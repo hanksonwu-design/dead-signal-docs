@@ -292,7 +292,7 @@ function openReader(path, updateHash = true, headingText = "") {
   $("readerContent").querySelectorAll("[data-scene-source], [data-week-detail]").forEach((link) => link.addEventListener("click", (event) => {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
     event.preventDefault();
-    window.open(link.href, "_blank", "popup=yes,width=1200,height=900,resizable=yes,scrollbars=yes,noopener,noreferrer");
+    window.open(link.href, "_blank", "noopener,noreferrer");
   }));
   $("readerContent").querySelectorAll("[data-doc-link]").forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); openReader(link.dataset.docLink, true, link.dataset.docHeading || ""); }));
 }
@@ -309,6 +309,11 @@ function closeReader() {
 function syncHash() {
   const value = new URLSearchParams(location.hash.slice(1));
   if (value.has("scene")) {
+    state.selected = null;
+    $("readerOverlay").classList.add("hidden");
+    $("readerOverlay").setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    window.sceneReturnId = value.get("scene");
     state.folder="06_關卡規格";state.view="cards";
     document.querySelectorAll(".view-button").forEach(b=>b.classList.toggle("active",b.dataset.view===state.view));
     renderNav();renderHeading();renderCards();return;

@@ -13,7 +13,7 @@ window.SceneBrowser = (() => {
       const params=new URLSearchParams({doc:path});
       if(heading)params.set('heading',heading);
       url.hash=params.toString();
-      window.open(url.href,'_blank','popup=yes,width=1200,height=900,resizable=yes,scrollbars=yes,noopener,noreferrer');
+      window.open(url.href,'_blank','noopener,noreferrer');
       return;
     }
     options.openReader(path,true,heading);
@@ -47,7 +47,7 @@ window.SceneBrowser = (() => {
       <p class="scene-note">拓撲圖不是比例地圖。高亮為目前節點的連線；跨章長線代表流程，不能據此推定自由穿越樓層。</p></div>
       <aside class="scene-detail" aria-label="場景詳細資料"><div class="eyebrow">${esc(data.acts[n.act])} / ${esc(n.id)}</div><h3>${esc(n.name)}</h3><p>${esc(n.goal)}</p>
       ${n.tags.length?`<p class="scene-tags">${n.tags.map(esc).join(' · ')}</p>`:''}
-      <div class="scene-source"><button type="button" data-source="${esc(n.source)}" data-heading="${esc(n.heading)}" data-new-window="true" title="在新視窗開啟製作細節說明" aria-label="製作細節說明（在新視窗開啟）">製作細節說明 ↗</button>${n.duplicatePack || n.source===n.pack ? '' : `<button type="button" data-source="${esc(n.pack)}" data-heading="${esc(n.id)}" title="互動 ID、狀態鍵、資產與驗收條件">製作規格 ↗</button>`}</div>
+      <div class="scene-source"><button type="button" data-source="${esc(n.source)}" data-heading="${esc(n.heading)}" data-new-window="true" title="在新視窗開啟製作細節說明" aria-label="製作細節說明（在新視窗開啟）">製作細節說明 ↗</button>${n.duplicatePack || n.source===n.pack ? '' : `<button type="button" data-source="${esc(n.pack)}" data-heading="${esc(n.packAnchor || n.id)}" data-new-window="true" title="互動 ID、狀態鍵、資產與驗收條件（在新視窗開啟）" aria-label="製作規格（在新視窗開啟）">製作規格 ↗</button>`}</div>
       ${data.phases[n.id]?`<h4>房內進行順序</h4><ol>${data.phases[n.id].map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`:''}
       <h4>入口、出口與回訪</h4>${connections.map(e=>{const outgoing=e.fromId===selected,other=outgoing?e.toId:e.fromId;return `<article class="scene-edge" style="border-left-color:${color(e)}"><strong>${esc(e.fromId)} ${e.back?'↔':'→'} ${esc(e.toId)} <small>${esc(e.kind)} · ${outgoing?'出口':'入口'}</small></strong><p><b>條件</b> ${esc(e.gate)}</p><p><b>移動演出提案</b> ${esc(e.motion)}</p><p class="scene-note">${esc(e.returnRule)}</p><button type="button" data-follow="${esc(other)}">${outgoing||e.back?'沿連線預覽':'查看來源'} ${esc(other)} · ${esc(get(other).name)}</button></article>`;}).join('')}
       <h4>支線與收集</h4><p>${n.quests.length?n.quests.map(esc).join('<br>'):'沒有新增支線掛點；選填調查依場景原文。'}</p>
