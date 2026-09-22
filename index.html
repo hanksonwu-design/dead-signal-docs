@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0c1119" />
+    <title>灰燈寨 · 企劃文件瀏覽器</title>
+    <link rel="stylesheet" href="styles.css" /><link rel="stylesheet" href="scene-browser.css?v=20260918" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-mark">灰</div>
+          <div>
+            <div class="brand-title">灰燈寨</div>
+            <div class="brand-subtitle">企劃文件瀏覽器</div>
+          </div>
+        </div>
+        <div class="sidebar-scroll">
+          <button class="all-docs active" id="allDocs" type="button">
+            <span>▦</span><span>全部文件</span><span class="nav-count" id="allCount">—</span>
+          </button>
+          <div class="nav-label">資料夾</div>
+          <nav id="folderNav" aria-label="文件資料夾"></nav>
+          <div class="nav-label">文件狀態</div>
+          <nav id="statusNav" aria-label="文件狀態"></nav>
+        </div>
+        <div class="sidebar-footer">
+          <span class="live-dot"></span>
+          <span>企劃內容快照 · 2026 年 9 月 22 日</span>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="icon-button menu-button" id="menuButton" type="button" aria-label="開啟選單">☰</button>
+          <div class="crumbs" id="breadcrumbs">企劃庫 <span>/</span> 總覽</div>
+          <div class="topbar-actions">
+            <button class="quiet-button" id="refreshButton" type="button">↻ 重新載入</button>
+            <a class="quiet-button" href="#doc=README.md">README</a>
+          </div>
+        </header>
+
+        <section class="hero" id="hero">
+          <div class="hero-copy">
+            <div class="eyebrow">DEAD SIGNAL · DESIGN ARCHIVE</div>
+            <h1>一層一層，<em>認出你自己。</em></h1>
+            <p>集中閱讀《灰燈寨》的世界觀、角色、玩法、敘事與關卡流程。此處提供已發布的企劃內容，適合線上閱讀、製作討論與快速查找。</p>
+          </div>
+          <div class="hero-stats" id="heroStats"></div>
+        </section>
+
+        <section class="toolbar">
+          <label class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="search" placeholder="搜尋文件名稱、內容、角色或系統…" autocomplete="off" />
+            <kbd>Ctrl K</kbd>
+          </label>
+          <div class="view-toggle" role="group" aria-label="檢視模式">
+            <button class="view-button active" data-view="cards" type="button">卡片</button>
+            <button class="view-button" data-view="list" type="button">清單</button>
+          </div>
+        </section>
+
+        <section class="content-area">
+          <div class="section-heading">
+            <div>
+              <div class="eyebrow" id="sectionEyebrow">DOCUMENTS</div>
+              <h2 id="sectionTitle">全部文件</h2>
+            </div>
+            <div class="result-count" id="resultCount"></div>
+          </div>
+          <div class="document-grid" id="documentGrid" aria-live="polite"></div>
+          <div class="empty-state hidden" id="emptyState">
+            <div class="empty-icon">⌕</div>
+            <h3>找不到相符文件</h3>
+            <p>試試其他關鍵字，或清除目前的篩選條件。</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="reader-overlay hidden" id="readerOverlay" aria-hidden="true">
+      <div class="reader-backdrop" id="readerBackdrop"></div>
+      <article class="reader-panel">
+        <div class="reader-topbar">
+          <button class="quiet-button" id="closeReader" type="button">← 返回文件</button>
+          <div class="reader-actions">
+            <span class="reader-path" id="readerPath"></span>
+            <button class="icon-button" id="copyPath" type="button" title="複製檔案路徑">⧉</button>
+          </div>
+        </div>
+        <div class="reader-content" id="readerContent"></div>
+      </article>
+    </div>
+
+    <script src="scene-browser.js?v=20260922-detail-link"></script><script src="app.js?v=20260918-coremerge"></script>
+  </body>
+</html>
