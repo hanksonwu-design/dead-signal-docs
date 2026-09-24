@@ -9,7 +9,37 @@
 開啟此儲存庫的 GitHub Pages 網址，可使用分類、搜尋、文件閱讀及場景節點導覽。
 製作時程中的 Google 試算表連結沿用原檔案權限。
 
-## 更新
+## 修改文件
 
-由原專案重新產生 docs_viewer 的靜態資料後，更新本站的文件資料、節點圖及所引用圖片並推送。
-GitHub Pages 設為從 main 分支的根目錄發布。
+文件原稿是 `docs/` 裡的 `.md` 檔，直接修改這些檔案即可；**不要手動改 `docs.json`**。
+
+1. 本機預覽：雙擊 `preview.bat`（需要安裝 Node.js），瀏覽器會打開 http://localhost:8765/ 。
+   改完 `.md` 存檔後，在網頁上按「重新載入」就會看到新內容。
+2. 推送到 `main` 後，GitHub Actions 會自動從 `docs/` 重新產生 `docs.json` 並提交，
+   GitHub Pages 約 1～2 分鐘後更新。推送下一批前請先 pull，拿到自動產生的那次提交。
+
+也可以手動產生：`node tools/build-docs.mjs`（加 `--check` 只檢查是否過期）。
+
+### 檔頭欄位
+
+每份 `.md` 開頭的 `---` 區塊決定網站上的顯示方式，閱讀時不會顯示出來：
+
+| 欄位 | 用途 |
+| --- | --- |
+| `文件` | 卡片標題 |
+| `狀態` | 狀態標籤 |
+| `摘要` | 卡片摘要；沒寫就用內文第一個 `>` 引言 |
+| `導覽分類` | 分類；`批次存檔` 的文件不列在清單中 |
+| `導覽層級` | `每週細表` 只在搜尋時出現 |
+
+新增資料夾時，在 `tools/build-docs.mjs` 的 `FOLDER_LABELS` 補上顯示名稱。
+
+## 其他資料
+
+- 圖片：`assets/<資料夾>/`，對應 `.md` 裡的相對路徑。
+- 場景節點圖：`scene_graph.json`。
+- 上部 3D 空間模型：`building/`，網址 `building/`（可加 `#scene=R17` 直接選房）。
+  網站頂部「3D 空間模型」與節點圖上部房間的「3D 空間 ↗」會連過去；模型裡的規格連結會回到本站。
+  模型的資料是 2026-09-23 的快照（`building/data.js`），不會跟著 `docs/` 自動更新。
+  修改模型原始碼後在 `building/` 執行 `npm install`、`npm run build` 重新產生 `building/index.html`。
+- GitHub Pages 設為從 main 分支的根目錄發布。

@@ -342,7 +342,7 @@ async function loadDocuments() {
     refreshState();
     syncHash();
   } catch (error) {
-    $("documentGrid").innerHTML = `<div class="empty-state"><div class="empty-icon">!</div><h3>無法讀取文件</h3><p>${esc(error.message)}。請確認是透過 server.py 開啟，而不是直接雙擊 HTML。</p></div>`;
+    $("documentGrid").innerHTML = `<div class="empty-state"><div class="empty-icon">!</div><h3>無法讀取文件</h3><p>${esc(error.message)}。請確認是透過 preview.bat 開啟，而不是直接雙擊 HTML。</p></div>`;
   }
 }
 
