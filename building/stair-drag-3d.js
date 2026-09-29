@@ -74,6 +74,7 @@ export function createStairDrag3D(env) {
   const identity = stage => ({edgeId: stage.edgeId, index: stage.index, fromFloor: stage.fromFloor, toFloor: stage.toFloor, local: stage.local});
   const selectedStage = () => selected && stages.find(stage => stage.edgeId === selected.edgeId && stage.fromFloor === selected.fromFloor && stage.toFloor === selected.toFloor && stage.local === selected.local);
   const caption = stage => stage.local ? `${floorName(stage.fromFloor)} 局部階梯` : `${floorName(stage.fromFloor)} → ${floorName(stage.toFloor)}`;
+  const clippedSpans = (stage, spans = stage.spans) => spans.flatMap(span => clipRouteToHeight(span, ...stage.bounds));
 
   function collect() {
     const result = [];
@@ -88,7 +89,8 @@ export function createStairDrag3D(env) {
           const points = body.route.points.map(p => [p.x, ha + (hb - ha) * p.t + .3 + p.dy, p.z]);
           const spans = bodySpans(points, body.route.width);
           if (spans.length) result.push({edgeId: edge.id, index: 0, fromFloor: a.floor, toFloor: b.floor, local: true,
-            route: body.route, body, points, spans, width: body.route.width, ha, hb});
+            route: body.route, body, points, spans, width: body.route.width, ha, hb,
+            bounds: [Math.min(...points.map(p => p[1])), Math.max(...points.map(p => p[1]))]});
           continue;
         }
         const route = edge.route?.stairSections ? reconcileFloorStairs(edge.route, a, b, ha, hb, floorHeight)
@@ -121,7 +123,7 @@ export function createStairDrag3D(env) {
     let best = null;
     for (const stage of stages) {
       if (!visible(stage)) continue;
-      for (const [a, b] of stage.spans) {
+      for (const [a, b] of clippedSpans(stage)) {
       const pa = project(a, rect), pb = project(b, rect);
       if (!pa || !pb) continue;
       const dx = pb.x - pa.x, dy = pb.y - pa.y, length = dx * dx + dy * dy;
@@ -168,16 +170,15 @@ export function createStairDrag3D(env) {
     const stage = gesture?.stage || hoverStage || selectedStage();
     if (!enabled || !visible(stage)) return;
     const edge = edgeFor(stage.edgeId); if (!edge) return;
-    const route = gesture?.preview || stage.route, points = currentPoints(stage, route);
+    const route = gesture?.preview || stage.route;
     overlay = new THREE.Group(); overlay.name = 'stair-drag-3d-preview'; scene.add(overlay);
     const draft = {...edge, route};
     if (gesture?.moved) {
       // Reuse the final renderer, including fixed doorway leads and floor
       // joins. Clipping changes visibility only, never preview geometry.
       const full = makeRoutePoints(nodeMap.get(edge.fromId), nodeMap.get(edge.toId), stage.ha, stage.hb, route, floorHeight);
-      const low = Math.min(...points.map(p => p[1])), high = Math.max(...points.map(p => p[1]));
-      for (const path of clipRouteToHeight(full, low, high)) drawRoute(draft, path, overlay, true);
-    } else for (const span of stage.spans) drawRoute(draft, span, overlay, true);
+      for (const path of clipRouteToHeight(full, ...stage.bounds)) drawRoute(draft, path, overlay, true);
+    } else for (const span of clippedSpans(stage)) drawRoute(draft, span, overlay, true);
     overlay.traverse(object => {
       object.renderOrder = 30;
       for (const material of object.material ? (Array.isArray(object.material) ? object.material : [object.material]) : []) {
@@ -221,7 +222,7 @@ export function createStairDrag3D(env) {
     if (!visible(stage)) { label.hidden = true; if (overlay) overlay.visible = false; return; }
     if (overlay) overlay.visible = true;
     const route = gesture?.preview || stage.route, points = currentPoints(stage, route);
-    const spans = gesture?.moved ? bodySpans(points, route.width) : stage.spans;
+    const spans = clippedSpans(stage, gesture?.moved ? bodySpans(points, route.width) : stage.spans);
     const span = spans[Math.floor(spans.length / 2)];
     const center = span ? mix(span[0], span[1], .5) : points[0], rect = host.getBoundingClientRect(), p = project(center, rect);
     label.hidden = !p || p.x < rect.left || p.x > rect.left + rect.width || p.y < rect.top || p.y > rect.top + rect.height;
@@ -313,6 +314,7 @@ export function createStairDrag3D(env) {
     }, refresh, update, cancel, clearSelection,
     undo: () => commitHistory('undo'), redo: () => commitHistory('redo'),
     get enabled() { return enabled; }, get dragging() { return Boolean(gesture); },
-    get selected() { return selected ? {...selected} : null; }
+    get selected() { return selected ? {...selected} : null; },
+    get selectionBounds() { const stage = gesture?.stage || selectedStage(); return stage ? [...stage.bounds] : null; }
   };
 }

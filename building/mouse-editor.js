@@ -3,6 +3,7 @@ import {connectionFromGesture, editableRouteFromPath, stairBodyFromPath, transla
 import {toFloorStairs, reconcileFloorStairs, getFloorSectionPoints, translateFloorSection, setFloorSectionShape, placeFloorStair} from './floor-stairs.js';
 import {buildStairCatalog} from './stair-catalog.js';
 import {landingPorts, resolveLinkEndpoint, makeLandingLinkPoints} from './landing-links.js';
+import {clipRouteToHeight} from './floor-route-view.js';
 
 const clone = value => JSON.parse(JSON.stringify(value));
 const snap = value => Math.round(value * 2) / 2;
@@ -156,7 +157,15 @@ export function createMouseEditor(env) {
   if(mode==='link'&&linkDraft?.to){
    try{paintRoute({route:{width:1.6},back:true},makeLandingLinkPoints({from:linkDraft.from,to:linkDraft.to,width:1.6,points:[]},linkContext()));}catch{/* Invalid hovered targets remain uncommitted. */}
   }else if(drawing)displayDrawing();else if(working){
-   if(section()){const shown=placement?.route?{...working,route:placement.route}:working,ghost=new THREE.Group();overlay.add(ghost);drawRoute(shown,routePath(shown),ghost,true);ghost.traverse(o=>{if(o.material){o.material.transparent=true;o.material.opacity*=placement?.route ? .45 : .16;o.material.depthWrite=false;}});paintRoute(shown,getFloorSectionPoints(shown.route,sectionIndex,roomY(nodeMap.get(shown.fromId)),roomY(nodeMap.get(shown.toId)),env.floorHeight));}
+   if(section()){
+    const shown=placement?.route?{...working,route:placement.route}:working,ghost=new THREE.Group(),heights=sectionHeights().map(y=>y+.3);
+    const minY=Math.min(...heights),maxY=Math.max(...heights);overlay.add(ghost);
+    // Keep this floor's connecting landings without showing other floors' stairs.
+    for(const points of clipRouteToHeight(routePath(shown),minY,maxY))drawRoute(shown,points,ghost,true);
+    ghost.traverse(o=>{if(o.material){o.material.transparent=true;o.material.opacity*=placement?.route ? .45 : .16;o.material.depthWrite=false;}});
+    const points=getFloorSectionPoints(shown.route,sectionIndex,roomY(nodeMap.get(shown.fromId)),roomY(nodeMap.get(shown.toId)),env.floorHeight);
+    for(const path of clipRouteToHeight(points,minY,maxY))paintRoute(shown,path);
+   }
    else paintRoute(working,routePath(working));
   }
   if(gesture?.kind==='resize'){
