@@ -12,7 +12,7 @@ export function createSceneFileUI({editor, onLoaded = () => true, onExportFallba
     if (typeof text !== 'string' || text.length > MAX_BYTES) throw new Error('場景檔超過 128 MB 或內容不是文字。');
     const changed = editor.apply(JSON.parse(text.replace(/^\uFEFF/, ''))); // Store validation is atomic.
     const saved = onLoaded({name, changed}) !== false;
-    const snapshot = editor.snapshot(), routes = (snapshot.edges?.length || 0) + (snapshot.terminalRoutes?.length || 0);
+    const snapshot = editor.snapshot(), routes = (snapshot.edges?.length || 0) + (snapshot.terminalRoutes?.length || 0) + (snapshot.platformLinks?.length || 0);
     status(`已載入 ${name} · ${snapshot.rooms.length} 個房間／${routes} 條通路${saved ? '' : ' · 瀏覽器無法暫存，請保留 JSON 備份。'}`, !saved);
     return {changed, saved};
   }

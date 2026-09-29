@@ -40,7 +40,7 @@ export function createSandboxUI({data, nodeMap, editor, pathFor, roomY, floorHei
     if (nodeMap.has(value)) select.value = value;
   }
   function syncPicker() {
-    $('edge-count').textContent = data.edges.filter(edge=>!nodeMap.get(edge.fromId).terminal&&!nodeMap.get(edge.toId).terminal).length;
+    $('edge-count').textContent = data.edges.filter(edge=>!nodeMap.get(edge.fromId).terminal&&!nodeMap.get(edge.toId).terminal).length + (data.platformLinks?.length || 0);
     const options = data.edges.map(edge => {
       const option = document.createElement('option');
       option.value = edge.id;
@@ -113,7 +113,7 @@ export function createSandboxUI({data, nodeMap, editor, pathFor, roomY, floorHei
   }
   function nextId() {
     let index = 1;
-    while (currentEdge(`custom-${index}`)) index++;
+    while (currentEdge(`custom-${index}`) || data.platformLinks?.some(link => link.id === `custom-${index}`)) index++;
     return `custom-${index}`;
   }
   function newDraft(fromId, toId, from, to) {

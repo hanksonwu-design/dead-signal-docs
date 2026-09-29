@@ -22,13 +22,20 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
       (options.terminals !== undefined && !Array.isArray(options.terminals))) {
     throw new Error('出口接點設定必須包含有效的接點清單。');
   }
+  const editablePlatformLinks = options.platformLinks !== undefined;
+  if (editablePlatformLinks && (!editableEdges || !Array.isArray(options.platformLinks))) {
+    throw new Error('平台連線需要啟用通路編輯，並提供平台連線陣列。');
+  }
+  const platformLinks = options.platformLinks;
   const terminalIds = new Set();
+  const terminalFloors = new Map();
   for (const terminal of options.terminals || []) {
     const id = terminal?.id;
     if (typeof id !== 'string' || !id.trim() || id.trim() !== id || id.length > 120 || byId.has(id) || terminalIds.has(id)) {
       throw new Error('出口接點代號不可為空、重複，或與房間代號相同。');
     }
     terminalIds.add(id);
+    terminalFloors.set(id, terminal.floor);
   }
   const hasTerminals = terminalIds.size > 0;
   if (hasTerminals && !editableEdges) throw new Error('出口接點需要啟用通路編輯。');
@@ -152,10 +159,58 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
       return result;
     });
   }
+  function landingContext(snapshot) {
+    return {edges: new Map(allEdges(snapshot).map(edge => [edge.id, edge])),
+      floors: new Map([...terminalFloors, ...snapshot.rooms.map(room => [room.id, room.floor])])};
+  }
+  function landingExists(endpoint, context) {
+    const parent = context.edges.get(endpoint.edgeId);
+    if (!parent || parent.route?.mode === 'ramp' || !BUILDING_FLOORS.includes(endpoint.floor)) return false;
+    const a = context.floors.get(parent.fromId), b = context.floors.get(parent.toId);
+    return BUILDING_FLOORS.includes(a) && BUILDING_FLOORS.includes(b) && a !== b &&
+      endpoint.floor >= Math.min(a, b) && endpoint.floor <= Math.max(a, b);
+  }
+  function validatePlatformLinks(input, snapshot) {
+    if (!Array.isArray(input) || input.length > 160) throw new Error('平台連線必須是陣列，最多可有 160 條。');
+    const context = landingContext(snapshot), seen = new Set(context.edges.keys());
+    const endpoint = (value, label) => {
+      if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${label} 資料不正確。`);
+      if (value.kind === 'room') {
+        if (!byId.has(value.roomId)) throw new Error(`${label} 必須選擇既有房間。`);
+        return {kind: 'room', roomId: value.roomId, ...validatePortal(value, label)};
+      }
+      if (value.kind !== 'landing') throw new Error(`${label} 必須是房間路口或樓梯平台。`);
+      const result = {kind: 'landing', edgeId: boundedString(value.edgeId, 120, `${label} 樓梯代號`, {required: true}), floor: value.floor};
+      if (!landingExists(result, context)) throw new Error(`${label} 平台必須位於既有跨層通路的樓層範圍內。`);
+      return result;
+    };
+    return input.map(link => {
+      if (!link || typeof link !== 'object' || Array.isArray(link)) throw new Error('平台連線資料不正確。');
+      const id = boundedString(link.id, 120, '平台連線代號', {required: true});
+      if (seen.has(id)) throw new Error('平台連線代號不可重複或與通路代號相同。');
+      seen.add(id);
+      const from = endpoint(link.from, `${id} 起點`), to = endpoint(link.to, `${id} 終點`);
+      if (from.kind !== 'landing' && to.kind !== 'landing') throw new Error(`${id} 至少需要一端連接樓梯平台。`);
+      if (same(from, to)) throw new Error(`${id} 必須連接兩個不同接點。`);
+      if (!Array.isArray(link.points) || link.points.length > 256) throw new Error(`${id} 平台連線最多可有 256 個中繼點。`);
+      const points = link.points.map((point, index) => {
+        if (!point || typeof point !== 'object' || Array.isArray(point)) throw new Error(`${id} 中繼點 ${index + 1} 不正確。`);
+        return {x: finite(point.x, -150, 150, `${id} 中繼點 X`), z: finite(point.z, -150, 150, `${id} 中繼點 Z`)};
+      });
+      return {id, from, to, width: finite(link.width, .8, 6, `${id} 平台連線寬度`), points};
+    });
+  }
+  function prunePlatformLinks(snapshot) {
+    if (!editablePlatformLinks) return;
+    const context = landingContext(snapshot);
+    snapshot.platformLinks = snapshot.platformLinks.filter(link => [link.from, link.to].every(endpoint =>
+      endpoint.kind !== 'landing' || landingExists(endpoint, context)));
+  }
   function validate(input) {
     if (!input || input.format !== FORMAT || ![1, ...(editableEdges ? [2] : [])].includes(input.version) || !Array.isArray(input.rooms)) {
       throw new Error(`請使用版本 ${editableEdges ? '1 或 2' : '1'} 的 Dead Signal 配置 JSON。`);
     }
+    if (!editablePlatformLinks && input.platformLinks !== undefined) throw new Error('此編輯器尚未啟用平台連線。');
     if (input.rooms.length !== ids.length) throw new Error(`配置必須包含全部 ${ids.length} 個房間。`);
     const rooms = new Map();
     for (const room of input.rooms) {
@@ -200,9 +255,10 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
       // Validate the merged set so IDs and the 160-link budget are shared.
       setEdges(result, validateEdges(combined));
     }
+    if (editablePlatformLinks) result.platformLinks = validatePlatformLinks(input.platformLinks === undefined ? [] : input.platformLinks, result);
     return result;
   }
-  const initial = validate({format: FORMAT, version: 1, rooms: nodes.map(node => {
+  const initial = validate({format: FORMAT, version: 1, ...(editablePlatformLinks ? {platformLinks: copy(platformLinks)} : {}), rooms: nodes.map(node => {
     const [x, z, floor, w, d] = layout[node.id];
     return {id: node.id, name: node.name, x: node.x ?? x, z: node.z ?? z,
       floor: node.floor ?? floor, w: node.w ?? w, d: node.d ?? d, offset: offsets[node.id] ?? 0};
@@ -212,12 +268,14 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
   const past = [], future = [];
   function write(next) {
     const nextEdges = editableEdges ? copy(allEdges(next)) : null;
+    const nextPlatformLinks = editablePlatformLinks ? copy(next.platformLinks) : null;
     for (const room of next.rooms) {
       const node = byId.get(room.id);
       for (const field of FIELDS) if (field !== 'offset') node[field] = room[field];
       offsets[room.id] = room.offset;
     }
     if (editableEdges) edges.splice(0, edges.length, ...nextEdges);
+    if (editablePlatformLinks) platformLinks.splice(0, platformLinks.length, ...nextPlatformLinks);
     current = copy(next);
   }
   function apply(input) {
@@ -231,6 +289,9 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
   }
   function requireEdges() {
     if (!editableEdges) throw new Error('此編輯器尚未啟用通路編輯。');
+  }
+  function requirePlatformLinks() {
+    if (!editablePlatformLinks) throw new Error('此編輯器尚未啟用平台連線。');
   }
   function findEdge(id) {
     requireEdges();
@@ -247,6 +308,7 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
       }
       const next = copy(current);
       Object.assign(next.rooms.find(room => room.id === id), patch);
+      prunePlatformLinks(next);
       return apply(next);
     },
     updateEdge(id, patch) {
@@ -258,6 +320,7 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
       const combined = allEdges(next);
       Object.assign(combined.find(edge => edge.id === id), patch);
       setEdges(next, combined);
+      prunePlatformLinks(next);
       return apply(next);
     },
     addEdge(edge) {
@@ -270,6 +333,30 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
       findEdge(id);
       const next = copy(current);
       setEdges(next, allEdges(next).filter(edge => edge.id !== id));
+      prunePlatformLinks(next);
+      return apply(next);
+    },
+    addPlatformLink(link) {
+      requirePlatformLinks();
+      const next = copy(current);
+      next.platformLinks.push(link);
+      return apply(next);
+    },
+    updatePlatformLink(id, patch) {
+      requirePlatformLinks();
+      if (!current.platformLinks.some(link => link.id === id)) throw new Error('找不到平台連線代號。');
+      if (!patch || typeof patch !== 'object' || Array.isArray(patch) || Object.keys(patch).some(key => !['from','to','width','points'].includes(key))) {
+        throw new Error('只能編輯平台連線端點、寬度與路線。');
+      }
+      const next = copy(current);
+      Object.assign(next.platformLinks.find(link => link.id === id), patch);
+      return apply(next);
+    },
+    removePlatformLink(id) {
+      requirePlatformLinks();
+      if (!current.platformLinks.some(link => link.id === id)) throw new Error('找不到平台連線代號。');
+      const next = copy(current);
+      next.platformLinks = next.platformLinks.filter(link => link.id !== id);
       return apply(next);
     },
     edgeChanged(id) {

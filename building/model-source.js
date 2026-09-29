@@ -9,6 +9,9 @@ import {createSandboxUI} from './sandbox-ui.js';
 import {createMouseEditor} from './mouse-editor.js';
 import {clipRouteToHeight} from './floor-route-view.js';
 import {createSceneFileUI} from './scene-files.js';
+import {makeLandingLinkPoints,resolveLinkEndpoint} from './landing-links.js';
+import {createStairDrag3D} from './stair-drag-3d.js';
+import {createObjectEdit3D} from './object-edit-3d.js';
 
 const $=id=>document.getElementById(id);
 const groups=[
@@ -34,14 +37,18 @@ const exitAnchor={id:'EXIT43',name:'43F 分部門檻',floor:43,x:24,z:22.1,w:3,d
 nodeMap.set(exitAnchor.id,exitAnchor);
 const defaultExitRoute={mode:'stairs',shape:'manual',width:1.5,from:{side:'east',u:0},to:{side:'north',u:0},points:[{x:24,z:16,t:0,dy:0},{x:24,z:19,t:0,dy:-.7}]};
 data.edges.push({id:'R22-EXIT43',fromId:'R22',toId:'EXIT43',kind:'出口',back:false,gate:'上部與下部的分界。',motion:'下折避梁後沿樓梯上行至 43F 門檻。',returnRule:'出口示意，不新增 R23 房間。',route:defaultExitRoute});
-const editor=createEditorStore(data.nodes,layout,offsets,data.edges,{terminals:[exitAnchor]});
+data.platformLinks=[];
+const editor=createEditorStore(data.nodes,layout,offsets,data.edges,{terminals:[exitAnchor],platformLinks:data.platformLinks});
 const originalRooms=new Map(data.nodes.map(n=>[n.id,{...n}]));
+// Keep the reference floor elevations stable while rooms move between floors.
+// Otherwise moving the last room off a floor collapses it during mouse release.
+const structureFloors=new Set(data.nodes.map(n=>n.floor));
 let usedFloors=[...new Set(data.nodes.map(n=>n.floor))].sort((a,b)=>a-b);
 const floors=Array.from({length:47},(_,i)=>i-3).filter(f=>f!==0);
 let state={group:'all',floor:null,selected:'R6',height:'compressed',spread:0,shell:true,special:true,labels:true,view:'iso'};
-let scene,camera,renderer,controls,building,structure,roomMeshes=[],tags=[],floorTags=[],edgeObjects=[],roomObjects=new Map(),floorY=new Map();
+let scene,camera,renderer,controls,building,structure,roomMeshes=[],tags=[],floorTags=[],edgeObjects=[],platformLinkObjects=[],roomObjects=new Map(),floorY=new Map();
 let editing=false,dragMode=false,drag=null;
-let sandbox,mouseEditor,sceneFiles,routeFocus=false,routePreview,routeMarkers=[],pointDrag=null,lastPreviewId=null,portAnchor=null;
+let sandbox,mouseEditor,stairDrag3D,objectEdit3D,sceneFiles,routeFocus=false,routePreview,routeMarkers=[],pointDrag=null,lastPreviewId=null,portAnchor=null;
 const host=$('canvas-host');
 function box(w,h,d,x,y,z,material,parent){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);mesh.position.set(x,y,z);parent.add(mesh);return mesh;}
 function material(color,opacity=1){return new THREE.MeshStandardMaterial({color,roughness:.82,metalness:.08,transparent:opacity<1,opacity,depthWrite:opacity>=1});}
@@ -64,7 +71,7 @@ function drawRoute(e,points,g,preview=false){
  for(let i=1;i<points.length-1;i++){const a=points[i-1],b=points[i],c=points[i+1];if(Math.abs((b[0]-a[0])*(c[2]-b[2])-(b[2]-a[2])*(c[0]-b[0]))>.001)box(width,.15,width,b[0],b[1]-.02,b[2],deck,g);}
  if(e.route?.stairSections){const seen=new Set();for(const p of points){if(!floors.some(f=>Math.abs(p[1]-floorY.get(f)-.3)<.001))continue;const key=p.map(v=>v.toFixed(5)).join('/');if(seen.has(key))continue;seen.add(key);box(width,.15,width,p[0],p[1]-.02,p[2],deck,g);}}
 }
-function recalcHeights(){let y=0;floors.forEach((f,i)=>{if(i){const prior=floors[i-1];y+=(state.height==='actual'?4.2:usedFloors.includes(prior)?4.2:.65)+(usedFloors.includes(prior)?state.spread:0);}floorY.set(f,y);});}
+function recalcHeights(){let y=0;floors.forEach((f,i)=>{if(i){const prior=floors[i-1];y+=(state.height==='actual'?4.2:structureFloors.has(prior)?4.2:.65)+(structureFloors.has(prior)?state.spread:0);}floorY.set(f,y);});}
 function roomY(n){return floorY.get(n.floor)+(offsets[n.id]||0);}
 function point(n){return[n.x,roomY(n)+.3,n.z];}
 function portal(n,p){
@@ -80,6 +87,7 @@ function pathFor(e){
  const ap=portal(a,points[0]),bp=portal(b,points.at(-1));if(ap)ap.width=width;if(bp)bp.width=width;
  return{points,ap,bp};
 }
+const landingContext=()=>({edges:data.edges,nodeMap,roomY,pathFor,floorHeight:f=>floorY.get(f)});
 function makeWall(n,side,openings,parent,mat){
  if(n.id==='R4b'||n.id==='R10'||n.id==='R22')return;
  const glass=sharedGlassBoundary(nodeMap.get('R19'),nodeMap.get('R20'));
@@ -94,10 +102,17 @@ function makeWall(n,side,openings,parent,mat){
 function rebuild(refit=true){
  const terminalSource=nodeMap.get('R22');exitAnchor.x=terminalSource.x+terminalSource.w/2+5;exitAnchor.z=terminalSource.z+6.1;
  if(building){scene.remove(building);building.traverse(o=>{o.geometry?.dispose();if(o.material){for(const m of(Array.isArray(o.material)?o.material:[o.material])){m.map?.dispose();m.dispose();}}});}
- tags.forEach(t=>t.el.remove());floorTags.forEach(t=>t.el.remove());tags=[];floorTags=[];roomMeshes=[];edgeObjects=[];roomObjects.clear();usedFloors=[...new Set(data.nodes.map(n=>n.floor))].sort((a,b)=>a-b);recalcHeights();
+ tags.forEach(t=>t.el.remove());floorTags.forEach(t=>t.el.remove());tags=[];floorTags=[];roomMeshes=[];edgeObjects=[];platformLinkObjects=[];roomObjects.clear();usedFloors=[...new Set(data.nodes.map(n=>n.floor))].sort((a,b)=>a-b);recalcHeights();
  building=new THREE.Group();scene.add(building);structure=new THREE.Group();building.add(structure);
  const paths=new Map(),doors=new Map(data.nodes.map(n=>[n.id,[]]));
  data.edges.forEach(e=>{const p=pathFor(e);paths.set(e.id,p);if(e.kind!=='子節點'){doors.get(e.fromId)?.push(p.ap);doors.get(e.toId)?.push(p.bp);}});
+ const linkPaths=new Map();
+ data.platformLinks.forEach(link=>{
+  const points=makeLandingLinkPoints(link,landingContext());if(points.length<2)return;linkPaths.set(link.id,points);
+  for(const [endpoint,p] of [[link.from,points[0]],[link.to,points.at(-1)]])if(endpoint.kind==='room'){
+   const opening=portal(nodeMap.get(endpoint.roomId),p);if(opening){opening.width=link.width;doors.get(endpoint.roomId)?.push(opening);}
+  }
+ });
  // Perimeter-only structure leaves room plans and corridors readable.
  const minY=floorY.get(-3)-.6,maxY=floorY.get(43)+2.7;
  for(const x of[-26,26])for(const z of[-24,24])box(.2,maxY-minY,.2,x,(minY+maxY)/2,z,material(0x60768b,.24),structure);
@@ -119,8 +134,9 @@ function rebuild(refit=true){
   tags.push({el,point:new THREE.Vector3(n.x,y+3.05,n.z),node:n});roomObjects.set(n.id,{g,base,selection});
  });
  data.edges.forEach(e=>{const g=new THREE.Group();building.add(g);const points=paths.get(e.id).points;drawRoute(e,points,g);if(e.toId===exitAnchor.id){const p=points.at(-1);box(3,.22,3,p[0],p[1]-.1,p[2],material(0xeab275,.6),g);}g.traverse(o=>{o.userData.edge=e.id;});edgeObjects.push({g,e,points,viewG:null,viewPaths:[],viewKey:null});});
+ data.platformLinks.forEach(link=>{const points=linkPaths.get(link.id);if(!points)return;const g=new THREE.Group(),e={id:link.id,kind:'分岔',back:true,route:{mode:'auto',width:link.width}};building.add(g);drawRoute(e,points,g);g.traverse(o=>{o.userData.platformLink=link.id;});platformLinkObjects.push({g,e,link,points,viewG:null,viewPaths:[],viewKey:null});});
  dressBuilding(building,{THREE,box,material,line,segment,floorY,roomY,nodeMap,isEdited:id=>editor.isChanged(id)||(['R7','R8'].includes(id)&&editor.edgeChanged('R7-R8-11'))});
- refreshFloorOptions();applyVisibility();updateRouteOverlay();mouseEditor?.refresh();if(refit)fitCamera();
+ refreshFloorOptions();applyVisibility();updateRouteOverlay();mouseEditor?.refresh();stairDrag3D?.refresh();objectEdit3D?.refresh();sync3DEditor();if(refit)fitCamera();
 }
 function inGroup(n){if(mouseEditor?.enabled){const e=mouseEditor.selectedEdge,s=mouseEditor.selectedSection;if(s)return n.floor===s.fromFloor||n.floor===s.toFloor;if(e&&(n.id===e.fromId||n.id===e.toId))return true;}if(editing&&!mouseEditor?.enabled&&sandbox?.mode==='route'&&routeFocus&&sandbox.interaction!=='ports'&&sandbox.draft)return n.id===sandbox.draft.fromId||n.id===sandbox.draft.toId;return state.floor!==null?n.floor===state.floor:state.group==='all'||n.group===state.group;}
 function routeViewBounds(){
@@ -136,10 +152,12 @@ function sliceRouteForView(record,bounds){
  record.viewPaths=clipRouteToHeight(record.points,...bounds);
  for(const path of record.viewPaths)drawRoute(record.e,path,g);
  if(record.e.toId===exitAnchor.id){const p=record.points.at(-1);if(p[1]>=bounds[0]&&p[1]<=bounds[1])box(3,.22,3,p[0],p[1]-.1,p[2],material(0xeab275,.6),g);}
- g.traverse(o=>{o.userData.edge=record.e.id;});
+ g.traverse(o=>{o.userData[record.link?'platformLink':'edge']=record.e.id;});
 }
 const visibleEdgeObjects=()=>edgeObjects.map(o=>({g:o.viewG?.visible?o.viewG:o.g,e:o.e}));
-const visibleRoutePoints=()=>edgeObjects.flatMap(o=>o.viewG?.visible?o.viewPaths.flat():o.g.visible?o.points:[]);
+const visiblePlatformLinkObjects=()=>platformLinkObjects.map(o=>({g:o.viewG?.visible?o.viewG:o.g,link:o.link}));
+const visibleRoutePoints=()=>[...edgeObjects,...platformLinkObjects].flatMap(o=>o.viewG?.visible?o.viewPaths.flat():o.g.visible?o.points:[]);
+function platformLinkAt(event){const rect=host.getBoundingClientRect(),ray=new THREE.Raycaster();ray.params.Line.threshold=.5;ray.setFromCamera(new THREE.Vector2((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1),camera);return ray.intersectObjects(visiblePlatformLinkObjects().filter(o=>o.g.visible).map(o=>o.g),true)[0]?.object.userData.platformLink;}
 function applyVisibility(){
  const chosen=groups.find(g=>g.id===state.group);
  structure.visible=state.shell;
@@ -155,6 +173,11 @@ function applyVisibility(){
   if(a.floor!==b.floor&&bounds&&!routeView){sliceRouteForView(record,bounds);record.viewG.visible=record.viewPaths.length>0;}
   else g.visible=inGroup(a)&&inGroup(b);
  });
+ platformLinkObjects.forEach(record=>{
+  const {g,link}=record,a=resolveLinkEndpoint(link.from,landingContext()),b=resolveLinkEndpoint(link.to,landingContext());g.visible=false;if(record.viewG)record.viewG.visible=false;if(!a||!b)return;
+  if(a.floor!==b.floor&&bounds){sliceRouteForView(record,bounds);record.viewG.visible=record.viewPaths.length>0;}
+  else{const range=groups.find(group=>group.id===state.group).floors;g.visible=state.floor!==null?a.floor===state.floor:state.group==='all'||a.floor>=range[0]&&a.floor<=range[1];}
+ });
  building.children.filter(o=>o.userData.storyFloor!=null).forEach(o=>{const f=o.userData.storyFloor;o.visible=o.userData.storyNodes?o.userData.storyNodes.every(id=>inGroup(nodeMap.get(id))):(state.floor===null||state.floor===f)&&(state.group==='all'||data.nodes.some(n=>inGroup(n)&&n.floor===f));o.children.filter(c=>c.userData.detailSign).forEach(c=>c.visible=(state.group!=='all'||state.floor!==null)&&state.labels);});
  building.children.filter(o=>o.userData.exit).forEach(o=>o.visible=state.floor===null&&inGroup(nodeMap.get('R22')));
  for(const {el,node} of tags)el.classList.toggle('selected',node.id===state.selected);
@@ -162,19 +185,23 @@ function applyVisibility(){
  const section=mouseEditor?.enabled&&mouseEditor.selectedSection;
  const mainMode=!!(mouseEditor?.enabled&&mouseEditor.mainStair);
  $('main-stair-edit').setAttribute('aria-pressed',String(mainMode));
+ $('stair-link-start').setAttribute('aria-pressed',String(!!(editing&&mouseEditor?.enabled&&host.dataset.mouseTool==='link')));
  document.querySelector('.right').classList.toggle('main-stair-mode',mainMode);
  document.querySelector('.right>.section-label').textContent=mainMode?'MAIN STAIR / 主樓梯':'SELECTED SPACE / 選取房間';
  if(mouseRoute){$('room-id').textContent=mouseEditor.mainStair?'主樓梯':'樓梯';$('room-name').textContent=mouseEditor.mainStair&&section?floorName(section.fromFloor)+' → '+floorName(section.toFloor):mouseRoute.fromId+' → '+mouseRoute.toId;$('room-floor').textContent=section?floorName(section.fromFloor)+' → '+floorName(section.toFloor)+' · 目前梯段':'目前選取的通路';}
  else{const n=nodeMap.get(state.selected);$('room-id').textContent=n.id;$('room-name').textContent=n.name;$('room-floor').textContent=floorName(n.floor)+(editor.isChanged(n.id)?' 自訂配置':['R1','R2','R17','P0','P1'].includes(n.id)?'':' 配置提案')+' · 原文 '+groups.find(g=>g.id===n.group).range;}
  $('view-title').textContent=section?(mouseEditor.mainStair?'主樓梯 / ':'樓梯編輯 / ')+floorName(section.fromFloor)+' → '+floorName(section.toFloor):mouseRoute?'通路編輯 / '+mouseRoute.fromId+' → '+mouseRoute.toId:routeView?'通路編輯 / '+sandbox.draft.fromId+' → '+sandbox.draft.toId:state.floor!==null?'單層檢視 / '+floorName(state.floor):chosen.title;
- $('view-subtitle').textContent=mainMode?'點選位置建立樓梯 · 自動銜接上一層 · 右鍵平移，滾輪縮放':mouseEditor?.enabled?'滑鼠建造 · 完成拖曳即保存 · 右鍵平移，滾輪縮放':editing?(sandbox?.mode==='route'?'道路／樓梯 · 青色為預覽，套用後儲存 · 平面直角轉折':'編輯配置 · '+(dragMode?'拖曳房間編號以移動':'選取房間後在右側修改')):state.group==='all'?'由地下逐層上行 · 封閉樓層保留':chosen.range+' · 原文高度帶';
+ $('view-subtitle').textContent=stairDrag3D?.enabled?'3D 物件編輯 · 選取房間／拖彩色移動軸 · 走廊節點 · 逐層樓梯':mainMode?'點選位置建立樓梯 · 自動銜接上一層 · 右鍵平移，滾輪縮放':mouseEditor?.enabled?'滑鼠建造 · 完成拖曳即保存 · 右鍵平移，滾輪縮放':editing?(sandbox?.mode==='route'?'道路／樓梯 · 青色為預覽，套用後儲存 · 平面直角轉折':'編輯配置 · '+(dragMode?'拖曳房間編號以移動':'選取房間後在右側修改')):state.group==='all'?'由地下逐層上行 · 封閉樓層保留':chosen.range+' · 原文高度帶';
  document.querySelectorAll('[data-group]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.group===state.group)));
 }
-function selectGroup(id){routeFocus=false;state.group=id;state.floor=null;$('floor-only').value='all';const choices=data.nodes.filter(n=>id==='all'||n.group===id),target=choices.find(n=>n.id===state.selected)||choices[0];if(mouseEditor?.enabled){if(target)mouseEditor.selectRoom(target.id);state.floor=nodeMap.get(state.selected).floor;refreshFloorOptions();mouseEditor.floorChanged();}else if(target&&target.id!==state.selected){state.selected=target.id;updateDetails();history.replaceState(null,'','#scene='+state.selected);}applyVisibility();updateRouteOverlay();fitCamera();}
+function selectGroup(id){stairDrag3D?.clearSelection();objectEdit3D?.clearSelection();routeFocus=false;state.group=id;state.floor=null;$('floor-only').value='all';const choices=data.nodes.filter(n=>id==='all'||n.group===id),target=choices.find(n=>n.id===state.selected)||choices[0];if(mouseEditor?.enabled){if(target)mouseEditor.selectRoom(target.id);state.floor=nodeMap.get(state.selected).floor;refreshFloorOptions();mouseEditor.floorChanged();}else if(target&&target.id!==state.selected){state.selected=target.id;updateDetails();history.replaceState(null,'','#scene='+state.selected);}applyVisibility();updateRouteOverlay();fitCamera();}
 function selectRoom(id){if(!nodeMap.has(id)||nodeMap.get(id).terminal)return;state.selected=id;const n=nodeMap.get(id);let changedFloor=false;if(state.floor!==null){if(state.floor!==n.floor){state.floor=n.floor;$('floor-only').value=String(n.floor);changedFloor=true;}}else if(state.group!=='all'&&state.group!==n.group)selectGroup(n.group);applyVisibility();updateDetails();if(changedFloor)fitCamera();history.replaceState(null,'','#scene='+id);}
+function viewTerminal(id){state.group='all';state.floor=nodeMap.get(id).floor;refreshFloorOptions();applyVisibility();fitCamera();}
 function updateDetails(){const n=nodeMap.get(state.selected),idx=data.nodes.indexOf(n);$('room-id').textContent=n.id;$('room-name').textContent=n.name;$('room-floor').textContent=`${floorName(n.floor)}${editor.isChanged(n.id)?' 自訂配置':['R1','R2','R17','P0','P1'].includes(n.id)?'':' 配置提案'} · 原文 ${groups.find(g=>g.id===n.group).range}`;$('room-goal').textContent=n.goal;$('room-story').textContent=(editor.isChanged(n.id)?'原配置說明（已自訂修改）：':'')+rationale[n.id];$('room-evidence').textContent=data.spatial[n.id].floor+' '+data.spatial[n.id].space;$('room-picker').value=n.id;$('source-link').href=sourceUrl(n.id);$('docs-link').href='../#scene='+encodeURIComponent(n.id);$('prev').disabled=idx===0;$('next').disabled=idx===data.nodes.length-1;
  const root=$('connections');root.replaceChildren();
- data.edges.filter(e=>e.fromId===n.id||e.toId===n.id).forEach(e=>{const other=e.fromId===n.id?e.toId:e.fromId;const card=document.createElement('div');card.className='edge-card';card.style.setProperty('--edge','#'+edgeColor(e).toString(16));const button=document.createElement('button');button.textContent=`${e.fromId} ${e.back?'↔':'→'} ${e.toId} · ${e.kind}`;button.onclick=()=>nodeMap.get(other).terminal?openMainStair(nodeMap.get(e.fromId).floor,e.id):mouseEditor?.enabled?mouseEditor.selectRoad(e.id):editing&&sandbox?.mode==='route'?sandbox.selectEdge(e.id):selectRoom(other);if(editor.edgeChanged(e.id))button.textContent+=' · 自訂';card.append(button);const small=document.createElement('small');small.textContent=`${nodeMap.get(other).name} · ${floorName(nodeMap.get(other).floor)}`;card.append(small);const details=document.createElement('details');const summary=document.createElement('summary');summary.textContent=editor.edgeChanged(e.id)?'通路說明（已自訂；原規則供參考）':'通行條件與移動方式';details.append(summary);[e.gate,e.motion,e.returnRule].forEach(text=>{const p=document.createElement('p');p.textContent=text;details.append(p);});card.append(details);root.append(card);});
+ data.edges.filter(e=>e.fromId===n.id||e.toId===n.id).forEach(e=>{const other=e.fromId===n.id?e.toId:e.fromId;const card=document.createElement('div');card.className='edge-card';card.style.setProperty('--edge','#'+edgeColor(e).toString(16));const button=document.createElement('button');button.textContent=`${e.fromId} ${e.back?'↔':'→'} ${e.toId} · ${e.kind}`;button.onclick=()=>nodeMap.get(other).terminal?(isEditMode()?openMainStair(nodeMap.get(e.fromId).floor,e.id):viewTerminal(other)):mouseEditor?.enabled?mouseEditor.selectRoad(e.id):editing&&sandbox?.mode==='route'?sandbox.selectEdge(e.id):selectRoom(other);if(editor.edgeChanged(e.id))button.textContent+=' · 自訂';card.append(button);const small=document.createElement('small');small.textContent=`${nodeMap.get(other).name} · ${floorName(nodeMap.get(other).floor)}`;card.append(small);const details=document.createElement('details');const summary=document.createElement('summary');summary.textContent=editor.edgeChanged(e.id)?'通路說明（已自訂；原規則供參考）':'通行條件與移動方式';details.append(summary);[e.gate,e.motion,e.returnRule].forEach(text=>{const p=document.createElement('p');p.textContent=text;details.append(p);});card.append(details);root.append(card);});
+ data.platformLinks.filter(link=>[link.from,link.to].some(endpoint=>endpoint.kind==='room'&&endpoint.roomId===n.id)).forEach(link=>{const other=link.from.kind==='room'&&link.from.roomId===n.id?link.to:link.from,info=resolveLinkEndpoint(other,landingContext());const card=document.createElement('div');card.className='edge-card';card.style.setProperty('--edge','#78b9c8');card.textContent=n.id+' ↔ '+(info?.label||'樓梯平台')+' · 自訂連接';root.append(card);});
+ $('edge-count').textContent=data.edges.filter(e=>!nodeMap.get(e.fromId).terminal&&!nodeMap.get(e.toId).terminal).length+data.platformLinks.length;
  if(n.id==='R4b'){const p=document.createElement('p');p.className='note';p.textContent='R4b 是共享 R4 基底的神壇子節點，本模型以原走道中的神壇角落表示，未新增獨立房間。';root.append(p);}
  if(n.id==='R22'){const p=document.createElement('p');p.className='note';p.textContent='上部終點：局部下折避梁，再沿同一梯井上行至 43F 門檻。R23 屬下部，不建立其房間。';root.append(p);}
  syncEditor();mouseEditor?.refresh();
@@ -200,7 +227,7 @@ function togglePerspective(){
  $('perspective').title=camera.isPerspectiveCamera?'目前為透視投影；點擊切回正交投影':'目前為正交投影；點擊開啟透視投影（近大遠小）';
 }
 function renderTags(){const rect=host.getBoundingClientRect();const occupied=[];
- tags.sort((a,b)=>Number(b.node.id===state.selected)-Number(a.node.id===state.selected)).forEach(t=>{const visible=(state.labels||editing)&&inGroup(t.node);t.el.hidden=!visible;if(!visible)return;const world=t.point.clone();if(mouseEditor?.roomDelta?.id===t.node.id){world.x+=mouseEditor.roomDelta.x;world.z+=mouseEditor.roomDelta.z;}if(drag?.id===t.node.id)world.add(roomObjects.get(t.node.id).g.position);const p=world.project(camera);if(p.z<-1||p.z>1||Math.abs(p.x)>1.1||Math.abs(p.y)>1.1){t.el.hidden=true;return;}let x=(p.x*.5+.5)*rect.width,y=(-p.y*.5+.5)*rect.height;let shifted=0;while(occupied.some(q=>Math.abs(q.x-x)<36&&Math.abs(q.y-y)<19)&&shifted<4){y-=18;shifted++;}occupied.push({x,y});t.el.style.left=x+'px';t.el.style.top=y+'px';});
+ tags.sort((a,b)=>Number(b.node.id===state.selected)-Number(a.node.id===state.selected)).forEach(t=>{const visible=(state.labels||editing)&&inGroup(t.node);t.el.hidden=!visible;if(!visible)return;const world=t.point.clone();if(mouseEditor?.roomDelta?.id===t.node.id){world.x+=mouseEditor.roomDelta.x;world.z+=mouseEditor.roomDelta.z;}if(drag?.id===t.node.id||objectEdit3D?.enabled)world.add(roomObjects.get(t.node.id).g.position);const p=world.project(camera);if(p.z<-1||p.z>1||Math.abs(p.x)>1.1||Math.abs(p.y)>1.1){t.el.hidden=true;return;}let x=(p.x*.5+.5)*rect.width,y=(-p.y*.5+.5)*rect.height;let shifted=0;while(occupied.some(q=>Math.abs(q.x-x)<36&&Math.abs(q.y-y)<19)&&shifted<4){y-=18;shifted++;}occupied.push({x,y});t.el.style.left=x+'px';t.el.style.top=y+'px';});
  floorTags.forEach(t=>{const focusedRoute=editing&&!mouseEditor?.enabled&&sandbox?.mode==='route'&&routeFocus&&sandbox.interaction!=='ports';const range=groups.find(g=>g.id===state.group).floors;const visible=focusedRoute?data.nodes.some(n=>inGroup(n)&&n.floor===t.floor):state.floor!==null?t.floor===state.floor:t.overviewVisible&&(state.group==='all'||t.floor>=range[0]&&t.floor<=range[1]);t.el.hidden=!state.shell||!visible;if(t.el.hidden)return;t.el.textContent=state.floor!==null?floorName(t.floor):t.overviewText;const p=t.point.clone().project(camera);t.el.hidden=Math.abs(p.x)>1.15||Math.abs(p.y)>1.1;t.el.style.left=(p.x*.5+.5)*rect.width+'px';t.el.style.top=(-p.y*.5+.5)*rect.height+'px';});
 }
 const storageKey='dead-signal-building-sandbox-v2';
@@ -260,7 +287,7 @@ function setupSandbox(){
 }
 function setupMouseEditor(){
  mouseEditor=createMouseEditor({THREE,host,scene,data,nodeMap,editor,roomY,pathFor,drawRoute,afterEdit,
-  camera:()=>camera,controls:()=>controls,canvas:()=>renderer.domElement,roomMeshes:()=>roomMeshes,edgeObjects:visibleEdgeObjects,visible:inGroup,
+  camera:()=>camera,controls:()=>controls,canvas:()=>renderer.domElement,roomMeshes:()=>roomMeshes,edgeObjects:visibleEdgeObjects,platformLinkAt,visible:inGroup,
   selectedRoom:()=>state.selected,floor:()=>state.floor??nodeMap.get(state.selected).floor,floors:()=>floors,floorHeight:f=>floorY.get(f),selectRoom,
   status:editorStatus,visibility:applyVisibility,fit:fitCamera,
   previewRoom:(id,delta)=>{roomObjects.get(id)?.g.position.set(delta.x,0,delta.z);},
@@ -277,7 +304,69 @@ function setupMouseEditor(){
   applyVisibility();updateRouteOverlay();
  });
 }
-function editorStatus(message,error=false){$('edit-status').textContent=message;$('edit-status').classList.toggle('error',error);}
+function sync3DEditor(){
+ const active=!!stairDrag3D?.enabled;
+ document.querySelector('.app').classList.toggle('stair-3d-editing',active);
+ $('stair-3d-toolbar').hidden=!active;$('stair-3d-start').setAttribute('aria-pressed',String(active));
+ $('stair-3d-undo').disabled=!editor.canUndo();$('stair-3d-redo').disabled=!editor.canRedo();
+ const selected=objectEdit3D?.selected,stair=stairDrag3D?.selected,room=selected?.kind==='room'?nodeMap.get(selected.id):null;
+ $('object-3d-selection').textContent=room?`${room.id} · ${floorName(room.floor)} · 拖彩色軸或平面把手移動`:selected?`走廊 ${selected.id} · 拖金色點改路線`:stair?`${floorName(stair.fromFloor)} → ${floorName(stair.toFloor)} · 拖動此段樓梯`:'選擇房間、走廊或樓梯';
+ $('object-3d-floor-actions').hidden=!room;
+ if(room){const i=floors.indexOf(room.floor);$('object-3d-down').disabled=i<=0;$('object-3d-up').disabled=i>=floors.length-1;}
+ syncEditModeSwitch();
+}
+function isEditMode(){return !!(editing||stairDrag3D?.enabled||objectEdit3D?.enabled);}
+function syncEditModeSwitch(){
+ const active=isEditMode();$('edit-mode-switch').setAttribute('aria-checked',String(active));
+ $('edit-mode-label').textContent='編輯模式：'+(active?'開啟':'關閉');
+ $('edit-mode-switch').title=active?'關閉編輯，僅查看模型':'開啟編輯，操作房間、走廊與樓梯';
+}
+function setEditMode(value){
+ if(value&&isEditMode())return;
+ if(drag)finishRoomDrag({pointerId:drag.pointer},true);
+ if(pointDrag){const d=pointDrag;pointDrag=null;if(d.element.hasPointerCapture(d.pointer))d.element.releasePointerCapture(d.pointer);const point=sandbox?.draft?.route?.points?.[d.index];if(point)Object.assign(point,d.original);}
+ setEditing(false);$('advanced-editor').open=false;routeFocus=false;portAnchor=null;
+ controls.enabled=true;controls.enableRotate=true;controls.mouseButtons.LEFT=THREE.MOUSE.ROTATE;controls.mouseButtons.RIGHT=THREE.MOUSE.PAN;
+ if(value)setStairDrag3D(true);
+ applyVisibility();updateRouteOverlay();syncEditModeSwitch();
+ editorStatus(value?'編輯模式已開啟；選房間後拖彩色軸，或選取走廊與樓梯。':'編輯模式已關閉；可旋轉、平移及縮放視角。');
+}
+function setStairDrag3D(value){
+ stairDrag3D?.setEnabled(value);objectEdit3D?.setEnabled(value);sync3DEditor();
+}
+function openStairDrag3D(){
+ const refit=editing||state.floor!==null||state.group!=='all'||state.view!=='iso';
+ setEditing(false);$('advanced-editor').open=false;
+ state.group='all';state.floor=null;state.view='iso';routeFocus=false;
+ controls.enableRotate=true;controls.mouseButtons.LEFT=THREE.MOUSE.ROTATE;controls.mouseButtons.RIGHT=THREE.MOUSE.PAN;
+ setStairDrag3D(true);refreshFloorOptions();applyVisibility();if(refit)fitCamera();
+}
+function setupStairDrag3D(){
+ stairDrag3D=createStairDrag3D({THREE,host,scene,data,nodeMap,editor,roomY,pathFor,floorHeight:f=>floorY.get(f),
+  camera:()=>camera,controls:()=>controls,drawRoute,afterEdit,status:editorStatus,
+  blocked:()=>!!(objectEdit3D?.gizmoActive||objectEdit3D?.dragging),
+  occluded:(event,point)=>{
+   scene.updateMatrixWorld(true);const rect=host.getBoundingClientRect(),ray=new THREE.Raycaster();
+   ray.setFromCamera(new THREE.Vector2((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1),camera);
+   const hit=ray.intersectObjects(roomMeshes.filter(mesh=>mesh.parent.visible))[0];
+   return !!hit&&hit.distance<new THREE.Vector3(...point).sub(ray.ray.origin).dot(ray.ray.direction)-.4;
+  },
+  onSelect:()=>objectEdit3D?.clearSelection(),onChange:sync3DEditor,
+  visible:(edge,section)=>{
+   const record=edgeObjects.find(o=>o.e.id===edge.id);if(!record||!(record.g.visible||record.viewG?.visible))return false;
+   const bounds=routeViewBounds();if(!bounds)return true;
+   const a=floorY.get(section.fromFloor),b=floorY.get(section.toFloor);return Math.max(a,b)+.3>=bounds[0]&&Math.min(a,b)+.3<=bounds[1];
+  }
+ });
+}
+function setupObjectEdit3D(){
+ objectEdit3D=createObjectEdit3D({THREE,host,scene,data,nodeMap,editor,roomY,pathFor,floorHeight:f=>floorY.get(f),floors:()=>floors,offsets,
+  camera:()=>camera,controls:()=>controls,canvas:()=>renderer.domElement,roomMeshes:()=>roomMeshes,edgeObjects:visibleEdgeObjects,platformLinkObjects:visiblePlatformLinkObjects,routeBounds:routeViewBounds,
+  drawRoute,afterEdit,status:editorStatus,visible:inGroup,onSelect:selected=>{stairDrag3D?.clearSelection();if(selected?.kind==='room')selectRoom(selected.id);},onChange:sync3DEditor,
+  previewRoom:(id,delta)=>roomObjects.get(id)?.g.position.set(delta.x,delta.y||0,delta.z)
+ });
+}
+function editorStatus(message,error=false){for(const id of ['edit-status','object-3d-status']){$(id).textContent=message;$(id).classList.toggle('error',error);}}
 function refreshFloorOptions(){
  const select=$('floor-only');select.replaceChildren(new Option('整個區域','all'));
  floors.forEach(f=>select.add(new Option(floorName(f)+' · '+(data.nodes.filter(n=>n.floor===f).map(n=>n.id).join(' / ')||'無房間'),String(f))));
@@ -301,19 +390,21 @@ function syncEditor(){
 function persistLayout(){try{localStorage.setItem(storageKey,JSON.stringify(editor.snapshot()));return true;}catch{return false;}}
 function afterEdit(message,refit=false){
  const oldY=floorY.get(nodeMap.get(state.selected).floor);
- if(state.floor!==null&&!mouseEditor?.enabled)state.floor=nodeMap.get(state.selected).floor;
+ if(state.floor!==null&&!mouseEditor?.enabled&&!stairDrag3D?.enabled)state.floor=nodeMap.get(state.selected).floor;
  rebuild(refit);sandbox?.refresh();updateDetails();
- if(!refit&&oldY!==undefined){const delta=floorY.get(nodeMap.get(state.selected).floor)-oldY;camera.position.y+=delta;controls.target.y+=delta;controls.update();}
+ if(!refit&&!stairDrag3D?.enabled&&oldY!==undefined){const delta=floorY.get(nodeMap.get(state.selected).floor)-oldY;camera.position.y+=delta;controls.target.y+=delta;controls.update();}
  const saved=persistLayout();editorStatus(message+(saved?' · 已暫存在此瀏覽器':' · 無法暫存，請匯出 JSON 備份'),!saved);
  return saved;
 }
 function onSceneLoaded({name,changed}){
  // Discard transient gestures only after the imported snapshot has passed
  // validation, then show the complete loaded building rather than an old slice.
- mouseEditor?.cancel();if(drag)finishRoomDrag({pointerId:drag.pointer},true);
+ const resume3D=!!stairDrag3D?.enabled;
+ mouseEditor?.cancel();stairDrag3D?.cancel();objectEdit3D?.cancel();if(drag)finishRoomDrag({pointerId:drag.pointer},true);
  if(pointDrag){if(pointDrag.element.hasPointerCapture(pointDrag.pointer))pointDrag.element.releasePointerCapture(pointDrag.pointer);pointDrag=null;}
  state.group='all';state.floor=null;state.view='iso';routeFocus=false;
  setEditing(false);$('advanced-editor').open=false;
+ if(resume3D)setStairDrag3D(true);
  if(changed)return afterEdit('已載入場景：'+name,true);
  applyVisibility();fitCamera();editorStatus('場景檔與目前配置相同。');return true;
 }
@@ -323,10 +414,14 @@ function setDragMode(value){
  applyVisibility();
 }
 function openMainStair(floor=state.floor??nodeMap.get(state.selected).floor,edgeId){
- $('advanced-editor').open=false;if(!editing)setEditing(true);else if(!mouseEditor.enabled)mouseEditor.setEnabled(true);
+ $('advanced-editor').open=false;setEditing(true);
  mouseEditor.selectMainStair(floor,edgeId);applyVisibility();
 }
-function setEditing(value){editing=value;$('edit-toggle').setAttribute('aria-pressed',String(value));$('edit-toggle').textContent=value?'完成編輯':'滑鼠建造';$('editor-panel').hidden=!value;document.querySelector('.right').classList.toggle('editing',value);setDragMode(false);if(value&&!$('advanced-editor').open)sandbox.setTab('room');mouseEditor?.setEnabled(value&&!$('advanced-editor').open);if(!value)controls.enableRotate=true;applyVisibility();updateRouteOverlay();syncEditor();}
+function openStairLink(){
+ $('advanced-editor').open=false;setEditing(true);
+ routeFocus=false;mouseEditor.setTool('link');applyVisibility();fitCamera();
+}
+function setEditing(value){setStairDrag3D(false);editing=value;$('edit-toggle').hidden=!value;$('editor-panel').hidden=!value;document.querySelector('.right').classList.toggle('editing',value);setDragMode(false);if(value&&!$('advanced-editor').open)sandbox.setTab('room');mouseEditor?.setEnabled(value&&!$('advanced-editor').open);if(!value)controls.enableRotate=true;applyVisibility();updateRouteOverlay();syncEditor();syncEditModeSwitch();}
 function dragPoint(event,y){const rect=host.getBoundingClientRect(),ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1),camera);return ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,1,0),-y),new THREE.Vector3());}
 function startRoomDrag(event,id){
  if(!editing||!dragMode||event.button!==0)return;event.preventDefault();event.stopPropagation();selectRoom(id);
@@ -347,8 +442,15 @@ function initEditor(){
  sceneFiles=createSceneFileUI({editor,onLoaded:onSceneLoaded,onExportFallback:()=>{if(!$('export-dialog').open)$('edit-export').click();}});sceneFiles.init();
  let importRead=0;
  for(const f of floors)$('edit-floor').add(new Option(floorName(f),String(f)));
- $('edit-toggle').onclick=()=>setEditing(!editing);
+ $('edit-toggle').onclick=()=>setEditMode(false);
  $('main-stair-edit').onclick=()=>openMainStair();
+ $('stair-link-start').onclick=openStairLink;
+ $('stair-3d-start').onclick=openStairDrag3D;
+ $('edit-mode-switch').onclick=()=>setEditMode(!isEditMode());
+ $('stair-3d-done').onclick=()=>setEditMode(false);
+ $('stair-3d-undo').onclick=()=>{stairDrag3D?.cancel();objectEdit3D?.cancel();if(editor.undo())afterEdit('已復原');};
+ $('stair-3d-redo').onclick=()=>{stairDrag3D?.cancel();objectEdit3D?.cancel();if(editor.redo())afterEdit('已重做');};
+ $('object-3d-up').onclick=()=>objectEdit3D?.moveFloor(1);$('object-3d-down').onclick=()=>objectEdit3D?.moveFloor(-1);
  $('edit-drag').onclick=()=>setDragMode(!dragMode);
  $('edit-form').onsubmit=event=>{event.preventDefault();if(!$('edit-form').reportValidity())return;try{const patch={name:$('edit-name').value};for(const key of ['x','z','floor','w','d','offset'])patch[key]=Number($('edit-'+key).value);const previous=nodeMap.get(state.selected).floor;if(editor.updateRoom(state.selected,patch))afterEdit(state.selected+' 已套用',previous!==patch.floor);else editorStatus('配置沒有變更。');}catch(error){editorStatus(error.message,true);}};
  $('edit-form').oninput=()=>editorStatus('欄位尚未套用；完成後按「套用修改」。');
@@ -374,7 +476,7 @@ function init(){
  controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.08;controls.minZoom=.35;controls.maxZoom=8;controls.minDistance=5;controls.maxDistance=1200;controls.maxPolarAngle=Math.PI*.93;
  groups.forEach(g=>{const b=document.createElement('button');b.dataset.group=g.id;b.innerHTML=`<b>${g.range}</b><small>${g.title}</small>`;b.onclick=()=>{setDragMode(false);selectGroup(g.id);};$('floor-list').append(b);});
  data.nodes.forEach(n=>{const o=document.createElement('option');o.value=n.id;o.textContent=n.id+' · '+n.name;$('room-picker').append(o);});
- $('floor-only').onchange=e=>{routeFocus=false;state.floor=e.target.value==='all'?null:Number(e.target.value);state.group='all';if(state.floor!==null){const n=data.nodes.find(n=>n.floor===state.floor);if(n){state.selected=n.id;updateDetails();history.replaceState(null,'','#scene='+n.id);}}else setDragMode(false);mouseEditor?.enabled&&mouseEditor.floorChanged();applyVisibility();updateRouteOverlay();fitCamera();};
+ $('floor-only').onchange=e=>{stairDrag3D?.clearSelection();objectEdit3D?.clearSelection();routeFocus=false;state.floor=e.target.value==='all'?null:Number(e.target.value);state.group='all';if(state.floor!==null){const n=data.nodes.find(n=>n.floor===state.floor);if(n){state.selected=n.id;updateDetails();history.replaceState(null,'','#scene='+n.id);}}else setDragMode(false);mouseEditor?.enabled&&mouseEditor.floorChanged();applyVisibility();updateRouteOverlay();fitCamera();};
  const initial=new URLSearchParams(location.hash.slice(1)).get('scene');if(nodeMap.has(initial)&&!nodeMap.get(initial).terminal)state.selected=initial;
  $('room-picker').onchange=e=>mouseEditor?.enabled?mouseEditor.selectRoom(e.target.value):selectRoom(e.target.value);$('height-mode').onchange=e=>{state.height=e.target.value;rebuild();};$('spread').oninput=e=>{state.spread=Number(e.target.value);$('spread-value').textContent=state.spread;rebuild();};
  ['shell','special','labels'].forEach(id=>$(id).onchange=e=>{state[id]=e.target.checked;applyVisibility();});['iso','front','top'].forEach(id=>$(id).onclick=()=>{if(id!=='top')setDragMode(false);state.view=id;if(mouseEditor?.enabled){controls.enableRotate=id!=='top';controls.mouseButtons.LEFT=id==='top'?THREE.MOUSE.PAN:THREE.MOUSE.ROTATE;}fitCamera();});$('reset').onclick=()=>{setDragMode(false);state.view='iso';fitCamera();};
@@ -383,9 +485,9 @@ function init(){
  window.addEventListener('hashchange',()=>{const id=new URLSearchParams(location.hash.slice(1)).get('scene');if(nodeMap.has(id))selectRoom(id);});
  function roomAt(e){const r=renderer.domElement.getBoundingClientRect(),ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);return ray.intersectObjects(roomMeshes.filter(m=>m.parent.visible))[0]?.object.userData.node;}
  function edgeAt(e){const r=renderer.domElement.getBoundingClientRect(),ray=new THREE.Raycaster();ray.params.Line.threshold=.3;ray.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);return ray.intersectObjects(visibleEdgeObjects().filter(o=>o.g.visible).map(o=>o.g),true)[0];}
- let down;renderer.domElement.addEventListener('pointerdown',e=>{if(mouseEditor?.enabled)return;down=[e.clientX,e.clientY];if(dragMode){const id=roomAt(e);if(id)startRoomDrag(e,id);}});renderer.domElement.addEventListener('pointerup',e=>{if(mouseEditor?.enabled)return;if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;const hit=edgeAt(e),edge=hit?.object.userData.edge;if(editing&&sandbox?.mode==='route'&&edge){sandbox.selectEdge(edge);return;}if(!editing&&edge&&mouseEditor.isMainEdge(edge)){const f=floors.reduce((nearest,f)=>Math.abs(floorY.get(f)+.3-hit.point.y)<Math.abs(floorY.get(nearest)+.3-hit.point.y)?f:nearest,floors[0]);openMainStair(f,edge);return;}const id=roomAt(e);if(id)selectRoom(id);});
+ let down;renderer.domElement.addEventListener('pointerdown',e=>{if(mouseEditor?.enabled||stairDrag3D?.enabled)return;down=[e.clientX,e.clientY];if(dragMode){const id=roomAt(e);if(id)startRoomDrag(e,id);}});renderer.domElement.addEventListener('pointerup',e=>{if(mouseEditor?.enabled||stairDrag3D?.enabled)return;if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;const hit=edgeAt(e),edge=hit?.object.userData.edge;if(editing&&sandbox?.mode==='route'&&edge){sandbox.selectEdge(edge);return;}const id=roomAt(e);if(id)selectRoom(id);});
  new ResizeObserver(()=>{renderer.setSize(host.clientWidth,host.clientHeight);const a=host.clientWidth/host.clientHeight;if(camera.isPerspectiveCamera)camera.aspect=a;else{camera.left=-camera.top*a;camera.right=camera.top*a;}camera.updateProjectionMatrix();}).observe(host);
- initEditor();rebuild();setupSandbox();setupMouseEditor();updateDetails();$('loading').remove();
- renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera);renderTags();renderRouteMarkers();mouseEditor?.render();});
+ initEditor();rebuild();setupSandbox();setupMouseEditor();setupStairDrag3D();setupObjectEdit3D();updateDetails();openStairDrag3D();$('loading').remove();
+ renderer.setAnimationLoop(()=>{if(!stairDrag3D?.dragging&&!objectEdit3D?.dragging)controls.update();stairDrag3D?.update();objectEdit3D?.update();renderer.render(scene,camera);renderTags();renderRouteMarkers();mouseEditor?.render();});
 }
 try{init();}catch(error){$('loading')?.remove();$('error').style.display='block';$('error').textContent='3D 模型無法啟動。請使用支援 WebGL 的瀏覽器並開啟硬體加速。'+error.message;console.error(error);}
