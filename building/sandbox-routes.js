@@ -173,18 +173,73 @@ function avoidEndpointRooms(start, end, endpoints, width, force = false) {
 
 function nearAxis(a, b) { return Math.abs(a - b) < EPS; }
 
+// Intersections of coplanar orthogonal spans. For an overlap, use the first
+// shared point along a -> b so a retraced stretch is removed completely.
+function flatIntersection(a, b, c, d) {
+  const axis = nearAxis(a[0], b[0]) ? 2 : 0, other = axis === 0 ? 2 : 0;
+  const between = (value, p, q) => value >= Math.min(p, q) - EPS && value <= Math.max(p, q) + EPS;
+  if (nearAxis(c[other], d[other])) {
+    if (!nearAxis(a[other], c[other])) return null;
+    const lo = Math.max(Math.min(a[axis], b[axis]), Math.min(c[axis], d[axis]));
+    const hi = Math.min(Math.max(a[axis], b[axis]), Math.max(c[axis], d[axis]));
+    if (lo > hi + EPS) return null;
+    const point = [...a]; point[axis] = b[axis] > a[axis] ? lo : hi; return point;
+  }
+  if (!between(c[axis], a[axis], b[axis]) || !between(a[other], c[other], d[other])) return null;
+  const point = [...a]; point[axis] = c[axis]; return point;
+}
+
+// Only erase a flat loop if a nonzero part of an automatically added join
+// closes it. Authored loops inside a section, rising U flights and crossings
+// on different floors stay intact. This also repairs previously saved joins
+// without moving any stored handles or rewriting scene data.
+function withoutJoinLoops(points, joins) {
+  let changed = true;
+  while (changed) {
+    changed = false;
+    const joinCounts = [0]; joins.forEach(value => joinCounts.push(joinCounts.at(-1) + Number(value)));
+    search: for (let i = 0; i < joins.length - 1; i++) {
+      let end = i;
+      while (end < joins.length && nearAxis(points[i][1], points[end + 1][1])) end++;
+      // Prefer the last crossing: removing an earlier reversal first could
+      // leave the remainder of the rectangular detour as a long U-shaped path.
+      for (let j = end - 1; j > i; j--) {
+        if (joinCounts[j + 1] === joinCounts[i]) continue;
+        const hit = flatIntersection(points[i], points[i + 1], points[j], points[j + 1]);
+        if (!hit) continue;
+        const closesJoin = joins[i] && !same(hit, points[i + 1]) || joins[j] && !same(hit, points[j]) || joinCounts[j] > joinCounts[i + 1];
+        if (!closesJoin) continue;
+        const next = points.slice(0, i + 1), flags = joins.slice(0, i);
+        const add = (point, generated) => { if (!same(next.at(-1), point)) { next.push(point); flags.push(generated); } };
+        add(hit, joins[i]); add(points[j + 1], joins[j]);
+        for (let k = j + 2; k < points.length; k++) add(points[k], joins[k - 1]);
+        points = next; joins = flags; changed = true; break search;
+      }
+    }
+  }
+  return points;
+}
+
 export function makeRoutePoints(a, b, ha, hb, route = {}, floorHeight) {
   if (route.stairSections?.length) {
     const current = reconcileFloorStairs(route, a, b, ha, hb, floorHeight);
     if (!current.stairSections?.length) return makeRoutePoints(a, b, ha, hb, current, floorHeight);
     const width = routeWidth(current.width), from = current.from || inferPortal(a, b), to = current.to || inferPortal(b, a);
     const {start, end, startLead, endLead} = portalsWithLeads(a, b, ha, hb, from, to, width);
-    const points = [start, startLead];
+    const points = [start], joins = [];
+    const add = (point, generated = false) => {
+      if (same(points.at(-1), point)) return;
+      const prefix = points.slice(-2);
+      for (const next of orthogonalize([...prefix, point], width).slice(prefix.length)) {
+        points.push(next); joins.push(generated);
+      }
+    };
+    add(startLead);
     current.stairSections.forEach((section, index) => {
-      getFloorSectionPoints(current, index, ha, hb, floorHeight).forEach(point => append(points, point));
+      getFloorSectionPoints(current, index, ha, hb, floorHeight).forEach((point, i) => add(point, i === 0));
     });
-    append(points, endLead); append(points, end);
-    return orthogonalize(points, width);
+    add(endLead, true); add(end);
+    return withoutJoinLoops(points, joins);
   }
   const width = routeWidth(route.width);
   const from = route.from || inferPortal(a, b), to = route.to || inferPortal(b, a);

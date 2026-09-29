@@ -7,21 +7,26 @@ const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 // Room-only clients keep their version 1 format. Passing the shared edge array
 // enables version 2, with one history for room geometry and connection edits.
+// Custom-room clients opt into version 3; legacy clients keep their contract.
 export function createEditorStore(nodes, layout, offsets, edges = undefined, options = {}) {
   const editableEdges = edges !== undefined;
   if (editableEdges && !Array.isArray(edges)) throw new Error('通路清單必須是陣列。');
-  const version = editableEdges ? 2 : 1;
   const sourceEdges = editableEdges ? copy(edges) : [];
   const sourceById = new Map(sourceEdges.map(edge => [edge.id, edge]));
   const byId = new Map(nodes.map(node => [node.id, node]));
   const ids = nodes.map(node => node.id);
+  const originalIds = new Set(ids);
   if (byId.size !== nodes.length || Object.keys(layout).length !== ids.length || ids.some(id => !Object.hasOwn(layout, id))) {
     throw new Error('房間清單與原始配置不一致。');
   }
   if (!options || typeof options !== 'object' || Array.isArray(options) ||
-      (options.terminals !== undefined && !Array.isArray(options.terminals))) {
+      (options.terminals !== undefined && !Array.isArray(options.terminals)) ||
+      (options.allowCustomRooms !== undefined && typeof options.allowCustomRooms !== 'boolean')) {
     throw new Error('出口接點設定必須包含有效的接點清單。');
   }
+  const editableRooms = options.allowCustomRooms === true;
+  const version = editableRooms ? 3 : editableEdges ? 2 : 1;
+  const customIdPattern = /^R[1-9]\d*$/;
   const editablePlatformLinks = options.platformLinks !== undefined;
   if (editablePlatformLinks && (!editableEdges || !Array.isArray(options.platformLinks))) {
     throw new Error('平台連線需要啟用通路編輯，並提供平台連線陣列。');
@@ -40,7 +45,6 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
   const hasTerminals = terminalIds.size > 0;
   if (hasTerminals && !editableEdges) throw new Error('出口接點需要啟用通路編輯。');
   const isTerminalEdge = edge => terminalIds.has(edge?.fromId) || terminalIds.has(edge?.toId);
-  const knownEndpoint = id => byId.has(id) || terminalIds.has(id);
   const sourceTerminalEdges = sourceEdges.filter(isTerminalEdge);
   const allEdges = snapshot => [...(snapshot.edges || []), ...(snapshot.terminalRoutes || [])];
   function setEdges(snapshot, combined) {
@@ -128,7 +132,7 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
     }
     return result;
   }
-  function validateEdges(input) {
+  function validateEdges(input, roomIds) {
     if (!Array.isArray(input) || input.length > 160) throw new Error('通路清單必須是陣列，最多可有 160 條。');
     const seen = new Set();
     return input.map(edge => {
@@ -136,6 +140,7 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
       const id = boundedString(edge.id, 120, '通路代號', {required: true});
       if (seen.has(id)) throw new Error('通路代號不可重複。');
       seen.add(id);
+      const knownEndpoint = endpointId => roomIds.has(endpointId) || terminalIds.has(endpointId);
       if (!knownEndpoint(edge.fromId) || !knownEndpoint(edge.toId) || edge.fromId === edge.toId) {
         throw new Error(`${id} 必須連接兩個不同的既有房間或出口接點。`);
       }
@@ -173,10 +178,11 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
   function validatePlatformLinks(input, snapshot) {
     if (!Array.isArray(input) || input.length > 160) throw new Error('平台連線必須是陣列，最多可有 160 條。');
     const context = landingContext(snapshot), seen = new Set(context.edges.keys());
+    const roomIds = new Set(snapshot.rooms.map(room => room.id));
     const endpoint = (value, label) => {
       if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${label} 資料不正確。`);
       if (value.kind === 'room') {
-        if (!byId.has(value.roomId)) throw new Error(`${label} 必須選擇既有房間。`);
+        if (!roomIds.has(value.roomId)) throw new Error(`${label} 必須選擇既有房間。`);
         return {kind: 'room', roomId: value.roomId, ...validatePortal(value, label)};
       }
       if (value.kind !== 'landing') throw new Error(`${label} 必須是房間路口或樓梯平台。`);
@@ -207,22 +213,30 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
       endpoint.kind !== 'landing' || landingExists(endpoint, context)));
   }
   function validate(input) {
-    if (!input || input.format !== FORMAT || ![1, ...(editableEdges ? [2] : [])].includes(input.version) || !Array.isArray(input.rooms)) {
-      throw new Error(`請使用版本 ${editableEdges ? '1 或 2' : '1'} 的 Dead Signal 配置 JSON。`);
+    const versions = [1, ...(editableEdges ? [2] : []), ...(editableRooms ? [3] : [])];
+    if (!input || input.format !== FORMAT || !versions.includes(input.version) || !Array.isArray(input.rooms)) {
+      throw new Error(`請使用版本 ${versions.join('、')} 的 Dead Signal 配置 JSON。`);
     }
     if (!editablePlatformLinks && input.platformLinks !== undefined) throw new Error('此編輯器尚未啟用平台連線。');
-    if (input.rooms.length !== ids.length) throw new Error(`配置必須包含全部 ${ids.length} 個房間。`);
+    const acceptsCustomRooms = editableRooms && input.version === 3;
+    if (acceptsCustomRooms ? input.rooms.length < ids.length || input.rooms.length > 200 : input.rooms.length !== ids.length) {
+      throw new Error(acceptsCustomRooms ? `配置必須包含全部 ${ids.length} 個原始房間，房間總數最多 200 個。` : `配置必須包含全部 ${ids.length} 個房間。`);
+    }
     const rooms = new Map();
     for (const room of input.rooms) {
-      if (!room || !byId.has(room.id) || rooms.has(room.id)) throw new Error('房間代號不正確或重複。');
+      if (!room || typeof room !== 'object' || Array.isArray(room) || typeof room.id !== 'string' || rooms.has(room.id)) throw new Error('房間代號不正確或重複。');
       const id = room.id;
+      const custom = !originalIds.has(id);
+      if (custom ? !acceptsCustomRooms || room.custom !== true || !customIdPattern.test(id) || id.length > 120 || terminalIds.has(id) : room.custom === true) {
+        throw new Error('新增房間必須使用未佔用的 R 數字代號並標記 custom，原始房間不可標記為自訂。');
+      }
       if (typeof room.name !== 'string' || !room.name.trim() || room.name.trim().length > 80) {
         throw new Error(`${id} 名稱必須是 1 到 80 個字元。`);
       }
       const floor = finite(room.floor, -3, 43, `${id} 樓層`);
       if (!Number.isInteger(floor) || floor === 0) throw new Error(`${id} 樓層必須是 B3 到 43F 的整數，不能是 0。`);
       rooms.set(id, {
-        id, name: room.name.trim(),
+        id, ...(custom ? {custom: true} : {}), name: room.name.trim(),
         x: finite(room.x, -100, 100, `${id} X`),
         z: finite(room.z, -100, 100, `${id} Z`), floor,
         w: finite(room.w, 3, 60, `${id} 寬度`),
@@ -230,7 +244,9 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
         offset: finite(room.offset, -2, 3, `${id} 局部高差`)
       });
     }
-    const result = {format: FORMAT, version, rooms: ids.map(id => rooms.get(id))};
+    if (ids.some(id => !rooms.has(id))) throw new Error(`配置必須包含全部 ${ids.length} 個原始房間。`);
+    const customIds = [...rooms.keys()].filter(id => !originalIds.has(id)).sort((a, b) => BigInt(a.slice(1)) < BigInt(b.slice(1)) ? -1 : 1);
+    const result = {format: FORMAT, version, rooms: [...ids, ...customIds].map(id => rooms.get(id))};
     // A version 1 file contains no topology; migration always restores the
     // original links, rather than accidentally keeping a different edit set.
     if (editableEdges) {
@@ -253,7 +269,7 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
         }
       }
       // Validate the merged set so IDs and the 160-link budget are shared.
-      setEdges(result, validateEdges(combined));
+      setEdges(result, validateEdges(combined, new Set(rooms.keys())));
     }
     if (editablePlatformLinks) result.platformLinks = validatePlatformLinks(input.platformLinks === undefined ? [] : input.platformLinks, result);
     return result;
@@ -269,11 +285,25 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
   function write(next) {
     const nextEdges = editableEdges ? copy(allEdges(next)) : null;
     const nextPlatformLinks = editablePlatformLinks ? copy(next.platformLinks) : null;
+    const nextIds = new Set(next.rooms.map(room => room.id));
+    for (const id of byId.keys()) {
+      if (!nextIds.has(id) && !originalIds.has(id)) {
+        byId.delete(id);
+        delete offsets[id];
+      }
+    }
+    const nextNodes = [];
     for (const room of next.rooms) {
-      const node = byId.get(room.id);
+      let node = byId.get(room.id);
+      if (!node) {
+        node = {id: room.id, custom: true, part: 1, act: 0, goal: '自訂房間'};
+        byId.set(room.id, node);
+      }
       for (const field of FIELDS) if (field !== 'offset') node[field] = room[field];
       offsets[room.id] = room.offset;
+      nextNodes.push(node);
     }
+    if (editableRooms) nodes.splice(0, nodes.length, ...nextNodes);
     if (editableEdges) edges.splice(0, edges.length, ...nextEdges);
     if (editablePlatformLinks) platformLinks.splice(0, platformLinks.length, ...nextPlatformLinks);
     current = copy(next);
@@ -301,6 +331,24 @@ export function createEditorStore(nodes, layout, offsets, edges = undefined, opt
   }
   return {
     snapshot: () => copy(current), apply,
+    addRoom(room) {
+      if (!editableRooms) throw new Error('此編輯器尚未啟用新增房間。');
+      if (!room || typeof room !== 'object' || Array.isArray(room) || Object.keys(room).some(key => !FIELDS.includes(key))) {
+        throw new Error('新增房間只能設定名稱、位置、樓層、尺寸與局部高差。');
+      }
+      if (current.rooms.length >= 200) throw new Error('房間總數最多 200 個。');
+      let number = 0n;
+      for (const id of byId.keys()) if (customIdPattern.test(id)) {
+        const value = BigInt(id.slice(1));
+        if (value > number) number = value;
+      }
+      let id;
+      do { id = `R${++number}`; } while (terminalIds.has(id));
+      const next = copy(current);
+      next.rooms.push({id, custom: true, name: room.name ?? '新房間', offset: 0, ...room});
+      apply(next);
+      return id;
+    },
     updateRoom(id, patch) {
       if (!byId.has(id)) throw new Error('找不到房間代號。');
       if (!patch || typeof patch !== 'object' || Array.isArray(patch) || Object.keys(patch).some(key => !FIELDS.includes(key))) {

@@ -282,7 +282,7 @@ export function createObjectEdit3D(env) {
   if (working && previewBounds !== JSON.stringify(env.routeBounds?.() ?? null)) { drawPreview(); buildMarkers(); }
   for (const m of markers) { const point = new THREE.Vector3(...m.point).project(env.camera()); m.el.hidden = !pointVisible(m.point) || Math.abs(point.x) > 1.05 || Math.abs(point.y) > 1.05 || point.z < -1 || point.z > 1; m.el.style.left = `${(point.x * .5 + .5) * rect.width}px`; m.el.style.top = `${(-point.y * .5 + .5) * rect.height}px`; }
  }
- return {setEnabled, refresh, update, clearSelection, cancel, moveFloor,
+ return {setEnabled, refresh, update, clearSelection, cancel, moveFloor, selectRoom,
   get enabled() { return enabled; }, get selected() { return selected; }, get dragging() { return !!(gesture || gizmoGesture || transform.dragging); },
   get gizmoActive() { return enabled && selected?.kind === 'room' && !!(transform.axis || transform.dragging || gizmoGesture); }};
 }
