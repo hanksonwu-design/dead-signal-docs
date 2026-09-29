@@ -32,23 +32,47 @@ export function dressRoom(n,parent,{THREE,box,material,line,segment,y}){
  if(n.id==='R22'){b(.3,2.2,.3,-3,1.3,-2,m.red);b(1,.7,.7,-3,1.2,-1.5,m.metal);}
 }
 
-export function dressBuilding(building,{THREE,box,material,line,segment,floorY,roomY,nodeMap}){
- function group(f){const g=new THREE.Group();g.userData.storyFloor=f;building.add(g);return g;}
+// Keep the shared pane and the two omitted room walls governed by one predicate.
+export function sharedGlassBoundary(a,b){
+ if(!a||!b||a.floor!==b.floor)return null;
+ const x1=Math.max(a.x-a.w/2,b.x-b.w/2),x2=Math.min(a.x+a.w/2,b.x+b.w/2);
+ if(x2-x1<=.01)return null;
+ if(Math.abs(a.z+a.d/2-(b.z-b.d/2))<=.05)return{x1,x2,z:(a.z+a.d/2+b.z-b.d/2)/2,sideA:'south',sideB:'north'};
+ if(Math.abs(a.z-a.d/2-(b.z+b.d/2))<=.05)return{x1,x2,z:(a.z-a.d/2+b.z+b.d/2)/2,sideA:'north',sideB:'south'};
+ return null;
+}
+
+export function dressBuilding(building,{THREE,box,material,line,segment,floorY,roomY,nodeMap,isEdited=()=>false}){
+ function group(f,ids){const g=new THREE.Group();g.userData.storyFloor=f;if(ids)g.userData.storyNodes=ids;building.add(g);return g;}
  function sign(text,x,y,z,g){const c=document.createElement('canvas');c.width=600;c.height=72;const ctx=c.getContext('2d');ctx.fillStyle='#14202be8';ctx.fillRect(0,0,600,72);ctx.fillStyle='#c4d5dd';ctx.font='28px "Microsoft JhengHei", sans-serif';ctx.textAlign='center';ctx.fillText(text,300,46);const map=new THREE.CanvasTexture(c);const s=new THREE.Sprite(new THREE.SpriteMaterial({map,depthTest:false,transparent:true}));s.scale.set(12,1.44,1);s.position.set(x,y,z);s.userData.detailSign=true;g.add(s);}
  // The lightwell and service shafts are within the cutaway building envelope, never open-air bridges.
  for(const f of[2,15,31,32]){const g=group(f),y=floorY.get(f);
   line([[-3,y+.1,-15],[5,y+.1,-15],[5,y+.1,1],[-3,y+.1,1],[-3,y+.1,-15]],0x496d80,g,.7);
-  if(f===15){sign('封頂內井 · 跨棟窄橋',1,y+3,-11,g);for(const z of[-13,-11])segment([-10,y+.8,z],[7,y+1.2,z],.08,.08,material(0x6a838e),g);}
-  if(f===31)sign('共用貨梯 · 後勤平台',15,y+3,-10,g);
  }
- const g=group(41),y=floorY.get(41);
- box(14,2,.1,-5,y+1.7,-3,material(0x77c5ce,.35),g);
- box(4,1.9,.15,4,y+1.85,0,material(0x73848e,.6),g);
- line([[-12,y+.7,-3],[2,y+.7,-3],[2,y+2.7,-3],[-12,y+2.7,-3],[-12,y+.7,-3]],0x9ad4d8,g,.9);
- // Single physical scratch marker shared by both sides, not two duplicate clues.
- line([[-6,y+1,-3.07],[-5.6,y+1.13,-3.07],[-5.25,y+1.06,-3.07]],0xf1ddb8,g);
- sign('R19／R20 共用單向玻璃',-5,y+3.5,-3,g);
- const b=group(-3);sign('B3 處理室 → B2–B1 爬梯出口',17,floorY.get(-3)+3.2,7,b);
- const r=group(2);sign('同層住宅 → 工坊',-10,floorY.get(2)+2.8,0,r);
+ const r7=nodeMap.get('R7'),r8=nodeMap.get('R8');
+ if(r7&&r8&&!isEdited('R7')&&!isEdited('R8')&&r7.floor===r8.floor){
+  const x1=r7.x+r7.w/2,x2=r8.x-r8.w/2,z1=Math.max(r7.z-r7.d/2,r8.z-r8.d/2),z2=Math.min(r7.z+r7.d/2,r8.z+r8.d/2);
+  if(x2>x1&&x2-x1<=24&&z2-z1>=2.2&&Math.abs(roomY(r7)-roomY(r8))<=2){
+   const g=group(r7.floor,['R7','R8']),z=Math.max(z1+1.1,Math.min(z2-1.1,r8.z));
+   for(const dz of[-1,1])segment([x1,roomY(r7)+.8,z+dz],[x2,roomY(r8)+.8,z+dz],.08,.08,material(0x6a838e),g);
+   sign('封頂內井 · 跨棟窄橋',(x1+x2)/2,Math.max(roomY(r7),roomY(r8))+3,z,g);
+  }
+ }
+ const lift=nodeMap.get('R14');
+ if(lift)sign('共用貨梯 · 後勤平台',lift.x,roomY(lift)+3,lift.z,group(lift.floor,['R14']));
+ const r19=nodeMap.get('R19'),r20=nodeMap.get('R20'),glass=sharedGlassBoundary(r19,r20);
+ if(glass){
+  const g=group(r19.floor,['R19','R20']),{x1,x2,z}=glass,x=(x1+x2)/2,bottom=Math.min(roomY(r19),roomY(r20))+.7,top=Math.max(roomY(r19),roomY(r20))+1.8;
+  box(x2-x1,top-bottom,.1,x,(bottom+top)/2,z,material(0x77c5ce,.35),g);
+  line([[x1,bottom,z],[x2,bottom,z],[x2,top,z],[x1,top,z],[x1,bottom,z]],0x9ad4d8,g,.9);
+  // Single physical scratch marker shared by both sides, not two duplicate clues.
+  const mark=Math.min(.75,(x2-x1)*.3);
+  line([[x-mark/2,bottom+.3,z-.07],[x,bottom+.43,z-.07],[x+mark/2,bottom+.36,z-.07]],0xf1ddb8,g);
+  sign('R19／R20 共用單向玻璃',x,top+.8,z,g);
+ }
+ const p2=nodeMap.get('P2');
+ if(p2){const floor=p2.floor<0?`B${-p2.floor}`:`${p2.floor}F`;sign(`P2 配置 ${floor} · 原文 B3–B1 上行段`,p2.x,roomY(p2)+3.2,p2.z,group(p2.floor,['P2']));}
+ const r3=nodeMap.get('R3'),r5=nodeMap.get('R5');
+ if(r3&&r5&&r3.floor===r5.floor)sign('同層住宅 → 工坊',(r3.x+r5.x)/2,Math.max(roomY(r3),roomY(r5))+2.8,(r3.z+r5.z)/2,group(r3.floor,['R3','R5']));
  const cap=group(40);box(8,.3,16,1,floorY.get(40)+.2,-7,material(0x394d5c,.25),cap);
 }
