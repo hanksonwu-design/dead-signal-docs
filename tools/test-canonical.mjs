@@ -110,6 +110,137 @@ test('R1 coerced intake; no voluntary work or freedom result', () => {
   assert(!scene.includes('「下一位」'));
 });
 
+test('seven transition routes retain gates and directions without adding rooms', () => {
+  const routes = [
+    ['R2', 'R3', 1, 's-0904-16', 's-0602-5', 2,
+      '完成本房必要操作，依 R2-03 推開送餐車露出梯口；無額外證據或鑰匙'],
+    ['R3', 'R4', 1, 's-0904-25', 's-0602-7', 1,
+      '可自由前往刻痕牆，無額外門鎖；R3 人物碎片可章內回查，統一在 R5 離幕前核對'],
+    ['R7', 'R8', 2, 's-0905-22', 's-0603-6', 2,
+      '可沿窄橋自由前往；教戰手冊與留存排行榜在 R11 離幕前核對，老周安息及配給支線不擋通行'],
+    ['R11', 'R12', 2, 's-0905-55', 's-0603-9', 3,
+      '阿尋必要校驗、arc.ahsun.scope_confirmed 與幕尾 K1-01 成立，再完成現場第一鑰匙門端驗證；SQ-C1／SQ-S 不擋主線'],
+    ['R13', 'R14', 3, 's-0906-14', 's-0604-5', 2,
+      'E-07 已依本房叫號序列與照護註記安息，診所後門開啟；可退回 R12 不受本條阻擋'],
+    ['R17', 'R18', 3, 's-0906-62', 's-0604-9', 2,
+      '正確日期證據與 K2-01 成立；假路返回後可重排；離幕前可回查已發現未完成的 SQ-M1／SQ-T，支線不擋主線'],
+    ['R24', 'R25', 5, 's-0908-28', 's-0606-5', 1,
+      'E4-01／E4-02／E3-02 第四層鎖定成立；act5.r24.board_locked = true']
+  ];
+  let viewCount = 0;
+  for (const [from, to, act, storyId, specId, views, gate] of routes) {
+    const route = `T-${from}-${to}`;
+    const anchor = `transition-${from.toLowerCase()}-${to.toLowerCase()}`;
+    const edges = graph.edges.filter(e => e.fromId === from && e.toId === to);
+    assert.equal(edges.length, 1, route);
+    const edge = edges[0];
+    assert.equal(edge.gate, gate, route);
+    const oneWay = ['R11', 'R17'].includes(from);
+    assert.equal(edge.kind, oneWay ? '跨幕' : from === 'R13' ? '分岔' : '主線');
+    assert.equal(edge.back, !oneWay);
+    assert.equal(edge.returnRule, oneWay ? '單向流程；不代表可沿此線倒退' :
+      '章內回訪；遇鎖場、追逐或封路停用' + (from === 'R7' ? '；R8 放蛾不鎖通路，必要讀卡在 R11 校驗前核對' : ''));
+    assert(edge.motion.startsWith(`${route}：`));
+    assert(!graph.nodes.some(n => n.id === route));
+    for (const id of [anchor, `${anchor}-script`]) assert.equal(canonicalFile(master, id), ACTS[act].path);
+    assert(block(storyId).includes(`[通路製作規格](#${anchor})`));
+    const spec = block(specId).split(`<a id="${anchor}"></a>`)[1].split('<a id=')[0];
+    assert.equal([...spec.matchAll(/^\| [ABC]：/gm)].length, views, route);
+    assert(spec.includes('#transition-rules'));
+    assert(spec.includes('#transition-assets'));
+    assert(block('s-0810-23').includes(`| [${route}](${path.posix.basename(ACTS[act].path)}#${anchor}) | ${views} |`));
+    viewCount += views;
+  }
+  assert.equal(viewCount, 13);
+  assert.equal(canonicalFile(master, 'transition-rules'), APPENDIX);
+  assert.equal(canonicalFile(master, 'transition-assets'), APPENDIX);
+  assert(block('s-0810-8').includes('既有連線過渡構圖'));
+  assert(block('s-0810-23').includes('尚未交付這 13 個過渡構圖的正式圖像或遊戲場景'));
+});
+
+test('transition text separates presentation saves from story gates and chapter handoff', () => {
+  const common = block('s-0403-3');
+  assert(common.includes('transition_progress = { route, from, to, view, committed }'));
+  assert(common.includes('`transition_seen` 絕不是通行權限'));
+  assert(common.includes('不標記目的房已到訪、不啟動其入場事件'));
+  assert(common.includes('不能只憑通路欄位裡的 `to` 或 `committed` 越過主線驗證'));
+  assert(graph.edges.every(e => !/transition_(?:seen|progress)/.test(e.gate)));
+  const leaving = block('s-0905-55');
+  assert(leaving.indexOf('選「繼續」，沿原流程存檔') < leaving.indexOf('<a id="transition-r11-r12-script">'));
+  assert(leaving.includes('不先播該房的三下敲擊'));
+  assert(block('s-0906-3').includes('不重播梯段、離幕確認或門端驗證'));
+  assert(block('s-0603-9').includes('亦不可預先提交 `act3.r12.breaker_repaired`'));
+  assert(block('s-0904-25').includes('由神壇轉角回廁所不重播'));
+  assert(block('s-0905-22').includes('由 R9 或 R10 回 R8 不重播'));
+  assert(common.includes('R17 的 L-04 假路不是離幕'));
+  assert(common.includes('R13 ↔ R14 的安息門檻雙向有效'));
+  assert(block('s-0907-3').includes('不代做後續掩體移動'));
+  assert(!graph.edges.find(e => e.fromId === 'R17' && e.toId === 'R14').motion.includes('T-R17-R18'));
+});
+
+test('cultural close-ups stay optional, local and outside main evidence gates', () => {
+  assert.equal(canonicalFile(master, 'culture-details'), APPENDIX);
+  const assets = block('s-0810-23');
+  for (const [id, detail] of [['s-0904-18', '起鍋再放鹽'], ['s-0904-39', '袖口先別剪'],
+    ['s-0906-3', '借走的鉗子請掛回'], ['s-0909-15', '下層會濕']]) assert(block(id).includes(detail), id);
+  for (const key of ['cooking', 'mending', 'borrowing', 'shared_mail']) {
+    assert(assets.includes(`\`${key}\``));
+    assert(graph.edges.every(edge => !edge.gate.includes(key)));
+  }
+  assert(assets.includes('上述 4 組局部'));
+  assert(assets.includes('無新配音、證據、資源、主線或結局旗標'));
+  assert(block('s-0904-39').includes('不先開放被衣架擋住的繡布'));
+  for (const id of ['s-uppertech-31', 's-uppertech-34', 's-uppertech-60', 's-0909-15'])
+    assert(block(id).includes('#culture-details'), id);
+});
+
+test('P0 footprint contract requires a witnessed baseline and a later occluded change', () => {
+  const story = block('s-0903-10');
+  for (const phrase of ['須先實際近看第一階段鞋印', '停留 4 秒只使事件待發',
+    '完全遮住鞋印時', '關閉該次近看', '未觀察／已觀察／待發／已換圖／已揭露',
+    '重載已揭露狀態不補播', '事件可略過，不補播、不擋主線']) assert(story.includes(phrase), phrase);
+  for (const id of ['s-0601-6', 's-0601-10']) {
+    assert(block(id).includes('原鞋印'));
+    assert(block(id).includes('4 秒只'));
+    assert(block(id).includes('完全遮'));
+  }
+  assert(!master.text.includes('全景停留 4 秒時呈現方向難辨'));
+  assert(!master.text.includes('腳印回訪僅靜態差分'));
+  const edge = graph.edges.find(e => e.fromId === 'P0' && e.toId === 'P1');
+  assert.equal(edge.back, false);
+  assert(!edge.gate.includes('HA-P0-01'));
+});
+
+test('R2 sightline and R14 arrivals respect the physical route', () => {
+  assert(block('s-0904-12').includes('上緣仍留一道能看向梯口的窄縫'));
+  for (const id of ['s-0904-16', 's-0602-5']) {
+    assert(block(id).includes('出餐小窗上緣窄縫'));
+    assert(block(id).includes('沿櫃側原通道'));
+  }
+  const arrival = block('s-0906-18');
+  for (const route of ['從 R13 抵達', '從 R12 抵達', 'R17 假路回流', 'R15 回訪']) assert(arrival.includes(route));
+  assert(arrival.includes('抵達均不自動解開本房繼電箱'));
+  assert(block('s-uppertech-61').includes('返回 R12 不受安息條件阻擋'));
+});
+
+test('R13 date observation does not invent lock-date knowledge or a cause of death', () => {
+  assert(block('s-0906-16').includes('已有封鎖日來源才核對重疊'));
+  const spec = block('s-0604-5');
+  assert(spec.includes('玩家未取得封鎖日來源前只記實見日期'));
+  assert(spec.includes('取得封鎖日來源並由玩家比對後'));
+  assert(spec.includes('反序取得亦須完成比對'));
+  assert(!master.text.includes('使用日期與封鎖日重疊'));
+  assert(!master.text.includes('這張床在撤離當天被用過一次'));
+});
+
+test('R24 production and sensitive-sequence summary retain actual evidence requirements', () => {
+  const pack = block('s-0807-11');
+  for (const phrase of ['只疊版面不發', '原職稱', '未安排管理職面試', '倒填三個曆月',
+    '同人轉任／撤號欄', '反序查閱也須返回確認', '不同人不必同一天']) assert(pack.includes(phrase), phrase);
+  assert(block('s-0001-12').includes('R19 的記憶可不啟動，M1 必須通行但各窗觀察可略過'));
+  assert(!block('s-0001-12').includes('四段必須確認必要資訊'));
+});
+
 test('F1 and moth actions do not gate exits; R11 uses actual sources', () => {
   assert(graph.edges.find(e => e.fromId === 'R5' && e.toId === 'R6').gate.includes('不另作門禁'));
   for (const edge of graph.edges.filter(e => e.fromId === 'R8')) assert(edge.gate.includes('不作出口門檻'));

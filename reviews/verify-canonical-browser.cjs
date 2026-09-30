@@ -113,6 +113,41 @@ async function canvasCheck(page, name) {
     await readerReady(page, 'node-r11-script');
     pass('in-document navigation');
 
+    const transitionRoutes = [['r2-r3', 1], ['r3-r4', 1], ['r7-r8', 2], ['r11-r12', 2], ['r13-r14', 3], ['r17-r18', 3], ['r24-r25', 5]];
+    for (const [route, act] of transitionRoutes) {
+      const anchor = `transition-${route}`;
+      await page.goto(docUrl(ACTS[act].path, `${anchor}-script`));
+      await readerReady(page, `${anchor}-script`);
+      await page.locator(`[data-doc-heading="${anchor}"]`).first().click();
+      await readerReady(page, anchor);
+      if (route === 'r7-r8') await page.screenshot({ path: path.join(out, 'transition-spec-desktop.png') });
+      if (route === 'r17-r18') await page.screenshot({ path: path.join(out, 'warehouse-transition-desktop.png') });
+      await page.locator('[data-doc-heading="transition-rules"]').first().click();
+      await readerReady(page, 'transition-rules');
+      assert.equal(await page.evaluate(() => state.selected.path), APPENDIX);
+    }
+    pass('seven transition scripts link to owned specifications and shared rules');
+
+    await page.goto(docUrl(APPENDIX, 'culture-details'));
+    await readerReady(page, 'culture-details');
+    assert((await page.locator('#readerContent').innerText()).includes('上述 4 組局部'));
+    await page.locator('[data-doc-heading="node-r3-script"]').last().click();
+    await readerReady(page, 'node-r3-script');
+    assert((await page.locator('#readerContent').innerText()).includes('起鍋再放鹽'));
+    pass('cultural asset list links to the owning screenplay');
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    for (const [route, act] of transitionRoutes) {
+      const anchor = `transition-${route}`;
+      await page.goto(docUrl(ACTS[act].path, anchor));
+      await readerReady(page, anchor);
+      assert(await page.locator('.reader-panel').evaluate(el => el.scrollWidth - el.clientWidth <= 1), route);
+      if (route === 'r11-r12') await page.screenshot({ path: path.join(out, 'transition-spec-mobile.png') });
+      if (route === 'r17-r18') await page.screenshot({ path: path.join(out, 'warehouse-transition-mobile.png') });
+    }
+    pass('seven transition specifications fit mobile reader');
+    await page.setViewportSize({ width: 1440, height: 1000 });
+
     const images = [];
     for (const file of CANONICAL_FILES.filter(file => file !== master)) {
       const anchor = [...canonical.anchorFiles].find(([, owner]) => owner === file)[0];
@@ -165,6 +200,7 @@ async function canvasCheck(page, name) {
     await page.locator('.scene-node[data-node="R8"][aria-pressed="true"]').waitFor();
     assert.equal(await page.locator('.scene-node').count(), 48);
     assert((await page.locator('.scene-edge').allInnerTexts()).some(t => t.includes('不作出口門檻')));
+    assert((await page.locator('.scene-edge').allInnerTexts()).some(t => t.includes('T-R7-R8')));
     const popupPromise = context.waitForEvent('page');
     await page.locator('.scene-source [data-source]').first().click();
     const popup = await popupPromise;
