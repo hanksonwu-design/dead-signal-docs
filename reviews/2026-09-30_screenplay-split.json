@@ -1,0 +1,56 @@
+{
+  "documents": 10,
+  "retainedBlocks": 1554,
+  "retainedOriginalAnchors": 5122,
+  "images": 56,
+  "acts": [
+    {
+      "act": 0,
+      "file": "09_劇本/09-03_正式劇本_序幕.md",
+      "rooms": 3,
+      "narrativeSections": 22
+    },
+    {
+      "act": 1,
+      "file": "09_劇本/09-04_正式劇本_第一幕.md",
+      "rooms": 6,
+      "narrativeSections": 38
+    },
+    {
+      "act": 2,
+      "file": "09_劇本/09-05_正式劇本_第二幕.md",
+      "rooms": 6,
+      "narrativeSections": 47
+    },
+    {
+      "act": 3,
+      "file": "09_劇本/09-06_正式劇本_第三幕.md",
+      "rooms": 6,
+      "narrativeSections": 54
+    },
+    {
+      "act": 4,
+      "file": "09_劇本/09-07_正式劇本_第四幕.md",
+      "rooms": 5,
+      "narrativeSections": 41
+    },
+    {
+      "act": 5,
+      "file": "09_劇本/09-08_正式劇本_第五幕.md",
+      "rooms": 4,
+      "narrativeSections": 51
+    },
+    {
+      "act": 6,
+      "file": "09_劇本/09-09_正式劇本_第六幕.md",
+      "rooms": 15,
+      "narrativeSections": 52
+    },
+    {
+      "act": 7,
+      "file": "09_劇本/09-10_正式劇本_終幕.md",
+      "rooms": 3,
+      "narrativeSections": 37
+    }
+  ]
+}

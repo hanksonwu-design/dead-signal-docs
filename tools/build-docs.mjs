@@ -4,6 +4,7 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { MASTER, CANONICAL_FILES, SPLIT_MARKER } from './screenplay-files.mjs';
 
 export const ROOT = fileURLToPath(new URL("..", import.meta.url));
 export const DOCS_DIR = join(ROOT, "docs");
@@ -18,7 +19,7 @@ const FOLDER_LABELS = {
   "06_關卡規格": "關卡流程",
   "07_視聽與介面": "視聽與介面",
   "08_製作管理": "製作管理",
-  "09_劇本": "正式劇本",
+  "09_劇本": "遊戲劇本",
   "09_故事劇情": "故事劇情",
 };
 const ROOT_FOLDER = "根目錄";
@@ -77,6 +78,13 @@ export function buildDocuments() {
       content,
     };
   });
+  const index = documents.find(doc => doc.path === MASTER);
+  if (index?.content.includes(SPLIT_MARKER)) {
+    // Route old all-in-one bookmarks to the chapter that now owns the anchor.
+    index.anchorRedirects = Object.fromEntries(documents
+      .filter(doc => doc.path !== MASTER && CANONICAL_FILES.includes(doc.path))
+      .flatMap(doc => [...doc.content.matchAll(/<a id="([^"]+)"><\/a>/g)].map(match => [match[1], doc.path])));
+  }
   return documents.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
 }
 

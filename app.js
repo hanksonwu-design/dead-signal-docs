@@ -256,10 +256,17 @@ function renderMarkdown(raw) {
 function openReader(path, updateHash = true, headingText = "") {
   path = documentAliases[path] || path;
   let doc = state.documents.find((item) => item.path === path);
-  if (doc?.redirect) {
-    const [targetPath, anchor] = doc.redirect.split("#");
+  const visited = new Set();
+  while (doc && !visited.has(doc.path)) {
+    visited.add(doc.path);
+    const destination = doc.anchorRedirects?.[headingText] || doc.redirect;
+    if (!destination) break;
+    const [targetPath, anchor] = destination.split("#");
     const target = state.documents.find(item => item.path === targetPath);
-    if (target) { path = targetPath; doc = target; headingText ||= anchor || ""; }
+    if (!target) break;
+    path = targetPath;
+    doc = target;
+    headingText ||= anchor || "";
   }
   if (doc?.archived) {
     const links = [...doc.content.matchAll(/\[[^\]]+\]\(([^)]+\.md)\)/g)];

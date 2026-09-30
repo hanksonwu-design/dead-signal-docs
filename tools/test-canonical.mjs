@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import path from 'node:path';
-import { ROOT, MASTER, parseMaster, buildSync, deriveGraph } from './sync-canonical.mjs';
+import { ROOT, MASTER, parseMaster, buildSync, deriveGraph, canonicalFile } from './sync-canonical.mjs';
+import { ACTS, APPENDIX, CANONICAL_FILES, SPLIT_MARKER } from './screenplay-files.mjs';
 import { buildDocuments } from './build-docs.mjs';
 
 const read = file => readFileSync(path.join(ROOT, file), 'utf8').replace(/\r\n/g, '\n');
@@ -21,30 +22,40 @@ test('source manifest accounts for every retained block without empty placeholde
   for (const [id, text] of master.blocks) assert(text.replace(/<a id="[^"]+"><\/a>/g, '').trim(), id);
 });
 
-test('342 narrative sections run through eight acts before production and spoilers', () => {
-  const specStart = master.text.indexOf('<a id="book-specs">');
-  const appendixStart = master.text.indexOf('<a id="book-appendices">');
-  assert(specStart > 0 && appendixStart > specStart);
-  const story = master.text.slice(master.text.indexOf('<a id="book-story">'), specStart);
-  const actIds = [...story.matchAll(/<a id="act-(\d)">/g)].map(match => Number(match[1]));
-  assert.deepEqual(actIds, [0, 1, 2, 3, 4, 5, 6, 7]);
-  const sceneBlocks = [...story.matchAll(/<!-- import:([^:]+):begin -->/g)].map(match => match[1]);
-  assert.equal(sceneBlocks.length, 342);
-  for (const id of sceneBlocks) assert(/^#### \[|^#### POST ·/m.test(block(id)), id);
-  assert(!story.includes('進行目的：'));
-  assert(!story.includes('**狀態、素材與驗收**'));
-  assert(!story.includes('本幕台詞清單'));
-  assert(!story.includes('本節目標'));
-  for (const section of ['book-payoffs', 'book-first-play', 'book-pending', 'book-sources']) {
-    assert(master.text.indexOf(`<a id="${section}">`) > appendixStart, section);
-  }
-  for (const node of graph.nodes) {
-    const id = node.id.toLowerCase();
-    assert(master.text.indexOf(`<a id="node-${id}-script">`) < specStart, id);
-    for (const suffix of ['spec', 'nav', 'level', 'pack', 'visual']) {
-      const position = master.text.indexOf(`<a id="node-${id}-${suffix}">`);
-      assert(position > specStart && position < appendixStart, `${id}:${suffix}`);
+test('eight maintained acts place their story before local specifications without duplicate master prose', () => {
+  assert.deepEqual([...master.documents.keys()], CANONICAL_FILES);
+  const index = master.documents.get(MASTER);
+  assert(index.includes(SPLIT_MARKER));
+  assert(!index.includes('<!-- import:'));
+  let sceneCount = 0;
+  for (const act of ACTS) {
+    const text = master.documents.get(act.path);
+    assert(!/^正式入口:/m.test(text));
+    const specStart = text.indexOf(`<a id="spec-act-${act.act}">`);
+    assert(specStart > text.indexOf(`<a id="act-${act.act}">`));
+    const story = text.slice(0, specStart);
+    assert.deepEqual([...story.matchAll(/<a id="act-(\d)">/g)].map(m => Number(m[1])), [act.act]);
+    const sceneBlocks = [...story.matchAll(/<!-- import:([^:]+):begin -->/g)].map(m => m[1]);
+    sceneCount += sceneBlocks.length;
+    for (const id of sceneBlocks) assert(/^#### \[|^#### POST ·/m.test(block(id)), id);
+    for (const technical of ['進行目的：', '**狀態、素材與驗收**', '本幕台詞清單', '本節目標']) assert(!story.includes(technical), act.path);
+    assert(text.indexOf(`<a id="act-${act.act}-continue">`) < specStart);
+    if (act.act < 7) assert(story.includes(`${path.posix.basename(ACTS[act.act + 1].path)}#act-${act.act + 1}`));
+    for (const node of graph.nodes.filter(node => node.act === act.act)) {
+      const id = node.id.toLowerCase();
+      assert(text.indexOf(`<a id="node-${id}-script">`) > 0, id);
+      assert(text.indexOf(`<a id="node-${id}-script">`) < specStart, id);
+      for (const suffix of ['spec', 'nav', 'level', 'pack', 'visual']) {
+        assert(text.indexOf(`<a id="node-${id}-${suffix}">`) > specStart, `${id}:${suffix}`);
+        assert.equal(canonicalFile(master, `node-${id}-${suffix}`), act.path);
+      }
     }
+  }
+  assert.equal(sceneCount, 342);
+  assert(block('s-0900-2').includes('各幕文件前半部為正式演出，後半部為該幕製作規格'));
+  assert(!block('s-0900-2').includes('同一份文件內'));
+  for (const section of ['book-payoffs', 'book-first-play', 'book-pending', 'book-sources']) {
+    assert.equal(canonicalFile(master, section), APPENDIX);
   }
   assert(!master.text.includes('原正文 SHA-256：'));
   assert(!master.text.includes('### 本版修訂：'));
@@ -64,12 +75,12 @@ test('48 nodes, 55 routes; every source and destination anchor is canonical', ()
   assert.equal(new Set(graph.nodes.map(n => n.id)).size, 48);
   assert.deepEqual(deriveGraph(master, graph), graph);
   for (const node of graph.nodes) {
-    assert.equal(node.source, MASTER);
-    assert.equal(node.pack, MASTER);
+    assert.equal(node.source, ACTS[node.act].path);
+    assert.equal(node.pack, ACTS[node.act].path);
     for (const field of ['heading', 'packAnchor', 'spatialHeading']) assert(master.anchors.has(node[field]), `${node.id}:${field}`);
   }
   for (const edge of graph.edges) {
-    assert.equal(edge.source, MASTER);
+    assert.equal(edge.source, graph.nodes.find(n => n.id === edge.fromId).source);
     assert(graph.nodes.some(n => n.id === edge.fromId));
     assert(graph.nodes.some(n => n.id === edge.toId));
   }
@@ -82,7 +93,7 @@ test('26 model nodes and 30 routes keep canonical references without adding lowe
     const canonical = graph.nodes.find(n => n.id === node.id);
     assert.equal(canonical.part, 1);
     for (const key of ['goal', 'source', 'heading', 'packAnchor', 'spatialHeading']) assert.equal(node[key], canonical[key]);
-    assert.equal(model.spatial[node.id].source, MASTER);
+    assert.equal(model.spatial[node.id].source, canonical.source);
     assert(master.anchors.has(model.spatial[node.id].heading));
   }
   for (const edge of model.edges) {
@@ -264,22 +275,32 @@ test('all Markdown document and image links resolve; master anchors are unique',
       if (target && !/\.(?:md|png|jpe?g|webp|gif|svg)$/i.test(target)) continue;
       const absolute = target ? path.resolve(path.dirname(file), decodeURIComponent(target)) : file;
       if (!existsSync(absolute)) { errors.push(`${relative}: ${href}`); continue; }
-      if (absolute === path.join(ROOT,'docs',MASTER) && fragment && !master.anchors.has(decodeURIComponent(fragment))) errors.push(`${relative}: missing #${fragment}`);
+      const canonical = path.relative(path.join(ROOT, 'docs'), absolute).split(path.sep).join('/');
+      if (master.documents.has(canonical) && fragment && master.anchorFiles.get(decodeURIComponent(fragment)) !== canonical) errors.push(`${relative}: wrong document for #${fragment}: ${canonical}`);
       if (/06_關卡規格.*\.md$/i.test(target)) errors.push(`${relative}: stale level link ${href}`);
     }
   }
   assert.deepEqual(errors, []);
 });
 
-test('website includes one visible master and resolves all retired document entries', () => {
+test('website exposes eight acts, an index and one appendix; old bookmarks resolve to their owner', () => {
   const documents = buildDocuments();
   const screenplays = documents.filter(doc => doc.folder === '09_劇本' && !doc.archived);
-  assert.deepEqual(screenplays.map(doc => doc.path), [MASTER]);
-  assert.equal(documents.filter(doc => doc.redirect).length,25);
+  for (const doc of screenplays) {
+    assert(doc.title.startsWith('遊戲劇本'), doc.path);
+    assert.equal(doc.folderLabel, '遊戲劇本');
+    assert(!/^(?:文件:|#{1,6} ).*正式劇本/m.test(doc.content), doc.path);
+  }
+  assert.deepEqual(screenplays.map(doc => doc.path).sort(), [...CANONICAL_FILES].sort());
+  assert.equal(documents.filter(doc => doc.redirect).length,17);
   for (const doc of documents.filter(doc => doc.redirect)) {
     const [file, anchor] = doc.redirect.split('#');
-    assert.equal(file, MASTER);
-    assert(master.anchors.has(anchor));
+    assert.equal(file, canonicalFile(master, anchor));
+  }
+  const index = documents.find(doc => doc.path === MASTER);
+  for (const [anchor, file] of master.anchorFiles) {
+    if (file === MASTER) assert(!index.anchorRedirects[anchor]);
+    else assert.equal(index.anchorRedirects[anchor], file, anchor);
   }
   assert.equal(documents.filter(doc => doc.weeklyDetail).length,13);
 });
@@ -289,6 +310,9 @@ test('malformed masters and unmapped routes fail before any output is written', 
   const badGraph = structuredClone(graph);
   badGraph.edges.push({id:'invalid',fromId:'R1',toId:'POST'});
   assert.throws(() => deriveGraph(master,badGraph), /Unmapped edge/);
+  const duplicate = new Map(master.documents);
+  duplicate.set(APPENDIX, duplicate.get(APPENDIX) + '\n<a id="act-0"></a>');
+  assert.throws(() => parseMaster([...duplicate.values()].join('\n\n'), duplicate), /Duplicate anchor/);
 });
 
 console.log(`${passed} checks passed. Text/data validation only; not a Godot playtest or art/audio sign-off.`);

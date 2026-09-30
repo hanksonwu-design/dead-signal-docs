@@ -6,7 +6,7 @@ import { ROOT, MASTER, parseMaster, deriveGraph } from './sync-canonical.mjs';
 
 const file = path.join(ROOT, 'docs', MASTER);
 const before = readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
-if (before.includes('<a id="book-story"></a>')) {
+if (before.includes('<a id="book-story"></a>') || before.includes('<!-- screenplay:split -->')) {
   console.log('The screenplay already uses the sequential layout; no changes made.');
   process.exit(0);
 }
