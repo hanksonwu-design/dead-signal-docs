@@ -1,0 +1,744 @@
+{
+  "beforeLines": 46331,
+  "afterLines": 44456,
+  "beforeCharacters": 1335776,
+  "afterCharacters": 1270832,
+  "scenesPreserved": 342,
+  "beforeBlocks": 1700,
+  "afterBlocks": 1554,
+  "duplicateParagraphs": 106,
+  "duplicateCharacters": 16638,
+  "deleted": [
+    {
+      "id": "s-0903-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0903-29",
+      "reason": "historical completed self-check",
+      "target": "book-first-play"
+    },
+    {
+      "id": "s-0601-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0601-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0904-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0602-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0905-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0905-52",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0603-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0906-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0906-57",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0604-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0907-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0907-45",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0605-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0908-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0908-3",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0908-57",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0606-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0909-3",
+      "reason": "empty or duplicate heading",
+      "target": "node-m1-script"
+    },
+    {
+      "id": "s-0909-8",
+      "reason": "empty or duplicate heading",
+      "target": "node-r27-script"
+    },
+    {
+      "id": "s-0909-14",
+      "reason": "empty or duplicate heading",
+      "target": "node-u1-script"
+    },
+    {
+      "id": "s-0909-21",
+      "reason": "empty or duplicate heading",
+      "target": "node-r28-script"
+    },
+    {
+      "id": "s-0909-25",
+      "reason": "empty or duplicate heading",
+      "target": "node-r29-script"
+    },
+    {
+      "id": "s-0909-34",
+      "reason": "empty or duplicate heading",
+      "target": "node-u4-script"
+    },
+    {
+      "id": "s-0909-43",
+      "reason": "empty or duplicate heading",
+      "target": "node-r30-script"
+    },
+    {
+      "id": "s-0909-51",
+      "reason": "empty or duplicate heading",
+      "target": "node-r31-script"
+    },
+    {
+      "id": "s-0909-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0607-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0910-3",
+      "reason": "empty or duplicate heading",
+      "target": "node-r32-script"
+    },
+    {
+      "id": "s-0910-20",
+      "reason": "empty or duplicate heading",
+      "target": "node-r32-script"
+    },
+    {
+      "id": "s-0910-31",
+      "reason": "empty or duplicate heading",
+      "target": "node-r33-script"
+    },
+    {
+      "id": "s-0910-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0608-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0608-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0001-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0001-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0002-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0003-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0003-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0900-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0101-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0102-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0102-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0103-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0103-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0201-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0201-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0202-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0203-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0204-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0205-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0206-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0206-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0301-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0301-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0302-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0303-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0303-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0304-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0304-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0305-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0306-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0307-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0307-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0401-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0401-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0402-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0402-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0403-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0403-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0404-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0404-4",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0404-9",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0405-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0405-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0405-4",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0405-8",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0405-14",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0405-21",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0406-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0406-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0406-4",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0406-11",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0407-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0407-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0408-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0408-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0409-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0410-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0411-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0412-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0600-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0600-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0609-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0609-6",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0609-10",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0609-17",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0609-24",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0609-31",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0609-37",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0609-42",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0609-58",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0610-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0610-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0911-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0913-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0701-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0702-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0703-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-07a01-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-07a02-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-07a03-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-07a04-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-07a05-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-07a06-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-07a07-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-07a08-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-07a09-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0801-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0801-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0803-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0803-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0807-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0807-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0807-9",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0808-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0808-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0808-8",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0809-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0809-1",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-0810-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-0",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-3",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-12",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-27",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-38",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-42",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-59",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-87",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-101",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-106",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-110",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-112",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-114",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    },
+    {
+      "id": "s-uppertech-116",
+      "reason": "empty or duplicate heading",
+      "target": "book-maintenance"
+    }
+  ],
+  "anchors": 5122
+}

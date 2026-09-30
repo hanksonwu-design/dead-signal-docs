@@ -1,0 +1,71 @@
+{
+  "base": "http://127.0.0.1:8765",
+  "checks": [
+    {
+      "name": "one visible canonical screenplay"
+    },
+    {
+      "name": "canonical anchors and import markers"
+    },
+    {
+      "name": "sequential story before production and spoiler appendices"
+    },
+    {
+      "name": "story and room specification round-trip"
+    },
+    {
+      "name": "in-document navigation"
+    },
+    {
+      "name": "56 image URLs and lazy image rendering"
+    },
+    {
+      "name": "legacy level URL redirects to canonical act"
+    },
+    {
+      "name": "mobile canonical reader",
+      "detail": {
+        "width": 390,
+        "overflow": 0
+      }
+    },
+    {
+      "name": "48-node graph opens correct canonical scene"
+    },
+    {
+      "name": "3D source and node count"
+    },
+    {
+      "name": "model-desktop",
+      "detail": {
+        "channelDeviation": [
+          43.41,
+          46.14,
+          45.38
+        ],
+        "changedRatio": 0.3526
+      }
+    },
+    {
+      "name": "3D room selection and editor mode remain interactive"
+    },
+    {
+      "name": "model-mobile",
+      "detail": {
+        "channelDeviation": [
+          49.77,
+          52.13,
+          51.17
+        ],
+        "changedRatio": 0.5367
+      }
+    },
+    {
+      "name": "static docs.json fallback opens ending"
+    },
+    {
+      "name": "no JavaScript page errors"
+    }
+  ],
+  "errors": []
+}

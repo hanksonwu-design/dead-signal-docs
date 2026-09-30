@@ -1,14 +1,15 @@
 // Run against tools/serve.mjs. Pass a package directory containing playwright and sharp.
 const assert = require('node:assert/strict');
 const { createRequire } = require('node:module');
-const { mkdirSync, writeFileSync } = require('node:fs');
+const { mkdirSync, writeFileSync, readFileSync } = require('node:fs');
 const path = require('node:path');
 const runtime = createRequire(path.resolve(process.argv[2] || 'node_modules', '__qa__.cjs'));
 const { chromium } = runtime('playwright');
 const sharp = runtime('sharp');
 const base = process.argv[3] || 'http://127.0.0.1:8765';
 const master = '09_劇本/09-14_全劇本與關卡整合稿.md';
-const out = path.join(__dirname, 'canonical-browser');
+const out = path.resolve(__dirname, process.argv[4] || 'canonical-browser');
+const expectedAnchors = [...readFileSync(path.join(__dirname, '..', 'docs', master), 'utf8').matchAll(/<a id="[^"]+"><\/a>/g)].length;
 mkdirSync(out, { recursive: true });
 const checks = [];
 const errors = [];
@@ -61,10 +62,24 @@ async function canvasCheck(page, name) {
 
     await page.goto(docUrl(master, 'node-r8-script'));
     await readerReady(page, 'node-r8-script');
-    assert.equal(await page.locator('#readerContent .md-anchor').count(), 5058);
+    assert.equal(await page.locator('#readerContent .md-anchor').count(), expectedAnchors);
     assert(!await page.locator('#readerContent').innerText().then(t => t.includes('<!-- import:')));
+    assert(!await page.locator('#readerContent').innerText().then(t => t.includes('canonical-source:')));
     await page.screenshot({ path: path.join(out, 'reader-desktop.png') });
     pass('canonical anchors and import markers');
+
+    const ordered = await page.evaluate(() => {
+      const before = (a, b) => Boolean(document.getElementById(a).compareDocumentPosition(document.getElementById(b)) & Node.DOCUMENT_POSITION_FOLLOWING);
+      return before('act-0', 'act-7') && before('node-post-script', 'book-specs') &&
+        before('book-specs', 'node-r8-visual') && before('book-specs', 'book-appendices') && before('book-appendices', 'book-payoffs');
+    });
+    assert(ordered);
+    pass('sequential story before production and spoiler appendices');
+    await page.locator('[data-doc-heading="node-r8-spec"]').first().click();
+    await readerReady(page, 'node-r8-spec');
+    await page.locator('[data-doc-heading="node-r8-script"]').first().click();
+    await readerReady(page, 'node-r8-script');
+    pass('story and room specification round-trip');
 
     const samePage = page.locator('[data-doc-heading="node-r1-script"]').first();
     await samePage.click();

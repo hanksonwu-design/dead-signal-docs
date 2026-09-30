@@ -12,12 +12,44 @@ let passed = 0;
 function test(name, fn) { fn(); passed++; console.log(`PASS ${name}`); }
 function block(id) { assert(master.blocks.has(id), id); return master.blocks.get(id); }
 
-test('72 sources and 1700 uniquely paired import blocks', () => {
+test('source manifest accounts for every retained block without empty placeholders', () => {
   assert.equal(master.sources.length, 72);
-  assert.equal(master.blocks.size, 1700);
-  assert.equal([...master.text.matchAll(/<!-- import:[^:]+:begin -->/g)].length, 1700);
-  assert.equal([...master.text.matchAll(/<!-- import:[^:]+:end -->/g)].length, 1700);
-  assert.equal(master.sources.reduce((sum, item) => sum + item.count, 0), 1700);
+  assert.equal([...master.text.matchAll(/<!-- import:[^:]+:begin -->/g)].length, master.blocks.size);
+  assert.equal([...master.text.matchAll(/<!-- import:[^:]+:end -->/g)].length, master.blocks.size);
+  assert.equal(master.sources.reduce((sum, item) => sum + item.count, 0), master.blocks.size);
+  assert.equal(new Set(master.sources.flatMap(source => source.blocks.map(block => block.id))).size, master.blocks.size);
+  for (const [id, text] of master.blocks) assert(text.replace(/<a id="[^"]+"><\/a>/g, '').trim(), id);
+});
+
+test('342 narrative sections run through eight acts before production and spoilers', () => {
+  const specStart = master.text.indexOf('<a id="book-specs">');
+  const appendixStart = master.text.indexOf('<a id="book-appendices">');
+  assert(specStart > 0 && appendixStart > specStart);
+  const story = master.text.slice(master.text.indexOf('<a id="book-story">'), specStart);
+  const actIds = [...story.matchAll(/<a id="act-(\d)">/g)].map(match => Number(match[1]));
+  assert.deepEqual(actIds, [0, 1, 2, 3, 4, 5, 6, 7]);
+  const sceneBlocks = [...story.matchAll(/<!-- import:([^:]+):begin -->/g)].map(match => match[1]);
+  assert.equal(sceneBlocks.length, 342);
+  for (const id of sceneBlocks) assert(/^#### \[|^#### POST ·/m.test(block(id)), id);
+  assert(!story.includes('進行目的：'));
+  assert(!story.includes('**狀態、素材與驗收**'));
+  assert(!story.includes('本幕台詞清單'));
+  assert(!story.includes('本節目標'));
+  for (const section of ['book-payoffs', 'book-first-play', 'book-pending', 'book-sources']) {
+    assert(master.text.indexOf(`<a id="${section}">`) > appendixStart, section);
+  }
+  for (const node of graph.nodes) {
+    const id = node.id.toLowerCase();
+    assert(master.text.indexOf(`<a id="node-${id}-script">`) < specStart, id);
+    for (const suffix of ['spec', 'nav', 'level', 'pack', 'visual']) {
+      const position = master.text.indexOf(`<a id="node-${id}-${suffix}">`);
+      assert(position > specStart && position < appendixStart, `${id}:${suffix}`);
+    }
+  }
+  assert(!master.text.includes('原正文 SHA-256：'));
+  assert(!master.text.includes('### 本版修訂：'));
+  assert(!master.text.includes('#### 本幕自檢'));
+  assert.equal(master.text.split('**保存與素材驗收：**原房主線').length - 1, 1);
 });
 
 test('derived files exactly match the current master; no legacy-heading fallback', () => {

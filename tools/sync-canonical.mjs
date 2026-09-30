@@ -12,19 +12,29 @@ const slug = text => text.toLowerCase().replace(/[*`]/g, '').replace(/[^\p{L}\p{
 const clean = text => text.replace(/[*`]/g, '').trim();
 
 export function parseMaster(text = read(path.join(DOCS, MASTER))) {
-  const sources = [...text.matchAll(/<a id="doc-([^"]+)"><\/a>\s*\n\s*### [^\n]+\s*\n\s*原檔：`([^`]+)`；正文 \d+ 行，([\d,]+) 段/g)]
+  const manifest = [...text.matchAll(/^<!-- canonical-source: (\{[^\n]+\}) -->$/gm)].map(m => JSON.parse(m[1]));
+  const sources = manifest.length ? manifest.map(source => ({ ...source, count: source.indices.length })) : [...text.matchAll(/<a id="doc-([^"]+)"><\/a>\s*\n\s*### [^\n]+\s*\n\s*原檔：`([^`]+)`；正文 \d+ 行，([\d,]+) 段/g)]
     .map(m => ({ id: m[1], path: m[2], count: Number(m[3].replaceAll(',', '')) }));
-  const blocks = new Map([...text.matchAll(/<!-- import:([^:]+):begin -->([\s\S]*?)<!-- import:\1:end -->/g)].map(m => [m[1], m[2].trim()]));
+  const entries = [...text.matchAll(/<!-- import:([^:]+):begin -->([\s\S]*?)<!-- import:\1:end -->/g)].map(m => [m[1], m[2].trim()]);
+  const blocks = new Map(entries);
+  assert.equal(blocks.size, entries.length, 'Duplicate imported blocks');
+  assert.equal([...text.matchAll(/<!-- import:[^:]+:begin -->/g)].length, blocks.size, 'Unpaired imported blocks');
+  assert.equal([...text.matchAll(/<!-- import:[^:]+:end -->/g)].length, blocks.size, 'Unpaired imported blocks');
   const anchors = new Set([...text.matchAll(/<a id="([^"]+)"><\/a>/g)].map(m => m[1]));
   assert.equal(sources.length, 72, 'source manifest');
-  assert.equal(blocks.size, 1700, 'imported blocks');
+  assert.equal(new Set(sources.map(source => source.id)).size, sources.length, 'Duplicate source IDs');
+  assert.equal(new Set(sources.map(source => source.path)).size, sources.length, 'Duplicate source paths');
+  assert.equal(blocks.size, sources.reduce((sum, source) => sum + source.count, 0), 'imported blocks');
   for (const source of sources) {
-    source.blocks = Array.from({ length: source.count }, (_, i) => {
+    const indices = source.indices || Array.from({ length: source.count }, (_, i) => i);
+    assert.equal(new Set(indices).size, indices.length, `Duplicate indices: ${source.id}`);
+    source.blocks = indices.map(i => {
+      assert(Number.isSafeInteger(i) && i >= 0, `Invalid index: ${source.id}`);
       const id = `s-${source.id}-${i}`;
       assert(blocks.has(id), `Missing ${id}`);
       return { id, text: blocks.get(id) };
     });
-    source.first = source.blocks.find(block => block.text)?.id;
+    source.first = source.blocks.find(block => block.text)?.id || `doc-${source.id}`;
     source.headings = source.blocks.flatMap(block => [...block.text.matchAll(/<a id="([^"]+)"><\/a>\s*\n\s*(#{1,6}) ([^\n]+)/g)]
       .map(m => ({ id: m[1], title: clean(m[3]), slug: slug(m[3]) })));
   }
@@ -98,7 +108,7 @@ function topicView(source, original) {
     return `](${path.posix.relative(path.posix.dirname(source.path), absolute)})`;
   });
   const notice = `> 本頁由[完整正式劇本](${masterLink(source.path, source.first)})的已整合正文產生，方便分類查閱；唯一修改來源是正式劇本。台詞與揭露順序仍讀對應正式場次，不能把製作端完整設定提前顯示給玩家。\n\n`;
-  return header(fields) + notice + body.trim() + '\n';
+  return header(fields) + notice + (body.trim() || `# ${path.posix.basename(source.path, '.md')}\n\n此分類以正式稿的共用規格與圖像索引為準。`) + '\n';
 }
 
 function retiredView(file, original, anchor) {
@@ -141,7 +151,8 @@ export function deriveGraph(master, existing) {
   for (const node of graph.nodes) {
     const id = node.id.toLowerCase();
     const start = master.text.indexOf(`<a id="node-${id}-nav">`);
-    const end = master.text.indexOf(`<a id="node-${id}-script">`, start);
+    const navEnd = master.text.indexOf(`<!-- navigation:${id}:end -->`, start);
+    const end = navEnd >= 0 ? navEnd : master.text.indexOf(`<a id="node-${id}-script">`, start);
     assert(start >= 0 && end > start, `Navigation section: ${node.id}`);
     const nav = master.text.slice(start, end);
     const goal = nav.match(/^進行目的：(.*)$/m)?.[1];
