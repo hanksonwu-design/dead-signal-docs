@@ -151,10 +151,11 @@ function imageAssetUrl(href) {
   // Resolve against the selected Markdown document, never the viewer page.
   try {
     if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return null;
-    const base = new URL(state.selected?.path || "README.md", "https://docs.invalid/");
+    const base = new URL(`docs/${state.selected?.path || "README.md"}`, "https://docs.invalid/");
     const resolved = new URL(href, base);
     if (!/\.(?:png|jpe?g|webp|gif)$/i.test(resolved.pathname)) return null;
-    return `assets/${resolved.pathname.slice(1)}`;
+    const assetPath = resolved.pathname.slice(1);
+    return assetPath.startsWith("assets/") ? assetPath : `assets/${assetPath.replace(/^docs\//, "")}`;
   } catch (_) { return null; }
 }
 
@@ -167,6 +168,10 @@ function inlineMarkdown(value) {
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, label, href) => {
     const asset = imageAssetUrl(href);
     if (asset) return `<a href="${asset}" target="_blank" rel="noreferrer">${label}</a>`;
+    if (href.startsWith("#") && state.selected) {
+      const heading = href.slice(1);
+      return `<a href="#doc=${encodeURIComponent(state.selected.path)}&amp;heading=${encodeURIComponent(heading)}" data-doc-link="${esc(state.selected.path)}" data-doc-heading="${esc(heading)}">${label}</a>`;
+    }
     if (/\.md(?:#.*)?$/i.test(href) || href.startsWith("../")) {
       const file = href.split("#")[0].replace(/^\.\.\//, "");
       const target = state.documents.find((doc) => doc.path === file || doc.path.endsWith(file));
@@ -216,6 +221,9 @@ function renderMarkdown(raw) {
     const line = lines[i];
     if (code !== null) { if (/^\s*(?:```|~~~)/.test(line)) closeCode(); else code.push(line); i += 1; continue; }
     if (/^\s*(?:```|~~~)/.test(line)) { flushParagraph(); closeList(); closeTable(); code = []; i += 1; continue; }
+    const anchor = line.match(/^<a id="([A-Za-z0-9_-]+)"><\/a>$/);
+    if (anchor) { flushParagraph(); closeList(); closeTable(); out.push(`<span id="${anchor[1]}" class="md-anchor"></span>`); i += 1; continue; }
+    if (/^\s*<!--.*-->\s*$/.test(line)) { i += 1; continue; }
     if (/^\s*---\s*$/.test(line)) { flushParagraph(); closeList(); closeTable(); out.push("<hr>"); i += 1; continue; }
     const heading = line.match(/^(#{1,6})\s+(.+)$/);
     if (heading) { flushParagraph(); closeList(); closeTable(); const level = heading[1].length; out.push(`<h${level}>${inlineMarkdown(documentDisplayTitle(heading[2]))}</h${level}>`); i += 1; continue; }
@@ -248,6 +256,11 @@ function renderMarkdown(raw) {
 function openReader(path, updateHash = true, headingText = "") {
   path = documentAliases[path] || path;
   let doc = state.documents.find((item) => item.path === path);
+  if (doc?.redirect) {
+    const [targetPath, anchor] = doc.redirect.split("#");
+    const target = state.documents.find(item => item.path === targetPath);
+    if (target) { path = targetPath; doc = target; headingText ||= anchor || ""; }
+  }
   if (doc?.archived) {
     const links = [...doc.content.matchAll(/\[[^\]]+\]\(([^)]+\.md)\)/g)];
     if (links.length === 1) {
@@ -256,6 +269,12 @@ function openReader(path, updateHash = true, headingText = "") {
     }
   }
   if (!doc) return;
+  closeSidebar();
+  if (state.selected === doc && headingText && !$("readerOverlay").classList.contains("hidden")) {
+    scrollReaderTo(headingText);
+    if (updateHash) history.replaceState(null, "", `#doc=${encodeURIComponent(path)}&heading=${encodeURIComponent(headingText)}`);
+    return;
+  }
   const previousScene = new URLSearchParams(location.hash.slice(1)).get("scene");
   if (previousScene) window.sceneReturnId = previousScene;
   else if (state.folder !== "06_關卡規格") window.sceneReturnId = null;
@@ -287,9 +306,7 @@ function openReader(path, updateHash = true, headingText = "") {
   document.querySelector(".reader-panel").scrollTop = 0;
   document.body.style.overflow = "hidden";
   if (headingText) {
-    headingText = documentDisplayTitle(headingText);
-    const target = [...$("readerContent").querySelectorAll("h1,h2,h3,h4")].find(h => h.textContent === headingText || h.textContent.startsWith(headingText + " ") || h.textContent.startsWith(headingText + "：") || h.textContent.toLowerCase().replace(/[*`]/g, "").replace(/[^\p{L}\p{N}_\- ]/gu, "").replace(/ /g, "-") === headingText);
-    if (target) requestAnimationFrame(() => { target.tabIndex=-1; target.focus({preventScroll:true}); target.scrollIntoView({block:"start"}); });
+    scrollReaderTo(headingText);
   }
   if (updateHash) history.replaceState(null, "", `#doc=${encodeURIComponent(path)}${headingText ? `&heading=${encodeURIComponent(headingText)}` : ""}`);
   $("readerContent").querySelectorAll("[data-scene-source], [data-week-detail]").forEach((link) => link.addEventListener("click", (event) => {
@@ -298,6 +315,14 @@ function openReader(path, updateHash = true, headingText = "") {
     window.open(link.href, "_blank", "noopener,noreferrer");
   }));
   $("readerContent").querySelectorAll("[data-doc-link]").forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); openReader(link.dataset.docLink, true, link.dataset.docHeading || ""); }));
+}
+
+function scrollReaderTo(headingText) {
+  const content = $("readerContent");
+  const anchor = document.getElementById(headingText);
+  const title = documentDisplayTitle(headingText);
+  const target = anchor && content.contains(anchor) ? anchor : [...content.querySelectorAll("h1,h2,h3,h4,h5,h6")].find(h => h.textContent === title || h.textContent.startsWith(title + " ") || h.textContent.startsWith(title + "：") || h.textContent.toLowerCase().replace(/[*`]/g, "").replace(/[^\p{L}\p{N}_\- ]/gu, "").replace(/ /g, "-") === title);
+  if (target) requestAnimationFrame(() => { target.tabIndex = -1; target.focus({preventScroll: true}); target.scrollIntoView({block: "start"}); });
 }
 
 function closeReader() {

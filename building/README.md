@@ -206,7 +206,7 @@ JSON 是場景資料；要重新觀看與編輯，需開啟本模型的 `index.h
 
 ## 原始碼與驗證
 
-`spatial.js` 管理初始配置、逐條通路與理由；`story-props.js` 管理家具、玻璃和地標；`model-source.js` 管理 Three.js 與操作；`room-create-3d.js` 管理滑鼠拖曳建立房間；`editor-state.js` 管理房間與通路資料、版本相容、格式驗證和復原／重做；`sandbox-routes.js` 管理路口與直角路線幾何；`sandbox-ui.js` 管理進階道路編輯面板；`mouse-editor.js` 管理直接拖曳、畫路與拆除；`mouse-routes.js` 將滑鼠路徑轉成可保存的通路與編輯控制點；`floor-stairs.js` 管理逐層梯段、獨立位移、形狀與平台高度；`data.js`／`scene-data.json` 包含原圖與逐房原文快照。
+`spatial.js` 管理初始配置、逐條通路與理由；`story-props.js` 管理家具、玻璃和地標；`model-source.js` 管理 Three.js 與操作；`room-create-3d.js` 管理滑鼠拖曳建立房間；`editor-state.js` 管理房間與通路資料、版本相容、格式驗證和復原／重做；`sandbox-routes.js` 管理路口與直角路線幾何；`sandbox-ui.js` 管理進階道路編輯面板；`mouse-editor.js` 管理直接拖曳、畫路與拆除；`mouse-routes.js` 將滑鼠路徑轉成可保存的通路與編輯控制點；`floor-stairs.js` 管理逐層梯段、獨立位移、形狀與平台高度；`data.js`／`scene-data.json` 的節點目標、通行條件與規格連結，由儲存庫根目錄的 `node tools/sync-canonical.mjs` 依正式劇本同步。房間配置與編輯器資料格式不隨敘事同步改寫；同步後執行 `npm run build` 更新嵌入資料。
 
 修改時執行 `npm install`，編輯後執行 `npm run build`。僅查看現成 HTML 不必安裝。
 

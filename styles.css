@@ -101,12 +101,12 @@ kbd { color: var(--faint); border: 1px solid var(--line); border-radius: 3px; pa
 .empty-icon { color: var(--accent); font-size: 32px; }
 .hidden { display: none !important; }
 
-.reader-overlay { position: fixed; inset: 0; z-index: 10; display: block; background: #0e1621; }
+.reader-overlay { position: fixed; inset: 0; z-index: 30; display: block; background: #0e1621; }
 .reader-backdrop { display: none; }
 .reader-panel { position: relative; width: 100%; height: 100%; background: #0e1621; overflow-y: auto; animation: reader-fade-in .18s ease-out; }
 .reader-topbar { position: sticky; top: 0; z-index: 2; min-height: 70px; display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 13px clamp(22px, 5vw, 76px); background: rgba(14,22,33,.97); border-bottom: 1px solid var(--line); backdrop-filter: blur(12px); }
 .reader-path { color: var(--faint); font-size: 10px; max-width: 50vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.reader-content { max-width: 1120px; margin: 0 auto; padding: 64px clamp(28px, 6vw, 96px) 110px; }
+.reader-content { max-width: 1120px; margin: 0 auto; padding: 64px clamp(28px, 6vw, 96px) 110px; overflow-wrap: anywhere; }
 .reader-content h1 { color: var(--text); font-family: Georgia, "Noto Serif TC", serif; font-size: 35px; line-height: 1.35; font-weight: 400; border-bottom: 1px solid var(--line); padding-bottom: 22px; margin: 0 0 26px; }
 .reader-content h2 { color: var(--accent); font-family: Georgia, "Noto Serif TC", serif; font-size: 24px; font-weight: 400; margin: 42px 0 16px; }
 .reader-content h3 { color: var(--cyan); font-size: 17px; font-weight: 500; margin: 30px 0 12px; }
@@ -137,7 +137,7 @@ kbd { color: var(--faint); border: 1px solid var(--line); border-radius: 3px; pa
 @keyframes reader-fade-in { from { opacity: .35; } to { opacity: 1; } }
 @media (max-width: 1040px) { .document-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .hero, .toolbar, .content-area { padding-left: 35px; padding-right: 35px; } }
 @media (max-width: 760px) {
-  .sidebar { position: fixed; z-index: 20; transform: translateX(-100%); transition: transform .2s ease; box-shadow: var(--shadow); }
+  .sidebar { position: fixed; left: 0; z-index: 20; transform: translateX(-100%); transition: transform .2s ease; box-shadow: var(--shadow); }
   .sidebar.open { transform: translateX(0); }
   .menu-button { display: inline-block; margin-right: 10px; }
   .topbar { padding: 0 18px; justify-content: flex-start; }
@@ -169,3 +169,4 @@ kbd { color: var(--faint); border: 1px solid var(--line); border-radius: 3px; pa
 .hero-stats { display:none; }
 
 .core-filters,.core-group{grid-column:1/-1}.core-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}.core-filters button{background:var(--panel);color:var(--text);border:1px solid var(--line);padding:9px 16px;border-radius:6px;cursor:pointer}.core-filters button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}.core-group{margin:16px 0 0;color:var(--cyan);font-size:18px}
+.md-anchor { display: block; scroll-margin-top: 90px; }

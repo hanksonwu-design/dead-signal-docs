@@ -18,6 +18,7 @@ const FOLDER_LABELS = {
   "06_關卡規格": "關卡流程",
   "07_視聽與介面": "視聽與介面",
   "08_製作管理": "製作管理",
+  "09_劇本": "正式劇本",
   "09_故事劇情": "故事劇情",
 };
 const ROOT_FOLDER = "根目錄";
@@ -68,6 +69,8 @@ export function buildDocuments() {
       folderLabel: FOLDER_LABELS[folder] || folder.replace(/^\d+_/, ""),
       category,
       archived: category === "批次存檔",
+      weeklyDetail: fm["導覽層級"] === "每週細表",
+      redirect: fm["正式入口"] || "",
       status: fm["狀態"] || "",
       updated: fm["更新"] || "",
       summary: fm["摘要"] || firstQuote(content),

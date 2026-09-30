@@ -5,7 +5,7 @@ name: Build docs.json
 on:
   push:
     branches: [main]
-    paths: ["docs/**", "tools/build-docs.mjs"]
+    paths: ["docs/**", "tools/*.mjs", "scene_graph.json", "building/scene-data.json", "building/data.js"]
   workflow_dispatch:
 
 permissions:
@@ -25,6 +25,8 @@ jobs:
           node-version: 20
       - name: Build
         run: |
+          node tools/sync-canonical.mjs --check
+          node tools/test-canonical.mjs
           if node tools/build-docs.mjs --check; then exit 0; fi
           node tools/build-docs.mjs
           git config user.name "github-actions[bot]"
