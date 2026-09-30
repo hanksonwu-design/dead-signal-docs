@@ -305,6 +305,15 @@ test('website exposes eight acts, an index and one appendix; old bookmarks resol
   assert.equal(documents.filter(doc => doc.weeklyDetail).length,13);
 });
 
+test('abridged novel category and titles agree without changing its document path', () => {
+  const novels = buildDocuments().filter(doc => doc.folder === '09_故事劇情');
+  assert.equal(novels.length, 1);
+  assert.equal(novels[0].path, '09_故事劇情/17_縮寫短文.md');
+  assert.equal(novels[0].folderLabel, '精簡版小說');
+  assert.equal(novels[0].title, '精簡版小說');
+  assert(novels[0].content.includes('# 灰燈寨（精簡版小說）'));
+});
+
 test('malformed masters and unmapped routes fail before any output is written', () => {
   assert.throws(() => parseMaster(master.text.replace('<!-- import:s-0904-6:end -->','')), /imported blocks/);
   const badGraph = structuredClone(graph);
