@@ -1,5 +1,5 @@
 import {TransformControls} from 'three/addons/controls/TransformControls.js';
-import {editableRouteFromPath, nearestPathPoint} from './mouse-routes.js';
+import {connectionFromGesture, editableRouteFromPath, nearestPathPoint} from './mouse-routes.js';
 import {inferPortal, makeRoutePoints, portalPosition} from './sandbox-routes.js';
 import {clipRouteToHeight} from './floor-route-view.js';
 import {makeLandingLinkPoints} from './landing-links.js';
@@ -33,7 +33,7 @@ export function createObjectEdit3D(env) {
  const routeVisible = value => value.isPlatform ? platformVisible(value.id) : edgeVisible(value.id);
  const pointVisible = point => { const bounds = env.routeBounds?.(); return !bounds || point[1] >= bounds[0] && point[1] <= bounds[1]; };
  const status = (message, error = false) => env.status?.(message, error);
- const roomDescription = n => `${n.id} · ${floorName(n.floor)} · 已選取；拖 X／Y／Z 箭頭或平面把手移動`;
+ const roomDescription = n => `${n.id} · ${floorName(n.floor)} · 拖 X／Y／Z 移動；從牆邊青色 ＋ 拉到另一間房接走廊`;
  function ray(event) {
   const rect = env.canvas().getBoundingClientRect(), result = new THREE.Raycaster();
   result.setFromCamera(new THREE.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1), env.camera());
@@ -50,21 +50,30 @@ export function createObjectEdit3D(env) {
   return makeRoutePoints(a, b, roomY(a), roomY(b), value.route, env.floorHeight);
  }
  function drawPreview() {
-  clearOverlay(); if (!enabled || !working || !routeVisible(working)) return;
-  const bounds = env.routeBounds?.(), points = routePath(working), paths = bounds ? clipRouteToHeight(points, ...bounds) : [points];
+  clearOverlay(); const drawing = gesture?.kind === 'room-port' ? gesture : null, value = drawing?.draft || working;
+  if (!enabled || !value || !drawing && !routeVisible(value)) return;
+  const bounds = env.routeBounds?.(), points = drawing?.previewPoints || routePath(value), paths = bounds ? clipRouteToHeight(points, ...bounds) : [points];
   previewBounds = JSON.stringify(bounds ?? null);
-  overlay = new THREE.Group(); scene.add(overlay); for (const path of paths) env.drawRoute(working, path, overlay, true);
+  overlay = new THREE.Group(); scene.add(overlay); for (const path of paths) env.drawRoute(value, path, overlay, true);
  }
  function marker(text, point, kind, info = {}) {
   if (!pointVisible(point)) return;
   const el = document.createElement('button'); el.type = 'button'; el.textContent = text;
-  el.className = kind === 'endpoint' || kind === 'fixed' ? 'mouse-endpoint object3d-handle' : kind === 'midpoint' ? 'mouse-midpoint object3d-handle' : 'mouse-point object3d-handle';
-  el.dataset.object3dKind = kind; el.title = kind === 'fixed' ? '固定接點：隨原房間或樓梯平台移動' : kind === 'endpoint' ? '拖曳調整房間路口' : kind === 'midpoint' ? '新增通路轉角' : '拖曳通路轉角'; el.setAttribute('aria-label', el.title);
+  el.className = kind === 'room-port' ? 'mouse-port object3d-room-port object3d-handle' : kind === 'endpoint' || kind === 'fixed' ? 'mouse-endpoint object3d-handle' : kind === 'midpoint' ? 'mouse-midpoint object3d-handle' : 'mouse-point object3d-handle';
+  el.dataset.object3dKind = kind; el.title = kind === 'room-port' ? `從 ${info.roomId} 牆邊拖到另一間房間，建立走廊` : kind === 'fixed' ? '固定接點：隨原房間或樓梯平台移動' : kind === 'endpoint' ? '拖到其他房間改接；拖到原房間調整路口' : kind === 'midpoint' ? '新增通路轉角' : '拖曳通路轉角'; el.setAttribute('aria-label', el.title);
   if (kind === 'fixed') { el.disabled = true; el.style.cursor = 'default'; }
   host.append(el); markers.push({el, point: [...point], kind, ...info});
  }
  function buildMarkers() {
-  clearMarkers(); if (!enabled || !working || !routeVisible(working)) return;
+  clearMarkers(); if (!enabled) return;
+  if (selected?.kind === 'room') {
+   const n = nodeMap.get(selected.id); if (!nodeVisible(n)) return;
+   for (const side of ['north', 'east', 'south', 'west']) {
+    const portal = {side, u: 0}; marker('+', portalPosition(n, portal, roomY(n), 1.6), 'room-port', {roomId: n.id, portal, y: roomY(n) + .3});
+   }
+   return;
+  }
+  if (!working || !routeVisible(working)) return;
   if (working.isPlatform) { buildPlatformMarkers(); return; }
   const a = nodeMap.get(working.fromId), b = nodeMap.get(working.toId), ha = roomY(a), hb = roomY(b), route = working.route;
   marker('A', portalPosition(a, route.from, ha, route.width), 'endpoint', {end: 'from', y: ha + .3});
@@ -121,7 +130,8 @@ export function createObjectEdit3D(env) {
  }
  function cancel() {
   cancelling = true;
-  if (gesture) { const old = gesture; gesture = null; if (old.beforeEdge) working = old.beforeEdge; if (host.hasPointerCapture?.(old.pointer)) host.releasePointerCapture(old.pointer); env.controls().enabled = old.orbit; }
+  if (gesture) { const old = gesture; gesture = null; if (old.beforeEdge) working = old.beforeEdge; if (host.hasPointerCapture?.(old.pointer)) host.releasePointerCapture(old.pointer); env.controls().enabled = old.orbit; if (old.kind === 'room-port') transform.enabled = enabled && selected?.kind === 'room'; }
+  env.highlightRoom?.(null);
   if (gizmoGesture) { const old = gizmoGesture; gizmoGesture = null; resetRoomPreview(old.before.id); proxy.position.set(old.before.x, old.before.y, old.before.z); env.controls().enabled = old.orbit; }
   const owner = gizmoOwner; gizmoOwner = null; if (owner !== null && env.canvas().hasPointerCapture?.(owner)) env.canvas().releasePointerCapture(owner);
   transform.dragging = false; transform.axis = null; cancelling = false;
@@ -131,25 +141,78 @@ export function createObjectEdit3D(env) {
  function selectRoom(id) {
   const n = nodeMap.get(id); if (!nodeVisible(n)) return false;
   clearSelection(); selected = {kind: 'room', id}; proxy.position.set(n.x, roomY(n), n.z); transform.attach(proxy); transform.enabled = enabled;
-  env.onSelect?.(selected); status(roomDescription(n)); notify(); return true;
+  env.onSelect?.(selected); buildMarkers(); status(roomDescription(n)); notify(); return true;
  }
  function selectEdge(id) {
   const original = edge(id); if (!original) return false;
   const a = nodeMap.get(original.fromId), b = nodeMap.get(original.toId); if (!a || !b) return false;
   clearSelection(); selected = {kind: 'edge', id};
   working = {...clone(original), route: original.route?.stairSections?.length || original.route?.shape === 'manual' ? clone(original.route) : editableRouteFromPath(original, pathFor(original).points, a, b, roomY(a), roomY(b))};
-  env.onSelect?.(selected); drawPreview(); buildMarkers(); status(`${a.id} → ${b.id} · 拖金色轉角調整走廊；＋ 新增轉角，A／B 調整路口`); notify(); return true;
+  env.onSelect?.(selected); drawPreview(); buildMarkers(); status(`${a.id} → ${b.id} · 拖金色轉角調整走廊；＋ 新增轉角，A／B 可拉到其他房間改接`); notify(); return true;
  }
  function selectPlatform(id) {
   const link = platform(id); if (!link || !platformVisible(id)) return false;
   clearSelection(); selected = {kind: 'platform', id}; working = platformDraft(link);
   env.onSelect?.(selected); drawPreview(); buildMarkers(); status(`${id} · 拖金色轉角，＋ 新增轉角；A／B 固定，隨原房間或樓梯平台移動`); notify(); return true;
  }
- function roomAt(event, cast) {
-  const label = event.target.closest?.('.room-tag');
-  if (label?.dataset.node && nodeVisible(nodeMap.get(label.dataset.node))) return {n: nodeMap.get(label.dataset.node), distance: -1};
+ function roomAt(event, cast, underPointer = false) {
+  // Pointer capture retargets events to the host, so a drop must inspect the
+  // actual element under the cursor instead of trusting event.target.
+  const underneath = underPointer ? document.elementFromPoint?.(event.clientX, event.clientY) : null;
+  const target = underPointer ? underneath ?? event.target : event.target;
+  const label = target?.closest?.('.room-tag');
+  if (label) return label.dataset.node && !label.hidden && nodeVisible(nodeMap.get(label.dataset.node)) ? {n: nodeMap.get(label.dataset.node), distance: -1} : null;
+  if (underPointer) {
+   const control = target?.closest?.('[data-object3d-kind]'), item = markers.find(m => m.el === control);
+   if (item && ['room-port', 'endpoint'].includes(item.kind)) {
+    const id = item.kind === 'room-port' ? item.roomId : working?.[item.end === 'from' ? 'fromId' : 'toId'], n = nodeMap.get(id);
+    return !item.el.hidden && nodeVisible(n) ? {n, distance: -1, portal: item.portal} : null;
+   }
+   // Floating toolbar controls cover the canvas. A drop there must not pass
+   // through the UI and silently connect whichever room lies behind it.
+   if (target !== env.canvas() && !(target === host && !underneath)) return null;
+  }
+  const rect = env.canvas().getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.left + rect.width || event.clientY < rect.top || event.clientY > rect.top + rect.height) return null;
   const hit = cast.intersectObjects(env.roomMeshes().filter(o => o.parent?.visible !== false && nodeVisible(nodeMap.get(o.userData.node))), true)[0];
-  return hit ? {n: nodeMap.get(hit.object.userData.node), distance: hit.distance} : null;
+  if (!hit) return null;
+  let object = hit.object; while (object && !object.userData?.node) object = object.parent;
+  const n = nodeMap.get(object?.userData.node); return nodeVisible(n) ? {n, distance: hit.distance, point: hit.point} : null;
+ }
+ function nextEdgeId() {
+  const snapshot = editor.snapshot(), used = new Set([...data.edges, ...(data.platformLinks || []), ...(data.terminalRoutes || []), ...(snapshot.terminalRoutes || [])].map(value => value.id));
+  let number = 1; while (used.has(`custom-${number}`)) number++; return `custom-${number}`;
+ }
+ function connectionTarget(event, excludeId) {
+  const hit = roomAt(event, ray(event), true);
+  if (!hit || hit.n.id === excludeId) return null;
+  const p = world(event, roomY(hit.n) + .3) || hit.point; if (!p) return null;
+  return {n: hit.n, portal: hit.portal || inferPortal(hit.n, p)};
+ }
+ function updateConnection(event, g) {
+  const source = nodeMap.get(g.roomId), target = connectionTarget(event, source.id);
+  g.valid = !!target; env.highlightRoom?.(target?.n.id ?? null);
+  if (target) {
+   g.draft = connectionFromGesture({id: g.id, fromRoom: source, toRoom: target.n, fromPortal: g.portal, toPortal: target.portal, heightA: roomY(source), heightB: roomY(target.n)});
+   g.previewPoints = null;
+   status(`${source.id} → ${target.n.id} · 放開建立${Math.abs(roomY(source) - roomY(target.n)) > .05 ? '樓梯' : '走廊'}；Esc 取消`);
+  } else {
+   const p = world(event, roomY(source) + .3), start = portalPosition(source, g.portal, roomY(source), 1.6);
+   g.draft = {id: g.id, kind: '自訂', back: true, route: {width: 1.6, mode: 'auto'}};
+   g.previewPoints = p ? [start, ['east', 'west'].includes(g.portal.side) ? [p.x, start[1], start[2]] : [start[0], start[1], p.z], [p.x, start[1], p.z]] : [];
+   status(`從 ${source.id} 拉到另一間可見房間後放開；空白處放開取消`);
+  }
+  drawPreview();
+ }
+ function updateEndpoint(event, g) {
+  const oppositeId = g.end === 'from' ? g.beforeEdge.toId : g.beforeEdge.fromId, target = connectionTarget(event, oppositeId);
+  g.valid = !!target; env.highlightRoom?.(target?.n.id ?? null);
+  if (!target) { status('請拖到可見房間後放開；空白處放開取消改接'); return; }
+  // Start each sample from the original draft. Crossing another room cannot
+  // gradually alter waypoints, the other entrance or saved stair sections.
+  working = clone(g.beforeEdge); working[g.end === 'from' ? 'fromId' : 'toId'] = target.n.id; working.route[g.end] = target.portal;
+  g.marker.point = portalPosition(target.n, target.portal, roomY(target.n), working.route.width);
+  drawPreview(); status(`${working.fromId} → ${working.toId} · 放開保存路口；Esc 取消`);
  }
  function corridorAt(cast) {
   cast.params.Line.threshold = .4;
@@ -172,6 +235,12 @@ export function createObjectEdit3D(env) {
   if (!enabled || event.button !== 0 || gesture) return;
   if (gizmoGesture) { if (gizmoOwner !== null && event.pointerId !== gizmoOwner) { event.preventDefault(); event.stopImmediatePropagation(); } return; }
   const handle = event.target.closest?.('[data-object3d-kind]'), item = markers.find(m => m.el === handle);
+  if (item?.kind === 'room-port') {
+   if (!nodeVisible(nodeMap.get(item.roomId))) return;
+   capture(event, {kind: 'room-port', roomId: item.roomId, portal: clone(item.portal), id: nextEdgeId(), valid: false});
+   transform.enabled = false; transform.axis = null;
+   status(`從 ${item.roomId} 拉到另一間可見房間後放開；Esc 取消`); return;
+  }
   if (item && working) {
    if (item.kind === 'fixed') return;
    const start = world(event, item.y); if (!start) return;
@@ -200,11 +269,8 @@ export function createObjectEdit3D(env) {
    const p = world(event, g.y); if (!p) return; const point = working.route.points[g.index];
    point.x = clamp(snap(g.value.x + p.x - g.start.x), -150, 150); point.z = clamp(snap(g.value.z + p.z - g.start.z), -150, 150); working.route.shape = 'manual'; drawPreview();
    g.marker.point = [point.x, g.y, point.z];
-  } else if (g.kind === 'endpoint') {
-   const p = world(event, g.y); if (!p) return;
-   const n = nodeMap.get(g.end === 'from' ? working.fromId : working.toId); working.route[g.end] = inferPortal(n, p); drawPreview();
-   g.marker.point = portalPosition(n, working.route[g.end], roomY(n), working.route.width);
-  }
+  } else if (g.kind === 'endpoint') updateEndpoint(event, g);
+  else if (g.kind === 'room-port') updateConnection(event, g);
  }
  function pointerUp(event, aborted = false) {
   if (gizmoGesture && gizmoOwner !== null && event.pointerId !== gizmoOwner) { event.preventDefault(); event.stopImmediatePropagation(); return; }
@@ -212,11 +278,26 @@ export function createObjectEdit3D(env) {
   if (!gesture || event.pointerId !== gesture.pointer) return;
   if (gesture.stamp !== stamp()) { cancel(); refresh(); return; }
   if (aborted) { cancel(); refresh(); return; }
-  const g = gesture; gesture = null; if (host.hasPointerCapture?.(g.pointer)) host.releasePointerCapture(g.pointer); env.controls().enabled = g.orbit;
+  const g = gesture;
+  // Mouseup can arrive at a different room without an intervening move event.
+  // Its location is authoritative, including a final drop on empty space.
+  if (Math.hypot(event.clientX - g.startClientX, event.clientY - g.startClientY) > 4) g.moved = true;
+  if (g.moved && g.kind === 'room-port') updateConnection(event, g);
+  if (g.moved && g.kind === 'endpoint') updateEndpoint(event, g);
+  gesture = null; if (host.hasPointerCapture?.(g.pointer)) host.releasePointerCapture(g.pointer); env.controls().enabled = g.orbit;
+  if (g.kind === 'room-port') transform.enabled = enabled && selected?.kind === 'room';
+  env.highlightRoom?.(null);
   event.preventDefault(); event.stopImmediatePropagation();
   try {
-   if (g.beforeEdge && (g.moved || g.kind === 'midpoint')) {
-    const changed = working.isPlatform ? editor.updatePlatformLink(working.id, {points: clone(working.route.points)}) : editor.updateEdge(working.id, {route: clone(working.route)});
+   if (g.kind === 'room-port' && g.moved && g.valid) {
+    if (editor.addEdge(g.draft)) env.afterEdit(`${g.draft.fromId} → ${g.draft.toId} 通路已建立`);
+   } else if (g.beforeEdge && (g.moved || g.kind === 'midpoint') && (g.kind !== 'endpoint' || g.valid)) {
+    const patch = {route: clone(working.route)};
+    if (g.kind === 'endpoint') {
+     Object.assign(patch, {fromId: working.fromId, toId: working.toId});
+     if (working.fromId !== g.beforeEdge.fromId || working.toId !== g.beforeEdge.toId) Object.assign(patch, {kind: '自訂', source: '沙盒自訂配置', gate: '沙盒自訂路口。', motion: '滑鼠編輯通路。', returnRule: '依自訂通行方向。'});
+    }
+    const changed = working.isPlatform ? editor.updatePlatformLink(working.id, {points: clone(working.route.points)}) : editor.updateEdge(working.id, patch);
     if (changed) env.afterEdit(working.isPlatform ? '平台連接轉角已更新；A／B 接點保持固定' : `${working.fromId} → ${working.toId} 通路已更新`);
    }
   } catch (error) { if (g.beforeEdge) working = g.beforeEdge; status(error.message, true); }
@@ -227,7 +308,7 @@ export function createObjectEdit3D(env) {
   transform.camera = env.camera();
   if (selected?.kind === 'room') {
    const n = nodeMap.get(selected.id); if (!nodeVisible(n)) { clearSelection(); return; }
-   proxy.position.set(n.x, roomY(n), n.z); if (enabled) transform.attach(proxy);
+   proxy.position.set(n.x, roomY(n), n.z); if (enabled) transform.attach(proxy); clearOverlay(); buildMarkers();
   } else if (selected?.kind === 'edge') {
    const original = edge(selected.id); if (!original || !edgeVisible(selected.id)) { clearSelection(); return; }
    const a = nodeMap.get(original.fromId), b = nodeMap.get(original.toId);
@@ -276,11 +357,12 @@ export function createObjectEdit3D(env) {
  }, true);
  function update() {
   if (!enabled) return; transform.camera = env.camera(); const rect = host.getBoundingClientRect();
+  if ((gesture || gizmoGesture) && (gesture || gizmoGesture).stamp !== stamp()) { cancel(); refresh(); return; }
   if (selected?.kind === 'room' && !nodeVisible(nodeMap.get(selected.id))) { clearSelection(); return; }
   if (selected?.kind === 'edge' && !edgeVisible(selected.id)) { clearSelection(); return; }
   if (selected?.kind === 'platform' && !platformVisible(selected.id)) { clearSelection(); return; }
-  if (working && previewBounds !== JSON.stringify(env.routeBounds?.() ?? null)) { drawPreview(); buildMarkers(); }
-  for (const m of markers) { const point = new THREE.Vector3(...m.point).project(env.camera()); m.el.hidden = !pointVisible(m.point) || Math.abs(point.x) > 1.05 || Math.abs(point.y) > 1.05 || point.z < -1 || point.z > 1; m.el.style.left = `${(point.x * .5 + .5) * rect.width}px`; m.el.style.top = `${(-point.y * .5 + .5) * rect.height}px`; }
+  if (!gesture && working && previewBounds !== JSON.stringify(env.routeBounds?.() ?? null)) { drawPreview(); buildMarkers(); }
+  for (const m of markers) { const point = new THREE.Vector3(...m.point).project(env.camera()); m.el.hidden = m.kind === 'room-port' && !!(gizmoGesture || transform.dragging) || !pointVisible(m.point) || Math.abs(point.x) > 1.05 || Math.abs(point.y) > 1.05 || point.z < -1 || point.z > 1; m.el.style.left = `${(point.x * .5 + .5) * rect.width}px`; m.el.style.top = `${(-point.y * .5 + .5) * rect.height}px`; }
  }
  return {setEnabled, refresh, update, clearSelection, cancel, moveFloor, selectRoom,
   get enabled() { return enabled; }, get selected() { return selected; }, get dragging() { return !!(gesture || gizmoGesture || transform.dragging); },

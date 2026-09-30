@@ -338,7 +338,7 @@ function sync3DEditor(){
  $('stair-3d-toolbar').hidden=!active;
  $('stair-3d-undo').disabled=!editor.canUndo();$('stair-3d-redo').disabled=!editor.canRedo();
  const selected=objectEdit3D?.selected,stair=stairDrag3D?.selected,room=selected?.kind==='room'?nodeMap.get(selected.id):null;
- $('object-3d-selection').textContent=room?`${room.id} · ${floorName(room.floor)} · 拖彩色軸或平面把手移動`:selected?`走廊 ${selected.id} · 拖金色點改路線`:stair?`${floorName(stair.fromFloor)} → ${floorName(stair.toFloor)} · 拖動此段樓梯`:'選擇房間、走廊或樓梯';
+ $('object-3d-selection').textContent=room?`${room.id} · ${floorName(room.floor)} · 拖彩色軸移動；拖牆上 ＋ 接房間`:selected?`走廊 ${selected.id} · 拖金色點改路線；拖 A／B 改接房間`:stair?`${floorName(stair.fromFloor)} → ${floorName(stair.toFloor)} · 拖動此段樓梯`:'選擇房間、走廊或樓梯';
  $('object-3d-floor-actions').hidden=!room;
  if(room){const i=floors.indexOf(room.floor);$('object-3d-down').disabled=i<=0;$('object-3d-up').disabled=i>=floors.length-1;}
  syncEditModeSwitch();
@@ -389,7 +389,8 @@ function setupObjectEdit3D(){
  objectEdit3D=createObjectEdit3D({THREE,host,scene,data,nodeMap,editor,roomY,pathFor,floorHeight:f=>floorY.get(f),floors:()=>floors,offsets,
   camera:()=>camera,controls:()=>controls,canvas:()=>renderer.domElement,roomMeshes:()=>roomMeshes,edgeObjects:visibleEdgeObjects,platformLinkObjects:visiblePlatformLinkObjects,routeBounds:routeViewBounds,
   drawRoute,afterEdit,status:editorStatus,visible:inGroup,onSelect:selected=>{stairDrag3D?.clearSelection();if(selected?.kind==='room'&&state.selected!==selected.id)selectRoom(selected.id);},onChange:sync3DEditor,
-  previewRoom:(id,delta)=>roomObjects.get(id)?.g.position.set(delta.x,delta.y||0,delta.z)
+  previewRoom:(id,delta)=>roomObjects.get(id)?.g.position.set(delta.x,delta.y||0,delta.z),
+  highlightRoom:id=>{roomObjects.forEach((o,key)=>{o.selection.visible=key===state.selected||key===id;o.selection.material.color.setHex(key===id?0x7cebd8:0xffce8c);});}
  });
 }
 function editorStatus(message,error=false){for(const id of ['edit-status','object-3d-status']){$(id).textContent=message;$(id).classList.toggle('error',error);}}

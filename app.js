@@ -85,7 +85,10 @@ function renderNav() {
   });
   $("allCount").textContent = currentDocs().length;
   $("allDocs").classList.toggle("active", state.folder === "all" && state.status === "all");
-  const folders = [...folderCounts.entries()].sort((a, b) => a[0].localeCompare(b[0], "zh-Hant"));
+  const folders = [...folderCounts.entries()].sort((a, b) =>
+    Number(a[0] === "09_故事劇情") - Number(b[0] === "09_故事劇情") ||
+    a[0].localeCompare(b[0], "zh-Hant")
+  );
   $("folderNav").innerHTML = folders.map(([key, count]) => `
     <button class="folder-link ${state.folder === key ? "active" : ""}" data-folder="${esc(key)}" type="button">
       <span class="folder-icon">▱</span><span>${esc(state.documents.find((d) => d.folder === key)?.folderLabel || key)}</span><span class="nav-count">${count}</span>
