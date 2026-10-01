@@ -923,7 +923,7 @@ test('gameplay inventory and novel share the source contracts while production s
   assert(novel.includes('那張照片已經清楚了'));
   const assets = block('s-0810-21').split('<a id="core-gameplay-assets"></a>')[1];
   assert(assets.includes('未宣稱圖稿或引擎已完成'));
-  assert(assets.includes('不增加 48 節點、342 場次、55 條動線或 15 個訊號槽'));
+  assert(assets.includes('不增加 48 個宏觀流程節點、342 場次、55 條動線或 15 個訊號槽'));
   assert(assets.includes('須另估工時'));
 });
 
@@ -961,7 +961,7 @@ test('plain-language signal repair still requires the actual card and expanded r
 test('reading layers retain evidence distinctions without solving or revealing identity early', () => {
   const pace = block('s-0304-19');
   for (const text of ['未知欄位保持未讀', '同錯字只證明範本相同', '不先亮正確路徑',
-    '三月份皆必讀', '尚未測試', '不宣稱已降低負評']) assert(pace.includes(text), text);
+    '三個月份皆必讀', '尚未測試', '不宣稱已降低負評']) assert(pace.includes(text), text);
   const versions = block('s-0908-8');
   for (const text of ['原職稱', '灰塵點', '建檔晚於入境', '三個月前']) assert(versions.includes(text), text);
   const people = block('s-0908-21');

@@ -18,14 +18,18 @@
 修改主稿後執行：
 
 ```powershell
+node tools/build-scene-images.mjs
 node tools/sync-canonical.mjs
 node tools/build-story-inventory.mjs
+node tools/test-scene-images.mjs
 node tools/test-canonical.mjs
 node tools/build-docs.mjs
 npm --prefix building run build
 ```
 
 `node tools/sync-canonical.mjs --check` 檢查分類副本與場景資料；`node tools/build-docs.mjs --check` 檢查網站資料包。縮寫小說仍需人工依主稿複核，不從規格機械拼接。修改前備份為 `archive/2026-09-30-canonical-sync/before-sync.zip`。
+
+場景主圖、過渡鏡位、物件近看及文件頁只在各幕製作規格的 `scene-images` 表格維護；既有 H／B 熱點與圖號的對應在同房 `hotspot-images` 表格維護。新增原熱點時也須補對圖，不能只在正文列出物件。`build-scene-images.mjs` 檢查原熱點覆蓋，並同步劇本內簡明圖單、各幕連線圖號與場景道具總表；加 `--check` 可檢查是否同步。一列可能含多頁或差分，並非已完成的一張圖。48 個宏觀流程節點與 55 條動線不等於全部畫面節點；新畫面不能默默新增關卡門檻。更動原動線時，先同步場景圖，再重建圖單與相關查表。
 
 總目錄末尾的 `canonical-source` 註記是同步來源清單，不是可讀正文。刪除匯入區塊時需同步移除對應 `indices`，舊連結可保留定位錨點；不能為湊舊段落數留下空白正文。`tools/screenplay-files.mjs` 定義正式文件清單；同步工具逐份讀取，不產生另一份合併正文。`tools/reorder-screenplay.mjs`、`tools/split-screenplay.mjs` 與 `tools/split-screenplay-specs.mjs` 是一次性遷移工具，已完成遷移的文件不會被再次改寫。網站保留總目錄與舊分幕製作錨點的轉介；一般 Markdown 連結直接指向目前的正式來源。
 
@@ -61,4 +65,4 @@ npm --prefix building run build
   修改模型原始碼後在 `building/` 執行 `npm install`、`npm run build` 重新產生 `building/index.html`。
 - GitHub Pages 設為從 main 分支的根目錄發布。
 
-本輪只更新本地週表的規格連結，沒有核對或改寫 Google 試算表中的派工、工期與完成狀態。概念圖像、配音素材、Godot 功能與真人試玩也不因文件一致而視為已驗收。
+本地週表的規格連結納入文件檢查；Google 試算表中的派工、工期與完成狀態仍須另行核對，不能視為已同步。概念圖像、配音素材、Godot 功能與真人試玩也不因文件一致而視為已驗收。
