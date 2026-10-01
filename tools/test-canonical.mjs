@@ -63,6 +63,46 @@ test('eight maintained acts place their story before local specifications withou
   assert.equal(master.text.split('**保存與素材驗收：**原房主線').length - 1, 1);
 });
 
+test('screenplay presentation cues distinguish motion, stills, transitions and interfaces', () => {
+  const labels = ['動畫演出', '靜態畫面', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
+  assert(!master.text.includes('〔演出〕'));
+  for (const label of labels) assert(block('s-0900-4').includes(`（${label}）`), label);
+  for (const act of ACTS) {
+    const text = master.documents.get(act.path);
+    const story = text.slice(0, text.indexOf(`<a id="spec-act-${act.act}">`));
+    assert(story.includes('（動畫演出）'), act.path);
+    assert(story.includes('（靜態畫面）'), act.path);
+    assert(story.includes('（介面呈現）'), act.path);
+  }
+  for (const id of ['s-0904-16', 's-0905-22', 's-0905-55', 's-0906-14', 's-0906-62', 's-0908-28']) {
+    assert(block(id).includes('（鏡位切換）'), id);
+  }
+  assert(block('s-0903-3').includes('（配音演出）保留人的氣息與猶豫。'));
+  assert(block('s-0904-42').includes('（介面呈現）五個人物碎片'));
+});
+
+test('frozen history and H-08 remain still while present action and the unique thaw are explicit', () => {
+  for (const [id, text] of [
+    ['s-0903-23', '同一間房'], ['s-0905-27', '同鏡位靜格'],
+    ['s-0907-14', '凝固構圖始終不動'], ['s-0908-45', 'C-07 有完整可辨的臉'],
+    ['s-0908-25', '凝固或原快取靜格'], ['s-0909-20', '25–45 秒靜止回憶'],
+  ]) {
+    assert(block(id).includes(`（靜態畫面）${text}`), id);
+    assert(!block(id).includes('（動畫演出）'), id);
+  }
+  assert(block('s-0905-17').includes('（動畫演出）回到現時，老周的迴聲'));
+  assert(block('s-0906-11').includes('（動畫演出）退出後，現時輪廓'));
+  assert(block('s-0907-12').includes('（靜態差分）玩家轉開鏡頭後才撤去該靜格'));
+  assert(block('s-0907-25').includes('（靜態畫面）主角收手時，門邊那隻手仍是靜格。'));
+  assert(block('s-0909-5').includes('（靜態畫面）窗內的人與物保持不動'));
+  assert(block('s-0909-59').includes('（動畫演出）同一歷史鏡位中，十二秒解凍'));
+  assert(block('s-0909-59').includes('（靜態差分）減少動態版用原八張定格、同十二秒。'));
+  assert(block('s-0909-60').includes('（介面呈現）選用文字摘要'));
+  assert(block('s-0910-5').includes('（動畫演出）泵體後內凹室'));
+  assert(block('s-0910-6').includes('（靜態畫面）記憶不動'));
+  assert(block('s-0910-42').includes('（動畫演出）康刷白色管理卡'));
+});
+
 test('derived files exactly match the current master; no legacy-heading fallback', () => {
   const { outputs, warnings } = buildSync();
   assert.deepEqual(warnings, []);
@@ -105,8 +145,9 @@ test('26 model nodes and 30 routes keep canonical references without adding lowe
 test('R1 coerced intake; no voluntary work or freedom result', () => {
   const scene = block('s-0904-6');
   assert(scene.includes('等待循環已結束。'));
-  assert(scene.includes('不以姿態判定誰被騙、誰被綁'));
-  assert(scene.includes('不以消散宣告受害者已得到自由'));
+  const spec = block('s-0602-4');
+  assert(spec.includes('不據此判定誰被騙、誰被綁'));
+  assert(spec.includes('沒有證據證明已救出他們'));
   assert(!scene.includes('「下一位」'));
 });
 
@@ -190,15 +231,16 @@ test('cultural close-ups stay optional, local and outside main evidence gates', 
   assert(assets.includes('上述 4 組局部'));
   assert(assets.includes('無新配音、證據、資源、主線或結局旗標'));
   assert(block('s-0904-39').includes('不先開放被衣架擋住的繡布'));
-  for (const id of ['s-uppertech-31', 's-uppertech-34', 's-uppertech-60', 's-0909-15'])
+  for (const id of ['s-uppertech-31', 's-uppertech-34', 's-uppertech-60', 's-0610-5'])
     assert(block(id).includes('#culture-details'), id);
 });
 
 test('P0 footprint contract requires a witnessed baseline and a later occluded change', () => {
   const story = block('s-0903-10');
   for (const phrase of ['須先實際近看第一階段鞋印', '停留 4 秒只使事件待發',
-    '完全遮住鞋印時', '關閉該次近看', '未觀察／已觀察／待發／已換圖／已揭露',
-    '重載已揭露狀態不補播', '事件可略過，不補播、不擋主線']) assert(story.includes(phrase), phrase);
+    '完全遮住鞋印時', '關閉該次近看']) assert(story.includes(phrase), phrase);
+  for (const phrase of ['未觀察／已觀察／待發／已換圖／已揭露',
+    '重載已揭露狀態不補播', '事件可略過，不補播、不擋主線']) assert(block('s-0601-6').includes(phrase), phrase);
   for (const id of ['s-0601-6', 's-0601-10']) {
     assert(block(id).includes('原鞋印'));
     assert(block(id).includes('4 秒只'));
@@ -443,6 +485,82 @@ test('abridged novel category and titles agree without changing its document pat
   assert.equal(novels[0].folderLabel, '精簡版小說');
   assert.equal(novels[0].title, '精簡版小說');
   assert(novels[0].content.includes('# 灰燈寨（精簡版小說）'));
+});
+
+test('act V varies investigation controls without removing evidence or adding per-page gates', () => {
+  const versions = block('s-0908-8');
+  const people = block('s-0908-21');
+  const timeline = block('s-0908-32');
+  for (const text of ['A／B／C 三個來源位置', '整組只提交一次', '不補發尚未取得的證據']) assert(versions.includes(text), text);
+  assert(block('s-0606-4').includes('初見不高亮正解'));
+  for (const text of ['每人一列', '另外三人的來源仍須各自展開並核對', '三個曆月', '不因畫面整理而自動鎖定']) assert(people.includes(text), text);
+  for (const text of ['同一日及共用時間基準', '放大只改視窗尺度', '48 小時事件留在另一日期頁', '未持有碎片也能用本地原件完成', '02:20:11', '02:20:22']) assert(timeline.includes(text), text);
+  for (const [spec, anchor] of [['s-0606-4', 's-0908-8'], ['s-0606-5', 's-0908-21'], ['s-0606-6', 's-0908-32']]) assert(block(spec).includes(`](#${anchor})`));
+  assert(block('s-0606-6').includes('不播放歷史人物動作'));
+  assert(block('s-0908-22').includes('E3-02'));
+  const exit = graph.edges.find(e => e.fromId === 'R25' && e.toId === 'R26');
+  for (const key of ['timeline_locked', 'e405_seen', 'inventory.override_code.complete', 'speaker_sequence_cleared']) assert(exit.gate.includes(key), key);
+  assert(graph.edges.filter(e => ['R23', 'R24', 'R25'].includes(e.fromId))
+    .every(e => !/草稿|釘欄|近看已讀/.test(e.gate)));
+});
+
+test('act VI adjacent views retain actions and safety while removing repeated setup', () => {
+  assert(block('s-0909-17').includes('未主動轉輪不啟動襲擊'));
+  assert(block('s-0909-37').includes('不要求重繫、重走或再確認異常'));
+  assert(block('s-0909-42').includes('不再出一題分水'));
+  assert(block('s-0909-42').includes('親手扣止回栓'));
+  const handoff = block('s-0610-15');
+  for (const text of ['仍須自行啟動並完成 UD-01', '原完成鍵仍獨立保存', '尚未固定的 U6 重開閥', 'U6 載入仍驗總水量六格']) assert(handoff.includes(text), text);
+  assert(block('s-0610-2').includes('不自動把玩家送入下一房'));
+  for (const [from, to, gate] of [['U2', 'U2b', 'lower.u2.setup_ready'], ['U2b', 'U3', 'lower.u2.bridge_clear'],
+    ['U4b', 'U5', 'lower.u4.service_latch_open'], ['U6', 'U6b', 'lower.u6.balance_held'], ['U6b', 'R30', 'lower.u6.walkway_locked']]) {
+    assert(graph.edges.find(e => e.fromId === from && e.toId === to).gate.includes(gate), `${from}->${to}`);
+  }
+  assert(block('s-0610-16').includes('不增加水槽、步數或必讀文件來湊時長'));
+});
+
+test('orientation and visible cultural use do not depend on reading optional notes', () => {
+  const common = block('s-0403-3');
+  for (const text of ['來路輪廓、去路熱區', '不能直接把底圖水平翻轉', '不提前啟動下一房聲音事件']) assert(common.includes(text), text);
+  assert(block('s-0905-55').includes('不能因此新增返回產線的熱點'));
+  assert(block('s-0906-62').includes('不另設聲音猜路題'));
+  for (const [id, text] of [['s-0904-18', '避開牆上滲水線'], ['s-0904-39', '不讀註記也能看見'],
+    ['s-0906-3', '先看得見長期共用與後加管制'], ['s-0909-15', '不讀短箋也能辨認']]) assert(block(id).includes(text), id);
+  assert(block('s-0810-23').includes('略過四組文字仍能走完主線'));
+  const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
+  assert(inventory.includes('知道了，這次少放'));
+  assert(!inventory.includes('借鹽回覆'));
+  assert(inventory.includes('不是搶救倒數'));
+});
+
+test('play roles and unexecuted greybox checks distinguish design from validation', () => {
+  for (const anchor of ['scene-play-roles', 'scene-playtest-checks']) assert.equal(canonicalFile(master, anchor), APPENDIX);
+  const roles = block('s-0304-19');
+  for (const role of ['推理查證', '證據收集與記錄', '空間觀察與機械操作', '遭遇判讀', '喘息與情感承接', '過渡與生活觀察']) assert(roles.includes(`| ${role} |`), role);
+  assert(roles.includes('F3 的視角／格位推理仍依 R20 原規格'));
+  const checks = block('s-0304-22');
+  for (const text of ['待執行的遊戲灰盒測試', '尚無受測紀錄時一律標未測', '不能把提示後成功混算為自行解出', 'R29 至少 20 秒', 'R31 原 12 秒']) assert(checks.includes(text), text);
+  assert(read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md').includes('#scene-playtest-checks'));
+});
+
+test('reading chapters omit editorial notes while production contracts remain available', () => {
+  let beats = 0;
+  for (const act of ACTS) {
+    const text = master.documents.get(act.path);
+    const story = text.slice(0, text.indexOf(`<a id="spec-act-${act.act}">`));
+    assert(!/^〔(?:禁止|製作|製作註|錄音註|保存|排程|抑制)〕/m.test(story), act.path);
+    assert(!/【(?:鎖定|新增|沿用待審)/.test(story), act.path);
+    assert(!/（新增待審）/.test(story), act.path);
+    beats += [...story.matchAll(/<!-- import:[^:]+:begin -->/g)].length;
+  }
+  assert.equal(beats, 342);
+  assert(block('s-0903-3').includes('「……看著亮的地方。」'));
+  assert(block('s-0903-3').includes('「別先走。」'));
+  assert(!block('s-0903-3').includes('音訊檔名與製作註解'));
+  assert(block('s-0601-6').includes('音訊檔名與製作註解不進玩家介面'));
+  assert(block('s-0604-5').includes('r13.correct_number_called'));
+  assert(block('s-0605-7').includes('核對條件是 A 開、B 關，C 任意'));
+  assert(block('s-0608-18').includes('順序固定為人物結局'));
 });
 
 test('malformed masters and unmapped routes fail before any output is written', () => {

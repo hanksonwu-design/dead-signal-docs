@@ -204,7 +204,7 @@ export function deriveGraph(master, existing) {
   graph.atlas = MASTER;
   graph.source = MASTER;
   graph.notes[0] = `${graph.nodes.length} 個導覽節點（上部 ${graph.nodes.filter(node => node.part === 1).length}、下部 ${graph.nodes.filter(node => node.part === 2).length}）；含共用子節點、操作鏡位與片尾，不等於獨立房間數。`;
-  const endingOrder = master.blocks.get('s-0910-39').match(/順序固定為([^。]+)。/)?.[1];
+  const endingOrder = master.blocks.get('s-0608-18').match(/順序固定為([^。]+)。/)?.[1];
   assert(endingOrder, 'Canonical ending presentation order');
   graph.phases.R33 = endingOrder.split('→').map(step => step.trim());
   return graph;
