@@ -264,6 +264,25 @@ async function canvasCheck(page, name) {
     }
     pass('48-node gameplay progression and resource contracts render at desktop and mobile widths');
 
+    for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
+      await page.setViewportSize(viewport);
+      for (const [anchor, expected] of [
+        ['player-language', '玩家用語與製作識別碼分層'],
+        ['reading-load', '必要查證的閱讀節奏'],
+        ['s-0905-46', '再從原件選取 6C2A'],
+        ['s-0908-21', '另外三人的來源仍須各自展開並核對'],
+        ['s-0909-55', '備份資料已接回'],
+        ['s-0910-29', '長按「緊急接管」四秒'],
+      ]) {
+        await page.goto(docUrl(canonical.anchorFiles.get(anchor), anchor));
+        await readerReady(page, anchor);
+        assert((await page.locator('#readerContent').innerText()).includes(expected), anchor);
+        assert(await page.locator('.reader-panel').evaluate(el => el.scrollWidth - el.clientWidth <= 1), anchor);
+        await page.screenshot({ path: path.join(out, `reading-${anchor}-${viewport.width}.png`) });
+      }
+    }
+    pass('plain-language scenes and reading layers render without losing original clue values');
+
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(docUrl(ACTS[5].path, 's-0908-21'));
     await readerReady(page, 's-0908-21');

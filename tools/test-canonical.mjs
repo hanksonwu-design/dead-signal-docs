@@ -73,6 +73,14 @@ test('eight reading acts and eight production files keep unique blocks and paire
   assert.equal(master.text.split('**存檔與素材驗收：**原房主線').length - 1, 1);
 });
 
+test('reading scripts omit pause notes without removing production timing', () => {
+  for (const act of ACTS) assert(!master.documents.get(act.path).includes('〔停頓〕'), act.name);
+  assert(!block('s-0900-4').includes('〔停頓〕'));
+  const finaleSpec = master.documents.get(ACTS[7].specPath);
+  assert(finaleSpec.includes('離體知情後提供玩家自行繼續的停頓'));
+  assert(finaleSpec.includes('疊層短暫減弱'));
+});
+
 test('screenplay presentation cues distinguish motion, stills, transitions and interfaces', () => {
   const labels = ['動畫演出', '靜態畫面', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
   assert(!master.text.includes('〔演出〕'));
@@ -441,7 +449,8 @@ test('act III outline respects local power routes and does not add police playba
   assert(row.includes('藥品櫃與人員評級共用同一個權限碼'));
   for (const stale of ['整棟樓同時亮起一秒', '每一個亮起的螢幕', '二次進入失敗']) assert(!row.includes(stale), stale);
   assert(master.text.includes('沒有全樓亮起的蒙太奇，也不插警用人聲'));
-  assert(block('s-0906-31').includes('僅全面供電的既有低壓迴聲'));
+  assert(block('s-0906-31').includes('僅全面供電後出現這次低壓迴聲'));
+  assert(block('s-0906-31').includes('不會打斷穩壓操作、閱讀或安定，也不重複發生'));
 });
 
 test('V33 per-room instructions select the correct panel and retain encounter limits', () => {
@@ -533,10 +542,10 @@ test('act V varies investigation controls without removing evidence or adding pe
   const versions = block('s-0908-8');
   const people = block('s-0908-21');
   const timeline = block('s-0908-32');
-  for (const text of ['A／B／C 三個來源位置', '整組只提交一次', '不補發尚未取得的證據']) assert(versions.includes(text), text);
+  for (const text of ['A／B／C 三個來源位置', '整組確認一次後取得 E4-01', '尚未讀到的頁面保持未讀']) assert(versions.includes(text), text);
   assert(block('s-0606-4').includes('初見不醒目標示正解'));
   for (const text of ['每人一列', '另外三人的來源仍須各自展開並核對', '三個曆月', '不因畫面整理而自動鎖定']) assert(people.includes(text), text);
-  for (const text of ['同一日及共用時間基準', '放大只改視窗尺度', '48 小時事件留在另一日期頁', '未持有碎片也能用本地原件完成', '02:20:11', '02:20:22']) assert(timeline.includes(text), text);
+  for (const text of ['三帶的日期與時鐘基準始終可見', '先保留同日與共用時基', '放大只改視窗尺度', '48 小時事件留在另一日期頁', '未持有碎片也能用本地原件完成', '02:20:11', '02:20:22']) assert(timeline.includes(text), text);
   for (const [spec, anchor] of [['s-0606-4', 's-0908-8'], ['s-0606-5', 's-0908-21'], ['s-0606-6', 's-0908-32']]) {
     assert(block(spec).includes(`](../${ACTS[5].path}#${anchor})`));
   }
@@ -552,7 +561,7 @@ test('act VI adjacent views retain actions and safety while removing repeated se
   assert(block('s-0909-17').includes('未主動轉輪不啟動襲擊'));
   assert(block('s-0909-37').includes('不要求重繫、重走或再確認異常'));
   assert(block('s-0909-42').includes('不再出一題分水'));
-  assert(block('s-0909-42').includes('親手扣止回栓'));
+  assert(block('s-0909-42').includes('親手扣上止回栓'));
   const handoff = block('s-0610-15');
   for (const text of ['仍須自行啟動並完成 UD-01', '原完成鍵仍獨立保存', '尚未固定的 U6 重開閥', 'U6 載入仍驗總水量六格']) assert(handoff.includes(text), text);
   assert(block('s-0610-2').includes('不自動把玩家送入下一房'));
@@ -654,7 +663,7 @@ test('inventory summaries do not invent a prologue lock, clue solution or occupa
   assert(scene('R11').includes('已解讀 E2-09'));
   assert(scene('R23').includes('本房同頁見臉與真名'));
   assert(scene('R33').includes('名冊另接片尾流程'));
-  assert(block('s-0903-24').includes('仍在凝固中的全景'));
+  assert(block('s-0903-24').includes('房間仍凝固著，門邊卻少了一個人'));
   assert(block('s-0903-25').includes('退出 · 第零層疑點'));
   assert(!master.text.includes('第零層鎖定'));
   assert(!master.text.includes('玩家離開後，剛才的凝固剪影'));
@@ -916,6 +925,72 @@ test('gameplay inventory and novel share the source contracts while production s
   assert(assets.includes('未宣稱圖稿或引擎已完成'));
   assert(assets.includes('不增加 48 節點、342 場次、55 條動線或 15 個訊號槽'));
   assert(assets.includes('須另估工時'));
+});
+
+test('reading scripts keep implementation states in production documents', () => {
+  const states = /\b(?:act[2-6]|arc|side|lower|memory|inventory|scene_detail|moth|series)\.[a-z0-9_.]+|\b(?:SOURCE_READ|SIGNAL_GAMBIT|PACKING_COMPARE|EMERGENCY_CUSTODY|packet_checksum|projection_reveal_complete|seal_resolved|branch_outcome_complete|defense_step|thaw_state)\b|\bcommit [A-E]\b/;
+  for (const act of ACTS) {
+    assert(!states.test(master.documents.get(act.path)), act.name);
+    for (const label of ['旗標', '原子操作', '相容鍵']) assert(!master.documents.get(act.path).includes(label), `${act.name}: ${label}`);
+    const spec = master.documents.get(act.specPath);
+    for (const anchor of ['player-language', 'reading-load']) assert(spec.includes(`#${anchor}`), act.name);
+  }
+  const production = [master.documents.get(APPENDIX), ...ACTS.map(act => master.documents.get(act.specPath))].join('\n');
+  for (const key of ['arc.ahsun.scope_confirmed', 'packet_checksum', 'authority_familiarity',
+    'act4.r20.palm_accepted', 'series.part1_complete', 'inventory.override_code.complete',
+    'lower.u6.walkway_locked', 'queue_approved', 'memory.lm03.reviewed',
+    'seal_resolved', 'branch_outcome_complete', 'EMERGENCY_CUSTODY']) assert(production.includes(key), key);
+  for (const anchor of ['player-language', 'reading-load']) assert.equal(canonicalFile(master, anchor), APPENDIX);
+  for (const id of ['s-0905-46', 's-0908-21', 's-0909-55', 's-0910-29']) {
+    assert(block(id).includes('\n\n〔操作〕'), `${id}: separate action paragraphs`);
+    assert(block(id).includes('\n\n〔玩家〕'), `${id}: separate player response paragraphs`);
+  }
+});
+
+test('plain-language signal repair still requires the actual card and expanded roster', () => {
+  const card = block('s-0905-24');
+  const roster = block('s-0905-43');
+  const repair = block('s-0905-46');
+  for (const text of ['自行插入原卡', '名單備份／最後一段', 'AX-17', '版本 02', '100／100', '6C2A']) assert(card.includes(text), text);
+  for (const text of ['比對兩版名單', 'v01', 'v02', '排除其他人', '標出實際改動',
+    '查閱時攻擊、播放與提交都暫停', '主動選「恢復終端操作」', '完整三秒前兆', '小型速查頁不暫停危險']) assert(roster.includes(text), text);
+  for (const text of ['實際讀卡', '已收 001–099／缺 100', '再從原件選取 6C2A',
+    '未查明他最後想送出哪些名字', '仍不能完成', '已保存可供外部讀取的副本', '0 穩定時仍可']) assert(repair.includes(text), text);
+});
+
+test('reading layers retain evidence distinctions without solving or revealing identity early', () => {
+  const pace = block('s-0304-19');
+  for (const text of ['未知欄位保持未讀', '同錯字只證明範本相同', '不先亮正確路徑',
+    '三月份皆必讀', '尚未測試', '不宣稱已降低負評']) assert(pace.includes(text), text);
+  const versions = block('s-0908-8');
+  for (const text of ['原職稱', '灰塵點', '建檔晚於入境', '三個月前']) assert(versions.includes(text), text);
+  const people = block('s-0908-21');
+  for (const text of ['記綠', 'VF-0818', '各自入境前三個曆月', '另外三人的來源仍須各自展開並核對']) assert(people.includes(text), text);
+  assert(block('s-0908-32').includes('那個帳號什麼時候有機會通過'));
+  assert(block('s-0908-32').includes('還不能證明操作帳號的人是誰'));
+  const backup = block('s-0909-55');
+  for (const text of ['01:50', '02:20', 'L48_INDEX_PURGE = COMPLETE',
+    'DATA_OVERWRITE = INTERRUPTED_AT_POWER_LOSS', 'LOCAL_ASSESSMENT = UNREADABLE',
+    'COLD_ARCHIVE_REMOUNTED', '五段通行碼', 'R29 留下的本地資料目錄與現場電力',
+    '少了任何一項', '不說所有被覆寫的內容都已復原']) assert(backup.includes(text), text);
+});
+
+test('player-facing feedback and ending choices agree with production wording', () => {
+  const language = block('s-0900-4');
+  for (const text of ['緊急接管', '資料指紋不能還原正文', '四項後果', '不等於當下已送達警方']) assert(language.includes(text), text);
+  for (const stale of ['校驗完成。外部可讀副本已保存。', '主管路由已恢復',
+    '此工作階段不接受本訊號。', '三格關聯自洽。鎖定。', '遠端工作階段已恢復／刪除排程 01:30']) assert(!master.text.includes(stale), stale);
+  assert(block('s-0910-29').includes('長按「緊急接管」四秒'));
+  assert(block('s-0910-29').includes('取消不提交'));
+  const finale = master.documents.get(ACTS[7].path);
+  for (const text of ['收到收件證明後', '收到副本的收件證明後', '這時才保全本地原件',
+    '她確認留下', '封鎖沒有解除', '沒有送出定位', 'P1 的肉身仍昏迷存活']) assert(finale.includes(text), text);
+  const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
+  assert(inventory.includes('#player-language'));
+  assert(inventory.includes('#reading-load'));
+  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
+  assert(novel.includes('名單已補齊。已保存可供外部讀取的副本。'));
+  assert(!novel.includes('校驗完成。外部可讀副本已保存。'));
 });
 
 test('common-rule referrals are not duplicated within a source block', () => {
