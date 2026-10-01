@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "six passages and twelve nonblank camera locations; 26 nodes / 30 edges",
+    "cross-floor platform views rebuild in compressed and equal-height modes",
+    "room floor editing, undo and redo remain operational",
+    "corridor geometry editing and undo preserve the existing scene contract",
+    "passage inspection leaves the saved scene untouched",
+    "old-format scene import preserves customized room coordinates",
+    "deleted passage is disabled and restored on scene import",
+    "scene export round-trip preserves layout and connection data",
+    "floor and edit controls leave passage inspection cleanly",
+    "mobile passage controls and model render without horizontal overflow",
+    "no JavaScript page errors"
+  ],
+  "errors": []
+}
