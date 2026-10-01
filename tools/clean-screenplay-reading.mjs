@@ -3,10 +3,14 @@
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { ACTS } from './screenplay-files.mjs';
+import { ACTS, MASTER, SPEC_SPLIT_MARKER } from './screenplay-files.mjs';
 import { ROOT, parseMaster, deriveGraph } from './sync-canonical.mjs';
 
 const master = parseMaster();
+if (master.documents.get(MASTER).includes(SPEC_SPLIT_MARKER)) {
+  console.log('Editorial cleanup predates the specification split; no changes made.');
+  process.exit(0);
+}
 const documents = new Map(master.documents);
 const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
 const additions = new Map();

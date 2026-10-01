@@ -1,0 +1,74 @@
+{
+  "documents": 18,
+  "retainedBlocks": 1554,
+  "retainedAnchors": 5149,
+  "imageReferences": 56,
+  "blockContentAndLinkChecks": "passed",
+  "contentHash": "0c87173bb1dd873ff30efd3cb05bd7b405eb8f2d19550634e3cd7dfef9d1c118",
+  "acts": [
+    {
+      "act": "序幕",
+      "story": "09_劇本/09-03_正式劇本_序幕.md",
+      "specs": "10_製作規格/10-01_製作規格_序幕.md",
+      "nodes": 3,
+      "storyBlocks": 22,
+      "specBlocks": 31
+    },
+    {
+      "act": "第一幕",
+      "story": "09_劇本/09-04_正式劇本_第一幕.md",
+      "specs": "10_製作規格/10-02_製作規格_第一幕.md",
+      "nodes": 6,
+      "storyBlocks": 38,
+      "specBlocks": 43
+    },
+    {
+      "act": "第二幕",
+      "story": "09_劇本/09-05_正式劇本_第二幕.md",
+      "specs": "10_製作規格/10-03_製作規格_第二幕.md",
+      "nodes": 6,
+      "storyBlocks": 47,
+      "specBlocks": 59
+    },
+    {
+      "act": "第三幕",
+      "story": "09_劇本/09-06_正式劇本_第三幕.md",
+      "specs": "10_製作規格/10-04_製作規格_第三幕.md",
+      "nodes": 6,
+      "storyBlocks": 54,
+      "specBlocks": 49
+    },
+    {
+      "act": "第四幕",
+      "story": "09_劇本/09-07_正式劇本_第四幕.md",
+      "specs": "10_製作規格/10-05_製作規格_第四幕.md",
+      "nodes": 5,
+      "storyBlocks": 41,
+      "specBlocks": 47
+    },
+    {
+      "act": "第五幕",
+      "story": "09_劇本/09-08_正式劇本_第五幕.md",
+      "specs": "10_製作規格/10-06_製作規格_第五幕.md",
+      "nodes": 4,
+      "storyBlocks": 51,
+      "specBlocks": 45
+    },
+    {
+      "act": "第六幕",
+      "story": "09_劇本/09-09_正式劇本_第六幕.md",
+      "specs": "10_製作規格/10-07_製作規格_第六幕.md",
+      "nodes": 15,
+      "storyBlocks": 52,
+      "specBlocks": 62
+    },
+    {
+      "act": "終幕",
+      "story": "09_劇本/09-10_正式劇本_終幕.md",
+      "specs": "10_製作規格/10-08_製作規格_終幕.md",
+      "nodes": 3,
+      "storyBlocks": 37,
+      "specBlocks": 28
+    }
+  ]
+}

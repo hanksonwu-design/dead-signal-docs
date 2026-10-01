@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT, MASTER, parseMaster, buildSync, deriveGraph, canonicalFile } from './sync-canonical.mjs';
-import { ACTS, APPENDIX, CANONICAL_FILES, SPLIT_MARKER } from './screenplay-files.mjs';
+import { ACTS, APPENDIX, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER } from './screenplay-files.mjs';
 import { buildDocuments } from './build-docs.mjs';
 
 const read = file => readFileSync(path.join(ROOT, file), 'utf8').replace(/\r\n/g, '\n');
@@ -22,37 +22,47 @@ test('source manifest accounts for every retained block without empty placeholde
   for (const [id, text] of master.blocks) assert(text.replace(/<a id="[^"]+"><\/a>/g, '').trim(), id);
 });
 
-test('eight maintained acts place their story before local specifications without duplicate master prose', () => {
+test('eight reading acts and eight production files keep unique blocks and paired navigation', () => {
   assert.deepEqual([...master.documents.keys()], CANONICAL_FILES);
   const index = master.documents.get(MASTER);
   assert(index.includes(SPLIT_MARKER));
+  assert(index.includes(SPEC_SPLIT_MARKER));
   assert(!index.includes('<!-- import:'));
   let sceneCount = 0;
   for (const act of ACTS) {
-    const text = master.documents.get(act.path);
-    assert(!/^正式入口:/m.test(text));
-    const specStart = text.indexOf(`<a id="spec-act-${act.act}">`);
-    assert(specStart > text.indexOf(`<a id="act-${act.act}">`));
-    const story = text.slice(0, specStart);
+    const story = master.documents.get(act.path);
+    const spec = master.documents.get(act.specPath);
+    assert(!/^正式入口:/m.test(story));
+    assert(!story.includes(`<a id="spec-act-${act.act}">`));
+    assert(spec.includes(`<a id="spec-act-${act.act}">`));
+    assert(!spec.includes(`<a id="act-${act.act}">`));
+    assert(story.includes(`../${act.specPath}#spec-act-${act.act}`));
+    assert(spec.includes(`../${act.path}#act-${act.act}`));
+    assert(index.includes(`../${act.specPath}#spec-act-${act.act}`));
     assert.deepEqual([...story.matchAll(/<a id="act-(\d)">/g)].map(m => Number(m[1])), [act.act]);
     const sceneBlocks = [...story.matchAll(/<!-- import:([^:]+):begin -->/g)].map(m => m[1]);
     sceneCount += sceneBlocks.length;
-    for (const id of sceneBlocks) assert(/^#### \[|^#### POST ·/m.test(block(id)), id);
+    for (const id of sceneBlocks) {
+      assert(/^#### \[|^#### POST ·/m.test(block(id)), id);
+      assert(!spec.includes(`<!-- import:${id}:begin -->`), id);
+    }
     for (const technical of ['進行目的：', '**狀態、素材與驗收**', '本幕台詞清單', '本節目標']) assert(!story.includes(technical), act.path);
-    assert(text.indexOf(`<a id="act-${act.act}-continue">`) < specStart);
+    assert(story.indexOf(`<a id="act-${act.act}-continue">`) > story.lastIndexOf('<!-- import:'));
     if (act.act < 7) assert(story.includes(`${path.posix.basename(ACTS[act.act + 1].path)}#act-${act.act + 1}`));
     for (const node of graph.nodes.filter(node => node.act === act.act)) {
       const id = node.id.toLowerCase();
-      assert(text.indexOf(`<a id="node-${id}-script">`) > 0, id);
-      assert(text.indexOf(`<a id="node-${id}-script">`) < specStart, id);
+      assert(story.includes(`<a id="node-${id}-script">`), id);
+      assert(story.includes(`../${act.specPath}#node-${id}-spec`), id);
+      assert(spec.includes(`../${act.path}#node-${id}-script`), id);
       for (const suffix of ['spec', 'nav', 'level', 'pack', 'visual']) {
-        assert(text.indexOf(`<a id="node-${id}-${suffix}">`) > specStart, `${id}:${suffix}`);
-        assert.equal(canonicalFile(master, `node-${id}-${suffix}`), act.path);
+        assert(!story.includes(`<a id="node-${id}-${suffix}">`), `${id}:${suffix}`);
+        assert(spec.includes(`<a id="node-${id}-${suffix}">`), `${id}:${suffix}`);
+        assert.equal(canonicalFile(master, `node-${id}-${suffix}`), act.specPath);
       }
     }
   }
   assert.equal(sceneCount, 342);
-  assert(block('s-0900-2').includes('各幕文件前半部為正式演出，後半部為該幕製作規格'));
+  assert(block('s-0900-2').includes('八份同幕製作規格維護技術條件'));
   assert(!block('s-0900-2').includes('同一份文件內'));
   for (const section of ['book-payoffs', 'book-first-play', 'book-pending', 'book-sources']) {
     assert.equal(canonicalFile(master, section), APPENDIX);
@@ -68,8 +78,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
   assert(!master.text.includes('〔演出〕'));
   for (const label of labels) assert(block('s-0900-4').includes(`（${label}）`), label);
   for (const act of ACTS) {
-    const text = master.documents.get(act.path);
-    const story = text.slice(0, text.indexOf(`<a id="spec-act-${act.act}">`));
+    const story = master.documents.get(act.path);
     assert(story.includes('（動畫演出）'), act.path);
     assert(story.includes('（靜態畫面）'), act.path);
     assert(story.includes('（介面呈現）'), act.path);
@@ -135,7 +144,7 @@ test('48 nodes, 55 routes; every source and destination anchor is canonical', ()
   assert.deepEqual(deriveGraph(master, graph), graph);
   for (const node of graph.nodes) {
     assert.equal(node.source, ACTS[node.act].path);
-    assert.equal(node.pack, ACTS[node.act].path);
+    assert.equal(node.pack, ACTS[node.act].specPath);
     for (const field of ['heading', 'packAnchor', 'spatialHeading']) assert(master.anchors.has(node[field]), `${node.id}:${field}`);
   }
   for (const edge of graph.edges) {
@@ -151,8 +160,8 @@ test('26 model nodes and 30 routes keep canonical references without adding lowe
   for (const node of model.nodes) {
     const canonical = graph.nodes.find(n => n.id === node.id);
     assert.equal(canonical.part, 1);
-    for (const key of ['goal', 'source', 'heading', 'packAnchor', 'spatialHeading']) assert.equal(node[key], canonical[key]);
-    assert.equal(model.spatial[node.id].source, canonical.source);
+    for (const key of ['goal', 'source', 'heading', 'pack', 'packAnchor', 'spatialHeading']) assert.equal(node[key], canonical[key]);
+    assert.equal(model.spatial[node.id].source, canonicalFile(master, canonical.spatialHeading));
     assert(master.anchors.has(model.spatial[node.id].heading));
   }
   for (const edge of model.edges) {
@@ -202,13 +211,14 @@ test('seven transition routes retain gates and directions without adding rooms',
       '章內回訪；遇鎖場、追逐或封路停用' + (from === 'R7' ? '；R8 放蛾不鎖通路，必要讀卡在 R11 校驗前核對' : ''));
     assert(edge.motion.startsWith(`${route}：`));
     assert(!graph.nodes.some(n => n.id === route));
-    for (const id of [anchor, `${anchor}-script`]) assert.equal(canonicalFile(master, id), ACTS[act].path);
-    assert(block(storyId).includes(`[通路製作規格](#${anchor})`));
+    assert.equal(canonicalFile(master, anchor), ACTS[act].specPath);
+    assert.equal(canonicalFile(master, `${anchor}-script`), ACTS[act].path);
+    assert(block(storyId).includes(`[通路製作規格](../${ACTS[act].specPath}#${anchor})`));
     const spec = block(specId).split(`<a id="${anchor}"></a>`)[1].split('<a id=')[0];
     assert.equal([...spec.matchAll(/^\| [ABC]：/gm)].length, views, route);
     assert(spec.includes('#transition-rules'));
     assert(spec.includes('#transition-assets'));
-    assert(block('s-0810-23').includes(`| [${route}](${path.posix.basename(ACTS[act].path)}#${anchor}) | ${views} |`));
+    assert(block('s-0810-23').includes(`| [${route}](../${ACTS[act].specPath}#${anchor}) | ${views} |`));
     viewCount += views;
   }
   assert.equal(viewCount, 13);
@@ -442,7 +452,8 @@ test('V33 per-room instructions select the correct panel and retain encounter li
     ['r15', 4, '電房殘響', '限全面供電']
   ]) {
     const start = master.text.indexOf(`<a id="node-${room}-visual">`);
-    const end = master.text.indexOf(`[返回本房正式劇本](#node-${room}-script)`, start);
+    const story = canonicalFile(master, `node-${room}-script`);
+    const end = master.text.indexOf(`[返回本房正式劇本](../${story}#node-${room}-script)`, start);
     assert(start >= 0 && end > start, room);
     const note = master.text.slice(start, end).split('\n').find(line => line.startsWith('- **V33：**'));
     assert(note?.includes(`本房只取第 ${panel} 格「${character}」`), room);
@@ -475,7 +486,7 @@ test('all Markdown document and image links resolve; master anchors are unique',
   assert.deepEqual(errors, []);
 });
 
-test('website exposes eight acts, an index and one appendix; old bookmarks resolve to their owner', () => {
+test('website separates reading and production categories and preserves old act bookmarks', () => {
   const documents = buildDocuments();
   const screenplays = documents.filter(doc => doc.folder === '09_劇本' && !doc.archived);
   for (const doc of screenplays) {
@@ -483,7 +494,13 @@ test('website exposes eight acts, an index and one appendix; old bookmarks resol
     assert.equal(doc.folderLabel, '遊戲劇本');
     assert(!/^(?:文件:|#{1,6} ).*正式劇本/m.test(doc.content), doc.path);
   }
-  assert.deepEqual(screenplays.map(doc => doc.path).sort(), [...CANONICAL_FILES].sort());
+  assert.deepEqual(screenplays.map(doc => doc.path).sort(), [...READING_FILES].sort());
+  const specs = documents.filter(doc => doc.folder === '10_製作規格' && !doc.archived);
+  assert.deepEqual(specs.map(doc => doc.path).sort(), ACTS.map(act => act.specPath).sort());
+  for (const spec of specs) {
+    assert(spec.title.startsWith('製作規格'), spec.path);
+    assert.equal(spec.folderLabel, '製作規格');
+  }
   assert.equal(documents.filter(doc => doc.redirect).length,17);
   for (const doc of documents.filter(doc => doc.redirect)) {
     const [file, anchor] = doc.redirect.split('#');
@@ -493,6 +510,12 @@ test('website exposes eight acts, an index and one appendix; old bookmarks resol
   for (const [anchor, file] of master.anchorFiles) {
     if (file === MASTER) assert(!index.anchorRedirects[anchor]);
     else assert.equal(index.anchorRedirects[anchor], file, anchor);
+  }
+  for (const act of ACTS) {
+    const story = documents.find(doc => doc.path === act.path);
+    const expected = Object.fromEntries([...master.anchorFiles].filter(([, file]) => file === act.specPath));
+    assert.deepEqual(story.anchorRedirects, expected);
+    assert(!story.anchorRedirects[`node-${graph.nodes.find(node => node.act === act.act).id.toLowerCase()}-script`]);
   }
   assert.equal(documents.filter(doc => doc.weeklyDetail).length,13);
 });
@@ -514,7 +537,9 @@ test('act V varies investigation controls without removing evidence or adding pe
   assert(block('s-0606-4').includes('初見不醒目標示正解'));
   for (const text of ['每人一列', '另外三人的來源仍須各自展開並核對', '三個曆月', '不因畫面整理而自動鎖定']) assert(people.includes(text), text);
   for (const text of ['同一日及共用時間基準', '放大只改視窗尺度', '48 小時事件留在另一日期頁', '未持有碎片也能用本地原件完成', '02:20:11', '02:20:22']) assert(timeline.includes(text), text);
-  for (const [spec, anchor] of [['s-0606-4', 's-0908-8'], ['s-0606-5', 's-0908-21'], ['s-0606-6', 's-0908-32']]) assert(block(spec).includes(`](#${anchor})`));
+  for (const [spec, anchor] of [['s-0606-4', 's-0908-8'], ['s-0606-5', 's-0908-21'], ['s-0606-6', 's-0908-32']]) {
+    assert(block(spec).includes(`](../${ACTS[5].path}#${anchor})`));
+  }
   assert(block('s-0606-6').includes('不播放歷史人物動作'));
   assert(block('s-0908-22').includes('E3-02'));
   const exit = graph.edges.find(e => e.fromId === 'R25' && e.toId === 'R26');
@@ -565,8 +590,7 @@ test('play roles and unexecuted greybox checks distinguish design from validatio
 test('reading chapters omit editorial notes while production contracts remain available', () => {
   let beats = 0;
   for (const act of ACTS) {
-    const text = master.documents.get(act.path);
-    const story = text.slice(0, text.indexOf(`<a id="spec-act-${act.act}">`));
+    const story = master.documents.get(act.path);
     assert(!/^〔(?:禁止|製作|製作註|錄音註|保存|排程|抑制)〕/m.test(story), act.path);
     assert(!/【(?:鎖定|新增|沿用待審)/.test(story), act.path);
     assert(!/（新增待審）/.test(story), act.path);

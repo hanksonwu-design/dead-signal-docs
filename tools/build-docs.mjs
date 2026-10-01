@@ -4,7 +4,7 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { MASTER, CANONICAL_FILES, SPLIT_MARKER } from './screenplay-files.mjs';
+import { MASTER, ACTS, CANONICAL_FILES, SPLIT_MARKER } from './screenplay-files.mjs';
 
 export const ROOT = fileURLToPath(new URL("..", import.meta.url));
 export const DOCS_DIR = join(ROOT, "docs");
@@ -21,6 +21,7 @@ const FOLDER_LABELS = {
   "08_製作管理": "製作管理",
   "09_劇本": "遊戲劇本",
   "09_故事劇情": "精簡版小說",
+  "10_製作規格": "製作規格",
 };
 const ROOT_FOLDER = "根目錄";
 
@@ -84,6 +85,13 @@ export function buildDocuments() {
     index.anchorRedirects = Object.fromEntries(documents
       .filter(doc => doc.path !== MASTER && CANONICAL_FILES.includes(doc.path))
       .flatMap(doc => [...doc.content.matchAll(/<a id="([^"]+)"><\/a>/g)].map(match => [match[1], doc.path])));
+    // Existing act bookmarks can point to specification anchors moved out of the act.
+    for (const act of ACTS) {
+      const story = documents.find(doc => doc.path === act.path);
+      const spec = documents.find(doc => doc.path === act.specPath);
+      if (story && spec) story.anchorRedirects = Object.fromEntries(
+        [...spec.content.matchAll(/<a id="([^"]+)"><\/a>/g)].map(match => [match[1], spec.path]));
+    }
   }
   return documents.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
 }

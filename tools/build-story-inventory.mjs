@@ -33,10 +33,8 @@ for (const node of graph.nodes) {
 }
 
 const indexedActs = ACTS.map(act => {
-  const document = master.documents.get(act.path);
-  const cutoff = document.indexOf(`<a id="spec-act-${act.act}"></a>`);
-  assert(cutoff > 0, `Production boundary ${act.path}`);
-  const story = document.slice(0, cutoff);
+  const story = master.documents.get(act.path);
+  assert(!story.includes(`<a id="spec-act-${act.act}"></a>`), `Specifications must be separate: ${act.path}`);
   const beats = [...story.matchAll(/<!-- import:([^:]+):begin -->([\s\S]*?)<!-- import:\1:end -->/g)]
     .flatMap(match => {
       const heading = match[2].match(/^#### (.+)$/m)?.[1];
@@ -95,7 +93,7 @@ const routes = table(['動線／來源', '類型', '進入或離房條件', '回
   assert(destination, `Route destination ${edge.id}`);
   const anchor = `node-${destination.id.toLowerCase()}-spec`;
   assert(master.anchors.has(anchor), `Route source anchor ${anchor}`);
-  return [link(`${edge.fromId}→${edge.toId}`, destination.source, anchor), edge.kind, edge.gate,
+  return [link(`${edge.fromId}→${edge.toId}`, master.anchorFiles.get(anchor), anchor), edge.kind, edge.gate,
     `${edge.back ? '可回訪' : '單向／條件回返'}：${edge.returnRule}`];
 }));
 

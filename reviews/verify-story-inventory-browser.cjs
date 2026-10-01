@@ -6,7 +6,7 @@ const runtime = createRequire(path.resolve(process.argv[2] || 'node_modules', '_
 const { chromium } = runtime('playwright');
 const base = process.argv[3] || 'http://127.0.0.1:8766';
 const doc = '08_製作管理/08-13_劇情節點與場景道具總表.md';
-const out = path.join(__dirname, 'story-inventory-browser');
+const out = path.resolve(__dirname, process.argv[4] || 'story-inventory-browser');
 mkdirSync(out, { recursive: true });
 const checks = [];
 const errors = [];
@@ -61,7 +61,7 @@ async function ready(page, heading) {
     const routes = await page.locator('#readerContent a[data-doc-heading$="-spec"]').count();
     assert.equal(routes, 55);
     await page.locator('#readerContent [data-doc-heading="node-u6b-spec"]').click();
-    await page.waitForFunction(() => state.selected?.path.endsWith('09-09_正式劇本_第六幕.md'));
+    await page.waitForFunction(() => state.selected?.path.endsWith('10-07_製作規格_第六幕.md'));
     pass('all 55 route links render and lead to production specifications');
 
     for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {

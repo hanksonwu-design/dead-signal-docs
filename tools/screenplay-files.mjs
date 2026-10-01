@@ -13,6 +13,9 @@ export const ACTS = [
 ].map(([name, subtitle], act) => ({
   act, name, subtitle,
   path: `09_劇本/09-${String(act + 3).padStart(2, '0')}_正式劇本_${name}.md`,
+  specPath: `10_製作規格/10-${String(act + 1).padStart(2, '0')}_製作規格_${name}.md`,
 }));
-export const CANONICAL_FILES = [MASTER, ...ACTS.map(act => act.path), APPENDIX];
+export const READING_FILES = [MASTER, ...ACTS.map(act => act.path), APPENDIX];
+export const CANONICAL_FILES = [MASTER, ...ACTS.map(act => act.path), ...ACTS.map(act => act.specPath), APPENDIX];
 export const SPLIT_MARKER = '<!-- screenplay:split -->';
+export const SPEC_SPLIT_MARKER = '<!-- screenplay:specs-split -->';

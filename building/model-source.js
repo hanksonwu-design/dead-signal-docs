@@ -260,7 +260,7 @@ function showTransition(id,index=-1){
  for(const [i,label] of [[-1,'通路全覽'],...t.views.map((v,i)=>[i,v.label])]){const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.shot=i;b.setAttribute('aria-pressed',String(i===index));b.onclick=()=>showTransition(id,i);buttons.append(b);}
  const custom=edge.route||t.id.split('-').some(id=>editor.isChanged(id));
  $('transition-copy').textContent=(index<0?'沿既有連線補足平台與空間地標。首次通行目標 '+t.seconds+' 秒，生活近看可略過。':t.views[index].text)+(custom?' 已依目前配置定位，樓層與鏡位請再核對。':'');
- $('transition-source').href='../#'+new URLSearchParams({doc:'09_劇本/'+t.source,heading:'transition-'+id.toLowerCase()});
+ $('transition-source').href='../#'+new URLSearchParams({doc:nodeMap.get(id.split('-')[0]).pack,heading:'transition-'+id.toLowerCase()});
  refreshFloorOptions();applyVisibility();updateDetails();fitCamera();
 }
 function fitTransitionCamera(){

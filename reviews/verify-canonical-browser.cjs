@@ -21,9 +21,13 @@ async function readerReady(page, anchor) {
   await page.locator('#readerOverlay:not(.hidden)').waitFor();
   await page.waitForFunction(id => {
     const el = document.getElementById(id);
-    return el && el.getBoundingClientRect().top >= 70 && el.getBoundingClientRect().top < 150;
+    const panel = document.querySelector('.reader-panel');
+    if (!el || !panel) return false;
+    const top = el.getBoundingClientRect().top;
+    const atEnd = panel.scrollHeight - panel.scrollTop - panel.clientHeight <= 2;
+    return top >= 70 && (top < 150 || (atEnd && top < innerHeight - 20));
   }, anchor);
-  assert.match(await page.locator('#readerPath').innerText(), /遊戲劇本/);
+  assert.match(await page.locator('#readerPath').innerText(), /遊戲劇本|製作規格/);
   assert.equal(await page.evaluate(() => state.selected.path), canonical.anchorFiles.get(anchor));
 }
 
@@ -71,16 +75,20 @@ async function canvasCheck(page, name) {
     assert.match(await page.locator('[data-folder="09_劇本"]').innerText(), /遊戲劇本/);
     await page.screenshot({ path: path.join(out, 'chapter-list.png') });
     pass('eight visible acts, one index and one shared appendix');
+    await page.locator('[data-folder="10_製作規格"]').click();
+    assert.equal(await page.locator('#documentGrid .doc-card').count(), 8);
+    assert((await page.locator('#documentGrid .doc-card h3').allInnerTexts()).every(title => title.startsWith('製作規格')));
+    await page.screenshot({ path: path.join(out, 'spec-list.png') });
+    pass('eight production files are discoverable in their own category');
 
     for (const act of ACTS) {
       await page.goto(docUrl(act.path, `act-${act.act}`));
       await readerReady(page, `act-${act.act}`);
-      assert(await page.evaluate(act => Boolean(document.getElementById(`act-${act}-continue`)
-        .compareDocumentPosition(document.getElementById(`spec-act-${act}`)) & Node.DOCUMENT_POSITION_FOLLOWING), act.act));
+      assert.equal(await page.locator(`[id="spec-act-${act.act}"]`).count(), 0);
       const story = await page.evaluate(act => {
         const range = document.createRange();
         range.setStartAfter(document.getElementById(`act-${act}`));
-        range.setEndBefore(document.getElementById(`spec-act-${act}`));
+        range.setEndBefore(document.getElementById(`act-${act}-continue`));
         return range.toString();
       }, act.act);
       assert(!/〔(?:禁止|製作|製作註|錄音註|保存|排程|抑制)〕|【(?:鎖定|新增|沿用待審)/.test(story), act.path);
@@ -89,8 +97,14 @@ async function canvasCheck(page, name) {
         assert(story.includes(`（${label}）`), `${act.path}: ${label}`);
       }
       if (act.act === 0) await page.screenshot({ path: path.join(out, 'clean-prologue-desktop.png') });
+      await page.locator(`[data-doc-heading="spec-act-${act.act}"]`).first().click();
+      await readerReady(page, `spec-act-${act.act}`);
+      assert.equal(await page.evaluate(() => state.selected.path), act.specPath);
+      assert.equal(await page.locator(`[id="act-${act.act}"]`).count(), 0);
+      await page.locator(`[data-doc-heading="act-${act.act}"]`).first().click();
+      await readerReady(page, `act-${act.act}`);
     }
-    pass('all eight act files open with story before local specifications');
+    pass('all eight acts retain the story and link bidirectionally to separate production files');
     pass('all eight rendered stories exclude editorial prohibition and production labels');
     await page.goto(docUrl(ACTS[0].path, 'act-0-continue'));
     await readerReady(page, 'act-0-continue');
@@ -110,16 +124,26 @@ async function canvasCheck(page, name) {
 
     const ordered = await page.evaluate(() => {
       const before = (a, b) => Boolean(document.getElementById(a).compareDocumentPosition(document.getElementById(b)) & Node.DOCUMENT_POSITION_FOLLOWING);
-      return before('act-2', 'node-r11-script') && before('act-2-continue', 'spec-act-2') &&
-        before('spec-act-2', 'node-r8-visual') && !document.getElementById('book-payoffs');
+      return before('act-2', 'node-r11-script') && before('node-r11-script', 'act-2-continue') &&
+        !document.getElementById('spec-act-2') && !document.getElementById('node-r8-visual') && !document.getElementById('book-payoffs');
     });
     assert(ordered);
-    pass('sequential story before production and spoiler appendices');
+    pass('sequential story ends without production tables or spoiler appendices');
     await page.locator('[data-doc-heading="node-r8-spec"]').first().click();
     await readerReady(page, 'node-r8-spec');
+    assert.equal(await page.evaluate(() => state.selected.path), ACTS[2].specPath);
     await page.locator('[data-doc-heading="node-r8-script"]').first().click();
     await readerReady(page, 'node-r8-script');
-    pass('story and room specification round-trip');
+    pass('story and room specification round-trip crosses files correctly');
+
+    for (const act of ACTS) {
+      await page.goto(docUrl(act.path, `spec-act-${act.act}`));
+      await readerReady(page, `spec-act-${act.act}`);
+      assert.equal(await page.evaluate(() => state.selected.path), act.specPath);
+    }
+    await page.goto(docUrl(chapter, 'node-r8-script'));
+    await readerReady(page, 'node-r8-script');
+    pass('all eight old act specification bookmarks redirect to their new owner');
 
     const samePage = page.locator('[data-doc-heading="node-r11-script"]').first();
     await samePage.click();
@@ -243,13 +267,20 @@ async function canvasCheck(page, name) {
     await readerReady(popup, 'node-r8-script');
     await popup.close();
     pass('48-node graph opens correct canonical scene');
+    const specPopupPromise = context.waitForEvent('page');
+    await page.locator('.scene-source [data-heading="node-r8-pack"]').click();
+    const specPopup = await specPopupPromise;
+    await readerReady(specPopup, 'node-r8-pack');
+    assert.equal(await specPopup.evaluate(() => state.selected.path), ACTS[2].specPath);
+    await specPopup.close();
+    pass('scene graph exposes a separate production link');
 
     await page.goto(`${base}/building/#scene=R8`);
     await page.locator('#room-id').filter({ hasText: 'R8' }).waitFor();
     assert.equal(await page.locator('#room-picker option').count(), 26);
     const source = new URL(await page.locator('#source-link').getAttribute('href'), page.url());
     const params = new URLSearchParams(source.hash.slice(1));
-    assert.equal(params.get('doc'), chapter);
+    assert.equal(params.get('doc'), ACTS[2].specPath);
     assert.equal(params.get('heading'), 'node-r8-level');
     pass('3D source and node count');
     await canvasCheck(page, 'model-desktop');
@@ -259,6 +290,15 @@ async function canvasCheck(page, name) {
     assert.equal(await page.locator('#edit-mode-switch').getAttribute('aria-checked'), 'true');
     await page.locator('#edit-mode-switch').click();
     pass('3D room selection and editor mode remain interactive');
+    for (const [route, act] of [['R2-R3', 1], ['R3-R4', 1], ['R7-R8', 2], ['R11-R12', 2], ['R13-R14', 3], ['R17-R18', 3]]) {
+      await page.locator('#transition-picker').selectOption(route);
+      const link = new URL(await page.locator('#transition-source').getAttribute('href'), page.url());
+      const query = new URLSearchParams(link.hash.slice(1));
+      assert.equal(query.get('doc'), ACTS[act].specPath);
+      assert.equal(query.get('heading'), `transition-${route.toLowerCase()}`);
+    }
+    await page.locator('#transition-close').click();
+    pass('all six 3D passage source links target the relocated specifications');
     await page.setViewportSize({ width: 390, height: 844 });
     await canvasCheck(page, 'model-mobile');
 
@@ -267,6 +307,14 @@ async function canvasCheck(page, name) {
     await page.goto(docUrl(master, 'node-r33-script'));
     await readerReady(page, 'node-r33-script');
     pass('static docs.json fallback redirects old bookmark to ending file');
+    for (const act of ACTS) {
+      await page.goto(docUrl(act.path, `spec-act-${act.act}`));
+      await readerReady(page, `spec-act-${act.act}`);
+      assert.equal(await page.evaluate(() => state.selected.path), act.specPath);
+    }
+    await page.goto(docUrl(master, 'transition-r7-r8'));
+    await readerReady(page, 'transition-r7-r8');
+    pass('static payload preserves old act and combined specification bookmarks');
     assert.deepEqual(errors, []);
     pass('no JavaScript page errors');
     writeFileSync(path.join(out, 'results.json'), JSON.stringify({ base, checks, errors }, null, 2));

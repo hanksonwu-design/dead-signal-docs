@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
-import { MASTER, CANONICAL_FILES, SPLIT_MARKER } from './screenplay-files.mjs';
+import { MASTER, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER } from './screenplay-files.mjs';
 export { MASTER } from './screenplay-files.mjs';
 
 export const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -15,7 +15,7 @@ const clean = text => text.replace(/[*`]/g, '').trim();
 export function parseMaster(text, documents) {
   if (text === undefined) {
     const index = read(path.join(DOCS, MASTER));
-    documents = new Map((index.includes(SPLIT_MARKER) ? CANONICAL_FILES : [MASTER])
+    documents = new Map((index.includes(SPEC_SPLIT_MARKER) ? CANONICAL_FILES : index.includes(SPLIT_MARKER) ? READING_FILES : [MASTER])
       .map(file => [file, read(path.join(DOCS, file))]));
     text = [...documents.values()].join('\n\n');
   }
@@ -107,9 +107,21 @@ function topicView(source, original, master) {
   fields.set('狀態', '正式稿衍生查閱；待審／未實機驗收');
   fields.set('更新', '2026-09-30');
   fields.set('來源', `${canonicalFile(master, source.first)}#${source.first}`);
-  fields.set('維護', '由 tools/sync-canonical.mjs 產生；請只修訂正式劇本');
-  fields.set('摘要', '正式劇本的分類查閱副本；條件、原件與演出以同一主稿為準，不獨立修訂。');
-  let body = source.blocks.filter(block => block.text).map(block => block.text).join('\n\n');
+  fields.set('維護', '由 tools/sync-canonical.mjs 產生；請只修訂對應遊戲劇本、製作規格或共用附錄');
+  fields.set('摘要', '正式來源的分類查閱副本；劇情、逐房製作規格與共用設定各有唯一維護位置，不獨立修訂。');
+  // Each retained block can now live in a different folder from this topic view.
+  let body = source.blocks.filter(block => block.text).map(block => {
+    const owner = canonicalFile(master, block.id);
+    return block.text.replace(/\]\(([^)]+)\)/g, (whole, href) => {
+      if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(href)) return whole;
+      const [target, ...fragment] = href.split('#');
+      const anchor = fragment.join('#');
+      if (anchor && master.anchors.has(anchor)) return `](${masterLink(source.path, anchor, master)})`;
+      if (!target) return whole;
+      const absolute = path.posix.normalize(path.posix.join(path.posix.dirname(owner), target));
+      return `](${path.posix.relative(path.posix.dirname(source.path), absolute)}${fragment.length ? '#' + anchor : ''})`;
+    });
+  }).join('\n\n');
   let fenced = false;
   let firstHeading = true;
   body = body.split('\n').map(line => {
@@ -121,15 +133,7 @@ function topicView(source, original, master) {
     firstHeading = false;
     return `${'#'.repeat(level)} ${heading[2]}`;
   }).join('\n');
-  body = body.replace(/\]\(#([^)]+)\)/g, (_, anchor) => `](${masterLink(source.path, anchor, master)})`);
-  // Topic files and the master are both one directory below docs/.
-  body = body.replace(/\]\(([^)]+)\)/g, (whole, href) => {
-    if (/^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(href)) return whole;
-    const [target, ...fragment] = href.split('#');
-    const absolute = path.posix.normalize(path.posix.join(path.posix.dirname(MASTER), target));
-    return `](${path.posix.relative(path.posix.dirname(source.path), absolute)}${fragment.length ? '#' + fragment.join('#') : ''})`;
-  });
-  const notice = `> 本頁由[正式劇本](${masterLink(source.path, source.first, master)})產生，方便分類查閱；請只修訂對應幕別或共用附錄。台詞與揭露順序仍讀對應正式場次，不能把製作端完整設定提前顯示給玩家。\n\n`;
+  const notice = `> 本頁由[正式來源](${masterLink(source.path, source.first, master)})產生，方便分類查閱；請只修訂對應遊戲劇本、製作規格或共用附錄。台詞與揭露順序仍讀對應正式場次，不能把製作端完整設定提前顯示給玩家。\n\n`;
   return header(fields) + notice + (body.trim() || `# ${path.posix.basename(source.path, '.md')}\n\n此分類以正式稿的共用規格與圖像索引為準。`) + '\n';
 }
 
@@ -139,9 +143,9 @@ function retiredView(file, original, anchor, master) {
   fields.set('更新', '2026-09-30');
   fields.set('導覽分類', file.startsWith('06_') && file.includes('06-00_') ? '場景導覽' : '批次存檔');
   fields.set('正式入口', `${canonicalFile(master, anchor)}#${anchor}`);
-  fields.set('摘要', '正文已併入對應幕別或共用附錄；此頁只保留舊連結入口，不另維護劇情或關卡條件。');
+  fields.set('摘要', '內容由對應遊戲劇本、製作規格或共用附錄維護；此頁只保留舊連結入口。');
   fields.set('維護', '由 tools/sync-canonical.mjs 產生');
-  return header(fields) + `# 遊戲劇本入口\n\n本文件已併入[正式劇本](${masterLink(file, anchor, master)})，請在對應幕別或共用附錄閱讀、修訂及驗收。\n\n[逐房目錄](${masterLink(file, 'book-toc', master)}) · [圖像與示意](${masterLink(file, 'book-illustrations', master)}) · [待審與驗收](${masterLink(file, 'book-pending', master)})\n\n修改前內容保存在儲存庫的 \`archive/2026-09-30-canonical-sync/before-sync.zip\`；備份是歷史快照，不是製作依據。\n`;
+  return header(fields) + `# 遊戲劇本入口\n\n本文件已併入[正式來源](${masterLink(file, anchor, master)})；劇情讀對應遊戲劇本，技術細節查同幕製作規格，跨幕設定查共用附錄。\n\n[逐房目錄](${masterLink(file, 'book-toc', master)}) · [圖像與示意](${masterLink(file, 'book-illustrations', master)}) · [待審與驗收](${masterLink(file, 'book-pending', master)})\n\n修改前內容保存在儲存庫的 \`archive/2026-09-30-canonical-sync/before-sync.zip\`；備份是歷史快照，不是製作依據。\n`;
 }
 
 export function rewriteLinks(content, file, master, warnings = []) {
