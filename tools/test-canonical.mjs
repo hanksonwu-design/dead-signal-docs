@@ -820,6 +820,104 @@ test('uncanny audiovisual inventory, novel and pending asset estimates agree', (
     '矩形反光卡住胸殼', '近處的纖維像原來的衣料']) assert(novel.includes(phrase), phrase);
 });
 
+test('gameplay progression maps every original node once and links all eight production acts', () => {
+  const flow = block('s-0412-4');
+  const table = flow.split('<a id="core-gameplay-nodes"></a>')[1]
+    .split('<a id="core-gameplay-audit"></a>')[0];
+  const rows = [...table.matchAll(/^\| `([A-Z][A-Za-z0-9]*)` \| (.+) \| (.+) \| (.+) \|$/gm)];
+  assert.equal(rows.length, 48);
+  assert.equal(new Set(rows.map(row => row[1])).size, 48);
+  assert.deepEqual(rows.map(row => row[1]).sort(), graph.nodes.map(node => node.id).sort());
+  for (const row of rows) for (const cell of row.slice(2)) assert(cell.trim().length > 8, row[1]);
+  for (const act of ACTS) assert(master.documents.get(act.specPath).includes('#core-gameplay-nodes'), act.name);
+  for (const anchor of ['core-gameplay-progression', 'core-gameplay-nodes', 'core-gameplay-audit',
+    'photo-flow', 'light-marker-route', 'misplaced-residue-cases', 'core-gameplay-assets']) {
+    assert.equal(master.anchorFiles.get(anchor), APPENDIX, anchor);
+  }
+  assert.equal(master.anchorFiles.get('signal-tests'), ACTS[1].specPath);
+  assert(flow.includes('R25 喇叭靜默窗，不另加追兵'));
+  assert(flow.includes('不使用照片、不留光、略過 R1 兩測試'));
+});
+
+test('photo use cannot farm clarity or override the story lock and saved boss outcome', () => {
+  const photo = block('s-0406-9');
+  for (const phrase of ['| 0–5 |', '| 6–15 |', '| 16–30 |', '| 31+ |',
+    '不是每次翻頁就增加', '成功次數加 1', '恐慌至少 1、穩定度大於 0',
+    '恐慌 0、穩定度 0、冷卻中或鎖定時只看照片', '不把看照片當作離幕條件',
+    '由原處置結果推導完整清晰', '180 秒一次', '不延長正在跑的冷卻',
+    '不倍增', '不能靠快捷鍵在招式中新增停攻窗口', '兩種阿彪處置']) assert(photo.includes(phrase), phrase);
+  assert(block('s-0903-14').includes('頁內有一張過曝的照片記憶'));
+  assert(block('s-0904-6').includes('不看照片也能接著調查'));
+  assert(block('s-0908-58').includes('即使從未用過它，也是一樣'));
+  assert(block('s-0606-8').includes('不要求查看才開管理門'));
+  assert(block('s-0605-8').includes('不能把所有玩家強制鎖 3'));
+  assert(block('s-0202-8').includes('單純開關頁面不計次'));
+  assert(photo.includes('每次由關閉到主動開啟照片時只判斷一次'));
+  assert(photo.includes('讀檔恢復已開啟頁面也不算新開啟'));
+});
+
+test('R1 signal tests have local useful effects without completing or resetting the encounter', () => {
+  const signal = block('s-0602-4').split('<a id="signal-tests"></a>')[1];
+  for (const phrase of ['選填播放 5 點，少於 5 點停用', '不由播放代讀',
+    '已候坐時不重送、不扣款', '不清主線進度、不補穩定度',
+    '不需要先做 #1 或 #2', '批次中停用另外兩項', '不重付費、不重算五人',
+    '測試效果不跨房持續', '必要叫號完成旗標不回退']) assert(signal.includes(phrase), phrase);
+  assert(block('s-0904-6').includes('鈴聲只讓它們轉頭'));
+  assert(block('s-0904-6').includes('叫號完成後不再以測試召回五人'));
+  assert(!block('s-0602-4').includes('播放其他訊號 → 激怒'));
+  assert(!block('s-0904-6').includes('依原教學錯誤回饋'));
+  assert(block('s-0404-11').includes('其他房不自動繼承有效性'));
+  assert(block('s-uppertech-29').includes('不把回座寫成完成，也不把完成寫成安息'));
+  assert(!block('s-uppertech-29').includes('安息後回訪不復活'));
+  assert(block('s-0803-6').includes('前兩者不激怒、不安息、不開通路'));
+  assert(!block('s-0803-9').includes('播放錯誤訊號一次'));
+  assert(!master.text.includes('R1 安息後'));
+});
+
+test('light markers have four authored choices and cannot strand a zero-slot player', () => {
+  const light = block('s-0406-12');
+  for (const phrase of ['P1 工具箱', 'R8 通往 R9／R10', 'R12 工具櫃', 'U4 單結布標',
+    '每處最多一個，全輪最多三個', '確認才扣槽，取消不扣',
+    '不能搬動、收回、跨幕補槽或載入重生', '舊標記仍占槽但不要求為後幕預留',
+    '反向鏡位只換投影', '不使用這三個留光槽']) assert(light.includes(phrase), phrase);
+  assert(block('s-0905-22').includes('從短租房或祈禱室回來時'));
+  assert(block('s-0906-3').includes('光不會替玩家接好線'));
+  assert(block('s-0909-35').includes('沒有槽位也繼續沿單結'));
+  assert(block('s-0610-9').includes('不能只看光就跳過任一步'));
+  assert(block('s-0607-5').includes('已用完三槽或從未留光也呈現相同內容'));
+  assert(!block('s-0909-5').includes('發光棒殘光掠過窗面'));
+  assert(!block('s-0701-13').includes('發光棒經過'));
+});
+
+test('panic misplacements reuse seen objects without replacing evidence or reviving people', () => {
+  const panic = block('s-0406-6');
+  assert.equal((panic.match(/\| `MR-R\d+` \|/g) || []).length, 2);
+  for (const phrase of ['恐慌階段 3、來源確實看過', '免費的全景差分',
+    '不進入歷史凝固', '不帶人形、照片或文字', '不複製刻字或數字',
+    '不在開門後補播', '不重扣資源或觸發驚嚇']) assert(panic.includes(phrase), phrase);
+  assert(!panic.includes('約四分之一'));
+  assert(block('s-0604-9').includes('文字摘要不能冒充曾看過該畫面'));
+  assert(block('s-0605-8').includes('不干擾 E3-01／02／03 原件'));
+  assert(block('s-0906-45').includes('文件上的日期、編號與門牌始終不變'));
+  assert(block('s-0907-28').includes('沒有刻字跟過來'));
+  assert(panic.includes('不要求跨幕回到原房'));
+});
+
+test('gameplay inventory and novel share the source contracts while production stays pending', () => {
+  const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
+  for (const anchor of ['core-gameplay-progression', 'photo-flow', 'signal-tests',
+    'light-marker-route', 'misplaced-residue-cases', 'core-gameplay-assets', 'core-gameplay-audit']) {
+    assert(inventory.includes(`#${anchor}`), anchor);
+  }
+  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
+  assert(novel.includes('重置之後，他們坐回原位'));
+  assert(novel.includes('那張照片已經清楚了'));
+  const assets = block('s-0810-21').split('<a id="core-gameplay-assets"></a>')[1];
+  assert(assets.includes('未宣稱圖稿或引擎已完成'));
+  assert(assets.includes('不增加 48 節點、342 場次、55 條動線或 15 個訊號槽'));
+  assert(assets.includes('須另估工時'));
+});
+
 test('common-rule referrals are not duplicated within a source block', () => {
   for (const [id, source] of master.blocks) {
     const links = source.match(/^共用規則見.+$/gm) || [];

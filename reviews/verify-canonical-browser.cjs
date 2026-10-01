@@ -246,6 +246,24 @@ async function canvasCheck(page, name) {
     }
     pass('boss domains, local uncanny spaces and pending assets render at desktop and mobile widths');
 
+    for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
+      await page.setViewportSize(viewport);
+      for (const [anchor, expected] of [
+        ['core-gameplay-progression', '核心玩法的教學、變化與回收'],
+        ['core-gameplay-nodes', '逐節點操作與回饋'], ['core-gameplay-audit', '最少收集路線'],
+        ['photo-flow', '不延長正在跑的冷卻'], ['signal-tests', '不由播放代讀'],
+        ['light-marker-route', '每處最多一個，全輪最多三個'],
+        ['misplaced-residue-cases', 'MR-R17'], ['core-gameplay-assets', '須另估工時'],
+      ]) {
+        await page.goto(docUrl(canonical.anchorFiles.get(anchor), anchor));
+        await readerReady(page, anchor);
+        assert((await page.locator('#readerContent').innerText()).includes(expected), anchor);
+        assert(await page.locator('.reader-panel').evaluate(el => el.scrollWidth - el.clientWidth <= 1), anchor);
+        await page.screenshot({ path: path.join(out, `${anchor}-${viewport.width}.png`) });
+      }
+    }
+    pass('48-node gameplay progression and resource contracts render at desktop and mobile widths');
+
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(docUrl(ACTS[5].path, 's-0908-21'));
     await readerReady(page, 's-0908-21');
