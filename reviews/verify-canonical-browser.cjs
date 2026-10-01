@@ -77,8 +77,17 @@ async function canvasCheck(page, name) {
       await readerReady(page, `act-${act.act}`);
       assert(await page.evaluate(act => Boolean(document.getElementById(`act-${act}-continue`)
         .compareDocumentPosition(document.getElementById(`spec-act-${act}`)) & Node.DOCUMENT_POSITION_FOLLOWING), act.act));
+      const story = await page.evaluate(act => {
+        const range = document.createRange();
+        range.setStartAfter(document.getElementById(`act-${act}`));
+        range.setEndBefore(document.getElementById(`spec-act-${act}`));
+        return range.toString();
+      }, act.act);
+      assert(!/〔(?:禁止|製作|製作註|錄音註|保存|排程|抑制)〕|【(?:鎖定|新增|沿用待審)/.test(story), act.path);
+      if (act.act === 0) await page.screenshot({ path: path.join(out, 'clean-prologue-desktop.png') });
     }
     pass('all eight act files open with story before local specifications');
+    pass('all eight rendered stories exclude editorial prohibition and production labels');
     await page.goto(docUrl(ACTS[0].path, 'act-0-continue'));
     await readerReady(page, 'act-0-continue');
     await page.locator('[data-doc-heading="act-1"]').nth(1).click();
@@ -135,6 +144,29 @@ async function canvasCheck(page, name) {
     await readerReady(page, 'node-r3-script');
     assert((await page.locator('#readerContent').innerText()).includes('起鍋再放鹽'));
     pass('cultural asset list links to the owning screenplay');
+
+    for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
+      await page.setViewportSize(viewport);
+      for (const anchor of ['scene-play-roles', 'scene-playtest-checks']) {
+        await page.goto(docUrl(APPENDIX, anchor));
+        await readerReady(page, anchor);
+        assert(await page.locator('.reader-panel').evaluate(el => el.scrollWidth - el.clientWidth <= 1));
+        const text = await page.locator('#readerContent').innerText();
+        assert(text.includes('待執行的遊戲灰盒測試'));
+        assert(text.includes('F3 的視角／格位推理仍依 R20 原規格'));
+        await page.screenshot({ path: path.join(out, `${anchor}-${viewport.width}.png`) });
+      }
+    }
+    pass('play-role and pending-greybox tables render at desktop and mobile widths');
+
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto(docUrl(ACTS[5].path, 's-0908-21'));
+    await readerReady(page, 's-0908-21');
+    assert((await page.locator('#readerContent').innerText()).includes('另外三人的來源仍須各自展開並核對'));
+    await page.goto(docUrl(ACTS[6].path, 's-0909-17'));
+    await readerReady(page, 's-0909-17');
+    assert((await page.locator('#readerContent').innerText()).includes('不重做配鏈教學'));
+    pass('revised investigations and continuous mechanisms render in their owning acts');
 
     await page.setViewportSize({ width: 390, height: 844 });
     for (const [route, act] of transitionRoutes) {

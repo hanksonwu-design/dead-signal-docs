@@ -1,0 +1,15 @@
+{
+  "base": "http://127.0.0.1:8766",
+  "doc": "08_製作管理/08-13_劇情節點與場景道具總表.md",
+  "checks": [
+    "inventory is discoverable in production management",
+    "summary, scene tables and hidden generator markers render correctly",
+    "scene link opens its owning screenplay act",
+    "all 342 beat links render and the B ending opens the correct source",
+    "all 55 route links render and lead to production specifications",
+    "readable props tables with contained overflow at 1440px",
+    "readable props tables with contained overflow at 390px",
+    "no browser runtime errors"
+  ],
+  "errors": []
+}
