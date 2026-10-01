@@ -63,6 +63,46 @@ test('eight maintained acts place their story before local specifications withou
   assert.equal(master.text.split('**保存與素材驗收：**原房主線').length - 1, 1);
 });
 
+test('screenplay presentation cues distinguish motion, stills, transitions and interfaces', () => {
+  const labels = ['動畫演出', '靜態畫面', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
+  assert(!master.text.includes('〔演出〕'));
+  for (const label of labels) assert(block('s-0900-4').includes(`（${label}）`), label);
+  for (const act of ACTS) {
+    const text = master.documents.get(act.path);
+    const story = text.slice(0, text.indexOf(`<a id="spec-act-${act.act}">`));
+    assert(story.includes('（動畫演出）'), act.path);
+    assert(story.includes('（靜態畫面）'), act.path);
+    assert(story.includes('（介面呈現）'), act.path);
+  }
+  for (const id of ['s-0904-16', 's-0905-22', 's-0905-55', 's-0906-14', 's-0906-62', 's-0908-28']) {
+    assert(block(id).includes('（鏡位切換）'), id);
+  }
+  assert(block('s-0903-3').includes('（配音演出）保留人的氣息與猶豫。'));
+  assert(block('s-0904-42').includes('（介面呈現）五個人物碎片'));
+});
+
+test('frozen history and H-08 remain still while present action and the unique thaw are explicit', () => {
+  for (const [id, text] of [
+    ['s-0903-23', '同一間房'], ['s-0905-27', '同鏡位靜格'],
+    ['s-0907-14', '凝固構圖始終不動'], ['s-0908-45', 'C-07 有完整可辨的臉'],
+    ['s-0908-25', '凝固或原快取靜格'], ['s-0909-20', '25–45 秒靜止回憶'],
+  ]) {
+    assert(block(id).includes(`（靜態畫面）${text}`), id);
+    assert(!block(id).includes('（動畫演出）'), id);
+  }
+  assert(block('s-0905-17').includes('（動畫演出）回到現時，老周的迴聲'));
+  assert(block('s-0906-11').includes('（動畫演出）退出後，現時輪廓'));
+  assert(block('s-0907-12').includes('（靜態差分）玩家轉開鏡頭後才撤去該靜格'));
+  assert(block('s-0907-25').includes('（靜態畫面）主角收手時，門邊那隻手仍是靜格。'));
+  assert(block('s-0909-5').includes('（靜態畫面）窗內的人與物保持不動'));
+  assert(block('s-0909-59').includes('（動畫演出）同一歷史鏡位中，十二秒解凍'));
+  assert(block('s-0909-59').includes('（靜態差分）減少動態版用原八張定格、同十二秒。'));
+  assert(block('s-0909-60').includes('（介面呈現）選用文字摘要'));
+  assert(block('s-0910-5').includes('（動畫演出）泵體後內凹室'));
+  assert(block('s-0910-6').includes('（靜態畫面）記憶不動'));
+  assert(block('s-0910-42').includes('（動畫演出）康刷白色管理卡'));
+});
+
 test('derived files exactly match the current master; no legacy-heading fallback', () => {
   const { outputs, warnings } = buildSync();
   assert.deepEqual(warnings, []);
