@@ -26,6 +26,7 @@ jobs:
       - name: Build
         run: |
           node tools/sync-canonical.mjs --check
+          node tools/build-story-inventory.mjs --check
           node tools/test-canonical.mjs
           if node tools/build-docs.mjs --check; then exit 0; fi
           node tools/build-docs.mjs

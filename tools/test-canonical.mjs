@@ -606,6 +606,111 @@ test('reading chapters omit editorial notes while production contracts remain av
   assert(block('s-0608-18').includes('順序固定為人物結局'));
 });
 
+test('Kang post-credit date counts from escape, not either later seal', () => {
+  const dates = block('s-0913-2');
+  assert(dates.includes('| 第 10 日，康死亡 | 2025-11-14 |'));
+  const day = 24 * 60 * 60 * 1000;
+  assert.equal((Date.parse('2025-11-14') - Date.parse('2025-11-04')) / day, 10);
+  assert(block('s-0910-42').includes('逃亡後第十日（2025-11-14）'));
+  assert(block('s-0102-26').includes('逃亡後第 10 日（2025-11-14）'));
+  assert(read('docs/09_故事劇情/17_縮寫短文.md').includes('逃亡後第十日'));
+  assert(!master.text.includes('封鎖形成後的第十日'));
+});
+
+test('evidence summaries keep reachable sources, date rules and exact marginal writing', () => {
+  const evidence = block('s-0302-4');
+  const row = id => evidence.split('\n').find(line => line.startsWith(`| \`${id}\` |`));
+  assert(row('E2-14').includes('R16 第三機櫃本地分級頁'));
+  assert(row('E2-14').includes('不返回 R7'));
+  assert(row('E3-07').includes('R17 的 32F 外部中繼端'));
+  assert(row('E4-02').includes('各自倒填至本人入境前三個曆月'));
+  assert(!master.text.includes('同倒填日期檔案'));
+  assert(!master.text.includes('R16 技術核心／R7 回訪'));
+  assert(block('s-0103-3').includes('寫下「宿舍」二字'));
+  assert(block('s-0604-9').includes('寫下「宿舍」二字'));
+  assert(block('s-0906-46').includes('手寫「宿舍」兩字'));
+});
+
+test('inventory summaries do not invent a prologue lock, clue solution or occupation', () => {
+  const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
+  const row = id => {
+    const rows = inventory.split('\n').filter(line => line.startsWith(`| ${id} |`));
+    assert.equal(rows.length, 1, id);
+    return rows[0];
+  };
+  assert(row('E0-02').includes('實際查看編號牌並記下聲證'));
+  assert(row('E0-02').includes('不可鎖定灰槽'));
+  assert(row('K0-01').includes('取得 E0-02 後'));
+  assert(row('E1-13').includes('E-02 墜落者的逃生路線'));
+  assert(row('E2-09').includes('R7 快捷鍵表「轉接校正」'));
+  assert(row('E2-09').includes('實際比對後才可替代'));
+  assert(row('E2-11').includes('不據此指定職業'));
+  assert(row('E4-02').includes('三個曆月'));
+  assert(row('E4-00-C').includes('前後電壓正常'));
+  const scene = id => inventory.split('\n').find(line => line.startsWith(`| [${id} ·`)) || '';
+  assert(scene('P2').includes('凝固全景少一個剪影'));
+  assert(scene('R1').includes('不以姿態判定被騙或被擄'));
+  assert(scene('R3').includes('E1-13 斷裂床單'));
+  assert(scene('R11').includes('已解讀 E2-09'));
+  assert(scene('R23').includes('本房同頁見臉與真名'));
+  assert(scene('R33').includes('名冊另接片尾流程'));
+  assert(block('s-0903-24').includes('仍在凝固中的全景'));
+  assert(block('s-0903-25').includes('退出 · 第零層疑點'));
+  assert(!master.text.includes('第零層鎖定'));
+  assert(!master.text.includes('玩家離開後，剛才的凝固剪影'));
+  for (const stale of ['鎖定第零層', '第零層鎖定', '記者通報', '記者未寄', '依本房排班／水痕核對來源', '批次與三個月份'])
+    assert(!inventory.includes(stale), stale);
+});
+
+test('E2-14 is mandatory inherited evidence but R29 comparison is optional', () => {
+  assert(block('s-0906-40').includes('E2-14'));
+  assert(block('s-0307-5').includes('E2-14 客戶分級表與第二層鎖定'));
+  assert(block('s-0607-8').includes('選填的是本房再次比對，不是先前證據'));
+  assert(block('s-0808-11').includes('有效檔略過 `R29_H12`／`R29_H13` 仍能完成'));
+  assert(!master.text.includes('未在第三幕取得 `E2-14` 的玩家'));
+  assert(!master.text.includes('取得後，一直沒有回收'));
+});
+
+test('R21 panic reset follows deduction and never shakes the interaction reticle', () => {
+  const expected = '環境威脅資料已更新。';
+  assert(block('s-0406-10').includes('親自完成第三層三格鎖定；只讀人事架構表不觸發'));
+  assert(block('s-0406-10').includes(expected));
+  assert(block('s-0703-6').includes(expected));
+  assert(master.documents.get(ACTS[4].path).includes(expected));
+  assert(master.documents.get(ACTS[4].specPath).includes(expected));
+  assert(block('s-0703-6').includes('感知準心、互動按鈕與字幕保持穩定'));
+  for (const stale of ['環境威脅評估更新', '感知準心在階段 2 起才晃動', '（玩家在上鎖辦公室讀完人事架構表）'])
+    assert(!master.text.includes(stale), stale);
+});
+
+test('insufficient positive stability keeps existing fallback paths usable', () => {
+  const rules = block('s-0404-8');
+  for (const phrase of ['大於 0 但不足原成本時也可完成', 'max(0, 原值 - 原成本)',
+    '不要求先耗到恰好 0', '未配置備援的選填耗費操作', '不啟動、不扣費',
+    'R26 與 R31–R33 原停止消耗規則優先']) assert(rules.includes(phrase), phrase);
+  assert(rules.includes('來源、關聯、供電與權限仍須成立'));
+});
+
+test('ending overview separates transaction commit, uncertain receipts and presentation result', () => {
+  const overview = block('s-0303-11');
+  assert(overview.includes('此時 branch_outcome_complete=false、seal_resolved=false'));
+  assert(overview.includes('演出完成後，才同次保存 branch_outcome_complete=true'));
+  assert(overview.includes('D 合翼完成只設 branch_outcome_complete=true'));
+  assert(overview.includes('回執不明時，保留同一 pending_commit_id'));
+  assert(overview.includes('不換路、不重送'));
+  const contract = block('s-0809-4');
+  assert(contract.includes('回執不明先查詢，不能重複傳送或換路線'));
+  assert(contract.includes('完成後，同次保存 seal_resolved=true'));
+  assert(contract.includes('D 完成合翼演出只設 branch_outcome_complete=true'));
+});
+
+test('common-rule referrals are not duplicated within a source block', () => {
+  for (const [id, source] of master.blocks) {
+    const links = source.match(/^共用規則見.+$/gm) || [];
+    assert.equal(links.length, new Set(links).size, id);
+  }
+});
+
 test('malformed masters and unmapped routes fail before any output is written', () => {
   assert.throws(() => parseMaster(master.text.replace('<!-- import:s-0904-6:end -->','')), /imported blocks/);
   const badGraph = structuredClone(graph);
