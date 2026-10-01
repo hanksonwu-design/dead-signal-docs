@@ -15,7 +15,7 @@ mkdirSync(out, { recursive: true });
 const checks = [];
 const errors = [];
 function pass(name, detail) { checks.push({ name, detail }); console.log(`PASS ${name}`, detail || ''); }
-const docUrl = (doc, heading = '') => `${base}/#${new URLSearchParams({ doc, heading })}`;
+const docUrl = (doc, heading = '', staticMode = false) => `${base}/${staticMode ? '?static=1' : ''}#${new URLSearchParams({ doc, heading })}`;
 
 async function readerReady(page, anchor) {
   await page.locator('#readerOverlay:not(.hidden)').waitFor();
@@ -29,6 +29,26 @@ async function readerReady(page, anchor) {
   }, anchor);
   assert.match(await page.locator('#readerPath').innerText(), /遊戲劇本|製作規格/);
   assert.equal(await page.evaluate(() => state.selected.path), canonical.anchorFiles.get(anchor));
+}
+
+async function openSpecification(page, anchor, activation = 'click') {
+  const link = page.locator(`[data-doc-heading="${anchor}"]`).first();
+  assert.equal(await link.getAttribute('target'), '_blank');
+  assert.equal(await link.getAttribute('rel'), 'noopener noreferrer');
+  assert.equal(await link.getAttribute('data-doc-window'), 'true');
+  // Center the link below the sticky toolbar before measuring the reading position.
+  await link.evaluate(el => el.scrollIntoView({ block: 'center' }));
+  await link.focus();
+  const readingState = () => ({ url: location.href, path: state.selected.path, scrollTop: document.querySelector('.reader-panel').scrollTop });
+  const before = await page.evaluate(readingState);
+  const opened = page.context().waitForEvent('page');
+  if (activation === 'keyboard') await link.press('Enter');
+  else await link.click(activation === 'modified' ? { modifiers: ['Control'] } : {});
+  const popup = await opened;
+  await readerReady(popup, anchor);
+  assert.equal(await popup.evaluate(() => window.opener), null);
+  assert.deepEqual(await page.evaluate(readingState), before, 'opening specifications preserves the original story and scroll position');
+  return popup;
 }
 
 async function canvasCheck(page, name) {
@@ -97,14 +117,15 @@ async function canvasCheck(page, name) {
         assert(story.includes(`（${label}）`), `${act.path}: ${label}`);
       }
       if (act.act === 0) await page.screenshot({ path: path.join(out, 'clean-prologue-desktop.png') });
-      await page.locator(`[data-doc-heading="spec-act-${act.act}"]`).first().click();
-      await readerReady(page, `spec-act-${act.act}`);
-      assert.equal(await page.evaluate(() => state.selected.path), act.specPath);
-      assert.equal(await page.locator(`[id="act-${act.act}"]`).count(), 0);
-      await page.locator(`[data-doc-heading="act-${act.act}"]`).first().click();
-      await readerReady(page, `act-${act.act}`);
+      const specs = await openSpecification(page, `spec-act-${act.act}`, act.act === 0 ? 'keyboard' : 'click');
+      assert.equal(await specs.evaluate(() => state.selected.path), act.specPath);
+      assert.equal(await specs.locator(`[id="act-${act.act}"]`).count(), 0);
+      await specs.locator(`[data-doc-heading="act-${act.act}"]`).first().click();
+      await readerReady(specs, `act-${act.act}`);
+      await specs.close();
     }
-    pass('all eight acts retain the story and link bidirectionally to separate production files');
+    pass('all eight acts open separate specification windows, preserve reading position and retain return links');
+    pass('specification links support keyboard activation with no opener access');
     pass('all eight rendered stories exclude editorial prohibition and production labels');
     await page.goto(docUrl(ACTS[0].path, 'act-0-continue'));
     await readerReady(page, 'act-0-continue');
@@ -129,12 +150,15 @@ async function canvasCheck(page, name) {
     });
     assert(ordered);
     pass('sequential story ends without production tables or spoiler appendices');
-    await page.locator('[data-doc-heading="node-r8-spec"]').first().click();
-    await readerReady(page, 'node-r8-spec');
-    assert.equal(await page.evaluate(() => state.selected.path), ACTS[2].specPath);
-    await page.locator('[data-doc-heading="node-r8-script"]').first().click();
-    await readerReady(page, 'node-r8-script');
-    pass('story and room specification round-trip crosses files correctly');
+    const roomSpecs = await openSpecification(page, 'node-r8-spec');
+    assert.equal(await roomSpecs.evaluate(() => state.selected.path), ACTS[2].specPath);
+    await roomSpecs.screenshot({ path: path.join(out, 'spec-window-desktop.png') });
+    await roomSpecs.locator('[data-doc-heading="node-r8-script"]').first().click();
+    await readerReady(roomSpecs, 'node-r8-script');
+    await roomSpecs.close();
+    const modifiedSpecs = await openSpecification(page, 'node-r8-spec', 'modified');
+    await modifiedSpecs.close();
+    pass('room specifications open separately and modifier clicks retain native browser behavior');
 
     for (const act of ACTS) {
       await page.goto(docUrl(act.path, `spec-act-${act.act}`));
@@ -155,13 +179,13 @@ async function canvasCheck(page, name) {
       const anchor = `transition-${route}`;
       await page.goto(docUrl(ACTS[act].path, `${anchor}-script`));
       await readerReady(page, `${anchor}-script`);
-      await page.locator(`[data-doc-heading="${anchor}"]`).first().click();
-      await readerReady(page, anchor);
-      if (route === 'r7-r8') await page.screenshot({ path: path.join(out, 'transition-spec-desktop.png') });
-      if (route === 'r17-r18') await page.screenshot({ path: path.join(out, 'warehouse-transition-desktop.png') });
-      await page.locator('[data-doc-heading="transition-rules"]').first().click();
-      await readerReady(page, 'transition-rules');
-      assert.equal(await page.evaluate(() => state.selected.path), APPENDIX);
+      const specs = await openSpecification(page, anchor);
+      if (route === 'r7-r8') await specs.screenshot({ path: path.join(out, 'transition-spec-desktop.png') });
+      if (route === 'r17-r18') await specs.screenshot({ path: path.join(out, 'warehouse-transition-desktop.png') });
+      await specs.locator('[data-doc-heading="transition-rules"]').first().click();
+      await readerReady(specs, 'transition-rules');
+      assert.equal(await specs.evaluate(() => state.selected.path), APPENDIX);
+      await specs.close();
     }
     pass('seven transition scripts link to owned specifications and shared rules');
 
@@ -254,6 +278,14 @@ async function canvasCheck(page, name) {
     assert(overflow <= 1, `reader horizontal overflow: ${overflow}`);
     assert(await page.evaluate(() => Boolean(document.elementFromPoint(25, 120)?.closest('#readerOverlay'))), 'sidebar must not cover the reader');
     pass('mobile canonical reader', { width: 390, overflow });
+    const mobileSpecs = await openSpecification(page, 'node-r8-spec');
+    await mobileSpecs.setViewportSize({ width: 390, height: 844 });
+    await mobileSpecs.reload();
+    await readerReady(mobileSpecs, 'node-r8-spec');
+    assert(await mobileSpecs.locator('.reader-panel').evaluate(el => el.scrollWidth - el.clientWidth <= 1));
+    await mobileSpecs.screenshot({ path: path.join(out, 'spec-window-mobile.png') });
+    await mobileSpecs.close();
+    pass('mobile specification window preserves the story and fits its viewport');
 
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(`${base}/#scene=R8`);
@@ -303,18 +335,24 @@ async function canvasCheck(page, name) {
     await canvasCheck(page, 'model-mobile');
 
     // Exercise published docs.json too, not only the local live-document API.
-    await page.route('**/api/docs', route => route.fulfill({ status: 404, body: 'not found' }));
-    await page.goto(docUrl(master, 'node-r33-script'));
+    await context.route('**/api/docs?*', route => route.abort());
+    await page.goto(docUrl(master, 'node-r33-script', true));
     await readerReady(page, 'node-r33-script');
-    pass('static docs.json fallback redirects old bookmark to ending file');
+    pass('static docs.json redirects old bookmark to ending file without the live API');
     for (const act of ACTS) {
-      await page.goto(docUrl(act.path, `spec-act-${act.act}`));
+      await page.goto(docUrl(act.path, `spec-act-${act.act}`, true));
       await readerReady(page, `spec-act-${act.act}`);
       assert.equal(await page.evaluate(() => state.selected.path), act.specPath);
     }
-    await page.goto(docUrl(master, 'transition-r7-r8'));
+    await page.goto(docUrl(master, 'transition-r7-r8', true));
     await readerReady(page, 'transition-r7-r8');
     pass('static payload preserves old act and combined specification bookmarks');
+    await page.goto(docUrl(ACTS[2].path, 'node-r8-script', true));
+    await readerReady(page, 'node-r8-script');
+    const staticSpecs = await openSpecification(page, 'node-r8-spec');
+    assert.equal(new URL(staticSpecs.url()).searchParams.get('static'), '1');
+    await staticSpecs.close();
+    pass('static specification window loads docs.json with the source mode and exact anchor retained');
     assert.deepEqual(errors, []);
     pass('no JavaScript page errors');
     writeFileSync(path.join(out, 'results.json'), JSON.stringify({ base, checks, errors }, null, 2));

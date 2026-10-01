@@ -182,6 +182,7 @@ function inlineMarkdown(value) {
       const docHref = target ? `#doc=${encodeURIComponent(target.path)}${heading ? `&amp;heading=${encodeURIComponent(heading)}` : ""}` : "";
       if (target && target.folder === "06_關卡規格") return `<a href="${docHref}" target="_blank" rel="noopener noreferrer" data-scene-source="true" aria-label="${label}（另開視窗或分頁）">${label}</a>`;
       if (target?.weeklyDetail) return `<a href="${docHref}" target="_blank" rel="noopener noreferrer" data-week-detail="true" aria-label="${label}（另開新視窗）">${label}</a>`;
+      if (state.selected?.folder === "09_劇本" && target?.folder === "10_製作規格") return `<a href="${docHref}" target="_blank" rel="noopener noreferrer" data-doc-window="true" data-doc-link="${esc(target.path)}" data-doc-heading="${esc(heading)}" title="${label}（另開新視窗）" aria-label="${label}（另開新視窗）">${label}</a>`;
       return target ? `<a href="${docHref}" data-doc-link="${esc(target.path)}" data-doc-heading="${esc(heading)}">${label}</a>` : `<span>${label}</span>`;
     }
     return `<a href="${href}" target="_blank" rel="noreferrer">${label}</a>`;
@@ -321,7 +322,15 @@ function openReader(path, updateHash = true, headingText = "") {
     event.preventDefault();
     window.open(link.href, "_blank", "noopener,noreferrer");
   }));
-  $("readerContent").querySelectorAll("[data-doc-link]").forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); openReader(link.dataset.docLink, true, link.dataset.docHeading || ""); }));
+  $("readerContent").querySelectorAll("[data-doc-link]").forEach((link) => link.addEventListener("click", (event) => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    event.preventDefault();
+    if (link.dataset.docWindow === "true") {
+      window.open(link.href, "_blank", "popup,width=1100,height=900,noopener,noreferrer");
+      return;
+    }
+    openReader(link.dataset.docLink, true, link.dataset.docHeading || "");
+  }));
 }
 
 function scrollReaderTo(headingText) {
