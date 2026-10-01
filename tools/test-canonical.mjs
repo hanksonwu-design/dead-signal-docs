@@ -704,6 +704,122 @@ test('ending overview separates transaction commit, uncertain receipts and prese
   assert(contract.includes('D 完成合翼演出只設 branch_outcome_complete=true'));
 });
 
+test('two boss domains retain local geometry, original sources and no extra progression gates', () => {
+  const domain = block('s-0410-3');
+  for (const phrase of ['全作**兩場**', '阿尋以必要封包校驗收束',
+    '或另一種可切換圖層', '不添加領域專屬鑰匙']) assert(domain.includes(phrase), phrase);
+  assert(block('s-0606-7').includes('不新增異世界'));
+  assert(domain.includes('門框、證物、設備及地標的實際位置不變'));
+  assert(domain.includes('R26／R32 必要查證與防禦維持零穩定度可完成'));
+  assert(block('s-0102-24').includes('不能製造小花式的門檻回返'));
+  assert(block('s-0102-24').includes('R31 仍是唯一歷史解凍'));
+  assert.equal(master.anchorFiles.get('boss-domains'), APPENDIX);
+  assert.equal(master.anchorFiles.get('abiao-domain'), ACTS[5].specPath);
+  assert.equal(master.anchorFiles.get('xiaohua-domain'), ACTS[7].specPath);
+  assert(graph.edges.every(edge => !/domain|領域/.test(edge.gate)), 'domains do not become new route gates');
+});
+
+test('Abiao domain connects command-space feedback to the original investigation and resolutions', () => {
+  assert(block('s-0908-44').includes('走廊的遠聲退下去'));
+  assert(block('s-0908-47').includes('核可框只壓住空台面'));
+  assert(block('s-0908-47').includes('鉤臂牽住空柄'));
+  assert(block('s-0908-50').includes('同一個待確認的位置仍朝向玩家'));
+  assert(block('s-0908-52').includes('厚門仍未釋放'));
+  assert(block('s-0908-54').includes('阿彪也仍在房裡'));
+  assert(block('s-0908-55').includes('房間沒有碎裂或坍塌'));
+  const spec = block('s-0606-7').split('<a id="abiao-domain"></a>')[1];
+  for (const phrase of ['四來源全核對即永久停攻', '三卡推理完成才進 RESPOND',
+    '六秒仍絕對靜默', '3.2 秒完整前兆及 6 秒恢復窗', '明確確認後才等原五秒逾時',
+    '不銷毀紙件、不重算抹除', '不另存領域通關旗標', '不重播入場收攏、不重啟 Boss']) assert(spec.includes(phrase), phrase);
+  assert(block('s-0807-24').includes('只讀取原狀態，不另排第二組攻擊'));
+});
+
+test('Xiaohua domain preserves reveal order, fixed landmarks and ending-specific release', () => {
+  assert(block('s-0910-4').includes('沒有遮住來路的翼'));
+  assert(block('s-0910-11').includes('房間沒有換過'));
+  assert(block('s-0910-13').includes('柱列沒有位移'));
+  assert(block('s-0910-14').includes('扶手仍連著側牆凹位'));
+  assert(block('s-0910-16').includes('剛才容身的桌下低縫被薄膜包住'));
+  assert(block('s-0910-17').includes('假門的輪廓比側牆亮，扶手卻沒有接過去'));
+  assert(block('s-0910-18').includes('仍不等於她已經讓路'));
+  const spec = block('s-0608-7').split('<a id="xiaohua-domain"></a>')[1];
+  for (const phrase of ['三來源完成前不顯完整形態', '不再接一次領域動畫',
+    '不新增找地標清單或計時門檻', '不以新遮罩擴大命中', 'D 不先撤再重封',
+    '3.5 秒前兆、6 秒恢復窗', '不覆寫 P1 維修影像', '回執不明仍查同一 `pending_commit_id`']) assert(spec.includes(phrase), phrase);
+  assert(block('s-0809-9').includes('defense_complete 只清除動態攻擊，不清除封窗與回返'));
+});
+
+test('domain inventory and novel agree while added art and playtests remain pending', () => {
+  const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
+  assert(inventory.includes('退位、鬆柄與最終拒絕分開'));
+  assert(inventory.includes('停戰仍未解封'));
+  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
+  assert(novel.includes('柱跨和封窗沉進暗處'));
+  assert(novel.includes('停止攻擊和讓我離開，是兩件不同的事'));
+  const assets = block('s-0810-21');
+  assert(assets.includes('以下六組交付'));
+  assert(assets.includes('遮罩、音訊混音與差分需另估工時'));
+  assert(assets.includes('關閉額外領域遮罩與聲場'));
+  assert(assets.includes('原招式前兆、威脅範圍與地標提示仍保留'));
+  assert(block('s-0606-7').includes('待灰盒驗收'));
+  assert(block('s-0608-7').includes('待灰盒驗收'));
+});
+
+test('character-specific audiovisual motifs keep the original encounter scope and source priority', () => {
+  const av = block('s-0412-8');
+  for (const phrase of ['阿彪、小花仍是兩場正式 Boss', '阿尋是原 R11 訊號遭遇的局部領域',
+    '老周是可暫離的低壓迴聲', '現時感知擬音，不是新錄音或可收集訊號',
+    '必要來源原音／字幕及安全閱讀 > 招式方向、地標和操作提示 > 額外角色質感',
+    'R31 唯一解凍不變', '不跟進相鄰房間', '禁止頻閃', '單聲道仍能作同樣判斷',
+    '以上為待實作驗收']) assert(av.includes(phrase), phrase);
+  for (const [anchor, owner] of [['haunted-av-language', APPENDIX], ['laozhou-resonance', ACTS[2].specPath],
+    ['ahsun-domain', ACTS[2].specPath], ['silenced-field', ACTS[4].specPath]]) {
+    assert.equal(master.anchorFiles.get(anchor), owner, anchor);
+  }
+  assert(block('s-0102-24').includes('不把「有領域感」等同新增 Boss'));
+});
+
+test('local uncanny spaces retain optional playback, safe source access and silenced-room boundaries', () => {
+  const lao = block('s-0603-5').split('<a id="laozhou-resonance"></a>')[1];
+  for (const phrase of ['不封門、不追擊', 'HA-R7-01 已依原規則停止', '兩路一律停新增擬音',
+    '沒有背景耳語接話', '暫離只停本地效果，不能當成安息']) assert(lao.includes(phrase), phrase);
+  assert(block('s-0905-17').includes('牆上沒有因此少掉一天'));
+  const ah = block('s-0603-9').split('<a id="ahsun-domain"></a>')[1];
+  for (const phrase of ['不是十一位客戶的亡魂', '此時停攻、不可播放或提交',
+    '主動恢復操作才從完整前兆恢復', '後方 W01–W11 原文仍在', '不重寫歷史收件日']) assert(ah.includes(phrase), phrase);
+  assert(block('s-0905-45').includes('三層表情薄膜各自繃住不同的笑意'));
+  assert(block('s-0905-46').includes('後面的聊天原文還在'));
+  const silenced = block('s-0605-4').split('<a id="silenced-field"></a>')[1];
+  for (const phrase of ['同一巡行肩線', '不補腳步濺水音', 'R19 九十秒固定段依原靜默',
+    '全抹除時只保留吸音板、舊門楣和門控', '不替玩家重演手勢']) assert(silenced.includes(phrase), phrase);
+  assert(block('s-0907-37').includes('空缺沒有被陰影補滿'));
+});
+
+test('boss material and sound additions retain protected evidence, fixed cues and ending timing', () => {
+  const abiao = block('s-0606-7');
+  for (const phrase of ['不把表單文字印成新身分或證據', 'C-07 六秒絕對靜默',
+    '四來源完成後永久撤掉招式擬音']) assert(abiao.includes(phrase), phrase);
+  assert(block('s-0908-44').includes('身體像被壓進一格過窄的待核欄'));
+  assert(block('s-0908-54').includes('反折的姿勢卻沒有復原'));
+  const xiaohua = block('s-0608-7');
+  for (const phrase of ['只在完整顯形條件成立後', '維持原四鬚兩左兩右',
+    '不增加致盲、持續傷害或第二次命中', '停戰後掃擦、收緊聲與攻擊動態停止',
+    'D 維持安靜的囚禁']) assert(xiaohua.includes(phrase), phrase);
+  assert(block('s-0910-13').includes('翼膜近處的細纖維延續袖口邊緣'));
+  assert(block('s-0910-17').includes('真正扶手的磨損與斷鉚釘保持清楚'));
+});
+
+test('uncanny audiovisual inventory, novel and pending asset estimates agree', () => {
+  const assets = block('s-0810-21');
+  for (const phrase of ['R7／R11／校正區須新增估工', '17 秒留言原檔保持不變',
+    '不新增音檔', '素材命名與引擎匯入待製作時配置', '主觀不安程度']) assert(assets.includes(phrase), phrase);
+  const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
+  assert(inventory.includes('不新增收集物、訊號、房間或 Boss'));
+  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
+  for (const phrase of ['留言照原來的樣子播完', '反光與膜擦退下', '沒有腳步濺水的聲音',
+    '矩形反光卡住胸殼', '近處的纖維像原來的衣料']) assert(novel.includes(phrase), phrase);
+});
+
 test('common-rule referrals are not duplicated within a source block', () => {
   for (const [id, source] of master.blocks) {
     const links = source.match(/^共用規則見.+$/gm) || [];

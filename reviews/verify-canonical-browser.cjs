@@ -229,6 +229,23 @@ async function canvasCheck(page, name) {
     }
     pass('play-role and pending-greybox tables render at desktop and mobile widths');
 
+    for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
+      await page.setViewportSize(viewport);
+      for (const [anchor, expected] of [
+        ['boss-domains', '不添加領域專屬鑰匙'], ['abiao-domain', '六秒仍絕對靜默'],
+        ['xiaohua-domain', 'D 不先撤再重封'], ['boss-domain-assets', '以下六組交付'],
+        ['haunted-av-language', '角色專屬的詭譎視聽'], ['laozhou-resonance', '聲音還在上工'],
+        ['ahsun-domain', '永遠差最後一點的產線'], ['silenced-field', '被消音的住戶走道'],
+      ]) {
+        await page.goto(docUrl(canonical.anchorFiles.get(anchor), anchor));
+        await readerReady(page, anchor);
+        assert((await page.locator('#readerContent').innerText()).includes(expected));
+        assert(await page.locator('.reader-panel').evaluate(el => el.scrollWidth - el.clientWidth <= 1));
+        await page.screenshot({ path: path.join(out, `${anchor}-${viewport.width}.png`) });
+      }
+    }
+    pass('boss domains, local uncanny spaces and pending assets render at desktop and mobile widths');
+
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(docUrl(ACTS[5].path, 's-0908-21'));
     await readerReady(page, 's-0908-21');
