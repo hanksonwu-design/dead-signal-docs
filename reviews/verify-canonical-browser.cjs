@@ -36,9 +36,19 @@ async function openSpecification(page, anchor, activation = 'click') {
   assert.equal(await link.getAttribute('target'), '_blank');
   assert.equal(await link.getAttribute('rel'), 'noopener noreferrer');
   assert.equal(await link.getAttribute('data-doc-window'), 'true');
+  const destination = new URL(await link.getAttribute('href'));
+  assert.equal(destination.origin, new URL(page.url()).origin);
+  assert.equal(destination.pathname, new URL(page.url()).pathname);
+  const params = new URLSearchParams(destination.hash.slice(1));
+  assert.equal(params.get('doc'), canonical.anchorFiles.get(anchor));
+  assert.equal(params.get('heading'), anchor);
   // Center the link below the sticky toolbar before measuring the reading position.
   await link.evaluate(el => el.scrollIntoView({ block: 'center' }));
   await link.focus();
+  await link.evaluate(el => {
+    window.specLinkDefaultPrevented = null;
+    el.addEventListener('click', event => { window.specLinkDefaultPrevented = event.defaultPrevented; }, { once: true });
+  });
   const readingState = () => ({ url: location.href, path: state.selected.path, scrollTop: document.querySelector('.reader-panel').scrollTop });
   const before = await page.evaluate(readingState);
   const opened = page.context().waitForEvent('page');
@@ -46,6 +56,7 @@ async function openSpecification(page, anchor, activation = 'click') {
   else await link.click(activation === 'modified' ? { modifiers: ['Control'] } : {});
   const popup = await opened;
   await readerReady(popup, anchor);
+  assert.equal(await page.evaluate(() => window.specLinkDefaultPrevented), false, 'specifications use native new-page navigation without intercepting the click');
   assert.equal(await popup.evaluate(() => window.opener), null);
   assert.deepEqual(await page.evaluate(readingState), before, 'opening specifications preserves the original story and scroll position');
   return popup;
@@ -127,6 +138,13 @@ async function canvasCheck(page, name) {
     pass('all eight acts open separate specification windows, preserve reading position and retain return links');
     pass('specification links support keyboard activation with no opener access');
     pass('all eight rendered stories exclude editorial prohibition and production labels');
+    await page.goto(docUrl(ACTS[4].path, 'node-r18-script'));
+    await readerReady(page, 'node-r18-script');
+    const r18Specs = await openSpecification(page, 'node-r18-spec');
+    await page.screenshot({ path: path.join(out, 'act4-story-retained.png') });
+    await r18Specs.screenshot({ path: path.join(out, 'act4-r18-spec-page.png') });
+    await r18Specs.close();
+    pass('act IV R18 specification opens a native new page while its story remains open');
     await page.goto(docUrl(ACTS[0].path, 'act-0-continue'));
     await readerReady(page, 'act-0-continue');
     await page.locator('[data-doc-heading="act-1"]').nth(1).click();
