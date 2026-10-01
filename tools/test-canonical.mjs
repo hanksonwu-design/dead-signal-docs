@@ -60,7 +60,7 @@ test('eight maintained acts place their story before local specifications withou
   assert(!master.text.includes('原正文 SHA-256：'));
   assert(!master.text.includes('### 本版修訂：'));
   assert(!master.text.includes('#### 本幕自檢'));
-  assert.equal(master.text.split('**保存與素材驗收：**原房主線').length - 1, 1);
+  assert.equal(master.text.split('**存檔與素材驗收：**原房主線').length - 1, 1);
 });
 
 test('screenplay presentation cues distinguish motion, stills, transitions and interfaces', () => {
@@ -101,6 +101,25 @@ test('frozen history and H-08 remain still while present action and the unique t
   assert(block('s-0910-5').includes('（動畫演出）泵體後內凹室'));
   assert(block('s-0910-6').includes('（靜態畫面）記憶不動'));
   assert(block('s-0910-42').includes('（動畫演出）康刷白色管理卡'));
+});
+
+test('current document text uses reviewed Taiwan terminology without changing clue wording', () => {
+  const stale = /證据|狀态|观察|辨认|设备|自动|選项|半翼与|開门|不从|未送出处置|历史|內井墙|實际打开|預览|条件|进入|關联|结果|结局|艺術|脚本|补記|結论|對话|来源|来自|属于|改变|緩存|隊列|交互文字|幀|接口|身份|主觀視像|實時等待|保存進度|保存離開|默認|全屏|同屏|黑屏|熄屏|整屏閃光|高亮|像素|Godot 導入/;
+  for (const doc of buildDocuments()) {
+    for (const [index, line] of doc.content.split('\n').entries()) {
+      assert(!stale.test(line), `${doc.path}:${index + 1}: ${line}`);
+    }
+  }
+  const format = block('s-0900-4');
+  assert(format.includes('台灣用語與校訂原則'));
+  assert(format.includes('量測或統計結果可稱「數據」'));
+  assert(block('s-0908-21').includes('共同錯字「記綠」、VF-0818'));
+  assert(block('s-0904-3').includes('招工燈箱'));
+  assert(block('s-0906-4').includes('插接處缺一個低壓接頭'));
+  assert(master.text.includes('來源與儲存介面'));
+  assert(master.text.includes('只在佇列中留下空位'));
+  assert(master.text.includes('真實時間換命'));
+  assert(master.text.includes('完整屏息上限'));
 });
 
 test('derived files exactly match the current master; no legacy-heading fallback', () => {
@@ -492,7 +511,7 @@ test('act V varies investigation controls without removing evidence or adding pe
   const people = block('s-0908-21');
   const timeline = block('s-0908-32');
   for (const text of ['A／B／C 三個來源位置', '整組只提交一次', '不補發尚未取得的證據']) assert(versions.includes(text), text);
-  assert(block('s-0606-4').includes('初見不高亮正解'));
+  assert(block('s-0606-4').includes('初見不醒目標示正解'));
   for (const text of ['每人一列', '另外三人的來源仍須各自展開並核對', '三個曆月', '不因畫面整理而自動鎖定']) assert(people.includes(text), text);
   for (const text of ['同一日及共用時間基準', '放大只改視窗尺度', '48 小時事件留在另一日期頁', '未持有碎片也能用本地原件完成', '02:20:11', '02:20:22']) assert(timeline.includes(text), text);
   for (const [spec, anchor] of [['s-0606-4', 's-0908-8'], ['s-0606-5', 's-0908-21'], ['s-0606-6', 's-0908-32']]) assert(block(spec).includes(`](#${anchor})`));

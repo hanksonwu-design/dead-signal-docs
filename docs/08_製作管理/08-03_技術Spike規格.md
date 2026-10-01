@@ -149,7 +149,7 @@ T-17、T-18、T-22 涉及演出穩定性，須在技術驗證階段確認。
 
 - E-01 持有管理者指派的新人接收編號；依叫號起身不是自願安息，R7 分配聯才補足產線去向。**情話底噪仍從 R1 就開始播放**
 
-- **鏡像者第 1 次（P0 積水）與第 2 次（R1 黑屏）**、R4 的 #4 多語言細語／#4′ 一個人的聲音（互斥的主觀聲證，只供回看，不可播放）
+- **鏡像者第 1 次（P0 積水）與第 2 次（R1 熄滅的螢幕）**、R4 的 #4 多語言細語／#4′ 一個人的聲音（互斥的主觀聲證，只供回看，不可播放）
 
 <a id="h-0803-181"></a>
 
@@ -159,7 +159,7 @@ T-17、T-18、T-22 涉及演出穩定性，須在技術驗證階段確認。
 
 | --- | --- | --- | --- |
 
-| **T-17** | **鏡像者：反射層與時間差** | P0 積水與 R1 電視黑屏可渲染一層與玩家視角同構的剪影，且**延遲 0.3–0.4 秒**跟隨玩家的鏡頭／互動。玩家**主動點擊該反射面時剪影不出現**；凝神感知與敵人標記皆不偵測它 | ⚠️ **高**。定點場景沒有「玩家的動作」可以直接反射——需先定義剪影跟隨的是鏡頭轉向、互動點擊還是兩者。這是全新的渲染與狀態設計 |
+| **T-17** | **鏡像者：反射層與時間差** | P0 積水與 R1 熄滅的電視螢幕可渲染一層與玩家視角同構的剪影，且**延遲 0.3–0.4 秒**跟隨玩家的鏡頭／互動。玩家**主動點擊該反射面時剪影不出現**；凝神感知與敵人標記皆不偵測它 | ⚠️ **高**。定點場景沒有「玩家的動作」可以直接反射——需先定義剪影跟隨的是鏡頭轉向、互動點擊還是兩者。這是全新的渲染與狀態設計 |
 
 | **T-18** | **同構圖時態錯位：貼圖差分** | 依各事件的離房回訪或近看遮擋條件換差分；P0 不需倒走，P2 剪影只在遮擋時換。場景實物數不增加，物件缺席與投影差分依原事件，不能要求「少一件」又總數不變 | 中高；驗證資料驅動、原事件去重與保存 |
 
@@ -217,7 +217,7 @@ T-17、T-18、T-22 涉及演出穩定性，須在技術驗證階段確認。
 
 | `InvestigationBoard` | 碎片卡片、三格鎖定、**未定位列（T-19）**、錯誤訊息與非拖曳替代操作 |
 
-| **`MirrorHarness`** | **P0 積水與 R1 黑屏兩個反射面、剪影層、可調延遲（0.0–1.0 秒）、「玩家主動點擊時不出現」的抑制邏輯（T-17）** |
+| **`MirrorHarness`** | **P0 積水與 R1 熄滅的螢幕兩個反射面、剪影層、可調延遲（0.0–1.0 秒）、「玩家主動點擊時不出現」的抑制邏輯（T-17）** |
 
 | **`TenseShiftHarness`** | **一張背景 + 三組前景差分、離房／回訪計數、差分階段的存檔恢復（T-18）** |
 
@@ -340,7 +340,7 @@ resources/
 
 ### 阻塞處理（不切換引擎）
 
-- 三圖層疊化在低階顯示卡上無法維持穩定幀率：先改用 Compatibility 渲染器、降低疊圖成本並記錄最低規格。
+- 三圖層疊化在低階顯示卡上無法維持穩定影格率：先改用 Compatibility 渲染器、降低疊圖成本並記錄最低規格。
 
 - 中文字型、滑鼠熱區或拖曳 UI 需要繞過預設行為：集中封裝成共用元件，避免各房間各自修補。
 
@@ -364,7 +364,7 @@ resources/
 
 ## 離體狀態的實作契約與驗收
 
-每個熱點必須指定 interaction_domain：observation（只讀感知）、residue_reconstruction（只改感知物件）、device_commit（真實設備交易）、physical_interaction（指定實物操作）。未指定者不得默認修改 real_world_state。
+每個熱點必須指定 interaction_domain：observation（只讀感知）、residue_reconstruction（只改感知物件）、device_commit（真實設備交易）、physical_interaction（指定實物操作）。未指定者不得自動修改 real_world_state。
 
 device_commit 必填 device_id、power_source、credential_requirement、real_effect、receipt；缺任何一項即不可提交。觀察與回憶只寫 perception_state。受傷、喝水與感知留光不得治療遠處肉身；調查板拖曳只改觀察，實景指定紙張可由 physical_interaction 翻動；門禁、喇叭、印表機、貨梯與鑑識座按真實設備規則保存。
 
@@ -390,7 +390,7 @@ device_commit 必填 device_id、power_source、credential_requirement、real_ef
 
 | R32 模組處置 | device_commit；座內馬達至本地封存槽，禁止攜出 |
 
-現行狀態以 stability.value、finale.r32.projection_reveal_complete、finale.r32.seal_reveal_complete、finale.r32.seal_resolved、world.seal_state、body_location 與 rescue_ping 為準。舊 battery／connection_value 只遷移為 0–100 的 stability.value；丟棄 physical_phone_location，不生成真機或遠端工作階段。新揭露旗標不可默認完成；暫停與失焦凍結限時操作。
+現行狀態以 stability.value、finale.r32.projection_reveal_complete、finale.r32.seal_reveal_complete、finale.r32.seal_resolved、world.seal_state、body_location 與 rescue_ping 為準。舊 battery／connection_value 只遷移為 0–100 的 stability.value；丟棄 physical_phone_location，不生成真機或遠端工作階段。新揭露旗標不可直接視為完成；暫停與失焦凍結限時操作。
 
 必測：筆記本介面關閉仍可感知；觀察卡不得外送原件；無電可操作機械及插卡，但不得執行電子讀寫或馬達功能；離鏡重載物件不互相污染；0 穩定度主線可完成；R32 揭露先於所有提交；A／B／C／E 求援與返回，D 確認留下。以上尚需 Godot 灰盒驗證，文件更新不等於功能已實作。
 
@@ -524,13 +524,13 @@ R8 卡片以 items.r08_memory_card.location 保存 r08_box／carried／r08_reade
 
 沿既有 EncounterController 加 attack_id、attack_phase(prewarn/resolve/recover)、attack_cycle_id、defense_step、confrontation_ready；命中依 cycle_id 去重。暫停、失焦及完整閱讀凍結計時，重載從完整前兆恢復；R11 的錯誤回應同輪優先結算。R26／R32 只回退鏡位及未提交操作，證據不丟、穩定不扣、P1 無新外傷。
 
-R32 關係提交 gate 為 projection_reveal_complete && seal_reveal_complete && defense_complete，分支結果另驗 branch_outcome_complete。defense_complete 不代表 seal_resolved，不得讓同幀防禦成功直接送資料、坐下或抹除。R26 的最終處置與 R32 關係選擇均禁排攻擊。
+R32 關係提交 gate 為 projection_reveal_complete && seal_reveal_complete && defense_complete，分支結果另驗 branch_outcome_complete。defense_complete 不代表 seal_resolved，不得讓同一影格防禦成功直接送資料、坐下或抹除。R26 的最終處置與 R32 關係選擇均禁排攻擊。
 
 <a id="h-0803-639"></a>
 
 ## 角色曲線的存檔與入口
 
-新增 arc.protagonist.compromise_seen、arc.ahsun.scope_confirmed、arc.abiao.extra_restriction_seen 為既有必要熱點的核對子旗標；它們不加善惡值，不增加結局門票。R11 校驗、R21 E3-02、R26 B02 的必要完成條件分別包含對應子旗標，資料都在該房本地可達，無自我依賴。未完成的舊存檔若已越過房間，於當前可用的既有來源回顧入口補讀並核對，不重發獎勵、不默認已讀、不要求倒走不可逆路線；已完成歷史結局維持唯讀。
+新增 arc.protagonist.compromise_seen、arc.ahsun.scope_confirmed、arc.abiao.extra_restriction_seen 為既有必要熱點的核對子旗標；它們不加善惡值，不增加結局門票。R11 校驗、R21 E3-02、R26 B02 的必要完成條件分別包含對應子旗標，資料都在該房本地可達，無自我依賴。未完成的舊存檔若已越過房間，於當前可用的既有來源回顧入口補讀並核對，不重發獎勵、不自動標為已讀、不要求倒走不可逆路線；已完成歷史結局維持唯讀。
 
 arc.laozhou.note_seen、arc.xiaohua.workbench_seen 與 arc.clients_reviewed_ids 為選填回顧旗標。康沿既有 KX 三份資料與完成旗標。閱讀、比對、失焦與存讀檔不得清空既有證據或誤觸攻擊；離開全文閱讀給完整前兆。
 
@@ -542,7 +542,7 @@ arc.laozhou.note_seen、arc.xiaohua.workbench_seen 與 arc.clients_reviewed_ids 
 
 [開啟本機操作原型](../../playtest.html)。含 R12、R22 雙路、U4／U4b、UD-01、UD-02 五個獨立切片；不讀寫正式遊戲存檔。此原型使用文字線索與逐拍推演，沒有成品美術、音效、即時攻擊或完整資源系統，不可用來證明恐怖感或正式通關時間。UD-02 首次來向在原型固定左，正式規格可左右擇一保存。
 
-先請首次玩家說明所見依據，再觀察是否能自主完成；記錄錯解後有無理解、R22 是否感到突破、兩段 UD 是否需要不同判斷。任何功能測試結果只代表原型分支正確，首次玩家試玩尚待執行。正式 Godot 實作再驗證時窗、命中同幀優先、失焦暫停、視聽前兆及可及性。
+先請首次玩家說明所見依據，再觀察是否能自主完成；記錄錯解後有無理解、R22 是否感到突破、兩段 UD 是否需要不同判斷。任何功能測試結果只代表原型分支正確，首次玩家試玩尚待執行。正式 Godot 實作再驗證時窗、同一影格內的命中優先順序、失焦暫停、視聽前兆及可及性。
 
 <a id="h-0803-660"></a>
 
@@ -778,7 +778,7 @@ ability.admin_override_unlocked
 inventory.key.k2_01
 ~~~
 
-> 成功操作的旗標、證據、成本與回執原子保存，演出另存 sequence／step／elapsed／result_committed。中斷只恢復未播完部分，不重發成果；必要揭露未完成不得默認播完，依共用破例契約恢復。
+> 成功操作的旗標、證據、成本與回執原子保存，演出另存 sequence／step／elapsed／result_committed。中斷只恢復未播完部分，不重發成果；必要揭露未完成不得直接視為播完，依共用破例契約恢復。
 
 <a id="h-0803-866"></a>
 
@@ -1016,7 +1016,7 @@ DORMANT
 | 標準 | 2.2 | 走廊視點切換 |
 | 長 | 2.8 | 跨越開放門框 |
 
-- 點擊下一節點後播放 6–10 幀視差過場，不瞬間傳送。
+- 點擊下一節點後播放 6–10 個影格視差過場，不瞬間傳送。
 - 移動開始 0.4 秒後不可取消，避免連點探路；仍可在 `SUSPICIOUS` 補救窗使用權限反擊。
 - 噪音由連線資料決定，不受玩家點擊速度影響。
 - 每個安全窗都必須比正確路線的移動時間長至少 0.8 秒。
