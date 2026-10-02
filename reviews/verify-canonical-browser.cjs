@@ -131,6 +131,10 @@ async function canvasCheck(page, name) {
       assert(staticCues.length > 0, act.path);
       for (const cue of staticCues) assert.match(cue, /^（靜態畫面／(?:遠景|全景|中景|近景|特寫)）$/, act.path);
       assert(!story.includes('定點構圖'), act.path);
+      assert(!/〔(?:操作|環境|系統)〕/.test(story), act.path);
+      for (const type of ['操作', '環境', '系統']) {
+        assert(new RegExp(`〔${type}／[^〕]+〕`).test(story), `${act.path}: ${type} subtype`);
+      }
       if (act.act === 0) await page.screenshot({ path: path.join(out, 'clean-prologue-desktop.png') });
       const specs = await openSpecification(page, `spec-act-${act.act}`, act.act === 0 ? 'keyboard' : 'click');
       assert.equal(await specs.evaluate(() => state.selected.path), act.specPath);

@@ -128,6 +128,62 @@ test('every static screenplay cue names its shot size without changing protected
   }
 });
 
+test('operation, environment and system cues distinguish inputs, sources and automatic responses', () => {
+  const kinds = {
+    操作: new Set(['場景點擊', '物件近看', '近看翻頁', '物件操作', '設備按鍵', '介面點選', '介面查閱',
+      '介面比對', '介面拖曳', '介面長按', '場景長按', '按鍵感應', '按鍵長按', '感知觸發', '感知長按',
+      '視角切換', '返回操作', '原位停留', '定神停留']),
+    環境: new Set(['背景聲', '局部音效', '設備聲', '異常聲', '聲場變化', '光線', '觸覺與聲音']),
+    系統: new Set(['操作提示', '選項介面', '確認警示', '取得提示', '筆記更新', '狀態顯示', '狀態更新',
+      '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
+  };
+  const counts = [[20, 17, 8], [48, 27, 20], [72, 33, 11], [79, 27, 12],
+    [48, 18, 11], [51, 13, 12], [50, 5, 11], [23, 12, 4]];
+  for (const act of ACTS) {
+    const story = master.documents.get(act.path);
+    assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
+    const cues = [...story.matchAll(/^〔(操作|環境|系統)／([^〕]+)〕/gm)];
+    assert.deepEqual(Object.keys(kinds).map(type => cues.filter(m => m[1] === type).length), counts[act.act], act.name);
+    for (const [, type, detail] of cues) {
+      const parts = detail.split(/＋|或/);
+      assert(parts.length <= 2 && new Set(parts).size === parts.length, detail);
+      for (const part of parts) {
+        assert(kinds[type].has(part), `${act.name}: ${type}/${part}`);
+        assert(block('s-0900-4').includes(part), `Missing cue definition: ${part}`);
+      }
+    }
+  }
+  for (const [id, cue, text] of [
+    ['s-0903-4', '操作／場景點擊', '玩家第一次點擊'],
+    ['s-0903-16', '操作／按鍵感應', '玩家短按 `Q`'],
+    ['s-0903-22', '操作／感知長按', '對強訊號點**長按滑鼠左鍵 0.8 秒**'],
+    ['s-0904-6', '操作／設備按鍵', '玩家按下現場叫號功能'],
+    ['s-0905-6', '操作／原位停留', '玩家在同步座主動停留 2.5 秒'],
+    ['s-0905-38', '操作／原位停留或物件近看', '在原位置停留 5 秒，或查看第三張祈願卡'],
+    ['s-0905-43', '操作／介面點選', '在同一通電終端選「比對兩版名單」'],
+    ['s-0907-9', '操作／場景長按', '玩家按住慢關門'],
+    ['s-0907-9', '操作／按鍵長按', '玩家依提示屏息'],
+    ['s-0907-40', '系統／狀態更新', '第四次正確輸入後'],
+    ['s-0908-32', '操作／介面拖曳', '把三帶對到同一時間尺'],
+    ['s-0909-32', '操作／介面點選', '玩家已展開批次，再主動點「可移交」'],
+    ['s-0910-23', '系統／送出回饋', '收到副本的收件證明後'],
+    ['s-0910-29', '操作／介面長按', '長按「緊急接管」四秒'],
+    ['s-0904-6', '環境／設備聲', '每顯示一個編號'],
+    ['s-0905-6', '環境／設備聲', '接通快取後，是風扇、販賣機、雨和鍵盤'],
+    ['s-0904-28', '系統／錯誤回饋', '「無法解讀。缺少對應線索。標記已記下。」'],
+  ]) assert(block(id).includes(`〔${cue}〕${text}`), `${id}: ${cue}`);
+  for (const [id, cue, text] of [
+    ['s-0908-31', '介面呈現', '進房時，時序軌'],
+    ['s-0909-22', '動畫演出', '主角在安全桌邊伸手'],
+    ['s-0909-44', '動畫演出', '粉塵往一側落'],
+    ['s-0910-34', '動畫演出', '既有分支演出中，她伸出手指向原簽名'],
+  ]) assert(block(id).includes(`（${cue}）${text}`), `${id}: automatic presentation`);
+  for (const text of ['不是新增的玩家介面文字', '不把替代路徑變成兩步必做', '不另外插入一次確認',
+    '預覽不外送，回執不明不重發', '不單憑分類認定說話者', '規則註記不直接顯示']) {
+    assert(block('s-0900-4').includes(text), text);
+  }
+});
+
 test('frozen history and H-08 remain still while present action and the unique thaw are explicit', () => {
   for (const [id, size, text] of [
     ['s-0903-23', '全景', '同一間房'], ['s-0905-27', '近景', '同鏡位靜格'],
@@ -972,7 +1028,7 @@ test('reading scripts keep implementation states in production documents', () =>
     'seal_resolved', 'branch_outcome_complete', 'EMERGENCY_CUSTODY']) assert(production.includes(key), key);
   for (const anchor of ['player-language', 'reading-load']) assert.equal(canonicalFile(master, anchor), APPENDIX);
   for (const id of ['s-0905-46', 's-0908-21', 's-0909-55', 's-0910-29']) {
-    assert(block(id).includes('\n\n〔操作〕'), `${id}: separate action paragraphs`);
+    assert.match(block(id), /\n\n〔操作／[^〕]+〕/, `${id}: separate action paragraphs`);
     assert(block(id).includes('\n\n〔玩家〕'), `${id}: separate player response paragraphs`);
   }
 });

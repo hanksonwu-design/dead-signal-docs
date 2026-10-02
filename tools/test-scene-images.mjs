@@ -3,13 +3,14 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { ACTS, APPENDIX } from './screenplay-files.mjs';
 import { ROOT, parseMaster, rewriteLinks } from './sync-canonical.mjs';
-import { collectSceneImages, collectHotspotImages, bindImageRoutes, buildSceneImageOutputs } from './build-scene-images.mjs';
+import { collectSceneImages, collectHotspotImages, bindImageRoutes, collectSubscenes, buildSceneImageOutputs } from './build-scene-images.mjs';
 
 const master = parseMaster();
 const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
 const specs = new Map(ACTS.map(a => [a.specPath, master.documents.get(a.specPath)]));
 const collection = collectSceneImages(graph, specs);
 const routes = bindImageRoutes(graph, collection);
+const subscenes = collectSubscenes(collection, routes);
 const hotspots = collectHotspotImages(collection, specs);
 let passed = 0;
 function test(name, fn) { fn(); console.log(`PASS ${name}`); passed++; }
@@ -93,6 +94,49 @@ test('all 55 routes bind valid static views without conflating ending rescue wit
   assert.equal(collection.rows.filter(r => r.kind === '出口接景').length, 20);
   assert.equal(routes.find(r => r.edge.fromId === 'R17' && r.edge.toId === 'R14').mode, '出口接景');
   assert.equal(routes.find(r => r.edge.fromId === 'R17' && r.edge.toId === 'R18').mode, '逐鏡過渡');
+});
+
+test('33 secondary scene nodes retain their parent, ordered connections and distinct reading/spec anchors', () => {
+  assert.equal(subscenes.length, 33);
+  assert.equal(subscenes.filter(s => s.type === '可查看過渡').length, 13);
+  assert.equal(subscenes.filter(s => s.type === '轉場接景').length, 20);
+  assert.equal(graph.nodes.length, 48);
+  for (const child of subscenes) {
+    assert.equal(child.node, child.route.edge.fromId);
+    assert(collection.allIds.has(child.from) && collection.allIds.has(child.to), child.id);
+    assert.equal(master.anchorFiles.get(`subscene-${child.id.toLowerCase()}-script`), child.act.path);
+    assert.equal(master.anchorFiles.get(`subscene-${child.id.toLowerCase()}-spec`), child.act.specPath);
+    const story = master.documents.get(child.act.path);
+    if (child.type === '可查看過渡') {
+      const heading = `###### 次場景 ${child.id} · ${child.name}`;
+      assert.equal(story.split(heading).length, 2, child.id);
+      const body = story.split(heading)[1].split(/\n(?:#{1,6} |<a id="subscene-)/)[0];
+      assert(body.includes('（鏡位切換）'), `Missing prose after child heading: ${child.id}`);
+      for (const detail of child.details) assert(body.includes(detail.id));
+    } else assert.equal(child.details.length, 0, child.id);
+  }
+  for (const id of ['R20-V03', 'R33-V02', 'R31-F01', 'T-R2-R3-01-C01']) assert(!subscenes.some(s => s.id === id), id);
+});
+
+test('invalid child order, adjacency, orphan close-ups and wrong return parents fail before generation', () => {
+  const invalid = edit => {
+    const copy = structuredClone(collection);
+    edit(copy.rows);
+    copy.groups = copy.groups.map(g => ({ ...g, rows: copy.rows.filter(r => r.node === g.node) }));
+    assert.throws(() => collectSubscenes(copy, bindImageRoutes(graph, copy)));
+  };
+  invalid(rows => { rows.find(r => r.id === 'T-R2-R3-01').requirements = '來路 R2-V01；去路 R3-V01。'; });
+  invalid(rows => { rows.find(r => r.id === 'T-R2-R3-01-C01').requirements = '關閉回 T-R2-R3-02，'; });
+  invalid(rows => { rows.find(r => r.id === 'T-R2-R3-01-C01').id = 'T-R2-R3-99-C01'; });
+  invalid(rows => { rows.find(r => r.id === 'T-R2-R3-02').id = 'T-R2-R3-03'; });
+});
+
+test('secondary scene headings preserve entry gates and do not redefine transition saves', () => {
+  const act3 = master.documents.get(ACTS[3].path);
+  assert(act3.indexOf('只在 C-02 現場驗證與上述單向確認完成後展開') < act3.indexOf('###### 次場景 T-R17-R18-01'));
+  assert(act3.indexOf('不覆蓋上段十二秒餘波') < act3.indexOf('###### 次場景 T-R13-R14-01'));
+  const policy = master.documents.get(APPENDIX).split('<a id="scene-image-contract"></a>')[1].split('各場景原文')[0];
+  for (const phrase of ['主場景 → 次場景 → 物件近看', '操作與演出 V 圖不一律', '實際觸發仍依正文分支', '20 個出口接景不套用七路通路進度']) assert(policy.includes(phrase), phrase);
 });
 
 test('exit work orders stay assigned to their actual routes rather than falling back silently', () => {

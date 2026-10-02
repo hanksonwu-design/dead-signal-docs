@@ -106,6 +106,30 @@ export function bindImageRoutes(graph, collection) {
   return routes;
 }
 
+export function collectSubscenes(collection, routes) {
+  const subscenes = routes.flatMap(route => {
+    if (!['逐鏡過渡', '出口接景'].includes(route.mode)) return [];
+    return route.rows.map((row, index, rows) => {
+      const from = index ? rows[index - 1].id : `${route.edge.fromId}-V01`;
+      const to = index + 1 < rows.length ? rows[index + 1].id : `${route.edge.toId}-V01`;
+      const details = collection.rows.filter(r => r.kind === '過渡近看' && r.id.startsWith(`${row.id}-`));
+      if (row.kind === '過渡場景') {
+        assert.equal(row.id, `T-${route.edge.fromId}-${route.edge.toId}-${String(index + 1).padStart(2, '0')}`, `Subscene order: ${row.id}`);
+        assert(row.requirements.startsWith(`來路 ${from}；去路 ${to}。`), `Subscene connections: ${row.id}`);
+        assert(details.length, `Subscene close-ups: ${row.id}`);
+        for (const detail of details) assert(detail.requirements.includes(`關閉回 ${row.id}，`), `Close-up return: ${detail.id}`);
+      }
+      return { ...row, route, from, to, details, name: row.content.split('：')[0],
+        type: row.kind === '過渡場景' ? '可查看過渡' : '轉場接景' };
+    });
+  });
+  assert.equal(new Set(subscenes.map(s => s.id)).size, subscenes.length, 'Duplicate subscene');
+  for (const detail of collection.rows.filter(r => r.kind === '過渡近看')) {
+    assert.equal(subscenes.filter(s => s.details.includes(detail)).length, 1, `Unowned close-up: ${detail.id}`);
+  }
+  return subscenes;
+}
+
 function section(text, name, body, insertion) {
   const begin = `<!-- scene-image-${name}:begin -->`;
   const end = `<!-- scene-image-${name}:end -->`;
@@ -125,9 +149,12 @@ function section(text, name, body, insertion) {
 const cleanCell = value => String(value).replaceAll('|', '／').replaceAll('\n', ' ');
 const table = (headings, rows) => [headings, headings.map(() => '---'), ...rows]
   .map(row => `| ${row.map(cleanCell).join(' | ')} |`).join('\n');
+const isSubscene = row => ['過渡場景', '出口接景'].includes(row.kind);
+const subsceneAnchor = (row, suffix) => `subscene-${row.id.toLowerCase()}-${suffix}`;
 const specLink = (row, from) => {
   const target = from === row.act.specPath ? '' : path.posix.relative(path.posix.dirname(from), row.act.specPath);
-  return `[${row.id}](${target}#node-${row.node.toLowerCase()}-images)`;
+  const anchor = isSubscene(row) ? subsceneAnchor(row, 'spec') : `node-${row.node.toLowerCase()}-images`;
+  return `[${row.id}](${target}#${anchor})`;
 };
 const shortName = row => row.kind === '出口接景' ? row.content.split('：')[0] : row.content;
 
@@ -135,17 +162,24 @@ export function buildSceneImageOutputs(graph, documents) {
   const collection = collectSceneImages(graph, documents);
   const hotspots = collectHotspotImages(collection, documents);
   const routes = bindImageRoutes(graph, collection);
+  const subscenes = collectSubscenes(collection, routes);
   const outputs = new Map();
   for (const act of ACTS) {
     let story = read(act.path);
     let spec = documents?.get(act.specPath) ?? read(act.specPath);
     for (const group of collection.groups.filter(g => g.act.act === act.act)) {
-      const rows = group.rows.filter(r => !r.id.startsWith('T-'));
+      const children = subscenes.filter(s => s.node === group.node);
+      const rows = group.rows.filter(r => !r.id.startsWith('T-') && r.kind !== '出口接景');
       const main = rows[0];
       const lines = [`**場景圖：${main.id}** · ${main.content}`, '', '**近看、原件與其他畫面：**'];
       // Keep only names in the reading edition; states and art instructions remain in the specification.
       for (let i = 1; i < rows.length; i += 3) {
         lines.push(`- ${rows.slice(i, i + 3).map(r => `${r.id} ${shortName(r)}`).join('；')}。`);
+      }
+      const exits = children.filter(s => s.kind === '出口接景');
+      if (exits.length) {
+        lines.push('', '**接景次場景：**');
+        for (const child of exits) lines.push('', `<a id="${subsceneAnchor(child, 'script')}"></a>`, '', `- ${specLink(child, act.path)} · ${child.content}`);
       }
       lines.push('', `[本場景圖像製作單](../${act.specPath}#node-${group.node.toLowerCase()}-images)`);
       const intro = `[製作規格](../${act.specPath}#node-${group.node.toLowerCase()}-spec)`;
@@ -156,9 +190,27 @@ export function buildSceneImageOutputs(graph, documents) {
         const anchor = `transition-${slug}-script`;
         const heading = story.match(new RegExp(`<a id="${anchor}"></a>\\n(#{1,6} [^\\n]+)`))?.[0];
         assert(heading, `Transition reading anchor: ${route}`);
-        const body = ['**過渡場景與近看圖：**', '', ...group.rows.filter(r => r.id.startsWith(`${route}-`))
-          .map(r => `- ${r.id} · ${r.content.replace(/[。；]+$/, '')}。`), '', `[通路圖像製作單](../${act.specPath}#node-${group.node.toLowerCase()}-images)`].join('\n');
+        const routeChildren = children.filter(s => s.id.startsWith(`${route}-`));
+        const body = `**次場景順序：** ${routeChildren.map(s => `[${s.id} · ${s.name}](#${subsceneAnchor(s, 'script')})`).join(' → ')}\n\n` +
+          `[通路圖像製作單](../${act.specPath}#subscenes-${group.node.toLowerCase()})`;
         story = section(story, route.toLowerCase(), body, heading);
+        for (const child of routeChildren) {
+          const childBody = `<a id="${subsceneAnchor(child, 'script')}"></a>\n###### 次場景 ${child.id} · ${child.name}\n\n` +
+            `**近看：** ${child.details.map(d => `${d.content}（${d.id}）`).join('；')}。\n\n` +
+            `[次場景製作規格](../${act.specPath}#${subsceneAnchor(child, 'spec')})`;
+          // Each marker is placed beside its actual shot, never ahead of a route's entry condition.
+          story = section(story, `subscene-${child.id.toLowerCase()}`, childBody);
+        }
+      }
+      if (children.length) {
+        const childBody = `<a id="subscenes-${group.node.toLowerCase()}"></a>\n#### 次場景節點\n\n` +
+          `以下次場景歸 ${group.node} 管理，節點編號沿用主圖圖號。來去方向為原動線的正向排列；反向通行與單向限制依原門檻，不因列出來路就新增返回出口。\n\n` +
+          children.map(s => `<a id="${subsceneAnchor(s, 'spec')}"></a>\n##### ${s.id} · ${s.name}\n\n` +
+            `**類型：**${s.type}。**正向連接：**${s.from} → **${s.id}** → ${s.to}。\n\n` +
+            `**近看：**${s.details.length ? `${s.details.map(d => d.id).join('、')}；關閉回 ${s.id}。` : '不新增近看；沿原轉場操作，不新增等待或讀取門檻。'}\n\n` +
+            `[正文](../${act.path}#${subsceneAnchor(s, 'script')}) · [圖像製作單](#node-${group.node.toLowerCase()}-images) · [原門檻與回訪](#node-${group.node.toLowerCase()}-nav) · ${s.source}`
+          ).join('\n\n');
+        spec = section(spec, `subscenes-${group.node.toLowerCase()}`, childBody, `<!-- scene-images:${group.node}:end -->`);
       }
     }
     const actRoutes = routes.filter(r => graph.nodes.find(n => n.id === r.edge.fromId).act === act.act);
@@ -178,18 +230,23 @@ export function buildSceneImageOutputs(graph, documents) {
   const transitions = collection.rows.filter(r => r.kind === '過渡場景');
   const exits = collection.rows.filter(r => r.kind === '出口接景');
   const summary = `<a id="inventory-scene-images"></a>\n\n## 場景畫面與靜態圖\n\n` +
-    `**${collection.groups.length} 個流程節點、${transitions.length} 個獨立過渡畫面、${exits.length} 個出口接景製作項目；合計 ${collection.rows.length} 列圖像製作項目（場景／操作／演出 ${views.length} 列，近看／文件／介面／回憶 ${details.length} 列），對應 ${routes.length} 條動線。**\n\n` +
+    `**${collection.groups.length} 個流程節點，下分 ${subscenes.length} 個次場景節點（${transitions.length} 個可查看過渡、${exits.length} 個轉場接景）；合計 ${collection.rows.length} 列圖像製作項目（場景／操作／演出 ${views.length} 列，近看／文件／介面／回憶 ${details.length} 列），對應 ${routes.length} 條動線。**\n\n` +
     `原規格的 ${hotspots.length} 個 H／B 熱點編號均有逐項對圖；包含已撤除事件的相容參照，不代表新增同數量的可點物件。其餘節點沿原場次與操作名稱列圖。\n\n` +
     '一列可能包含多頁、正反面、子鏡位或差分，不等於一張輸出圖；共用圖也不能重複算獨立背景。全部仍待正式圖像與遊戲實作交付，現有概念圖不能當完成品。完整拆圖與來源以各幕製作單為準。\n\n' +
     table(['節點', '場景／操作／演出項目', '近看等項目', '逐件圖號與拆圖'], collection.groups.map(g => [
       g.node, g.rows.filter(r => r.view).length, g.rows.filter(r => !r.view).length,
       `[製作單](../${g.act.specPath}#node-${g.node.toLowerCase()}-images)`,
+    ])) + '\n\n<a id="inventory-subscenes"></a>\n\n### 次場景節點總表\n\n' +
+    '次場景沿用既有圖號，隸屬原連線的起點主場景；不另算主線房間。近看圖是次場景的局部，不是另一個可移動節點。接景型保留原轉場操作；兩端直接切鏡與結局演出不虛構中間場景。\n\n' +
+    table(['所屬主場景', '次場景／主圖', '類型／名稱', '正向來路 → 去路', '近看圖'], subscenes.map(s => [
+      s.node, specLink(s, inventory), `${s.type} · ${s.name}`, `${s.from} → ${s.to}`,
+      s.details.map(d => d.id).join('、') || '無新增近看',
     ])) + '\n\n### 全部動線圖像對照\n\n' +
     table(['動線', '接景方式', '對應圖號'], routes.map(({ edge, mode, rows }) => [
       `${edge.fromId}→${edge.toId}`, mode, rows.map(r => specLink(r, inventory)).join(' → '),
     ]));
   outputs.set(inventory, section(read(inventory), 'inventory', summary, '<!-- inventory:summary:end -->'));
-  return { outputs, collection, routes, hotspots };
+  return { outputs, collection, routes, hotspots, subscenes };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

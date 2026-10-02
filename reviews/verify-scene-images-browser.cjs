@@ -17,6 +17,10 @@ const targets = [
   ['inventory', inventoryFile, 'inventory-scene-images', `${imageCount} 列圖像製作項目`],
   ['details', '10_製作規格/10-03_製作規格_第二幕.md', 'node-r9-images', 'R09_H02'],
   ['hiding', '10_製作規格/10-05_製作規格_第四幕.md', 'node-r20-images', 'R20-V03'],
+  ['subscene', '09_劇本/09-04_正式劇本_第一幕.md', 'subscene-t-r2-r3-02-script', '次場景 T-R2-R3-02'],
+  ['subscene-spec', '10_製作規格/10-02_製作規格_第一幕.md', 'subscene-t-r2-r3-02-spec', '關閉回 T-R2-R3-02'],
+  ['exit-subscene', '09_劇本/09-06_正式劇本_第三幕.md', 'subscene-r12-v03-script', 'R12→R15'],
+  ['subscene-inventory', inventoryFile, 'inventory-subscenes', '33 個次場景節點'],
 ];
 const url = (doc, heading, staticMode = false) => `${base}/${staticMode ? '?static=1' : ''}#${new URLSearchParams({ doc, heading })}`;
 async function ready(page, doc, heading) {
@@ -42,6 +46,12 @@ function pass(name) { checks.push(name); console.log(`PASS ${name}`); }
         const text = await page.locator('#readerContent').innerText();
         assert(text.includes(expected));
         assert(!text.includes('<!-- scene-image'));
+        assert(!text.includes('<a id='), 'No escaped anchor markup in the reading view');
+        if (name === 'subscene') {
+          const childHeading = page.locator(`#${heading} + h6`);
+          assert((await childHeading.innerText()).includes('住宅側平台'));
+          assert(await childHeading.evaluate(el => parseFloat(getComputedStyle(el).fontSize)) >= 14);
+        }
         const dimensions = await page.evaluate(() => {
           const panel = document.querySelector('.reader-panel');
           return [document.documentElement.scrollWidth, innerWidth, panel.scrollWidth, panel.clientWidth];
@@ -66,6 +76,42 @@ function pass(name) { checks.push(name); console.log(`PASS ${name}`); }
     assert.equal(await page.evaluate(() => state.selected.path), targets[0][1]);
     await popup.close();
     pass('reading image list opens its production sheet in a separate page');
+    for (const [doc, child] of [
+      [targets[0][1], 't-r2-r3-02'],
+      ['09_劇本/09-06_正式劇本_第三幕.md', 'r12-v03'],
+    ]) {
+      await page.goto(url(doc, `subscene-${child}-script`));
+      await ready(page, doc, `subscene-${child}-script`);
+      const link = page.locator(`#readerContent [data-doc-heading="subscene-${child}-spec"]`).first();
+      assert.equal(await link.getAttribute('target'), '_blank');
+      const target = await link.getAttribute('data-doc-link');
+      const opened = context.waitForEvent('page');
+      await link.click();
+      const sheet = await opened;
+      await ready(sheet, target, `subscene-${child}-spec`);
+      assert.equal(await sheet.evaluate(() => window.opener), null);
+      const back = sheet.locator(`[data-doc-heading="subscene-${child}-script"]`).first();
+      await back.click();
+      await ready(sheet, doc, `subscene-${child}-script`);
+      assert.equal(await page.evaluate(() => state.selected.path), doc);
+      await sheet.close();
+      pass(`${child} opens its own specification and returns to the matching reading node`);
+    }
+    const { ACTS } = await import('../tools/screenplay-files.mjs');
+    let readingAnchors = 0, specAnchors = 0;
+    for (const doc of ACTS.flatMap(act => [act.path, act.specPath])) {
+      const source = readFileSync(path.resolve(__dirname, '../docs', doc), 'utf8').replaceAll('\r\n', '\n');
+      const ids = [...source.matchAll(/^<a id="(subscene-[^"]+)"><\/a>$/gm)].map(m => m[1]);
+      if (!ids.length) continue;
+      await page.goto(url(doc, ids[0]));
+      await ready(page, doc, ids[0]);
+      for (const id of ids) assert.equal(await page.locator(`#readerContent #${id}`).count(), 1, id);
+      if (doc.startsWith('09_')) readingAnchors += ids.length;
+      else specAnchors += ids.length;
+    }
+    assert.equal(readingAnchors, 33);
+    assert.equal(specAnchors, 33);
+    pass('all 33 secondary nodes have rendered anchors in both reading and production documents');
     await page.goto(url(targets[2][1], targets[2][2], true));
     await ready(page, targets[2][1], targets[2][2]);
     assert((await page.locator('#readerContent').innerText()).includes(`${imageCount} 列圖像製作項目`));

@@ -111,6 +111,7 @@ kbd { color: var(--faint); border: 1px solid var(--line); border-radius: 3px; pa
 .reader-content h2 { color: var(--accent); font-family: Georgia, "Noto Serif TC", serif; font-size: 24px; font-weight: 400; margin: 42px 0 16px; }
 .reader-content h3 { color: var(--cyan); font-size: 17px; font-weight: 500; margin: 30px 0 12px; }
 .reader-content h4, .reader-content h5, .reader-content h6 { color: var(--text); margin: 24px 0 10px; }
+.reader-content .md-anchor[id^="subscene-"] + h6 { font-size: 14px; line-height: 1.6; }
 .reader-content p, .reader-content li { color: #b9c5d3; font-size: 14px; line-height: 1.95; }
 .reader-content p { margin: 14px 0; }
 .reader-content a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(143,215,207,.3); }
