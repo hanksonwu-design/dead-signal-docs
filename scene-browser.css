@@ -18,11 +18,17 @@
 .scene-canvas{position:relative;transform-origin:top left}
 .scene-canvas svg{position:absolute;inset:0;pointer-events:none}
 .scene-lane{position:absolute;left:26px;color:var(--accent);font-size:12px;letter-spacing:0}
-.scene-shell .scene-node{position:absolute;width:150px;height:78px;text-align:left;display:flex;flex-direction:column;justify-content:center;padding:8px 12px;background:#14212a;border-color:#3a5058}
-.scene-node b{color:var(--cyan);font-size:12px}
-.scene-node span{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
-.scene-node small{color:var(--muted);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
-.scene-shell .scene-node.selected{border:2px solid var(--accent);background:#302b23;box-shadow:0 0 0 4px #dfb57418}
+.scene-shell .scene-map-node{position:absolute;text-align:left;display:flex;flex-direction:column;justify-content:flex-start;gap:3px;padding:8px 12px;background:#14212a;border-color:#3a5058;line-height:1.4}
+.scene-map-node b{color:var(--cyan);font-size:12px}
+.scene-map-node span{font-size:13px;white-space:normal;overflow-wrap:anywhere;width:100%;min-height:36px}
+.scene-map-node small{color:var(--muted);font-size:10px;white-space:nowrap;width:100%}
+.scene-map-node small:last-child{margin-top:auto}
+.scene-shell .scene-child{border-style:dashed;border-color:#739d91;background:#102320}
+.scene-shell .scene-boundary{background:#17191c;border-style:dotted;border-color:#9d8f76}
+.scene-shell .scene-map-node.selected{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent),0 0 0 3px #dfb57418}
+.scene-legend-main::before,.scene-legend-child::before{content:"";display:inline-block;width:12px;height:10px;margin-right:6px;border:1px solid #739d91;vertical-align:middle}
+.scene-legend-child::before{border-style:dashed;background:#102320}
+.scene-child-summary{padding:0 0 16px;border-bottom:1px solid var(--line)}
 .scene-detail{position:sticky;top:15px;max-height:85vh;overflow:auto;padding-left:20px;border-left:1px solid var(--line);min-width:0}
 .scene-detail h3{font-size:20px;margin:8px 0 16px}
 .scene-detail h4{margin:24px 0 12px;color:var(--cyan);font-size:15px}

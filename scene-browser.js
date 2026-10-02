@@ -36,6 +36,10 @@ window.SceneBrowser = (() => {
   function detailRows(ids){
     return ids.map(id=>{const image=flow.images[id];return `<li><div>${sourceButton(id,image.spec,image.heading)}<span>${esc(image.kind)} · 待製作</span></div><p>${esc(image.content)}</p><details><summary>拆圖與狀態</summary><p>${esc(image.requirements)}</p></details></li>`;}).join('');
   }
+  function locateSelected(){
+    const node=options.root.querySelector('.scene-node.selected'),scroll=options.root.querySelector('.scene-scroll');
+    if(node&&scroll){scroll.scrollLeft=Math.max(0,node.offsetLeft*zoom-12);scroll.scrollTop=Math.max(0,node.offsetTop*zoom-44);}
+  }
   function routePanel(connections){
     let edge=connections.find(e=>e.id===routeId)||connections.find(e=>e.fromId===selected)||connections[0];
     if(!edge)return '';
@@ -65,33 +69,33 @@ window.SceneBrowser = (() => {
   }
   function draw(){
     const root=options.root;root.classList.add('scene-mode');
+    const previousScroll=root.querySelector('.scene-scroll'),scrollPosition=[previousScroll?.scrollLeft||0,previousScroll?.scrollTop||0];
     if(!data||!flow){root.innerHTML='<p role="alert">節點或銜接資料未載入，請重新載入。</p>';return;}
     const q=options.query.trim().toLowerCase();
     const visible=data.nodes.filter(n=>(part==='all'||n.part===Number(part))&&(act==='all'||n.act===Number(act))&&(!q||[n.id,n.name,n.goal,...n.quests,...n.tags,...flow.subscenes.filter(s=>s.node===n.id).flatMap(s=>[s.id,s.name])].join(' ').toLowerCase().includes(q)));
     if(visible.length&&!visible.some(n=>n.id===selected)){selected=visible[0].id;routeId='';shotId='';reverse=false;}
-    const n=get(selected)||data.nodes[0];const activeActs=[...new Set(visible.map(n=>n.act))];
-    const positions=new Map();
-    activeActs.forEach((a,row)=>data.nodes.filter(n=>n.act===a).forEach((node,col)=>positions.set(node.id,{x:40+col*176,y:55+row*156})));
-    const ids=new Set(visible.map(n=>n.id));const width=Math.max(1115,...activeActs.map(a=>data.nodes.filter(n=>n.act===a).length*176+80)),height=Math.max(190,activeActs.length*156+30);
-    const strokes=data.edges.filter(e=>ids.has(e.fromId)&&ids.has(e.toId)).map(e=>{
-      const p=positions.get(e.fromId),t=positions.get(e.toId),near=e.fromId===selected||e.toId===selected;
-      let d;if(e.fromId===e.toId)d=`M ${p.x+128} ${p.y+66} c 35 55 -110 55 -80 8`;
-      else if(p.y===t.y)d=`M ${p.x+150} ${p.y+39} C ${p.x+170} ${p.y+104},${t.x-24} ${t.y+104},${t.x-5} ${t.y+39}`;
-      else d=`M ${p.x+74} ${p.y+77} C ${p.x+74} ${p.y+117},${t.x+74} ${t.y-30},${t.x+74} ${t.y-5}`;
-      return `<path d="${d}" fill="none" stroke="${color(e)}" stroke-width="${near?3:1.5}" opacity="${near?1:showAll?.48:.12}" ${['捷徑','誤導','回返','肉身回返','片尾'].includes(e.kind)?'stroke-dasharray="6 5"':''} ${e.back?'marker-start="url(#scene-arrow)"':''} marker-end="url(#scene-arrow)"><title>${esc(`${e.fromId} ${e.back?'↔':'→'} ${e.toId} · ${e.kind} · ${e.gate}`)}</title></path>`;
-    }).join('');
+    const n=get(selected)||data.nodes[0];
     const connections=data.edges.filter(e=>e.fromId===selected||e.toId===selected);
+    const panel=visible.length?routePanel(connections):'',activeChild=childInfo(shotId);
+    const overview=window.SceneOverview.layout(data,flow,visible.map(n=>n.id)),{width,height}=overview;
+    const strokes=overview.segments.map(s=>{
+      const e=data.edges.find(e=>e.id===s.route),near=e.id===routeId;
+      return `<path data-map-route="${esc(e.id)}" data-from="${esc(s.from)}" data-to="${esc(s.to)}" d="${s.d}" fill="none" stroke="${color(e)}" stroke-width="${near?2.5:1.5}" opacity="${near?1:showAll?.8:.4}" ${['捷徑','誤導','回返','肉身回返','片尾'].includes(e.kind)?'stroke-dasharray="6 5"':''} ${e.back?'marker-start="url(#scene-arrow)"':''} marker-end="url(#scene-arrow)"><title>${esc(`${e.fromId} ${e.back?'↔':'→'} ${e.toId} · ${e.kind} · ${e.gate}`)}</title></path>`;
+    }).join('');
     root.innerHTML=`<section class="scene-shell">
       <div class="scene-intro"><div><h3>場景連接</h3><p>${data.nodes.length} 個主節點 · ${flow.subscenes.length} 個次場景 · ${data.edges.length} 條動線</p></div><button type="button" data-atlas>完整節點規格 ↗</button></div>
-      <div class="scene-controls"><label>部別 <select id="scenePart"><option value="all">上下部</option><option value="1" ${part==='1'?'selected':''}>上部</option><option value="2" ${part==='2'?'selected':''}>下部</option></select></label><label>章節 <select id="sceneAct"><option value="all">全程總覽</option>${data.acts.map((a,i)=>`<option value="${i}" ${String(i)===act?'selected':''}>${esc(a)}</option>`).join('')}</select></label><button type="button" data-zoom="-0.15" aria-label="縮小節點圖">−</button><span>${Math.round(zoom*100)}%</span><button type="button" data-zoom="0.15" aria-label="放大節點圖">＋</button><button type="button" data-fit>適合寬度</button><label><input type="checkbox" id="sceneAllEdges" ${showAll?'checked':''}>全部連線</label><span>${visible.length} 個節點</span></div>
-      <div class="scene-legend"><span>實線：主線／分岔</span><span>綠虛線：捷徑</span><span>紫虛線：誤導／回返</span><span>橘：封路／肉身回返</span></div>
+      <div class="scene-controls"><label>部別 <select id="scenePart"><option value="all">上下部</option><option value="1" ${part==='1'?'selected':''}>上部</option><option value="2" ${part==='2'?'selected':''}>下部</option></select></label><label>章節 <select id="sceneAct"><option value="all">全程總覽</option>${data.acts.map((a,i)=>`<option value="${i}" ${String(i)===act?'selected':''}>${esc(a)}</option>`).join('')}</select></label><button type="button" data-zoom="-0.15" aria-label="縮小節點圖" title="縮小節點圖">−</button><span>${Math.round(zoom*100)}%</span><button type="button" data-zoom="0.15" aria-label="放大節點圖" title="放大節點圖">＋</button><button type="button" data-fit>適合寬度</button><label><input type="checkbox" id="sceneAllEdges" ${showAll?'checked':''}>全部連線</label><span>${visible.length} 個主節點 · ${overview.nodes.filter(n=>n.type==='subscene').length} 個次場景</span></div>
+      <div class="scene-legend"><span class="scene-legend-main">主場景</span><span class="scene-legend-child">過渡次場景／轉場接景</span><span>實線：主線／分岔</span><span>綠虛線：捷徑</span><span>紫虛線：誤導／回返</span><span>橘：封路／肉身回返</span></div>
       <div class="scene-layout"><div><div class="scene-scroll" tabindex="0" aria-label="場景串接圖，可橫向捲動"><div style="width:${width*zoom}px;height:${height*zoom}px"><div class="scene-canvas" style="width:${width}px;height:${height}px;transform:scale(${zoom})">
-      <svg width="${width}" height="${height}" aria-hidden="true"><defs><marker id="scene-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a7b6bd"/></marker></defs>${strokes}</svg>
-      ${activeActs.map((a,row)=>`<div class="scene-lane" style="top:${row*156+14}px">${esc(data.acts[a])}</div>`).join('')}
-      ${visible.map(node=>{const p=positions.get(node.id);return `<button type="button" class="scene-node ${node.id===selected?'selected':''}" data-node="${esc(node.id)}" style="left:${p.x}px;top:${p.y}px" aria-pressed="${node.id===selected}" title="${esc(node.name)}"><b>${esc(node.id)}</b><span>${esc(node.name)}</span><small>${esc(nodeInfo(node.id).image)}</small></button>`;}).join('')}
+      <svg width="${width}" height="${height}" aria-hidden="true"><defs><marker id="scene-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a7b6bd"/></marker></defs>${strokes}</svg>
+      ${overview.lanes.map(l=>`<div class="scene-lane" style="top:${l.y}px">${esc(data.acts[l.act])}</div>`).join('')}
+      ${overview.nodes.map(node=>{const child=node.type==='subscene',boundary=node.type==='boundary',active=child?node.id===shotId:!boundary&&node.id===selected;
+        const label=child?childInfo(node.id).type:boundary?'銜接至其他場景':'主場景';
+        return `<button type="button" class="scene-map-node ${child?'scene-child':boundary?'scene-boundary':'scene-node'} ${active?'selected':''}" ${child?`data-subscene="${esc(node.id)}"`:boundary?`data-follow="${esc(node.id)}"`:`data-node="${esc(node.id)}"`} data-map-key="${esc(node.key)}" style="left:${node.x}px;top:${node.y}px;width:${node.width}px;height:${node.height}px" aria-pressed="${active}" title="${esc(`${label} · ${node.name} · ${node.image}`)}"><small>${label}</small><b>${esc(node.id)}</b><span>${esc(node.name)}</span><small>${child?'正式圖待製作':esc(node.image)}</small></button>`;}).join('')}
       </div></div></div>${!visible.length?'<p role="status">沒有符合條件的場景，請調整搜尋或章節。</p>':''}
-      <p class="scene-note">流程連接，非比例地圖。</p>${visible.length?routePanel(connections):''}</div>
+      <p class="scene-note">流程連接，非比例地圖。</p>${panel}</div>
       <aside class="scene-detail" aria-label="場景詳細資料" ${visible.length?'':'hidden'}><div class="eyebrow">${esc(data.acts[n.act])} / ${esc(n.id)}</div><h3>${esc(n.name)}</h3><p>${esc(n.goal)}</p>
+      ${activeChild?`<section class="scene-child-summary"><h4>${esc(activeChild.id)} · ${esc(activeChild.name)}</h4><p>${esc(activeChild.type)} · ${esc(activeChild.from)} → ${esc(activeChild.to)}</p><p>${esc(flow.images[activeChild.image].content)}</p><div class="scene-source">${sourceButton('次場景劇本',activeChild.source,activeChild.heading)}${sourceButton('次場景規格',activeChild.spec,activeChild.specHeading)}</div></section>`:''}
       ${n.tags.length?`<p class="scene-tags">${n.tags.map(esc).join(' · ')}</p>`:''}
       <div class="scene-source"><button type="button" data-source="${esc(n.source)}" data-heading="${esc(n.heading)}" data-new-window="true" title="在新視窗開啟本場景劇情、台詞與演出" aria-label="遊戲劇本（在新視窗開啟）">遊戲劇本 ↗</button>${n.part===1?`<a class="scene-3d" href="building/#scene=${encodeURIComponent(n.id)}" title="在上部空間模型中查看此房的樓層與通路">3D 空間 ↗</a>`:''}${n.duplicatePack || n.source===n.pack ? '' : `<button type="button" data-source="${esc(n.pack)}" data-heading="${esc(n.packAnchor || n.id)}" data-new-window="true" title="互動 ID、狀態鍵、資產與驗收條件（在新視窗開啟）" aria-label="製作規格（在新視窗開啟）">製作規格 ↗</button>`}</div>
       ${data.phases[n.id]?`<h4>房內進行順序</h4><ol>${data.phases[n.id].map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`:''}
@@ -103,22 +107,24 @@ window.SceneBrowser = (() => {
       <div class="scene-trail" ${visible.length?'':'hidden'}>閱讀路徑：${trail.length?trail.map(esc).join(' → '):esc(n.id)} <button type="button" data-clear>清除</button></div>
       <details class="scene-docs"><summary>依章閱讀原文件（${options.docs.length} 份）</summary>${options.docs.map(d=>`<button type="button" data-source="${esc(d.path)}">${esc(window.documentDisplayTitle(d.title))}</button>`).join('')}</details></section>`;
     if(visible.length)saveRoute();
+    const scroller=root.querySelector('.scene-scroll');scroller.scrollLeft=scrollPosition[0];scroller.scrollTop=scrollPosition[1];
     root.querySelectorAll('[data-node]').forEach(b=>b.onclick=()=>{select(b.dataset.node);root.querySelector(`[data-node="${selected}"]`)?.focus({preventScroll:true});});
     root.querySelectorAll('[data-follow]').forEach(b=>b.onclick=()=>{act='all';part='all';const hadQuery=Boolean(options.query);options.query='';select(b.dataset.follow,true);if(hadQuery)options.clearQuery?.();root.querySelector(`[data-node="${selected}"]`)?.scrollIntoView({block:'nearest',inline:'nearest'});});
     root.querySelectorAll('[data-source]').forEach(b=>b.onclick=()=>source(b.dataset.source,b.dataset.heading,b.dataset.newWindow==='true'));
     const redrawRoute=focus=>{const scroll=root.querySelector('.scene-scroll');const position=[scroll.scrollLeft,scroll.scrollTop];saveRoute();draw();const next=root.querySelector('.scene-scroll');next.scrollLeft=position[0];next.scrollTop=position[1];root.querySelector(focus)?.focus({preventScroll:true});};
+    root.querySelectorAll('[data-subscene]').forEach(b=>b.onclick=()=>{const child=childInfo(b.dataset.subscene);selected=child.node;routeId=child.route;shotId=child.id;reverse=false;redrawRoute(`[data-subscene="${child.id}"]`);});
     root.querySelector('#sceneRoute')?.addEventListener('change',e=>{routeId=e.target.value;shotId='';reverse=false;redrawRoute('#sceneRoute');});
     root.querySelectorAll('[data-route]').forEach(b=>b.onclick=()=>{routeId=b.dataset.route;shotId='';reverse=false;redrawRoute('#sceneRoute');root.querySelector('#sceneRoutePanel')?.scrollIntoView({block:'start'});});
     root.querySelectorAll('[data-shot]').forEach(b=>b.onclick=()=>{shotId=b.dataset.shot;redrawRoute(`[data-shot="${shotId}"]`);});
     root.querySelectorAll('[data-direction]').forEach(b=>b.onclick=()=>{reverse=b.dataset.direction==='return';redrawRoute(`[data-direction="${b.dataset.direction}"]`);});
     root.querySelector('[data-atlas]').onclick=()=>source(data.atlas||options.docs.find(d=>d.path.includes('06-09_'))?.path);
     root.querySelector('[data-quests]').onclick=()=>source(options.allDocs.find(d=>d.path.includes('03-05_')).path);
-    root.querySelector('#scenePart').onchange=e=>{part=e.target.value;act='all';if(part!=='all'&&get(selected).part!==Number(part))select(data.nodes.find(n=>n.part===Number(part)).id);else draw();};
-    root.querySelector('#sceneAct').onchange=e=>{part='all';act=e.target.value;if(act!=='all'&&get(selected).act!==Number(act))select(data.nodes.find(n=>n.act===Number(act)).id);else draw();};
+    root.querySelector('#scenePart').onchange=e=>{part=e.target.value;act='all';if(part!=='all'&&get(selected).part!==Number(part))select(data.nodes.find(n=>n.part===Number(part)).id);else draw();locateSelected();};
+    root.querySelector('#sceneAct').onchange=e=>{part='all';act=e.target.value;if(act!=='all'&&get(selected).act!==Number(act))select(data.nodes.find(n=>n.act===Number(act)).id);else draw();locateSelected();};
     root.querySelector('#sceneAllEdges').onchange=e=>{showAll=e.target.checked;draw();};
-    root.querySelectorAll('[data-zoom]').forEach(b=>b.onclick=()=>{zoom=Math.min(1.6,Math.max(.35,zoom+Number(b.dataset.zoom)));draw();});
-    root.querySelector('[data-fit]').onclick=()=>{zoom=Math.min(1,Math.max(.35,root.querySelector('.scene-scroll').clientWidth/width));draw();};
+    root.querySelectorAll('[data-zoom]').forEach(b=>b.onclick=()=>{zoom=Math.min(1.6,Math.max(.05,zoom+Number(b.dataset.zoom)));draw();});
+    root.querySelector('[data-fit]').onclick=()=>{zoom=Math.min(1,Math.max(.05,(root.querySelector('.scene-scroll').clientWidth-2)/width));draw();locateSelected();};
     root.querySelector('[data-clear]').onclick=()=>{trail=[];draw();};
   }
-  return {load,render(o){options=o;const hash=new URLSearchParams(location.hash.slice(1)),id=hash.get('scene');if(data?.nodes.some(n=>n.id===id)){if(id!==selected){part='all';act='all';}selected=id;}routeId=hash.get('route')||'';shotId=hash.get('shot')||'';reverse=hash.get('direction')==='return';draw();}};
+  return {load,render(o){options=o;const hash=new URLSearchParams(location.hash.slice(1)),id=hash.get('scene');if(data?.nodes.some(n=>n.id===id)){if(id!==selected){part='all';act='all';}selected=id;}routeId=hash.get('route')||'';shotId=hash.get('shot')||'';reverse=hash.get('direction')==='return';draw();locateSelected();}};
 })();

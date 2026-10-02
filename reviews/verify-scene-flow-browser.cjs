@@ -45,12 +45,29 @@ async function reference(page) {
     await page.goto(`${base}/#scene=R2`);
     await page.locator('#sceneRoute').waitFor();
     assert.equal(await page.locator('.scene-node').count(), 48);
+    assert.equal(await page.locator('.scene-child').count(), 34);
+    assert.equal(await page.locator('[data-map-route]').count(), 90);
+    for (const route of flow.routes) {
+      const steps = route.steps.map(s => s.id);
+      if (steps.length === 1) steps.push(steps[0]);
+      const arrows = await page.locator(`[data-map-route="${route.id}"]`).evaluateAll(els => els.map(el => [el.dataset.from, el.dataset.to, el.hasAttribute('marker-start')]));
+      assert.deepEqual(arrows, steps.slice(1).map((id, i) => [steps[i], id, route.back]), route.id);
+    }
+    pass('upper overview draws every transition once and subdivides all original routes');
     assert.deepEqual(await ids(page), ['R2', 'T-R2-R3-01', 'T-R2-R3-02', 'R3']);
     await page.screenshot({ path: path.join(out, 'overview-desktop.png') });
     await page.locator('#sceneRoutePanel').scrollIntoViewIfNeeded();
     await page.screenshot({ path: path.join(out, 'route-desktop.png') });
     await overflow(page);
     pass('main overview expands R2 to R3 into its four ordered pictures');
+
+    await page.locator('[data-subscene="T-R2-R3-02"]').focus();
+    await page.locator('[data-subscene="T-R2-R3-02"]').press('Enter');
+    assert.equal(await page.locator('.scene-child.selected').getAttribute('data-subscene'), 'T-R2-R3-02');
+    assert.match(await page.locator('.scene-child-summary h4').innerText(), /住宅側平台/);
+    assert.match(await page.locator('.scene-shot-detail h4').innerText(), /T-R2-R3-02/);
+    assert.equal(await page.locator('[data-subscene="T-R2-R3-02"]').evaluate(el => el === document.activeElement), true);
+    pass('keyboard selection in upper overview synchronizes subscene summary and route detail');
 
     await page.locator('[data-shot="T-R2-R3-01"]').click();
     assert.match(await page.locator('.scene-shot-detail h4').innerText(), /T-R2-R3-01.*後廚服務巷/);
@@ -122,11 +139,13 @@ async function reference(page) {
     assert.equal(await page.locator('#scenePart').inputValue(), 'all');
     await page.locator('#sceneAct').selectOption('1');
     assert.equal(await page.locator('.scene-node').count(), graph.nodes.filter(n => n.act === 1).length);
+    assert.equal(await page.locator('.scene-child').count(), 4);
+    assert.equal(await page.locator('.scene-boundary[data-follow="R6"]').count(), 1);
     await page.locator('#sceneAct').selectOption('all');
     await page.locator('#searchInput').fill('T-R2-R3-01');
     assert.equal(await page.locator('.scene-node').count(), 1);
     assert.equal(await page.locator('.scene-node.selected').getAttribute('data-node'), 'R2');
-    await page.locator('[data-follow="R3"]').click();
+    await page.locator('.scene-boundary[data-follow="R3"]').click();
     assert.equal(await page.locator('.scene-node.selected').getAttribute('data-node'), 'R3');
     assert.equal(await page.locator('#searchInput').inputValue(), '');
     assert.equal(await page.locator('.scene-node').count(), 48);
@@ -152,6 +171,39 @@ async function reference(page) {
       await reference(page);
     }
     pass('desktop and mobile route panels fit and reference pictures are nonblank');
+
+    for (const viewport of [{ width: 1920, height: 1080 }, { width: 1440, height: 1000 }, { width: 390, height: 844 }, { width: 320, height: 740 }]) {
+      await page.setViewportSize(viewport);
+      await page.goto(`${base}/#scene=R2`);
+      await page.reload();
+      await page.locator('.scene-child').first().waitFor();
+      assert.equal(Math.round((await page.locator('.scene-node.selected').boundingBox()).width), 168);
+      if (viewport.width < 760) await page.waitForFunction(() => document.querySelector('.sidebar').getBoundingClientRect().right <= 0);
+      const clipped = await page.locator('.scene-map-node').evaluateAll(nodes => nodes.filter(el => {
+        const label = el.querySelector('span').getBoundingClientRect(), picture = el.querySelector('small:last-child').getBoundingClientRect();
+        return el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1 || label.bottom > picture.top + 1;
+      }).map(el => el.dataset.mapKey));
+      assert.deepEqual(clipped, [], `${viewport.width}: scene node labels fit`);
+      await page.locator('.scene-scroll').evaluate(el => el.scrollIntoView({ block: 'start' }));
+      await overflow(page);
+      await page.screenshot({ path: path.join(out, `upper-overview-${viewport.width}.png`) });
+      await page.locator('[data-subscene="T-R2-R3-02"]').click();
+      assert.equal(await page.locator('.scene-child.selected').getAttribute('data-subscene'), 'T-R2-R3-02');
+      assert.match(await page.locator('.scene-shot-detail h4').innerText(), /T-R2-R3-02/);
+      await page.locator('[data-fit]').click();
+      assert.equal(await page.locator('.scene-scroll').evaluate(el => el.scrollWidth <= el.clientWidth + 1), true);
+    }
+    pass('upper overview supports mobile panning, fitting, readable labels and transition selection');
+
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.goto(`${base}/#scene=R8`);
+    await page.reload();
+    await page.locator('[data-subscene="R8-V03"]').click();
+    assert.equal(await page.locator('#sceneRoute').inputValue(), 'R8-R10-13');
+    assert.equal(await page.locator('.scene-child.selected').getAttribute('data-subscene'), 'R8-V03');
+    await page.locator('.scene-scroll').evaluate(el => el.scrollIntoView({ block: 'start' }));
+    await page.screenshot({ path: path.join(out, 'upper-overview-branch.png') });
+    pass('upper overview branch selection opens only its original exit route');
 
     await page.goto(`${base}/?static=1#scene=R2`);
     await page.locator('#sceneRoute').waitFor();

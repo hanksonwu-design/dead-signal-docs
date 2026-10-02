@@ -23,6 +23,7 @@ node tools/sync-canonical.mjs
 node tools/build-story-inventory.mjs
 node tools/test-scene-images.mjs
 node tools/test-scene-flow.mjs
+node tools/test-scene-overview.mjs
 node tools/test-canonical.mjs
 node tools/build-docs.mjs
 npm --prefix building run build
@@ -32,7 +33,7 @@ npm --prefix building run build
 
 場景主圖、過渡鏡位、物件近看及文件頁只在各幕製作規格的 `scene-images` 表格維護；既有 H／B 熱點與圖號的對應在同房 `hotspot-images` 表格維護。新增原熱點時也須補對圖，不能只在正文列出物件。`build-scene-images.mjs` 檢查原熱點覆蓋，並同步劇本段落中的圖號連結、各幕連線圖號、場景道具總表與 `scene-flow.json`；加 `--check` 可檢查是否同步。一列可能含多頁或差分，並非已完成的一張圖。48 個宏觀流程節點與 56 條動線不等於全部畫面節點；新畫面不能默默新增關卡門檻。更動原動線時，先執行 `sync-canonical.mjs` 更新場景圖，再重建圖單與相關查表。
 
-關卡流程保留主節點總覽，並展開「主場景 → 過渡次場景 → 下一場景」的路段圖號、出入口與通行條件。34 個既有次場景分為 13 個可查看過渡與 21 個轉場接景；未配置獨立路段圖的連線沿用兩端畫面，物件近看不增加移動節點。可用 `#scene=R2&route=R2-R3-5&shot=T-R2-R3-01` 直接定位路段與畫面。現有概念圖或出入口草圖僅作參考；440 筆正式畫面規格仍標示待製作，不代表已有遊戲美術素材。
+關卡流程的上方總覽直接以「主場景 → 過渡次場景 → 下一場景」連接，48 個主節點與 34 個次場景各畫一次；點選次場景可連動路段詳情、圖號與製作規格。34 個既有次場景分為 13 個可查看過渡與 21 個轉場接景；未配置獨立路段圖的連線沿用兩端畫面，物件近看不增加移動節點。分岔、捷徑、單向與回返沿用原條件，章節篩選外的目的地只顯示銜接入口，不新增房間。可用 `#scene=R2&route=R2-R3-5&shot=T-R2-R3-01` 直接定位路段與畫面。現有概念圖或出入口草圖僅作參考；440 筆正式畫面規格仍標示待製作，不代表已有遊戲美術素材。
 
 總目錄末尾的 `canonical-source` 註記是同步來源清單，不是可讀正文。刪除匯入區塊時需同步移除對應 `indices`，舊連結可保留定位錨點；不能為湊舊段落數留下空白正文。`tools/screenplay-files.mjs` 定義正式文件清單；同步工具逐份讀取，不產生另一份合併正文。`tools/reorder-screenplay.mjs`、`tools/split-screenplay.mjs` 與 `tools/split-screenplay-specs.mjs` 是一次性遷移工具，已完成遷移的文件不會被再次改寫。網站保留總目錄與舊分幕製作錨點的轉介；一般 Markdown 連結直接指向目前的正式來源。
 
