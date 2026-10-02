@@ -37,7 +37,7 @@ async function ready(page, heading) {
     await page.goto(url('inventory-scenes'));
     await ready(page, 'inventory-scenes');
     const text = await page.locator('#readerContent').innerText();
-    assert(text.includes('48 個導覽節點、342 段正文場次、55 條登記動線'));
+    assert(text.includes('48 個導覽節點、342 段正文場次、56 條登記動線'));
     assert(!text.includes('<!-- inventory:'));
     assert(text.includes('不是保護受害者隱私'));
     await page.screenshot({ path: path.join(out, 'scenes-desktop.png') });
@@ -58,11 +58,13 @@ async function ready(page, heading) {
 
     await page.goto(url('inventory-routes'));
     await ready(page, 'inventory-routes');
-    const routes = await page.locator('#readerContent a[data-doc-heading$="-spec"]').count();
-    assert.equal(routes, 55);
-    await page.locator('#readerContent [data-doc-heading="node-u6b-spec"]').click();
+    const routeTable = page.locator('#readerContent table').filter({ has: page.locator('th', { hasText: '動線／來源' }) });
+    const routes = await routeTable.locator('a[data-doc-heading$="-spec"]').count();
+    assert.equal(routes, 56);
+    const routeLink = routeTable.locator('[data-doc-heading="node-u6b-spec"]');
+    await routeLink.click();
     await page.waitForFunction(() => state.selected?.path.endsWith('10-07_製作規格_第六幕.md'));
-    pass('all 55 route links render and lead to production specifications');
+    pass('all 56 route links render and lead to production specifications');
 
     for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
       await page.setViewportSize(viewport);

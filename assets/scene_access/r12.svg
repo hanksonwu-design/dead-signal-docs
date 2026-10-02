@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="962" viewBox="0 0 1100 962" role="img" aria-labelledby="title desc">
+  <title id="title">R12 出入口配置草圖</title>
+  <desc id="desc">設備修理與藥品櫃。兩個一般出口與維修門扣分開；捷徑不是初訪第三條解法。。來路：後勤平台門：修理舖進場門框，外側接同一立管與服務梯上端平台。 單向承接 R11，不提供倒退回產線的操作。 出口：診所舊門：修理桌外側貼著舊門牌的診所入口，門後延續住宅廚房地磚。 本房配電接妥並通過本地權限後可進 R13 及返回；不用先在未進入的診所完成安息。 出口：鋼平台門：朝貨梯核心的原通道口，門外可辨量體接縫與平台橋板。 同樣須完成本房配電及本地權限；沿鋼平台到 R14，可往返。 後開捷徑：低負荷門扣：舊服務道口的機械門扣，與診所、貨梯兩個一般出口分開。 兩端都已到訪、取得供電證據並完成維修支線後才開放；俯身經窄服務道到 R15，不是初訪第三條捷徑。</desc>
+  <rect width="1100" height="962" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">R12 · 設備修理與藥品櫃 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">修理桌與配電面板</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">原立管作進場基準</text>
+    <g data-port="1">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">1. 後勤平台門</text>
+      <text x="84" y="497" font-size="17" fill="#147469">來路／不可反走</text>
+    </g>
+<g data-port="2">
+      <rect x="85" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="99" y="204" font-size="22" font-weight="700">2. 診所舊門</text>
+      <text x="99" y="237" font-size="17" fill="#aa582a">配電及權限後</text>
+    </g>
+<g data-port="3">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">3. 鋼平台門</text>
+      <text x="769" y="237" font-size="17" fill="#aa582a">配電及權限後</text>
+    </g>
+<g data-port="4">
+      <rect x="770" y="432" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="784" y="464" font-size="22" font-weight="700">4. 低負荷門扣</text>
+      <text x="784" y="497" font-size="17" fill="#aa582a">維修支線後開</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景左側   R11→R12</text>
+<text x="60" y="713" font-size="22" >2. 後景左側   R12↔R13</text>
+<text x="60" y="761" font-size="22" >3. 後景右側   R12↔R14</text>
+<text x="60" y="809" font-size="22" >4. 前景右側   R12↔R15</text>
+    <text x="40" y="900" font-size="21" >兩個一般出口與維修門扣分開；捷徑不是初訪第三條解法。</text>
+    <text x="40" y="937" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

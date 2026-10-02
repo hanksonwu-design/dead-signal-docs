@@ -20,7 +20,12 @@ const targets = [
   ['subscene', '09_劇本/09-04_正式劇本_第一幕.md', 'subscene-t-r2-r3-02-script', '次場景 T-R2-R3-02'],
   ['subscene-spec', '10_製作規格/10-02_製作規格_第一幕.md', 'subscene-t-r2-r3-02-spec', '關閉回 T-R2-R3-02'],
   ['exit-subscene', '09_劇本/09-06_正式劇本_第三幕.md', 'subscene-r12-v03-script', 'R12→R15'],
-  ['subscene-inventory', inventoryFile, 'inventory-subscenes', '33 個次場景節點'],
+  ['subscene-inventory', inventoryFile, 'inventory-subscenes', '34 個次場景節點'],
+  ['room-order', '10_製作規格/10-02_製作規格_第一幕.md', 'node-r2-spec', '進場與動線'],
+  ['passage-order', '10_製作規格/10-02_製作規格_第一幕.md', 'node-r3-exit', 'T-R3-R4'],
+  ['access-reading', '09_劇本/09-04_正式劇本_第一幕.md', 'node-r3-access-script', '出口：洗衣窄巷'],
+  ['access-spec', '10_製作規格/10-04_製作規格_第三幕.md', 'node-r12-access', '後開捷徑：低負荷門扣'],
+  ['access-return', '09_劇本/09-08_正式劇本_第五幕.md', 'node-r26-access-script', '唯一出入口：C-07 厚門'],
 ];
 const url = (doc, heading, staticMode = false) => `${base}/${staticMode ? '?static=1' : ''}#${new URLSearchParams({ doc, heading })}`;
 async function ready(page, doc, heading) {
@@ -46,6 +51,7 @@ function pass(name) { checks.push(name); console.log(`PASS ${name}`); }
         const text = await page.locator('#readerContent').innerText();
         assert(text.includes(expected));
         assert(!text.includes('<!-- scene-image'));
+        assert(!text.includes('<!-- scene-access'));
         assert(!text.includes('<a id='), 'No escaped anchor markup in the reading view');
         if (name === 'subscene') {
           const childHeading = page.locator(`#${heading} + h6`);
@@ -109,9 +115,42 @@ function pass(name) { checks.push(name); console.log(`PASS ${name}`); }
       if (doc.startsWith('09_')) readingAnchors += ids.length;
       else specAnchors += ids.length;
     }
-    assert.equal(readingAnchors, 33);
-    assert.equal(specAnchors, 33);
-    pass('all 33 secondary nodes have rendered anchors in both reading and production documents');
+    assert.equal(readingAnchors, 34);
+    assert.equal(specAnchors, 34);
+    pass('all 34 secondary nodes have rendered anchors in both reading and production documents');
+    const graph = JSON.parse(readFileSync(path.resolve(__dirname, '../scene_graph.json'), 'utf8'));
+    for (const act of ACTS) {
+      await page.goto(url(act.specPath, `spec-act-${act.act}-overview`));
+      await ready(page, act.specPath, `spec-act-${act.act}-overview`);
+      const ids = await page.locator('#readerContent .md-anchor').evaluateAll(els => els.map(el => el.id));
+      const inOrder = expected => {
+        const positions = expected.map(id => ids.indexOf(id));
+        assert(positions.every((n, i) => n >= 0 && (!i || n > positions[i - 1])), expected.join(','));
+      };
+      const nodes = graph.nodes.filter(n => n.act === act.act);
+      inOrder(['overview', 'rooms', 'shared', 'references', 'delivery'].map(s => `spec-act-${act.act}-${s}`));
+      for (const [i, node] of nodes.entries()) {
+        const id = node.id.toLowerCase();
+        inOrder(['spec', 'nav', 'access', 'level', 'pack', 'images', 'visual', 'exit'].map(s => `node-${id}-${s}`));
+        const end = nodes[i + 1] ? `node-${nodes[i + 1].id.toLowerCase()}-spec` : `spec-act-${act.act}-shared`;
+        for (const child of ids.filter(s => s.startsWith(`subscene-t-${id}-`) && s.endsWith('-spec'))) inOrder([`node-${id}-exit`, child, end]);
+        for (const route of ids.filter(s => s.startsWith(`transition-${id}-`))) inOrder([`node-${id}-exit`, route, end]);
+      }
+      pass(`${act.name} renders overview, sequential rooms, departure passages and delivery in order`);
+      await page.goto(url(act.path, `node-${nodes[0].id.toLowerCase()}-access-script`));
+      await ready(page, act.path, `node-${nodes[0].id.toLowerCase()}-access-script`);
+      for (const node of nodes) assert.equal(await page.locator(`#readerContent #node-${node.id.toLowerCase()}-access-script`).count(), 1);
+      if (act.act === 0) {
+        const intro = await page.evaluate(() => {
+          let el = document.getElementById('node-p1-access-script').nextElementSibling;
+          const parts = [];
+          while (el && !el.innerText?.includes('近看、原件與其他畫面')) { parts.push(el.innerText || ''); el = el.nextElementSibling; }
+          return parts.join('\n');
+        });
+        assert(!/肉身|R33|終幕銜接/.test(intro));
+      }
+      pass(`${act.name} renders every main scene access summary at its own anchor`);
+    }
     await page.goto(url(targets[2][1], targets[2][2], true));
     await ready(page, targets[2][1], targets[2][2]);
     assert((await page.locator('#readerContent').innerText()).includes(`${imageCount} 列圖像製作項目`));

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="914" viewBox="0 0 1100 914" role="img" aria-labelledby="title desc">
+  <title id="title">R25 出入口配置草圖</title>
+  <desc id="desc">七分鐘控制室。R26 返回仍走 C-07；M1 在另一道管理門，必須回此確認離幕。。來路／返回：飯廳轉角門：會議桌來向的服務門，外側接收碗槽與磁磚腰線。 安全時可經飯廳轉角回 R24、R23，不在三喇叭遭遇中跨門避開操作。 出口：C-07 厚門：會議室側廊、嵌在舊柱跨內的校正室厚門。 時序鎖定、E4-05、完整覆核碼及三喇叭處置完成後才開放；R26 處置完成後由此返回。 離幕出口：管理維修門：另一道帶稽核門端的管理門，與 C-07 厚門分開可辨。 五段校驗及阿彪處置都完成後，由玩家回到此門確認上行；不是取得 F5 就開門，確認前可安全回訪。</desc>
+  <rect width="1100" height="914" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">R25 · 七分鐘控制室 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">會議桌與三喇叭</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">舊柱跨、磁磚腰線</text>
+    <g data-port="1">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">1. 飯廳轉角門</text>
+      <text x="84" y="497" font-size="17" fill="#147469">安全時可返回</text>
+    </g>
+<g data-port="2">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">2. C-07 厚門</text>
+      <text x="769" y="237" font-size="17" fill="#aa582a">校驗及遭遇完成後</text>
+    </g>
+<g data-port="3">
+      <rect x="85" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="99" y="204" font-size="22" font-weight="700">3. 管理維修門</text>
+      <text x="99" y="237" font-size="17" fill="#aa582a">五段及阿彪處置後</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景左側   R24↔R25</text>
+<text x="60" y="713" font-size="22" >2. 後景右側   R25↔R26</text>
+<text x="60" y="761" font-size="22" >3. 後景左側   R25→M1</text>
+    <text x="40" y="852" font-size="21" >R26 返回仍走 C-07；M1 在另一道管理門，必須回此確認離幕。</text>
+    <text x="40" y="889" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

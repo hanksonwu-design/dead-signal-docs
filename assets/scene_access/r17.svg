@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="914" viewBox="0 0 1100 914" role="img" aria-labelledby="title desc">
+  <title id="title">R17 出入口配置草圖</title>
+  <desc id="desc">檔案區／康辦公室／外部中繼。L-04 與 C-02 是固定分岔，不畫成兩扇外門；去向只供製作核對。。來路／返回：冷卻管接駁口：檔案區進場側，飾板與機房裸牆交界處的原門口。 離幕確認前可返回 R16，再沿已開路線整理本幕證據。 誤導支路：L-04：32-S 服務門後固定分岔中的 L-04 支路口。 錯誤路由組合只觸發一次，沿維修迴路回 R14；不是回第四幕，也不移動或替換門牌。 正路：C-02：同一 32-S 門後另一個固定支路口，柵門內接上行扶手。 正確日期鏈與第二鑰匙成立，完成現場驗證及單向確認後，經倉儲平台、吸音門外到 R18；確認前仍可回查。 受損公開出口：檔案區原公開出口的損壞門口，與 32-S 服務門分開。 不能通往樓外；服務門的遠端去向須查路由資料，首次觀看不提前揭露正解。</desc>
+  <rect width="1100" height="914" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">R17 · 檔案區／康辦公室／外部中繼 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">檔案區與 32-S 路由</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">服務門後才有兩支路</text>
+    <g data-port="1">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">1. 冷卻管接駁口</text>
+      <text x="84" y="497" font-size="17" fill="#147469">離幕前可返回</text>
+    </g>
+<g data-port="2">
+      <rect x="420" y="147" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="434" y="179" font-size="22" font-weight="700">2. 32-S 服務門</text>
+      <text x="434" y="212" font-size="17" fill="#aa582a">同一門後 L-04／C-02</text>
+    </g>
+<g data-port="3">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#6a737b" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">3. 受損公開出口</text>
+      <text x="769" y="237" font-size="17" fill="#6a737b">封閉／不能到樓外</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景左側   R16↔R17</text>
+<text x="60" y="713" font-size="22" >2. 後景中央   R17→R14 ／ R17→R18</text>
+<text x="60" y="761" font-size="22" >3. 後景右側   封閉</text>
+    <text x="40" y="852" font-size="21" >L-04 與 C-02 是固定分岔，不畫成兩扇外門；去向只供製作核對。</text>
+    <text x="40" y="889" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

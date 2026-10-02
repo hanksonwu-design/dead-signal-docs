@@ -153,7 +153,7 @@ function imageAssetUrl(href) {
     if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return null;
     const base = new URL(`docs/${state.selected?.path || "README.md"}`, "https://docs.invalid/");
     const resolved = new URL(href, base);
-    if (!/\.(?:png|jpe?g|webp|gif)$/i.test(resolved.pathname)) return null;
+    if (!/\.(?:png|jpe?g|webp|gif|svg)$/i.test(resolved.pathname)) return null;
     const assetPath = resolved.pathname.slice(1);
     return assetPath.startsWith("assets/") ? assetPath : `assets/${assetPath.replace(/^docs\//, "")}`;
   } catch (_) { return null; }

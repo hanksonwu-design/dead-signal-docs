@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="914" viewBox="0 0 1100 914" role="img" aria-labelledby="title desc">
+  <title id="title">R3 出入口配置草圖</title>
+  <desc id="desc">宿舍主間。洗衣路在左近；工坊門在另一側，兩個出口不綁宿舍碎片。。來路／返回：住宅側平台：進場住宅門框外，紅扶手接回共用鐵梯。 經住宅側平台與後廚服務巷回 R2，不直接切回大廳。 出口：洗衣窄巷：畫面左近的綠磁磚折角，排水槽通向共用洗衣路。 經洗衣窄巷到 R4，可往返；不要求先收完宿舍碎片。 出口：工坊門框：另一側舊住宅門框，粗管、厚柱及加鋼板的門檻相連。 可直接進 R5 並回訪；缺少必要線索只限制工坊離幕，不封住宿舍兩個出口。</desc>
+  <rect width="1100" height="914" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">R3 · 宿舍主間 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">床架與厚柱</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">左近綠磁磚、排水槽</text>
+    <g data-port="1">
+      <rect x="770" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="784" y="464" font-size="22" font-weight="700">1. 住宅側平台</text>
+      <text x="784" y="497" font-size="17" fill="#147469">來路／可返回</text>
+    </g>
+<g data-port="2">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">2. 洗衣窄巷</text>
+      <text x="84" y="497" font-size="17" fill="#147469">雙向</text>
+    </g>
+<g data-port="3">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">3. 工坊門框</text>
+      <text x="769" y="237" font-size="17" fill="#147469">雙向</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景右側   R2↔R3</text>
+<text x="60" y="713" font-size="22" >2. 前景左側   R3↔R4</text>
+<text x="60" y="761" font-size="22" >3. 後景右側   R3↔R5</text>
+    <text x="40" y="852" font-size="21" >洗衣路在左近；工坊門在另一側，兩個出口不綁宿舍碎片。</text>
+    <text x="40" y="889" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

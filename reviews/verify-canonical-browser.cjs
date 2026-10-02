@@ -324,7 +324,7 @@ async function canvasCheck(page, name) {
         await page.waitForFunction(() => { const img = document.querySelector('#readerContent img'); return img.complete && img.naturalWidth > 0; });
       }
     }
-    assert.equal(images.length, 56);
+    assert.equal(images.length, 69);
     assert(images.every(src => new URL(src).pathname.startsWith('/assets/') && !src.includes('/assets/assets/')));
     for (const src of new Set(images)) {
       const response = await page.request.get(src);
@@ -334,7 +334,7 @@ async function canvasCheck(page, name) {
     await image.scrollIntoViewIfNeeded();
     await page.waitForFunction(() => { const img = document.querySelector('#readerContent img'); return img.complete && img.naturalWidth > 0; });
     await page.screenshot({ path: path.join(out, 'reader-image.png') });
-    pass('56 image URLs and lazy image rendering');
+    pass('69 image URLs and lazy image rendering');
 
     await page.goto(docUrl(master, 'book-payoffs'));
     await readerReady(page, 'book-payoffs');

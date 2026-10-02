@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="866" viewBox="0 0 1100 866" role="img" aria-labelledby="title desc">
+  <title id="title">U6 出入口配置草圖</title>
+  <desc id="desc">水箱夾層。配重管指向下方維修艙；此處只畫固定梯，不依賴未固定的踏板。。來路／返回：冷藏維修口：水箱夾層來向的原通道口，管線接回冷藏後場。 非鎖場且沉降前可原路回 U5。 出口：固定保養梯：三水槽旁的固定梯，配重管向下連到維修艙。 水位調成 2／2／2 並關閥後才可下行；不踏尚未固定的活動踏板，可沿同梯返回。</desc>
+  <rect width="1100" height="866" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">U6 · 水箱夾層 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">三水槽與配重管</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">水位 2／2／2、關閥</text>
+    <g data-port="1">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">1. 冷藏維修口</text>
+      <text x="84" y="497" font-size="17" fill="#147469">安全時可返回</text>
+    </g>
+<g data-port="2">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">2. 固定保養梯</text>
+      <text x="769" y="237" font-size="17" fill="#aa582a">平衡及關閥後下行</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景左側   U5↔U6</text>
+<text x="60" y="713" font-size="22" >2. 後景右側   U6↔U6b</text>
+    <text x="40" y="804" font-size="21" >配重管指向下方維修艙；此處只畫固定梯，不依賴未固定的踏板。</text>
+    <text x="40" y="841" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

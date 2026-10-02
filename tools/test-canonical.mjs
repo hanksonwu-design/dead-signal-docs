@@ -4,6 +4,7 @@ import path from 'node:path';
 import { ROOT, MASTER, parseMaster, buildSync, deriveGraph, canonicalFile } from './sync-canonical.mjs';
 import { ACTS, APPENDIX, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER } from './screenplay-files.mjs';
 import { buildDocuments } from './build-docs.mjs';
+import { validateProductionOrder, reorderProduction } from './reorder-production-specs.mjs';
 
 const read = file => readFileSync(path.join(ROOT, file), 'utf8').replace(/\r\n/g, '\n');
 const master = parseMaster();
@@ -73,6 +74,24 @@ test('eight reading acts and eight production files keep unique blocks and paire
   assert.equal(master.text.split('**存檔與素材驗收：**原房主線').length - 1, 1);
 });
 
+test('production specifications follow overview, room flow, shared reference and delivery order', () => {
+  assert.deepEqual(validateProductionOrder(master.documents, graph), { acts: 8, nodes: 48, subscenes: 34, passages: 7 });
+  assert.deepEqual(reorderProduction(master, graph).documents, master.documents);
+});
+
+test('production order validation rejects a return to front-loaded children or misplaced passages', () => {
+  const file = ACTS[1].specPath, original = master.documents.get(file);
+  for (const edit of [
+    text => text.replace('<a id="node-r2-exit"></a>', ''),
+    text => text.replace('<a id="transition-r3-r4"></a>', '<a id="transition-r4-r3"></a>'),
+    text => text.replace('<a id="spec-act-1-delivery"></a>', ''),
+    text => text.replace('<a id="subscene-t-r2-r3-01-spec"></a>', '').replace('<a id="node-r2-level"></a>', '<a id="subscene-t-r2-r3-01-spec"></a>\n<a id="node-r2-level"></a>'),
+  ]) {
+    const invalid = new Map(master.documents); invalid.set(file, edit(original));
+    assert.throws(() => validateProductionOrder(invalid, graph));
+  }
+});
+
 test('reading scripts omit pause notes without removing production timing', () => {
   for (const act of ACTS) assert(!master.documents.get(act.path).includes('〔停頓〕'), act.name);
   assert(!block('s-0900-4').includes('〔停頓〕'));
@@ -99,7 +118,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
 });
 
 test('every static screenplay cue names its shot size without changing protected framing', () => {
-  const counts = [22, 41, 57, 45, 37, 29, 27, 20];
+  const counts = [22, 41, 57, 45, 37, 29, 29, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -138,7 +157,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
   const counts = [[20, 17, 8], [48, 27, 20], [72, 33, 11], [79, 27, 12],
-    [48, 18, 11], [51, 13, 12], [50, 5, 11], [23, 12, 4]];
+    [48, 18, 11], [51, 13, 12], [52, 5, 11], [23, 12, 4]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
@@ -231,9 +250,9 @@ test('derived files exactly match the current master; no legacy-heading fallback
   for (const [file, expected] of outputs) assert.equal(read(file), expected, file);
 });
 
-test('48 nodes, 55 routes; every source and destination anchor is canonical', () => {
+test('48 nodes, 56 routes; every source and destination anchor is canonical', () => {
   assert.equal(graph.nodes.length, 48);
-  assert.equal(graph.edges.length, 55);
+  assert.equal(graph.edges.length, 56);
   assert.equal(new Set(graph.nodes.map(n => n.id)).size, 48);
   assert.deepEqual(deriveGraph(master, graph), graph);
   for (const node of graph.nodes) {
@@ -275,19 +294,19 @@ test('R1 coerced intake; no voluntary work or freedom result', () => {
 
 test('seven transition routes retain gates and directions without adding rooms', () => {
   const routes = [
-    ['R2', 'R3', 1, 's-0904-16', 's-0602-5', 2,
+    ['R2', 'R3', 1, 's-0904-16', 's-0602-22', 2,
       '完成本房必要操作，依 R2-03 推開送餐車露出梯口；無額外證據或鑰匙'],
-    ['R3', 'R4', 1, 's-0904-25', 's-0602-7', 1,
+    ['R3', 'R4', 1, 's-0904-25', 's-0602-23', 1,
       '可自由前往刻痕牆，無額外門鎖；R3 人物碎片可章內回查，統一在 R5 離幕前核對'],
-    ['R7', 'R8', 2, 's-0905-22', 's-0603-6', 2,
+    ['R7', 'R8', 2, 's-0905-22', 's-0603-35', 2,
       '可沿窄橋自由前往；教戰手冊與留存排行榜在 R11 離幕前核對，老周安息及配給支線不擋通行'],
-    ['R11', 'R12', 2, 's-0905-55', 's-0603-9', 3,
+    ['R11', 'R12', 2, 's-0905-55', 's-0603-36', 3,
       '阿尋必要校驗、arc.ahsun.scope_confirmed 與幕尾 K1-01 成立，再完成現場第一鑰匙門端驗證；SQ-C1／SQ-S 不擋主線'],
-    ['R13', 'R14', 3, 's-0906-14', 's-0604-5', 2,
+    ['R13', 'R14', 3, 's-0906-14', 's-0604-28', 2,
       'E-07 已依本房叫號序列與照護註記安息，診所後門開啟；可退回 R12 不受本條阻擋'],
-    ['R17', 'R18', 3, 's-0906-62', 's-0604-9', 2,
+    ['R17', 'R18', 3, 's-0906-62', 's-0604-29', 2,
       '正確日期證據與 K2-01 成立；假路返回後可重排；離幕前可回查已發現未完成的 SQ-M1／SQ-T，支線不擋主線'],
-    ['R24', 'R25', 5, 's-0908-28', 's-0606-5', 1,
+    ['R24', 'R25', 5, 's-0908-28', 's-0606-26', 1,
       'E4-01／E4-02／E3-02 第四層鎖定成立；act5.r24.board_locked = true']
   ];
   let viewCount = 0;
@@ -333,7 +352,7 @@ test('transition text separates presentation saves from story gates and chapter 
   assert(leaving.indexOf('選「繼續」，沿原流程存檔') < leaving.indexOf('<a id="transition-r11-r12-script">'));
   assert(leaving.includes('不先播該房的三下敲擊'));
   assert(block('s-0906-3').includes('不重播梯段、離幕確認或門端驗證'));
-  assert(block('s-0603-9').includes('亦不可預先提交 `act3.r12.breaker_repaired`'));
+  assert(block('s-0603-36').includes('亦不可預先提交 `act3.r12.breaker_repaired`'));
   assert(block('s-0904-25').includes('由神壇轉角回廁所不重播'));
   assert(block('s-0905-22').includes('由 R9 或 R10 回 R8 不重播'));
   assert(common.includes('R17 的 L-04 假路不是離幕'));
@@ -560,7 +579,7 @@ test('all Markdown document and image links resolve; master anchors are unique',
   const explicit = [...master.text.matchAll(/<a id="([^"]+)"><\/a>/g)].map(m => m[1]);
   assert.equal(explicit.length, new Set(explicit).size);
   const imageRefs = [...master.text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)];
-  assert.equal(imageRefs.length, 56);
+  assert.equal(imageRefs.length, 69);
   const files = readdirSync(path.join(ROOT, 'docs'), {recursive:true}).filter(f => f.endsWith('.md'));
   const errors = [];
   for (const relative of files) {
@@ -1009,7 +1028,8 @@ test('gameplay inventory and novel share the source contracts while production s
   assert(novel.includes('那張照片已經清楚了'));
   const assets = block('s-0810-21').split('<a id="core-gameplay-assets"></a>')[1];
   assert(assets.includes('未宣稱圖稿或引擎已完成'));
-  assert(assets.includes('不增加 48 個宏觀流程節點、342 場次、55 條動線或 15 個訊號槽'));
+  assert(assets.includes('維持 48 個宏觀流程節點、342 場次與 15 個訊號槽'));
+  assert(assets.includes('56 條動線包含新增的 U3↔U1 回程捷徑'));
   assert(assets.includes('須另估工時'));
 });
 

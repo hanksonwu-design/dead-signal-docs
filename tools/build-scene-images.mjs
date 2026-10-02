@@ -130,6 +130,45 @@ export function collectSubscenes(collection, routes) {
   return subscenes;
 }
 
+export function collectSceneAccess(graph, documents) {
+  const edgeKey = edge => `${edge.fromId}${edge.back ? '↔' : '→'}${edge.toId}`;
+  const edges = new Map(graph.edges.map(edge => [edgeKey(edge), edge]));
+  const special = new Set(['起點', '封閉', '結束']);
+  const groups = new Map();
+  for (const act of ACTS) {
+    const spec = documents?.get(act.specPath) ?? read(act.specPath);
+    const matches = [...spec.matchAll(/<!-- scene-access:([^:]+):begin -->([\s\S]*?)<!-- scene-access:\1:end -->/g)];
+    assert.deepEqual(matches.map(m => m[1]), graph.nodes.filter(n => n.act === act.act).map(n => n.id), `Access coverage: ${act.name}`);
+    for (const [whole, node, body] of matches) {
+      const slug = node.toLowerCase();
+      const position = spec.indexOf(whole);
+      assert(position > spec.indexOf(`<!-- navigation:${slug}:end -->`) && position < spec.indexOf(`<a id="node-${slug}-level">`), `Access section order: ${node}`);
+      const lines = body.trim().split('\n');
+      assert.equal(lines[0], '| 動線 | 顯示名稱 | 畫面位置與辨識物 | 通行狀態 |');
+      assert.equal(lines[1], '| --- | --- | --- | --- |');
+      const rows = lines.slice(2).map(line => {
+        assert(line.startsWith('| ') && line.endsWith(' |'), `Access table row: ${node}`);
+        const cells = line.split('|').slice(1, -1).map(cell => cell.trim());
+        assert(cells.length === 4 && cells.every(Boolean), `Incomplete access row: ${node}`);
+        const [route, label, location, state] = cells;
+        const edge = edges.get(route);
+        assert(edge || special.has(route), `Unknown access route: ${node} ${route}`);
+        if (edge) assert([edge.fromId, edge.toId].includes(node), `Foreign access route: ${node} ${route}`);
+        if (route === '起點') assert.equal(node, 'P0');
+        if (route === '結束') assert.equal(node, 'POST');
+        // Reusing P1 at the ending must not reveal the body in the prologue.
+        const reading = !(node === 'P1' && edge?.fromId === 'R33');
+        return { route, label, location, state, edge, reading };
+      });
+      const expected = graph.edges.filter(edge => [edge.fromId, edge.toId].includes(node)).map(edgeKey).sort();
+      assert.deepEqual(rows.filter(row => row.edge).map(row => row.route).sort(), expected, `Access route coverage: ${node}`);
+      assert(rows.length > 0, `Empty access section: ${node}`);
+      groups.set(node, rows);
+    }
+  }
+  return groups;
+}
+
 function section(text, name, body, insertion) {
   const begin = `<!-- scene-image-${name}:begin -->`;
   const end = `<!-- scene-image-${name}:end -->`;
@@ -163,6 +202,7 @@ export function buildSceneImageOutputs(graph, documents) {
   const hotspots = collectHotspotImages(collection, documents);
   const routes = bindImageRoutes(graph, collection);
   const subscenes = collectSubscenes(collection, routes);
+  const access = collectSceneAccess(graph, documents);
   const outputs = new Map();
   for (const act of ACTS) {
     let story = read(act.path);
@@ -171,7 +211,11 @@ export function buildSceneImageOutputs(graph, documents) {
       const children = subscenes.filter(s => s.node === group.node);
       const rows = group.rows.filter(r => !r.id.startsWith('T-') && r.kind !== '出口接景');
       const main = rows[0];
-      const lines = [`**場景圖：${main.id}** · ${main.content}`, '', '**近看、原件與其他畫面：**'];
+      const lines = [`**場景圖：${main.id}** · ${main.content}`, '',
+        `<a id="node-${group.node.toLowerCase()}-access-script"></a>`, '',
+        ['R33', 'POST'].includes(group.node) ? '**演出銜接：**' : '**出入口：**',
+        ...access.get(group.node).filter(row => row.reading).map(row => `- **${row.label}**：${row.location} ${row.state}`),
+        '', '**近看、原件與其他畫面：**'];
       // Keep only names in the reading edition; states and art instructions remain in the specification.
       for (let i = 1; i < rows.length; i += 3) {
         lines.push(`- ${rows.slice(i, i + 3).map(r => `${r.id} ${shortName(r)}`).join('；')}。`);
@@ -182,8 +226,19 @@ export function buildSceneImageOutputs(graph, documents) {
         for (const child of exits) lines.push('', `<a id="${subsceneAnchor(child, 'script')}"></a>`, '', `- ${specLink(child, act.path)} · ${child.content}`);
       }
       lines.push('', `[本場景圖像製作單](../${act.specPath}#node-${group.node.toLowerCase()}-images)`);
+      if (spec.includes(`<a id="node-${group.node.toLowerCase()}-access-layout">`)) {
+        lines.push('', `[出入口配置草圖](../${act.specPath}#node-${group.node.toLowerCase()}-access-layout)`);
+      }
       const intro = `[製作規格](../${act.specPath}#node-${group.node.toLowerCase()}-spec)`;
       story = section(story, group.node.toLowerCase(), lines.join('\n'), intro);
+      const slug = group.node.toLowerCase();
+      const navLink = `[進場與動線](#node-${slug}-nav)`;
+      const accessLink = `[出入口位置](#node-${slug}-access)`;
+      if (!spec.includes(accessLink)) spec = spec.replace(navLink, `${navLink} · ${accessLink}`);
+      const accessArt = ['R33', 'POST'].includes(group.node)
+        ? `**銜接交圖：**${main.id} 依[演出銜接表](#node-${slug}-access)對位，不新增門口或移動熱區。`
+        : `**出入口交圖：**${main.id} 須依場次與狀態畫出[本場景出入口表](#node-${slug}-access)的來路、去路及封閉位置；既有操作鏡位與接景圖沿同一地標對位。門端差分、移動熱區與遮擋另分層，依[出入口共用契約](../09_劇本/09-15_正式劇本_共用附錄.md#scene-access-contract)驗收。${group.node === 'P1' ? '終幕肉身銜接只用 R33-V02 等終幕鏡位，不畫入 P1-V01，也不在序幕生成可查看凹室。' : ''}`;
+      spec = section(spec, `access-art-${slug}`, accessArt, `<!-- scene-images:${group.node}:end -->`);
       const transitionRoutes = new Set(group.rows.filter(r => r.kind === '過渡場景').map(r => r.id.replace(/-\d+$/, '')));
       for (const route of transitionRoutes) {
         const slug = route.slice(2).toLowerCase();
@@ -210,7 +265,9 @@ export function buildSceneImageOutputs(graph, documents) {
             `**近看：**${s.details.length ? `${s.details.map(d => d.id).join('、')}；關閉回 ${s.id}。` : '不新增近看；沿原轉場操作，不新增等待或讀取門檻。'}\n\n` +
             `[正文](../${act.path}#${subsceneAnchor(s, 'script')}) · [圖像製作單](#node-${group.node.toLowerCase()}-images) · [原門檻與回訪](#node-${group.node.toLowerCase()}-nav) · ${s.source}`
           ).join('\n\n');
-        spec = section(spec, `subscenes-${group.node.toLowerCase()}`, childBody, `<!-- scene-images:${group.node}:end -->`);
+        const placement = spec.includes('<!-- production:ordered:v1 -->')
+          ? `<!-- production-subscenes:${group.node.toLowerCase()} -->` : `<!-- scene-images:${group.node}:end -->`;
+        spec = section(spec, `subscenes-${group.node.toLowerCase()}`, childBody, placement);
       }
     }
     const actRoutes = routes.filter(r => graph.nodes.find(n => n.id === r.edge.fromId).act === act.act);
@@ -233,9 +290,10 @@ export function buildSceneImageOutputs(graph, documents) {
     `**${collection.groups.length} 個流程節點，下分 ${subscenes.length} 個次場景節點（${transitions.length} 個可查看過渡、${exits.length} 個轉場接景）；合計 ${collection.rows.length} 列圖像製作項目（場景／操作／演出 ${views.length} 列，近看／文件／介面／回憶 ${details.length} 列），對應 ${routes.length} 條動線。**\n\n` +
     `原規格的 ${hotspots.length} 個 H／B 熱點編號均有逐項對圖；包含已撤除事件的相容參照，不代表新增同數量的可點物件。其餘節點沿原場次與操作名稱列圖。\n\n` +
     '一列可能包含多頁、正反面、子鏡位或差分，不等於一張輸出圖；共用圖也不能重複算獨立背景。全部仍待正式圖像與遊戲實作交付，現有概念圖不能當完成品。完整拆圖與來源以各幕製作單為準。\n\n' +
-    table(['節點', '場景／操作／演出項目', '近看等項目', '逐件圖號與拆圖'], collection.groups.map(g => [
+    table(['節點', '場景／操作／演出項目', '近看等項目', '逐件圖號與拆圖', '出入口與銜接'], collection.groups.map(g => [
       g.node, g.rows.filter(r => r.view).length, g.rows.filter(r => !r.view).length,
       `[製作單](../${g.act.specPath}#node-${g.node.toLowerCase()}-images)`,
+      `[位置與通行狀態](../${g.act.specPath}#node-${g.node.toLowerCase()}-access)`,
     ])) + '\n\n<a id="inventory-subscenes"></a>\n\n### 次場景節點總表\n\n' +
     '次場景沿用既有圖號，隸屬原連線的起點主場景；不另算主線房間。近看圖是次場景的局部，不是另一個可移動節點。接景型保留原轉場操作；兩端直接切鏡與結局演出不虛構中間場景。\n\n' +
     table(['所屬主場景', '次場景／主圖', '類型／名稱', '正向來路 → 去路', '近看圖'], subscenes.map(s => [
@@ -246,7 +304,7 @@ export function buildSceneImageOutputs(graph, documents) {
       `${edge.fromId}→${edge.toId}`, mode, rows.map(r => specLink(r, inventory)).join(' → '),
     ]));
   outputs.set(inventory, section(read(inventory), 'inventory', summary, '<!-- inventory:summary:end -->'));
-  return { outputs, collection, routes, hotspots, subscenes };
+  return { outputs, collection, routes, hotspots, subscenes, access };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

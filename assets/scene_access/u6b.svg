@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="866" viewBox="0 0 1100 866" role="img" aria-labelledby="title desc">
+  <title id="title">U6b 出入口配置草圖</title>
+  <desc id="desc">配重踏板維修艙。到艙與離艙是兩種結構；回 U6 重開閥後，須重新平衡才能再下來。。來路／返回：保養梯腳：維修艙來向的固定梯與同一組配重管，向上接 U6。 可回水箱夾層；若未固定踏板就重開調節閥，須重新平衡關閥才能再下來。 出口：配重踏面：水平泡與止回栓旁的活動踏面，另一端接運送通道。 完成水平確認並扣上止回栓後才可到 R30；沉降前可沿已固定踏面返回。</desc>
+  <rect width="1100" height="866" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">U6b · 配重踏板維修艙 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">水平泡、止回栓</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">固定梯與活動踏面分開</text>
+    <g data-port="1">
+      <rect x="85" y="172" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="99" y="204" font-size="22" font-weight="700">1. 保養梯腳</text>
+      <text x="99" y="237" font-size="17" fill="#147469">同一固定梯向上</text>
+    </g>
+<g data-port="2">
+      <rect x="770" y="432" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="784" y="464" font-size="22" font-weight="700">2. 配重踏面</text>
+      <text x="784" y="497" font-size="17" fill="#aa582a">水平確認及扣栓後</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 後景左側   U6↔U6b</text>
+<text x="60" y="713" font-size="22" >2. 前景右側   U6b↔R30</text>
+    <text x="40" y="804" font-size="21" >到艙與離艙是兩種結構；回 U6 重開閥後，須重新平衡才能再下來。</text>
+    <text x="40" y="841" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

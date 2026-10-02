@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="962" viewBox="0 0 1100 962" role="img" aria-labelledby="title desc">
+  <title id="title">R15 出入口配置草圖</title>
+  <desc id="desc">發電機房。三供電方案共用同一防火門；不要依方案增畫三扇出口。。來路／返回：診所設備道：厚柱旁的設備通道門口，管線接回診所後勤出口。 原安息與物流供電門檻成立後可回 R13。 另一來路／返回：貨梯短梯：另一側接固定欄杆與局部高差的機房入口。 原門檻成立後可回 R14，與診所入口分開辨認。 後開捷徑：維修門扣：側面維修箱附近的低負荷服務道口。 維修支線、兩端到訪與供電證據條件成立後可直返 R12；未開時保留實體門扣，不暗示可穿越。 出口：後加防火門：發電機外側接機櫃通道的防火門，排氣管與原地磚延續過門檻。 任一供電方案完成確認、取得 E2-06 後可進 R16 及返回；不用先解完伺服器室內的推理。</desc>
+  <rect width="1100" height="962" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">R15 · 發電機房 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">發電機與厚柱</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">排氣管、舊地磚</text>
+    <g data-port="1">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">1. 診所設備道</text>
+      <text x="84" y="497" font-size="17" fill="#aa582a">原門檻成立可返回</text>
+    </g>
+<g data-port="2">
+      <rect x="770" y="432" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="784" y="464" font-size="22" font-weight="700">2. 貨梯短梯</text>
+      <text x="784" y="497" font-size="17" fill="#aa582a">原門檻成立可返回</text>
+    </g>
+<g data-port="3">
+      <rect x="85" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="99" y="204" font-size="22" font-weight="700">3. 維修門扣</text>
+      <text x="99" y="237" font-size="17" fill="#aa582a">維修支線後開</text>
+    </g>
+<g data-port="4">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">4. 後加防火門</text>
+      <text x="769" y="237" font-size="17" fill="#aa582a">供電確認及 E2-06 後</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景左側   R13↔R15</text>
+<text x="60" y="713" font-size="22" >2. 前景右側   R14↔R15</text>
+<text x="60" y="761" font-size="22" >3. 後景左側   R12↔R15</text>
+<text x="60" y="809" font-size="22" >4. 後景右側   R15↔R16</text>
+    <text x="40" y="900" font-size="21" >三供電方案共用同一防火門；不要依方案增畫三扇出口。</text>
+    <text x="40" y="937" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

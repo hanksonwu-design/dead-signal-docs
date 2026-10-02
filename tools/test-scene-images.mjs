@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { ACTS, APPENDIX } from './screenplay-files.mjs';
 import { ROOT, parseMaster, rewriteLinks } from './sync-canonical.mjs';
-import { collectSceneImages, collectHotspotImages, bindImageRoutes, collectSubscenes, buildSceneImageOutputs } from './build-scene-images.mjs';
+import { collectSceneImages, collectHotspotImages, bindImageRoutes, collectSubscenes, collectSceneAccess, buildSceneImageOutputs } from './build-scene-images.mjs';
 
 const master = parseMaster();
 const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
@@ -12,9 +12,85 @@ const collection = collectSceneImages(graph, specs);
 const routes = bindImageRoutes(graph, collection);
 const subscenes = collectSubscenes(collection, routes);
 const hotspots = collectHotspotImages(collection, specs);
+const access = collectSceneAccess(graph, specs);
 let passed = 0;
 function test(name, fn) { fn(); console.log(`PASS ${name}`); passed++; }
 const row = id => { const value = collection.rows.find(r => r.id === id); assert(value, id); return value; };
+
+test('all 48 nodes name both endpoints of every original route without adding routes', () => {
+  assert.deepEqual([...access.keys()], graph.nodes.map(n => n.id));
+  assert.equal([...access.values()].flat().filter(r => r.edge).length, graph.edges.reduce((count, e) => count + (e.fromId === e.toId ? 1 : 2), 0));
+  for (const node of graph.nodes) {
+    assert.equal(master.anchorFiles.get(`node-${node.id.toLowerCase()}-access`), node.pack);
+    assert.equal(master.anchorFiles.get(`node-${node.id.toLowerCase()}-access-script`), node.source);
+  }
+});
+
+test('missing, repeated, reversed, foreign and incomplete access rows are rejected', () => {
+  const file = ACTS[1].specPath;
+  const original = specs.get(file);
+  const line = original.split('\n').find(l => l.startsWith('| P2→R1 |'));
+  for (const edit of [
+    s => s.replace(line, ''),
+    s => s.replace(line, `${line}\n${line}`),
+    s => s.replace(line, line.replace('P2→R1', 'P2↔R1')),
+    s => s.replace(line, line.replace('P2→R1', 'R25↔R26')),
+    s => s.replace(line, line.replace('來路：地下梯段門', '')),
+    s => s.replace('<!-- scene-access:R1:begin -->', '<!-- scene-access:R99:begin -->'),
+  ]) {
+    const invalid = new Map(specs); invalid.set(file, edit(original));
+    assert.throws(() => collectSceneAccess(graph, invalid));
+  }
+});
+
+test('reading access summaries sit between the main picture and close-ups and do not leak the ending', () => {
+  for (const node of graph.nodes) {
+    const text = master.documents.get(node.source);
+    const body = text.split(`<!-- scene-image-${node.id.toLowerCase()}:begin -->`)[1].split('<!-- scene-image-')[0];
+    const heading = ['R33', 'POST'].includes(node.id) ? '**演出銜接：**' : '**出入口：**';
+    assert(body.indexOf(heading) > body.indexOf(`**場景圖：${node.id}-V01**`));
+    assert(body.indexOf(heading) < body.indexOf('**近看、原件與其他畫面：**'));
+    for (const entry of access.get(node.id)) {
+      if (entry.reading) assert(body.includes(`**${entry.label}**：${entry.location} ${entry.state}`), node.id);
+      else assert(!body.includes(entry.location));
+    }
+    if (node.id === 'P1') assert(!/肉身|R33|終幕銜接/.test(body));
+  }
+});
+
+test('branch, return-only, one-way and ending access remain distinct', () => {
+  const routes = node => access.get(node).filter(r => r.edge).map(r => r.route);
+  assert.deepEqual(routes('R26'), ['R25↔R26']);
+  assert.equal(routes('R12').length, 4);
+  assert(routes('R14').includes('R17→R14'));
+  assert(routes('R17').includes('R17→R18'));
+  assert(routes('U4').includes('U4→U4'));
+  assert(access.get('R4b').some(r => r.state.includes('共用場景的近景')));
+  assert(access.get('R33').some(r => r.state.includes('D 留在翼內')));
+  assert(access.get('POST').some(r => r.route === '結束'));
+  const p1 = access.get('P1').find(r => r.route === 'R33→P1');
+  assert.equal(p1.reading, false);
+});
+
+test('art sheets link access locations and require visible, separately gated doorways', () => {
+  assert.equal(master.anchorFiles.get('scene-access-contract'), APPENDIX);
+  for (const node of graph.nodes) {
+    const spec = specs.get(node.pack);
+    const slug = node.id.toLowerCase();
+    assert(spec.includes(`[出入口位置](#node-${slug}-access)`));
+    const note = spec.split(`<!-- scene-image-access-art-${slug}:begin -->`)[1]?.split(`<!-- scene-image-access-art-${slug}:end -->`)[0];
+    assert(note?.includes(`${node.id}-V01`) && note.includes(`#node-${slug}-access`), node.id);
+  }
+});
+
+test('U2b clears the existing bridge by raising racks and uses side stairs, while U6 uses the fixed ladder', () => {
+  assert(!/待抬橋面|橋第一段|晾架橋升起/.test(row('U2b-V01').content + row('U2b-V01').requirements + row('U2b-C02').content));
+  assert(row('U2b-V01').content.includes('上橋側階'));
+  assert(row('U2b-C02').requirements.includes('不畫成升降橋'));
+  assert(access.get('U2b').find(r => r.route === 'U2b↔U3').state.includes('沿側階上橋'));
+  assert(access.get('U6').find(r => r.route === 'U6↔U6b').state.includes('不踏尚未固定'));
+  assert(row('R12-V01').content.includes('後開的服務捷徑門扣'));
+});
 
 test('all 48 flow nodes have an owned base picture and named detail work orders', () => {
   assert.deepEqual(collection.groups.map(g => g.node), graph.nodes.map(n => n.id));
@@ -86,20 +162,20 @@ test('seven routes have thirteen individually identified views and close-ups wit
   }
 });
 
-test('all 55 routes bind valid static views without conflating ending rescue with prologue exploration', () => {
-  assert.equal(routes.length, 55);
-  assert.equal(new Set(routes.map(r => r.edge.id)).size, 55);
+test('all 56 routes bind valid static views without conflating ending rescue with prologue exploration', () => {
+  assert.equal(routes.length, 56);
+  assert.equal(new Set(routes.map(r => r.edge.id)).size, 56);
   for (const route of routes) assert(route.rows.every(r => collection.allIds.has(r.id) && r.view), route.edge.id);
   assert.deepEqual(routes.find(r => r.edge.fromId === 'R33' && r.edge.toId === 'P1').rows.map(r => r.id), ['R33-V02']);
-  assert.equal(collection.rows.filter(r => r.kind === '出口接景').length, 20);
+  assert.equal(collection.rows.filter(r => r.kind === '出口接景').length, 21);
   assert.equal(routes.find(r => r.edge.fromId === 'R17' && r.edge.toId === 'R14').mode, '出口接景');
   assert.equal(routes.find(r => r.edge.fromId === 'R17' && r.edge.toId === 'R18').mode, '逐鏡過渡');
 });
 
-test('33 secondary scene nodes retain their parent, ordered connections and distinct reading/spec anchors', () => {
-  assert.equal(subscenes.length, 33);
+test('34 secondary scene nodes retain their parent, ordered connections and distinct reading/spec anchors', () => {
+  assert.equal(subscenes.length, 34);
   assert.equal(subscenes.filter(s => s.type === '可查看過渡').length, 13);
-  assert.equal(subscenes.filter(s => s.type === '轉場接景').length, 20);
+  assert.equal(subscenes.filter(s => s.type === '轉場接景').length, 21);
   assert.equal(graph.nodes.length, 48);
   for (const child of subscenes) {
     assert.equal(child.node, child.route.edge.fromId);
@@ -136,11 +212,11 @@ test('secondary scene headings preserve entry gates and do not redefine transiti
   assert(act3.indexOf('只在 C-02 現場驗證與上述單向確認完成後展開') < act3.indexOf('###### 次場景 T-R17-R18-01'));
   assert(act3.indexOf('不覆蓋上段十二秒餘波') < act3.indexOf('###### 次場景 T-R13-R14-01'));
   const policy = master.documents.get(APPENDIX).split('<a id="scene-image-contract"></a>')[1].split('各場景原文')[0];
-  for (const phrase of ['主場景 → 次場景 → 物件近看', '操作與演出 V 圖不一律', '實際觸發仍依正文分支', '20 個出口接景不套用七路通路進度']) assert(policy.includes(phrase), phrase);
+  for (const phrase of ['主場景 → 次場景 → 物件近看', '操作與演出 V 圖不一律', '實際觸發仍依正文分支', '21 個出口接景不套用七路通路進度']) assert(policy.includes(phrase), phrase);
 });
 
 test('exit work orders stay assigned to their actual routes rather than falling back silently', () => {
-  const expected = ['P2-R1', 'R5-R6', 'R6-R7', 'R8-R9', 'R8-R10', 'R9-R11', 'R10-R11', 'R12-R14', 'R12-R15', 'R13-R15', 'R14-R15', 'R16-R17', 'R17-R14', 'R19-R20', 'R20-R21', 'R22-R23', 'R25-R26', 'R28-R29', 'R30-R31', 'R31-R32'];
+  const expected = ['P2-R1', 'R5-R6', 'R6-R7', 'R8-R9', 'R8-R10', 'R9-R11', 'R10-R11', 'R12-R14', 'R12-R15', 'R13-R15', 'R14-R15', 'R16-R17', 'R17-R14', 'R19-R20', 'R20-R21', 'R22-R23', 'R25-R26', 'R28-R29', 'R30-R31', 'R31-R32', 'U3-U1'];
   assert.deepEqual(routes.filter(r => r.mode === '出口接景').map(r => `${r.edge.fromId}-${r.edge.toId}`).sort(), expected.sort());
   const invalid = { ...collection, groups: collection.groups.map(g => ({ ...g, rows: g.rows.map(r => r.id === 'R17-V02' ? { ...r, content: r.content.replace('R17→R14', 'R17→R15') } : r) })) };
   invalid.rows = invalid.groups.flatMap(g => g.rows);
@@ -154,6 +230,16 @@ test('reading summaries and inventory are generated from the specification, with
     if (master.documents.has(file)) assert.equal(rewriteLinks(content, file, master), content, file);
   }
   for (const item of collection.rows) assert(master.documents.get(item.act.path).includes(item.id), `Missing reading image: ${item.id}`);
+});
+
+test('regenerating a missing secondary-scene list keeps it at the departure end', () => {
+  const file = ACTS[1].specPath;
+  const documents = new Map(specs);
+  documents.set(file, specs.get(file).replace(/<!-- scene-image-subscenes-r2:begin -->[\s\S]*?<!-- scene-image-subscenes-r2:end -->/, ''));
+  const output = buildSceneImageOutputs(graph, documents).outputs.get(file);
+  const position = output.indexOf('<a id="subscenes-r2"></a>');
+  assert(position > output.indexOf('<a id="node-r2-exit"></a>'));
+  assert(position < output.indexOf('<a id="node-r3-spec"></a>'));
 });
 
 test('interactive close-ups preserve frozen reflections, original clue text and source-reading boundaries', () => {

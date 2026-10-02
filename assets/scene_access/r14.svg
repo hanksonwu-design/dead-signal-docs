@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1010" viewBox="0 0 1100 1010" role="img" aria-labelledby="title desc">
+  <title id="title">R14 出入口配置草圖</title>
+  <desc id="desc">貨梯轉接間。維修口不產生回 R17 的捷徑；貨梯門不是可選樓層的出口。。來路／返回：接縫鋼平台：平台外緣接向修理舖的橋板口，以護欄及井壁接縫定位。 可回 R12，沿已開的配電權限通路。 另一來路／出口：診所送物廊：貨梯側有搬運標記與輪痕的平台口，接回診所後簾。 診所安息完成後才可往返 R13；不能先到貨梯就反穿未開的後門。 出口：井道內側短梯：貨梯核心內側的固定短梯，欄杆接向發電機房門。 物流繼電器接回且病患已安息後可往返 R15；不必完成搬運工支線。 假路抵達點：物流維修口：既有物流標籤旁的維修通道口，承接 R17 的 L-04 迴路。 只承接假路的一次到達，不提供由此直返 R17 的新捷徑；回辦公區走 R15、R16。 貨梯井門：控制器旁的貨梯框及井道。 可操作原繼電器，不提供乘梯、選樓層或跳過診所的出口。</desc>
+  <rect width="1100" height="1010" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">R14 · 貨梯轉接間 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">貨梯核心與繼電器</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">平台、井壁接縫</text>
+    <g data-port="1">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">1. 接縫鋼平台</text>
+      <text x="84" y="497" font-size="17" fill="#147469">可返回修理舖</text>
+    </g>
+<g data-port="2">
+      <rect x="85" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="99" y="204" font-size="22" font-weight="700">2. 診所送物廊</text>
+      <text x="99" y="237" font-size="17" fill="#aa582a">安息後雙向</text>
+    </g>
+<g data-port="3">
+      <rect x="770" y="432" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="784" y="464" font-size="22" font-weight="700">3. 井道內側短梯</text>
+      <text x="784" y="497" font-size="17" fill="#aa582a">安息及物流供電後</text>
+    </g>
+<g data-port="4">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">4. 物流維修口</text>
+      <text x="769" y="237" font-size="17" fill="#aa582a">僅承接 L-04 抵達</text>
+    </g>
+<g data-port="5">
+      <rect x="420" y="147" width="260" height="96" fill="white" stroke="#6a737b" stroke-width="3"/>
+      <text x="434" y="179" font-size="22" font-weight="700">5. 貨梯井門</text>
+      <text x="434" y="212" font-size="17" fill="#6a737b">封閉／不能乘梯</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景左側   R12↔R14</text>
+<text x="60" y="713" font-size="22" >2. 後景左側   R13↔R14</text>
+<text x="60" y="761" font-size="22" >3. 前景右側   R14↔R15</text>
+<text x="60" y="809" font-size="22" >4. 後景右側   R17→R14</text>
+<text x="60" y="857" font-size="22" >5. 後景中央   封閉</text>
+    <text x="40" y="948" font-size="21" >維修口不產生回 R17 的捷徑；貨梯門不是可選樓層的出口。</text>
+    <text x="40" y="985" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

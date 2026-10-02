@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="914" viewBox="0 0 1100 914" role="img" aria-labelledby="title desc">
+  <title id="title">R13 出入口配置草圖</title>
+  <desc id="desc">非法診所。未完成安息仍可從候診入口退出；兩道後門不合併為同一熱區。。來路／返回：候診入口：候診椅外側的舊門牌入口，地磚接回修理舖。 尚未完成病患安息仍可退回 R12；後簾門檻不封住這條退路。 出口：後簾送物廊：病床後簾與車輪磨痕相接的原後門，通向貨梯側平台。 依叫號序列及照護註記完成安息後，經後簾短廊、平台到 R14；反向通行也受同一門檻約束。 出口：後勤設備道：後勤出口朝設備通道的一側，管線指向厚柱旁機房；不與送物廊混成同一出口。 病患已安息且 R14 物流繼電器接回後，才可往返 R15；機房內的供電選擇不是進房條件。</desc>
+  <rect width="1100" height="914" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">R13 · 非法診所 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">候診椅、病床與後簾</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">車輪磨痕指向送物廊</text>
+    <g data-port="1">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">1. 候診入口</text>
+      <text x="84" y="497" font-size="17" fill="#147469">可返回修理舖</text>
+    </g>
+<g data-port="2">
+      <rect x="420" y="147" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="434" y="179" font-size="22" font-weight="700">2. 後簾送物廊</text>
+      <text x="434" y="212" font-size="17" fill="#aa582a">安息後雙向</text>
+    </g>
+<g data-port="3">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">3. 後勤設備道</text>
+      <text x="769" y="237" font-size="17" fill="#aa582a">安息及物流供電後</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景左側   R12↔R13</text>
+<text x="60" y="713" font-size="22" >2. 後景中央   R13↔R14</text>
+<text x="60" y="761" font-size="22" >3. 後景右側   R13↔R15</text>
+    <text x="40" y="852" font-size="21" >未完成安息仍可從候診入口退出；兩道後門不合併為同一熱區。</text>
+    <text x="40" y="889" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

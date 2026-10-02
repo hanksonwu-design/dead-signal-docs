@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="914" viewBox="0 0 1100 914" role="img" aria-labelledby="title desc">
+  <title id="title">U1 出入口配置草圖</title>
+  <desc id="desc">分租迴廊。送件門沿同一核心柱回 U3，不是管圖第四答案；初訪外側無把手。。來路／返回：展示牆服務門：核心柱旁接回展示廊的門口，粉灰牆與展示飾板交界可辨。 沿已開通路回 R27，不返回 M1。 出口：管圖服務門：收件架後可查的管圖所指服務口，以門旁下彎接頭及插栓定位。 移架、完成管圖辨路並退開原插栓後到 U2；重複住宅門號不是任選出口。 後開捷徑：修燈送件門：核心柱另一側、收件架旁的窄門，外側只有護板；與管圖三端點分開。 初訪不能從此側開啟。走完內井、收架及工場落橋後，從 U3 手動退閂才可往返；R30 不可逆前進後停用。</desc>
+  <rect width="1100" height="914" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">U1 · 分租迴廊 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">核心柱、墊高收件架</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">管圖三端點另在近看</text>
+    <g data-port="1">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">1. 展示牆服務門</text>
+      <text x="84" y="497" font-size="17" fill="#147469">可返回 R27</text>
+    </g>
+<g data-port="2">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">2. 管圖服務門</text>
+      <text x="769" y="237" font-size="17" fill="#aa582a">移架、辨路及退栓後</text>
+    </g>
+<g data-port="3">
+      <rect x="85" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="99" y="204" font-size="22" font-weight="700">3. 修燈送件門</text>
+      <text x="99" y="237" font-size="17" fill="#aa582a">須從 U3 端後開</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景左側   R27↔U1</text>
+<text x="60" y="713" font-size="22" >2. 後景右側   U1↔U2</text>
+<text x="60" y="761" font-size="22" >3. 後景左側   U3↔U1</text>
+    <text x="40" y="852" font-size="21" >送件門沿同一核心柱回 U3，不是管圖第四答案；初訪外側無把手。</text>
+    <text x="40" y="889" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>

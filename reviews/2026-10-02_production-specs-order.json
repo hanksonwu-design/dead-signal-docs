@@ -1,0 +1,54 @@
+{
+  "acts": 8,
+  "nodes": 48,
+  "subscenes": 33,
+  "passages": 7,
+  "beforeBlocks": 1554,
+  "afterBlocks": 1561,
+  "moved": [
+    {
+      "from": "s-0602-5",
+      "to": "s-0602-22",
+      "anchor": "transition-r2-r3",
+      "room": "r2"
+    },
+    {
+      "from": "s-0602-7",
+      "to": "s-0602-23",
+      "anchor": "transition-r3-r4",
+      "room": "r3"
+    },
+    {
+      "from": "s-0603-6",
+      "to": "s-0603-35",
+      "anchor": "transition-r7-r8",
+      "room": "r7"
+    },
+    {
+      "from": "s-0603-9",
+      "to": "s-0603-36",
+      "anchor": "transition-r11-r12",
+      "room": "r11"
+    },
+    {
+      "from": "s-0604-5",
+      "to": "s-0604-28",
+      "anchor": "transition-r13-r14",
+      "room": "r13"
+    },
+    {
+      "from": "s-0604-9",
+      "to": "s-0604-29",
+      "anchor": "transition-r17-r18",
+      "room": "r17"
+    },
+    {
+      "from": "s-0606-5",
+      "to": "s-0606-26",
+      "anchor": "transition-r24-r25",
+      "room": "r24"
+    }
+  ],
+  "checks": "Source text, original anchors, reading acts, work-order rows, illustrations and game routes preserved",
+  "contentHash": "cc58d699c071fdaa11d97e0e026e7d5e2f75038a5e0b326909aff103770015da"
+}

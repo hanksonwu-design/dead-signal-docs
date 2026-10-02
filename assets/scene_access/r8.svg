@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="914" viewBox="0 0 1100 914" role="img" aria-labelledby="title desc">
+  <title id="title">R8 出入口配置草圖</title>
+  <desc id="desc">視訊組。兩出口分列隔間與窗邊；側道接遮棚平台，不露出樓外天空。。來路／返回：窄橋門：隔音布旁略高的門檻，門外延續橋板與異批地磚。 經兩端橋頭回 R7；放蛾及讀卡不封住回程。 出口：短租房門：視訊隔間旁的舊住宅門，門後下兩級台階。 沿短轉場進 R9，可往返；紙墊、小帳、照片及歌曲不鎖此門。 出口：內井側道：窗邊通向有遮棚的共用平台，地面通道與封窗分開。 沿平台接景到 R10，可往返；不是翻窗，也不能從內井逃到樓外。</desc>
+  <rect width="1100" height="914" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    <text x="40" y="52" font-size="30" font-weight="700">R8 · 視訊組 / 出入口配置</text>
+    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
+    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
+    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
+    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">視訊隔間</text>
+    <text x="550" y="373" font-size="20" text-anchor="middle">封窗與地面側道分開</text>
+    <g data-port="1">
+      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="84" y="464" font-size="22" font-weight="700">1. 窄橋門</text>
+      <text x="84" y="497" font-size="17" fill="#147469">來路／可返回</text>
+    </g>
+<g data-port="2">
+      <rect x="85" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
+      <text x="99" y="204" font-size="22" font-weight="700">2. 短租房門</text>
+      <text x="99" y="237" font-size="17" fill="#aa582a">雙向／門後下兩級</text>
+    </g>
+<g data-port="3">
+      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="769" y="204" font-size="22" font-weight="700">3. 內井側道</text>
+      <text x="769" y="237" font-size="17" fill="#147469">雙向／不可翻窗</text>
+    </g>
+    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
+    <text x="60" y="665" font-size="22" >1. 前景左側   R7↔R8</text>
+<text x="60" y="713" font-size="22" >2. 後景左側   R8↔R9</text>
+<text x="60" y="761" font-size="22" >3. 後景右側   R8↔R10</text>
+    <text x="40" y="852" font-size="21" >兩出口分列隔間與窗邊；側道接遮棚平台，不露出樓外天空。</text>
+    <text x="40" y="889" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+  </g>
+</svg>
