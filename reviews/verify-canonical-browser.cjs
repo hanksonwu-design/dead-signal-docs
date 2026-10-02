@@ -124,9 +124,13 @@ async function canvasCheck(page, name) {
       }, act.act);
       assert(!/〔(?:禁止|製作|製作註|錄音註|保存|排程|抑制)〕|【(?:鎖定|新增|沿用待審)/.test(story), act.path);
       assert(!story.includes('〔演出〕'), act.path);
-      for (const label of ['動畫演出', '靜態畫面', '介面呈現']) {
+      for (const label of ['動畫演出', '介面呈現']) {
         assert(story.includes(`（${label}）`), `${act.path}: ${label}`);
       }
+      const staticCues = story.match(/（靜態畫面[^）]*）/g) || [];
+      assert(staticCues.length > 0, act.path);
+      for (const cue of staticCues) assert.match(cue, /^（靜態畫面／(?:遠景|全景|中景|近景|特寫)）$/, act.path);
+      assert(!story.includes('定點構圖'), act.path);
       if (act.act === 0) await page.screenshot({ path: path.join(out, 'clean-prologue-desktop.png') });
       const specs = await openSpecification(page, `spec-act-${act.act}`, act.act === 0 ? 'keyboard' : 'click');
       assert.equal(await specs.evaluate(() => state.selected.path), act.specPath);

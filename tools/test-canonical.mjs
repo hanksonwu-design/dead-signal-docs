@@ -82,13 +82,13 @@ test('reading scripts omit pause notes without removing production timing', () =
 });
 
 test('screenplay presentation cues distinguish motion, stills, transitions and interfaces', () => {
-  const labels = ['動畫演出', '靜態畫面', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
+  const labels = ['動畫演出', '靜態畫面／景別', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
   assert(!master.text.includes('〔演出〕'));
   for (const label of labels) assert(block('s-0900-4').includes(`（${label}）`), label);
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(story.includes('（動畫演出）'), act.path);
-    assert(story.includes('（靜態畫面）'), act.path);
+    assert.match(story, /（靜態畫面／(?:遠景|全景|中景|近景|特寫)）/, act.path);
     assert(story.includes('（介面呈現）'), act.path);
   }
   for (const id of ['s-0904-16', 's-0905-22', 's-0905-55', 's-0906-14', 's-0906-62', 's-0908-28']) {
@@ -98,25 +98,55 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
   assert(block('s-0904-42').includes('（介面呈現）五個人物碎片'));
 });
 
+test('every static screenplay cue names its shot size without changing protected framing', () => {
+  const counts = [22, 41, 57, 45, 37, 29, 27, 20];
+  for (const act of ACTS) {
+    const story = master.documents.get(act.path);
+    const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
+    assert.equal(cues.length, counts[act.act], act.name);
+    for (const cue of cues) assert.match(cue, /^（靜態畫面／(?:遠景|全景|中景|近景|特寫)）$/, act.name);
+    assert(!story.includes('定點構圖'), act.name);
+  }
+  for (const [id, size, text] of [
+    ['s-0903-4', '全景', '黑暗退去'],
+    ['s-0903-10', '近景', '鞋印清楚'],
+    ['s-0904-22', '近景', '近看先容得下整雙拖鞋'],
+    ['s-0904-26', '近景', '同幅必要近看完整露出相鄰牆角'],
+    ['s-0905-28', '中景', '真實的手仍扶在椅背上'],
+    ['s-0906-50', '遠景', '桌上是咖啡杯'],
+    ['s-0906-51', '特寫', '同一杯的外圈已乾'],
+    ['s-0907-12', '遠景', '走廊最遠處有一個細小人形'],
+    ['s-0907-19', '中景', '控制桌、桌下掩體與玻璃缺角同框'],
+    ['s-0909-26', '特寫', '三份文件分別標著 2025 年 8、9、10 月'],
+    ['s-0910-28', '中景', '暖光只落到近處的手與椅面'],
+  ]) assert(block(id).includes(`（靜態畫面／${size}）${text}`), id);
+  for (const text of ['不代表每行自動換鏡', '同鏡位延續沿用相同景別', '不自動框出答案']) {
+    assert(block('s-0900-4').includes(text), text);
+  }
+  for (const text of ['景別對照', '倒影與來路不能被裁掉', '景別標示不改變原熱點']) {
+    assert(block('s-0810-24').includes(text), text);
+  }
+});
+
 test('frozen history and H-08 remain still while present action and the unique thaw are explicit', () => {
-  for (const [id, text] of [
-    ['s-0903-23', '同一間房'], ['s-0905-27', '同鏡位靜格'],
-    ['s-0907-14', '凝固構圖始終不動'], ['s-0908-45', 'C-07 有完整可辨的臉'],
-    ['s-0908-25', '凝固或原快取靜格'], ['s-0909-20', '25–45 秒靜止回憶'],
+  for (const [id, size, text] of [
+    ['s-0903-23', '全景', '同一間房'], ['s-0905-27', '近景', '同鏡位靜格'],
+    ['s-0907-14', '中景', '凝固構圖始終不動'], ['s-0908-45', '近景', 'C-07 有完整可辨的臉'],
+    ['s-0908-25', '近景', '凝固或原快取靜格'], ['s-0909-20', '中景', '25–45 秒靜止回憶'],
   ]) {
-    assert(block(id).includes(`（靜態畫面）${text}`), id);
+    assert(block(id).includes(`（靜態畫面／${size}）${text}`), id);
     assert(!block(id).includes('（動畫演出）'), id);
   }
   assert(block('s-0905-17').includes('（動畫演出）回到現時，老周的迴聲'));
   assert(block('s-0906-11').includes('（動畫演出）退出後，現時輪廓'));
   assert(block('s-0907-12').includes('（靜態差分）玩家轉開鏡頭後才撤去該靜格'));
-  assert(block('s-0907-25').includes('（靜態畫面）主角收手時，門邊那隻手仍是靜格。'));
-  assert(block('s-0909-5').includes('（靜態畫面）窗內的人與物保持不動'));
+  assert(block('s-0907-25').includes('（靜態畫面／中景）主角收手時，門邊那隻手仍是靜格。'));
+  assert(block('s-0909-5').includes('（靜態畫面／遠景）窗內的人與物保持不動'));
   assert(block('s-0909-59').includes('（動畫演出）同一歷史鏡位中，十二秒解凍'));
   assert(block('s-0909-59').includes('（靜態差分）減少動態版用原八張定格、同十二秒。'));
   assert(block('s-0909-60').includes('（介面呈現）選用文字摘要'));
   assert(block('s-0910-5').includes('（動畫演出）泵體後內凹室'));
-  assert(block('s-0910-6').includes('（靜態畫面）記憶不動'));
+  assert(block('s-0910-6').includes('（靜態畫面／近景）記憶不動'));
   assert(block('s-0910-42').includes('（動畫演出）康刷白色管理卡'));
 });
 
