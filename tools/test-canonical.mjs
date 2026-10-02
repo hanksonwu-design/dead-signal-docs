@@ -42,9 +42,10 @@ test('eight reading acts and eight production files keep unique blocks and paire
     assert(index.includes(`../${act.specPath}#spec-act-${act.act}`));
     assert.deepEqual([...story.matchAll(/<a id="act-(\d)">/g)].map(m => Number(m[1])), [act.act]);
     const sceneBlocks = [...story.matchAll(/<!-- import:([^:]+):begin -->/g)].map(m => m[1]);
-    sceneCount += sceneBlocks.length;
+    sceneCount += sceneBlocks.filter(id => /^#### /m.test(block(id))).length;
     for (const id of sceneBlocks) {
-      assert(/^#### \[|^#### POST ·/m.test(block(id)), id);
+      if (['s-0905-59', 's-0905-60'].includes(id)) assert(/^##### /m.test(block(id)), id);
+      else assert(/^#### \[|^#### POST ·/m.test(block(id)), id);
       assert(!spec.includes(`<!-- import:${id}:begin -->`), id);
     }
     for (const technical of ['進行目的：', '**狀態、素材與驗收**', '本幕台詞清單', '本節目標']) assert(!story.includes(technical), act.path);
@@ -156,7 +157,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     系統: new Set(['操作提示', '選項介面', '確認警示', '取得提示', '筆記更新', '狀態顯示', '狀態更新',
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
-  const counts = [[20, 17, 8], [48, 27, 20], [72, 33, 11], [79, 27, 12],
+  const counts = [[21, 17, 8], [48, 27, 20], [72, 33, 11], [79, 27, 12],
     [48, 18, 11], [51, 13, 12], [52, 5, 11], [23, 12, 4]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
@@ -708,7 +709,7 @@ test('reading chapters omit editorial notes while production contracts remain av
     assert(!/^〔(?:禁止|製作|製作註|錄音註|保存|排程|抑制)〕/m.test(story), act.path);
     assert(!/【(?:鎖定|新增|沿用待審)/.test(story), act.path);
     assert(!/（新增待審）/.test(story), act.path);
-    beats += [...story.matchAll(/<!-- import:[^:]+:begin -->/g)].length;
+    beats += [...story.matchAll(/^#### (?:\[|POST ·)/gm)].length;
   }
   assert.equal(beats, 342);
   assert(block('s-0903-3').includes('「……看著亮的地方。」'));
@@ -1054,7 +1055,7 @@ test('reading scripts keep implementation states in production documents', () =>
 });
 
 test('plain-language signal repair still requires the actual card and expanded roster', () => {
-  const card = block('s-0905-24');
+  const card = block('s-0905-59');
   const roster = block('s-0905-43');
   const repair = block('s-0905-46');
   for (const text of ['自行插入原卡', '名單備份／最後一段', 'AX-17', '版本 02', '100／100', '6C2A']) assert(card.includes(text), text);

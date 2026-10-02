@@ -4,6 +4,7 @@ import path from 'node:path';
 import { ACTS, APPENDIX } from './screenplay-files.mjs';
 import { ROOT, parseMaster, rewriteLinks } from './sync-canonical.mjs';
 import { collectSceneImages, collectHotspotImages, bindImageRoutes, collectSubscenes, collectSceneAccess, buildSceneImageOutputs } from './build-scene-images.mjs';
+import { placeReadingImages, stripReadingFlow } from './reading-scene-flow.mjs';
 
 const master = parseMaster();
 const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
@@ -43,19 +44,62 @@ test('missing, repeated, reversed, foreign and incomplete access rows are reject
   }
 });
 
-test('reading access summaries sit between the main picture and close-ups and do not leak the ending', () => {
+test('reading introductions follow actual main shots without front-loaded inventories or ending spoilers', () => {
   for (const node of graph.nodes) {
     const text = master.documents.get(node.source);
-    const body = text.split(`<!-- scene-image-${node.id.toLowerCase()}:begin -->`)[1].split('<!-- scene-image-')[0];
-    const heading = ['R33', 'POST'].includes(node.id) ? '**演出銜接：**' : '**出入口：**';
-    assert(body.indexOf(heading) > body.indexOf(`**場景圖：${node.id}-V01**`));
-    assert(body.indexOf(heading) < body.indexOf('**近看、原件與其他畫面：**'));
-    for (const entry of access.get(node.id)) {
-      if (entry.reading) assert(body.includes(`**${entry.label}**：${entry.location} ${entry.state}`), node.id);
-      else assert(!body.includes(entry.location));
-    }
+    const start = text.indexOf(`<a id="node-${node.id.toLowerCase()}-script">`);
+    const entry = text.indexOf(`<a id="node-${node.id.toLowerCase()}-access-script">`);
+    assert(entry > start, node.id);
+    assert(/（靜態畫面|（鏡位切換|〔前置〕/.test(text.slice(start, entry)), node.id);
+    const body = text.slice(entry, text.indexOf(':end -->', entry));
+    assert(body.includes(`[${node.id}-V01]`));
+    for (const stale of ['**出入口：**', '**場景圖：', '**近看、原件與其他畫面：**', `<!-- scene-image-${node.id.toLowerCase()}:begin -->`]) assert(!text.includes(stale), node.id);
     if (node.id === 'P1') assert(!/肉身|R33|終幕銜接/.test(body));
   }
+});
+
+test('all reading picture placements follow actual paragraphs and survive repeat generation', () => {
+  for (const act of ACTS) {
+    const original = master.documents.get(act.path), groups = collection.groups.filter(g => g.act.act === act.act);
+    const children = subscenes.filter(s => s.act.act === act.act), spec = specs.get(act.specPath);
+    const first = placeReadingImages(original, act, groups, children, spec);
+    assert.equal(first.story, original, act.name);
+    assert.equal(placeReadingImages(first.story, act, groups, children, spec).story, first.story);
+    assert.equal(stripReadingFlow(first.story, groups), stripReadingFlow(original, groups));
+    const ids = first.placements.map(p => p.id);
+    assert.equal(new Set(ids).size, ids.length);
+    assert.deepEqual(ids.sort(), groups.flatMap(g => g.rows.filter(r => !r.id.startsWith('T-')).map(r => r.id)).sort());
+    for (const p of first.placements) assert(p.paragraph && !p.paragraph.startsWith('〔玩家〕可自由觀察'), p.id);
+  }
+});
+
+test('missing and ambiguous paragraph targets fail before publishing a reading file', () => {
+  const act = ACTS[0], original = master.documents.get(act.path);
+  const groups = collection.groups.filter(g => g.act.act === 0), children = subscenes.filter(s => s.act.act === 0);
+  for (const text of [original.replace('前景：淺水', '前景：水面'), original.replace('前景：淺水', '前景：淺水\n\n前景：淺水')]) {
+    assert.throws(() => placeReadingImages(text, act, groups, children, specs.get(act.specPath)), /Ambiguous reading placement/);
+  }
+});
+
+test('required events read in play order while optional branches remain optional', () => {
+  const order = (act, values) => {
+    const text = master.documents.get(ACTS[act].path), positions = values.map(v => text.indexOf(v));
+    assert(positions.every((p, i) => p >= 0 && (!i || p > positions[i - 1])), values.join(' -> '));
+  };
+  order(0, ['id="s-0903-3"', 'id="s-0903-4"', 'id="s-0903-9"', 'id="s-0903-5"']);
+  order(0, ['id="s-0903-15"', 'id="s-0903-17"', '將祈願紙與通道用途在筆記中連起', 'id="s-0903-16"']);
+  order(0, ['查看斷梯、壓住出口的混凝土', '[P0-C01]']);
+  order(2, ['id="s-0905-24"', 'id="s-0905-28"', 'id="s-0905-26"', 'id="s-0905-59"', 'id="s-0905-25"', 'id="s-0905-60"', 'id="s-0905-27"']);
+  order(3, ['id="s-0906-58"', 'id="s-0906-60"', 'id="s-0906-59"']);
+  order(3, ['id="s-0906-33"', 'id="subscene-r12-v03-script"']);
+  order(4, ['id="s-0907-34"', '現場門控的授權欄與走廊同框', '[R21-D04]']);
+  order(6, ['id="s-0909-40"', 'id="s-0909-41"', '玩家選擇離開水槽旁，沿固定保養梯下到低位台']);
+  order(6, ['門內橫閂與外側護板', '斜側接景同時保留兩端門框', 'id="subscene-u3-v02-script"']);
+  const act2 = master.documents.get(ACTS[2].path);
+  assert(act2.includes('兩路不要求讀卡、放蛾或讀完小帳才開放'));
+  assert(act2.includes('不要求兩條路依序走完'));
+  assert(master.documents.get(ACTS[4].path).includes('不在上部直接載入 R23'));
+  assert(master.documents.get(ACTS[6].path).includes('選填 H-07 未播放也能前進'));
 });
 
 test('branch, return-only, one-way and ending access remain distinct', () => {

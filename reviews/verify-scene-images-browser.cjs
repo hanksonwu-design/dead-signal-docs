@@ -19,20 +19,30 @@ const targets = [
   ['hiding', '10_製作規格/10-05_製作規格_第四幕.md', 'node-r20-images', 'R20-V03'],
   ['subscene', '09_劇本/09-04_正式劇本_第一幕.md', 'subscene-t-r2-r3-02-script', '次場景 T-R2-R3-02'],
   ['subscene-spec', '10_製作規格/10-02_製作規格_第一幕.md', 'subscene-t-r2-r3-02-spec', '關閉回 T-R2-R3-02'],
-  ['exit-subscene', '09_劇本/09-06_正式劇本_第三幕.md', 'subscene-r12-v03-script', 'R12→R15'],
+  ['exit-subscene', '09_劇本/09-06_正式劇本_第三幕.md', 'subscene-r12-v03-script', '往返 R15 與 R12'],
   ['subscene-inventory', inventoryFile, 'inventory-subscenes', '34 個次場景節點'],
   ['room-order', '10_製作規格/10-02_製作規格_第一幕.md', 'node-r2-spec', '進場與動線'],
   ['passage-order', '10_製作規格/10-02_製作規格_第一幕.md', 'node-r3-exit', 'T-R3-R4'],
-  ['access-reading', '09_劇本/09-04_正式劇本_第一幕.md', 'node-r3-access-script', '出口：洗衣窄巷'],
+  ['access-reading', '09_劇本/09-04_正式劇本_第一幕.md', 'node-r3-access-script', '左近綠磁磚折角'],
   ['access-spec', '10_製作規格/10-04_製作規格_第三幕.md', 'node-r12-access', '後開捷徑：低負荷門扣'],
-  ['access-return', '09_劇本/09-08_正式劇本_第五幕.md', 'node-r26-access-script', '唯一出入口：C-07 厚門'],
+  ['access-return', '09_劇本/09-08_正式劇本_第五幕.md', 'node-r26-access-script', '沒有另一個離場通道'],
+  ['prologue-flow', '09_劇本/09-03_正式劇本_序幕.md', 's-0903-4', 'P0-V01'],
+  ['first-look', '09_劇本/09-03_正式劇本_序幕.md', 's-0903-5', 'P0-C01'],
+  ['association', '09_劇本/09-03_正式劇本_序幕.md', 's-0903-17', '將祈願紙與通道用途在筆記中連起'],
+  ['card-order', '09_劇本/09-05_正式劇本_第二幕.md', 's-0905-59', '紙墊移妥後'],
+  ['first-door', '09_劇本/09-06_正式劇本_第三幕.md', 's-0906-60', '第一次'],
+  ['shortcut-flow', '09_劇本/09-09_正式劇本_第六幕.md', 'subscene-u3-v02-script', '柱後送件廊'],
 ];
 const url = (doc, heading, staticMode = false) => `${base}/${staticMode ? '?static=1' : ''}#${new URLSearchParams({ doc, heading })}`;
 async function ready(page, doc, heading) {
   await page.locator('#readerOverlay:not(.hidden)').waitFor();
   await page.waitForFunction(({ doc, heading }) => {
     const anchor = document.getElementById(heading);
-    return state.selected?.path === doc && anchor && anchor.getBoundingClientRect().top >= 70 && anchor.getBoundingClientRect().top < 155;
+    const panel = document.querySelector('.reader-panel');
+    if (state.selected?.path !== doc || !anchor || !panel) return false;
+    const top = anchor.getBoundingClientRect().top;
+    const atBottom = Math.abs(panel.scrollHeight - panel.clientHeight - panel.scrollTop) < 2;
+    return top >= 70 && (top < 155 || (atBottom && top < innerHeight - 40));
   }, { doc, heading });
 }
 function pass(name) { checks.push(name); console.log(`PASS ${name}`); }
@@ -144,7 +154,7 @@ function pass(name) { checks.push(name); console.log(`PASS ${name}`); }
         const intro = await page.evaluate(() => {
           let el = document.getElementById('node-p1-access-script').nextElementSibling;
           const parts = [];
-          while (el && !el.innerText?.includes('近看、原件與其他畫面')) { parts.push(el.innerText || ''); el = el.nextElementSibling; }
+          while (el && !el.innerText?.startsWith('畫面：')) { parts.push(el.innerText || ''); el = el.nextElementSibling; }
           return parts.join('\n');
         });
         assert(!/肉身|R33|終幕銜接/.test(intro));

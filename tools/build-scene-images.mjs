@@ -4,6 +4,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ACTS } from './screenplay-files.mjs';
 import { ROOT } from './sync-canonical.mjs';
+import { placeReadingImages } from './reading-scene-flow.mjs';
+import { orderImages } from './reorder-production-specs.mjs';
 
 const read = file => readFileSync(path.join(ROOT, 'docs', file), 'utf8').replaceAll('\r\n', '\n');
 const inventory = '08_製作管理/08-13_劇情節點與場景道具總表.md';
@@ -195,7 +197,6 @@ const specLink = (row, from) => {
   const anchor = isSubscene(row) ? subsceneAnchor(row, 'spec') : `node-${row.node.toLowerCase()}-images`;
   return `[${row.id}](${target}#${anchor})`;
 };
-const shortName = row => row.kind === '出口接景' ? row.content.split('：')[0] : row.content;
 
 export function buildSceneImageOutputs(graph, documents) {
   const collection = collectSceneImages(graph, documents);
@@ -209,28 +210,7 @@ export function buildSceneImageOutputs(graph, documents) {
     let spec = documents?.get(act.specPath) ?? read(act.specPath);
     for (const group of collection.groups.filter(g => g.act.act === act.act)) {
       const children = subscenes.filter(s => s.node === group.node);
-      const rows = group.rows.filter(r => !r.id.startsWith('T-') && r.kind !== '出口接景');
-      const main = rows[0];
-      const lines = [`**場景圖：${main.id}** · ${main.content}`, '',
-        `<a id="node-${group.node.toLowerCase()}-access-script"></a>`, '',
-        ['R33', 'POST'].includes(group.node) ? '**演出銜接：**' : '**出入口：**',
-        ...access.get(group.node).filter(row => row.reading).map(row => `- **${row.label}**：${row.location} ${row.state}`),
-        '', '**近看、原件與其他畫面：**'];
-      // Keep only names in the reading edition; states and art instructions remain in the specification.
-      for (let i = 1; i < rows.length; i += 3) {
-        lines.push(`- ${rows.slice(i, i + 3).map(r => `${r.id} ${shortName(r)}`).join('；')}。`);
-      }
-      const exits = children.filter(s => s.kind === '出口接景');
-      if (exits.length) {
-        lines.push('', '**接景次場景：**');
-        for (const child of exits) lines.push('', `<a id="${subsceneAnchor(child, 'script')}"></a>`, '', `- ${specLink(child, act.path)} · ${child.content}`);
-      }
-      lines.push('', `[本場景圖像製作單](../${act.specPath}#node-${group.node.toLowerCase()}-images)`);
-      if (spec.includes(`<a id="node-${group.node.toLowerCase()}-access-layout">`)) {
-        lines.push('', `[出入口配置草圖](../${act.specPath}#node-${group.node.toLowerCase()}-access-layout)`);
-      }
-      const intro = `[製作規格](../${act.specPath}#node-${group.node.toLowerCase()}-spec)`;
-      story = section(story, group.node.toLowerCase(), lines.join('\n'), intro);
+      const main = group.rows[0];
       const slug = group.node.toLowerCase();
       const navLink = `[進場與動線](#node-${slug}-nav)`;
       const accessLink = `[出入口位置](#node-${slug}-access)`;
@@ -279,8 +259,9 @@ export function buildSceneImageOutputs(graph, documents) {
       ]));
     const specIntro = `## ${act.name} · ${act.subtitle}：製作規格`;
     spec = section(spec, `routes-${act.act}`, routeBody, specIntro);
-    outputs.set(act.path, story);
-    outputs.set(act.specPath, spec);
+    const reading = placeReadingImages(story, act, collection.groups.filter(g => g.act.act === act.act), subscenes.filter(s => s.act.act === act.act), spec);
+    outputs.set(act.path, reading.story);
+    outputs.set(act.specPath, orderImages(spec, reading.story));
   }
   const views = collection.rows.filter(r => r.view);
   const details = collection.rows.filter(r => !r.view);

@@ -39,7 +39,7 @@ function storyPosition(row, story) {
   return index >= 0 ? index : Number.MAX_SAFE_INTEGER;
 }
 
-function orderImages(text, story) {
+export function orderImages(text, story) {
   return text.replace(/(<!-- scene-images:[^:]+:begin -->\n)([\s\S]*?)(\n<!-- scene-images:[^:]+:end -->)/g, (_, begin, body, end) => {
     const [heading, rule, base, ...rows] = body.split('\n');
     rows.sort((a, b) => storyPosition(a, story) - storyPosition(b, story));
