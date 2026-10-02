@@ -13,12 +13,19 @@ window.SceneBrowser = (() => {
     if(!r.ok||!f.ok)throw Error('場景或銜接路段資料無法讀取');
     const graph=await r.json(), detail=await f.json();
     if(detail.version!==1||detail.nodes.length!==graph.nodes.length||detail.routes.length!==graph.edges.length||
-      !graph.nodes.every(n=>detail.nodes.some(d=>d.id===n.id))||
-      !graph.edges.every(e=>detail.routes.some(d=>d.id===e.id&&d.from===e.fromId&&d.to===e.toId&&d.back===e.back)))throw Error('場景與銜接資料尚未同步');
+      !graph.nodes.every(n=>detail.nodes.some(d=>d.id===n.id&&d.floor?.label))||
+      !detail.subscenes.every(s=>s.floor?.label&&s.floor?.reverseLabel)||
+      !graph.edges.every(e=>detail.routes.some(d=>d.id===e.id&&d.from===e.fromId&&d.to===e.toId&&d.back===e.back&&d.floor?.label&&d.floor?.reverseLabel)))throw Error('場景與銜接資料尚未同步');
     data=graph;flow=detail;
   }
   const nodeInfo=id=>flow.nodes.find(n=>n.id===id);
   const childInfo=id=>flow.subscenes.find(n=>n.id===id);
+  const floorLabel=(step,returning=false)=>{
+    if(step.image==='R33-V02')return `${nodeInfo('P1').floor.label} · 肉身回返`;
+    const floor=step.type==='subscene'?childInfo(step.id).floor:nodeInfo(step.id).floor;
+    return returning&&floor.reverseLabel?floor.reverseLabel:floor.label;
+  };
+  const floorText=(label,title=label)=>`<em class="scene-floor" title="${esc(title)}">${esc(label)}</em>`;
   function saveRoute(){const hash=new URLSearchParams({scene:selected});if(routeId)hash.set('route',routeId);if(shotId)hash.set('shot',shotId);if(reverse)hash.set('direction','return');history.replaceState(null,'',`#${hash}`);}
   function select(id, follow=false){if(!get(id))return;selected=id;routeId='';shotId='';reverse=false;if(follow)trail=[...(trail.length?trail:[new URLSearchParams(location.hash.slice(1)).get('scene')||'P0']),id].slice(-8);else trail=[];saveRoute();draw();}
   function source(path, heading='', newWindow=false){
@@ -59,9 +66,10 @@ window.SceneBrowser = (() => {
       <div class="scene-route-controls"><label for="sceneRoute">路線</label><select id="sceneRoute">${connections.map(e=>`<option value="${esc(e.id)}" ${e.id===edge.id?'selected':''}>${esc(e.fromId)} ${e.back?'↔':'→'} ${esc(e.toId)} · ${esc(e.kind)}</option>`).join('')}</select>
       <div class="scene-direction" role="group" aria-label="路段方向"><button type="button" data-direction="forward" aria-pressed="${!reverse}">正向</button><button type="button" data-direction="return" aria-pressed="${reverse}" ${!edge.back?'disabled':''} title="${edge.back?'反向排列同一組路段；通行仍依回訪條件':'此連線不提供反向通行'}">回程</button></div></div>
       <p class="scene-route-kind">${esc(edge.kind)} · ${edge.back?'可回訪，依原條件':'單向／條件銜接'} · ${esc(boundary)}</p>
-      <ol class="scene-route-chain">${steps.map((s,i)=>`<li>${i?`<span class="scene-route-arrow" aria-hidden="true">→</span>`:''}<button type="button" class="scene-route-step ${s.type==='subscene'?'secondary':''}" data-shot="${esc(s.id)}" aria-pressed="${s.id===shotId}"><small>${s.type==='subscene'?esc(childInfo(s.id).type):'主場景／演出'}</small><b>${esc(s.id)}</b><span>${esc(shotName(s))}</span><small>${esc(s.image)} · 待製作</small></button></li>`).join('')}</ol>
+      <p class="scene-route-floor"><b>路段樓層</b> ${esc(reverse?route.floor.reverseLabel:route.floor.label)}</p>
+      <ol class="scene-route-chain">${steps.map((s,i)=>`<li>${i?`<span class="scene-route-arrow" aria-hidden="true">→</span>`:''}<button type="button" class="scene-route-step ${s.type==='subscene'?'secondary':''}" data-shot="${esc(s.id)}" aria-pressed="${s.id===shotId}"><small>${s.type==='subscene'?esc(childInfo(s.id).type):'主場景／演出'}</small><b>${esc(s.id)}</b><span>${esc(shotName(s))}</span>${floorText(floorLabel(s,reverse),s.type==='subscene'?'所屬路段的起訖樓層／區段':nodeInfo(s.id).floor.description)}<small>${esc(s.image)} · 待製作</small></button></li>`).join('')}</ol>
       <div class="scene-route-gates"><p><b>通行條件</b> ${esc(edge.gate)}</p><p><b>回訪限制</b> ${esc(edge.returnRule)}</p>${access.map(a=>`<p><b>${esc(a.label)}</b> ${esc(a.location)} ${esc(a.state)}</p>`).join('')}</div>
-      <section class="scene-shot-detail" aria-label="畫面與近看資料"><div><h4>${esc(current.image)} · ${esc(shotName(current))}</h4><p class="scene-asset-status">正式圖：待製作</p><p>${esc(image.content)}</p>
+      <section class="scene-shot-detail" aria-label="畫面與近看資料"><div><h4>${esc(current.image)} · ${esc(shotName(current))}</h4><p class="scene-shot-floor">${child?'路段樓層':'樓層／位置'}：${esc(floorLabel(current,reverse))}</p><p class="scene-asset-status">正式圖：待製作</p><p>${esc(image.content)}</p>
       <div class="scene-source">${sourceButton('圖像製作單',image.spec,image.heading)}${sourceButton('遊戲劇本',child?.source??node.source,child?.heading??node.heading)}${child?sourceButton('次場景規格',child.spec,child.specHeading):''}</div>
       <details class="scene-image-requirements"><summary>畫面狀態與交付</summary><p>${esc(image.requirements)}</p></details>
       <details class="scene-closeups"><summary>物件近看與原件（${(child?.details??owner.details).length}）</summary><ul>${detailRows(child?.details??owner.details)}</ul></details></div>${reference}</section>
@@ -72,7 +80,7 @@ window.SceneBrowser = (() => {
     const previousScroll=root.querySelector('.scene-scroll'),scrollPosition=[previousScroll?.scrollLeft||0,previousScroll?.scrollTop||0];
     if(!data||!flow){root.innerHTML='<p role="alert">節點或銜接資料未載入，請重新載入。</p>';return;}
     const q=options.query.trim().toLowerCase();
-    const visible=data.nodes.filter(n=>(part==='all'||n.part===Number(part))&&(act==='all'||n.act===Number(act))&&(!q||[n.id,n.name,n.goal,...n.quests,...n.tags,...flow.subscenes.filter(s=>s.node===n.id).flatMap(s=>[s.id,s.name])].join(' ').toLowerCase().includes(q)));
+    const visible=data.nodes.filter(n=>(part==='all'||n.part===Number(part))&&(act==='all'||n.act===Number(act))&&(!q||[n.id,n.name,n.goal,nodeInfo(n.id).floor.label,...n.quests,...n.tags,...flow.subscenes.filter(s=>s.node===n.id).flatMap(s=>[s.id,s.name,s.floor.label])].join(' ').toLowerCase().includes(q)));
     if(visible.length&&!visible.some(n=>n.id===selected)){selected=visible[0].id;routeId='';shotId='';reverse=false;}
     const n=get(selected)||data.nodes[0];
     const connections=data.edges.filter(e=>e.fromId===selected||e.toId===selected);
@@ -91,11 +99,13 @@ window.SceneBrowser = (() => {
       ${overview.lanes.map(l=>`<div class="scene-lane" style="top:${l.y}px">${esc(data.acts[l.act])}</div>`).join('')}
       ${overview.nodes.map(node=>{const child=node.type==='subscene',boundary=node.type==='boundary',active=child?node.id===shotId:!boundary&&node.id===selected;
         const label=child?childInfo(node.id).type:boundary?'銜接至其他場景':'主場景';
-        return `<button type="button" class="scene-map-node ${child?'scene-child':boundary?'scene-boundary':'scene-node'} ${active?'selected':''}" ${child?`data-subscene="${esc(node.id)}"`:boundary?`data-follow="${esc(node.id)}"`:`data-node="${esc(node.id)}"`} data-map-key="${esc(node.key)}" style="left:${node.x}px;top:${node.y}px;width:${node.width}px;height:${node.height}px" aria-pressed="${active}" title="${esc(`${label} · ${node.name} · ${node.image}`)}"><small>${label}</small><b>${esc(node.id)}</b><span>${esc(node.name)}</span><small>${child?'正式圖待製作':esc(node.image)}</small></button>`;}).join('')}
+        return `<button type="button" class="scene-map-node ${child?'scene-child':boundary?'scene-boundary':'scene-node'} ${active?'selected':''}" ${child?`data-subscene="${esc(node.id)}"`:boundary?`data-follow="${esc(node.id)}"`:`data-node="${esc(node.id)}"`} data-map-key="${esc(node.key)}" style="left:${node.x}px;top:${node.y}px;width:${node.width}px;height:${node.height}px" aria-pressed="${active}" title="${esc(`${label} · ${node.name} · ${node.image}`)}"><small>${label}</small><b>${esc(node.id)}</b><span>${esc(node.name)}</span>${floorText(floorLabel(node),child?'所屬路段的起訖樓層／區段':nodeInfo(node.id).floor.description)}<small>${child?'正式圖待製作':esc(node.image)}</small></button>`;}).join('')}
       </div></div></div>${!visible.length?'<p role="status">沒有符合條件的場景，請調整搜尋或章節。</p>':''}
       <p class="scene-note">流程連接，非比例地圖。</p>${panel}</div>
       <aside class="scene-detail" aria-label="場景詳細資料" ${visible.length?'':'hidden'}><div class="eyebrow">${esc(data.acts[n.act])} / ${esc(n.id)}</div><h3>${esc(n.name)}</h3><p>${esc(n.goal)}</p>
-      ${activeChild?`<section class="scene-child-summary"><h4>${esc(activeChild.id)} · ${esc(activeChild.name)}</h4><p>${esc(activeChild.type)} · ${esc(activeChild.from)} → ${esc(activeChild.to)}</p><p>${esc(flow.images[activeChild.image].content)}</p><div class="scene-source">${sourceButton('次場景劇本',activeChild.source,activeChild.heading)}${sourceButton('次場景規格',activeChild.spec,activeChild.specHeading)}</div></section>`:''}
+      <p class="scene-location"><b>樓層／區段</b> ${esc(nodeInfo(n.id).floor.label)}</p>
+      <details class="scene-spatial"><summary>空間定位</summary><p>${esc(nodeInfo(n.id).floor.description)}</p>${sourceButton('樓層規格',nodeInfo(n.id).floor.source,nodeInfo(n.id).floor.heading)}</details>
+      ${activeChild?`<section class="scene-child-summary"><h4>${esc(activeChild.id)} · ${esc(activeChild.name)}</h4><p>${esc(activeChild.type)} · ${esc(activeChild.from)} → ${esc(activeChild.to)}</p><p class="scene-child-floor">路段樓層：${esc(reverse?activeChild.floor.reverseLabel:activeChild.floor.label)}</p><p>${esc(flow.images[activeChild.image].content)}</p><div class="scene-source">${sourceButton('次場景劇本',activeChild.source,activeChild.heading)}${sourceButton('次場景規格',activeChild.spec,activeChild.specHeading)}</div></section>`:''}
       ${n.tags.length?`<p class="scene-tags">${n.tags.map(esc).join(' · ')}</p>`:''}
       <div class="scene-source"><button type="button" data-source="${esc(n.source)}" data-heading="${esc(n.heading)}" data-new-window="true" title="在新視窗開啟本場景劇情、台詞與演出" aria-label="遊戲劇本（在新視窗開啟）">遊戲劇本 ↗</button>${n.part===1?`<a class="scene-3d" href="building/#scene=${encodeURIComponent(n.id)}" title="在上部空間模型中查看此房的樓層與通路">3D 空間 ↗</a>`:''}${n.duplicatePack || n.source===n.pack ? '' : `<button type="button" data-source="${esc(n.pack)}" data-heading="${esc(n.packAnchor || n.id)}" data-new-window="true" title="互動 ID、狀態鍵、資產與驗收條件（在新視窗開啟）" aria-label="製作規格（在新視窗開啟）">製作規格 ↗</button>`}</div>
       ${data.phases[n.id]?`<h4>房內進行順序</h4><ol>${data.phases[n.id].map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`:''}

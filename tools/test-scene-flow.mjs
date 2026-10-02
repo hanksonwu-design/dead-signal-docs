@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT, parseMaster } from './sync-canonical.mjs';
 import { buildSceneImageOutputs } from './build-scene-images.mjs';
-import { buildSceneFlowData } from './scene-flow-data.mjs';
+import { buildSceneFlowData, readSceneFloor } from './scene-flow-data.mjs';
 
 const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
 const master = parseMaster();
@@ -29,6 +29,55 @@ test('all original directions and only original routes survive expansion', () =>
     assert.equal(r.steps.at(-1).id, r.to);
     for (const step of r.steps) assert(flow.images[step.image], step.image);
   }
+});
+
+test('every floor label comes from its own canonical spatial table', () => {
+  for (const node of graph.nodes) {
+    const floor = flow.nodes.find(n => n.id === node.id).floor;
+    assert.deepEqual(floor, readSceneFloor(master.documents.get(node.pack), node));
+    assert.equal(floor.source, node.pack);
+    assert.equal(floor.heading, node.spatialHeading);
+    assert(floor.description && floor.label);
+  }
+  const label = id => flow.nodes.find(n => n.id === id).floor.label;
+  assert.equal(label('P0'), 'B3');
+  assert.equal(label('P2'), 'B3–B1 區段');
+  assert.equal(label('R2'), '1F');
+  assert.equal(label('R3'), '2F–7F 區段');
+  assert.equal(label('R17'), '32F');
+  assert.equal(label('R23'), '43F–44F 區段');
+  for (const id of ['U2b', 'U4b', 'U6b']) assert.equal(label(id), '50F 低位夾層');
+});
+
+test('transition floors identify the whole route and reverse with its direction', () => {
+  const floors = route('R2', 'R3').floor;
+  assert.equal(floors.label, '1F → 2F–7F 區段');
+  assert.equal(floors.reverseLabel, '2F–7F 區段 → 1F');
+  for (const child of flow.subscenes) assert.deepEqual(child.floor, flow.routes.find(r => r.id === child.route).floor);
+  assert.equal(route('R3', 'R4').floor.label, '2F–7F 區段');
+  assert.equal(route('U6', 'U6b').floor.label, '50F 區段 → 50F 低位夾層');
+  assert.equal(route('U6', 'U6b').floor.reverseLabel, '50F 低位夾層 → 50F 區段');
+});
+
+test('M1 uses distinct entrance and exit heights, not a new explorable floor', () => {
+  assert.equal(flow.nodes.find(n => n.id === 'M1').floor.label, '43F–44F → 50F');
+  assert.equal(route('R25', 'M1').floor.label, '43F–44F 區段');
+  assert.equal(route('M1', 'R27').floor.label, '50F 區段');
+});
+
+test('ending floors never imply a walk down from 50F to B3', () => {
+  for (const id of ['R33', 'POST']) assert.equal(flow.nodes.find(n => n.id === id).floor.kind, 'ending');
+  assert.equal(route('R33', 'P1').floor.label, 'B3 · 肉身回返');
+  assert.equal(route('R33', 'POST').floor.label, '結局／片尾演出');
+  assert.equal(route('R32', 'R33').floor.kind, 'ending');
+});
+
+test('missing, duplicated or unrecognized floor sources fail rather than guessing', () => {
+  const node = graph.nodes[0], spec = master.documents.get(node.pack);
+  const row = spec.split('\n').find(line => line.startsWith('| 樓層與環境 |'));
+  assert.throws(() => readSceneFloor(spec.replace(row, ''), node), /Floor row/);
+  assert.throws(() => readSceneFloor(spec.replace(row, `${row}\n${row}`), node), /Floor row/);
+  assert.throws(() => readSceneFloor(spec.replace(row, '| 樓層與環境 | 未定 |'), node), /Unrecognized floor/);
 });
 
 test('R2 to R3 shows both existing transitions in playable order', () => {

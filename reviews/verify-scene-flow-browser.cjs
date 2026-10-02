@@ -47,6 +47,10 @@ async function reference(page) {
     assert.equal(await page.locator('.scene-node').count(), 48);
     assert.equal(await page.locator('.scene-child').count(), 34);
     assert.equal(await page.locator('[data-map-route]').count(), 90);
+    for (const node of flow.nodes) assert.equal(await page.locator(`[data-node="${node.id}"] .scene-floor`).innerText(), node.floor.label);
+    for (const child of flow.subscenes) assert.equal(await page.locator(`[data-subscene="${child.id}"] .scene-floor`).innerText(), child.floor.label);
+    assert.match(await page.locator('.scene-location').innerText(), /1F/);
+    pass('all main and transition nodes show source-derived floor labels');
     for (const route of flow.routes) {
       const steps = route.steps.map(s => s.id);
       if (steps.length === 1) steps.push(steps[0]);
@@ -92,6 +96,9 @@ async function reference(page) {
 
     await page.locator('[data-direction="return"]').click();
     assert.deepEqual(await ids(page), ['R3', 'T-R2-R3-02', 'T-R2-R3-01', 'R2']);
+    assert.match(await page.locator('.scene-route-floor').innerText(), /2F–7F 區段 → 1F/);
+    assert.equal(await page.locator('[data-shot="T-R2-R3-01"] .scene-floor').innerText(), '2F–7F 區段 → 1F');
+    assert.match(await page.locator('.scene-child-floor').innerText(), /2F–7F 區段 → 1F/);
     await page.reload();
     await page.locator('#sceneRoute').waitFor();
     assert.deepEqual(await ids(page), ['R3', 'T-R2-R3-02', 'T-R2-R3-01', 'R2']);
@@ -101,6 +108,7 @@ async function reference(page) {
     for (const route of flow.routes) {
       await choose(page, route.from, route.id);
       assert.deepEqual(await ids(page), route.steps.map(s => s.id), route.id);
+      assert((await page.locator('.scene-route-floor').innerText()).includes(route.floor.label), route.id);
       assert.equal(await page.locator('[data-direction="return"]').isDisabled(), !route.back, route.id);
       assert((await page.locator('.scene-route-gates').innerText()).includes(graph.edges.find(e => e.id === route.id).gate), route.id);
       for (const child of flow.subscenes.filter(s => s.route === route.id)) {
@@ -113,6 +121,7 @@ async function reference(page) {
 
     await choose(page, 'R33', 'R33-P1-43', 'P1');
     assert.match(await page.locator('.scene-shot-detail h4').innerText(), /R33-V02.*肉身回返/);
+    assert.equal(await page.locator('[data-shot="P1"] .scene-floor').innerText(), 'B3 · 肉身回返');
     assert(!(await page.locator('.scene-route-panel').innerText()).includes('P1-V01'));
     assert.match(await page.locator('.scene-route-kind').innerText(), /非自由探索/);
     await choose(page, 'R22', 'R22-R23-31');
@@ -149,6 +158,9 @@ async function reference(page) {
     assert.equal(await page.locator('.scene-node.selected').getAttribute('data-node'), 'R3');
     assert.equal(await page.locator('#searchInput').inputValue(), '');
     assert.equal(await page.locator('.scene-node').count(), 48);
+    await page.locator('#searchInput').fill('50F');
+    assert.equal(await page.locator('[data-node="U6b"]').count(), 1);
+    assert.equal(await page.locator('[data-node="P0"]').count(), 0);
     await page.locator('#searchInput').fill('NO_MATCH_FOR_SCENE');
     assert.equal(await page.locator('.scene-node').count(), 0);
     assert.equal(await page.locator('.scene-detail').isVisible(), false);
@@ -180,8 +192,8 @@ async function reference(page) {
       assert.equal(Math.round((await page.locator('.scene-node.selected').boundingBox()).width), 168);
       if (viewport.width < 760) await page.waitForFunction(() => document.querySelector('.sidebar').getBoundingClientRect().right <= 0);
       const clipped = await page.locator('.scene-map-node').evaluateAll(nodes => nodes.filter(el => {
-        const label = el.querySelector('span').getBoundingClientRect(), picture = el.querySelector('small:last-child').getBoundingClientRect();
-        return el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1 || label.bottom > picture.top + 1;
+        const label = el.querySelector('span').getBoundingClientRect(), floor = el.querySelector('.scene-floor').getBoundingClientRect(), picture = el.querySelector('small:last-child').getBoundingClientRect();
+        return el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1 || label.bottom > floor.top + 1 || floor.bottom > picture.top + 1;
       }).map(el => el.dataset.mapKey));
       assert.deepEqual(clipped, [], `${viewport.width}: scene node labels fit`);
       await page.locator('.scene-scroll').evaluate(el => el.scrollIntoView({ block: 'start' }));

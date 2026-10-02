@@ -1,6 +1,6 @@
 /* Authored scene order stays fixed; transition pictures occupy the gaps between rooms. */
 const SceneOverview = (() => {
-  const box = { width: 168, height: 112 }, gap = 40, pitch = box.width + gap;
+  const box = { width: 168, height: 160 }, gap = 40, pitch = box.width + gap;
   function layout(graph, flow, visibleIds) {
     const visible = new Set(visibleIds), rooms = graph.nodes.filter(n => visible.has(n.id));
     const acts = [...new Set(rooms.map(n => n.act))];
