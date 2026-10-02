@@ -62,6 +62,8 @@ function pass(name) { checks.push(name); console.log(`PASS ${name}`); }
         assert(text.includes(expected));
         assert(!text.includes('<!-- scene-image'));
         assert(!text.includes('<!-- scene-access'));
+        assert(!text.includes('<!-- reading-inline:'));
+        if (doc.startsWith('09_')) assert(!/^畫面：/m.test(text));
         assert(!text.includes('<a id='), 'No escaped anchor markup in the reading view');
         if (name === 'subscene') {
           const childHeading = page.locator(`#${heading} + h6`);
@@ -80,6 +82,21 @@ function pass(name) { checks.push(name); console.log(`PASS ${name}`); }
         pass(`${name} shows image IDs with contained layout at ${size.width}px`);
       }
     }
+    const inlineDoc = '09_劇本/09-03_正式劇本_序幕.md';
+    await page.goto(url(inlineDoc, 's-0903-4'));
+    await ready(page, inlineDoc, 's-0903-4');
+    const inlineImage = page.locator('#readerContent a[data-doc-heading="node-p0-images"]').filter({ hasText: /^P0-V01$/ });
+    assert.equal(await inlineImage.count(), 1);
+    assert(await inlineImage.evaluate(el => el.parentElement.tagName === 'P' && el.parentElement.textContent.startsWith('（靜態畫面／全景） P0-V01')));
+    assert.equal(await inlineImage.getAttribute('target'), '_blank');
+    const inlineOpened = context.waitForEvent('page');
+    await inlineImage.click();
+    const inlineSheet = await inlineOpened;
+    await ready(inlineSheet, '10_製作規格/10-01_製作規格_序幕.md', 'node-p0-images');
+    assert.equal(await inlineSheet.evaluate(() => window.opener), null);
+    assert.equal(await page.evaluate(() => state.selected.path), inlineDoc);
+    await inlineSheet.close();
+    pass('P0-V01 sits directly after its shot-size cue and opens the production sheet separately');
     await page.goto(url(targets[0][1], targets[0][2]));
     await ready(page, targets[0][1], targets[0][2]);
     const link = page.locator('#readerContent [data-doc-heading="node-r2-images"]').last();
@@ -152,10 +169,7 @@ function pass(name) { checks.push(name); console.log(`PASS ${name}`); }
       for (const node of nodes) assert.equal(await page.locator(`#readerContent #node-${node.id.toLowerCase()}-access-script`).count(), 1);
       if (act.act === 0) {
         const intro = await page.evaluate(() => {
-          let el = document.getElementById('node-p1-access-script').nextElementSibling;
-          const parts = [];
-          while (el && !el.innerText?.startsWith('畫面：')) { parts.push(el.innerText || ''); el = el.nextElementSibling; }
-          return parts.join('\n');
+          return document.getElementById('node-p1-access-script').nextElementSibling?.innerText || '';
         });
         assert(!/肉身|R33|終幕銜接/.test(intro));
       }

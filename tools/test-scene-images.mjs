@@ -4,7 +4,7 @@ import path from 'node:path';
 import { ACTS, APPENDIX } from './screenplay-files.mjs';
 import { ROOT, parseMaster, rewriteLinks } from './sync-canonical.mjs';
 import { collectSceneImages, collectHotspotImages, bindImageRoutes, collectSubscenes, collectSceneAccess, buildSceneImageOutputs } from './build-scene-images.mjs';
-import { placeReadingImages, stripReadingFlow } from './reading-scene-flow.mjs';
+import { placeReadingImages, stripReadingFlow, stripReadingInline } from './reading-scene-flow.mjs';
 
 const master = parseMaster();
 const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
@@ -52,8 +52,8 @@ test('reading introductions follow actual main shots without front-loaded invent
     assert(entry > start, node.id);
     assert(/（靜態畫面|（鏡位切換|〔前置〕/.test(text.slice(start, entry)), node.id);
     const body = text.slice(entry, text.indexOf(':end -->', entry));
-    assert(body.includes(`[${node.id}-V01]`));
-    for (const stale of ['**出入口：**', '**場景圖：', '**近看、原件與其他畫面：**', `<!-- scene-image-${node.id.toLowerCase()}:begin -->`]) assert(!text.includes(stale), node.id);
+    assert(text.slice(start, entry).includes(`[${node.id}-V01]`));
+    for (const stale of ['**畫面：**', '**出入口：**', '**場景圖：', '**近看、原件與其他畫面：**', `<!-- scene-image-${node.id.toLowerCase()}:begin -->`]) assert(!text.includes(stale), node.id);
     if (node.id === 'P1') assert(!/肉身|R33|終幕銜接/.test(body));
   }
 });
@@ -73,6 +73,29 @@ test('all reading picture placements follow actual paragraphs and survive repeat
   }
 });
 
+test('every former picture-list link is inline with its cue or table header, without duplicate standalone lines', () => {
+  const ids = [];
+  for (const act of ACTS) {
+    const text = master.documents.get(act.path);
+    assert(!/^\*\*畫面：\*\*/m.test(text), act.name);
+    for (const [, key, , line] of text.matchAll(/^<!-- reading-inline:([^:]+):(pad|tight) -->\n([^\n]+)/gm)) {
+      assert.match(line, /^(?:（[^）]+）|〔[^〕]+〕|\| [^|]+) \[/);
+      for (const id of key.split('_')) {
+        const row = collection.rows.find(r => r.id === id);
+        assert(row, id);
+        assert(line.includes(`[${id}](../${act.specPath}#node-${row.node.toLowerCase()}-images)`), id);
+        ids.push(id);
+      }
+    }
+    assert(!stripReadingInline(text).includes('<!-- reading-inline:'));
+  }
+  assert.equal(new Set(ids).size, ids.length);
+  assert.deepEqual(ids.sort(), collection.rows.filter(r => !r.id.startsWith('T-') && r.kind !== '出口接景').map(r => r.id).sort());
+  const prologue = master.documents.get(ACTS[0].path);
+  assert(prologue.includes('（靜態畫面／全景） [P0-V01]'));
+  assert.throws(() => stripReadingInline(prologue.replace('[P0-V01](', '[P0-V99](')), /Missing inline image links/);
+});
+
 test('missing and ambiguous paragraph targets fail before publishing a reading file', () => {
   const act = ACTS[0], original = master.documents.get(act.path);
   const groups = collection.groups.filter(g => g.act.act === 0), children = subscenes.filter(s => s.act.act === 0);
@@ -88,11 +111,11 @@ test('required events read in play order while optional branches remain optional
   };
   order(0, ['id="s-0903-3"', 'id="s-0903-4"', 'id="s-0903-9"', 'id="s-0903-5"']);
   order(0, ['id="s-0903-15"', 'id="s-0903-17"', '將祈願紙與通道用途在筆記中連起', 'id="s-0903-16"']);
-  order(0, ['查看斷梯、壓住出口的混凝土', '[P0-C01]']);
+  order(0, ['id="s-0903-5"', '[P0-C01]', '查看斷梯、壓住出口的混凝土']);
   order(2, ['id="s-0905-24"', 'id="s-0905-28"', 'id="s-0905-26"', 'id="s-0905-59"', 'id="s-0905-25"', 'id="s-0905-60"', 'id="s-0905-27"']);
   order(3, ['id="s-0906-58"', 'id="s-0906-60"', 'id="s-0906-59"']);
   order(3, ['id="s-0906-33"', 'id="subscene-r12-v03-script"']);
-  order(4, ['id="s-0907-34"', '現場門控的授權欄與走廊同框', '[R21-D04]']);
+  order(4, ['id="s-0907-34"', '[R21-D04]', '現場門控的授權欄與走廊同框']);
   order(6, ['id="s-0909-40"', 'id="s-0909-41"', '玩家選擇離開水槽旁，沿固定保養梯下到低位台']);
   order(6, ['門內橫閂與外側護板', '斜側接景同時保留兩端門框', 'id="subscene-u3-v02-script"']);
   const act2 = master.documents.get(ACTS[2].path);

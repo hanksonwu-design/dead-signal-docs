@@ -157,7 +157,27 @@ const tag = id => `<a id="${id}"></a>`;
 const sourceAnchor = row => row.source.match(/#([^)]+)/)[1];
 const marker = (key, body) => `<!-- reading-flow:${key}:begin -->\n${body}\n<!-- reading-flow:${key}:end -->`;
 
+export function stripReadingInline(story) {
+  return story.replace(/^<!-- reading-inline:([^:]+):(pad|tight) -->\n([^\n]+(?:\n[^\n]+)*)/gm, (_, key, spacing, body) => {
+    const links = key.split('_').map(id => `\\[${id}\\]\\(\\.\\./10_製作規格/[^)\\n]+#node-[a-z0-9]+-images\\)`).join(' · ');
+    const pattern = new RegExp(` ${links}${spacing === 'pad' ? ' ' : ''}`, 'g');
+    assert.equal([...body.matchAll(pattern)].length, 1, `Missing inline image links: ${key}`);
+    return body.replace(pattern, '');
+  });
+}
+
+function inlineImages(point, items, link) {
+  const prefix = point.text.match(/^(?:（[^）]+）|〔[^〕]+〕|\| [^|\n]*\S(?=\s*\|))/)?.[0];
+  assert(prefix, `Missing inline image cue: ${items.map(i => i.row.id).join(', ')}`);
+  const rest = point.text.slice(prefix.length);
+  const pad = rest.length > 0 && !/^\s/.test(rest);
+  const key = items.map(i => i.row.id).join('_');
+  return `<!-- reading-inline:${key}:${pad ? 'pad' : 'tight'} -->\n` +
+    prefix + ' ' + items.map(i => link(i.row)).join(' · ') + (pad ? ' ' : '') + rest;
+}
+
 export function stripReadingFlow(story, groups) {
+  story = stripReadingInline(story);
   story = story.replace(/\n\n<!-- reading-flow:([^:]+):begin -->[\s\S]*?<!-- reading-flow:\1:end -->/g, '');
   for (const group of groups) {
     const name = group.node.toLowerCase();
@@ -244,7 +264,6 @@ export function placeReadingImages(original, act, groups, subscenes, spec) {
       if (ENTRY[node]) lines.push('', ENTRY[node]);
     }
     const images = items.filter(i => i.row);
-    if (images.length) lines.push('', `**畫面：** ${images.map(i => link(i.row)).join(' · ')}`);
     if (main && spec.includes(tag(`node-${main.row.node.toLowerCase()}-access-layout`))) {
       lines.push('', `[出入口配置草圖](../${act.specPath}#node-${main.row.node.toLowerCase()}-access-layout)`);
     }
@@ -254,7 +273,11 @@ export function placeReadingImages(original, act, groups, subscenes, spec) {
       lines.push('', `[次場景製作規格](../${act.specPath}#subscene-${child.id.toLowerCase()}-spec)`);
     }
     const key = items.map(i => i.row?.id ?? i.child.id).join('_');
-    result = result.slice(0, position) + '\n\n' + marker(key, lines.join('\n').trim()) + result.slice(position);
+    if (lines.length) result = result.slice(0, position) + '\n\n' + marker(key, lines.join('\n').trim()) + result.slice(position);
+    if (images.length) {
+      const point = images[0].point;
+      result = result.slice(0, point.start) + inlineImages(point, images, link) + result.slice(point.end);
+    }
   }
   return { story: result, placements };
 }

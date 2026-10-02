@@ -5,6 +5,7 @@ import { ROOT, MASTER, parseMaster, buildSync, deriveGraph, canonicalFile } from
 import { ACTS, APPENDIX, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER } from './screenplay-files.mjs';
 import { buildDocuments } from './build-docs.mjs';
 import { validateProductionOrder, reorderProduction } from './reorder-production-specs.mjs';
+import { stripReadingInline } from './reading-scene-flow.mjs';
 
 const read = file => readFileSync(path.join(ROOT, file), 'utf8').replace(/\r\n/g, '\n');
 const master = parseMaster();
@@ -12,7 +13,7 @@ const graph = JSON.parse(read('scene_graph.json'));
 const model = JSON.parse(read('building/scene-data.json'));
 let passed = 0;
 function test(name, fn) { fn(); passed++; console.log(`PASS ${name}`); }
-function block(id) { assert(master.blocks.has(id), id); return master.blocks.get(id); }
+function block(id) { assert(master.blocks.has(id), id); return stripReadingInline(master.blocks.get(id)); }
 
 test('source manifest accounts for every retained block without empty placeholders', () => {
   assert.equal(master.sources.length, 72);
