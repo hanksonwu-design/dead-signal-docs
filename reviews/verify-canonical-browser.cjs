@@ -374,7 +374,7 @@ async function canvasCheck(page, name) {
     assert((await page.locator('.scene-edge').allInnerTexts()).some(t => t.includes('不作出口門檻')));
     assert((await page.locator('.scene-edge').allInnerTexts()).some(t => t.includes('T-R7-R8')));
     const popupPromise = context.waitForEvent('page');
-    await page.locator('.scene-source [data-source]').first().click();
+    await page.locator('.scene-detail .scene-source [data-source]').first().click();
     const popup = await popupPromise;
     await readerReady(popup, 'node-r8-script');
     await popup.close();

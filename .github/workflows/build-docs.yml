@@ -5,7 +5,7 @@ name: Build docs.json
 on:
   push:
     branches: [main]
-    paths: ["docs/**", "tools/*.mjs", "scene_graph.json", "building/scene-data.json", "building/data.js"]
+    paths: ["docs/**", "tools/*.mjs", "scene_graph.json", "scene-flow.json", "scene-browser.js", "scene-browser.css", "app.js", "index.html", "building/scene-data.json", "building/data.js"]
   workflow_dispatch:
 
 permissions:
@@ -29,6 +29,7 @@ jobs:
           node tools/build-scene-images.mjs --check
           node tools/build-story-inventory.mjs --check
           node tools/test-scene-images.mjs
+          node tools/test-scene-flow.mjs
           node tools/test-canonical.mjs
           if node tools/build-docs.mjs --check; then exit 0; fi
           node tools/build-docs.mjs

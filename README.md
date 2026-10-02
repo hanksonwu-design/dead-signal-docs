@@ -13,7 +13,7 @@
 
 ## 修改文件
 
-劇情只修改 `docs/09_劇本/09-03` 至 `09-10` 的對應幕別；逐房技術規格只修改 `docs/10_製作規格/` 的同幕文件；跨幕共用規格只修改 `09-15_正式劇本_共用附錄.md`。`09-14_全劇本與關卡整合稿.md` 沿用舊檔名，但現在只是總目錄，不存放重複正文。50 份分類文件是可重建的查閱副本；舊 06 文件與其餘退役 09 文件只保留轉介入口。不要在副本維護第二套正文，也不要手動改 `docs.json`、`scene_graph.json` 或 `building/data.js` 的衍生欄位。
+劇情只修改 `docs/09_劇本/09-03` 至 `09-10` 的對應幕別；逐房技術規格只修改 `docs/10_製作規格/` 的同幕文件；跨幕共用規格只修改 `09-15_正式劇本_共用附錄.md`。`09-14_全劇本與關卡整合稿.md` 沿用舊檔名，但現在只是總目錄，不存放重複正文。50 份分類文件是可重建的查閱副本；舊 06 文件與其餘退役 09 文件只保留轉介入口。不要在副本維護第二套正文，也不要手動改 `docs.json`、`scene_graph.json`、`scene-flow.json` 或 `building/data.js` 的衍生欄位。
 
 修改主稿後執行：
 
@@ -22,6 +22,7 @@ node tools/build-scene-images.mjs
 node tools/sync-canonical.mjs
 node tools/build-story-inventory.mjs
 node tools/test-scene-images.mjs
+node tools/test-scene-flow.mjs
 node tools/test-canonical.mjs
 node tools/build-docs.mjs
 npm --prefix building run build
@@ -29,7 +30,9 @@ npm --prefix building run build
 
 `node tools/sync-canonical.mjs --check` 檢查分類副本與場景資料；`node tools/build-docs.mjs --check` 檢查網站資料包。縮寫小說仍需人工依主稿複核，不從規格機械拼接。修改前備份為 `archive/2026-09-30-canonical-sync/before-sync.zip`。
 
-場景主圖、過渡鏡位、物件近看及文件頁只在各幕製作規格的 `scene-images` 表格維護；既有 H／B 熱點與圖號的對應在同房 `hotspot-images` 表格維護。新增原熱點時也須補對圖，不能只在正文列出物件。`build-scene-images.mjs` 檢查原熱點覆蓋，並同步劇本內簡明圖單、各幕連線圖號與場景道具總表；加 `--check` 可檢查是否同步。一列可能含多頁或差分，並非已完成的一張圖。48 個宏觀流程節點與 55 條動線不等於全部畫面節點；新畫面不能默默新增關卡門檻。更動原動線時，先同步場景圖，再重建圖單與相關查表。
+場景主圖、過渡鏡位、物件近看及文件頁只在各幕製作規格的 `scene-images` 表格維護；既有 H／B 熱點與圖號的對應在同房 `hotspot-images` 表格維護。新增原熱點時也須補對圖，不能只在正文列出物件。`build-scene-images.mjs` 檢查原熱點覆蓋，並同步劇本段落中的圖號連結、各幕連線圖號、場景道具總表與 `scene-flow.json`；加 `--check` 可檢查是否同步。一列可能含多頁或差分，並非已完成的一張圖。48 個宏觀流程節點與 56 條動線不等於全部畫面節點；新畫面不能默默新增關卡門檻。更動原動線時，先執行 `sync-canonical.mjs` 更新場景圖，再重建圖單與相關查表。
+
+關卡流程保留主節點總覽，並展開「主場景 → 過渡次場景 → 下一場景」的路段圖號、出入口與通行條件。34 個既有次場景分為 13 個可查看過渡與 21 個轉場接景；未配置獨立路段圖的連線沿用兩端畫面，物件近看不增加移動節點。可用 `#scene=R2&route=R2-R3-5&shot=T-R2-R3-01` 直接定位路段與畫面。現有概念圖或出入口草圖僅作參考；440 筆正式畫面規格仍標示待製作，不代表已有遊戲美術素材。
 
 總目錄末尾的 `canonical-source` 註記是同步來源清單，不是可讀正文。刪除匯入區塊時需同步移除對應 `indices`，舊連結可保留定位錨點；不能為湊舊段落數留下空白正文。`tools/screenplay-files.mjs` 定義正式文件清單；同步工具逐份讀取，不產生另一份合併正文。`tools/reorder-screenplay.mjs`、`tools/split-screenplay.mjs` 與 `tools/split-screenplay-specs.mjs` 是一次性遷移工具，已完成遷移的文件不會被再次改寫。網站保留總目錄與舊分幕製作錨點的轉介；一般 Markdown 連結直接指向目前的正式來源。
 
@@ -57,7 +60,7 @@ npm --prefix building run build
 ## 其他資料
 
 - 圖片：`assets/<資料夾>/`，對應 `.md` 裡的相對路徑。
-- 場景節點圖：`scene_graph.json`。
+- 場景節點圖：`scene_graph.json`；銜接次場景、圖號與參考圖：`scene-flow.json`。
 - 上部 3D 空間模型：`building/`，網址 `building/`（可加 `#scene=R17` 直接選房）。
   網站頂部「3D 空間模型」與節點圖上部房間的「3D 空間 ↗」會連過去；模型裡的規格連結會回到本站。
   目前是第二十七版（六段故事通路、十二個過渡鏡位，保留房間／走廊／樓梯編輯），可直接在 3D 畫面中編輯房間、道路與逐層樓梯；編輯結果只存在各自的瀏覽器，要保存或分享請用左上「場景檔案 → 匯出場景檔」，之後再「載入場景檔」接著編輯。

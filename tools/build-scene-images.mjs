@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ACTS } from './screenplay-files.mjs';
 import { ROOT } from './sync-canonical.mjs';
 import { placeReadingImages } from './reading-scene-flow.mjs';
 import { orderImages } from './reorder-production-specs.mjs';
+import { buildSceneFlowData } from './scene-flow-data.mjs';
 
 const read = file => readFileSync(path.join(ROOT, 'docs', file), 'utf8').replaceAll('\r\n', '\n');
 const inventory = '08_製作管理/08-13_劇情節點與場景道具總表.md';
@@ -285,15 +286,21 @@ export function buildSceneImageOutputs(graph, documents) {
       `${edge.fromId}→${edge.toId}`, mode, rows.map(r => specLink(r, inventory)).join(' → '),
     ]));
   outputs.set(inventory, section(read(inventory), 'inventory', summary, '<!-- inventory:summary:end -->'));
-  return { outputs, collection, routes, hotspots, subscenes, access };
+  const flow = buildSceneFlowData(graph, collection, routes, subscenes, access, documents);
+  return { outputs, collection, routes, hotspots, subscenes, access, flow };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
-  const { outputs, collection, routes, hotspots } = buildSceneImageOutputs(graph);
+  const { outputs, collection, routes, hotspots, flow } = buildSceneImageOutputs(graph);
   for (const [file, content] of outputs) {
     if (process.argv.includes('--check')) assert(read(file) === content, `Stale scene images: ${file}`);
     else if (read(file) !== content) writeFileSync(path.join(ROOT, 'docs', file), content);
   }
+  const flowFile = path.join(ROOT, 'scene-flow.json');
+  const flowText = JSON.stringify(flow, null, 2) + '\n';
+  const currentFlow = existsSync(flowFile) ? readFileSync(flowFile, 'utf8').replaceAll('\r\n', '\n') : '';
+  if (process.argv.includes('--check')) assert.equal(currentFlow, flowText, 'Stale scene-flow.json');
+  else if (currentFlow !== flowText) writeFileSync(flowFile, flowText);
   console.log(`Scene images verified: ${collection.groups.length} groups, ${collection.rows.length} work items, ${routes.length} routes, ${hotspots.length} hotspot bindings`);
 }

@@ -125,7 +125,7 @@ function renderCards() {
   grid.classList.toggle("scene-mode", sceneMode);
   if (sceneMode) {
     $("emptyState").classList.add("hidden");
-    window.SceneBrowser.render({root:grid,docs:state.documents.filter(d=>d.folder===state.folder&&!d.archived),allDocs:state.documents,query:state.query,openReader});
+    window.SceneBrowser.render({root:grid,docs:state.documents.filter(d=>d.folder===state.folder&&!d.archived),allDocs:state.documents,query:state.query,openReader,clearQuery:()=>{state.query='';$("searchInput").value='';refreshState();}});
     return;
   }
   grid.classList.toggle("list-view", state.view === "list");
