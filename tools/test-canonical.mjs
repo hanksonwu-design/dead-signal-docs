@@ -592,11 +592,11 @@ test('Ah Xun starts sending on day 0; the historical header arrives on day 5', (
   const dates = block('s-0913-2');
   assert(character.includes('逃亡夜（2025-11-04）切斷監控迴路前，已開始嘗試外傳'));
   assert(character.includes('逃亡後第 5 日（2025-11-09），外部中繼端收到'));
-  assert(character.includes('第六至第七天攻堅'));
+  assert(character.includes('第六至七日設備震損後'));
   assert(character.includes('R11 本輪校驗也不改寫歷史收件日期'));
   assert(!character.includes('已經讓一個**不含姓名的標頭**抵達外部中繼端'));
   assert(dates.includes('| 第 5 日，殘缺標頭到外部 | 2025-11-09 |'));
-  assert(dates.includes('| 第 6–7 日，警方介入 | 2025-11-10 至 2025-11-11 |'));
+  assert(dates.includes('| 第 6–7 日，樓體受創 | 2025-11-10 至 2025-11-11 |'));
   assert(master.text.includes('| **T−2 週 +5 日** | **阿尋傳輸的殘缺標頭抵達外部中繼端**'));
 });
 
@@ -1151,7 +1151,7 @@ test('reading layers retain evidence distinctions without solving or revealing i
 
 test('player-facing feedback and ending choices agree with production wording', () => {
   const language = block('s-0900-4');
-  for (const text of ['緊急接管', '資料指紋不能還原正文', '四項後果', '不等於當下已送達警方']) assert(language.includes(text), text);
+  for (const text of ['緊急接管', '資料指紋不能還原正文', '四項後果', '不等於當下已送達外部收件方']) assert(language.includes(text), text);
   for (const stale of ['校驗完成。外部可讀副本已保存。', '主管路由已恢復',
     '此工作階段不接受本訊號。', '三格關聯自洽。鎖定。', '遠端工作階段已恢復／刪除排程 01:30']) assert(!master.text.includes(stale), stale);
   assert(block('s-0910-29').includes('長按「緊急接管」四秒'));
@@ -1165,6 +1165,43 @@ test('player-facing feedback and ending choices agree with production wording', 
   const novel = read('docs/09_故事劇情/17_縮寫短文.md');
   assert(novel.includes('名單已補齊。已保存可供外部讀取的副本。'));
   assert(!novel.includes('校驗完成。外部可讀副本已保存。'));
+});
+
+test('horror rewrite removes raid exposition but retains confiscation and dated sources', () => {
+  const stories = ACTS.map(act => master.documents.get(act.path)).join('\n');
+  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
+  for (const text of [stories, novel]) {
+    for (const stale of ['攻堅', '警方', '警用', '採證袋', '軍方', '空襲']) assert(!text.includes(stale), stale);
+    assert(text.includes('封存袋'));
+    assert(text.includes('紅霧'));
+    assert(text.includes('白絲'));
+  }
+  assert(master.text.includes('作者背景為軍方空襲'));
+  assert(master.text.includes('兩件事的日期先後不能證明求援引發破壞'));
+  assert(master.text.includes('封門早於震損'));
+  const route = block('s-0906-52');
+  assert(route.includes('RT-1 的可用支路為 L-04，RT-3 的可用支路為 C-02'));
+  assert(route.includes('本輪供電與既有憑據'));
+  const lower = master.documents.get(ACTS[6].specPath);
+  for (const text of ['BREACH_OUTSIDE_IN', 'BOARD_ASSAULT_RECONSTRUCTION',
+    '封焊日期早於本次震損', '時間碼相差 11 秒', '只留維修通話',
+    '舊鍵僅為存檔相容', '目的地空白的園區轉運標籤', 'PULL_BRAKE']) assert(lower.includes(text), text);
+});
+
+test('red mist and silk have scoped artwork layers without changing clues or routes', () => {
+  const contract = block('s-0701-3');
+  for (const id of ['R1-C04', 'R3-C04', 'T-R3-R5-05-C01', 'T-R7-R8-02',
+    'T-R12-R14-03', 'R17-V01', 'U2b-V01', 'R30-V01', 'R32-V01']) assert(contract.includes(id), id);
+  for (const text of ['實景底圖／紅霧遮罩／白絲遮罩', '不構成客觀事件紀錄',
+    '不把霧絲記成 E1-13 的物證', 'R17-D07 保留受創前日期', 'R8 普通飛蛾仍可穿過原窗縫',
+    '一般恐慌值不提前觸發完整翼膜', '不新增通路、鑰匙、倒數、傷害或恐慌扣值',
+    '低動態版本', '不代表背景美術已交付']) assert(contract.includes(text), text);
+  assert(master.documents.get(ACTS[1].specPath).includes('#red-mist-silk-contract'));
+  const art = 'assets/07_視聽與介面/assets/current_design/V27_damage_routes.svg';
+  assert(existsSync(path.join(ROOT, art)));
+  assert(master.text.includes(art));
+  assert(!master.text.includes('current_design/V27.png'));
+  assert(read(art).includes('先封門 → 後受創'));
 });
 
 test('common-rule referrals are not duplicated within a source block', () => {

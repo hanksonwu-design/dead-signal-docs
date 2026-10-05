@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="740" viewBox="0 0 1200 740" role="img" aria-labelledby="title desc">
+  <title id="title">下部：簽名、震損與制動</title>
+  <desc id="desc">非比例流程示意。R29 核對既有簽名；R30 重建先封門、後受創的順序。公共通路斷裂，單人管理維修路徑仍需逐段操作。提交後沉降，手動制動才通往 R31。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#89c8bb" stroke-width="1.4"/></marker>
+    <style>
+      text { font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif; fill: #e7eeec; }
+      .heading { font-size: 23px; font-weight: 700; }
+      .body { font-size: 19px; }
+      .note { font-size: 17px; fill: #acbfbd; }
+      .accent { fill: #efc979; }
+      .line { fill: none; stroke: #89c8bb; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1200" height="740" fill="#101c20"/>
+  <text x="40" y="48" font-size="30" font-weight="700">下部：簽名、震損與制動</text>
+  <text x="40" y="80" class="note">來源與操作流程示意／非比例空間圖</text>
+  <path d="M40 100H1160M600 122V662M40 390H1160" stroke="#40545a" fill="none"/>
+  <g>
+    <text x="40" y="142" class="heading">01　R29：比對既有簽名</text>
+    <rect x="55" y="177" width="204" height="95" rx="4" fill="#1d3035" stroke="#607a7e"/>
+    <rect x="345" y="177" width="204" height="95" rx="4" fill="#1d3035" stroke="#607a7e"/>
+    <text x="76" y="209" class="body">R21 已讀原件</text>
+    <text x="76" y="242" class="note">日期／核可欄／筆跡</text>
+    <text x="366" y="209" class="body">R29 留存範本</text>
+    <text x="366" y="242" class="note">逐欄比對來源</text>
+    <path d="M271 224H330" class="line"/>
+    <text x="55" y="314" class="body">玩家確認自己做過的事與後果。</text>
+    <text x="55" y="348" class="note">再次範本比對屬選填，沿用既有主線門檻。</text>
+  </g>
+  <g>
+    <text x="630" y="142" class="heading">02　R30：兩條通路並不相同</text>
+    <text x="648" y="185" class="body accent">先封門 → 後受創</text>
+    <text x="648" y="222" class="note">公共通路</text>
+    <path d="M648 239H786L801 222M818 255L833 239H960" fill="none" stroke="#d59686" stroke-width="5"/>
+    <path d="M976 222L1002 256M1002 222L976 256" stroke="#d59686" stroke-width="3"/>
+    <text x="1022" y="246" class="note">核心仍封焊</text>
+    <text x="648" y="284" class="note">單人管理維修脊柱</text>
+    <path d="M648 304H779V324H928V304H1100" class="line"/>
+    <text x="648" y="360" class="note">帳號＋覆寫碼＋區域供電＋手動確認</text>
+  </g>
+  <g>
+    <text x="40" y="430" class="heading">03　R30：核對五個來源</text>
+    <text x="55" y="475" class="body">構件快照、封焊與維修單、舊坍塌圖、</text>
+    <text x="55" y="506" class="body">歷史回執與自檢、管理維修圖。</text>
+    <text x="55" y="550" class="note">回執只確認部分標頭曾收件。</text>
+    <text x="55" y="579" class="note">完整求救後來停在本地，受困者下落未明。</text>
+    <text x="55" y="625" class="body accent">提交前，可返回整理已發現的支線。</text>
+  </g>
+  <g>
+    <text x="630" y="430" class="heading">04　R30 → R31：親手固定維修籠</text>
+    <text x="648" y="477" class="body">確認提交</text>
+    <path d="M753 470H799" class="line"/>
+    <text x="817" y="477" class="body">落塵、束帶與推車預警</text>
+    <path d="M985 490V522H669V543" class="line"/>
+    <text x="648" y="579" class="body accent">沉降 → 手動制動 → 維修籠固定</text>
+    <text x="648" y="621" class="note">後梯封閉後，只能沿既定路徑前往 R31。</text>
+    <text x="648" y="651" class="note">沒有反應倒數；保留玩家操作。</text>
+  </g>
+  <text x="40" y="710" class="note">V27　文書只提供可查核的片段；眼前的路是否能走，仍要由玩家親手確認。</text>
+</svg>
