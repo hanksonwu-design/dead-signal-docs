@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readChildFloors } from './scene-floors.mjs';
 
 // Only exceptions need an authored placement. Other images follow their cited story paragraph.
 export const IMAGE_PLACEMENTS = {
@@ -219,6 +220,7 @@ function paragraph(story, anchor, needle, main = false) {
 
 export function placeReadingImages(original, act, groups, subscenes, spec) {
   const story = stripReadingFlow(original, groups), points = new Map(), placements = [];
+  const floors = new Map(groups.flatMap(group => [...readChildFloors(spec, group.node, subscenes.filter(s => s.node === group.node))]));
   const put = (position, item) => { const list = points.get(position) ?? []; list.push(item); points.set(position, list); };
   const mainPoints = new Map();
   const link = row => `[${row.id}](../${act.specPath}#node-${row.node.toLowerCase()}-images)`;
@@ -269,6 +271,7 @@ export function placeReadingImages(original, act, groups, subscenes, spec) {
     }
     for (const { child, title, prose } of items.filter(i => i.child)) {
       lines.push('', tag(`subscene-${child.id.toLowerCase()}-script`), `###### 次場景 ${child.id} · ${title}`);
+      lines.push('', `**樓層：**${floors.get(child.id).label}`);
       if (prose) lines.push('', prose);
       lines.push('', `[次場景製作規格](../${act.specPath}#subscene-${child.id.toLowerCase()}-spec)`);
     }

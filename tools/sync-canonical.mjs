@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
+import { readSceneFloor } from './scene-floors.mjs';
 import { MASTER, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER } from './screenplay-files.mjs';
 export { MASTER } from './screenplay-files.mjs';
 
@@ -255,6 +256,9 @@ export function buildSync() {
   for (const [id, spatial] of Object.entries(model.spatial)) {
     spatial.source = canonicalFile(master, `node-${id.toLowerCase()}-level`);
     spatial.heading = `node-${id.toLowerCase()}-level`;
+    const floor = readSceneFloor(master.documents.get(spatial.source), graph.nodes.find(n => n.id === id));
+    spatial.floor = floor.description;
+    spatial.floorLabel = floor.label;
   }
   model.source = MASTER;
   model.retrieved = '2026-09-30';

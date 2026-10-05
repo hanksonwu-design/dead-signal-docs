@@ -31,7 +31,7 @@ const colors={0:0x7facc5,1:0x98bca6,2:0x80bac4,3:0x93a9c9,4:0xc0a29f};
 const edgeColor=e=>e.kind==='捷徑'?0x91c789:e.kind==='誤導'?0xbd90df:['分岔','子節點'].includes(e.kind)?0x78b9c8:0xeab275;
 const floorName=f=>f<0?`B${Math.abs(f)}`:`${f}F`;
 const sourceUrl=id=>data.spatial[id]?'../#'+new URLSearchParams({doc:data.spatial[id].source,heading:data.spatial[id].heading}):'';
-const roomCaption=n=>n.custom?floorName(n.floor)+' · 自訂房間':floorName(n.floor)+(editor.isChanged(n.id)?' 自訂配置':['R1','R2','R17','P0','P1'].includes(n.id)?'':' 配置提案')+' · 原文 '+groups.find(g=>g.id===n.group).range;
+const roomCaption=n=>n.custom?floorName(n.floor)+' · 自訂房間':editor.isChanged(n.id)?floorName(n.floor)+' 自訂配置 · 正式樓層 '+data.spatial[n.id].floorLabel:data.spatial[n.id].floorLabel+' · 正式樓層';
 data.nodes.forEach(n=>{[n.x,n.z,n.floor,n.w,n.d]=layout[n.id];n.group=groups.find(g=>g.id!=='all'&&n.floor>=g.floors[0]&&n.floor<=g.floors[1]).id;});
 const nodeMap=new Map(data.nodes.map(n=>[n.id,n]));
 // Existing upper/lower boundary is an editable route endpoint, not another room.

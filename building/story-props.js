@@ -71,7 +71,7 @@ export function dressBuilding(building,{THREE,box,material,line,segment,floorY,r
   sign('R19／R20 共用單向玻璃',x,top+.8,z,g);
  }
  const p2=nodeMap.get('P2');
- if(p2){const floor=p2.floor<0?`B${-p2.floor}`:`${p2.floor}F`;sign(`P2 配置 ${floor} · 原文 B3–B1 上行段`,p2.x,roomY(p2)+3.2,p2.z,group(p2.floor,['P2']));}
+ if(p2){const floor=p2.floor<0?`B${-p2.floor}`:`${p2.floor}F`;sign(`P2 配置 ${floor} · 正式定位 B3`,p2.x,roomY(p2)+3.2,p2.z,group(p2.floor,['P2']));}
  const r3=nodeMap.get('R3'),r5=nodeMap.get('R5');
  if(r3&&r5&&r3.floor===r5.floor)sign('同層住宅 → 工坊',(r3.x+r5.x)/2,Math.max(roomY(r3),roomY(r5))+2.8,(r3.z+r5.z)/2,group(r3.floor,['R3','R5']));
  const cap=group(40);box(8,.3,16,1,floorY.get(40)+.2,-7,material(0x394d5c,.25),cap);

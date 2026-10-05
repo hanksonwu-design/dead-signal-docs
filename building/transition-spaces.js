@@ -10,13 +10,13 @@ export const transitions = [
   {label:'B · 視訊區門側',at:.84,kind:'bridge',text:'回看對岸門與橋面，側面為封閉內井；前方隔音布標示 R8。'}]},
  {id:'R11-R12',title:'跨層維修梯',source:'09-05_正式劇本_第二幕.md',seconds:'15–22',views:[
   {label:'A · 產線服務梯',at:.08,kind:'service',text:'離幕確認後沿服務梯上行，保留來路門框與連續扶手。'},
-  {label:'B · 封閉樓段平台',at:.55,floor:24,kind:'sealed',text:'21F–27F 取一處代表平台，側門焊封，上行梯段仍可辨；初始提案放在 24F。'},
+  {label:'B · 封閉樓段平台',at:.55,floor:24,kind:'sealed',text:'正式定位在 24F 維修平台，位於 21F–27F 封閉樓段；側門焊封，上行梯段接 31F。'},
   {label:'C · 技術區門側',at:.94,kind:'service',text:'上端後勤平台接 R12；到達前不提前呈現房內操作或事件。'}]},
  {id:'R13-R14',title:'診所送物廊',source:'09-06_正式劇本_第三幕.md',seconds:'6–10',views:[
   {label:'A · 後簾外短廊',at:.22,kind:'clinic',text:'後簾、舊廚房磚和車輪磨痕連續；搬運字牌與後加管制分層。'},
   {label:'B · 貨梯側平台',at:.8,kind:'lift',text:'沿分流線到既有貨梯平台，保留井道內壁；沒有乘梯或新岔路。'}]},
  {id:'R17-R18',title:'倉儲側平台',source:'09-06_正式劇本_第三幕.md',seconds:'10–16',views:[
-  {label:'A · 倉儲側平台',at:.5,floor:36,kind:'warehouse',text:'33F–40F 取一處平台，封閉門楣與卸貨護角被新飾板覆蓋；初始提案放在 36F。'},
+  {label:'A · 倉儲側平台',at:.5,floor:36,kind:'warehouse',text:'正式定位在 36F 倉儲側平台，位於 33F–40F 封閉樓段；封閉門楣與卸貨護角被新飾板覆蓋，上行梯段接 41F。'},
   {label:'B · 校正區門外',at:.93,kind:'acoustic',text:'沿管線抵達 41F 門外；舊住宅表面逐步被吸音板包覆，入口接 R18 安全站位。'}]}
 ];
 const mix=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t);

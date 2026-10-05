@@ -1,7 +1,7 @@
 // Run against tools/serve.mjs. Pass a package directory containing playwright and sharp.
 const assert = require('node:assert/strict');
 const { createRequire } = require('node:module');
-const { mkdirSync, writeFileSync } = require('node:fs');
+const { mkdirSync, writeFileSync, readFileSync } = require('node:fs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const runtime = createRequire(path.resolve(process.argv[2] || 'node_modules', '__qa__.cjs'));
@@ -395,6 +395,13 @@ async function canvasCheck(page, name) {
     assert.equal(params.get('doc'), ACTS[2].specPath);
     assert.equal(params.get('heading'), 'node-r8-level');
     pass('3D source and node count');
+    const modelFloors = JSON.parse(readFileSync(path.join(__dirname, '../building/scene-data.json'), 'utf8')).spatial;
+    for (const [id, floor] of Object.entries(modelFloors)) {
+      await page.locator('#room-picker').selectOption(id);
+      assert.equal(await page.locator('#room-floor').innerText(), `${floor.floorLabel} · 正式樓層`, id);
+    }
+    await page.locator('#room-picker').selectOption('R8');
+    pass('all 26 default 3D room captions use canonical exact floors');
     await canvasCheck(page, 'model-desktop');
     await page.locator('#room-picker').selectOption('R11');
     assert.equal((await page.locator('#room-id').innerText()).trim(), 'R11');

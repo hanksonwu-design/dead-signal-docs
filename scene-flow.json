@@ -10,13 +10,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "B3 深層暗渠／泵房，同層短通道相接。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "B3 深層暗渠；同層短通道接 P1。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-01_製作規格_序幕.md",
         "heading": "node-p0-level",
-        "kind": "floor",
         "label": "B3",
+        "reverseLabel": "B3",
         "entry": "B3",
-        "exit": "B3"
+        "exit": "B3",
+        "levels": [
+          -3
+        ],
+        "kind": "floor"
       },
       "details": [
         "P0-C01",
@@ -62,13 +66,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "B3 深層暗渠／泵房，同層短通道相接。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "B3 泵房；同層短通道分別接 P0 與 P2。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-01_製作規格_序幕.md",
         "heading": "node-p1-level",
-        "kind": "floor",
         "label": "B3",
+        "reverseLabel": "B3",
         "entry": "B3",
-        "exit": "B3"
+        "exit": "B3",
+        "levels": [
+          -3
+        ],
+        "kind": "floor"
       },
       "details": [
         "P1-C01",
@@ -124,13 +132,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "B3–B1 管線區上行段；到 R1 的轉場需呈現爬梯至 1F。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "B3 地基處理室，與 P1 同層；出口 P2-V02 才經 B2、B1 上行至 1F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-01_製作規格_序幕.md",
         "heading": "node-p2-level",
-        "kind": "band",
-        "label": "B3–B1 區段",
-        "entry": "B3–B1 區段",
-        "exit": "B3–B1 區段"
+        "label": "B3",
+        "reverseLabel": "B3",
+        "entry": "B3",
+        "exit": "B3",
+        "levels": [
+          -3
+        ],
+        "kind": "floor"
       },
       "details": [
         "P2-C01",
@@ -170,13 +182,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "1F 舊室內街／大廳高度帶。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "1F 舊室內街／大廳，接待後室同層。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-02_製作規格_第一幕.md",
         "heading": "node-r1-level",
-        "kind": "floor",
         "label": "1F",
+        "reverseLabel": "1F",
         "entry": "1F",
-        "exit": "1F"
+        "exit": "1F",
+        "levels": [
+          1
+        ],
+        "kind": "floor"
       },
       "details": [
         "R1-C01",
@@ -223,13 +239,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "1F 舊室內街／大廳高度帶。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "1F 接待後室；後廚服務巷同層，紅鐵梯上行才到 2F 住宅側平台及 R3。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-02_製作規格_第一幕.md",
         "heading": "node-r2-level",
-        "kind": "floor",
         "label": "1F",
+        "reverseLabel": "1F",
         "entry": "1F",
-        "exit": "1F"
+        "exit": "1F",
+        "levels": [
+          1
+        ],
+        "kind": "floor"
       },
       "details": [
         "R2-D01",
@@ -275,13 +295,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "2F–7F 住宅／工場高度帶；使用可達殘段及接駁，避開 3F、5F 封閉區。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "2F 住宅／工場；R3、R4、R4b、R5 保持同層相鄰，3F、5F 封閉區不開放。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-02_製作規格_第一幕.md",
         "heading": "node-r3-level",
-        "kind": "band",
-        "label": "2F–7F 區段",
-        "entry": "2F–7F 區段",
-        "exit": "2F–7F 區段"
+        "label": "2F",
+        "reverseLabel": "2F",
+        "entry": "2F",
+        "exit": "2F",
+        "levels": [
+          2
+        ],
+        "kind": "floor"
       },
       "details": [
         "R3-C01",
@@ -324,13 +348,17 @@
       "image": "R4-V01",
       "reference": null,
       "floor": {
-        "description": "2F–7F 住宅／工場高度帶；使用可達殘段及接駁，避開 3F、5F 封閉區。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "2F 住宅／工場；R3、R4、R4b、R5 保持同層相鄰，3F、5F 封閉區不開放。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-02_製作規格_第一幕.md",
         "heading": "node-r4-level",
-        "kind": "band",
-        "label": "2F–7F 區段",
-        "entry": "2F–7F 區段",
-        "exit": "2F–7F 區段"
+        "label": "2F",
+        "reverseLabel": "2F",
+        "entry": "2F",
+        "exit": "2F",
+        "levels": [
+          2
+        ],
+        "kind": "floor"
       },
       "details": [
         "R4-C01",
@@ -368,13 +396,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "2F–7F 住宅／工場高度帶；使用可達殘段及接駁，避開 3F、5F 封閉區。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "2F 住宅／工場；R3、R4、R4b、R5 保持同層相鄰，3F、5F 封閉區不開放。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-02_製作規格_第一幕.md",
         "heading": "node-r4b-level",
-        "kind": "band",
-        "label": "2F–7F 區段",
-        "entry": "2F–7F 區段",
-        "exit": "2F–7F 區段"
+        "label": "2F",
+        "reverseLabel": "2F",
+        "entry": "2F",
+        "exit": "2F",
+        "levels": [
+          2
+        ],
+        "kind": "floor"
       },
       "details": [
         "R4b-C01",
@@ -411,13 +443,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "2F–7F 住宅／工場高度帶；使用可達殘段及接駁，避開 3F、5F 封閉區。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "2F 住宅／工場；R3、R4、R4b、R5 保持同層相鄰，3F、5F 封閉區不開放。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-02_製作規格_第一幕.md",
         "heading": "node-r5-level",
-        "kind": "band",
-        "label": "2F–7F 區段",
-        "entry": "2F–7F 區段",
-        "exit": "2F–7F 區段"
+        "label": "2F",
+        "reverseLabel": "2F",
+        "entry": "2F",
+        "exit": "2F",
+        "levels": [
+          2
+        ],
+        "kind": "floor"
       },
       "details": [
         "R5-C03",
@@ -456,13 +492,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "15F–20F 產線高度帶；量體間可有門檻與半層錯位。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "15F 產線；量體間可有門檻與短台階；R10、R11 另位於本層上半層平台。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-03_製作規格_第二幕.md",
         "heading": "node-r6-level",
-        "kind": "band",
-        "label": "15F–20F 區段",
-        "entry": "15F–20F 區段",
-        "exit": "15F–20F 區段"
+        "label": "15F",
+        "reverseLabel": "15F",
+        "entry": "15F",
+        "exit": "15F",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "details": [
         "R6-D01",
@@ -501,13 +541,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "15F–20F 產線高度帶；量體間可有門檻與半層錯位。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "15F 產線；量體間可有門檻與短台階；R10、R11 另位於本層上半層平台。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-03_製作規格_第二幕.md",
         "heading": "node-r7-level",
-        "kind": "band",
-        "label": "15F–20F 區段",
-        "entry": "15F–20F 區段",
-        "exit": "15F–20F 區段"
+        "label": "15F",
+        "reverseLabel": "15F",
+        "entry": "15F",
+        "exit": "15F",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "details": [
         "R7-D01",
@@ -548,13 +592,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "15F–20F 產線高度帶；量體間可有門檻與半層錯位。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "15F 產線；量體間可有門檻與短台階；R10、R11 另位於本層上半層平台。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-03_製作規格_第二幕.md",
         "heading": "node-r8-level",
-        "kind": "band",
-        "label": "15F–20F 區段",
-        "entry": "15F–20F 區段",
-        "exit": "15F–20F 區段"
+        "label": "15F",
+        "reverseLabel": "15F",
+        "entry": "15F",
+        "exit": "15F",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "details": [
         "R8-C04",
@@ -605,13 +653,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "15F–20F 產線高度帶；量體間可有門檻與半層錯位。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "15F 產線；量體間可有門檻與短台階；R10、R11 另位於本層上半層平台。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-03_製作規格_第二幕.md",
         "heading": "node-r9-level",
-        "kind": "band",
-        "label": "15F–20F 區段",
-        "entry": "15F–20F 區段",
-        "exit": "15F–20F 區段"
+        "label": "15F",
+        "reverseLabel": "15F",
+        "entry": "15F",
+        "exit": "15F",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "details": [
         "R9-C01",
@@ -657,13 +709,17 @@
       "image": "R10-V01",
       "reference": null,
       "floor": {
-        "description": "15F–20F 產線高度帶；量體間可有門檻與半層錯位。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "15F 上半層平台；R11 與本平台同高，R8 側道以短梯上行，不另算成 16F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-03_製作規格_第二幕.md",
         "heading": "node-r10-level",
-        "kind": "band",
-        "label": "15F–20F 區段",
-        "entry": "15F–20F 區段",
-        "exit": "15F–20F 區段"
+        "label": "15F 上半層平台",
+        "reverseLabel": "15F 上半層平台",
+        "entry": "15F 上半層平台",
+        "exit": "15F 上半層平台",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "details": [
         "R10-C01",
@@ -701,13 +757,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "15F–20F 產線高度帶；量體間可有門檻與半層錯位。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "15F 上半層平台；R9 短梯與 R10 側門分別抵達，服務梯由此經 24F 中繼平台到 31F 的 R12。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-03_製作規格_第二幕.md",
         "heading": "node-r11-level",
-        "kind": "band",
-        "label": "15F–20F 區段",
-        "entry": "15F–20F 區段",
-        "exit": "15F–20F 區段"
+        "label": "15F 上半層平台",
+        "reverseLabel": "15F 上半層平台",
+        "entry": "15F 上半層平台",
+        "exit": "15F 上半層平台",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "details": [
         "R11-C01",
@@ -758,13 +818,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "28F–31F 技術與後勤高度帶；短梯與接駁標示局部高差。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "31F 技術與後勤；短梯與接駁只銜接局部地坪高差，R16 出口才上行至 32F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-04_製作規格_第三幕.md",
         "heading": "node-r12-level",
-        "kind": "band",
-        "label": "28F–31F 區段",
-        "entry": "28F–31F 區段",
-        "exit": "28F–31F 區段"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "details": [
         "R12-C03",
@@ -822,13 +886,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "28F–31F 技術與後勤高度帶；短梯與接駁標示局部高差。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "31F 技術與後勤；短梯與接駁只銜接局部地坪高差，R16 出口才上行至 32F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-04_製作規格_第三幕.md",
         "heading": "node-r13-level",
-        "kind": "band",
-        "label": "28F–31F 區段",
-        "entry": "28F–31F 區段",
-        "exit": "28F–31F 區段"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "details": [
         "R13-C01",
@@ -876,13 +944,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "28F–31F 技術與後勤高度帶；短梯與接駁標示局部高差。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "31F 技術與後勤；短梯與接駁只銜接局部地坪高差，R16 出口才上行至 32F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-04_製作規格_第三幕.md",
         "heading": "node-r14-level",
-        "kind": "band",
-        "label": "28F–31F 區段",
-        "entry": "28F–31F 區段",
-        "exit": "28F–31F 區段"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "details": [
         "R14-C01",
@@ -945,13 +1017,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "28F–31F 技術與後勤高度帶；短梯與接駁標示局部高差。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "31F 技術與後勤；短梯與接駁只銜接局部地坪高差，R16 出口才上行至 32F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-04_製作規格_第三幕.md",
         "heading": "node-r15-level",
-        "kind": "band",
-        "label": "28F–31F 區段",
-        "entry": "28F–31F 區段",
-        "exit": "28F–31F 區段"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "details": [
         "R15-D01",
@@ -1008,13 +1084,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "28F–31F 技術與後勤高度帶；短梯與接駁標示局部高差。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "31F 技術與後勤；短梯與接駁只銜接局部地坪高差，R16 出口才上行至 32F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-04_製作規格_第三幕.md",
         "heading": "node-r16-level",
-        "kind": "band",
-        "label": "28F–31F 區段",
-        "entry": "28F–31F 區段",
-        "exit": "28F–31F 區段"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "details": [
         "R16-D01",
@@ -1055,13 +1135,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "32F 管理辦公區。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "32F 管理辦公區；假路下返 31F 的 R14，正確維修梯經 36F 倉儲側平台上行至 41F 的 R18。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-04_製作規格_第三幕.md",
         "heading": "node-r17-level",
-        "kind": "floor",
         "label": "32F",
+        "reverseLabel": "32F",
         "entry": "32F",
-        "exit": "32F"
+        "exit": "32F",
+        "levels": [
+          32
+        ],
+        "kind": "floor"
       },
       "details": [
         "R17-C01",
@@ -1122,13 +1206,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "41F–42F 校正前段；R22 避梁局部下折後沿同一梯井上行至 43F 入口。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "41F 校正區；R18–R21 同層，玻璃後觀察側與辦公室可局部墊高；R22 另在 42F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-05_製作規格_第四幕.md",
         "heading": "node-r18-level",
-        "kind": "band",
-        "label": "41F–42F 區段",
-        "entry": "41F–42F 區段",
-        "exit": "41F–42F 區段"
+        "label": "41F",
+        "reverseLabel": "41F",
+        "entry": "41F",
+        "exit": "41F",
+        "levels": [
+          41
+        ],
+        "kind": "floor"
       },
       "details": [
         "R18-C01",
@@ -1159,13 +1247,17 @@
       "image": "R19-V01",
       "reference": null,
       "floor": {
-        "description": "41F–42F 校正前段；R22 避梁局部下折後沿同一梯井上行至 43F 入口。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "41F 校正區；R18–R21 同層，玻璃後觀察側與辦公室可局部墊高；R22 另在 42F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-05_製作規格_第四幕.md",
         "heading": "node-r19-level",
-        "kind": "band",
-        "label": "41F–42F 區段",
-        "entry": "41F–42F 區段",
-        "exit": "41F–42F 區段"
+        "label": "41F",
+        "reverseLabel": "41F",
+        "entry": "41F",
+        "exit": "41F",
+        "levels": [
+          41
+        ],
+        "kind": "floor"
       },
       "details": [
         "R19-C01",
@@ -1206,13 +1298,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "41F–42F 校正前段；R22 避梁局部下折後沿同一梯井上行至 43F 入口。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "41F 校正區；R18–R21 同層，玻璃後觀察側與辦公室可局部墊高；R22 另在 42F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-05_製作規格_第四幕.md",
         "heading": "node-r20-level",
-        "kind": "band",
-        "label": "41F–42F 區段",
-        "entry": "41F–42F 區段",
-        "exit": "41F–42F 區段"
+        "label": "41F",
+        "reverseLabel": "41F",
+        "entry": "41F",
+        "exit": "41F",
+        "levels": [
+          41
+        ],
+        "kind": "floor"
       },
       "details": [
         "R20-C01",
@@ -1246,13 +1342,17 @@
       "image": "R21-V01",
       "reference": null,
       "floor": {
-        "description": "41F–42F 校正前段；R22 避梁局部下折後沿同一梯井上行至 43F 入口。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "41F 紀律辦公室；玻璃後工作走道與 R20 同層，原釋放口的鋼梯上行至 42F 的 R22。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-05_製作規格_第四幕.md",
         "heading": "node-r21-level",
-        "kind": "band",
-        "label": "41F–42F 區段",
-        "entry": "41F–42F 區段",
-        "exit": "41F–42F 區段"
+        "label": "41F",
+        "reverseLabel": "41F",
+        "entry": "41F",
+        "exit": "41F",
+        "levels": [
+          41
+        ],
+        "kind": "floor"
       },
       "details": [
         "R21-D01",
@@ -1290,13 +1390,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "41F–42F 校正前段；R22 避梁局部下折後沿同一梯井上行至 43F 入口。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "42F 釋放接點；先局部下折避梁，再沿同一梯井上行至 43F 的 R23，不返回 41F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-05_製作規格_第四幕.md",
         "heading": "node-r22-level",
-        "kind": "band",
-        "label": "41F–42F 區段",
-        "entry": "41F–42F 區段",
-        "exit": "41F–42F 區段"
+        "label": "42F",
+        "reverseLabel": "42F",
+        "entry": "42F",
+        "exit": "42F",
+        "levels": [
+          42
+        ],
+        "kind": "floor"
       },
       "details": [
         "R22-C01",
@@ -1330,13 +1434,17 @@
       "image": "R23-V01",
       "reference": null,
       "floor": {
-        "description": "43F–44F 校正深層；R25 管理門為通往上層脊柱的實際入口。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "43F 深層檔案室；原 42F 梯段在此銜接，同層架道接 R24。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-06_製作規格_第五幕.md",
         "heading": "node-r23-level",
-        "kind": "band",
-        "label": "43F–44F 區段",
-        "entry": "43F–44F 區段",
-        "exit": "43F–44F 區段"
+        "label": "43F",
+        "reverseLabel": "43F",
+        "entry": "43F",
+        "exit": "43F",
+        "levels": [
+          43
+        ],
+        "kind": "floor"
       },
       "details": [
         "R23-C03",
@@ -1375,13 +1483,17 @@
       "image": "R24-V01",
       "reference": null,
       "floor": {
-        "description": "43F–44F 校正深層；R25 管理門為通往上層脊柱的實際入口。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "43F 鏡像檔案間；飯廳服務轉角接原梯井，由 43F 上行到 44F 的 R25。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-06_製作規格_第五幕.md",
         "heading": "node-r24-level",
-        "kind": "band",
-        "label": "43F–44F 區段",
-        "entry": "43F–44F 區段",
-        "exit": "43F–44F 區段"
+        "label": "43F",
+        "reverseLabel": "43F",
+        "entry": "43F",
+        "exit": "43F",
+        "levels": [
+          43
+        ],
+        "kind": "floor"
       },
       "details": [
         "R24-D01",
@@ -1405,7 +1517,7 @@
           "route": "R24↔R25",
           "label": "出口：飯廳服務口",
           "location": "封死傳菜窗旁的可走門口，磁磚腰線指向收碗槽轉角。",
-          "state": "第四層三項證據鎖定後，經飯廳服務轉角到 R25，可返回；走門口，不鑽封窗。",
+          "state": "第四層三項證據鎖定後，經飯廳服務轉角由 43F 上行至 44F 的 R25，可循原梯返回；走門口，不鑽封窗。",
           "reading": true,
           "edge": "R24-R25-33"
         }
@@ -1420,13 +1532,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "43F–44F 校正深層；R25 管理門為通往上層脊柱的實際入口。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "44F 逃跑控制室；飯廳服務梯下接 43F 的 R24，同層側廊厚門接 R26；管理門為 M1 脊柱入口。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-06_製作規格_第五幕.md",
         "heading": "node-r25-level",
-        "kind": "band",
-        "label": "43F–44F 區段",
-        "entry": "43F–44F 區段",
-        "exit": "43F–44F 區段"
+        "label": "44F",
+        "reverseLabel": "44F",
+        "entry": "44F",
+        "exit": "44F",
+        "levels": [
+          44
+        ],
+        "kind": "floor"
       },
       "details": [
         "R25-D01",
@@ -1475,13 +1591,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "43F–44F 校正深層；R25 管理門為通往上層脊柱的實際入口。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "44F C-07 校正室；同層側廊厚門接 R25，處置後循原門返回，不直接進入 M1。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-06_製作規格_第五幕.md",
         "heading": "node-r26-level",
-        "kind": "band",
-        "label": "43F–44F 區段",
-        "entry": "43F–44F 區段",
-        "exit": "43F–44F 區段"
+        "label": "44F",
+        "reverseLabel": "44F",
+        "entry": "44F",
+        "exit": "44F",
+        "levels": [
+          44
+        ],
+        "kind": "floor"
       },
       "details": [
         "R26-F01",
@@ -1515,13 +1635,18 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "由 43F–44F 管理門上行，沿 45F–49F 封閉層外緣至 50F；全程在樓體包覆內。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "由 44F 的 R25 管理門上行，沿 45F–49F 封閉層外緣至 50F 的 R27；全程在樓體包覆內，封閉樓層側門不開放探索。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-m1-level",
-        "kind": "passage",
-        "label": "43F–44F → 50F",
-        "entry": "43F–44F 區段",
-        "exit": "50F 區段"
+        "label": "44F → 50F",
+        "reverseLabel": "50F → 44F",
+        "entry": "44F",
+        "exit": "50F",
+        "levels": [
+          44,
+          50
+        ],
+        "kind": "passage"
       },
       "details": [
         "M1-C01",
@@ -1556,13 +1681,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-r27-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "R27-C01",
@@ -1599,13 +1728,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-u1-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "U1-C01",
@@ -1646,13 +1779,17 @@
       "image": "U2-V01",
       "reference": null,
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-u2-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "U2-C01",
@@ -1687,13 +1824,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 橋下夾層；由 U2 固定側階下到凹位，收架後沿側階上回原橋面往 U3，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-u2b-level",
-        "kind": "low",
-        "label": "50F 低位夾層",
-        "entry": "50F 低位夾層",
-        "exit": "50F 低位夾層"
+        "label": "50F 橋下夾層",
+        "reverseLabel": "50F 橋下夾層",
+        "entry": "50F 橋下夾層",
+        "exit": "50F 橋下夾層",
+        "levels": [
+          50
+        ],
+        "kind": "low"
       },
       "details": [
         "U2b-C01",
@@ -1727,13 +1868,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-u3-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "U3-C01",
@@ -1775,13 +1920,17 @@
       "image": "R28-V01",
       "reference": null,
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-r28-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "R28-D01",
@@ -1819,13 +1968,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-r29-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "R29-D01",
@@ -1862,13 +2015,17 @@
       "image": "U4-V01",
       "reference": null,
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-u4-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "U4-C01",
@@ -1908,13 +2065,17 @@
       "image": "U4b-V01",
       "reference": null,
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 檢修蓋下夾層；由 U4 掀蓋踏入低位服務道，解除內銷後接 U5，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-u4b-level",
-        "kind": "low",
-        "label": "50F 低位夾層",
-        "entry": "50F 低位夾層",
-        "exit": "50F 低位夾層"
+        "label": "50F 檢修蓋下夾層",
+        "reverseLabel": "50F 檢修蓋下夾層",
+        "entry": "50F 檢修蓋下夾層",
+        "exit": "50F 檢修蓋下夾層",
+        "levels": [
+          50
+        ],
+        "kind": "low"
       },
       "details": [
         "U4b-C01",
@@ -1944,13 +2105,17 @@
       "image": "U5-V01",
       "reference": null,
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-u5-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "U5-C01",
@@ -1992,13 +2157,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-u6-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "U6-C01",
@@ -2034,13 +2203,17 @@
         "kind": "配置提案，非遊戲背景"
       },
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 水箱下夾層；由 U6 固定保養梯下到踏板維修端，扣栓後沿服務踏面接 R30，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-u6b-level",
-        "kind": "low",
-        "label": "50F 低位夾層",
-        "entry": "50F 低位夾層",
-        "exit": "50F 低位夾層"
+        "label": "50F 水箱下夾層",
+        "reverseLabel": "50F 水箱下夾層",
+        "entry": "50F 水箱下夾層",
+        "exit": "50F 水箱下夾層",
+        "levels": [
+          50
+        ],
+        "kind": "low"
       },
       "details": [
         "U6b-C01",
@@ -2070,13 +2243,17 @@
       "image": "R30-V01",
       "reference": null,
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-r30-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "R30-D01",
@@ -2127,13 +2304,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
         "heading": "node-r31-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "R31-D01",
@@ -2175,13 +2356,17 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "50F 高度帶與相鄰量體夾層；U2b／U4b／U6b 是相鄰低位操作鏡位，不另進封閉樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "50F 主樓層與相鄰量體同層空間；門檻、橋面與地坪高差沿本房構圖，低位操作鏡位另標所屬夾層，不進 49F。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-08_製作規格_終幕.md",
         "heading": "node-r32-level",
-        "kind": "band",
-        "label": "50F 區段",
-        "entry": "50F 區段",
-        "exit": "50F 區段"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "details": [
         "R32-D01",
@@ -2242,13 +2427,15 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "分支演出節點；沿用 50F／P1 或片尾畫面，不配置新的實體樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "分支演出節點；D 留在 50F 的 R32，A／B／C／E 以終幕鏡位回接 B3 的 P1 肉身，後日照護為時間轉場，不是沿樓梯下樓，也不重新開放地下探索。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-08_製作規格_終幕.md",
         "heading": "node-r33-level",
         "kind": "ending",
-        "label": "分支演出（非單一樓層）",
+        "label": "50F／B3（分支演出）",
+        "reverseLabel": "50F／B3（分支演出）",
         "entry": null,
-        "exit": null
+        "exit": null,
+        "levels": []
       },
       "details": [],
       "access": [
@@ -2287,13 +2474,15 @@
         "kind": "概念參考，非正式素材"
       },
       "floor": {
-        "description": "分支演出節點；沿用 50F／P1 或片尾畫面，不配置新的實體樓層。既有空間材質、光源與生活物件沿本房原文。",
+        "description": "分支演出節點；名冊、字幕與條件式康彩蛋均為片尾，不配置新的實體樓層。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-08_製作規格_終幕.md",
         "heading": "node-post-level",
         "kind": "ending",
         "label": "片尾演出（無固定樓層）",
+        "reverseLabel": "片尾演出（無固定樓層）",
         "entry": null,
-        "exit": null
+        "exit": null,
+        "levels": []
       },
       "details": [
         "POST-D01"
@@ -2327,9 +2516,15 @@
       "name": "上行梯段",
       "type": "轉場接景",
       "floor": {
-        "label": "B3–B1 區段 → 1F",
-        "reverseLabel": "1F → B3–B1 區段",
-        "kind": "route"
+        "label": "B3 → 1F",
+        "reverseLabel": "1F → B3",
+        "entry": "B3",
+        "exit": "1F",
+        "levels": [
+          -3,
+          1
+        ],
+        "kind": "passage"
       },
       "from": "P2-V01",
       "to": "R1-V01",
@@ -2347,9 +2542,14 @@
       "name": "後廚服務巷",
       "type": "可查看過渡",
       "floor": {
-        "label": "1F → 2F–7F 區段",
-        "reverseLabel": "2F–7F 區段 → 1F",
-        "kind": "route"
+        "label": "1F",
+        "reverseLabel": "1F",
+        "entry": "1F",
+        "exit": "1F",
+        "levels": [
+          1
+        ],
+        "kind": "floor"
       },
       "from": "R2-V01",
       "to": "T-R2-R3-02",
@@ -2369,9 +2569,14 @@
       "name": "住宅側平台",
       "type": "可查看過渡",
       "floor": {
-        "label": "1F → 2F–7F 區段",
-        "reverseLabel": "2F–7F 區段 → 1F",
-        "kind": "route"
+        "label": "2F",
+        "reverseLabel": "2F",
+        "entry": "2F",
+        "exit": "2F",
+        "levels": [
+          2
+        ],
+        "kind": "floor"
       },
       "from": "T-R2-R3-01",
       "to": "R3-V01",
@@ -2391,9 +2596,14 @@
       "name": "洗衣窄巷",
       "type": "可查看過渡",
       "floor": {
-        "label": "2F–7F 區段",
-        "reverseLabel": "2F–7F 區段",
-        "kind": "route"
+        "label": "2F",
+        "reverseLabel": "2F",
+        "entry": "2F",
+        "exit": "2F",
+        "levels": [
+          2
+        ],
+        "kind": "floor"
       },
       "from": "R3-V01",
       "to": "R4-V01",
@@ -2413,9 +2623,15 @@
       "name": "往產線的封閉梯段",
       "type": "轉場接景",
       "floor": {
-        "label": "2F–7F 區段 → 15F–20F 區段",
-        "reverseLabel": "15F–20F 區段 → 2F–7F 區段",
-        "kind": "route"
+        "label": "2F → 15F",
+        "reverseLabel": "15F → 2F",
+        "entry": "2F",
+        "exit": "15F",
+        "levels": [
+          2,
+          15
+        ],
+        "kind": "passage"
       },
       "from": "R5-V01",
       "to": "R6-V01",
@@ -2433,9 +2649,14 @@
       "name": "住宅長巷",
       "type": "轉場接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
-        "kind": "route"
+        "label": "15F",
+        "reverseLabel": "15F",
+        "entry": "15F",
+        "exit": "15F",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "from": "R6-V01",
       "to": "R7-V01",
@@ -2453,9 +2674,14 @@
       "name": "鋁門側橋頭",
       "type": "可查看過渡",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
-        "kind": "route"
+        "label": "15F",
+        "reverseLabel": "15F",
+        "entry": "15F",
+        "exit": "15F",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "from": "R7-V01",
       "to": "T-R7-R8-02",
@@ -2475,9 +2701,14 @@
       "name": "視訊門側橋頭",
       "type": "可查看過渡",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
-        "kind": "route"
+        "label": "15F",
+        "reverseLabel": "15F",
+        "entry": "15F",
+        "exit": "15F",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "from": "T-R7-R8-01",
       "to": "R8-V01",
@@ -2497,9 +2728,14 @@
       "name": "短租房門（前往 R9 的分岔）",
       "type": "轉場接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
-        "kind": "route"
+        "label": "15F",
+        "reverseLabel": "15F",
+        "entry": "15F",
+        "exit": "15F",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "from": "R8-V01",
       "to": "R9-V01",
@@ -2517,9 +2753,15 @@
       "name": "內井側道（前往 R10 的分岔）",
       "type": "轉場接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
-        "kind": "route"
+        "label": "15F → 15F 上半層平台",
+        "reverseLabel": "15F 上半層平台 → 15F",
+        "entry": "15F",
+        "exit": "15F 上半層平台",
+        "levels": [
+          15,
+          15
+        ],
+        "kind": "passage"
       },
       "from": "R8-V01",
       "to": "R10-V01",
@@ -2537,9 +2779,15 @@
       "name": "隔板後的長巷",
       "type": "轉場接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
-        "kind": "route"
+        "label": "15F → 15F 上半層平台",
+        "reverseLabel": "15F 上半層平台 → 15F",
+        "entry": "15F",
+        "exit": "15F 上半層平台",
+        "levels": [
+          15,
+          15
+        ],
+        "kind": "passage"
       },
       "from": "R9-V01",
       "to": "R11-V01",
@@ -2557,9 +2805,14 @@
       "name": "平台側門",
       "type": "轉場接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
-        "kind": "route"
+        "label": "15F 上半層平台",
+        "reverseLabel": "15F 上半層平台",
+        "entry": "15F 上半層平台",
+        "exit": "15F 上半層平台",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "from": "R10-V01",
       "to": "R11-V01",
@@ -2577,9 +2830,14 @@
       "name": "產線服務梯下段",
       "type": "可查看過渡",
       "floor": {
-        "label": "15F–20F 區段 → 28F–31F 區段",
-        "reverseLabel": "28F–31F 區段 → 15F–20F 區段",
-        "kind": "route"
+        "label": "15F 上半層平台",
+        "reverseLabel": "15F 上半層平台",
+        "entry": "15F 上半層平台",
+        "exit": "15F 上半層平台",
+        "levels": [
+          15
+        ],
+        "kind": "floor"
       },
       "from": "R11-V01",
       "to": "T-R11-R12-02",
@@ -2596,12 +2854,17 @@
       "node": "R11",
       "route": "R11-R12-16",
       "image": "T-R11-R12-02",
-      "name": "21F–27F 中繼平台",
+      "name": "24F 中繼平台",
       "type": "可查看過渡",
       "floor": {
-        "label": "15F–20F 區段 → 28F–31F 區段",
-        "reverseLabel": "28F–31F 區段 → 15F–20F 區段",
-        "kind": "route"
+        "label": "24F",
+        "reverseLabel": "24F",
+        "entry": "24F",
+        "exit": "24F",
+        "levels": [
+          24
+        ],
+        "kind": "floor"
       },
       "from": "T-R11-R12-01",
       "to": "T-R11-R12-03",
@@ -2621,9 +2884,14 @@
       "name": "後勤上端平台",
       "type": "可查看過渡",
       "floor": {
-        "label": "15F–20F 區段 → 28F–31F 區段",
-        "reverseLabel": "28F–31F 區段 → 15F–20F 區段",
-        "kind": "route"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "from": "T-R11-R12-02",
       "to": "R12-V01",
@@ -2643,9 +2911,14 @@
       "name": "貨梯鋼平台（一般分岔）",
       "type": "轉場接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
-        "kind": "route"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "from": "R12-V01",
       "to": "R14-V01",
@@ -2663,9 +2936,14 @@
       "name": "診所後簾短廊",
       "type": "可查看過渡",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
-        "kind": "route"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "from": "R13-V01",
       "to": "T-R13-R14-02",
@@ -2685,9 +2963,14 @@
       "name": "貨梯側平台",
       "type": "可查看過渡",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
-        "kind": "route"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "from": "T-R13-R14-01",
       "to": "R14-V01",
@@ -2707,9 +2990,14 @@
       "name": "後勤設備道（條件分岔）",
       "type": "轉場接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
-        "kind": "route"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "from": "R13-V01",
       "to": "R15-V01",
@@ -2727,9 +3015,14 @@
       "name": "井道內側短梯",
       "type": "轉場接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
-        "kind": "route"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "from": "R14-V01",
       "to": "R15-V01",
@@ -2747,9 +3040,15 @@
       "name": "冷卻管下接駁",
       "type": "轉場接景",
       "floor": {
-        "label": "28F–31F 區段 → 32F",
-        "reverseLabel": "32F → 28F–31F 區段",
-        "kind": "route"
+        "label": "31F → 32F",
+        "reverseLabel": "32F → 31F",
+        "entry": "31F",
+        "exit": "32F",
+        "levels": [
+          31,
+          32
+        ],
+        "kind": "passage"
       },
       "from": "R16-V01",
       "to": "R17-V01",
@@ -2767,9 +3066,14 @@
       "name": "低負荷服務道（後開回程）",
       "type": "轉場接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
-        "kind": "route"
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
       },
       "from": "R12-V01",
       "to": "R15-V01",
@@ -2787,9 +3091,15 @@
       "name": "物流維修迴路",
       "type": "轉場接景",
       "floor": {
-        "label": "32F → 28F–31F 區段",
-        "reverseLabel": "28F–31F 區段 → 32F",
-        "kind": "route"
+        "label": "32F → 31F",
+        "reverseLabel": "31F → 32F",
+        "entry": "32F",
+        "exit": "31F",
+        "levels": [
+          32,
+          31
+        ],
+        "kind": "passage"
       },
       "from": "R17-V01",
       "to": "R14-V01",
@@ -2807,9 +3117,14 @@
       "name": "倉儲側平台",
       "type": "可查看過渡",
       "floor": {
-        "label": "32F → 41F–42F 區段",
-        "reverseLabel": "41F–42F 區段 → 32F",
-        "kind": "route"
+        "label": "36F",
+        "reverseLabel": "36F",
+        "entry": "36F",
+        "exit": "36F",
+        "levels": [
+          36
+        ],
+        "kind": "floor"
       },
       "from": "R17-V01",
       "to": "T-R17-R18-02",
@@ -2829,9 +3144,14 @@
       "name": "41F 吸音門外",
       "type": "可查看過渡",
       "floor": {
-        "label": "32F → 41F–42F 區段",
-        "reverseLabel": "41F–42F 區段 → 32F",
-        "kind": "route"
+        "label": "41F",
+        "reverseLabel": "41F",
+        "entry": "41F",
+        "exit": "41F",
+        "levels": [
+          41
+        ],
+        "kind": "floor"
       },
       "from": "T-R17-R18-01",
       "to": "R18-V01",
@@ -2851,9 +3171,14 @@
       "name": "玻璃後方短折角",
       "type": "轉場接景",
       "floor": {
-        "label": "41F–42F 區段",
-        "reverseLabel": "41F–42F 區段",
-        "kind": "route"
+        "label": "41F",
+        "reverseLabel": "41F",
+        "entry": "41F",
+        "exit": "41F",
+        "levels": [
+          41
+        ],
+        "kind": "floor"
       },
       "from": "R19-V01",
       "to": "R20-V01",
@@ -2871,9 +3196,14 @@
       "name": "玻璃後工作走道",
       "type": "轉場接景",
       "floor": {
-        "label": "41F–42F 區段",
-        "reverseLabel": "41F–42F 區段",
-        "kind": "route"
+        "label": "41F",
+        "reverseLabel": "41F",
+        "entry": "41F",
+        "exit": "41F",
+        "levels": [
+          41
+        ],
+        "kind": "floor"
       },
       "from": "R20-V01",
       "to": "R21-V01",
@@ -2891,9 +3221,15 @@
       "name": "跨部銜接：深層門檻",
       "type": "轉場接景",
       "floor": {
-        "label": "41F–42F 區段 → 43F–44F 區段",
-        "reverseLabel": "43F–44F 區段 → 41F–42F 區段",
-        "kind": "route"
+        "label": "42F → 43F",
+        "reverseLabel": "43F → 42F",
+        "entry": "42F",
+        "exit": "43F",
+        "levels": [
+          42,
+          43
+        ],
+        "kind": "passage"
       },
       "from": "R22-V01",
       "to": "R23-V01",
@@ -2911,9 +3247,15 @@
       "name": "飯廳服務轉角",
       "type": "可查看過渡",
       "floor": {
-        "label": "43F–44F 區段",
-        "reverseLabel": "43F–44F 區段",
-        "kind": "route"
+        "label": "43F → 44F",
+        "reverseLabel": "44F → 43F",
+        "entry": "43F",
+        "exit": "44F",
+        "levels": [
+          43,
+          44
+        ],
+        "kind": "passage"
       },
       "from": "R24-V01",
       "to": "R25-V01",
@@ -2933,9 +3275,14 @@
       "name": "C-07 厚門",
       "type": "轉場接景",
       "floor": {
-        "label": "43F–44F 區段",
-        "reverseLabel": "43F–44F 區段",
-        "kind": "route"
+        "label": "44F",
+        "reverseLabel": "44F",
+        "entry": "44F",
+        "exit": "44F",
+        "levels": [
+          44
+        ],
+        "kind": "floor"
       },
       "from": "R25-V01",
       "to": "R26-V01",
@@ -2953,9 +3300,14 @@
       "name": "簽核室旁門",
       "type": "轉場接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
-        "kind": "route"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "from": "R28-V01",
       "to": "R29-V01",
@@ -2973,9 +3325,14 @@
       "name": "制動後的可見踏面",
       "type": "轉場接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
-        "kind": "route"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "from": "R30-V01",
       "to": "R31-V01",
@@ -2993,9 +3350,14 @@
       "name": "同層核心短廊",
       "type": "轉場接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
-        "kind": "route"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "from": "R31-V01",
       "to": "R32-V01",
@@ -3013,9 +3375,14 @@
       "name": "柱後送件廊（選填回程）",
       "type": "轉場接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
-        "kind": "route"
+        "label": "50F",
+        "reverseLabel": "50F",
+        "entry": "50F",
+        "exit": "50F",
+        "levels": [
+          50
+        ],
+        "kind": "floor"
       },
       "from": "U3-V01",
       "to": "U1-V01",
@@ -3062,8 +3429,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "B3 → B3–B1 區段",
-        "reverseLabel": "B3–B1 區段 → B3",
+        "label": "B3",
+        "reverseLabel": "B3",
         "kind": "route"
       },
       "images": [
@@ -3090,8 +3457,8 @@
       "back": false,
       "mode": "出口接景",
       "floor": {
-        "label": "B3–B1 區段 → 1F",
-        "reverseLabel": "1F → B3–B1 區段",
+        "label": "B3 → 1F",
+        "reverseLabel": "1F → B3",
         "kind": "route"
       },
       "images": [
@@ -3150,8 +3517,8 @@
       "back": true,
       "mode": "逐鏡過渡",
       "floor": {
-        "label": "1F → 2F–7F 區段",
-        "reverseLabel": "2F–7F 區段 → 1F",
+        "label": "1F → 2F",
+        "reverseLabel": "2F → 1F",
         "kind": "route"
       },
       "images": [
@@ -3188,8 +3555,8 @@
       "back": true,
       "mode": "逐鏡過渡",
       "floor": {
-        "label": "2F–7F 區段",
-        "reverseLabel": "2F–7F 區段",
+        "label": "2F",
+        "reverseLabel": "2F",
         "kind": "route"
       },
       "images": [
@@ -3220,8 +3587,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "2F–7F 區段",
-        "reverseLabel": "2F–7F 區段",
+        "label": "2F",
+        "reverseLabel": "2F",
         "kind": "route"
       },
       "images": [
@@ -3248,8 +3615,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "2F–7F 區段",
-        "reverseLabel": "2F–7F 區段",
+        "label": "2F",
+        "reverseLabel": "2F",
         "kind": "route"
       },
       "images": [
@@ -3276,8 +3643,8 @@
       "back": false,
       "mode": "出口接景",
       "floor": {
-        "label": "2F–7F 區段 → 15F–20F 區段",
-        "reverseLabel": "15F–20F 區段 → 2F–7F 區段",
+        "label": "2F → 15F",
+        "reverseLabel": "15F → 2F",
         "kind": "route"
       },
       "images": [
@@ -3308,8 +3675,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
+        "label": "15F",
+        "reverseLabel": "15F",
         "kind": "route"
       },
       "images": [
@@ -3340,8 +3707,8 @@
       "back": true,
       "mode": "逐鏡過渡",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
+        "label": "15F",
+        "reverseLabel": "15F",
         "kind": "route"
       },
       "images": [
@@ -3378,8 +3745,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
+        "label": "15F",
+        "reverseLabel": "15F",
         "kind": "route"
       },
       "images": [
@@ -3410,8 +3777,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
+        "label": "15F → 15F 上半層平台",
+        "reverseLabel": "15F 上半層平台 → 15F",
         "kind": "route"
       },
       "images": [
@@ -3442,8 +3809,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
+        "label": "15F → 15F 上半層平台",
+        "reverseLabel": "15F 上半層平台 → 15F",
         "kind": "route"
       },
       "images": [
@@ -3474,8 +3841,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "15F–20F 區段",
-        "reverseLabel": "15F–20F 區段",
+        "label": "15F 上半層平台",
+        "reverseLabel": "15F 上半層平台",
         "kind": "route"
       },
       "images": [
@@ -3506,8 +3873,8 @@
       "back": false,
       "mode": "逐鏡過渡",
       "floor": {
-        "label": "15F–20F 區段 → 28F–31F 區段",
-        "reverseLabel": "28F–31F 區段 → 15F–20F 區段",
+        "label": "15F 上半層平台 → 24F → 31F",
+        "reverseLabel": "31F → 24F → 15F 上半層平台",
         "kind": "route"
       },
       "images": [
@@ -3550,8 +3917,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
+        "label": "31F",
+        "reverseLabel": "31F",
         "kind": "route"
       },
       "images": [
@@ -3578,8 +3945,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
+        "label": "31F",
+        "reverseLabel": "31F",
         "kind": "route"
       },
       "images": [
@@ -3610,8 +3977,8 @@
       "back": true,
       "mode": "逐鏡過渡",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
+        "label": "31F",
+        "reverseLabel": "31F",
         "kind": "route"
       },
       "images": [
@@ -3648,8 +4015,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
+        "label": "31F",
+        "reverseLabel": "31F",
         "kind": "route"
       },
       "images": [
@@ -3680,8 +4047,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
+        "label": "31F",
+        "reverseLabel": "31F",
         "kind": "route"
       },
       "images": [
@@ -3712,8 +4079,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
+        "label": "31F",
+        "reverseLabel": "31F",
         "kind": "route"
       },
       "images": [
@@ -3740,8 +4107,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "28F–31F 區段 → 32F",
-        "reverseLabel": "32F → 28F–31F 區段",
+        "label": "31F → 32F",
+        "reverseLabel": "32F → 31F",
         "kind": "route"
       },
       "images": [
@@ -3772,8 +4139,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "28F–31F 區段",
-        "reverseLabel": "28F–31F 區段",
+        "label": "31F",
+        "reverseLabel": "31F",
         "kind": "route"
       },
       "images": [
@@ -3804,8 +4171,8 @@
       "back": false,
       "mode": "出口接景",
       "floor": {
-        "label": "32F → 28F–31F 區段",
-        "reverseLabel": "28F–31F 區段 → 32F",
+        "label": "32F → 31F",
+        "reverseLabel": "31F → 32F",
         "kind": "route"
       },
       "images": [
@@ -3836,8 +4203,8 @@
       "back": false,
       "mode": "逐鏡過渡",
       "floor": {
-        "label": "32F → 41F–42F 區段",
-        "reverseLabel": "41F–42F 區段 → 32F",
+        "label": "32F → 36F → 41F",
+        "reverseLabel": "41F → 36F → 32F",
         "kind": "route"
       },
       "images": [
@@ -3874,8 +4241,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "41F–42F 區段",
-        "reverseLabel": "41F–42F 區段",
+        "label": "41F",
+        "reverseLabel": "41F",
         "kind": "route"
       },
       "images": [
@@ -3902,8 +4269,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "41F–42F 區段",
-        "reverseLabel": "41F–42F 區段",
+        "label": "41F",
+        "reverseLabel": "41F",
         "kind": "route"
       },
       "images": [
@@ -3934,8 +4301,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "41F–42F 區段",
-        "reverseLabel": "41F–42F 區段",
+        "label": "41F",
+        "reverseLabel": "41F",
         "kind": "route"
       },
       "images": [
@@ -3966,8 +4333,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "41F–42F 區段",
-        "reverseLabel": "41F–42F 區段",
+        "label": "41F → 42F",
+        "reverseLabel": "42F → 41F",
         "kind": "route"
       },
       "images": [
@@ -3994,8 +4361,8 @@
       "back": false,
       "mode": "出口接景",
       "floor": {
-        "label": "41F–42F 區段 → 43F–44F 區段",
-        "reverseLabel": "43F–44F 區段 → 41F–42F 區段",
+        "label": "42F → 43F",
+        "reverseLabel": "43F → 42F",
         "kind": "route"
       },
       "images": [
@@ -4026,8 +4393,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "43F–44F 區段",
-        "reverseLabel": "43F–44F 區段",
+        "label": "43F",
+        "reverseLabel": "43F",
         "kind": "route"
       },
       "images": [
@@ -4054,8 +4421,8 @@
       "back": true,
       "mode": "逐鏡過渡",
       "floor": {
-        "label": "43F–44F 區段",
-        "reverseLabel": "43F–44F 區段",
+        "label": "43F → 44F",
+        "reverseLabel": "44F → 43F",
         "kind": "route"
       },
       "images": [
@@ -4086,8 +4453,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "43F–44F 區段",
-        "reverseLabel": "43F–44F 區段",
+        "label": "44F",
+        "reverseLabel": "44F",
         "kind": "route"
       },
       "images": [
@@ -4118,8 +4485,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4150,8 +4517,8 @@
       "back": false,
       "mode": "出口接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4182,8 +4549,8 @@
       "back": false,
       "mode": "出口接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4214,8 +4581,8 @@
       "back": false,
       "mode": "原鏡回返",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4319,8 +4686,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4347,8 +4714,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4375,8 +4742,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4403,8 +4770,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4431,8 +4798,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4459,8 +4826,8 @@
       "back": false,
       "mode": "原鏡回返",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4481,8 +4848,8 @@
       "back": false,
       "mode": "兩端接景",
       "floor": {
-        "label": "43F–44F 區段",
-        "reverseLabel": "43F–44F 區段",
+        "label": "44F",
+        "reverseLabel": "44F",
         "kind": "route"
       },
       "images": [
@@ -4509,8 +4876,8 @@
       "back": false,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -4537,8 +4904,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 區段 → 50F 低位夾層",
-        "reverseLabel": "50F 低位夾層 → 50F 區段",
+        "label": "50F → 50F 橋下夾層",
+        "reverseLabel": "50F 橋下夾層 → 50F",
         "kind": "route"
       },
       "images": [
@@ -4565,8 +4932,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 低位夾層 → 50F 區段",
-        "reverseLabel": "50F 區段 → 50F 低位夾層",
+        "label": "50F 橋下夾層 → 50F",
+        "reverseLabel": "50F → 50F 橋下夾層",
         "kind": "route"
       },
       "images": [
@@ -4593,8 +4960,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 區段 → 50F 低位夾層",
-        "reverseLabel": "50F 低位夾層 → 50F 區段",
+        "label": "50F → 50F 檢修蓋下夾層",
+        "reverseLabel": "50F 檢修蓋下夾層 → 50F",
         "kind": "route"
       },
       "images": [
@@ -4621,8 +4988,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 低位夾層 → 50F 區段",
-        "reverseLabel": "50F 區段 → 50F 低位夾層",
+        "label": "50F 檢修蓋下夾層 → 50F",
+        "reverseLabel": "50F → 50F 檢修蓋下夾層",
         "kind": "route"
       },
       "images": [
@@ -4649,8 +5016,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 區段 → 50F 低位夾層",
-        "reverseLabel": "50F 低位夾層 → 50F 區段",
+        "label": "50F → 50F 水箱下夾層",
+        "reverseLabel": "50F 水箱下夾層 → 50F",
         "kind": "route"
       },
       "images": [
@@ -4677,8 +5044,8 @@
       "back": true,
       "mode": "兩端接景",
       "floor": {
-        "label": "50F 低位夾層 → 50F 區段",
-        "reverseLabel": "50F 區段 → 50F 低位夾層",
+        "label": "50F 水箱下夾層 → 50F",
+        "reverseLabel": "50F → 50F 水箱下夾層",
         "kind": "route"
       },
       "images": [
@@ -4705,8 +5072,8 @@
       "back": true,
       "mode": "出口接景",
       "floor": {
-        "label": "50F 區段",
-        "reverseLabel": "50F 區段",
+        "label": "50F",
+        "reverseLabel": "50F",
         "kind": "route"
       },
       "images": [
@@ -5506,7 +5873,7 @@
       "id": "R5-V02",
       "node": "R5",
       "kind": "出口接景",
-      "content": "R5→R6：由 2F–7F 工場高度帶上行至 15F–20F 產線，8F–14F 門端封閉；用連續梯段、封閉樓層標牌與聲音漸變交代距離。",
+      "content": "R5→R6：由 2F 工坊上行至 15F 產線，8F–14F 門端封閉；用連續梯段、封閉樓層標牌與聲音漸變交代距離。",
       "requirements": "沿原轉場取固定構圖；來路與去路各有可見定位。允許沿兩端場景重組材質，但須交此視角靜態圖及低動態替代；不增加房間、線索或強制等待。原單向／回訪、操作窗口及完成提交依動線表。",
       "status": "pending",
       "spec": "10_製作規格/10-02_製作規格_第一幕.md",
@@ -6236,7 +6603,7 @@
       "id": "T-R11-R12-02",
       "node": "R11",
       "kind": "過渡場景",
-      "content": "21F–27F 中繼平台：焊封側門、封閉告示與連續上行梯段。",
+      "content": "24F 中繼平台：焊封側門、封閉告示與連續上行梯段。",
       "requirements": "來路 T-R11-R12-01；去路 T-R11-R12-03。單向提交後無返回前幕熱點；阿尋必要校驗、arc.ahsun.scope_confirmed 與幕尾 K1-01 成立，再完成現場第一鑰匙門端驗證；SQ-C1／SQ-S 不擋主線。背景獨立構圖，材質可共用；不水平翻圖當反向。",
       "status": "pending",
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -6256,7 +6623,7 @@
       "id": "T-R11-R12-03",
       "node": "R11",
       "kind": "過渡場景",
-      "content": "後勤上端平台：28F–31F 樓段標牌、後勤入口與同一立管接頭。",
+      "content": "後勤上端平台：31F 樓層標牌、後勤入口與同一立管接頭。",
       "requirements": "來路 T-R11-R12-02；去路 R12-V01。單向提交後無返回前幕熱點；阿尋必要校驗、arc.ahsun.scope_confirmed 與幕尾 K1-01 成立，再完成現場第一鑰匙門端驗證；SQ-C1／SQ-S 不擋主線。背景獨立構圖，材質可共用；不水平翻圖當反向。",
       "status": "pending",
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -6996,7 +7363,7 @@
       "id": "T-R17-R18-01",
       "node": "R17",
       "kind": "過渡場景",
-      "content": "倉儲側平台：32F 來路梯段、33F–40F 倉儲護角、半封門楣與上行過梁。",
+      "content": "倉儲側平台：通往 32F 的來路梯段、36F 倉儲護角、半封門楣與上行過梁。",
       "requirements": "來路 R17-V01；去路 T-R17-R18-02。單向提交後無返回前幕熱點；正確日期證據與 K2-01 成立；假路返回後可重排；離幕前可回查已發現未完成的 SQ-M1／SQ-T，支線不擋主線。背景獨立構圖，材質可共用；不水平翻圖當反向。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
@@ -7436,7 +7803,7 @@
       "id": "R22-V03",
       "node": "R22",
       "kind": "出口接景",
-      "content": "R22→R23：從 41F–42F 釋放接點局部下折避梁，再沿連續扶手上行至 43F 深層門檻；上部跨門保存，下部在另一側安全入口開始。",
+      "content": "R22→R23：從 42F 釋放接點局部下折避梁，再沿連續扶手上行至 43F 深層門檻；上部跨門保存，下部在另一側安全入口開始。",
       "requirements": "沿原轉場取固定構圖；來路與去路各有可見定位。允許沿兩端場景重組材質，但須交此視角靜態圖及低動態替代；不增加房間、線索或強制等待。原單向／回訪、操作窗口及完成提交依動線表。",
       "status": "pending",
       "spec": "10_製作規格/10-05_製作規格_第四幕.md",
@@ -7646,7 +8013,7 @@
       "id": "T-R24-R25-01",
       "node": "R24",
       "kind": "過渡場景",
-      "content": "飯廳服務轉角：封死傳菜窗、舊收碗槽、新飾板截斷的磁磚腰線與兩端門框。",
+      "content": "飯廳服務轉角：43F 服務口、封死傳菜窗、舊收碗槽，以及上行至 44F 的連續梯段、扶手和 R25 門框。",
       "requirements": "來路 R24-V01；去路 R25-V01。依原門檻可原路折返；E4-01／E4-02／E3-02 第四層鎖定成立；act5.r24.board_locked = true。背景獨立構圖，材質可共用；不水平翻圖當反向。",
       "status": "pending",
       "spec": "10_製作規格/10-06_製作規格_第五幕.md",
@@ -8866,7 +9233,7 @@
       "id": "R31-V02",
       "node": "R31",
       "kind": "出口接景",
-      "content": "R31→R32：在原頂層空間轉身，看見仍在等待的小花；停頓，不提前展示全形。",
+      "content": "R31→R32：在 50F 的 R31 轉身，看見仍在等待的小花；沿她讓出的同層核心短廊進 R32，不提前展示全形。",
       "requirements": "沿原轉場取固定構圖；來路與去路各有可見定位。允許沿兩端場景重組材質，但須交此視角靜態圖及低動態替代；不增加房間、線索或強制等待。原單向／回訪、操作窗口及完成提交依動線表。",
       "status": "pending",
       "spec": "10_製作規格/10-07_製作規格_第六幕.md",

@@ -1,4 +1,4 @@
-// x, z, reference floor, width, depth. All within-band floor choices are proposals.
+// x, z, canonical floor, width, depth. Dimensions and local offsets remain proposals.
 export const layout={
  P0:[-17,7,-3,12,10],P1:[0,7,-3,12,10],P2:[17,7,-3,12,10],
  R1:[-7,7,1,26,14],R2:[14,7,1,12,14],
@@ -15,7 +15,7 @@ export const offsets={R8:.4,R9:0,R10:1.6,R11:1.6,R15:.5,R16:.5,R20:.9,R21:.9};
 export const rationale={
  P0:'暗渠與 P1 泵房相鄰、同在 B3；封死的上行豎井只作阻礙地標。',
  P1:'與 P0、P2 以短管線通道相接；泵體後保留被遮擋的內側凹室，不新增可走出口。',
- P2:'原文只定義 B3–B1 上行段。本案讓處理室靠近 P1，將跨越 B2、B1 的爬梯放在出口，避免把房間武斷固定為 B1。',
+ P2:'處理室正式定位在 B3，與 P1 同層；跨越 B2、B1 至 1F 的爬梯放在出口，不把上行梯段當成房間所在樓層。',
  R1:'由舊室內服務街改裝的大廳，櫃檯遮住後室入口；正門封閉，不是可走出口。',
  R2:'接待背後的舊麵店後廚／庫房；送餐車移入凹位後露出後廚梯口，短紅鐵梯直接上接 R3 側門，不回 R1、不繞建築外緣。',
  R3:'多戶住宅打通的宿舍。兩個方向分別接洗衣巷與工坊，不因 R 號增加而升樓。',

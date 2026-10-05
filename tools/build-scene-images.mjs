@@ -205,6 +205,8 @@ export function buildSceneImageOutputs(graph, documents) {
   const routes = bindImageRoutes(graph, collection);
   const subscenes = collectSubscenes(collection, routes);
   const access = collectSceneAccess(graph, documents);
+  const flow = buildSceneFlowData(graph, collection, routes, subscenes, access, documents);
+  const floorLabel = id => [...flow.nodes, ...flow.subscenes].find(n => n.id === id).floor.label;
   const outputs = new Map();
   for (const act of ACTS) {
     let story = read(act.path);
@@ -213,6 +215,9 @@ export function buildSceneImageOutputs(graph, documents) {
       const children = subscenes.filter(s => s.node === group.node);
       const main = group.rows[0];
       const slug = group.node.toLowerCase();
+      const storyHeading = story.match(new RegExp(`<a id="node-${slug}-script"></a>\\n\\n### [^\\n]+`))?.[0];
+      assert(storyHeading, `Floor reading heading: ${group.node}`);
+      story = section(story, `floor-${slug}`, `**樓層：**${floorLabel(group.node)}`, storyHeading);
       const navLink = `[進場與動線](#node-${slug}-nav)`;
       const accessLink = `[出入口位置](#node-${slug}-access)`;
       if (!spec.includes(accessLink)) spec = spec.replace(navLink, `${navLink} · ${accessLink}`);
@@ -232,6 +237,7 @@ export function buildSceneImageOutputs(graph, documents) {
         story = section(story, route.toLowerCase(), body, heading);
         for (const child of routeChildren) {
           const childBody = `<a id="${subsceneAnchor(child, 'script')}"></a>\n###### 次場景 ${child.id} · ${child.name}\n\n` +
+            `**樓層：**${floorLabel(child.id)}\n\n` +
             `**近看：** ${child.details.map(d => `${d.content}（${d.id}）`).join('；')}。\n\n` +
             `[次場景製作規格](../${act.specPath}#${subsceneAnchor(child, 'spec')})`;
           // Each marker is placed beside its actual shot, never ahead of a route's entry condition.
@@ -242,6 +248,7 @@ export function buildSceneImageOutputs(graph, documents) {
         const childBody = `<a id="subscenes-${group.node.toLowerCase()}"></a>\n#### 次場景節點\n\n` +
           `以下次場景歸 ${group.node} 管理，節點編號沿用主圖圖號。來去方向為原動線的正向排列；反向通行與單向限制依原門檻，不因列出來路就新增返回出口。\n\n` +
           children.map(s => `<a id="${subsceneAnchor(s, 'spec')}"></a>\n##### ${s.id} · ${s.name}\n\n` +
+            `**樓層：**${floorLabel(s.id)}\n\n` +
             `**類型：**${s.type}。**正向連接：**${s.from} → **${s.id}** → ${s.to}。\n\n` +
             `**近看：**${s.details.length ? `${s.details.map(d => d.id).join('、')}；關閉回 ${s.id}。` : '不新增近看；沿原轉場操作，不新增等待或讀取門檻。'}\n\n` +
             `[正文](../${act.path}#${subsceneAnchor(s, 'script')}) · [圖像製作單](#node-${group.node.toLowerCase()}-images) · [原門檻與回訪](#node-${group.node.toLowerCase()}-nav) · ${s.source}`
@@ -272,21 +279,20 @@ export function buildSceneImageOutputs(graph, documents) {
     `**${collection.groups.length} 個流程節點，下分 ${subscenes.length} 個次場景節點（${transitions.length} 個可查看過渡、${exits.length} 個轉場接景）；合計 ${collection.rows.length} 列圖像製作項目（場景／操作／演出 ${views.length} 列，近看／文件／介面／回憶 ${details.length} 列），對應 ${routes.length} 條動線。**\n\n` +
     `原規格的 ${hotspots.length} 個 H／B 熱點編號均有逐項對圖；包含已撤除事件的相容參照，不代表新增同數量的可點物件。其餘節點沿原場次與操作名稱列圖。\n\n` +
     '一列可能包含多頁、正反面、子鏡位或差分，不等於一張輸出圖；共用圖也不能重複算獨立背景。全部仍待正式圖像與遊戲實作交付，現有概念圖不能當完成品。完整拆圖與來源以各幕製作單為準。\n\n' +
-    table(['節點', '場景／操作／演出項目', '近看等項目', '逐件圖號與拆圖', '出入口與銜接'], collection.groups.map(g => [
-      g.node, g.rows.filter(r => r.view).length, g.rows.filter(r => !r.view).length,
+    table(['節點', '樓層', '場景／操作／演出項目', '近看等項目', '逐件圖號與拆圖', '出入口與銜接'], collection.groups.map(g => [
+      g.node, floorLabel(g.node), g.rows.filter(r => r.view).length, g.rows.filter(r => !r.view).length,
       `[製作單](../${g.act.specPath}#node-${g.node.toLowerCase()}-images)`,
       `[位置與通行狀態](../${g.act.specPath}#node-${g.node.toLowerCase()}-access)`,
     ])) + '\n\n<a id="inventory-subscenes"></a>\n\n### 次場景節點總表\n\n' +
     '次場景沿用既有圖號，隸屬原連線的起點主場景；不另算主線房間。近看圖是次場景的局部，不是另一個可移動節點。接景型保留原轉場操作；兩端直接切鏡與結局演出不虛構中間場景。\n\n' +
-    table(['所屬主場景', '次場景／主圖', '類型／名稱', '正向來路 → 去路', '近看圖'], subscenes.map(s => [
-      s.node, specLink(s, inventory), `${s.type} · ${s.name}`, `${s.from} → ${s.to}`,
+    table(['所屬主場景', '次場景／主圖', '樓層', '類型／名稱', '正向來路 → 去路', '近看圖'], subscenes.map(s => [
+      s.node, specLink(s, inventory), floorLabel(s.id), `${s.type} · ${s.name}`, `${s.from} → ${s.to}`,
       s.details.map(d => d.id).join('、') || '無新增近看',
     ])) + '\n\n### 全部動線圖像對照\n\n' +
     table(['動線', '接景方式', '對應圖號'], routes.map(({ edge, mode, rows }) => [
       `${edge.fromId}→${edge.toId}`, mode, rows.map(r => specLink(r, inventory)).join(' → '),
     ]));
   outputs.set(inventory, section(read(inventory), 'inventory', summary, '<!-- inventory:summary:end -->'));
-  const flow = buildSceneFlowData(graph, collection, routes, subscenes, access, documents);
   return { outputs, collection, routes, hotspots, subscenes, access, flow };
 }
 

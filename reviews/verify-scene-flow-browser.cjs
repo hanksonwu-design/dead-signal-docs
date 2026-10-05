@@ -96,9 +96,9 @@ async function reference(page) {
 
     await page.locator('[data-direction="return"]').click();
     assert.deepEqual(await ids(page), ['R3', 'T-R2-R3-02', 'T-R2-R3-01', 'R2']);
-    assert.match(await page.locator('.scene-route-floor').innerText(), /2F–7F 區段 → 1F/);
-    assert.equal(await page.locator('[data-shot="T-R2-R3-01"] .scene-floor').innerText(), '2F–7F 區段 → 1F');
-    assert.match(await page.locator('.scene-child-floor').innerText(), /2F–7F 區段 → 1F/);
+    assert.match(await page.locator('.scene-route-floor').innerText(), /2F → 1F/);
+    assert.equal(await page.locator('[data-shot="T-R2-R3-01"] .scene-floor').innerText(), '1F');
+    assert.match(await page.locator('.scene-child-floor').innerText(), /所在樓層：1F$/);
     await page.reload();
     await page.locator('#sceneRoute').waitFor();
     assert.deepEqual(await ids(page), ['R3', 'T-R2-R3-02', 'T-R2-R3-01', 'R2']);
@@ -118,6 +118,19 @@ async function reference(page) {
       }
     }
     pass('all 56 routes and 34 subscenes render with original gates and one-way restrictions');
+
+    await choose(page, 'R11', 'R11-R12-16', 'T-R11-R12-02');
+    assert.equal(await page.locator('[data-shot="T-R11-R12-02"] .scene-floor').innerText(), '24F');
+    assert.match(await page.locator('.scene-route-floor').innerText(), /15F 上半層平台 → 24F → 31F/);
+    await choose(page, 'R17', 'R17-R18-26', 'T-R17-R18-01');
+    assert.equal(await page.locator('[data-shot="T-R17-R18-01"] .scene-floor').innerText(), '36F');
+    await page.screenshot({ path: path.join(out, 'floor-36-overview.png') });
+    const dining = flow.routes.find(r => r.from === 'R24' && r.to === 'R25');
+    await choose(page, 'R24', dining.id, 'T-R24-R25-01');
+    assert.equal(await page.locator('[data-shot="T-R24-R25-01"] .scene-floor').innerText(), '43F → 44F');
+    await page.locator('[data-direction="return"]').click();
+    assert.equal(await page.locator('[data-shot="T-R24-R25-01"] .scene-floor').innerText(), '44F → 43F');
+    pass('individual landings have exact floors and actual stair views reverse their own endpoints');
 
     await choose(page, 'R33', 'R33-P1-43', 'P1');
     assert.match(await page.locator('.scene-shot-detail h4').innerText(), /R33-V02.*肉身回返/);
