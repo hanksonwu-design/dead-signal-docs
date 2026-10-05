@@ -9,7 +9,7 @@ test('all current scenes, routes and secondary images are represented without al
  const before=JSON.stringify({graph,flow});
  for(const actual of [false,true]){
   const m=buildCurrentModel(graph,flow,actual);
-  assert.equal(m.nodes.length,48);assert.equal(m.shots.length,67);assert.equal(m.routes.length,56);
+  assert.equal(m.nodes.length,48);assert.equal(m.shots.length,72);assert.equal(m.routes.length,56);
   assert.equal(m.nodes.filter(n=>n.spatial).length,46);assert.equal(m.routes.filter(r=>r.spatial).length,51);
   for(const n of m.nodes)assert.deepEqual(n.floor,flow.nodes.find(f=>f.id===n.id).floor);
   for(const r of m.routes){const original=graph.edges.find(e=>e.id===r.id);for(const k of ['gate','motion','returnRule','back'])assert.deepEqual(r[k],original[k]);}

@@ -20,12 +20,12 @@ test('approved room groups occupy exact floors and the final floor is sparse',()
 test('every multi-floor route names each intervening platform, including conditional branches',()=>{
  for(const [a,b,expected] of [
   ['R11','R12',[16,17,18,19,20,21,22]],['R12','R14',[24,25,26]],['R12','R15',[24,25,26]],
-  ['R13','R14',[24,25,26]],['R13','R15',[24,25,26]],['R15','R16',[28,29,30]],
+  ['R13','R14',[24,25,26]],['R13','R15',[24,25,26]],['R15','R16',[28,29,29,30,30,31]],
   ['R17','R14',[31,30,29,28]],['R17','R18',[33,34,35,36]],['R20','R21',[38,39]],['R21','R22',[41]]
  ])assert.deepEqual(flow.subscenes.filter(s=>s.route===r(a,b).id).map(s=>s.floor.levels[0]),expected,`${a}-${b}`);
 });
-test('four new upper-story stairs and the brake exit bind their actual endpoints',()=>{
- for(const [a,b,lo,hi] of [['R27','U1',45,46],['U3','R28',46,47],['R29','U4',47,48],['U5','U6',48,49],['R30','R31',49,50]]){
+test('upper-story stairs and the brake exit bind their actual endpoints',()=>{
+ for(const [a,b,lo,hi] of [['R27','U1',45,46],['U3','R28',46,47],['U5','U6',48,49],['R30','R31',49,50]]){
   const route=r(a,b),children=flow.subscenes.filter(s=>s.route===route.id);
   assert.equal(children.length,1);assert.equal(children[0].floor.label,`${lo}F → ${hi}F`);
   assert.equal(route.steps[0].id,a);assert.equal(route.steps.at(-1).id,b);
@@ -52,7 +52,7 @@ test('original gates still prevent branch bypasses and premature core access',()
 });
 test('new revision saves cannot convert old route ordinals into unexplored room progress',()=>{
  const policy=master.blocks.get('s-0403-3');
- for(const text of ['version: 3','版本 1／2','每條新路獨立驗證','供電未完成','不能初始化 R15→R16','M1 保留原七窗各自觀察旗標'])assert(policy.includes(text),text);
+ for(const text of ['version: 4','版本 1／2／3','每條新路獨立驗證','供電未完成','不能初始化 R15→R16','M1 保留原七窗各自觀察旗標'])assert(policy.includes(text),text);
  const act4=master.documents.get(n('R21').floor.source);
  for(const text of ['平行工作梯','不因入房或讀檔重生','下返 37F 不重播段 C'])assert(act4.includes(text),text);
 });
@@ -60,8 +60,8 @@ test('retired exits are not duplicated in current artwork or reading order',()=>
  for(const id of ['R12-V02','R12-V03','R13-V02','R17-V02','R20-V02'])assert(!flow.images[id],id);
  const story=master.blocks.get('s-0906-59');
  assert(story.indexOf('ascent-t-r17-r14-04-script')<story.indexOf('先看見熟悉的搬運標記'));
- assert.equal(Object.values(flow.images).filter(i=>i.kind==='過渡場景').length,53);
- assert.equal(flow.subscenes.filter(s=>s.play).length,27);
+ assert.equal(Object.values(flow.images).filter(i=>i.kind==='過渡場景').length,58);
+ assert.equal(flow.subscenes.filter(s=>s.play).length,33);
 });
 test('abridged novel and the transition inventory share the new distribution',()=>{
  const novel=readFileSync(new URL('../docs/09_故事劇情/17_縮寫短文.md',import.meta.url),'utf8');
@@ -70,6 +70,6 @@ test('abridged novel and the transition inventory share the new distribution',()
  const inventory=readFileSync(new URL('../docs/08_製作管理/08-13_劇情節點與場景道具總表.md',import.meta.url),'utf8');
  const table=inventory.split('<!-- inventory:transitions:begin -->')[1].split('<!-- inventory:transitions:end -->')[0];
  const rows=[...table.matchAll(/^\| \[T-[^\]]+\]\([^\n]+?\) \| (\d+) \|/gm)];
- assert.equal(rows.length,21);assert.equal(rows.reduce((sum,m)=>sum+Number(m[1]),0),53);
+ assert.equal(rows.length,21);assert.equal(rows.reduce((sum,m)=>sum+Number(m[1]),0),58);
 });
 console.log(`${passed} floor-distribution checks passed; room rules and artwork remain production specifications.`);

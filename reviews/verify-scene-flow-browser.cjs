@@ -45,10 +45,10 @@ async function reference(page) {
     await page.goto(`${base}/#scene=R2`);
     await page.locator('#sceneRoute').waitFor();
     assert.equal(await page.locator('.scene-node').count(), 48);
-    assert.equal(await page.locator('.scene-child').count(), 67);
-    assert.equal(await page.locator('[data-map-route]').count(), 123);
-    for (const node of flow.nodes) assert.equal(await page.locator(`[data-node="${node.id}"] .scene-floor`).innerText(), node.floor.label);
-    for (const child of flow.subscenes) assert.equal(await page.locator(`[data-subscene="${child.id}"] .scene-floor`).innerText(), child.floor.label);
+    assert.equal(await page.locator('.scene-child').count(), 72);
+    assert.equal(await page.locator('[data-map-route]').count(), 128);
+    for (const node of flow.nodes) assert.equal(await page.locator(`[data-node="${node.id}"] .scene-floor`).innerText(), `${node.building.label} · ${node.floor.label}`);
+    for (const child of flow.subscenes) assert.equal(await page.locator(`[data-subscene="${child.id}"] .scene-floor`).innerText(), `${child.building.label} · ${child.floor.label}`);
     assert.match(await page.locator('.scene-location').innerText(), /1F/);
     pass('all main and transition nodes show source-derived floor labels');
     for (const route of flow.routes) {
@@ -97,8 +97,8 @@ async function reference(page) {
     await page.locator('[data-direction="return"]').click();
     assert.deepEqual(await ids(page), ['R3', 'T-R2-R3-02', 'T-R2-R3-01', 'R2']);
     assert.match(await page.locator('.scene-route-floor').innerText(), /2F → 1F/);
-    assert.equal(await page.locator('[data-shot="T-R2-R3-01"] .scene-floor').innerText(), '1F');
-    assert.match(await page.locator('.scene-child-floor').innerText(), /所在樓層：1F$/);
+    assert.equal(await page.locator('[data-shot="T-R2-R3-01"] .scene-floor').innerText(), 'A 棟 · 1F');
+    assert.match(await page.locator('.scene-child-floor').innerText(), /所在位置：A 棟 · 1F$/);
     await page.reload();
     await page.locator('#sceneRoute').waitFor();
     assert.deepEqual(await ids(page), ['R3', 'T-R2-R3-02', 'T-R2-R3-01', 'R2']);
@@ -118,19 +118,19 @@ async function reference(page) {
         if(child.play){const text=await page.locator('.scene-shot-detail').innerText();for(const field of ['clue','action','recovery'])assert(text.includes(child.play[field]),`${child.id}: ${field}`);}
       }
     }
-    pass('all 56 routes and 67 subscenes render with original gates and one-way restrictions');
+    pass('all 56 routes and 72 subscenes render with original gates and one-way restrictions');
 
     await choose(page, 'R11', 'R11-R12-16', 'T-R11-R12-01');
-    assert.equal(await page.locator('[data-shot="T-R11-R12-01"] .scene-floor').innerText(), '16F');
+    assert.equal(await page.locator('[data-shot="T-R11-R12-01"] .scene-floor').innerText(), 'B 棟 · 16F');
     assert.match(await page.locator('.scene-route-floor').innerText(), /15F 上半層平台 → 16F.*22F.*23F/);
     await choose(page, 'R17', 'R17-R18-26', 'T-R17-R18-04');
-    assert.equal(await page.locator('[data-shot="T-R17-R18-04"] .scene-floor').innerText(), '36F');
+    assert.equal(await page.locator('[data-shot="T-R17-R18-04"] .scene-floor').innerText(), 'B 棟 · 36F');
     await page.screenshot({ path: path.join(out, 'floor-36-overview.png') });
     const dining = flow.routes.find(r => r.from === 'R24' && r.to === 'R25');
     await choose(page, 'R24', dining.id, 'T-R24-R25-01');
-    assert.equal(await page.locator('[data-shot="T-R24-R25-01"] .scene-floor').innerText(), '43F → 44F');
+    assert.equal(await page.locator('[data-shot="T-R24-R25-01"] .scene-floor').innerText(), 'B 棟 · 43F → 44F');
     await page.locator('[data-direction="return"]').click();
-    assert.equal(await page.locator('[data-shot="T-R24-R25-01"] .scene-floor').innerText(), '44F → 43F');
+    assert.equal(await page.locator('[data-shot="T-R24-R25-01"] .scene-floor').innerText(), 'B 棟 · 44F → 43F');
     pass('individual landings have exact floors and actual stair views reverse their own endpoints');
 
     await choose(page, 'R33', 'R33-P1-43', 'P1');

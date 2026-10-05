@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readChildFloors } from './scene-floors.mjs';
+import { readChildLocations } from './scene-buildings.mjs';
 
 // Only exceptions need an authored placement. Other images follow their cited story paragraph.
 export const IMAGE_PLACEMENTS = {
@@ -100,7 +101,7 @@ const ENTRY = {
   R13: '候診椅外側的門接回修理舖；病床後簾通向有輪痕的送物廊，設備通道口另在後勤側，兩條後路沒有合成一扇門。',
   R14: '接縫鋼平台與診所輪痕分別接到平台兩側。井道內側有固定短梯，物流標籤旁另留維修口；貨梯井門本身不是乘梯出口。',
   R15: '診所設備道和貨梯短梯從兩側接入。維修箱旁是低矮服務門扣，發電機外側則是通往機櫃通道的防火門。',
-  R16: '31F 來路接回 30F 門下平台；沿已開的後勤側路才能下返 27F 機房。辦公區門端在冷卻管下，接向 32F。機櫃間隙只供查看。',
+  R16: '31F 來路接回 L1 拉閘門電梯平台；可搭原梯下返 30F／29F，再沿已開側路回 27F 機房。辦公區門端在冷卻管下，接向 32F。機櫃間隙只供查看。',
   R17: '進場門口位於飾板與機房裸牆交界。受損公開出口和 32-S 服務門各自可辨；服務門後的去向尚待資料核對。',
   R18: '來路門框與扶手保留在近處；向前沿原走道可辨隔音室門。吸音板縫與被封舊門洞不作出口。',
   R19: '進場的隔音門和椅外側側門分開可辨；後者繞向玻璃後方，不是穿過單向玻璃。',
@@ -119,7 +120,7 @@ const ENTRY = {
   U3: '來路門檻接著已清通的晾架橋。維修支架旁是尚未落位的服務橋，核心柱另一側可見窄送件門，內閂被支架擋住。',
   R28: '',
   R29: '來路接內部運送道；簽核架背面的服務口通向門牌走廊。核可佇列是桌上的選填操作，不是門端機關。',
-  U4: '來路仍接簽核室。重複門牌的內門與冷凝管旁檢修蓋各在原位；此時還不能從外觀斷定哪一道能離開走廊。',
+  U4: '來路接回 B 棟 48F 的 L2 拉閘門電梯平台，可搭原梯下返 47F 簽核室。重複門牌的內門與冷凝管旁檢修蓋各在原位；此時還不能從外觀斷定哪一道能離開走廊。',
   U4b: '上方檢修蓋接回布標處，服務閘在夾道另一端；低位鏡頭仍保留同組管線，不讓切鏡看起來像跨進別層。',
   U5: '來路服務閘與後方維修口分開可辨；左右投送孔是封板與辨向的位置，不能讓玩家鑽出。',
   U6: '冷藏維修口在來向，三水槽旁是固定保養梯；配重管沿梯向下，活動踏板不在此充當下行路。',
@@ -214,6 +215,7 @@ function paragraph(story, anchor, needle, main = false) {
 export function placeReadingImages(original, act, groups, subscenes, spec) {
   const story = stripReadingFlow(original, groups), points = new Map(), placements = [];
   const floors = new Map(groups.flatMap(group => [...readChildFloors(spec, group.node, subscenes.filter(s => s.node === group.node))]));
+  const locations = new Map(groups.flatMap(group => [...readChildLocations(spec, group.node)]));
   const put = (position, item) => { const list = points.get(position) ?? []; list.push(item); points.set(position, list); };
   const mainPoints = new Map();
   const link = row => `[${row.id}](../${act.specPath}#node-${row.node.toLowerCase()}-images)`;
@@ -264,7 +266,7 @@ export function placeReadingImages(original, act, groups, subscenes, spec) {
     }
     for (const { child, title, prose } of items.filter(i => i.child)) {
       lines.push('', tag(`subscene-${child.id.toLowerCase()}-script`), `###### 次場景 ${child.id} · ${title}`);
-      lines.push('', `**樓層：**${floors.get(child.id).label}`);
+      lines.push('', `**樓層：**${floors.get(child.id).label} · ${locations.get(child.id).building.label}`);
       if (prose) lines.push('', prose);
       lines.push('', `[次場景製作規格](../${act.specPath}#subscene-${child.id.toLowerCase()}-spec)`);
     }

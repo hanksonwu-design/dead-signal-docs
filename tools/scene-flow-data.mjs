@@ -4,6 +4,7 @@ import path from 'node:path';
 import { ROOT } from './sync-canonical.mjs';
 import { EXIT_PLACEMENTS } from './reading-scene-flow.mjs';
 import { readRouteExploration } from './route-exploration.mjs';
+import { readSceneBuilding, readChildLocations, routeBuilding } from './scene-buildings.mjs';
 
 import { preciseFloor, readSceneFloor, readChildFloors } from './scene-floors.mjs';
 export { preciseFloor, readSceneFloor } from './scene-floors.mjs';
@@ -25,6 +26,7 @@ function routeFloor(edge, nodes, children) {
 
 export function buildSceneFlowData(graph, collection, routes, subscenes, access, documents) {
   const childFloors = new Map();
+  const childLocations = new Map();
   const exploration = new Map();
   for (const file of new Set(graph.nodes.map(node => node.pack))) {
     const spec = documents?.get(file) ?? readFileSync(path.join(ROOT, 'docs', file), 'utf8');
@@ -42,6 +44,7 @@ export function buildSceneFlowData(graph, collection, routes, subscenes, access,
     const spec = documents?.get(node.pack) ?? readFileSync(path.join(ROOT, 'docs', node.pack), 'utf8');
     const slug = node.id.toLowerCase();
     for (const [id, floor] of readChildFloors(spec, node.id, subscenes.filter(s => s.node === node.id))) childFloors.set(id, floor);
+    for (const [id, location] of readChildLocations(spec, node.id)) childLocations.set(id, location);
     const visual = spec.split(`<a id="node-${slug}-visual"></a>`)[1]?.split(`<a id="node-${slug}-exit"></a>`)[0] || '';
     const image = visual.match(/!\[([^\]]*)\]\(([^)]+)\)/);
     const layout = `assets/scene_access/${slug}.svg`;
@@ -55,7 +58,7 @@ export function buildSceneFlowData(graph, collection, routes, subscenes, access,
     }
     if (reference) assert(existsSync(path.join(ROOT, reference.url)), `Missing scene reference: ${node.id}`);
     return {
-      id: node.id, image: `${node.id}-V01`, reference, floor: readSceneFloor(spec, node),
+      id: node.id, image: `${node.id}-V01`, reference, floor: readSceneFloor(spec, node), building: readSceneBuilding(spec, node),
       details: group.rows.filter(row => !row.view && row.kind !== '過渡近看').map(row => row.id),
       access: access.get(node.id).map(({ edge, ...entry }) => ({ ...entry, edge: edge?.id ?? null })),
     };
@@ -64,7 +67,7 @@ export function buildSceneFlowData(graph, collection, routes, subscenes, access,
     id: child.id, node: child.node, route: child.route.edge.id, image: child.id,
     name: EXIT_PLACEMENTS[child.id]?.[2] ?? child.name, type: exploration.has(child.id) ? '探路次場景' : child.type,
     play: exploration.get(child.id) ?? null,
-    floor: childFloors.get(child.id),
+    floor: childFloors.get(child.id), ...childLocations.get(child.id),
     from: child.from, to: child.to, details: child.details.map(row => row.id),
     source: child.act.path, heading: `subscene-${child.id.toLowerCase()}-script`,
     spec: child.act.specPath, specHeading: `subscene-${child.id.toLowerCase()}-spec`,
@@ -81,7 +84,22 @@ export function buildSceneFlowData(graph, collection, routes, subscenes, access,
     for (const step of steps) assert(images[step.image], `Unbound flow image: ${step.image}`);
     const playable = children.filter(child => child.route === edge.id && child.play);
     if (playable.length) assert.equal(playable.length, steps.filter(s => s.type === 'subscene').length, `Partial exploration route: ${edge.id}`);
+    const routeChildren = children.filter(s => s.route === edge.id);
+    const fromNode = nodes.find(n => n.id === edge.fromId), toNode = nodes.find(n => n.id === edge.toId);
+    if (fromNode.floor.kind !== 'ending' && toNode.floor.kind !== 'ending') {
+      let current = fromNode.building.exit;
+      for (const child of routeChildren) {
+        assert(child.building, `Missing building location: ${child.id}`);
+        assert.equal(child.building.entry, current, `Disconnected building entry: ${child.id}`);
+        if (child.building.codes.includes('A') && child.building.codes.includes('B')) assert.equal(child.travel, '跨棟橋', `Missing bridge: ${child.id}`);
+        if (child.travel === '跨棟橋') assert(child.building.codes.length === 2 && child.floor.levels.length === 1, `Bridge must be level: ${child.id}`);
+        current = child.building.exit;
+      }
+      assert.equal(current, toNode.building.entry, `Disconnected building exit: ${edge.id}`);
+    }
     return { id: edge.id, from: edge.fromId, to: edge.toId, back: edge.back, mode: playable.length ? '逐層探索' : route.mode, floor: routeFloor(edge, nodes, children),
+      building: routeBuilding(nodes.find(n => n.id === edge.fromId).building, routeChildren, nodes.find(n => n.id === edge.toId).building),
+      travel: [...new Set(routeChildren.map(s => s.travel))],
       images: route.rows.map(row => row.id), steps };
   });
   assert.equal(connections.length, graph.edges.length);

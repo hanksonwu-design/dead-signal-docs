@@ -22,6 +22,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "共用地基",
+        "reverseLabel": "共用地基",
+        "codes": [
+          "BASE"
+        ],
+        "entry": "BASE",
+        "exit": "BASE"
+      },
       "details": [
         "P0-C01",
         "P0-C03",
@@ -77,6 +86,15 @@
           -3
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "共用地基",
+        "reverseLabel": "共用地基",
+        "codes": [
+          "BASE"
+        ],
+        "entry": "BASE",
+        "exit": "BASE"
       },
       "details": [
         "P1-C01",
@@ -144,6 +162,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "共用地基",
+        "reverseLabel": "共用地基",
+        "codes": [
+          "BASE"
+        ],
+        "entry": "BASE",
+        "exit": "BASE"
+      },
       "details": [
         "P2-C01",
         "P2-C02",
@@ -193,6 +220,15 @@
           1
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
       },
       "details": [
         "R1-C01",
@@ -251,6 +287,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
       "details": [
         "R2-D01",
         "R2-D02",
@@ -307,6 +352,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
       "details": [
         "R3-C01",
         "R3-C02",
@@ -360,6 +414,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
       "details": [
         "R4-C01",
         "R4-C02",
@@ -408,6 +471,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
       "details": [
         "R4b-C01",
         "R4b-D01",
@@ -454,6 +526,15 @@
           8
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
       },
       "details": [
         "R5-C03",
@@ -504,6 +585,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
       "details": [
         "R6-D01",
         "R6-C01",
@@ -552,6 +642,15 @@
           15
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
       },
       "details": [
         "R7-D01",
@@ -603,6 +702,15 @@
           15
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R8-C04",
@@ -665,6 +773,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R9-C01",
         "R9-F01",
@@ -721,6 +838,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R10-C01",
         "R10-C02",
@@ -768,6 +894,15 @@
           15
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R11-C01",
@@ -830,6 +965,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
       "details": [
         "R12-C03",
         "R12-C01",
@@ -846,7 +990,7 @@
         {
           "route": "R11→R12",
           "label": "來路：後勤平台門",
-          "location": "23F 門端，來路可辨22F 打包機後側的連續扶手及固定梯口；起點房在 15F 上半層平台，不把兩端畫成同層相鄰門。",
+          "location": "23F 門端，來路可辨22F 打包機後側跨棟橋的連續扶手及固定梯口；起點房在 15F 上半層平台，不把兩端畫成同層相鄰門。",
           "state": "單向承接 R11，不提供倒退回產線的操作。",
           "reading": true,
           "edge": "R11-R12-16"
@@ -897,6 +1041,15 @@
           23
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
       },
       "details": [
         "R13-C01",
@@ -956,6 +1109,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R14-C01",
         "R14-D01",
@@ -969,7 +1131,7 @@
         {
           "route": "R12↔R14",
           "label": "來路／返回：接縫鋼平台",
-          "location": "27F 門端，來路可辨26F 冷卻水旁通室的連續扶手及固定梯口；起點房在 23F，不把兩端畫成同層相鄰門。",
+          "location": "27F 門端，來路可辨26F 冷卻水旁通跨棟廊的連續扶手及固定梯口；起點房在 23F，不把兩端畫成同層相鄰門。",
           "state": "可回 R12，沿已開的配電權限通路。",
           "reading": true,
           "edge": "R12-R14-18"
@@ -977,7 +1139,7 @@
         {
           "route": "R13↔R14",
           "label": "另一來路／出口：診所送物廊",
-          "location": "27F 門端，來路可辨26F 貨梯下方分流台的連續扶手及固定梯口；起點房在 23F，不把兩端畫成同層相鄰門。",
+          "location": "27F 門端，來路可辨26F 送物跨棟廊的連續扶手及固定梯口；起點房在 23F，不把兩端畫成同層相鄰門。",
           "state": "診所安息完成後才可往返 R13；不能先到貨梯就反穿未開的後門。",
           "reading": true,
           "edge": "R13-R14-19"
@@ -1029,6 +1191,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R15-D01",
         "R15-C01",
@@ -1044,7 +1215,7 @@
         {
           "route": "R13↔R15",
           "label": "來路／返回：診所設備道",
-          "location": "27F 門端，來路可辨26F 機房前防火梯臺的連續扶手及固定梯口；起點房在 23F，不把兩端畫成同層相鄰門。",
+          "location": "27F 門端，來路可辨26F 照護後勤跨棟廊的連續扶手及固定梯口；起點房在 23F，不把兩端畫成同層相鄰門。",
           "state": "原安息與物流供電門檻成立後可回 R13。",
           "reading": true,
           "edge": "R13-R15-20"
@@ -1060,7 +1231,7 @@
         {
           "route": "R12↔R15",
           "label": "後開捷徑：維修門扣",
-          "location": "27F 門端，來路可辨26F 機房低負荷門下的連續扶手及固定梯口；起點房在 23F，不把兩端畫成同層相鄰門。",
+          "location": "27F 門端，來路可辨26F 低負荷回程跨棟廊的連續扶手及固定梯口；起點房在 23F，不把兩端畫成同層相鄰門。",
           "state": "維修支線、兩端到訪與供電證據條件成立後可直返 R12；未開時保留實體門扣，不暗示可穿越。",
           "reading": true,
           "edge": "R12-R15-24"
@@ -1096,6 +1267,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R16-D01",
         "R16-D02",
@@ -1111,7 +1291,7 @@
         {
           "route": "R15↔R16",
           "label": "來路／返回：防火門",
-          "location": "31F 門端，來路可辨30F 後勤門下的平台的連續扶手及固定梯口；起點房在 27F，不把兩端畫成同層相鄰門。",
+          "location": "31F 門端，來路可辨B 棟 L1 的 31F 抵達平台、外閘與平層牌；起點房在 27F，不把兩端畫成同層相鄰門。",
           "state": "可回 R15；部分供電需要回修理舖時，沿已開通路前往。",
           "reading": true,
           "edge": "R15-R16-22"
@@ -1146,6 +1326,15 @@
           32
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R17-C01",
@@ -1218,6 +1407,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R18-C01",
         "R18-C02",
@@ -1258,6 +1456,15 @@
           37
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R19-C01",
@@ -1310,6 +1517,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R20-C01",
         "R20-D01",
@@ -1353,6 +1569,15 @@
           40
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R21-D01",
@@ -1402,6 +1627,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R22-C01",
         "R22-C02",
@@ -1445,6 +1679,15 @@
           43
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R23-C03",
@@ -1495,6 +1738,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R24-D01",
         "R24-D02",
@@ -1543,6 +1795,15 @@
           44
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R25-D01",
@@ -1603,6 +1864,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R26-F01",
         "R26-D01",
@@ -1648,6 +1918,15 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "M1-C01",
         "M1-D01",
@@ -1692,6 +1971,15 @@
           45
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R27-C01",
@@ -1739,6 +2027,15 @@
           46
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "U1-C01",
@@ -1791,6 +2088,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "U2-C01",
         "U2-C02",
@@ -1836,6 +2142,15 @@
         ],
         "kind": "low"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "U2b-C01",
         "U2b-C02"
@@ -1879,6 +2194,15 @@
           46
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "U3-C01",
@@ -1932,6 +2256,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R28-D01",
         "R28-D02",
@@ -1980,6 +2313,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R29-D01",
         "R29-C01",
@@ -2003,7 +2345,7 @@
         {
           "route": "R29↔U4",
           "label": "出口：簽核架背後",
-          "location": "47F 門端，去路可辨47F → 48F 簽核架後夾牆梯的連續扶手及固定梯口；目的房在 48F，不把兩端畫成同層相鄰門。",
+          "location": "47F 門端，去路可辨L2 候梯口、拉閘門與 47F／48F 平層標記；目的房在 48F，不把兩端畫成同層相鄰門。",
           "state": "必要證據、本地索引與責任餘波完成後可走；選填核可和額外比對不鎖出口。",
           "reading": true,
           "edge": "R29-U4-lower"
@@ -2027,6 +2369,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "U4-C01",
         "U4-C02",
@@ -2037,7 +2388,7 @@
         {
           "route": "R29↔U4",
           "label": "來路／返回：檔案室門口",
-          "location": "48F 門端，來路可辨47F → 48F 簽核架後夾牆梯的連續扶手及固定梯口；起點房在 47F，不把兩端畫成同層相鄰門。",
+          "location": "48F 門端，來路可辨L2 候梯口、拉閘門與 47F／48F 平層標記；起點房在 47F，不把兩端畫成同層相鄰門。",
           "state": "沉降前可循已開路線返回 R29。",
           "reading": true,
           "edge": "R29-U4-lower"
@@ -2076,6 +2427,15 @@
           48
         ],
         "kind": "low"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "U4b-C01",
@@ -2116,6 +2476,15 @@
           48
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "U5-C01",
@@ -2169,6 +2538,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "U6-C01",
         "U6-C02",
@@ -2215,6 +2593,15 @@
         ],
         "kind": "low"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "U6b-C01",
         "U6b-C02"
@@ -2254,6 +2641,15 @@
           49
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R30-D01",
@@ -2316,6 +2712,15 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
       "details": [
         "R31-D01",
         "R31-D02",
@@ -2367,6 +2772,15 @@
           50
         ],
         "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
       },
       "details": [
         "R32-D01",
@@ -2437,6 +2851,15 @@
         "exit": null,
         "levels": []
       },
+      "building": {
+        "label": "分支演出",
+        "reverseLabel": "分支演出",
+        "codes": [
+          "ENDING"
+        ],
+        "entry": "ENDING",
+        "exit": "ENDING"
+      },
       "details": [],
       "access": [
         {
@@ -2484,6 +2907,15 @@
         "exit": null,
         "levels": []
       },
+      "building": {
+        "label": "片尾演出",
+        "reverseLabel": "片尾演出",
+        "codes": [
+          "ENDING"
+        ],
+        "entry": "ENDING",
+        "exit": "ENDING"
+      },
       "details": [
         "POST-D01"
       ],
@@ -2527,6 +2959,17 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "共用地基 → A 棟",
+        "reverseLabel": "A 棟 → 共用地基",
+        "codes": [
+          "BASE",
+          "A"
+        ],
+        "entry": "BASE",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "P2-V01",
       "to": "R1-V01",
       "details": [],
@@ -2553,6 +2996,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R2-V01",
       "to": "T-R2-R3-02",
       "details": [
@@ -2581,6 +3034,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R2-R3-01",
       "to": "R3-V01",
       "details": [
@@ -2609,6 +3072,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R3-V01",
       "to": "R4-V01",
       "details": [
@@ -2629,7 +3102,7 @@
       "play": {
         "objective": "找出 3F 的下一段安全通路",
         "clue": "管壁很薄，真正承重的是套箍旁有防滑紋的維修踏板；晾衣繩不是扶手。",
-        "action": "近看踏板支架，再點沿牆踏板，繞到另一棟的半段鋼梯。",
+        "action": "近看踏板支架，再點沿牆踏板，繞到 A 棟內側的半段鋼梯。",
         "recovery": "錯點晾衣繩只拉近鬆脫掛鉤；回全景仍站在排水台，不能踏空。",
         "state": "route_local.t-r3-r5-01.open"
       },
@@ -2643,6 +3116,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R3-V01",
       "to": "T-R3-R5-02",
       "details": [
@@ -2677,6 +3160,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R3-R5-01",
       "to": "T-R3-R5-03",
       "details": [
@@ -2711,6 +3204,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R3-R5-02",
       "to": "T-R3-R5-04",
       "details": [
@@ -2745,6 +3248,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R3-R5-03",
       "to": "T-R3-R5-05",
       "details": [
@@ -2779,6 +3292,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R3-R5-04",
       "to": "R5-V01",
       "details": [
@@ -2813,6 +3336,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R5-V01",
       "to": "T-R5-R6-02",
       "details": [
@@ -2847,6 +3380,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R5-R6-01",
       "to": "R6-V01",
       "details": [
@@ -2881,6 +3424,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R6-V01",
       "to": "T-R6-R7-02",
       "details": [
@@ -2915,6 +3468,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R6-R7-01",
       "to": "T-R6-R7-03",
       "details": [
@@ -2949,6 +3512,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R6-R7-02",
       "to": "R7-V01",
       "details": [
@@ -2964,7 +3537,7 @@
       "node": "R7",
       "route": "R7-R8-11",
       "image": "T-R7-R8-01",
-      "name": "鋁門側橋頭",
+      "name": "A 棟產線橋頭",
       "type": "可查看過渡",
       "play": null,
       "floor": {
@@ -2977,6 +3550,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R7-V01",
       "to": "T-R7-R8-02",
       "details": [
@@ -2992,7 +3575,7 @@
       "node": "R7",
       "route": "R7-R8-11",
       "image": "T-R7-R8-02",
-      "name": "視訊門側橋頭",
+      "name": "B 棟視訊橋頭",
       "type": "可查看過渡",
       "play": null,
       "floor": {
@@ -3005,6 +3588,17 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": "跨棟橋",
       "from": "T-R7-R8-01",
       "to": "R8-V01",
       "details": [
@@ -3033,6 +3627,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R8-V01",
       "to": "R9-V01",
       "details": [],
@@ -3060,6 +3664,16 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R8-V01",
       "to": "R10-V01",
       "details": [],
@@ -3087,6 +3701,16 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R9-V01",
       "to": "R11-V01",
       "details": [],
@@ -3113,6 +3737,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R10-V01",
       "to": "R11-V01",
       "details": [],
@@ -3145,6 +3779,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R11-V01",
       "to": "T-R11-R12-02",
       "details": [
@@ -3179,6 +3823,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R11-R12-01",
       "to": "T-R11-R12-03",
       "details": [
@@ -3213,6 +3867,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R11-R12-02",
       "to": "T-R11-R12-04",
       "details": [
@@ -3247,6 +3911,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R11-R12-03",
       "to": "T-R11-R12-05",
       "details": [
@@ -3281,6 +3955,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R11-R12-04",
       "to": "T-R11-R12-06",
       "details": [
@@ -3315,6 +3999,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R11-R12-05",
       "to": "T-R11-R12-07",
       "details": [
@@ -3330,12 +4024,12 @@
       "node": "R11",
       "route": "R11-R12-16",
       "image": "T-R11-R12-07",
-      "name": "打包機後側",
+      "name": "打包機後側跨棟橋",
       "type": "探路次場景",
       "play": {
         "objective": "找出 22F 的下一段安全通路",
         "clue": "止轉指示與可見轉軸必須一起停下；這個開關只管當前小機器。",
-        "action": "扳下本地斷電柄，確認轉軸靜止，沿機器背側原踏板上行到 23F，再親自進入修理舖。",
+        "action": "扳下本地斷電柄，確認轉軸靜止，穿過 B 棟 22F → A 棟 22F 管線橋，再沿 A 棟短梯上 23F，親自進入修理舖。",
         "recovery": "不停機時出口只提示轉動部件阻路，不造成突襲傷害；不改 R12 配電選擇。",
         "state": "route_local.t-r11-r12-07.open"
       },
@@ -3349,6 +4043,17 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟 → A 棟",
+        "reverseLabel": "A 棟 → B 棟",
+        "codes": [
+          "B",
+          "A"
+        ],
+        "entry": "B",
+        "exit": "A"
+      },
+      "travel": "跨棟橋",
       "from": "T-R11-R12-06",
       "to": "R12-V01",
       "details": [
@@ -3369,7 +4074,7 @@
       "play": {
         "objective": "找出 24F 的下一段安全通路",
         "clue": "封的是房門和公共梯，側洞另有固定爬架與護套，不需要開焊門。",
-        "action": "拉開掛在鉤上的防塵片，沿側洞爬架移到另一棟的短梯。",
+        "action": "拉開掛在鉤上的防塵片，沿側洞爬架移到 A 棟內側的短梯。",
         "recovery": "焊門不是材料任務；近看就能看清全圈封死，回訪不重新蓋住防塵片。",
         "state": "route_local.t-r12-r14-01.open"
       },
@@ -3383,6 +4088,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R12-V01",
       "to": "T-R12-R14-02",
       "details": [
@@ -3417,6 +4132,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R12-R14-01",
       "to": "T-R12-R14-03",
       "details": [
@@ -3432,12 +4157,12 @@
       "node": "R12",
       "route": "R12-R14-18",
       "image": "T-R12-R14-03",
-      "name": "冷卻水旁通室",
+      "name": "冷卻水旁通跨棟廊",
       "type": "探路次場景",
       "play": {
         "objective": "找出 26F 的下一段安全通路",
         "clue": "管壓由刻痕與錶針雙重顯示；接到集水溝的是旁通，不是斷頭支管。",
-        "action": "開啟旁通讓錶針落入刻線區，再關閉漏水支管，沿顯露的止滑踏板上行至 27F 貨梯轉接間。",
+        "action": "開啟旁通讓錶針落入刻線區，再關閉漏水支管，沿止滑跨棟廊到 B 棟 26F，循短梯上 27F 貨梯轉接間。",
         "recovery": "順序反了只維持洩壓狀態；鬆手可重做，不爆管、不新增倒數。",
         "state": "route_local.t-r12-r14-03.open"
       },
@@ -3451,6 +4176,17 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": "跨棟橋",
       "from": "T-R12-R14-02",
       "to": "R14-V01",
       "details": [
@@ -3479,6 +4215,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R13-V01",
       "to": "T-R13-R14-02",
       "details": [
@@ -3507,6 +4253,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R13-R14-01",
       "to": "T-R13-R14-03",
       "details": [
@@ -3522,7 +4278,7 @@
       "node": "R13",
       "route": "R13-R14-19",
       "image": "T-R13-R14-03",
-      "name": "貨梯下方分流台",
+      "name": "送物跨棟廊",
       "type": "可查看過渡",
       "play": null,
       "floor": {
@@ -3535,6 +4291,17 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": "跨棟橋",
       "from": "T-R13-R14-02",
       "to": "R14-V01",
       "details": [
@@ -3563,6 +4330,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R13-V01",
       "to": "T-R13-R15-02",
       "details": [
@@ -3591,6 +4368,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R13-R15-01",
       "to": "T-R13-R15-03",
       "details": [
@@ -3606,7 +4393,7 @@
       "node": "R13",
       "route": "R13-R15-20",
       "image": "T-R13-R15-03",
-      "name": "機房前防火梯臺",
+      "name": "照護後勤跨棟廊",
       "type": "可查看過渡",
       "play": null,
       "floor": {
@@ -3619,6 +4406,17 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": "跨棟橋",
       "from": "T-R13-R15-02",
       "to": "R15-V01",
       "details": [
@@ -3647,6 +4445,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R14-V01",
       "to": "R15-V01",
       "details": [],
@@ -3663,10 +4471,10 @@
       "name": "舊維修排隊外間",
       "type": "探路次場景",
       "play": {
-        "objective": "找出 28F 的下一段安全通路",
-        "clue": "鏈輪可帶動的是輕型內簾；後方防火門仍焊住，側邊缺口才通向 29F。",
-        "action": "拉起內簾到止擋，撐上原防夾桿，從側邊服務缺口繞過焊門。",
-        "recovery": "撐桿繫在旁邊；放手可重做，不必回 23F 借工具。",
+        "objective": "通過 28F 舊維修排隊外間",
+        "clue": "輕型內簾可以提起，焊住的防火門不能開。",
+        "action": "拉起內簾到止擋，撐上原防夾桿，從固定側梯到 29F。",
+        "recovery": "撐桿繫在旁邊；取消可重做，不需回修理區借工具。",
         "state": "route_local.t-r15-r16-01.open"
       },
       "floor": {
@@ -3679,6 +4487,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R15-V01",
       "to": "T-R15-R16-02",
       "details": [
@@ -3694,13 +4512,13 @@
       "node": "R15",
       "route": "R15-R16-22",
       "image": "T-R15-R16-02",
-      "name": "管道換側橋",
+      "name": "29F 拉閘門候梯口",
       "type": "探路次場景",
       "play": {
-        "objective": "找出 29F 的下一段安全通路",
-        "clue": "可走的橋由兩端樑座支撐，敲擦來自鬆門片，不能把聲音當求救者。",
-        "action": "查看橋面栓座後沿護欄換到另一側，推開卡在限位的門片，上最後一小段梯。",
-        "recovery": "不完整舊梯只顯示斷面；檢修橋不突然斷裂，回頭仍看得到剛才的捲簾側。",
+        "objective": "通過 29F 29F 拉閘門候梯口",
+        "clue": "車廂地板和平台齊平，外門機械扣到位才可進；31F 按鍵尚未啟用。",
+        "action": "查看到站刻線與實體牌，拉開外閘進入車廂，再親手關妥外閘及內閘。",
+        "recovery": "門未扣妥會保留可見缺口，按上行不動；補關即可。未上行可重新開門退回。",
         "state": "route_local.t-r15-r16-02.open"
       },
       "floor": {
@@ -3713,6 +4531,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "電梯候梯",
       "from": "T-R15-R16-01",
       "to": "T-R15-R16-03",
       "details": [
@@ -3728,14 +4556,59 @@
       "node": "R15",
       "route": "R15-R16-22",
       "image": "T-R15-R16-03",
-      "name": "後勤門下的平台",
+      "name": "L1 車廂首次上行",
       "type": "探路次場景",
       "play": {
-        "objective": "找出 30F 的下一段安全通路",
-        "clue": "缺板掛在同層牆鉤，板邊與梯架凹槽一致；不是要去尚未進入的伺服器室借工具。",
-        "action": "取下掛架踏板放入凹槽，壓下兩端固定扣，再登上 31F 門前並點門進 R16。",
-        "recovery": "未扣好可抬起重放；跨門前不完成第二層推理，也不取得 R16 憑證。",
+        "objective": "通過 29F → 30F L1 車廂首次上行",
+        "clue": "首段只能選 30F；門扣和實體平層刻線是開門依據，不以樓層顯示燈或聲音單獨判斷。",
+        "action": "按 30F 上行；到站後核對實體牌與平層刻線，親手開閘，走出 30F 平台。",
+        "recovery": "中途不能開閘；取消移動演出只略過動畫，仍停在經驗證的 30F 門內，不寫目的房到訪。",
         "state": "route_local.t-r15-r16-03.open"
+      },
+      "floor": {
+        "label": "29F → 30F",
+        "reverseLabel": "30F → 29F",
+        "entry": "29F",
+        "exit": "30F",
+        "levels": [
+          29,
+          30
+        ],
+        "kind": "passage"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "電梯車廂",
+      "from": "T-R15-R16-02",
+      "to": "T-R15-R16-04",
+      "details": [
+        "T-R15-R16-03-C01"
+      ],
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "subscene-t-r15-r16-03-script",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "subscene-t-r15-r16-03-spec"
+    },
+    {
+      "id": "T-R15-R16-04",
+      "node": "R15",
+      "route": "R15-R16-22",
+      "image": "T-R15-R16-04",
+      "name": "30F 停靠與檢修平台",
+      "type": "探路次場景",
+      "play": {
+        "objective": "通過 30F 30F 停靠與檢修平台",
+        "clue": "掛架踏板與凹槽同形；裝妥後才能走到原地檢修箱，不向 31F 借工具。",
+        "action": "取下踏板嵌入凹槽並扣緊兩端，走過踏板，扳妥檢修箱啟用柄，再返回原車廂。",
+        "recovery": "缺一扣便保留歪斜差分且不能上踏板；可重放。未啟用仍能回 29F，不開 31F。",
+        "state": "route_local.t-r15-r16-04.open"
       },
       "floor": {
         "label": "30F",
@@ -3747,15 +4620,114 @@
         ],
         "kind": "floor"
       },
-      "from": "T-R15-R16-02",
-      "to": "R16-V01",
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "電梯停靠",
+      "from": "T-R15-R16-03",
+      "to": "T-R15-R16-05",
       "details": [
-        "T-R15-R16-03-C01"
+        "T-R15-R16-04-C01"
       ],
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
-      "heading": "subscene-t-r15-r16-03-script",
+      "heading": "subscene-t-r15-r16-04-script",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
-      "specHeading": "subscene-t-r15-r16-03-spec"
+      "specHeading": "subscene-t-r15-r16-04-spec"
+    },
+    {
+      "id": "T-R15-R16-05",
+      "node": "R15",
+      "route": "R15-R16-22",
+      "image": "T-R15-R16-05",
+      "name": "L1 車廂第二段上行",
+      "type": "探路次場景",
+      "play": {
+        "objective": "通過 30F → 31F L1 車廂第二段上行",
+        "clue": "30F 踏板到位及啟用柄均成立才允許上行；這不是取得 R16 權限。",
+        "action": "親手關妥兩道閘門，按 31F；到站核對 B 棟 31F 牌與平層刻線，再開閘。",
+        "recovery": "操作取消不清空 30F 成果；未啟用按鍵保持不可用。可回已通過樓層，不重解踏板。",
+        "state": "route_local.t-r15-r16-05.open"
+      },
+      "floor": {
+        "label": "30F → 31F",
+        "reverseLabel": "31F → 30F",
+        "entry": "30F",
+        "exit": "31F",
+        "levels": [
+          30,
+          31
+        ],
+        "kind": "passage"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "電梯車廂",
+      "from": "T-R15-R16-04",
+      "to": "T-R15-R16-06",
+      "details": [
+        "T-R15-R16-05-C01"
+      ],
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "subscene-t-r15-r16-05-script",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "subscene-t-r15-r16-05-spec"
+    },
+    {
+      "id": "T-R15-R16-06",
+      "node": "R15",
+      "route": "R15-R16-22",
+      "image": "T-R15-R16-06",
+      "name": "31F 核心門前平台",
+      "type": "探路次場景",
+      "play": {
+        "objective": "通過 31F 31F 核心門前平台",
+        "clue": "停靠只代表抵達平台，原必要調查仍在 R16 房內。",
+        "action": "離開車廂，沿固定平台點門進 R16；到訪只在真正跨入房門後提交。",
+        "recovery": "可依章內回訪規則搭原梯返回 30F／29F；原鎖場與門禁優先，不能跳往其他樓層。",
+        "state": "route_local.t-r15-r16-06.open"
+      },
+      "floor": {
+        "label": "31F",
+        "reverseLabel": "31F",
+        "entry": "31F",
+        "exit": "31F",
+        "levels": [
+          31
+        ],
+        "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "電梯停靠",
+      "from": "T-R15-R16-05",
+      "to": "R16-V01",
+      "details": [
+        "T-R15-R16-06-C01"
+      ],
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "subscene-t-r15-r16-06-script",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "subscene-t-r15-r16-06-spec"
     },
     {
       "id": "R16-V02",
@@ -3776,6 +4748,16 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R16-V01",
       "to": "R17-V01",
       "details": [],
@@ -3802,6 +4784,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "R12-V01",
       "to": "T-R12-R15-02",
       "details": [
@@ -3830,6 +4822,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": "步道",
       "from": "T-R12-R15-01",
       "to": "T-R12-R15-03",
       "details": [
@@ -3845,7 +4847,7 @@
       "node": "R12",
       "route": "R12-R15-24",
       "image": "T-R12-R15-03",
-      "name": "機房低負荷門下",
+      "name": "低負荷回程跨棟廊",
       "type": "可查看過渡",
       "play": null,
       "floor": {
@@ -3858,6 +4860,17 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": "跨棟橋",
       "from": "T-R12-R15-02",
       "to": "R15-V01",
       "details": [
@@ -3886,6 +4899,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R17-V01",
       "to": "T-R17-R14-02",
       "details": [
@@ -3914,6 +4937,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R17-R14-01",
       "to": "T-R17-R14-03",
       "details": [
@@ -3942,6 +4975,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R17-R14-02",
       "to": "T-R17-R14-04",
       "details": [
@@ -3970,6 +5013,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R17-R14-03",
       "to": "R14-V01",
       "details": [
@@ -4004,6 +5057,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R17-V01",
       "to": "T-R17-R18-02",
       "details": [
@@ -4038,6 +5101,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R17-R18-01",
       "to": "T-R17-R18-03",
       "details": [
@@ -4072,6 +5145,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R17-R18-02",
       "to": "T-R17-R18-04",
       "details": [
@@ -4106,6 +5189,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R17-R18-03",
       "to": "R18-V01",
       "details": [
@@ -4134,6 +5227,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R19-V01",
       "to": "R20-V01",
       "details": [],
@@ -4160,6 +5263,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R20-V01",
       "to": "T-R20-R21-02",
       "details": [
@@ -4188,6 +5301,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "T-R20-R21-01",
       "to": "R21-V01",
       "details": [
@@ -4216,6 +5339,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R21-V01",
       "to": "R22-V01",
       "details": [
@@ -4245,6 +5378,16 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R22-V01",
       "to": "R23-V01",
       "details": [],
@@ -4272,6 +5415,16 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R24-V01",
       "to": "R25-V01",
       "details": [
@@ -4300,6 +5453,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R25-V01",
       "to": "R26-V01",
       "details": [],
@@ -4326,6 +5489,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R28-V01",
       "to": "R29-V01",
       "details": [],
@@ -4353,6 +5526,16 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R30-V01",
       "to": "R31-V01",
       "details": [],
@@ -4379,6 +5562,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R31-V01",
       "to": "R32-V01",
       "details": [],
@@ -4406,6 +5599,16 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "R27-V01",
       "to": "U1-V01",
       "details": [
@@ -4421,9 +5624,59 @@
       "node": "R29",
       "route": "R29-U4-lower",
       "image": "T-R29-U4-01",
-      "name": "簽核架後夾牆梯",
-      "type": "可查看過渡",
-      "play": null,
+      "name": "47F 簽核架後候梯口",
+      "type": "探路次場景",
+      "play": {
+        "objective": "通過 47F 47F 簽核架後候梯口",
+        "clue": "本梯只有 47F／48F，電源來自已恢復的維修保留支路；不由 R29 核可選項供電。",
+        "action": "原必要查證與責任收束完成後，查看平層刻線，進入車廂並親手關妥兩道閘門。",
+        "recovery": "未完成原門檻不能離房；選填核可、SQ-M 和收集數量都不鎖梯。尚未上行可退回。",
+        "state": "route_local.t-r29-u4-01.open"
+      },
+      "floor": {
+        "label": "47F",
+        "reverseLabel": "47F",
+        "entry": "47F",
+        "exit": "47F",
+        "levels": [
+          47
+        ],
+        "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "電梯候梯",
+      "from": "R29-V01",
+      "to": "T-R29-U4-02",
+      "details": [
+        "T-R29-U4-01-C01"
+      ],
+      "source": "09_劇本/09-09_正式劇本_第六幕.md",
+      "heading": "subscene-t-r29-u4-01-script",
+      "spec": "10_製作規格/10-07_製作規格_第六幕.md",
+      "specHeading": "subscene-t-r29-u4-01-spec"
+    },
+    {
+      "id": "T-R29-U4-02",
+      "node": "R29",
+      "route": "R29-U4-lower",
+      "image": "T-R29-U4-02",
+      "name": "L2 冷藏線車廂",
+      "type": "探路次場景",
+      "play": {
+        "objective": "通過 47F → 48F L2 冷藏線車廂",
+        "clue": "假停靠處看得到封板，沒有落地平台；真正 48F 有實體牌、平層刻線與完整踏面，靜音仍可辨認。",
+        "action": "按 48F 上行；到站後核對三項實體線索，親手拉開閘門，走到 48F 平台。",
+        "recovery": "假停靠處拉閘只碰到鎖住的門扣，可收手繼續；不扣資源、不墜落、不新增房間。",
+        "state": "route_local.t-r29-u4-02.open"
+      },
       "floor": {
         "label": "47F → 48F",
         "reverseLabel": "48F → 47F",
@@ -4435,15 +5688,69 @@
         ],
         "kind": "passage"
       },
-      "from": "R29-V01",
-      "to": "U4-V01",
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "電梯車廂",
+      "from": "T-R29-U4-01",
+      "to": "T-R29-U4-03",
       "details": [
-        "T-R29-U4-01-C01"
+        "T-R29-U4-02-C01"
       ],
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
-      "heading": "subscene-t-r29-u4-01-script",
+      "heading": "subscene-t-r29-u4-02-script",
       "spec": "10_製作規格/10-07_製作規格_第六幕.md",
-      "specHeading": "subscene-t-r29-u4-01-spec"
+      "specHeading": "subscene-t-r29-u4-02-spec"
+    },
+    {
+      "id": "T-R29-U4-03",
+      "node": "R29",
+      "route": "R29-U4-lower",
+      "image": "T-R29-U4-03",
+      "name": "48F 門牌廊前平台",
+      "type": "探路次場景",
+      "play": {
+        "objective": "通過 48F 48F 門牌廊前平台",
+        "clue": "抵達平台不代表已解 U4 迴廊；來路可返，目的房機關仍保持初始狀態。",
+        "action": "自行點入 U4；R30 不可逆提交前，依原門檻可叫回 L2 返回 47F。",
+        "recovery": "叫梯從最近有效停靠點移來，到站才開外閘。R30 不可逆提交即封回程，不等到制動後。",
+        "state": "route_local.t-r29-u4-03.open"
+      },
+      "floor": {
+        "label": "48F",
+        "reverseLabel": "48F",
+        "entry": "48F",
+        "exit": "48F",
+        "levels": [
+          48
+        ],
+        "kind": "floor"
+      },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "電梯停靠",
+      "from": "T-R29-U4-02",
+      "to": "U4-V01",
+      "details": [
+        "T-R29-U4-03-C01"
+      ],
+      "source": "09_劇本/09-09_正式劇本_第六幕.md",
+      "heading": "subscene-t-r29-u4-03-script",
+      "spec": "10_製作規格/10-07_製作規格_第六幕.md",
+      "specHeading": "subscene-t-r29-u4-03-spec"
     },
     {
       "id": "T-U3-R28-01",
@@ -4464,6 +5771,16 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "U3-V01",
       "to": "R28-V01",
       "details": [
@@ -4493,6 +5810,16 @@
         ],
         "kind": "passage"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "U5-V01",
       "to": "U6-V01",
       "details": [
@@ -4521,6 +5848,16 @@
         ],
         "kind": "floor"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": "步道",
       "from": "U3-V01",
       "to": "U1-V01",
       "details": [],
@@ -4542,6 +5879,16 @@
         "reverseLabel": "B3",
         "kind": "route"
       },
+      "building": {
+        "label": "共用地基",
+        "reverseLabel": "共用地基",
+        "codes": [
+          "BASE"
+        ],
+        "entry": "BASE",
+        "exit": "BASE"
+      },
+      "travel": [],
       "images": [
         "P0-V01",
         "P1-V01"
@@ -4570,6 +5917,16 @@
         "reverseLabel": "B3",
         "kind": "route"
       },
+      "building": {
+        "label": "共用地基",
+        "reverseLabel": "共用地基",
+        "codes": [
+          "BASE"
+        ],
+        "entry": "BASE",
+        "exit": "BASE"
+      },
+      "travel": [],
       "images": [
         "P1-V01",
         "P2-V01"
@@ -4598,6 +5955,19 @@
         "reverseLabel": "1F → B3",
         "kind": "route"
       },
+      "building": {
+        "label": "共用地基 → A 棟",
+        "reverseLabel": "A 棟 → 共用地基",
+        "codes": [
+          "BASE",
+          "A"
+        ],
+        "entry": "BASE",
+        "exit": "A"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "P2-V02"
       ],
@@ -4630,6 +6000,16 @@
         "reverseLabel": "1F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": [],
       "images": [
         "R1-V01",
         "R2-V01"
@@ -4658,6 +6038,18 @@
         "reverseLabel": "2F → 1F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R2-R3-01",
         "T-R2-R3-02"
@@ -4696,6 +6088,18 @@
         "reverseLabel": "2F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R3-R4-01"
       ],
@@ -4728,6 +6132,18 @@
         "reverseLabel": "8F → 7F → 6F → 5F → 4F → 3F → 2F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R3-R5-01",
         "T-R3-R5-02",
@@ -4784,6 +6200,16 @@
         "reverseLabel": "2F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": [],
       "images": [
         "R4-V01",
         "R4b-V01"
@@ -4812,6 +6238,18 @@
         "reverseLabel": "11F → 10F → 9F → 8F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R5-R6-01",
         "T-R5-R6-02"
@@ -4850,6 +6288,18 @@
         "reverseLabel": "15F → 14F → 13F → 12F → 11F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R6-R7-01",
         "T-R6-R7-02",
@@ -4894,6 +6344,20 @@
         "reverseLabel": "15F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": [
+        "步道",
+        "跨棟橋"
+      ],
       "images": [
         "T-R7-R8-01",
         "T-R7-R8-02"
@@ -4932,6 +6396,18 @@
         "reverseLabel": "15F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R8-V02"
       ],
@@ -4964,6 +6440,18 @@
         "reverseLabel": "15F 上半層平台 → 15F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R8-V03"
       ],
@@ -4996,6 +6484,18 @@
         "reverseLabel": "15F 上半層平台 → 15F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R9-V02"
       ],
@@ -5028,6 +6528,18 @@
         "reverseLabel": "15F 上半層平台",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R10-V02"
       ],
@@ -5060,6 +6572,20 @@
         "reverseLabel": "23F → 22F → 21F → 20F → 19F → 18F → 17F → 16F → 15F 上半層平台",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟 → A 棟",
+        "reverseLabel": "A 棟 → B 棟",
+        "codes": [
+          "B",
+          "A"
+        ],
+        "entry": "B",
+        "exit": "A"
+      },
+      "travel": [
+        "步道",
+        "跨棟橋"
+      ],
       "images": [
         "T-R11-R12-01",
         "T-R11-R12-02",
@@ -5128,6 +6654,16 @@
         "reverseLabel": "23F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟",
+        "reverseLabel": "A 棟",
+        "codes": [
+          "A"
+        ],
+        "entry": "A",
+        "exit": "A"
+      },
+      "travel": [],
       "images": [
         "R12-V01",
         "R13-V01"
@@ -5156,6 +6692,20 @@
         "reverseLabel": "27F → 26F → 25F → 24F → 23F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": [
+        "步道",
+        "跨棟橋"
+      ],
       "images": [
         "T-R12-R14-01",
         "T-R12-R14-02",
@@ -5200,6 +6750,20 @@
         "reverseLabel": "27F → 26F → 25F → 24F → 23F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": [
+        "步道",
+        "跨棟橋"
+      ],
       "images": [
         "T-R13-R14-01",
         "T-R13-R14-02",
@@ -5244,6 +6808,20 @@
         "reverseLabel": "27F → 26F → 25F → 24F → 23F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": [
+        "步道",
+        "跨棟橋"
+      ],
       "images": [
         "T-R13-R15-01",
         "T-R13-R15-02",
@@ -5288,6 +6866,18 @@
         "reverseLabel": "27F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R14-V02"
       ],
@@ -5320,10 +6910,28 @@
         "reverseLabel": "31F → 30F → 29F → 28F → 27F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道",
+        "電梯候梯",
+        "電梯車廂",
+        "電梯停靠"
+      ],
       "images": [
         "T-R15-R16-01",
         "T-R15-R16-02",
-        "T-R15-R16-03"
+        "T-R15-R16-03",
+        "T-R15-R16-04",
+        "T-R15-R16-05",
+        "T-R15-R16-06"
       ],
       "steps": [
         {
@@ -5347,6 +6955,21 @@
           "image": "T-R15-R16-03"
         },
         {
+          "type": "subscene",
+          "id": "T-R15-R16-04",
+          "image": "T-R15-R16-04"
+        },
+        {
+          "type": "subscene",
+          "id": "T-R15-R16-05",
+          "image": "T-R15-R16-05"
+        },
+        {
+          "type": "subscene",
+          "id": "T-R15-R16-06",
+          "image": "T-R15-R16-06"
+        },
+        {
           "type": "main",
           "id": "R16",
           "image": "R16-V01"
@@ -5364,6 +6987,18 @@
         "reverseLabel": "32F → 31F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R16-V02"
       ],
@@ -5396,6 +7031,20 @@
         "reverseLabel": "27F → 26F → 25F → 24F → 23F",
         "kind": "route"
       },
+      "building": {
+        "label": "A 棟 → B 棟",
+        "reverseLabel": "B 棟 → A 棟",
+        "codes": [
+          "A",
+          "B"
+        ],
+        "entry": "A",
+        "exit": "B"
+      },
+      "travel": [
+        "步道",
+        "跨棟橋"
+      ],
       "images": [
         "T-R12-R15-01",
         "T-R12-R15-02",
@@ -5440,6 +7089,18 @@
         "reverseLabel": "27F → 28F → 29F → 30F → 31F → 32F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R17-R14-01",
         "T-R17-R14-02",
@@ -5490,6 +7151,18 @@
         "reverseLabel": "37F → 36F → 35F → 34F → 33F → 32F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R17-R18-01",
         "T-R17-R18-02",
@@ -5540,6 +7213,16 @@
         "reverseLabel": "37F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "R18-V01",
         "R19-V01"
@@ -5568,6 +7251,18 @@
         "reverseLabel": "37F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R19-V02"
       ],
@@ -5600,6 +7295,18 @@
         "reverseLabel": "40F → 39F → 38F → 37F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R20-R21-01",
         "T-R20-R21-02"
@@ -5638,6 +7345,18 @@
         "reverseLabel": "42F → 41F → 40F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R21-R22-01"
       ],
@@ -5670,6 +7389,18 @@
         "reverseLabel": "43F → 42F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R22-V03"
       ],
@@ -5702,6 +7433,16 @@
         "reverseLabel": "43F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "R23-V01",
         "R24-V01"
@@ -5730,6 +7471,18 @@
         "reverseLabel": "44F → 43F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R24-R25-01"
       ],
@@ -5762,6 +7515,18 @@
         "reverseLabel": "44F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R25-V03"
       ],
@@ -5794,6 +7559,18 @@
         "reverseLabel": "47F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R28-V02"
       ],
@@ -5826,6 +7603,18 @@
         "reverseLabel": "50F → 49F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R30-V02"
       ],
@@ -5858,6 +7647,18 @@
         "reverseLabel": "50F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "R31-V02"
       ],
@@ -5890,6 +7691,16 @@
         "reverseLabel": "50F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "R32-V01"
       ],
@@ -5912,6 +7723,17 @@
         "reverseLabel": "結局／片尾演出",
         "kind": "ending"
       },
+      "building": {
+        "label": "B 棟 → 分支演出",
+        "reverseLabel": "分支演出 → B 棟",
+        "codes": [
+          "B",
+          "ENDING"
+        ],
+        "entry": "B",
+        "exit": "ENDING"
+      },
+      "travel": [],
       "images": [
         "R32-V01",
         "R33-V01"
@@ -5940,6 +7762,17 @@
         "reverseLabel": "B3 · 肉身回返",
         "kind": "ending"
       },
+      "building": {
+        "label": "分支演出 → 共用地基",
+        "reverseLabel": "共用地基 → 分支演出",
+        "codes": [
+          "ENDING",
+          "BASE"
+        ],
+        "entry": "ENDING",
+        "exit": "BASE"
+      },
+      "travel": [],
       "images": [
         "R33-V02"
       ],
@@ -5967,6 +7800,16 @@
         "reverseLabel": "結局／片尾演出",
         "kind": "ending"
       },
+      "building": {
+        "label": "分支演出",
+        "reverseLabel": "分支演出",
+        "codes": [
+          "ENDING"
+        ],
+        "entry": "ENDING",
+        "exit": "ENDING"
+      },
+      "travel": [],
       "images": [
         "R33-V01",
         "POST-V01"
@@ -5995,6 +7838,18 @@
         "reverseLabel": "46F → 45F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-R27-U1-01"
       ],
@@ -6021,14 +7876,30 @@
       "from": "R29",
       "to": "U4",
       "back": true,
-      "mode": "逐鏡過渡",
+      "mode": "逐層探索",
       "floor": {
         "label": "47F → 48F",
         "reverseLabel": "48F → 47F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "電梯候梯",
+        "電梯車廂",
+        "電梯停靠"
+      ],
       "images": [
-        "T-R29-U4-01"
+        "T-R29-U4-01",
+        "T-R29-U4-02",
+        "T-R29-U4-03"
       ],
       "steps": [
         {
@@ -6040,6 +7911,16 @@
           "type": "subscene",
           "id": "T-R29-U4-01",
           "image": "T-R29-U4-01"
+        },
+        {
+          "type": "subscene",
+          "id": "T-R29-U4-02",
+          "image": "T-R29-U4-02"
+        },
+        {
+          "type": "subscene",
+          "id": "T-R29-U4-03",
+          "image": "T-R29-U4-03"
         },
         {
           "type": "main",
@@ -6059,6 +7940,16 @@
         "reverseLabel": "46F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "U1-V01",
         "U2-V01"
@@ -6087,6 +7978,18 @@
         "reverseLabel": "47F → 46F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-U3-R28-01"
       ],
@@ -6119,6 +8022,18 @@
         "reverseLabel": "49F → 48F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "T-U5-U6-01"
       ],
@@ -6151,6 +8066,16 @@
         "reverseLabel": "48F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "U4-V01"
       ],
@@ -6173,6 +8098,16 @@
         "reverseLabel": "44F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "R25-V01",
         "M1-V01"
@@ -6201,6 +8136,16 @@
         "reverseLabel": "45F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "M1-V01",
         "R27-V01"
@@ -6229,6 +8174,16 @@
         "reverseLabel": "46F 橋下夾層 → 46F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "U2-V01",
         "U2b-V01"
@@ -6257,6 +8212,16 @@
         "reverseLabel": "46F → 46F 橋下夾層",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "U2b-V01",
         "U3-V01"
@@ -6285,6 +8250,16 @@
         "reverseLabel": "48F 檢修蓋下夾層 → 48F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "U4-V01",
         "U4b-V01"
@@ -6313,6 +8288,16 @@
         "reverseLabel": "48F → 48F 檢修蓋下夾層",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "U4b-V01",
         "U5-V01"
@@ -6341,6 +8326,16 @@
         "reverseLabel": "49F 水箱下夾層 → 49F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "U6-V01",
         "U6b-V01"
@@ -6369,6 +8364,16 @@
         "reverseLabel": "49F → 49F 水箱下夾層",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [],
       "images": [
         "U6b-V01",
         "R30-V01"
@@ -6397,6 +8402,18 @@
         "reverseLabel": "46F",
         "kind": "route"
       },
+      "building": {
+        "label": "B 棟",
+        "reverseLabel": "B 棟",
+        "codes": [
+          "B"
+        ],
+        "entry": "B",
+        "exit": "B"
+      },
+      "travel": [
+        "步道"
+      ],
       "images": [
         "U3-V02"
       ],
@@ -6995,7 +9012,7 @@
       "node": "R3",
       "kind": "過渡近看",
       "content": "落水管套箍與踩踏磨痕",
-      "requirements": "每個列名焦點各交清晰局部；管壁很薄，真正承重的是套箍旁有防滑紋的維修踏板；晾衣繩不是扶手。 近看踏板支架，再點沿牆踏板，繞到另一棟的半段鋼梯。 關閉回 T-R3-R5-01，不自動切到下一層。機關初始／操作中／到位差分均須交付。",
+      "requirements": "每個列名焦點各交清晰局部；管壁很薄，真正承重的是套箍旁有防滑紋的維修踏板；晾衣繩不是扶手。 近看踏板支架，再點沿牆踏板，繞到 A 棟內側的半段鋼梯。 關閉回 T-R3-R5-01，不自動切到下一層。機關初始／操作中／到位差分均須交付。",
       "status": "pending",
       "spec": "10_製作規格/10-02_製作規格_第一幕.md",
       "heading": "node-r3-images"
@@ -7574,7 +9591,7 @@
       "id": "T-R7-R8-01",
       "node": "R7",
       "kind": "過渡場景",
-      "content": "鋁門側橋頭：鋁門、橋板接縫、舊窗高度與包覆內井的棚板。",
+      "content": "A 棟產線橋頭：A 棟 15F 的舊鋁門貼著住戶留下的送餐紙；門外是包覆內井的窄橋，對岸 B 棟門牌壓在隔音布上。兩端樓層同為 15F，棟別與窗高不同。",
       "requirements": "來路 R7-V01；去路 T-R7-R8-02。依原門檻可原路折返；可沿窄橋自由前往；教戰手冊與留存排行榜在 R11 離幕前核對，老周安息及配給支線不擋通行。背景獨立構圖，材質可共用；不水平翻圖當反向。",
       "status": "pending",
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -7584,7 +9601,7 @@
       "id": "T-R7-R8-01-C01",
       "node": "R7",
       "kind": "過渡近看",
-      "content": "橋板與量體接縫",
+      "content": "A 棟門牌、橋板接縫與對岸 B 棟字牌",
       "requirements": "透視與承重方向清楚，橋外沒有天空或可攀逃路。每個列名物件均交清晰局部；關閉回 T-R7-R8-01，不把下一鏡當返回位置。",
       "status": "pending",
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -7594,7 +9611,7 @@
       "id": "T-R7-R8-02",
       "node": "R7",
       "kind": "過渡場景",
-      "content": "視訊門側橋頭：異批地磚、略高門檻、隔音布、晾衣桿與 R8 門框。",
+      "content": "B 棟視訊橋頭：橋板跨過兩棟之間的封閉內井，B 棟門檻略高；回頭仍能辨認 A 棟的鋁門。夾層棚板遮住天光，鐵網外只有封死的住戶窗。",
       "requirements": "來路 T-R7-R8-01；去路 R8-V01。依原門檻可原路折返；可沿窄橋自由前往；教戰手冊與留存排行榜在 R11 離幕前核對，老周安息及配給支線不擋通行。背景獨立構圖，材質可共用；不水平翻圖當反向。",
       "status": "pending",
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -7604,7 +9621,7 @@
       "id": "T-R7-R8-02-C01",
       "node": "R7",
       "kind": "過渡近看",
-      "content": "封窗與舊晾衣桿固定處",
+      "content": "兩端棟別牌、橋座與異批地磚",
       "requirements": "同一住商遺跡與後加隔音層分清；不新增錄音。每個列名物件均交清晰局部；關閉回 T-R7-R8-02，不把下一鏡當返回位置。",
       "status": "pending",
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -8204,8 +10221,8 @@
       "id": "T-R11-R12-07",
       "node": "R11",
       "kind": "過渡場景",
-      "content": "打包機後側：打包帶像長髮垂在走道上；鏽住的打包機把舊診所招牌壓在背板後，右側傳送帶正在無載空轉。",
-      "requirements": "來路 T-R11-R12-06；去路 R12-V01。逐層探路；止轉指示與可見轉軸必須一起停下；這個開關只管當前小機器。 扳下本地斷電柄，確認轉軸靜止，沿機器背側原踏板上行到 23F，再親自進入修理舖。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "content": "打包機後側跨棟橋：B 棟 22F 的打包帶垂在通路上，無載轉軸擋住橋頭。封閉管線橋另一端是 A 棟 22F 舊診所招牌，橋後短梯才上 A 棟 23F 修理舖。",
+      "requirements": "來路 T-R11-R12-06；去路 R12-V01。逐層探路；止轉指示與可見轉軸必須一起停下；這個開關只管當前小機器。 扳下本地斷電柄，確認轉軸靜止，穿過 B 棟 22F → A 棟 22F 管線橋，再沿 A 棟短梯上 23F，親自進入修理舖。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "status": "pending",
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
       "heading": "node-r11-images"
@@ -8214,7 +10231,7 @@
       "id": "T-R11-R12-07-C01",
       "node": "R11",
       "kind": "過渡近看",
-      "content": "本地斷電柄與傳送帶轉軸",
+      "content": "本地斷電柄、止轉指示、兩端 22F 棟別牌與 A 棟上行梯",
       "requirements": "止轉指示與可見轉軸必須一起停下；這個開關只管當前小機器。 不停機時出口只提示轉動部件阻路，不造成突襲傷害；不改 R12 配電選擇。 每個列名焦點交清晰局部；關閉回 T-R11-R12-07，不自動移至下一房。機關初始／操作中／到位差分均須交付。",
       "status": "pending",
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -8335,7 +10352,7 @@
       "node": "R12",
       "kind": "過渡場景",
       "content": "焊封中繼平台：24F 標牌仍被封閉告示壓住；正前住戶門整圈焊死，維修管卻繞過門楣進入側面低洞。",
-      "requirements": "來路 R12-V01；去路 T-R12-R14-02。逐層探路；封的是房門和公共梯，側洞另有固定爬架與護套，不需要開焊門。 拉開掛在鉤上的防塵片，沿側洞爬架移到另一棟的短梯。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "requirements": "來路 R12-V01；去路 T-R12-R14-02。逐層探路；封的是房門和公共梯，側洞另有固定爬架與護套，不需要開焊門。 拉開掛在鉤上的防塵片，沿側洞爬架移到 A 棟內側的短梯。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r12-images"
@@ -8374,8 +10391,8 @@
       "id": "T-R12-R14-03",
       "node": "R12",
       "kind": "過渡場景",
-      "content": "冷卻水旁通室：粗水管從天花板垂到腰際，舊住戶蓄水桶排列在機器下方；去路被持續滲水遮成一片亮面。",
-      "requirements": "來路 T-R12-R14-02；去路 R14-V01。逐層探路；管壓由刻痕與錶針雙重顯示；接到集水溝的是旁通，不是斷頭支管。 開啟旁通讓錶針落入刻線區，再關閉漏水支管，沿顯露的止滑踏板上行至 27F 貨梯轉接間。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "content": "冷卻水旁通跨棟廊：A 棟 26F 的住戶蓄水桶排在粗管下；漏水遮住跨棟廊入口。兩端 A／B 棟 26F 牌與固定橋座可對位，B 棟側短梯上接 27F 貨梯轉接間。",
+      "requirements": "來路 T-R12-R14-02；去路 R14-V01。逐層探路；管壓由刻痕與錶針雙重顯示；接到集水溝的是旁通，不是斷頭支管。 開啟旁通讓錶針落入刻線區，再關閉漏水支管，沿止滑跨棟廊到 B 棟 26F，循短梯上 27F 貨梯轉接間。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r12-images"
@@ -8384,7 +10401,7 @@
       "id": "T-R12-R14-03-C01",
       "node": "R12",
       "kind": "過渡近看",
-      "content": "壓力錶、旁通刻痕與集水溝",
+      "content": "旁通錶針、漏水支管、兩端橋座與棟別牌",
       "requirements": "管壓由刻痕與錶針雙重顯示；接到集水溝的是旁通，不是斷頭支管。 順序反了只維持洩壓狀態；鬆手可重做，不爆管、不新增倒數。 每個列名焦點交清晰局部；關閉回 T-R12-R14-03，不自動移至下一房。機關初始／操作中／到位差分均須交付。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
@@ -8434,8 +10451,8 @@
       "id": "T-R12-R15-03",
       "node": "R12",
       "kind": "過渡場景",
-      "content": "機房低負荷門下：機房低負荷門下，來路扶手與下一段梯口同框；門楣保留 26F 標記，封板遮住舊公共梯。",
-      "requirements": "來路 T-R12-R15-02；去路 R15-V01。既有門檻；上方標示 27F 機房；本段只縮短繞行，不省略樓層。 由上行扶手到 R15 側門；回程逐層反向對位。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "content": "低負荷回程跨棟廊：26F 同一組接駁梁外緣另留低負荷服務道；A、B 棟兩端門扣均可辨，與送物及冷卻水廊用實體隔網分道。B 棟短梯接 27F 機房。",
+      "requirements": "來路 T-R12-R15-02；去路 R15-V01。既有門檻；上方標示 27F 機房；本段只縮短繞行，不省略樓層。 SQ-T 已完成且原回訪條件成立，才沿 A 棟 26F → B 棟 26F 的服務道到 27F 機房；回程按同一組棟別牌反向。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r12-images"
@@ -8444,7 +10461,7 @@
       "id": "T-R12-R15-03-C01",
       "node": "R12",
       "kind": "過渡近看",
-      "content": "兩端門扣與上行扶手",
+      "content": "回程跨棟廊雙端門扣、棟別牌與低負荷標示",
       "requirements": "上方標示 27F 機房；本段只縮短繞行，不省略樓層。 不改供電選擇與犧牲紀錄。 每個列名焦點交清晰局部；關閉回 T-R12-R15-03，不自動移至下一房。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
@@ -8584,8 +10601,8 @@
       "id": "T-R13-R14-03",
       "node": "R13",
       "kind": "過渡場景",
-      "content": "貨梯下方分流台：貨梯下方分流台，來路扶手與下一段梯口同框；門楣保留 26F 標記，封板遮住舊公共梯。",
-      "requirements": "來路 T-R13-R14-02；去路 R14-V01。既有門檻；同組搬運標記接到 27F 貨梯框，繼電器仍在目的房。 循分流台最後一段梯進入 R14。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "content": "送物跨棟廊：A 棟 26F 送物廊保留舊住戶搬運字牌，橋上後加的鐵網將人行道與冷卻水廊隔開；同層跨入 B 棟後，短梯接到 27F 貨梯框。",
+      "requirements": "來路 T-R13-R14-02；去路 R14-V01。既有門檻；同組搬運標記接到 27F 貨梯框，繼電器仍在目的房。 沿送物廊由 A 棟 26F 跨到 B 棟 26F，再循最後一段短梯進 R14。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r13-images"
@@ -8594,7 +10611,7 @@
       "id": "T-R13-R14-03-C01",
       "node": "R13",
       "kind": "過渡近看",
-      "content": "住戶搬運標記與新分流線",
+      "content": "A／B 棟 26F 字牌、送物廊隔網與貨梯側短梯",
       "requirements": "同組搬運標記接到 27F 貨梯框，繼電器仍在目的房。 進房不代做 R14 繼電器；可沿原路返回。 每個列名焦點交清晰局部；關閉回 T-R13-R14-03，不自動移至下一房。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
@@ -8644,8 +10661,8 @@
       "id": "T-R13-R15-03",
       "node": "R13",
       "kind": "過渡場景",
-      "content": "機房前防火梯臺：機房前防火梯臺，來路扶手與下一段梯口同框；門楣保留 26F 標記，封板遮住舊公共梯。",
-      "requirements": "來路 T-R13-R15-02；去路 R15-V01。既有門檻；同一回路護套穿過上方門框，不會接去技術核心。 走最後一段固定梯到 27F R15。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "content": "照護後勤跨棟廊：A 棟 26F 的防火門外，後勤管廊在固定梁座上跨到 B 棟；隔網另一側看得到送物廊，沒有可穿越缺口。B 棟末端短梯上接 27F 機房。",
+      "requirements": "來路 T-R13-R15-02；去路 R15-V01。既有門檻；同一回路護套穿過上方門框，不會接去技術核心。 依已開後勤門端沿 A 棟 26F → B 棟 26F 管廊通行，再上 27F 機房；仍須 E-07 安息及 R14 繼電器條件。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r13-images"
@@ -8654,7 +10671,7 @@
       "id": "T-R13-R15-03-C01",
       "node": "R13",
       "kind": "過渡近看",
-      "content": "27F 門牌與回路護套",
+      "content": "兩端棟別牌、分道隔網與機房門下短梯",
       "requirements": "同一回路護套穿過上方門框，不會接去技術核心。 通行不替玩家選供電方案，也不開 R16。 每個列名焦點交清晰局部；關閉回 T-R13-R15-03，不自動移至下一房。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
@@ -8854,8 +10871,8 @@
       "id": "T-R15-R16-01",
       "node": "R15",
       "kind": "過渡場景",
-      "content": "舊維修排隊外間：牆上掛著空維修號牌，不同筆跡的等候凳被搬到同一側；堵住去路的捲簾底下露出手動鏈。",
-      "requirements": "來路 R15-V01；去路 T-R15-R16-02。逐層探路；鏈輪可帶動的是輕型內簾；後方防火門仍焊住，側邊缺口才通向 29F。 拉起內簾到止擋，撐上原防夾桿，從側邊服務缺口繞過焊門。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "content": "舊維修排隊外間：牆上空維修號牌留在等候凳上；焊死的公共梯旁露出輕型內簾手動鏈，側洞通向 B 棟 29F 候梯口。",
+      "requirements": "來路 R15-V01；去路 T-R15-R16-02。逐層探路；輕型內簾可以提起，焊住的防火門不能開。 拉起內簾到止擋，撐上原防夾桿，從固定側梯到 29F。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r15-images"
@@ -8864,8 +10881,8 @@
       "id": "T-R15-R16-01-C01",
       "node": "R15",
       "kind": "過渡近看",
-      "content": "鏈輪方向與底部防夾撐桿",
-      "requirements": "鏈輪可帶動的是輕型內簾；後方防火門仍焊住，側邊缺口才通向 29F。 撐桿繫在旁邊；放手可重做，不必回 23F 借工具。 每個列名焦點交清晰局部；關閉回 T-R15-R16-01，不自動移至下一房。機關初始／操作中／到位差分均須交付。",
+      "content": "鏈輪方向、原防夾撐桿與側洞踏點",
+      "requirements": "輕型內簾可以提起，焊住的防火門不能開。 撐桿繫在旁邊；取消可重做，不需回修理區借工具。 每個列名焦點均交清晰局部；關閉回 T-R15-R16-01，不自動移至下一房。門扣、按鍵與到位差分均須交付。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r15-images"
@@ -8874,8 +10891,8 @@
       "id": "T-R15-R16-02",
       "node": "R15",
       "kind": "過渡場景",
-      "content": "管道換側橋：原樓梯在這層上下都斷了，兩棟之間只剩貼管的檢修橋。橋旁布條垂直不動，遠端卻有極輕的敲擦。",
-      "requirements": "來路 T-R15-R16-01；去路 T-R15-R16-03。逐層探路；可走的橋由兩端樑座支撐，敲擦來自鬆門片，不能把聲音當求救者。 查看橋面栓座後沿護欄換到另一側，推開卡在限位的門片，上最後一小段梯。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "content": "29F 拉閘門候梯口：B 棟 29F 的鐵製拉閘門後是停妥的單人維修電梯。外門框保留實體樓層牌與平層刻線，舊送餐單被檢修牌覆住；井道上方標著 30F 必停。",
+      "requirements": "來路 T-R15-R16-01；去路 T-R15-R16-03。逐層探路；車廂地板和平台齊平，外門機械扣到位才可進；31F 按鍵尚未啟用。 查看到站刻線與實體牌，拉開外閘進入車廂，再親手關妥外閘及內閘。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r15-images"
@@ -8884,8 +10901,8 @@
       "id": "T-R15-R16-02-C01",
       "node": "R15",
       "kind": "過渡近看",
-      "content": "橋面栓座、封死舊梯與遠端門鉸鏈",
-      "requirements": "可走的橋由兩端樑座支撐，敲擦來自鬆門片，不能把聲音當求救者。 不完整舊梯只顯示斷面；檢修橋不突然斷裂，回頭仍看得到剛才的捲簾側。 每個列名焦點交清晰局部；關閉回 T-R15-R16-02，不自動移至下一房。機關初始／操作中／到位差分均須交付。",
+      "content": "外門鎖舌、平層刻線、B 棟 29F 牌與三站示意",
+      "requirements": "車廂地板和平台齊平，外門機械扣到位才可進；31F 按鍵尚未啟用。 門未扣妥會保留可見缺口，按上行不動；補關即可。未上行可重新開門退回。 每個列名焦點均交清晰局部；關閉回 T-R15-R16-02，不自動移至下一房。門扣、按鍵與到位差分均須交付。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r15-images"
@@ -8894,8 +10911,8 @@
       "id": "T-R15-R16-03",
       "node": "R15",
       "kind": "過渡場景",
-      "content": "後勤門下的平台：30F 的線槽被整理成直線，上方 31F 伺服器室門框露出同樣接頭；腳邊折返梯缺了一塊可掀踏板。",
-      "requirements": "來路 T-R15-R16-02；去路 R16-V01。逐層探路；缺板掛在同層牆鉤，板邊與梯架凹槽一致；不是要去尚未進入的伺服器室借工具。 取下掛架踏板放入凹槽，壓下兩端固定扣，再登上 31F 門前並點門進 R16。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "content": "L1 車廂首次上行：內閘交叉鐵條把井壁切成細格；初始 29F 字牌與車廂平齊，30F 停靠牌在上方。擦亮的金屬板映著同一扇內閘；按鍵後另交井壁移動與倒影異常差分。",
+      "requirements": "來路 T-R15-R16-02；去路 T-R15-R16-04。逐層探路；首段只能選 30F；門扣和實體平層刻線是開門依據，不以樓層顯示燈或聲音單獨判斷。 按 30F 上行；到站後核對實體牌與平層刻線，親手開閘，走出 30F 平台。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r15-images"
@@ -8904,8 +10921,68 @@
       "id": "T-R15-R16-03-C01",
       "node": "R15",
       "kind": "過渡近看",
-      "content": "踏板掛架與上下梯段接點",
-      "requirements": "缺板掛在同層牆鉤，板邊與梯架凹槽一致；不是要去尚未進入的伺服器室借工具。 未扣好可抬起重放；跨門前不完成第二層推理，也不取得 R16 憑證。 每個列名焦點交清晰局部；關閉回 T-R15-R16-03，不自動移至下一房。機關初始／操作中／到位差分均須交付。",
+      "content": "30F 按鍵、內閘扣件、井壁實體牌與金屬倒影",
+      "requirements": "首段只能選 30F；門扣和實體平層刻線是開門依據，不以樓層顯示燈或聲音單獨判斷。 中途不能開閘；取消移動演出只略過動畫，仍停在經驗證的 30F 門內，不寫目的房到訪。 每個列名焦點均交清晰局部；關閉回 T-R15-R16-03，不自動移至下一房。門扣、按鍵與到位差分均須交付。",
+      "status": "pending",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "node-r15-images"
+    },
+    "T-R15-R16-04": {
+      "id": "T-R15-R16-04",
+      "node": "R15",
+      "kind": "過渡場景",
+      "content": "30F 停靠與檢修平台：車廂停在身後，平台側邊缺一塊檢修踏板，原掛架就在牆上。對面是覆著老租戶磁磚的檢修箱，上行啟用接點留在箱內。",
+      "requirements": "來路 T-R15-R16-03；去路 T-R15-R16-05。逐層探路；掛架踏板與凹槽同形；裝妥後才能走到原地檢修箱，不向 31F 借工具。 取下踏板嵌入凹槽並扣緊兩端，走過踏板，扳妥檢修箱啟用柄，再返回原車廂。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
+      "status": "pending",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "node-r15-images"
+    },
+    "T-R15-R16-04-C01": {
+      "id": "T-R15-R16-04-C01",
+      "node": "R15",
+      "kind": "過渡近看",
+      "content": "同層踏板掛架、兩端固定扣、檢修箱與上行啟用柄",
+      "requirements": "掛架踏板與凹槽同形；裝妥後才能走到原地檢修箱，不向 31F 借工具。 缺一扣便保留歪斜差分且不能上踏板；可重放。未啟用仍能回 29F，不開 31F。 每個列名焦點均交清晰局部；關閉回 T-R15-R16-04，不自動移至下一房。門扣、按鍵與到位差分均須交付。",
+      "status": "pending",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "node-r15-images"
+    },
+    "T-R15-R16-05": {
+      "id": "T-R15-R16-05",
+      "node": "R15",
+      "kind": "過渡場景",
+      "content": "L1 車廂第二段上行：同一車廂初始停在 30F，31F 按鍵亮起；先前拉閘聲不再出現，金屬板只照出眼前的閘門。關妥並按鍵後才播 30F→31F 井壁移動。",
+      "requirements": "來路 T-R15-R16-04；去路 T-R15-R16-06。逐層探路；30F 踏板到位及啟用柄均成立才允許上行；這不是取得 R16 權限。 親手關妥兩道閘門，按 31F；到站核對 B 棟 31F 牌與平層刻線，再開閘。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
+      "status": "pending",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "node-r15-images"
+    },
+    "T-R15-R16-05-C01": {
+      "id": "T-R15-R16-05-C01",
+      "node": "R15",
+      "kind": "過渡近看",
+      "content": "31F 按鍵、同一門扣與停靠刻線",
+      "requirements": "30F 踏板到位及啟用柄均成立才允許上行；這不是取得 R16 權限。 操作取消不清空 30F 成果；未啟用按鍵保持不可用。可回已通過樓層，不重解踏板。 每個列名焦點均交清晰局部；關閉回 T-R15-R16-05，不自動移至下一房。門扣、按鍵與到位差分均須交付。",
+      "status": "pending",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "node-r15-images"
+    },
+    "T-R15-R16-06": {
+      "id": "T-R15-R16-06",
+      "node": "R15",
+      "kind": "過渡場景",
+      "content": "31F 核心門前平台：拉開外閘，前方短平台接到 R16 防火門；回頭看得見 B 棟 31F 樓層牌與停在門內的原車廂，沒有新增可探索支門。",
+      "requirements": "來路 T-R15-R16-05；去路 R16-V01。逐層探路；停靠只代表抵達平台，原必要調查仍在 R16 房內。 離開車廂，沿固定平台點門進 R16；到訪只在真正跨入房門後提交。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
+      "status": "pending",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "node-r15-images"
+    },
+    "T-R15-R16-06-C01": {
+      "id": "T-R15-R16-06-C01",
+      "node": "R15",
+      "kind": "過渡近看",
+      "content": "B 棟 31F 字牌、外閘門框與 R16 門端",
+      "requirements": "停靠只代表抵達平台，原必要調查仍在 R16 房內。 可依章內回訪規則搭原梯返回 30F／29F；原鎖場與門禁優先，不能跳往其他樓層。 每個列名焦點均交清晰局部；關閉回 T-R15-R16-06，不自動移至下一房。門扣、按鍵與到位差分均須交付。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r15-images"
@@ -10794,8 +12871,8 @@
       "id": "T-R29-U4-01",
       "node": "R29",
       "kind": "過渡場景",
-      "content": "簽核架後夾牆梯：簽核架後夾牆梯，來路扶手與下一段梯口同框；門楣保留 47F → 48F 標記，封板遮住舊公共梯。",
-      "requirements": "來路 R29-V01；去路 U4-V01。既有門檻；兩端樓層牌、門框與連續扶手可對位；管線用於辨向，不踩管壁。 必要簽核查證及原收束完成後，沿架後梯到 48F；選填核可不鎖門。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
+      "content": "47F 簽核架後候梯口：簽核架後方不是直通樓梯，而是 B 棟 47F 的短程拉閘門電梯。外閘旁掛著按房號分色的送物袋，門框釘著 47F 實體牌。",
+      "requirements": "來路 R29-V01；去路 T-R29-U4-02。逐層探路；本梯只有 47F／48F，電源來自已恢復的維修保留支路；不由 R29 核可選項供電。 原必要查證與責任收束完成後，查看平層刻線，進入車廂並親手關妥兩道閘門。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "status": "pending",
       "spec": "10_製作規格/10-07_製作規格_第六幕.md",
       "heading": "node-r29-images"
@@ -10804,8 +12881,48 @@
       "id": "T-R29-U4-01-C01",
       "node": "R29",
       "kind": "過渡近看",
-      "content": "47F 架背、48F 布標前平台與封板",
-      "requirements": "兩端樓層牌、門框與連續扶手可對位；管線用於辨向，不踩管壁。 未完成原房條件不能出發；近看可直接關閉，沒有新密碼、收集或消耗。 每個列名焦點交清晰局部；關閉回 T-R29-U4-01，不自動移至下一房。",
+      "content": "外閘門扣、47F 刻線、48F 固定行程牌與送物袋",
+      "requirements": "本梯只有 47F／48F，電源來自已恢復的維修保留支路；不由 R29 核可選項供電。 未完成原門檻不能離房；選填核可、SQ-M 和收集數量都不鎖梯。尚未上行可退回。 每個列名焦點均交清晰局部；關閉回 T-R29-U4-01，不自動移至下一房。門扣、按鍵與到位差分均須交付。",
+      "status": "pending",
+      "spec": "10_製作規格/10-07_製作規格_第六幕.md",
+      "heading": "node-r29-images"
+    },
+    "T-R29-U4-02": {
+      "id": "T-R29-U4-02",
+      "node": "R29",
+      "kind": "過渡場景",
+      "content": "L2 冷藏線車廂：初始停在 47F，井壁保留封住的送物口與上方實體 48F 牌；空送物袋掛在車廂內側。按鍵後交井壁移動、無落地平台封口亮假到站燈與袋內刮擦差分，最後才交真正 48F 停靠。",
+      "requirements": "來路 T-R29-U4-01；去路 T-R29-U4-03。逐層探路；假停靠處看得到封板，沒有落地平台；真正 48F 有實體牌、平層刻線與完整踏面，靜音仍可辨認。 按 48F 上行；到站後核對三項實體線索，親手拉開閘門，走到 48F 平台。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
+      "status": "pending",
+      "spec": "10_製作規格/10-07_製作規格_第六幕.md",
+      "heading": "node-r29-images"
+    },
+    "T-R29-U4-02-C01": {
+      "id": "T-R29-U4-02-C01",
+      "node": "R29",
+      "kind": "過渡近看",
+      "content": "假到站燈、封口背板、48F 實體牌與平層刻線",
+      "requirements": "假停靠處看得到封板，沒有落地平台；真正 48F 有實體牌、平層刻線與完整踏面，靜音仍可辨認。 假停靠處拉閘只碰到鎖住的門扣，可收手繼續；不扣資源、不墜落、不新增房間。 每個列名焦點均交清晰局部；關閉回 T-R29-U4-02，不自動移至下一房。門扣、按鍵與到位差分均須交付。",
+      "status": "pending",
+      "spec": "10_製作規格/10-07_製作規格_第六幕.md",
+      "heading": "node-r29-images"
+    },
+    "T-R29-U4-03": {
+      "id": "T-R29-U4-03",
+      "node": "R29",
+      "kind": "過渡場景",
+      "content": "48F 門牌廊前平台：車廂外是一段接向門牌迴廊的短平台。外閘邊有凹掉一角的 48F 字牌，前方走廊才出現重複門牌；電梯不替玩家放置布標。",
+      "requirements": "來路 T-R29-U4-02；去路 U4-V01。逐層探路；抵達平台不代表已解 U4 迴廊；來路可返，目的房機關仍保持初始狀態。 自行點入 U4；R30 不可逆提交前，依原門檻可叫回 L2 返回 47F。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
+      "status": "pending",
+      "spec": "10_製作規格/10-07_製作規格_第六幕.md",
+      "heading": "node-r29-images"
+    },
+    "T-R29-U4-03-C01": {
+      "id": "T-R29-U4-03-C01",
+      "node": "R29",
+      "kind": "過渡近看",
+      "content": "48F 字牌、外閘與 U4 入口門框",
+      "requirements": "抵達平台不代表已解 U4 迴廊；來路可返，目的房機關仍保持初始狀態。 叫梯從最近有效停靠點移來，到站才開外閘。R30 不可逆提交即封回程，不等到制動後。 每個列名焦點均交清晰局部；關閉回 T-R29-U4-03，不自動移至下一房。門扣、按鍵與到位差分均須交付。",
       "status": "pending",
       "spec": "10_製作規格/10-07_製作規格_第六幕.md",
       "heading": "node-r29-images"

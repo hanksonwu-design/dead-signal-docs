@@ -214,9 +214,9 @@ test('new original hotspots cannot silently bypass image coverage', () => {
   assert.throws(() => collectHotspotImages(collection, invalid), /missing from image/);
 });
 
-test('twenty-one routes have fifty-three individually identified views and close-ups with a return parent', () => {
-  const expected = { 'T-R2-R3': 2, 'T-R3-R4': 1, 'T-R7-R8': 2, 'T-R3-R5': 5, 'T-R5-R6': 2, 'T-R6-R7': 3, 'T-R11-R12': 7, 'T-R13-R14': 3, 'T-R17-R18': 4, 'T-R24-R25': 1, 'T-R12-R14': 3, 'T-R12-R15': 3, 'T-R13-R15': 3, 'T-R15-R16': 3, 'T-R17-R14': 4, 'T-R20-R21': 2, 'T-R21-R22': 1, 'T-R27-U1': 1, 'T-U3-R28': 1, 'T-R29-U4': 1, 'T-U5-U6': 1 };
-  assert.equal(collection.rows.filter(r => r.kind === '過渡場景').length, 53);
+test('twenty-one routes have fifty-eight individually identified views and close-ups with a return parent', () => {
+  const expected = { 'T-R2-R3': 2, 'T-R3-R4': 1, 'T-R7-R8': 2, 'T-R3-R5': 5, 'T-R5-R6': 2, 'T-R6-R7': 3, 'T-R11-R12': 7, 'T-R13-R14': 3, 'T-R17-R18': 4, 'T-R24-R25': 1, 'T-R12-R14': 3, 'T-R12-R15': 3, 'T-R13-R15': 3, 'T-R15-R16': 6, 'T-R17-R14': 4, 'T-R20-R21': 2, 'T-R21-R22': 1, 'T-R27-U1': 1, 'T-U3-R28': 1, 'T-R29-U4': 3, 'T-U5-U6': 1 };
+  assert.equal(collection.rows.filter(r => r.kind === '過渡場景').length, 58);
   for (const [route, count] of Object.entries(expected)) {
     const views = collection.rows.filter(r => r.kind === '過渡場景' && r.id.startsWith(`${route}-`));
     assert.equal(views.length, count);
@@ -239,9 +239,9 @@ test('all 56 routes bind valid static views without conflating ending rescue wit
   assert.equal(routes.find(r => r.edge.fromId === 'R17' && r.edge.toId === 'R18').mode, '逐鏡過渡');
 });
 
-test('67 secondary scene nodes retain their parent, ordered connections and distinct reading/spec anchors', () => {
-  assert.equal(subscenes.length, 67);
-  assert.equal(subscenes.filter(s => s.type === '可查看過渡').length, 53);
+test('72 secondary scene nodes retain their parent, ordered connections and distinct reading/spec anchors', () => {
+  assert.equal(subscenes.length, 72);
+  assert.equal(subscenes.filter(s => s.type === '可查看過渡').length, 58);
   assert.equal(subscenes.filter(s => s.type === '轉場接景').length, 14);
   assert.equal(graph.nodes.length, 48);
   for (const child of subscenes) {

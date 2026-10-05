@@ -77,7 +77,7 @@ const transitionRows = flow.routes.flatMap(route => {
   const anchor = `transition-${route.from.toLowerCase()}-${route.to.toLowerCase()}`;
   assert(master.anchors.has(anchor), `Transition source ${anchor}`);
   return [[link(`T-${route.from}-${route.to}`, children[0].spec, anchor), children.length,
-    children.map(s => `${s.floor.label} ${s.name}`).join('；'), `${edge.gate}；${edge.returnRule}`]];
+    children.map(s => `${s.building.label} ${s.floor.label} ${s.name}`).join('；'), `${edge.gate}；${edge.returnRule}`]];
 });
 assert.equal(transitionRows.reduce((sum, row) => sum + row[1], 0), flow.subscenes.filter(s => s.id.startsWith('T-')).length);
 const transitions = table(['通路', '鏡位', '場景／文化物件組', '通行條件與敘事用途'], transitionRows);

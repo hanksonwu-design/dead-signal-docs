@@ -1,6 +1,8 @@
 import {layout as upper, offsets as upperOffsets, routePoints} from './spatial.js';
 import {orthogonalize} from './sandbox-routes.js';
 import {transitionPath} from './transition-spaces.js';
+import {towerShift,connectTowers,liftPath,anchoredShots,TOWERS} from './tower-routes.js';
+export {TOWERS} from './tower-routes.js';
 
 // Lower-room dimensions are greybox proposals. Floors and topology come from the published flow.
 const lower = {
@@ -77,7 +79,8 @@ export function buildCurrentModel(graph,flow,actual=false) {
   const [x,z]=u||l, [w,d]=u?u.slice(3):l.slice(2),floor=canonical.floor.levels[0];
   const offset=upperOffsets[n.id]||(['U2b','U4b','U6b'].includes(n.id)?-1.8:0);
   const y=floorY.get(floor)+offset;
-  return {...n,...canonical,spatial:true,x,z,w,d,level:floor,y,position:[x,y+.3,z]};
+  const shiftX=towerShift(canonical.building.entry);
+  return {...n,...canonical,spatial:true,x:x+shiftX,z,w,d,level:floor,y,shiftX,position:[x+shiftX,y+.3,z]};
  });
  const map=new Map(nodes.map(n=>[n.id,n]));
  const routes=graph.edges.map(edge=>{
@@ -92,19 +95,24 @@ export function buildCurrentModel(graph,flow,actual=false) {
    points=raw.map(([x,z,t])=>[x,ay+.3+(by-ay)*t,z]);
   }
   const children=flow.subscenes.filter(s=>s.route===edge.id);
-  const shots=children.map((s,i)=>({...s,...locateShot(points,s.floor,floorY,(i+.5)/children.length)}));
+  let special=null;
+  if(flowRoute.travel.includes('電梯車廂'))special=liftPath(edge,points,floorY,a.shiftX);
+  else if(flowRoute.travel.includes('跨棟橋'))special=connectTowers(edge,points,children,floorY,a,b);
+  if(special)points=special.points;
+  else points=points.map(p=>p.map((v,i)=>v+(i===0?a.shiftX:0)));
+  const shots=special?anchoredShots(children,points,special.anchors):children.map((s,i)=>({...s,...locateShot(points,s.floor,floorY,(i+.5)/children.length)}));
   if(shots.some((s,i)=>i&&s.along<shots[i-1].along-1e-6))throw new Error(`Reversed shot order: ${edge.id}`);
-  return {...edge,...flowRoute,spatial:true,points,shots};
+  return {...edge,...flowRoute,spatial:true,points,shots,shafts:special?.shafts||[]};
  });
  const m=map.get('M1'),spine=[];
  const start=m.floor.levels[0],end=m.floor.levels.at(-1);
  for(let f=start;f<=end;f++) {
   const y=floorY.get(f)+.3;
-  spine.push([-24,y,20]);
-  if(f<end)spine.push([-24,(y+floorY.get(f+1)+.3)/2,16]);
+  spine.push([-24+m.shiftX,y,20]);
+  if(f<end)spine.push([-24+m.shiftX,(y+floorY.get(f+1)+.3)/2,16]);
  }
  m.points=spine;m.position=spine[Math.floor(spine.length/2)];
  const shots=routes.flatMap(r=>r.shots||[]);
  if(shots.length!==flow.subscenes.length)throw new Error('Missing spatial subscene');
- return {nodes,routes,shots,floorY};
+ return {nodes,routes,shots,floorY,towers:TOWERS};
 }

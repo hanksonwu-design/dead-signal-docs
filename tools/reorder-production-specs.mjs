@@ -82,7 +82,7 @@ export function validateProductionOrder(documents, graph) {
       for (const id of supplements) assert(text.indexOf(anchor(id)) > text.indexOf(anchor(`node-${room}-level`)) && text.indexOf(anchor(id)) < text.indexOf(anchor(`node-${room}-pack`)), id);
     }
   }
-  assert.equal(children, 67);
+  assert.equal(children, 72);
   assert.equal(passages, 21);
   return { acts: ACTS.length, nodes: graph.nodes.length, subscenes: children, passages };
 }

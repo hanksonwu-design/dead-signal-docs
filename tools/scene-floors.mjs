@@ -43,8 +43,8 @@ export function readChildFloors(spec, node, expected) {
   assert.equal(spec.split(end).length, 2, `Missing or duplicate child floor end: ${node}`);
   const body = spec.split(begin)[1].split(end)[0];
   const rows = body.split('\n').filter(line => line.startsWith('|')).map(line => line.split('|').slice(1, -1).map(c => c.trim()));
-  assert.deepEqual(rows.shift(), ['次場景／主圖', '樓層定位']);
-  assert.deepEqual(rows.shift(), ['---', '---']);
+  assert.deepEqual(rows.shift(), ['次場景／主圖', '樓層定位', '樓棟定位', '移動方式']);
+  assert.deepEqual(rows.shift(), ['---', '---', '---', '---']);
   assert.deepEqual(rows.map(r => r[0]).sort(), expected.map(s => s.id).sort(), `Child floor coverage: ${node}`);
   return new Map(rows.map(([id, label]) => [id, preciseFloor(label, id)]));
 }

@@ -77,7 +77,7 @@ test('eight reading acts and eight production files keep unique blocks and paire
 });
 
 test('production specifications follow overview, room flow, shared reference and delivery order', () => {
-  assert.deepEqual(validateProductionOrder(master.documents, graph), { acts: 8, nodes: 48, subscenes: 67, passages: 21 });
+  assert.deepEqual(validateProductionOrder(master.documents, graph), { acts: 8, nodes: 48, subscenes: 72, passages: 21 });
   assert.deepEqual(reorderProduction(master, graph).documents, master.documents);
 });
 
@@ -120,7 +120,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
 });
 
 test('every static screenplay cue names its shot size without changing protected framing', () => {
-  const counts = [22, 55, 77, 91, 43, 29, 37, 20];
+  const counts = [22, 55, 77, 97, 43, 29, 41, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -158,8 +158,8 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     系統: new Set(['操作提示', '選項介面', '確認警示', '取得提示', '筆記更新', '狀態顯示', '狀態更新',
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
-  const counts = [[21, 17, 8], [62, 27, 20], [92, 33, 11], [125, 24, 12],
-    [54, 18, 11], [51, 13, 12], [60, 5, 11], [23, 12, 4]];
+  const counts = [[21, 17, 8], [62, 27, 20], [92, 33, 11], [133, 24, 12],
+    [54, 18, 11], [51, 13, 12], [66, 6, 11], [23, 12, 4]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
@@ -335,17 +335,17 @@ test('ten expanded routes preserve original departure gates and ordered scene co
     viewCount += views;
   }
   assert.equal(viewCount, 30);
-  assert(master.text.includes('| 既有連線探路／過渡構圖 | **53 個** |'));
+  assert(master.text.includes('| 既有連線探路／過渡構圖 | **58 個** |'));
   assert(!master.text.includes('15–20F       R6–R11'));
   assert.equal(canonicalFile(master, 'transition-rules'), APPENDIX);
   assert.equal(canonicalFile(master, 'ascent-route-contract'), APPENDIX);
   assert.equal(canonicalFile(master, 'transition-assets'), APPENDIX);
-  assert(block('s-0810-23').includes('尚未交付 53 個通路構圖的正式美術或遊戲場景'));
+  assert(block('s-0810-23').includes('尚未交付 58 個通路構圖的正式美術或遊戲場景'));
 });
 
 test('versioned route saves cannot skip exploration, destination operations or chapter gates', () => {
   const common = block('s-0403-3');
-  for (const phrase of ['version: 3', '連續前綴', '不直接送到目的房', '版本 1／2 的舊通路圖號改義',
+  for (const phrase of ['version: 4', '連續前綴', '不直接送到目的房', '版本 1／2／3 的舊通路圖號改義',
     '不把「看過」當通行權限', '起行不寫入目的房到訪', '不得只憑 to、committed', 'L-04 只走 R17→R14',
     'R13 ↔ R14 的安息門檻雙向有效', 'R3 ↔ R5、R6 ↔ R7']) assert(common.includes(phrase), phrase);
   assert(graph.edges.every(e => !/transition_(?:seen|progress)/.test(e.gate)));

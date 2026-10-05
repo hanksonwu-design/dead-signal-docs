@@ -20,8 +20,8 @@ test('published flow is generated from canonical specs without changing story do
   for (const [file, content] of result.outputs) assert.equal(content, master.documents.get(file) ?? readFileSync(path.join(ROOT, 'docs', file), 'utf8').replaceAll('\r\n', '\n'), file);
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);
-  assert.equal(flow.subscenes.length, 67);
-  assert.equal(Object.keys(flow.images).length, 513);
+  assert.equal(flow.subscenes.length, 72);
+  assert.equal(Object.keys(flow.images).length, 523);
 });
 
 test('all original directions and only original routes survive expansion', () => {
@@ -123,8 +123,8 @@ test('R2 to R3 shows both existing transitions in playable order', () => {
 });
 
 test('every transition has ordered adjacent pictures and a single route', () => {
-  assert.equal(flow.subscenes.filter(s => s.type === '探路次場景').length, 27);
-  assert.equal(flow.subscenes.filter(s => s.type === '可查看過渡').length, 26);
+  assert.equal(flow.subscenes.filter(s => s.type === '探路次場景').length, 33);
+  assert.equal(flow.subscenes.filter(s => s.type === '可查看過渡').length, 25);
   assert.equal(flow.subscenes.filter(s => s.type === '轉場接景').length, 14);
   const expanded = flow.routes.flatMap(r => r.steps.filter(s => s.type === 'subscene').map(s => s.id));
   assert.deepEqual(expanded.sort(), flow.subscenes.map(s => s.id).sort());
@@ -137,7 +137,7 @@ test('every transition has ordered adjacent pictures and a single route', () => 
 });
 
 test('all three former floor skips now have one playable node on every intermediate floor', () => {
-  const expected = [['R3','R5',2,8],['R5','R6',8,11],['R6','R7',11,15],['R11','R12',15,23],['R12','R14',23,27],['R15','R16',27,31],['R17','R18',32,37]];
+  const expected = [['R3','R5',2,8],['R5','R6',8,11],['R6','R7',11,15],['R11','R12',15,23],['R12','R14',23,27],['R17','R18',32,37]];
   for (const [from,to,start,end] of expected) {
     const r = route(from,to), children = flow.subscenes.filter(s => s.route === r.id);
     assert.equal(r.mode, '逐層探索');
@@ -176,8 +176,8 @@ test('exploration rule omissions, duplicate IDs and evidence-state substitutions
 
 test('close-ups are attached to their actual scene, never traversable steps', () => {
   const detailIds = [...flow.nodes, ...flow.subscenes].flatMap(n => n.details);
-  assert.equal(detailIds.length, 378);
-  assert.equal(new Set(detailIds).size, 378);
+  assert.equal(detailIds.length, 383);
+  assert.equal(new Set(detailIds).size, 383);
   const steps = new Set(flow.routes.flatMap(r => r.steps.map(s => s.image)));
   for (const id of detailIds) assert(!steps.has(id), id);
   for (const child of flow.subscenes) for (const id of child.details) assert(id.startsWith(`${child.id}-C`));

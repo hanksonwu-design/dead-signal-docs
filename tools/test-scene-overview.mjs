@@ -29,12 +29,12 @@ function geometry(result) {
   }
 }
 
-test('overview has 48 main rooms and all 67 transition nodes, each drawn once', () => {
-  assert.equal(full.nodes.length, 115);
-  assert.equal(new Set(full.nodes.map(n => n.key)).size, 115);
+test('overview has 48 main rooms and all 72 transition nodes, each drawn once', () => {
+  assert.equal(full.nodes.length, 120);
+  assert.equal(new Set(full.nodes.map(n => n.key)).size, 120);
   assert.equal(full.nodes.filter(n => n.type === 'main').length, 48);
   assert.deepEqual(full.nodes.filter(n => n.type === 'subscene').map(n => n.id).sort(), flow.subscenes.map(n => n.id).sort());
-  assert.equal(full.segments.length, 123);
+  assert.equal(full.segments.length, 128);
 });
 
 test('every original route is subdivided in picture order without bypass edges', () => {

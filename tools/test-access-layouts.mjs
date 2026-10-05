@@ -77,13 +77,13 @@ test('unlock, cancellation, open-door return, save migration and pre-brake lock 
 });
 
 test('two details and one return subscene are budgeted; diagrams are not shipped game art', () => {
-  assert.equal(images.rows.length, 513);
-  assert.equal(images.rows.filter(r => r.view).length, 135);
+  assert.equal(images.rows.length, 523);
+  assert.equal(images.rows.filter(r => r.view).length, 140);
   const route = routes.find(r => r.edge.id === 'U3-U1-return');
   assert.equal(route.mode, '出口接景');
   assert.deepEqual(route.rows.map(r => r.id), ['U3-V02']);
   const children = collectSubscenes(images, routes);
-  assert.equal(children.length, 67);
+  assert.equal(children.length, 72);
   const child = children.find(s => s.id === 'U3-V02');
   assert.equal(child.from, 'U3-V01'); assert.equal(child.to, 'U1-V01');
   assert.equal(child.details.length, 0);
