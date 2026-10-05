@@ -238,7 +238,7 @@ test('current document text uses reviewed Taiwan terminology without changing cl
   assert(format.includes('台灣用語與校訂原則'));
   assert(format.includes('量測或統計結果可稱「數據」'));
   assert(block('s-0908-21').includes('共同錯字「記綠」、VF-0818'));
-  assert(block('s-0904-3').includes('招工燈箱'));
+  assert(block('s-0904-3').includes('「接收登記」燈箱'));
   assert(block('s-0906-4').includes('插接處缺一個低壓接頭'));
   assert(master.text.includes('來源與儲存介面'));
   assert(master.text.includes('只在佇列中留下空位'));
@@ -292,6 +292,55 @@ test('R1 coerced intake; no voluntary work or freedom result', () => {
   assert(spec.includes('不據此判定誰被騙、誰被綁'));
   assert(spec.includes('沒有證據證明已救出他們'));
   assert(!scene.includes('「下一位」'));
+});
+
+test('worker origins are abduction or coerced friend referrals, without voluntary employment', () => {
+  const appendix = master.documents.get(APPENDIX);
+  const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
+  for (const text of ['受控員工全部非自願入園', '一類遭直接綁架押入', '受集團脅迫的朋友',
+    '帶來新人也不換得釋放', '活著的受控員工都想逃離', '不把小花改成誘騙主角的人',
+    '不是面試錄取', '不以受迫免責']) assert(appendix.includes(text), text);
+  for (const stale of ['招工燈箱', '招工大廳', '招工門面', '招募廣告', '入職名冊',
+    '她面試時自己給的', '可能自願加入', '宿舍、福利、休閒設施，都會在報到後統一安排。']) {
+    assert(!master.text.includes(stale), stale);
+    assert(!read('docs/09_故事劇情/17_縮寫短文.md').includes(stale), stale);
+    assert(!inventory.includes(stale), stale);
+  }
+  assert(!/招募|招工/.test(inventory));
+  assert(inventory.includes('朋友受脅迫邀約／直接被擄'));
+  assert(model.spatial.R1.space.includes('接收管制大廳'));
+});
+
+test('intake film, ledger and anonymous wall accounts share the coerced origin evidence', () => {
+  const story = master.documents.get(ACTS[1].path), spec = master.documents.get(ACTS[1].specPath);
+  const line = '食宿由管理處分配。依編號等候，不得自行離開。';
+  const account = '朋友說是來修設備的。到了，他才說是被逼打那通電話。我說不做，他們不讓我走。';
+  for (const text of [story, spec]) {
+    for (const required of [line, account, '我是在回家的路上被抓來的。', '接收名冊',
+      '受控轉介', '轉介者離園：不予放行', '對外聯絡：監看']) assert(text.includes(required), required);
+  }
+  assert(block('s-0904-26').includes('取得 #04 不自動補齊沒讀的段落'));
+  assert(block('s-0904-42').includes('只讀一段保留該段，未讀不補發'));
+  assert(block('s-0904-42').includes('不增加三格或離幕門檻'));
+  assert(spec.includes('舊招收、福利宣傳或取號畫面不得沿用'));
+});
+
+test('forged consent remains a source claim and does not erase coercion or later responsibility', () => {
+  const story = master.documents.get(ACTS[5].path), spec = master.documents.get(ACTS[5].specPath);
+  for (const text of [story, spec]) {
+    assert(text.includes('文件聲稱自願（待核）'));
+    assert(text.includes('內控主管／已核可校正'));
+    assert(text.includes('接收類別：受控轉介'));
+    assert(text.includes('聯絡關係：朋友'));
+    assert(text.includes('轉介者：留置'));
+  }
+  const originals = block('s-0913-3');
+  assert(originals.includes('受控員工轉介'));
+  assert(originals.includes('管理職自願應聘紀錄'));
+  assert(originals.includes('原接收記綠'));
+  assert(originals.includes('2024-06-18'));
+  assert(originals.includes('2025-08-18'));
+  assert(spec.includes('act5.r26.hotspot_recruitment_seen'));
 });
 
 test('ten expanded routes preserve original departure gates and ordered scene coverage', () => {
