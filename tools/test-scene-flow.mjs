@@ -149,7 +149,9 @@ test('all three former floor skips now have one playable node on every intermedi
       assert.equal(child.details.length, 1);
       const story = master.documents.get(child.source);
       assert(story.includes(`（靜態畫面／全景） [${child.id}]`));
-      assert(story.includes(child.play.action));
+      const action = child.id === 'T-R3-R5-03' ? '對照兩側支架，選固定在樑上的窄梯' : child.play.action;
+      assert(child.play.action.includes(action), child.id);
+      assert(story.includes(action), child.id);
       assert(story.includes(`#transition-${from.toLowerCase()}-${to.toLowerCase()})`), `${child.id}: direct route specification`);
     }
   }

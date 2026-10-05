@@ -102,6 +102,21 @@ test('reading scripts omit pause notes without removing production timing', () =
   assert(finaleSpec.includes('疊層短暫減弱'));
 });
 
+test('reading scripts describe playable events without editorial prohibitions', () => {
+  const editorial = /不新增|不另加|不追加|不演出|不給說話者正臉|不能增加的內容|不能推成|不替玩家解釋|沒有病理解說|不為一句話強迫回訪|不預先標正解|不擴寫後續對話|不合成同一個已知事件/;
+  for (const act of ACTS) assert.doesNotMatch(master.documents.get(act.path), editorial, act.name);
+  assert(block('s-0900-4').includes('按遊玩順序直接描述畫面、聲音、台詞、操作與結果'));
+  const prologue = master.documents.get(ACTS[0].path);
+  const actOne = master.documents.get(ACTS[1].path);
+  const finale = master.documents.get(ACTS[7].path);
+  assert(prologue.includes('「停止使用／禁止下行」'));
+  assert(actOne.includes('「依編號等候；未經帶領不得離座。」'));
+  assert(actOne.includes('我說不做，他們不讓我走。'));
+  assert(finale.includes('「本次不回返肉身，封鎖將持續。」'));
+  assert(finale.includes('長按「緊急接管」四秒'));
+  assert(master.documents.get(APPENDIX).includes('P2 首次凝固後的 60 秒'));
+});
+
 test('screenplay presentation cues distinguish motion, stills, transitions and interfaces', () => {
   const labels = ['動畫演出', '靜態畫面／景別', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
   assert(!master.text.includes('〔演出〕'));
@@ -158,7 +173,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     系統: new Set(['操作提示', '選項介面', '確認警示', '取得提示', '筆記更新', '狀態顯示', '狀態更新',
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
-  const counts = [[21, 17, 8], [62, 27, 20], [92, 33, 11], [133, 24, 12],
+  const counts = [[21, 17, 8], [62, 27, 19], [92, 33, 11], [133, 24, 12],
     [54, 18, 11], [51, 13, 12], [66, 6, 11], [23, 12, 4]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
@@ -319,9 +334,10 @@ test('intake film, ledger and anonymous wall accounts share the coerced origin e
     for (const required of [line, account, '我是在回家的路上被抓來的。', '接收名冊',
       '受控轉介', '轉介者離園：不予放行', '對外聯絡：監看']) assert(text.includes(required), required);
   }
-  assert(block('s-0904-26').includes('取得 #04 不自動補齊沒讀的段落'));
-  assert(block('s-0904-42').includes('只讀一段保留該段，未讀不補發'));
-  assert(block('s-0904-42').includes('不增加三格或離幕門檻'));
+  assert(block('s-0904-26').includes('近看並確認收起某段後，將該段原文與位置附記於 `E1-04`'));
+  assert(block('s-0904-42').includes('只讀一段時，筆記保留該段來歷'));
+  assert(spec.includes('取得 #04 不自動補齊未讀段'));
+  assert(spec.includes('不因多讀兩段增加證據 ID、門檻或回訪要求'));
   assert(spec.includes('舊招收、福利宣傳或取號畫面不得沿用'));
 });
 
@@ -401,11 +417,12 @@ test('versioned route saves cannot skip exploration, destination operations or c
   const leaving = block('s-0905-55');
   assert(leaving.indexOf('選「繼續」，沿原流程存檔') < leaving.indexOf('<a id="transition-r11-r12-script">'));
   assert(leaving.includes('房內仍然一片昏暗，尚未傳出敲擊聲'));
-  assert(block('s-0906-3').includes('不重播梯段、離幕確認或門端驗證'));
+  assert(block('s-0906-3').includes('鏡頭由同一門框進入修理舖'));
   assert(block('s-0603-36').includes('尚未抵達目的房不得取得該房道具'));
-  assert(block('s-0904-25').includes('由神壇轉角回廁所不重播'));
-  assert(block('s-0905-22').includes('由 R9 或 R10 回 R8 不重播'));
-  assert(block('s-0907-3').includes('不代做後續掩體移動'));
+  assert(block('s-0904-25').includes('住宅門回 R3，綠磁磚折角進 R4'));
+  assert(block('s-0905-22').includes('可近看接縫與舊窗，也可直接跨過門檻進 R8'));
+  assert(block('s-0907-3').includes('玩家停在入口安全站位'));
+  assert(block('s-0907-4').includes('玩家逐段選擇移動'));
   assert(!graph.edges.find(e => e.fromId === 'R17' && e.toId === 'R14').motion.includes('T-R17-R18'));
 });
 
@@ -420,7 +437,7 @@ test('cultural close-ups stay optional, local and outside main evidence gates', 
   }
   assert(assets.includes('上述 4 組局部'));
   assert(assets.includes('無新配音、證據、資源、主線或結局旗標'));
-  assert(block('s-0904-39').includes('不先開放被衣架擋住的繡布'));
+  assert(block('s-0904-39').includes('桌面另一角的繡布仍被衣架遮住'));
   for (const id of ['s-uppertech-31', 's-uppertech-34', 's-uppertech-60', 's-0610-5'])
     assert(block(id).includes('#culture-details'), id);
 });
@@ -450,8 +467,8 @@ test('R2 sightline and R14 arrivals respect the physical route', () => {
     assert(block(id).includes('沿櫃側原通道'));
   }
   const arrival = block('s-0906-18');
-  for (const route of ['從 R13 抵達', '從 R12 抵達', 'R17 假路回流', 'R15 回訪']) assert(arrival.includes(route));
-  assert(arrival.includes('抵達均不自動解開本房繼電箱'));
+  for (const route of ['從 R13 沿後簾與 T-R13-R14 抵達', '從 R12 沿維修鋼平台入鏡', 'R17 回流', 'R15 回訪']) assert(arrival.includes(route));
+  assert(arrival.includes('仍須親手處理本房繼電箱'));
   assert(block('s-uppertech-61').includes('返回 R12 不受安息條件阻擋'));
 });
 
@@ -601,9 +618,10 @@ test('act III outline respects local power routes and does not add police playba
   assert(row.includes('電房殘響只依全面供電的既有條件觸發'));
   assert(row.includes('藥品櫃與人員評級共用同一個權限碼'));
   for (const stale of ['整棟樓同時亮起一秒', '每一個亮起的螢幕', '二次進入失敗']) assert(!row.includes(stale), stale);
-  assert(master.text.includes('沒有全樓亮起的蒙太奇，也不插警用人聲'));
+  assert(block('s-0906-25').includes('低頻震動先透過腳下傳來'));
+  assert(!block('s-0906-25').includes('警用人聲'));
   assert(block('s-0906-31').includes('僅全面供電後出現這次低壓迴聲'));
-  assert(block('s-0906-31').includes('不會打斷穩壓操作、閱讀或安定，也不重複發生'));
+  assert(block('s-0906-31').includes('穩壓、閱讀與安定操作結束後，迴聲才浮現一次'));
 });
 
 test('V33 per-room instructions select the correct panel and retain encounter limits', () => {
@@ -697,7 +715,7 @@ test('act V varies investigation controls without removing evidence or adding pe
   const timeline = block('s-0908-32');
   for (const text of ['A／B／C 三個來源位置', '整組確認一次後取得 E4-01', '尚未讀到的頁面保持未讀']) assert(versions.includes(text), text);
   assert(block('s-0606-4').includes('初見不醒目標示正解'));
-  for (const text of ['每人一列', '另外三人的來源仍須各自展開並核對', '三個曆月', '不因畫面整理而自動鎖定']) assert(people.includes(text), text);
+  for (const text of ['每人一列', '另外三人的來源須各自展開核對', '三個曆月', '仍由玩家主動關聯 E4-01／E4-02／E3-02']) assert(people.includes(text), text);
   for (const text of ['三帶的日期與時鐘基準始終可見', '先保留同日與共用時基', '放大只改視窗尺度', '48 小時事件留在另一日期頁', '未持有碎片也能用本地原件完成', '02:20:11', '02:20:22']) assert(timeline.includes(text), text);
   for (const [spec, anchor] of [['s-0606-4', 's-0908-8'], ['s-0606-5', 's-0908-21'], ['s-0606-6', 's-0908-32']]) {
     assert(block(spec).includes(`](../${ACTS[5].path}#${anchor})`));
@@ -712,8 +730,9 @@ test('act V varies investigation controls without removing evidence or adding pe
 
 test('act VI adjacent views retain actions and safety while removing repeated setup', () => {
   assert(block('s-0909-17').includes('未主動轉輪不啟動襲擊'));
-  assert(block('s-0909-37').includes('不要求重繫、重走或再確認異常'));
-  assert(block('s-0909-42').includes('不再出一題分水'));
+  assert(block('s-0909-37').includes('上方外扣保持鬆開，布標留在來路'));
+  assert(block('s-0909-37').includes('玩家在這一側處理實際卡住的內銷'));
+  assert(block('s-0909-42').includes('U6 水位已平衡'));
   assert(block('s-0909-42').includes('親手扣上止回栓'));
   const handoff = block('s-0610-15');
   for (const text of ['仍須自行啟動並完成 UD-01', '原完成鍵仍獨立保存', '尚未固定的 U6 重開閥', 'U6 載入仍驗總水量六格']) assert(handoff.includes(text), text);
@@ -731,7 +750,7 @@ test('orientation and visible cultural use do not depend on reading optional not
   assert(block('s-0905-55').includes('身後跨幕門已關'));
   assert(block('s-0906-62').includes('靜音模式仍可只靠接縫與投影判斷'));
   for (const [id, text] of [['s-0904-18', '避開牆上滲水線'], ['s-0904-39', '不讀註記也能看見'],
-    ['s-0906-3', '先看得見長期共用與後加管制'], ['s-0909-15', '不讀短箋也能辨認']]) assert(block(id).includes(text), id);
+    ['s-0906-3', '先看得見長期共用與後加管制'], ['s-0909-15', '全景已能看見架腳墊磚、下緣水痕與上格擋片']]) assert(block(id).includes(text), id);
   assert(block('s-0810-23').includes('略過四組文字仍能走完主線'));
   const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
   assert(inventory.includes('知道了，這次少放'));
@@ -1025,7 +1044,7 @@ test('R1 signal tests have local useful effects without completing or resetting 
     '不需要先做 #1 或 #2', '批次中停用另外兩項', '不重付費、不重算五人',
     '測試效果不跨房持續', '必要叫號完成旗標不回退']) assert(signal.includes(phrase), phrase);
   assert(block('s-0904-6').includes('鈴聲只讓它們轉頭'));
-  assert(block('s-0904-6').includes('叫號完成後不再以測試召回五人'));
+  assert(block('s-0904-6').includes('叫號完成後，五張椅子保持空著'));
   assert(!block('s-0602-4').includes('播放其他訊號 → 激怒'));
   assert(!block('s-0904-6').includes('依原教學錯誤回饋'));
   assert(block('s-0404-11').includes('其他房不自動繼承有效性'));
@@ -1043,7 +1062,8 @@ test('light markers have four authored choices and cannot strand a zero-slot pla
     '不能搬動、收回、跨幕補槽或載入重生', '舊標記仍占槽但不要求為後幕預留',
     '反向鏡位只換投影', '不使用這三個留光槽']) assert(light.includes(phrase), phrase);
   assert(block('s-0905-22').includes('從短租房或祈禱室回來時'));
-  assert(block('s-0906-3').includes('光不會替玩家接好線'));
+  assert(block('s-0906-3').includes('先前的光、借鉗掛位與原面板會對上同一工作檯'));
+  assert(block('s-0906-43').includes('親手接通辦公區線路'));
   assert(block('s-0909-35').includes('沒有槽位也繼續沿單結'));
   assert(block('s-0610-9').includes('不能只看光就跳過任一步'));
   assert(block('s-0607-5').includes('已用完三槽或從未留光也呈現相同內容'));
@@ -1119,14 +1139,14 @@ test('reading layers retain evidence distinctions without solving or revealing i
   const versions = block('s-0908-8');
   for (const text of ['原職稱', '灰塵點', '建檔晚於入境', '三個月前']) assert(versions.includes(text), text);
   const people = block('s-0908-21');
-  for (const text of ['記綠', 'VF-0818', '各自入境前三個曆月', '另外三人的來源仍須各自展開並核對']) assert(people.includes(text), text);
+  for (const text of ['記綠', 'VF-0818', '本人入境前三個曆月', '另外三人的來源須各自展開核對']) assert(people.includes(text), text);
   assert(block('s-0908-32').includes('那個帳號什麼時候有機會通過'));
   assert(block('s-0908-32').includes('還不能證明操作帳號的人是誰'));
   const backup = block('s-0909-55');
   for (const text of ['01:50', '02:20', 'L48_INDEX_PURGE = COMPLETE',
     'DATA_OVERWRITE = INTERRUPTED_AT_POWER_LOSS', 'LOCAL_ASSESSMENT = UNREADABLE',
     'COLD_ARCHIVE_REMOUNTED', '五段通行碼', 'R29 留下的本地資料目錄與現場電力',
-    '少了任何一項', '不說所有被覆寫的內容都已復原']) assert(backup.includes(text), text);
+    '再按「接回備份資料」', '只列出這次能核實的原件']) assert(backup.includes(text), text);
 });
 
 test('player-facing feedback and ending choices agree with production wording', () => {

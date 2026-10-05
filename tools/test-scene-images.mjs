@@ -119,9 +119,9 @@ test('required events read in play order while optional branches remain optional
   order(6, ['id="s-0909-40"', 'id="s-0909-41"', '玩家選擇離開水槽旁，沿固定保養梯下到低位台']);
   order(6, ['門內橫閂與外側護板', '斜側接景同時保留兩端門框', 'id="subscene-u3-v02-script"']);
   const act2 = master.documents.get(ACTS[2].path);
-  assert(act2.includes('兩路不要求讀卡、放蛾或讀完小帳才開放'));
-  assert(act2.includes('不要求兩條路依序走完'));
-  assert(master.documents.get(ACTS[4].path).includes('不在上部直接載入 R23'));
+  assert(act2.includes('舊住宅門下兩級通往 R9；內井旁側道通往 R10。兩路均可自由通行'));
+  assert(act2.includes('也可先走另一側道，兩路都可自由通行'));
+  assert(master.documents.get(ACTS[4].path).includes('保存成功後進入上部片尾'));
   assert(master.documents.get(ACTS[6].path).includes('選填 H-07 未播放也能前進'));
 });
 
