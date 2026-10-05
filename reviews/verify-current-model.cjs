@@ -36,6 +36,7 @@ async function floorGuides(page,name){
  assert(await page.locator('.floor-label:visible').count()>0);
  const url=page.url(),floor=await page.locator('#node-floor').innerText();
  await c.scrollIntoViewIfNeeded();const before=await sharp(await c.screenshot()).raw().toBuffer();
+ await page.screenshot({path:path.join(out,name.replace('guides-off-','guides-on-')+'.png'),fullPage:true});
  await toggle.uncheck();await page.waitForTimeout(100);
  assert.equal(await page.locator('.floor-label:visible').count(),0);
  assert(await page.locator('.model-label[data-node]:visible').count()>0);

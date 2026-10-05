@@ -99,7 +99,9 @@ function build(){
  }
  for(const tower of model.towers)for(const f of FLOORS.filter(f=>f>0&&f<=tower.top)){
   const y=model.floorY.get(f),g=new THREE.Group(),x=tower.x;root.add(g);
-  line([[x-27,y,-24],[x+27,y,-24],[x+27,y,24],[x-27,y,24],[x-27,y,-24]],tower.color,g);
+  const geometry=new THREE.BufferGeometry().setFromPoints([[x-27,y,-24],[x+27,y,-24],[x+27,y,24],[x-27,y,24],[x-27,y,-24]].map(p=>new THREE.Vector3(...p)));
+  const guide=new THREE.Line(geometry,new THREE.LineDashedMaterial({color:tower.color,transparent:true,opacity:.24,depthWrite:false,dashSize:1.4,gapSize:1.2}));
+  guide.computeLineDistances();g.add(guide);
   const el=document.createElement('span');el.className='floor-label';el.textContent=`${tower.id} 棟 · ${floorName(f)}`;el.dataset.tower=tower.id;host.append(el);
   floorLabels.push({el,position:new THREE.Vector3(x+27,y,25),floor:f,g});
  }
