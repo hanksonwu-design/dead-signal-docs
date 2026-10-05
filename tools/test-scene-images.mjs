@@ -114,7 +114,7 @@ test('required events read in play order while optional branches remain optional
   order(0, ['id="s-0903-5"', '[P0-C01]', '查看斷梯、壓住出口的混凝土']);
   order(2, ['id="s-0905-24"', 'id="s-0905-28"', 'id="s-0905-26"', 'id="s-0905-59"', 'id="s-0905-25"', 'id="s-0905-60"', 'id="s-0905-27"']);
   order(3, ['id="s-0906-58"', 'id="s-0906-60"', 'id="s-0906-59"']);
-  order(3, ['id="s-0906-33"', 'id="subscene-r12-v03-script"']);
+  order(3, ['id="s-0906-33"', 'id="subscene-t-r12-r15-01-script"']);
   order(4, ['id="s-0907-34"', '[R21-D04]', '現場門控的授權欄與走廊同框']);
   order(6, ['id="s-0909-40"', 'id="s-0909-41"', '玩家選擇離開水槽旁，沿固定保養梯下到低位台']);
   order(6, ['門內橫閂與外側護板', '斜側接景同時保留兩端門框', 'id="subscene-u3-v02-script"']);
@@ -214,9 +214,9 @@ test('new original hotspots cannot silently bypass image coverage', () => {
   assert.throws(() => collectHotspotImages(collection, invalid), /missing from image/);
 });
 
-test('seven routes have thirteen individually identified views and close-ups with a return parent', () => {
-  const expected = { 'T-R2-R3': 2, 'T-R3-R4': 1, 'T-R7-R8': 2, 'T-R11-R12': 3, 'T-R13-R14': 2, 'T-R17-R18': 2, 'T-R24-R25': 1 };
-  assert.equal(collection.rows.filter(r => r.kind === '過渡場景').length, 13);
+test('twenty-one routes have fifty-three individually identified views and close-ups with a return parent', () => {
+  const expected = { 'T-R2-R3': 2, 'T-R3-R4': 1, 'T-R7-R8': 2, 'T-R3-R5': 5, 'T-R5-R6': 2, 'T-R6-R7': 3, 'T-R11-R12': 7, 'T-R13-R14': 3, 'T-R17-R18': 4, 'T-R24-R25': 1, 'T-R12-R14': 3, 'T-R12-R15': 3, 'T-R13-R15': 3, 'T-R15-R16': 3, 'T-R17-R14': 4, 'T-R20-R21': 2, 'T-R21-R22': 1, 'T-R27-U1': 1, 'T-U3-R28': 1, 'T-R29-U4': 1, 'T-U5-U6': 1 };
+  assert.equal(collection.rows.filter(r => r.kind === '過渡場景').length, 53);
   for (const [route, count] of Object.entries(expected)) {
     const views = collection.rows.filter(r => r.kind === '過渡場景' && r.id.startsWith(`${route}-`));
     assert.equal(views.length, count);
@@ -234,15 +234,15 @@ test('all 56 routes bind valid static views without conflating ending rescue wit
   assert.equal(new Set(routes.map(r => r.edge.id)).size, 56);
   for (const route of routes) assert(route.rows.every(r => collection.allIds.has(r.id) && r.view), route.edge.id);
   assert.deepEqual(routes.find(r => r.edge.fromId === 'R33' && r.edge.toId === 'P1').rows.map(r => r.id), ['R33-V02']);
-  assert.equal(collection.rows.filter(r => r.kind === '出口接景').length, 21);
-  assert.equal(routes.find(r => r.edge.fromId === 'R17' && r.edge.toId === 'R14').mode, '出口接景');
+  assert.equal(collection.rows.filter(r => r.kind === '出口接景').length, 14);
+  assert.equal(routes.find(r => r.edge.fromId === 'R17' && r.edge.toId === 'R14').mode, '逐鏡過渡');
   assert.equal(routes.find(r => r.edge.fromId === 'R17' && r.edge.toId === 'R18').mode, '逐鏡過渡');
 });
 
-test('34 secondary scene nodes retain their parent, ordered connections and distinct reading/spec anchors', () => {
-  assert.equal(subscenes.length, 34);
-  assert.equal(subscenes.filter(s => s.type === '可查看過渡').length, 13);
-  assert.equal(subscenes.filter(s => s.type === '轉場接景').length, 21);
+test('67 secondary scene nodes retain their parent, ordered connections and distinct reading/spec anchors', () => {
+  assert.equal(subscenes.length, 67);
+  assert.equal(subscenes.filter(s => s.type === '可查看過渡').length, 53);
+  assert.equal(subscenes.filter(s => s.type === '轉場接景').length, 14);
   assert.equal(graph.nodes.length, 48);
   for (const child of subscenes) {
     assert.equal(child.node, child.route.edge.fromId);
@@ -254,7 +254,7 @@ test('34 secondary scene nodes retain their parent, ordered connections and dist
       const heading = `###### 次場景 ${child.id} · ${child.name}`;
       assert.equal(story.split(heading).length, 2, child.id);
       const body = story.split(heading)[1].split(/\n(?:#{1,6} |<a id="subscene-)/)[0];
-      assert(body.includes('（鏡位切換）'), `Missing prose after child heading: ${child.id}`);
+      assert(/（鏡位切換）|（靜態畫面／全景）/.test(body), `Missing prose after child heading: ${child.id}`);
       for (const detail of child.details) assert(body.includes(detail.id));
     } else assert.equal(child.details.length, 0, child.id);
   }
@@ -276,16 +276,16 @@ test('invalid child order, adjacency, orphan close-ups and wrong return parents 
 
 test('secondary scene headings preserve entry gates and do not redefine transition saves', () => {
   const act3 = master.documents.get(ACTS[3].path);
-  assert(act3.indexOf('只在 C-02 現場驗證與上述單向確認完成後展開') < act3.indexOf('###### 次場景 T-R17-R18-01'));
+  assert(act3.indexOf('確認後沿原流程存檔') < act3.indexOf('###### 次場景 T-R17-R18-01'));
   assert(act3.indexOf('不覆蓋上段十二秒餘波') < act3.indexOf('###### 次場景 T-R13-R14-01'));
   const policy = master.documents.get(APPENDIX).split('<a id="scene-image-contract"></a>')[1].split('各場景原文')[0];
-  for (const phrase of ['主場景 → 次場景 → 物件近看', '操作與演出 V 圖不一律', '實際觸發仍依正文分支', '21 個出口接景不套用七路通路進度']) assert(policy.includes(phrase), phrase);
+  for (const phrase of ['主場景 → 次場景 → 物件近看', '操作與演出 V 圖不一律', '實際觸發仍依正文分支', '14 個出口接景不套用探路進度']) assert(policy.includes(phrase), phrase);
 });
 
 test('exit work orders stay assigned to their actual routes rather than falling back silently', () => {
-  const expected = ['P2-R1', 'R5-R6', 'R6-R7', 'R8-R9', 'R8-R10', 'R9-R11', 'R10-R11', 'R12-R14', 'R12-R15', 'R13-R15', 'R14-R15', 'R16-R17', 'R17-R14', 'R19-R20', 'R20-R21', 'R22-R23', 'R25-R26', 'R28-R29', 'R30-R31', 'R31-R32', 'U3-U1'];
+  const expected = ['P2-R1', 'R8-R9', 'R8-R10', 'R9-R11', 'R10-R11', 'R14-R15', 'R16-R17', 'R19-R20', 'R22-R23', 'R25-R26', 'R28-R29', 'R30-R31', 'R31-R32', 'U3-U1'];
   assert.deepEqual(routes.filter(r => r.mode === '出口接景').map(r => `${r.edge.fromId}-${r.edge.toId}`).sort(), expected.sort());
-  const invalid = { ...collection, groups: collection.groups.map(g => ({ ...g, rows: g.rows.map(r => r.id === 'R17-V02' ? { ...r, content: r.content.replace('R17→R14', 'R17→R15') } : r) })) };
+  const invalid = { ...collection, groups: collection.groups.map(g => ({ ...g, rows: g.rows.map(r => r.id === 'R16-V02' ? { ...r, content: r.content.replace('R16→R17', 'R16→R15') } : r) })) };
   invalid.rows = invalid.groups.flatMap(g => g.rows);
   assert.throws(() => bindImageRoutes(graph, invalid), /Unused or ambiguous/);
 });

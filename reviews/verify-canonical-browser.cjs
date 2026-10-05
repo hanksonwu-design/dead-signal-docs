@@ -200,7 +200,7 @@ async function canvasCheck(page, name) {
     await readerReady(page, 'node-r11-script');
     pass('in-document navigation');
 
-    const transitionRoutes = [['r2-r3', 1], ['r3-r4', 1], ['r7-r8', 2], ['r11-r12', 2], ['r13-r14', 3], ['r17-r18', 3], ['r24-r25', 5]];
+    const transitionRoutes = [['r2-r3', 1], ['r3-r4', 1], ['r3-r5', 1], ['r5-r6', 1], ['r6-r7', 2], ['r7-r8', 2], ['r11-r12', 2], ['r13-r14', 3], ['r17-r18', 3], ['r24-r25', 5]];
     for (const [route, act] of transitionRoutes) {
       const anchor = `transition-${route}`;
       await page.goto(docUrl(ACTS[act].path, `${anchor}-script`));
@@ -213,7 +213,7 @@ async function canvasCheck(page, name) {
       assert.equal(await specs.evaluate(() => state.selected.path), APPENDIX);
       await specs.close();
     }
-    pass('seven transition scripts link to owned specifications and shared rules');
+    pass('ten transition scripts link to owned specifications and shared rules');
 
     await page.goto(docUrl(APPENDIX, 'culture-details'));
     await readerReady(page, 'culture-details');
@@ -309,7 +309,7 @@ async function canvasCheck(page, name) {
       if (route === 'r11-r12') await page.screenshot({ path: path.join(out, 'transition-spec-mobile.png') });
       if (route === 'r17-r18') await page.screenshot({ path: path.join(out, 'warehouse-transition-mobile.png') });
     }
-    pass('seven transition specifications fit mobile reader');
+    pass('ten transition specifications fit mobile reader');
     await page.setViewportSize({ width: 1440, height: 1000 });
 
     const images = [];
@@ -387,7 +387,7 @@ async function canvasCheck(page, name) {
     await specPopup.close();
     pass('scene graph exposes a separate production link');
 
-    await page.goto(`${base}/building/#scene=R8`);
+    await page.goto(`${base}/building/editor.html#scene=R8`);
     await page.locator('#room-id').filter({ hasText: 'R8' }).waitFor();
     assert.equal(await page.locator('#room-picker option').count(), 26);
     const source = new URL(await page.locator('#source-link').getAttribute('href'), page.url());
@@ -409,7 +409,7 @@ async function canvasCheck(page, name) {
     assert.equal(await page.locator('#edit-mode-switch').getAttribute('aria-checked'), 'true');
     await page.locator('#edit-mode-switch').click();
     pass('3D room selection and editor mode remain interactive');
-    for (const [route, act] of [['R2-R3', 1], ['R3-R4', 1], ['R7-R8', 2], ['R11-R12', 2], ['R13-R14', 3], ['R17-R18', 3]]) {
+    for (const [route, act] of [['R2-R3', 1], ['R3-R4', 1], ['R3-R5', 1], ['R5-R6', 1], ['R6-R7', 2], ['R7-R8', 2], ['R11-R12', 2], ['R13-R14', 3], ['R17-R18', 3]]) {
       await page.locator('#transition-picker').selectOption(route);
       const link = new URL(await page.locator('#transition-source').getAttribute('href'), page.url());
       const query = new URLSearchParams(link.hash.slice(1));
@@ -417,7 +417,7 @@ async function canvasCheck(page, name) {
       assert.equal(query.get('heading'), `transition-${route.toLowerCase()}`);
     }
     await page.locator('#transition-close').click();
-    pass('all six 3D passage source links target the relocated specifications');
+    pass('all nine upper 3D passage source links target the canonical specifications');
     await page.setViewportSize({ width: 390, height: 844 });
     await canvasCheck(page, 'model-mobile');
 

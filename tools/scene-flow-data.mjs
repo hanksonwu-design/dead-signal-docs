@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT } from './sync-canonical.mjs';
 import { EXIT_PLACEMENTS } from './reading-scene-flow.mjs';
+import { readRouteExploration } from './route-exploration.mjs';
 
 import { preciseFloor, readSceneFloor, readChildFloors } from './scene-floors.mjs';
 export { preciseFloor, readSceneFloor } from './scene-floors.mjs';
@@ -24,6 +25,14 @@ function routeFloor(edge, nodes, children) {
 
 export function buildSceneFlowData(graph, collection, routes, subscenes, access, documents) {
   const childFloors = new Map();
+  const exploration = new Map();
+  for (const file of new Set(graph.nodes.map(node => node.pack))) {
+    const spec = documents?.get(file) ?? readFileSync(path.join(ROOT, 'docs', file), 'utf8');
+    for (const [id, play] of readRouteExploration(spec, subscenes)) exploration.set(id, play);
+  }
+  for (const child of subscenes) {
+    if (child.requirements.includes('逐層探路')) assert(exploration.has(child.id), `Missing exploration rules: ${child.id}`);
+  }
   const images = Object.fromEntries(collection.rows.map(row => [row.id, {
     id: row.id, node: row.node, kind: row.kind, content: row.content, requirements: row.requirements,
     status: 'pending', spec: row.act.specPath, heading: `node-${row.node.toLowerCase()}-images`,
@@ -53,7 +62,8 @@ export function buildSceneFlowData(graph, collection, routes, subscenes, access,
   });
   const children = subscenes.map(child => ({
     id: child.id, node: child.node, route: child.route.edge.id, image: child.id,
-    name: EXIT_PLACEMENTS[child.id]?.[2] ?? child.name, type: child.type,
+    name: EXIT_PLACEMENTS[child.id]?.[2] ?? child.name, type: exploration.has(child.id) ? '探路次場景' : child.type,
+    play: exploration.get(child.id) ?? null,
     floor: childFloors.get(child.id),
     from: child.from, to: child.to, details: child.details.map(row => row.id),
     source: child.act.path, heading: `subscene-${child.id.toLowerCase()}-script`,
@@ -69,10 +79,12 @@ export function buildSceneFlowData(graph, collection, routes, subscenes, access,
       image: edge.fromId === 'R33' && edge.toId === 'P1' ? 'R33-V02' : `${edge.toId}-V01`,
     });
     for (const step of steps) assert(images[step.image], `Unbound flow image: ${step.image}`);
-    return { id: edge.id, from: edge.fromId, to: edge.toId, back: edge.back, mode: route.mode, floor: routeFloor(edge, nodes, children),
+    const playable = children.filter(child => child.route === edge.id && child.play);
+    if (playable.length) assert.equal(playable.length, steps.filter(s => s.type === 'subscene').length, `Partial exploration route: ${edge.id}`);
+    return { id: edge.id, from: edge.fromId, to: edge.toId, back: edge.back, mode: playable.length ? '逐層探索' : route.mode, floor: routeFloor(edge, nodes, children),
       images: route.rows.map(row => row.id), steps };
   });
   assert.equal(connections.length, graph.edges.length);
-  assert.equal(children.length, 34);
+  assert.equal(children.length, subscenes.length);
   return { version: 1, nodes, subscenes: children, routes: connections, images };
 }

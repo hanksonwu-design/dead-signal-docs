@@ -5,7 +5,7 @@ const path=require('node:path');
 const runtime=createRequire(path.join(process.argv[2],'__qa__.cjs'));
 const {chromium}=runtime('playwright');
 const sharp=runtime('sharp');
-const out=path.join(__dirname,'transition-model-browser');fs.mkdirSync(out,{recursive:true});
+const out=path.resolve(process.argv[4]||path.join(__dirname,'transition-model-browser'));fs.mkdirSync(out,{recursive:true});
 const base=process.argv[3]||'http://127.0.0.1:8765';
 const errors=[],checks=[];
 const pass=name=>{checks.push(name);console.log('PASS '+name);};
@@ -15,10 +15,10 @@ const key='dead-signal-building-sandbox-v2';
  try{
   const context=await browser.newContext({viewport:{width:1440,height:1000}}),page=await context.newPage();
   page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(30000);
-  await page.goto(base+'/building/');await page.locator('#loading').waitFor({state:'detached'});
+  await page.goto(base+'/building/editor.html');await page.locator('#loading').waitFor({state:'detached'});
   assert.equal(await page.locator('#error').isVisible(),false);assert.equal(await page.locator('.room-tag').count(),26);
   assert.equal(await page.locator('#edge-count').innerText(),'30');
-  const routes=await page.locator('#transition-picker option').evaluateAll(os=>os.filter(o=>o.value).map(o=>o.value));assert.equal(routes.length,6);
+  const routes=await page.locator('#transition-picker option').evaluateAll(os=>os.filter(o=>o.value).map(o=>o.value));assert.equal(routes.length,16);
   let count=0;
   for(const route of routes){
    await page.locator('#transition-picker').selectOption(route);
@@ -32,8 +32,8 @@ const key='dead-signal-building-sandbox-v2';
    await page.locator('#transition-shots [data-shot="-1"]').click();
    await page.screenshot({path:path.join(out,route+'.png')});
   }
-  assert.equal(count,12);pass('six passages and twelve nonblank camera locations; 26 nodes / 30 edges');
-  for(const [route,shot] of [['R11-R12',1],['R17-R18',0]]){
+  assert.equal(count,48);pass('sixteen passages and forty-eight nonblank camera locations; 26 nodes / 30 edges');
+  for(const [route,shot] of [['R12-R14',0],['R17-R18',3]]){
    await page.locator('#transition-picker').selectOption(route);await page.locator(`#transition-shots [data-shot="${shot}"]`).click();
    await page.screenshot({path:path.join(out,route+'-landing.png')});
    await page.locator('#height-mode').selectOption('actual');assert.match(await page.locator('#view-title').innerText(),new RegExp(route));
@@ -69,8 +69,8 @@ const key='dead-signal-building-sandbox-v2';
   await page.locator('#transition-picker').selectOption('R7-R8');await page.locator('#floor-only').selectOption('15');assert.equal(await page.locator('#transition-picker').inputValue(),'');
   await page.locator('#transition-picker').selectOption('R7-R8');await page.locator('#edit-mode-switch').click();assert.equal(await page.locator('#transition-picker').inputValue(),'');
   await page.locator('#stair-3d-done').click();pass('floor and edit controls leave passage inspection cleanly');
-  const mobile=await context.newPage();mobile.on('pageerror',e=>errors.push(e.message));await mobile.setViewportSize({width:390,height:844});await mobile.goto(base+'/building/');await mobile.locator('#loading').waitFor({state:'detached'});
-  await mobile.locator('#transition-picker').selectOption('R11-R12');await mobile.locator('#transition-shots [data-shot="1"]').click();await mobile.locator('#canvas-host').scrollIntoViewIfNeeded();
+  const mobile=await context.newPage();mobile.on('pageerror',e=>errors.push(e.message));await mobile.setViewportSize({width:390,height:844});await mobile.goto(base+'/building/editor.html');await mobile.locator('#loading').waitFor({state:'detached'});
+  await mobile.locator('#transition-picker').selectOption('R11-R12');await mobile.locator('#transition-shots [data-shot="0"]').click();await mobile.locator('#canvas-host').scrollIntoViewIfNeeded();
   assert(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await mobile.screenshot({path:path.join(out,'mobile.png'),fullPage:true});pass('mobile passage controls and model render without horizontal overflow');
   assert.deepEqual(errors,[]);pass('no JavaScript page errors');
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors},null,2));

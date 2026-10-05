@@ -45,8 +45,8 @@ async function reference(page) {
     await page.goto(`${base}/#scene=R2`);
     await page.locator('#sceneRoute').waitFor();
     assert.equal(await page.locator('.scene-node').count(), 48);
-    assert.equal(await page.locator('.scene-child').count(), 34);
-    assert.equal(await page.locator('[data-map-route]').count(), 90);
+    assert.equal(await page.locator('.scene-child').count(), 67);
+    assert.equal(await page.locator('[data-map-route]').count(), 123);
     for (const node of flow.nodes) assert.equal(await page.locator(`[data-node="${node.id}"] .scene-floor`).innerText(), node.floor.label);
     for (const child of flow.subscenes) assert.equal(await page.locator(`[data-subscene="${child.id}"] .scene-floor`).innerText(), child.floor.label);
     assert.match(await page.locator('.scene-location').innerText(), /1F/);
@@ -115,15 +115,16 @@ async function reference(page) {
         await page.locator(`[data-shot="${child.id}"]`).click();
         assert((await page.locator('.scene-shot-detail h4').innerText()).includes(child.id));
         assert.equal(await page.locator('.scene-closeups li').count(), child.details.length);
+        if(child.play){const text=await page.locator('.scene-shot-detail').innerText();for(const field of ['clue','action','recovery'])assert(text.includes(child.play[field]),`${child.id}: ${field}`);}
       }
     }
-    pass('all 56 routes and 34 subscenes render with original gates and one-way restrictions');
+    pass('all 56 routes and 67 subscenes render with original gates and one-way restrictions');
 
-    await choose(page, 'R11', 'R11-R12-16', 'T-R11-R12-02');
-    assert.equal(await page.locator('[data-shot="T-R11-R12-02"] .scene-floor').innerText(), '24F');
-    assert.match(await page.locator('.scene-route-floor').innerText(), /15F 上半層平台 → 24F → 31F/);
-    await choose(page, 'R17', 'R17-R18-26', 'T-R17-R18-01');
-    assert.equal(await page.locator('[data-shot="T-R17-R18-01"] .scene-floor').innerText(), '36F');
+    await choose(page, 'R11', 'R11-R12-16', 'T-R11-R12-01');
+    assert.equal(await page.locator('[data-shot="T-R11-R12-01"] .scene-floor').innerText(), '16F');
+    assert.match(await page.locator('.scene-route-floor').innerText(), /15F 上半層平台 → 16F.*22F.*23F/);
+    await choose(page, 'R17', 'R17-R18-26', 'T-R17-R18-04');
+    assert.equal(await page.locator('[data-shot="T-R17-R18-04"] .scene-floor').innerText(), '36F');
     await page.screenshot({ path: path.join(out, 'floor-36-overview.png') });
     const dining = flow.routes.find(r => r.from === 'R24' && r.to === 'R25');
     await choose(page, 'R24', dining.id, 'T-R24-R25-01');
@@ -161,7 +162,7 @@ async function reference(page) {
     assert.equal(await page.locator('#scenePart').inputValue(), 'all');
     await page.locator('#sceneAct').selectOption('1');
     assert.equal(await page.locator('.scene-node').count(), graph.nodes.filter(n => n.act === 1).length);
-    assert.equal(await page.locator('.scene-child').count(), 4);
+    assert.equal(await page.locator('.scene-child').count(), flow.subscenes.filter(s => graph.nodes.find(n => n.id === s.node).act === 1).length);
     assert.equal(await page.locator('.scene-boundary[data-follow="R6"]').count(), 1);
     await page.locator('#sceneAct').selectOption('all');
     await page.locator('#searchInput').fill('T-R2-R3-01');
@@ -172,7 +173,8 @@ async function reference(page) {
     assert.equal(await page.locator('#searchInput').inputValue(), '');
     assert.equal(await page.locator('.scene-node').count(), 48);
     await page.locator('#searchInput').fill('50F');
-    assert.equal(await page.locator('[data-node="U6b"]').count(), 1);
+    assert.equal(await page.locator('[data-node="R31"]').count(), 1);
+    assert.equal(await page.locator('[data-node="U6b"]').count(), 0);
     assert.equal(await page.locator('[data-node="P0"]').count(), 0);
     await page.locator('#searchInput').fill('NO_MATCH_FOR_SCENE');
     assert.equal(await page.locator('.scene-node').count(), 0);

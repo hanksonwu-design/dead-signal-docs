@@ -68,11 +68,19 @@ for (const [prefix, numbers] of Object.entries({ CARE: [1, 2, 3, 4], MC: [1, 2, 
 for (const id of ['K0-01', 'K1-01', 'K2-01', 'F1', 'F2', 'F3', 'F4', 'F5']) {
   assert(original.includes(`| ${id} |`), `Missing key/code ${id}`);
 }
-const transitions = [...original.matchAll(/^\| (T-[A-Z0-9]+-[A-Z0-9]+) \| (\d+) \|/gm)];
-assert.equal(transitions.length, 7, 'Seven transition rows');
-assert.equal(transitions.reduce((sum, match) => sum + Number(match[2]), 0), 13, 'Thirteen transition compositions');
-assert.equal(new Set(transitions.map(match => match[1])).size, 7, 'No duplicate transitions');
-for (const match of transitions) assert(master.text.includes(match[1]), `Transition source ${match[1]}`);
+const flow = JSON.parse(readFileSync(path.join(ROOT, 'scene-flow.json'), 'utf8'));
+const transitionRows = flow.routes.flatMap(route => {
+  const children = flow.subscenes.filter(s => s.route === route.id && s.id.startsWith('T-'));
+  if (!children.length) return [];
+  const edge = graph.edges.find(e => e.id === route.id);
+  assert(edge, `Transition route ${route.id}`);
+  const anchor = `transition-${route.from.toLowerCase()}-${route.to.toLowerCase()}`;
+  assert(master.anchors.has(anchor), `Transition source ${anchor}`);
+  return [[link(`T-${route.from}-${route.to}`, children[0].spec, anchor), children.length,
+    children.map(s => `${s.floor.label} ${s.name}`).join('；'), `${edge.gate}；${edge.returnRule}`]];
+});
+assert.equal(transitionRows.reduce((sum, row) => sum + row[1], 0), flow.subscenes.filter(s => s.id.startsWith('T-')).length);
+const transitions = table(['通路', '鏡位', '場景／文化物件組', '通行條件與敘事用途'], transitionRows);
 
 const summary = `**盤點範圍：${ACTS.length} 幕（含序幕、終幕）、${graph.nodes.length} 個導覽節點、${beatIds.length} 段正文場次、${graph.edges.length} 條登記動線。**\n\n` +
   table(['幕別', '節點數', '正文場次數', '節點範圍'], indexedActs.map(act => [
@@ -98,7 +106,7 @@ const routes = table(['動線／來源', '類型', '進入或離房條件', '回
 }));
 
 let output = original;
-for (const [name, content] of Object.entries({ summary, beats, routes })) {
+for (const [name, content] of Object.entries({ summary, beats, routes, transitions })) {
   const { from, to } = section(output, name);
   output = output.slice(0, from) + '\n\n' + content + '\n\n' + output.slice(to);
 }

@@ -16,7 +16,7 @@ function path(t,map){
  return {edge,raw,points:transitionPath(edge,raw,map)};
 }
 const onSegment=(p,a,b)=>Math.abs(Math.hypot(...p.map((v,i)=>v-a[i]))+Math.hypot(...p.map((v,i)=>v-b[i]))-Math.hypot(...b.map((v,i)=>v-a[i])))<1e-6;
-test('all twelve stations stay on connected passages in both height modes',()=>{
+test('all current stations stay on connected passages in both height modes',()=>{
  const snapshot=JSON.stringify(data);
  for(const actual of [false,true])for(const t of transitions){
   const map=heights(actual),{raw,points}=path(t,map),views=transitionViews(t,points,map);
@@ -27,14 +27,16 @@ test('all twelve stations stay on connected passages in both height modes',()=>{
  }
  assert.equal(JSON.stringify(data),snapshot,'inspection must not alter graph or gates');
 });
-test('middle platforms match 24F and 36F and survive floor slicing',()=>{
+test('exploration platforms match every authored floor and survive floor slicing',()=>{
  for(const actual of [false,true])for(const t of transitions.filter(t=>t.views.some(v=>v.floor))){
-  const map=heights(actual),{points}=path(t,map),s=transitionViews(t,points,map).find(v=>v.floor);
+  const map=heights(actual),{points}=path(t,map);
+  for(const s of transitionViews(t,points,map).filter(v=>v.floor)){
   assert(s.flat,t.id+' needs a horizontal landing');
   assert(Math.abs(s.position[1]-(map.get(s.floor)+.3))<1e-6,t.id+' landing height');
   const sliced=clipRouteToHeight(points,map.get(s.floor)+.3,map.get(s.floor+1)+.3);
   assert(sliced.some(ps=>ps.some((b,i)=>i&&onSegment(s.access,ps[i-1],b))));
   assert(Math.hypot(...s.position.map((v,i)=>v-s.access[i]))>=3,'side bay clears stacked flights');
+  }
  }
 });
 test('custom paths retain all coordinates and relocated stations follow them',()=>{

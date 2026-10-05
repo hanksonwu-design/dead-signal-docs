@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="866" viewBox="0 0 1100 866" role="img" aria-labelledby="title desc">
   <title id="title">U6 出入口配置草圖</title>
-  <desc id="desc">水箱夾層。配重管指向下方維修艙；此處只畫固定梯，不依賴未固定的踏板。。來路／返回：冷藏維修口：水箱夾層來向的原通道口，管線接回冷藏後場。 非鎖場且沉降前可原路回 U5。 出口：固定保養梯：三水槽旁的固定梯，配重管向下連到維修艙。 水位調成 2／2／2 並關閥後才可下行；不踏尚未固定的活動踏板，可沿同梯返回。</desc>
+  <desc id="desc">水箱夾層。配重管指向下方維修艙；此處只畫固定梯，不依賴未固定的踏板。。來路／返回：冷藏維修口：49F 門端，來路可辨48F → 49F 冷藏維修上行道的連續扶手及固定梯口；起點房在 48F，不把兩端畫成同層相鄰門。 非鎖場且沉降前可原路回 U5。 出口：固定保養梯：三水槽旁的固定梯，配重管向下連到維修艙。 水位調成 2／2／2 並關閥後才可下行；不踏尚未固定的活動踏板，可沿同梯返回。</desc>
   <rect width="1100" height="866" fill="#fbfcfc"/>
   <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
     <text x="40" y="52" font-size="30" font-weight="700">U6 · 水箱夾層 / 出入口配置</text>

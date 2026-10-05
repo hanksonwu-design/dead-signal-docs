@@ -20,11 +20,11 @@ const groups=[
  {id:'all',title:'全棟概覽',range:'B3 → 43F',floors:[-3,43]},
  {id:'basement',title:'序幕 · 地底管線',range:'B3–B1',floors:[-3,-1]},
  {id:'lobby',title:'第一幕 · 入口大廳',range:'1F',floors:[1,1]},
- {id:'residence',title:'第一幕 · 住宅工場',range:'2F–7F',floors:[2,7]},
- {id:'production',title:'第二幕 · 中層產線',range:'15F–20F',floors:[15,20]},
- {id:'technical',title:'第三幕 · 技術後勤',range:'28F–31F',floors:[28,31]},
- {id:'office',title:'第三幕 · 管理辦公',range:'32F',floors:[32,32]},
- {id:'correction',title:'第四幕 · 校正前段',range:'41F–42F',floors:[41,42]},
+ {id:'residence',title:'第一幕 · 住宅工場',range:'2F–10F',floors:[2,10]},
+ {id:'production',title:'第二幕 · 生活產線與探路',range:'11F–22F',floors:[11,22]},
+ {id:'technical',title:'第三幕 · 技術後勤',range:'23F–31F',floors:[23,31]},
+ {id:'office',title:'第三幕 · 管理與倉儲探路',range:'32F–36F',floors:[32,36]},
+ {id:'correction',title:'第四幕 · 校正與釋放',range:'37F–42F',floors:[37,42]},
 ];
 
 const colors={0:0x7facc5,1:0x98bca6,2:0x80bac4,3:0x93a9c9,4:0xc0a29f};
@@ -44,7 +44,7 @@ const editor=createEditorStore(data.nodes,layout,offsets,data.edges,{terminals:[
 const originalRooms=new Map(data.nodes.map(n=>[n.id,{...n}]));
 // Keep the reference floor elevations stable while rooms move between floors.
 // Otherwise moving the last room off a floor collapses it during mouse release.
-const structureFloors=new Set(data.nodes.map(n=>n.floor));
+const structureFloors=new Set([...data.nodes.map(n=>n.floor),...transitions.flatMap(t=>t.views.map(v=>v.floor).filter(Boolean))]);
 let usedFloors=[...new Set(data.nodes.map(n=>n.floor))].sort((a,b)=>a-b);
 const floors=Array.from({length:47},(_,i)=>i-3).filter(f=>f!==0);
 let state={group:'all',floor:null,selected:'R6',height:'compressed',spread:0,shell:true,special:true,labels:true,view:'iso'};
@@ -259,7 +259,7 @@ function showTransition(id,index=-1){
  const buttons=$('transition-shots');buttons.replaceChildren();
  for(const [i,label] of [[-1,'通路全覽'],...t.views.map((v,i)=>[i,v.label])]){const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.shot=i;b.setAttribute('aria-pressed',String(i===index));b.onclick=()=>showTransition(id,i);buttons.append(b);}
  const custom=edge.route||t.id.split('-').some(id=>editor.isChanged(id));
- $('transition-copy').textContent=(index<0?'沿既有連線補足平台與空間地標。首次通行目標 '+t.seconds+' 秒，生活近看可略過。':t.views[index].text)+(custom?' 已依目前配置定位，樓層與鏡位請再核對。':'');
+ $('transition-copy').textContent=(index<0?(t.views.some(v=>v.play)?'逐層辨路與局部操作，依製作規格開通相鄰節點。':'沿既有連線補足平台與空間地標。首次通行目標 '+t.seconds+' 秒，生活近看可略過。'):t.views[index].text)+(custom?' 已依目前配置定位，樓層與鏡位請再核對。':'');
  $('transition-source').href='../#'+new URLSearchParams({doc:nodeMap.get(id.split('-')[0]).pack,heading:'transition-'+id.toLowerCase()});
  refreshFloorOptions();applyVisibility();updateDetails();fitCamera();
 }

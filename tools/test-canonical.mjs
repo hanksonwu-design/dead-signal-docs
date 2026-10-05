@@ -77,7 +77,7 @@ test('eight reading acts and eight production files keep unique blocks and paire
 });
 
 test('production specifications follow overview, room flow, shared reference and delivery order', () => {
-  assert.deepEqual(validateProductionOrder(master.documents, graph), { acts: 8, nodes: 48, subscenes: 34, passages: 7 });
+  assert.deepEqual(validateProductionOrder(master.documents, graph), { acts: 8, nodes: 48, subscenes: 67, passages: 21 });
   assert.deepEqual(reorderProduction(master, graph).documents, master.documents);
 });
 
@@ -112,7 +112,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
     assert.match(story, /（靜態畫面／(?:遠景|全景|中景|近景|特寫)）/, act.path);
     assert(story.includes('（介面呈現）'), act.path);
   }
-  for (const id of ['s-0904-16', 's-0905-22', 's-0905-55', 's-0906-14', 's-0906-62', 's-0908-28']) {
+  for (const id of ['s-0904-16', 's-0905-22', 's-0906-14', 's-0908-28']) {
     assert(block(id).includes('（鏡位切換）'), id);
   }
   assert(block('s-0903-3').includes('（配音演出）保留人的氣息與猶豫。'));
@@ -120,7 +120,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
 });
 
 test('every static screenplay cue names its shot size without changing protected framing', () => {
-  const counts = [22, 41, 57, 45, 37, 29, 29, 20];
+  const counts = [22, 55, 77, 91, 43, 29, 37, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -158,8 +158,8 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     系統: new Set(['操作提示', '選項介面', '確認警示', '取得提示', '筆記更新', '狀態顯示', '狀態更新',
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
-  const counts = [[21, 17, 8], [48, 27, 20], [72, 33, 11], [79, 27, 12],
-    [48, 18, 11], [51, 13, 12], [52, 5, 11], [23, 12, 4]];
+  const counts = [[21, 17, 8], [62, 27, 20], [92, 33, 11], [125, 24, 12],
+    [54, 18, 11], [51, 13, 12], [60, 5, 11], [23, 12, 4]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
@@ -294,71 +294,68 @@ test('R1 coerced intake; no voluntary work or freedom result', () => {
   assert(!scene.includes('「下一位」'));
 });
 
-test('seven transition routes retain gates and directions without adding rooms', () => {
+test('ten expanded routes preserve original departure gates and ordered scene coverage', () => {
   const routes = [
+    ['R3', 'R5', 1, 's-0904-23', null, 5, '可自由前往工坊，無額外門鎖；尚缺人物碎片或第一層證據時，只限制 R5→R6 離幕'],
+    ['R5', 'R6', 1, 's-0904-45', null, 2, '第一層人物鏈與必要三格鎖定，再於現場門端核對訊號鑰匙；F1 隨必要血字近看記錄，不另作門禁'],
+    ['R6', 'R7', 2, 's-0905-8', null, 3, '查看產線玻璃門，記下已見的中層路線後自行前往；設備同步、來電與帳號清單不擋通行'],
     ['R2', 'R3', 1, 's-0904-16', 's-0602-22', 2,
       '完成本房必要操作，依 R2-03 推開送餐車露出梯口；無額外證據或鑰匙'],
     ['R3', 'R4', 1, 's-0904-25', 's-0602-23', 1,
       '可自由前往刻痕牆，無額外門鎖；R3 人物碎片可章內回查，統一在 R5 離幕前核對'],
     ['R7', 'R8', 2, 's-0905-22', 's-0603-35', 2,
       '可沿窄橋自由前往；教戰手冊與留存排行榜在 R11 離幕前核對，老周安息及配給支線不擋通行'],
-    ['R11', 'R12', 2, 's-0905-55', 's-0603-36', 3,
+    ['R11', 'R12', 2, 's-0905-55', 's-0603-36', 7,
       '阿尋必要校驗、arc.ahsun.scope_confirmed 與幕尾 K1-01 成立，再完成現場第一鑰匙門端驗證；SQ-C1／SQ-S 不擋主線'],
-    ['R13', 'R14', 3, 's-0906-14', 's-0604-28', 2,
+    ['R13', 'R14', 3, 's-0906-14', 's-0604-28', 3,
       'E-07 已依本房叫號序列與照護註記安息，診所後門開啟；可退回 R12 不受本條阻擋'],
-    ['R17', 'R18', 3, 's-0906-62', 's-0604-29', 2,
+    ['R17', 'R18', 3, 's-0906-62', 's-0604-29', 4,
       '正確日期證據與 K2-01 成立；假路返回後可重排；離幕前可回查已發現未完成的 SQ-M1／SQ-T，支線不擋主線'],
     ['R24', 'R25', 5, 's-0908-28', 's-0606-26', 1,
       'E4-01／E4-02／E3-02 第四層鎖定成立；act5.r24.board_locked = true']
   ];
+  const flow = JSON.parse(read('scene-flow.json'));
   let viewCount = 0;
   for (const [from, to, act, storyId, specId, views, gate] of routes) {
-    const route = `T-${from}-${to}`;
-    const anchor = `transition-${from.toLowerCase()}-${to.toLowerCase()}`;
+    const route = `T-${from}-${to}`, anchor = `transition-${from.toLowerCase()}-${to.toLowerCase()}`;
     const edges = graph.edges.filter(e => e.fromId === from && e.toId === to);
     assert.equal(edges.length, 1, route);
-    const edge = edges[0];
+    const edge = edges[0], oneWay = ['R5','R11','R17'].includes(from);
     assert.equal(edge.gate, gate, route);
-    const oneWay = ['R11', 'R17'].includes(from);
-    assert.equal(edge.kind, oneWay ? '跨幕' : from === 'R13' ? '分岔' : '主線');
     assert.equal(edge.back, !oneWay);
-    assert.equal(edge.returnRule, oneWay ? '單向流程；不代表可沿此線倒退' :
-      '章內回訪；遇鎖場、追逐或封路停用' + (from === 'R7' ? '；R8 放蛾不鎖通路，必要讀卡在 R11 校驗前核對' : ''));
-    assert(edge.motion.startsWith(`${route}：`));
+    assert.equal(edge.kind, oneWay ? '跨幕' : from === 'R13' ? '分岔' : '主線');
     assert(!graph.nodes.some(n => n.id === route));
     assert.equal(canonicalFile(master, anchor), ACTS[act].specPath);
     assert.equal(canonicalFile(master, `${anchor}-script`), ACTS[act].path);
-    assert(block(storyId).includes(`[通路製作規格](../${ACTS[act].specPath}#${anchor})`));
-    const spec = block(specId).split(`<a id="${anchor}"></a>`)[1].split('<a id=')[0];
-    assert.equal([...spec.matchAll(/^\| [ABC]：/gm)].length, views, route);
-    assert(spec.includes('#transition-rules'));
-    assert(spec.includes('#transition-assets'));
+    assert(block(storyId).includes(`id="${anchor}-script"`));
+    assert.equal(flow.subscenes.filter(s=>s.route===edge.id).length,views);
     assert(block('s-0810-23').includes(`| [${route}](../${ACTS[act].specPath}#${anchor}) | ${views} |`));
+    const spec = master.documents.get(ACTS[act].specPath).split(`<a id="${anchor}"></a>`)[1].split('<a id=')[0];
+    assert(spec.includes('#transition-rules') || spec.includes('#ascent-route-contract'));
     viewCount += views;
   }
-  assert.equal(viewCount, 13);
+  assert.equal(viewCount, 30);
+  assert(master.text.includes('| 既有連線探路／過渡構圖 | **53 個** |'));
+  assert(!master.text.includes('15–20F       R6–R11'));
   assert.equal(canonicalFile(master, 'transition-rules'), APPENDIX);
+  assert.equal(canonicalFile(master, 'ascent-route-contract'), APPENDIX);
   assert.equal(canonicalFile(master, 'transition-assets'), APPENDIX);
-  assert(block('s-0810-8').includes('既有連線過渡構圖'));
-  assert(block('s-0810-23').includes('尚未交付這 13 個過渡構圖的正式圖像或遊戲場景'));
+  assert(block('s-0810-23').includes('尚未交付 53 個通路構圖的正式美術或遊戲場景'));
 });
 
-test('transition text separates presentation saves from story gates and chapter handoff', () => {
+test('versioned route saves cannot skip exploration, destination operations or chapter gates', () => {
   const common = block('s-0403-3');
-  assert(common.includes('transition_progress = { route, from, to, view, committed }'));
-  assert(common.includes('`transition_seen` 絕不是通行權限'));
-  assert(common.includes('不標記目的房已到訪、不啟動其入場事件'));
-  assert(common.includes('不能只憑通路欄位裡的 `to` 或 `committed` 越過主線驗證'));
+  for (const phrase of ['version: 3', '連續前綴', '不直接送到目的房', '版本 1／2 的舊通路圖號改義',
+    '不把「看過」當通行權限', '起行不寫入目的房到訪', '不得只憑 to、committed', 'L-04 只走 R17→R14',
+    'R13 ↔ R14 的安息門檻雙向有效', 'R3 ↔ R5、R6 ↔ R7']) assert(common.includes(phrase), phrase);
   assert(graph.edges.every(e => !/transition_(?:seen|progress)/.test(e.gate)));
   const leaving = block('s-0905-55');
   assert(leaving.indexOf('選「繼續」，沿原流程存檔') < leaving.indexOf('<a id="transition-r11-r12-script">'));
-  assert(leaving.includes('不先播該房的三下敲擊'));
+  assert(leaving.includes('房內仍然一片昏暗，尚未傳出敲擊聲'));
   assert(block('s-0906-3').includes('不重播梯段、離幕確認或門端驗證'));
-  assert(block('s-0603-36').includes('亦不可預先提交 `act3.r12.breaker_repaired`'));
+  assert(block('s-0603-36').includes('尚未抵達目的房不得取得該房道具'));
   assert(block('s-0904-25').includes('由神壇轉角回廁所不重播'));
   assert(block('s-0905-22').includes('由 R9 或 R10 回 R8 不重播'));
-  assert(common.includes('R17 的 L-04 假路不是離幕'));
-  assert(common.includes('R13 ↔ R14 的安息門檻雙向有效'));
   assert(block('s-0907-3').includes('不代做後續掩體移動'));
   assert(!graph.edges.find(e => e.fromId === 'R17' && e.toId === 'R14').motion.includes('T-R17-R18'));
 });
@@ -682,8 +679,8 @@ test('act VI adjacent views retain actions and safety while removing repeated se
 test('orientation and visible cultural use do not depend on reading optional notes', () => {
   const common = block('s-0403-3');
   for (const text of ['來路輪廓、去路熱區', '不能直接把底圖水平翻轉', '不提前啟動下一房聲音事件']) assert(common.includes(text), text);
-  assert(block('s-0905-55').includes('不能因此新增返回產線的熱點'));
-  assert(block('s-0906-62').includes('不另設聲音猜路題'));
+  assert(block('s-0905-55').includes('身後跨幕門已關'));
+  assert(block('s-0906-62').includes('靜音模式仍可只靠接縫與投影判斷'));
   for (const [id, text] of [['s-0904-18', '避開牆上滲水線'], ['s-0904-39', '不讀註記也能看見'],
     ['s-0906-3', '先看得見長期共用與後加管制'], ['s-0909-15', '不讀短箋也能辨認']]) assert(block(id).includes(text), id);
   assert(block('s-0810-23').includes('略過四組文字仍能走完主線'));
