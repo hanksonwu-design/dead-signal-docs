@@ -8,6 +8,10 @@ import {sharedGlassBoundary} from './story-props.js';
 import {clipRouteToHeight} from './floor-route-view.js';
 import {dressTransition,transitionFor} from './transition-spaces.js';
 import {showSceneNames,placeModelLabel} from './model-label-layout.js';
+import {createElement,KeyRound,Puzzle,Clapperboard,Ghost,Skull} from 'lucide';
+import markerData from './scene-markers.json';
+import {MARKER_CATEGORIES} from './marker-definitions.js';
+import {showContentMarkers,markerPosition,markerInContext} from './model-markers.js';
 
 const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -20,6 +24,65 @@ const host=$('canvas-host'),colors=[0x719eae,0x8bab8e,0x6fae9c,0x93a8bd,0xbd969c
 let renderer,camera,controls,scene,root,resizeObserver;
 let roomObjects=[],routeObjects=[],shotObjects=[],labels=[],floorLabels=[],visiblePoints=[];
 let namesAtScale=false;
+let markerPins=[],markerId='',markersAtScale=false;
+const markerIcons={item:KeyRound,puzzle:Puzzle,event:Clapperboard,horror:Ghost,boss:Skull};
+const markerById=new Map(markerData.markers.map(m=>[m.id,m]));
+const markerIcon=category=>createElement(markerIcons[category],{width:16,height:16,'aria-hidden':'true',focusable:'false'});
+const categoryEnabled=category=>$(`marker-${category}`).checked;
+function initMarkers(){
+ $('scene-list').insertAdjacentHTML('beforebegin',`<fieldset class="marker-filters"><legend><label><input id="content-markers" type="checkbox" checked>內容標示</label></legend><div class="checks">${Object.entries(MARKER_CATEGORIES).map(([id,title])=>`<label data-category="${id}" title="${esc(title)}"><input id="marker-${id}" type="checkbox" checked>${esc(title)}</label>`).join('')}</div></fieldset>`);
+ for(const label of document.querySelectorAll('.marker-filters [data-category]'))label.insertBefore(markerIcon(label.dataset.category),label.childNodes[1]);
+ $('node-links').insertAdjacentHTML('afterend','<section id="marker-section"><h3>場景重點 <small id="marker-count"></small></h3><ul id="marker-list"></ul><p id="marker-empty" class="reading" hidden>此分類沒有標示</p><div id="marker-detail" tabindex="-1" hidden></div></section>');
+ for(const id of ['content-markers',...Object.keys(MARKER_CATEGORIES).map(c=>'marker-'+c)])$(id).onchange=()=>{
+  if(markerId&&!categoryEnabled(markerById.get(markerId).category))markerId='';
+  renderMarkers();applyVisibility();saveHash();
+ };
+ $('marker-list').onclick=e=>{const b=e.target.closest('[data-marker-select]');if(b)selectMarker(b.dataset.markerSelect,true);};
+}
+function buildMarkerPins(){
+ for(const m of markerData.markers){
+  const p=markerPosition(m,model);if(!p)continue;
+  const el=document.createElement('button'),name=document.createElement('span');
+  el.className='content-marker';el.dataset.marker=m.id;el.dataset.category=m.category;
+  name.textContent=m.title;el.append(markerIcon(m.category),name);name.hidden=true;
+  el.title=`${MARKER_CATEGORIES[m.category]} · ${m.title} · ${m.shot||m.node} · 場景內位置示意`;
+  el.setAttribute('aria-label',el.title);el.hidden=true;el.onclick=()=>selectMarker(m.id,false);host.append(el);
+  markerPins.push({el,name,m,position:new THREE.Vector3(...p),sizes:{},enabled:false});
+ }
+}
+function renderMarkers(){
+ const items=markerData.markers.filter(m=>markerInContext(m,selected,shotId)&&categoryEnabled(m.category));
+ if(markerId&&!items.some(m=>m.id===markerId))markerId='';
+ $('marker-count').textContent=`${items.length}`;$('marker-empty').hidden=!!items.length;
+ $('marker-list').innerHTML=items.map(m=>`<li><button data-marker-select="${m.id}" data-category="${m.category}" aria-pressed="${markerId===m.id}"><span>${esc(m.title)}</span><small>${MARKER_CATEGORIES[m.category]} · ${m.image}</small></button></li>`).join('');
+ for(const button of $('marker-list').querySelectorAll('button'))button.prepend(markerIcon(button.dataset.category));
+ const m=markerById.get(markerId);$('marker-detail').hidden=!m;
+ $('marker-detail').innerHTML=m?`<h4>${esc(m.title)}</h4><p class="marker-meta">${MARKER_CATEGORIES[m.category]} · ${node(m.node).spatial?'場景內位置示意':'非實體演出節點'}</p><p class="reading">${esc(m.content)}</p>${m.play?`<p class="route-rule"><b>辨路依據</b> ${esc(m.play.clue)}</p><p class="route-rule"><b>操作</b> ${esc(m.play.action)}</p><p class="route-rule"><b>復原</b> ${esc(m.play.recovery)}</p>`:''}<details class="details"><summary>條件與製作要求</summary><p>${esc(m.requirements)}</p></details><div class="links">${link('原文依據',m.source,m.heading)}${link(m.image,m.spec,m.specHeading)}</div>`:'';
+ for(const p of markerPins)p.el.setAttribute('aria-pressed',String(p.m.id===markerId));
+}
+function selectMarker(id,refit){
+ const m=markerById.get(id);if(!m)return;
+ $('content-markers').checked=true;$(`marker-${m.category}`).checked=true;if(m.shot)$('shots').checked=true;
+ choose(m.node,m.shot?shot(m.shot).route:null,m.shot,false,true);markerId=id;
+ renderMarkers();applyVisibility();saveHash();if(refit)focus();
+ $('marker-detail').focus({preventScroll:true});
+ if(matchMedia('(max-width:800px)').matches)$('marker-detail').scrollIntoView({block:'center',behavior:'instant'});
+}
+function placeMarkers(bounds,occupied,w,h,scale){
+ markersAtScale=showContentMarkers(scale,markersAtScale);
+ const sorted=[...markerPins].sort((a,b)=>Number(b.m.id===markerId)-Number(a.m.id===markerId)||Number(markerInContext(b.m,selected,shotId))-Number(markerInContext(a.m,selected,shotId)));
+ for(const l of sorted){
+  if(!l.enabled||!markersAtScale){l.el.hidden=true;continue;}
+  const p=l.position.clone().project(camera),x=(p.x+1)*w/2,y=(1-p.y)*h/2;
+  let rect=null;
+  for(const named of scale>=12||l.m.id===markerId?[true,false]:[false]){
+   l.name.hidden=!named;l.el.hidden=false;
+   const size=l.sizes[String(named)]??={width:l.el.offsetWidth,height:l.el.offsetHeight};
+   rect=placeModelLabel({x,y,z:p.z,...size},bounds,occupied);if(rect)break;
+  }
+  l.el.hidden=!rect;if(rect){occupied.push(rect);l.el.style.left=(rect[0]+rect[2])/2+'px';l.el.style.top=rect[3]+'px';}
+ }
+}
 const material=(color,opacity=1)=>new THREE.MeshStandardMaterial({color,roughness:.8,metalness:.08,transparent:opacity<1,opacity,depthWrite:opacity>=1});
 function box(w,h,d,x,y,z,mat,parent){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);o.position.set(x,y,z);parent.add(o);return o;}
 function line(points,color,parent){const o=new THREE.Line(new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(...p))),new THREE.LineBasicMaterial({color,transparent:true,opacity:.7}));parent.add(o);return o;}
@@ -72,7 +135,7 @@ function latticeGate(x,y,z,parent){
  box(2,.1,.1,x,y+2.2,z,mat,parent);
 }
 function build(){
- if(root){scene.remove(root);dispose(root);}for(const l of [...labels,...floorLabels])l.el.remove();labels=[];floorLabels=[];roomObjects=[];routeObjects=[];shotObjects=[];
+ if(root){scene.remove(root);dispose(root);}for(const l of [...labels,...floorLabels,...markerPins])l.el.remove();labels=[];floorLabels=[];markerPins=[];roomObjects=[];routeObjects=[];shotObjects=[];
  root=new THREE.Group();scene.add(root);
  const glass=sharedGlassBoundary({...node('R19'),floor:node('R19').level},{...node('R20'),floor:node('R19').level});
  for(const n of model.nodes.filter(n=>n.spatial)){
@@ -115,7 +178,7 @@ function build(){
   const el=document.createElement('span');el.className='floor-label';el.textContent=`${tower.id} 棟 · ${floorName(f)}`;el.dataset.tower=tower.id;host.append(el);
   floorLabels.push({el,position:new THREE.Vector3(x+27,y,25),floor:f,g});
  }
- applyVisibility();
+ buildMarkerPins();applyVisibility();
 }
 function contextNode(){return node(selected).spatial?node(selected):node('R32');}
 function roomVisible(n){
@@ -143,6 +206,14 @@ function applyVisibility(){
   if(g.userData.cabin)g.userData.cabin.visible=s.id===shotId;
  }
  for(const l of labels){const room=l.isShot?null:roomObjects.find(o=>o.n.id===l.id);l.enabled=$('labels').checked&&(l.isShot?shotObjects.find(o=>o.s.id===l.id).g.visible:room.g.visible||!!room.sliced);if(!l.enabled)l.el.hidden=true;if(l.id==='M1')l.position.set(...(floor===null?node('M1').position:[node('M1').x,model.floorY.get(floor)+2,20]));l.el.classList.toggle('selected',l.id===(shotId||selected));}
+ for(const l of markerPins){
+  const owner=l.m.shot?shotObjects.find(o=>o.s.id===l.m.shot):roomObjects.find(o=>o.n.id===l.m.node);
+  l.enabled=$('content-markers').checked&&categoryEnabled(l.m.category)&&!!owner?.g.visible;
+  // M1 spans floors; its overview annotations do not imply a precise window on a floor slice.
+  if(l.m.node==='M1'&&floor!==null)l.enabled=false;
+  if(l.m.shot&&owner?.g.userData.cabin&&!owner.g.userData.cabin.visible)l.enabled=false;
+  if(!l.enabled)l.el.hidden=true;
+ }
  for(const l of floorLabels){l.g.visible=$('floor-guides').checked&&scope==='all'&&(floor===null||floor===l.floor);l.enabled=l.g.visible&&(floor!==null||[...new Set(model.nodes.filter(n=>n.spatial).map(n=>n.level)),24,36].includes(l.floor));}
  $('view-title').textContent=floor!==null?`${floorName(floor)} 空間`:scope==='route'?(route()?reverse?`${route().to} → ${route().from}`:`${route().from} → ${route().to}`:'場景定位'):scope==='act'?graph.acts[contextNode().act]:'雙棟概覽';
  $('view-floor').textContent=floor!==null?floorName(floor):scope==='route'?(route()?locationLabel(route(),reverse):''):scope==='act'?locationLabel(contextNode()):'A 棟 1–26F · B 棟 1–50F · 共用地基';
@@ -159,7 +230,7 @@ function fit(points=visiblePoints){
  camera.position.copy(center).add(direction.multiplyScalar(250));camera.near=.1;camera.far=1500;camera.updateProjectionMatrix();controls.target.copy(center);controls.update();
  for(const id of ['iso','front','top'])$(id).setAttribute('aria-pressed',String(id===view));
 }
-function focus(){const n=shotId?shot(shotId):contextNode(),p=n.position;fit([[p[0]-8,p[1]-5,p[2]-8],[p[0]+8,p[1]+7,p[2]+8]]);}
+function focus(){const n=shotId?shot(shotId):contextNode(),m=markerById.get(markerId),p=m?markerPosition(m,model)||n.position:n.position;fit([[p[0]-8,p[1]-5,p[2]-8],[p[0]+8,p[1]+7,p[2]+8]]);}
 function renderList(){
  const q=$('search').value.trim().toLowerCase(),act=$('act').value;
  const list=model.nodes.filter(n=>(act==='all'||String(n.act)===act)&&(floor===null||n.floor.levels.includes(floor)||n.id==='M1'&&n.floor.levels.includes(floor))&&`${n.id} ${n.name} ${locationLabel(n)}`.toLowerCase().includes(q));
@@ -189,10 +260,11 @@ function renderDetails(){
  $('reference').hidden=!n.reference;if(n.reference){$('reference-image').src='../'+n.reference.url;$('reference-caption').textContent=n.reference.kind;}
  $('flow-link').href='../#'+new URLSearchParams({scene:selected,...(r?{route:r.id}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{})});
  $('editor-link').href='editor.html#scene='+(n.part===1?n.id:'R6');
+ renderMarkers();
 }
-function saveHash(){history.replaceState(null,'','#'+new URLSearchParams({scene:selected,...(routeId?{route:routeId}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{})}));}
+function saveHash(){history.replaceState(null,'','#'+new URLSearchParams({scene:selected,...(routeId?{route:routeId}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{}),...(markerId?{marker:markerId}:{})}));}
 function choose(id,preferred=null,shot='',refit=true,keepDirection=false){
- if(!node(id))return;selected=id;
+ if(!node(id))return;selected=id;markerId='';
  const related=model.routes.filter(r=>r.from===id||r.to===id);routeId=related.find(r=>r.id===preferred)?.id||related.find(r=>r.from===id)?.id||related[0]?.id||'';
  shotId=shot&&model.shots.some(s=>s.id===shot&&s.node===id&&s.route===routeId)?shot:'';
  if(!keepDirection||!route()?.back)reverse=false;
@@ -200,12 +272,13 @@ function choose(id,preferred=null,shot='',refit=true,keepDirection=false){
  if(floor!==null&&!target.floor.levels.includes(floor)&&!(id==='M1'&&target.floor.levels.includes(floor))){$('floor').value='all';floor=null;}
  renderList();renderDetails();applyVisibility();saveHash();if(refit)fit();
 }
-function readHash(){const p=new URLSearchParams(location.hash.slice(1)),id=node(p.get('scene'))?p.get('scene'):'R6';if(p.get('route')){scope='route';$('scope').value=scope;}choose(id,p.get('route'),p.get('shot'),false);reverse=p.get('direction')==='return'&&!!route()?.back;renderDetails();applyVisibility();saveHash();}
+function readHash(){const p=new URLSearchParams(location.hash.slice(1)),id=node(p.get('scene'))?p.get('scene'):'R6';if(p.get('route')){scope='route';$('scope').value=scope;}choose(id,p.get('route'),p.get('shot'),false);reverse=p.get('direction')==='return'&&!!route()?.back;const m=markerById.get(p.get('marker'));if(m&&markerInContext(m,selected,shotId))markerId=m.id;renderDetails();applyVisibility();saveHash();}
 function placeLabels(){
  const w=host.clientWidth,h=host.clientHeight,occupied=[];
  const headerBottom=document.querySelector('.view-head').offsetTop+document.querySelector('.view-head').offsetHeight+12;
  const bounds={left:8,right:w-8,top:headerBottom,bottom:h-95},active=shotId||selected;
- namesAtScale=showSceneNames(h*camera.zoom/(camera.top-camera.bottom),namesAtScale);
+ const scale=h*camera.zoom/(camera.top-camera.bottom);
+ namesAtScale=showSceneNames(scale,namesAtScale);
  const priority=l=>l.id===active?3:l.hovered||l.el===document.activeElement?2:l.isShot?0:1;
  const sorted=[...labels].sort((a,b)=>priority(b)-priority(a));
  for(const l of sorted){
@@ -221,6 +294,7 @@ function placeLabels(){
   }
   l.el.hidden=!rect;if(rect){occupied.push(rect);l.el.style.left=(rect[0]+rect[2])/2+'px';l.el.style.top=rect[3]+'px';}
  }
+ placeMarkers(bounds,occupied,w,h,scale);
  for(const l of floorLabels){
   if(!l.enabled){l.el.hidden=true;continue;}
   const p=l.position.clone().project(camera),x=(p.x+1)*w/2,y=(1-p.y)*h/2;l.el.hidden=false;
@@ -261,8 +335,8 @@ try {
  renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setSize(host.clientWidth,host.clientHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;host.append(renderer.domElement);
  scene.add(new THREE.HemisphereLight(0xe7f3ea,0x334543,2.3));const light=new THREE.DirectionalLight(0xfff1d5,2.3);light.position.set(40,150,80);scene.add(light);
  controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.12;controls.maxPolarAngle=Math.PI*.495;controls.minZoom=.2;controls.maxZoom=12;
- build();readHash();bind();fit();$('loading').remove();
- const clearLabelSizes=()=>{for(const l of labels)l.sizes={};for(const l of floorLabels)l.size=null;};
+ initMarkers();build();readHash();bind();fit();$('loading').remove();
+ const clearLabelSizes=()=>{for(const l of [...labels,...markerPins])l.sizes={};for(const l of floorLabels)l.size=null;};
  resizeObserver=new ResizeObserver(()=>{clearLabelSizes();renderer.setSize(host.clientWidth,host.clientHeight);fit();});resizeObserver.observe(host);
  document.fonts.ready.then(clearLabelSizes);
  renderer.setAnimationLoop(()=>{controls.update();placeLabels();renderer.render(scene,camera);});

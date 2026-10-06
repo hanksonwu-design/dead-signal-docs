@@ -4,6 +4,6 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": { "build": "node build.mjs" },
-  "dependencies": { "three": "0.180.0" },
+  "dependencies": { "lucide": "1.52.0", "three": "0.180.0" },
   "devDependencies": { "esbuild": "0.25.10" }
 }
