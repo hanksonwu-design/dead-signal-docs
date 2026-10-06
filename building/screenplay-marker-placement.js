@@ -13,6 +13,7 @@ export const READING_PLACEMENTS = Object.freeze({
   'R21-D02-item': '查看原小花校正排程與核可欄。',
   'R23-V01-horror': '手沿門框滑到扶手，側身後鬆開。',
   'R26-V01-boss': '（靜態畫面／中景）阿彪停在椅旁',
+  'U2-V01-horror': '初次從門邊望進內井，風柵前的濕布',
   'U2b-V02-horror': '（動畫演出）地面黑線爬向搖輪',
   'U4-V01-horror': '〔玩家〕主動穿過原內門，一次短轉場後',
   'U5-V02-horror': '（動畫演出）左或右霜線由對應孔口延伸',

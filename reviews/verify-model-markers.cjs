@@ -92,7 +92,7 @@ async function layout(page){
   await open(page,{scene:'R2',marker:'R32-V01-boss'});assert(await page.locator('#marker-detail').isHidden());
   await open(page,{scene:'R2',marker:'does-not-exist'});assert(await page.locator('#marker-detail').isHidden());
   pass('boss encounters and nonphysical endings are distinct; mismatched or invalid marker URLs are discarded');
-  for(const image of ['T-R2-R3-01','R23-V01','T-R24-R25-01','U6-V01','U6b-V01','R25-C03','R24-C02']){
+  for(const image of ['T-R2-R3-01','R23-V01','T-R24-R25-01','U6-V01','U6b-V01','R25-C03','R24-C02','R7-V01','U2-V01']){
    const m=data.find(m=>m.id===image+'-horror');
    const params={scene:m.node,marker:m.id};
    if(m.shot){params.shot=m.shot;params.route=flow.subscenes.find(s=>s.id===m.shot).route;}
@@ -102,12 +102,14 @@ async function layout(page){
    assert((await page.locator(`.content-marker[data-marker="${m.id}"]`).getAttribute('title')).includes(m.timing));
    await page.locator('#focus').click();await page.waitForTimeout(200);await layout(page);
   }
-  pass('mainline and optional horror labels resolve across all five new cues and the revised mirror beat');
+  pass('mainline and optional labels resolve across all six HP cues, first-arrival R7 and the revised mirror beat');
   for(const width of [1440,390]){
    await page.setViewportSize({width,height:width>800?1000:844});
-   await open(page,{scene:'R23',marker:'R23-V01-horror'});await page.locator('#focus').click();await page.waitForTimeout(200);
-   await layout(page);assert(await page.locator('.content-marker[data-marker="R23-V01-horror"]').isVisible());
-   await page.screenshot({path:path.join(out,`horror-r23-${width}.png`),fullPage:true});
+   for(const scene of ['R23','U2']){
+    await open(page,{scene,marker:scene+'-V01-horror'});await page.locator('#focus').click();await page.waitForTimeout(200);
+    await layout(page);assert(await page.locator(`.content-marker[data-marker="${scene}-V01-horror"]`).isVisible());
+    await page.screenshot({path:path.join(out,`horror-${scene.toLowerCase()}-${width}.png`),fullPage:true});
+   }
   }
   for(const width of [1920,1440,390,320]){
    await page.setViewportSize({width,height:width>800?1000:844});await open(page);

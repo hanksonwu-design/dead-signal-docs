@@ -135,7 +135,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
 });
 
 test('every static screenplay cue names its shot size without changing protected framing', () => {
-  const counts = [22, 56, 79, 98, 45, 30, 17, 16, 10, 20];
+  const counts = [22, 56, 80, 98, 45, 30, 17, 16, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -174,7 +174,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
   const counts = [[21, 17, 8], [65, 28, 19], [92, 33, 11], [133, 24, 10],
-    [54, 18, 11], [52, 15, 12], [17, 3, 2], [29, 3, 5], [22, 3, 4], [26, 12, 3]];
+    [54, 18, 11], [52, 15, 12], [17, 4, 2], [29, 3, 5], [22, 3, 4], [26, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);

@@ -49,7 +49,7 @@ async function bounds(page) {
       assert.deepEqual(result.markers.sort((a,b) => a.id.localeCompare(b.id)), expected[act.path].map(({id, category}) => ({id, category})).sort((a,b) => a.id.localeCompare(b.id)));
       assert(result.max <= 2, 'sparse category labels');
     }
-    pass('207 markers render exactly once across ten acts; narrative text, headings and source links are unchanged');
+    pass(`${Object.values(expected).flat().length} markers render exactly once across ten acts; narrative text, headings and source links are unchanged`);
     const labels = ['item', 'puzzle', 'event', 'horror', 'boss'];
     const readerStyle = {};
     for (const category of labels) {
@@ -97,6 +97,19 @@ async function bounds(page) {
       await popup.close();
     }
     pass('static Pages payload and 390/320px layouts remain readable; specification links still open a separate page');
+    for (const width of [1440, 390]) {
+      await page.setViewportSize({width, height: width > 800 ? 1000 : 844});
+      for (const [act, node, phrase] of [[2, 'R7', '一聲清喉嚨在近處'], [6, 'U2', '初次從門邊望進內井']]) {
+        await page.goto(url(ACTS[act].path, `node-${node.toLowerCase()}-script`, true)); await ready(page);
+        const cue = page.locator(`[data-reading-markers~="${node}-V01-horror"]`);
+        const paragraph = await cue.evaluate(el => {
+          const p = el.closest('p'); p.scrollIntoView({block: 'center'}); return p.textContent;
+        });
+        assert(paragraph.includes(phrase)); await bounds(page);
+        await page.screenshot({path: path.join(out, `entry-${node.toLowerCase()}-${width}.png`)});
+      }
+    }
+    pass('R7 arrival and U2 wet-cloth cues label their exact beats on desktop/mobile and static Pages');
     await page.goto(url(ACTS[0].path)); await ready(page);
     assert.match(await page.locator('[data-reading-markers~="P2-C04-horror"]').locator('xpath=ancestor::tr').innerText(), /搪瓷盆.*第四個人/s);
     await page.goto(url(ACTS[9].path)); await ready(page);
