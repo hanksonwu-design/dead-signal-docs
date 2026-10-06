@@ -135,7 +135,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
 });
 
 test('every static screenplay cue names its shot size without changing protected framing', () => {
-  const counts = [22, 55, 77, 98, 43, 30, 17, 16, 8, 20];
+  const counts = [22, 55, 79, 98, 45, 30, 17, 16, 8, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
