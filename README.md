@@ -69,6 +69,7 @@ npm --prefix building run build
 - 場景節點圖：`scene_graph.json`；銜接次場景、圖號與參考圖：`scene-flow.json`。
 - 場景與流程：`building/`，可加 `#scene=R25`，也接受 `route`、`shot`、`direction`、`marker` 參數。舊關卡流程入口自動轉到同一介面，不再維護獨立頁面。
   模型涵蓋 B3 至 50F 的 48 個流程節點、72 個次場景與 56 條動線；其中 46 個節點有空間配置（含 M1 跨層脊柱），51 條為實體銜接。R33／POST 及 5 條回返／結局演出不虛構房間或通道。主場景、次場景、圖號、通行條件與來源由 `scene_graph.json`／`scene-flow.json` 直接嵌入，尺寸與平面配置仍屬灰盒提案。
+  目前模型以 1 單位 = 1 公尺校正物件，參考尺寸集中在 `building/human-scale.js`：人形高 1.7 公尺、床墊 1 × 2.05 公尺、桌面高 0.75 公尺、椅面高 0.45 公尺、門淨高 2.1 公尺、步道寬 1.2 公尺。標準層高暫估 3.2 公尺；壓縮模式只縮短空白樓層，不縮放家具。階梯以級高不超過 0.18 公尺、踏面至少 0.28 公尺為灰盒目標，過短的斜段改為折返梯；出入口、樓層停靠與流程不變。人形及完整牆高可以關閉。這些是設計參考值，房間平面、迴轉平台、淨空與碰撞仍須實機及建築配置驗證，不代表實測或法規合格。
   全劇模型為查閱模式，不讀寫配置存檔；正式導覽已移除舊沙盒入口。既有上部 3D 編輯器封存保留於 `building/editor.html` 原網址，仍有 26 個原始節點、30 條故事連線與出口接點，沿用原本機儲存鍵、匯入／匯出和復原功能；不清除舊配置，舊自訂 R23 等編號不會被新正式場景取代。
   先同步正式資料，再於 `building/` 執行 `npm run build`，同時產生全劇 `index.html` 與上部 `editor.html`。執行 `node building/current-spatial.test.mjs` 驗證全流程幾何與資料；`reviews/verify-current-model.cjs` 檢查桌面／手機、圖號、樓層、連結與舊存檔隔離。
   `building/scene-workspace.test.mjs` 驗證整合資料、圖像覆蓋與舊網址；`reviews/verify-scene-workspace.cjs` 檢查同步選取、章節總覽、手機與無 WebGL 的備援介面。`scene-overview.js` 是共用流程排版，`scene-redirect.js` 僅處理舊網址轉址。

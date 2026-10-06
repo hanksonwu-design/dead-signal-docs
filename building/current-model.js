@@ -14,6 +14,7 @@ import {MARKER_CATEGORIES} from './marker-definitions.js';
 import {showContentMarkers,markerPosition,markerInContext} from './model-markers.js';
 import {searchScenes,sceneMatches,sceneArtwork,connectedRoutes} from './scene-workspace.js';
 import {createFlowPanel} from './flow-panel.js';
+import {SCALE,stairFlight,addScaleReference,referenceSpot} from './human-scale.js';
 
 const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -27,6 +28,7 @@ let renderer,camera,controls,scene,root,resizeObserver;
 let roomObjects=[],routeObjects=[],shotObjects=[],labels=[],floorLabels=[],visiblePoints=[];
 let namesAtScale=false;
 let flowPanel,webglReady=false;
+let scaleReference;
 const filters=()=>({part:$('part').value,act:$('act').value,query:$('search').value,floor});
 function renderFlow(){flowPanel?.render({scene:selected,shot:shotId,route:routeId,visibleIds:[...new Set(searchScenes(graph,flow,filters()).map(n=>n.node))]});}
 let markerPins=[],markerId='',markersAtScale=false;
@@ -101,10 +103,20 @@ function pathMesh(points,color,parent){
   const a=points[i-1],b=points[i],dy=b[1]-a[1],dx=b[0]-a[0],dz=b[2]-a[2],horizontal=Math.hypot(dx,dz);
   if(Math.hypot(dx,dy,dz)<.01)continue;
   if(Math.abs(dy)>.1&&horizontal<.05){for(const x of[-.85,.85])line([[a[0]+x,a[1],a[2]],[b[0]+x,b[1],b[2]]],0xdac48a,parent);}
-  else if(Math.abs(dy)>.1){const count=Math.max(2,Math.ceil(Math.abs(dy)/.24));for(let j=0;j<count;j++)steps.push({p:a.map((v,k)=>v+(b[k]-v)*(j+.5)/count),angle:Math.atan2(dx,dz),depth:Math.max(.12,horizontal/count+.05)});}
-  else segment(a,b,1.2,.12,mat,parent);
+  else if(Math.abs(dy)>.1){
+   const {count,going}=stairFlight(a,b);
+   for(let j=0;j<count;j++){const p=a.map((v,k)=>v+(b[k]-v)*(j+.5)/count);p[1]=Math.min(a[1],b[1])+Math.abs(dy)*(dy>0?j+1:count-j)/count-SCALE.treadThickness/2;steps.push({p,angle:Math.atan2(dx,dz),depth:going+.015});}
+   for(const side of [-1,1]){
+    const ox=dz/horizontal*side*(SCALE.corridorWidth/2-.05),oz=-dx/horizontal*side*(SCALE.corridorWidth/2-.05);
+    segment([a[0]+ox,a[1]-.15,a[2]+oz],[b[0]+ox,b[1]-.15,b[2]+oz],.06,.09,mat,parent);
+    line([[a[0]+ox,a[1]+SCALE.railHeight,a[2]+oz],[b[0]+ox,b[1]+SCALE.railHeight,b[2]+oz]],color,parent);
+    const posts=Math.max(1,Math.ceil(horizontal/1.2));
+    for(let j=0;j<=posts;j++){const t=j/posts;box(.035,SCALE.railHeight,.035,a[0]+dx*t+ox,a[1]+dy*t+SCALE.railHeight/2,a[2]+dz*t+oz,mat,parent);}
+   }
+  }
+  else segment([a[0],a[1]-.06,a[2]],[b[0],b[1]-.06,b[2]],SCALE.corridorWidth,.12,mat,parent);
  }
- if(steps.length){const inst=new THREE.InstancedMesh(new THREE.BoxGeometry(1,.12,1),mat,steps.length),dummy=new THREE.Object3D();steps.forEach((s,i)=>{dummy.position.set(...s.p);dummy.rotation.y=s.angle;dummy.scale.set(1.2,1,s.depth);dummy.updateMatrix();inst.setMatrixAt(i,dummy.matrix);});parent.add(inst);}
+ if(steps.length){const inst=new THREE.InstancedMesh(new THREE.BoxGeometry(1,SCALE.treadThickness,1),mat,steps.length),dummy=new THREE.Object3D();steps.forEach((s,i)=>{dummy.position.set(...s.p);dummy.rotation.y=s.angle;dummy.scale.set(SCALE.corridorWidth,1,s.depth);dummy.updateMatrix();inst.setMatrixAt(i,dummy.matrix);});inst.userData.fixture='stair-treads';parent.add(inst);}
  line(points.map(p=>[p[0],p[1]+.15,p[2]]),color,parent);
 }
 function pathArrows(points,back,color,parent){
@@ -121,9 +133,15 @@ function walls(n,g){
   if(glass&&(n.id==='R19'&&side===glass.sideA||n.id==='R20'&&side===glass.sideB))continue;
   const horizontal=['north','south'].includes(side),length=horizontal?n.w:n.d;
   const fixed=horizontal?n.z+(side==='north'?-n.d/2:n.d/2):n.x+(side==='west'?-n.w/2:n.w/2);
-  const gaps=exits.filter(e=>e[0]===side).map(e=>[Math.max(-length/2,e[2]-.8),Math.min(length/2,e[2]+.8)]).sort((a,b)=>a[0]-b[0]);
-  let cursor=-length/2;const piece=end=>{if(end>cursor+.03){const center=(cursor+end)/2;box(horizontal?end-cursor:.12,1.3,horizontal?.12:end-cursor,horizontal?n.x+center:fixed,n.y+.75,horizontal?fixed:n.z+center,material(colors[n.act]||0x92a8a0,.3),g);}};
+  const gaps=exits.filter(e=>e[0]===side).map(e=>[Math.max(-length/2,e[2]-SCALE.doorWidth/2-.06),Math.min(length/2,e[2]+SCALE.doorWidth/2+.06)]).sort((a,b)=>a[0]-b[0]);
+  const height=$('full-walls').checked?SCALE.wallHeight:1.1;
+  let cursor=-length/2;const piece=end=>{if(end>cursor+.03){const center=(cursor+end)/2;box(horizontal?end-cursor:.12,height,horizontal?.12:end-cursor,horizontal?n.x+center:fixed,n.y+SCALE.floorSurface+height/2,horizontal?fixed:n.z+center,material(colors[n.act]||0x92a8a0,.22),g);}};
   for(const [lo,hi] of gaps){piece(lo);cursor=Math.max(cursor,hi);}piece(length/2);
+  for(const [lo,hi] of gaps){
+   const center=(lo+hi)/2,mat=material(0xc2b897),top=n.y+SCALE.floorSurface+SCALE.doorHeight;
+   const frame=box(horizontal?hi-lo:.1,.07,horizontal?.1:hi-lo,horizontal?n.x+center:fixed,top+.035,horizontal?fixed:n.z+center,mat,g);frame.userData.fixture='door-header';
+   for(const at of [lo+.03,hi-.03])box(horizontal?.06:.1,SCALE.doorHeight,horizontal?.1:.06,horizontal?n.x+at:fixed,top-SCALE.doorHeight/2,horizontal?fixed:n.z+at,mat,g);
+  }
  }
 }
 function label(id,position,isShot){
@@ -136,10 +154,10 @@ function label(id,position,isShot){
  el.onpointerenter=()=>{item.hovered=true;};el.onpointerleave=()=>{item.hovered=false;};labels.push(item);return item;
 }
 function latticeGate(x,y,z,parent){
- const mat=material(0xc8b891);
- for(const side of[-1,1])box(.1,2.2,.1,x+side,y+1.1,z,mat,parent);
- for(let i=0;i<5;i++){const left=x-1+i*.4;line([[left,y+.15,z],[left+.4,y+2.05,z]],0xd2c29b,parent);line([[left,y+2.05,z],[left+.4,y+.15,z]],0xd2c29b,parent);}
- box(2,.1,.1,x,y+2.2,z,mat,parent);
+ const mat=material(0xc8b891),half=SCALE.liftDoorWidth/2,h=SCALE.doorHeight;
+ for(const side of[-1,1])box(.06,h,.06,x+side*(half+.03),y+h/2,z,mat,parent);
+ for(let i=0;i<5;i++){const left=x-half+i*SCALE.liftDoorWidth/5,right=left+SCALE.liftDoorWidth/5;line([[left,y+.08,z],[right,y+h-.08,z]],0xd2c29b,parent);line([[left,y+h-.08,z],[right,y+.08,z]],0xd2c29b,parent);}
+ box(SCALE.liftDoorWidth+.12,.07,.06,x,y+h+.035,z,mat,parent);
 }
 function build(){
  if(!webglReady)return;
@@ -149,8 +167,13 @@ function build(){
  for(const n of model.nodes.filter(n=>n.spatial)){
   const g=new THREE.Group();root.add(g);g.userData.node=n.id;
   if(n.id==='M1')pathMesh(n.points,0xdbb575,g);
-  else {const base=box(n.w,.23,n.d,n.x,n.y,n.z,material(colors[n.act]||0x94b4a3,.65),g);walls(n,g);dressCurrentRoom(n,g,{THREE,box,material,line,segment,y:n.y});const outline=new THREE.BoxHelper(base,0xf0c878);g.add(outline);g.userData.outline=outline;}
-  if(n.id==='R19'&&glass)box(glass.x2-glass.x1,2,.08,(glass.x1+glass.x2)/2,n.y+1.25,glass.z,material(0x82ccc7,.4),g);
+  else {const base=box(n.w,SCALE.slab,n.d,n.x,n.y+SCALE.floorSurface-SCALE.slab/2,n.z,material(colors[n.act]||0x94b4a3,.65),g);walls(n,g);dressCurrentRoom(n,g,{THREE,box,material,line,segment,y:n.y+SCALE.floorSurface});const outline=new THREE.BoxHelper(base,0xf0c878);g.add(outline);g.userData.outline=outline;}
+  if(n.id==='R19'&&glass)box(glass.x2-glass.x1,2,.08,(glass.x1+glass.x2)/2,n.y+SCALE.floorSurface+1.25,glass.z,material(0x82ccc7,.3),g);
+  if(n.id!=='M1'){
+   const fixtures=g.children.filter(o=>o.userData.fixture&&o.userData.fixture!=='door-header'&&o.userData.fixture!=='pipe');
+   const obstacles=fixtures.map(o=>{const b=new THREE.Box3().setFromObject(o);return {minX:b.min.x,maxX:b.max.x,minZ:b.min.z,maxZ:b.max.z};});
+   g.userData.referenceSpot=referenceSpot(n,obstacles);
+  }
   g.traverse(o=>{o.userData.node=n.id;});roomObjects.push({n,g});
   label(n.id,n.id==='M1'?n.position:[n.x,n.y+3,n.z],false);
  }
@@ -166,8 +189,8 @@ function build(){
    if(s.travel.startsWith('電梯')){
     const frame=s.travel==='電梯車廂'?new THREE.Group():g;
     if(frame!==g){g.add(frame);g.userData.cabin=frame;}
-    latticeGate(p[0],p[1],p[2]+.8,frame);
-    if(s.travel==='電梯車廂'){box(2,.12,2,p[0],p[1],p[2],material(0xa5b3a1),frame);box(2,2.2,.12,p[0],p[1]+1.1,p[2]-.9,material(0x697c75,.4),frame);}
+    latticeGate(p[0],p[1],p[2]+SCALE.liftDepth/2,frame);
+    if(s.travel==='電梯車廂'){box(SCALE.liftWidth,.12,SCALE.liftDepth,p[0],p[1]-.06,p[2],material(0xa5b3a1),frame);box(SCALE.liftWidth,SCALE.liftHeight,.08,p[0],p[1]+SCALE.liftHeight/2,p[2]-SCALE.liftDepth/2,material(0x697c75,.3),frame);for(const side of[-1,1])box(.06,SCALE.liftHeight,SCALE.liftDepth,p[0]+side*SCALE.liftWidth/2,p[1]+SCALE.liftHeight/2,p[2],material(0x697c75,.18),frame);}
    } else dressTransition(r,r.points,g,{THREE,box,material,line,segment,floorY:model.floorY,definition,views:[station],hideLabels:true});
    if(s.play&&s.travel==='步道'){
     // A blocked former stair contrasts with the connected side path, not another live exit.
@@ -175,7 +198,7 @@ function build(){
     box(.18,1.2,1.6,p[0]+4.5,p[1]+.6,p[2],material(0xa57b68),g);
     line([[p[0]+4.62,p[1]+.2,p[2]-.6],[p[0]+4.62,p[1]+1,p[2]+.6]],0xe6b488,g);
    }
-   box(1.5,.14,1.5,p[0],p[1]+.15,p[2],material(0x80c4ac),g);g.traverse(o=>{o.userData.shot=s.id;});shotObjects.push({s,g});label(s.id,[p[0],p[1]+3,p[2]],true);
+   box(1.2,.14,1.2,p[0],p[1]-.07,p[2],material(0x80c4ac),g);g.traverse(o=>{o.userData.shot=s.id;});shotObjects.push({s,g});label(s.id,[p[0],p[1]+3,p[2]],true);
   }
  }
  for(const tower of model.towers)for(const f of FLOORS.filter(f=>f>0&&f<=tower.top)){
@@ -186,7 +209,7 @@ function build(){
   const el=document.createElement('span');el.className='floor-label';el.textContent=`${tower.id} 棟 · ${floorName(f)}`;el.dataset.tower=tower.id;host.append(el);
   floorLabels.push({el,position:new THREE.Vector3(x+27,y,25),floor:f,g});
  }
- buildMarkerPins();applyVisibility();
+ scaleReference=addScaleReference(root,{THREE,box,material,line});buildMarkerPins();applyVisibility();
 }
 function contextNode(){return node(selected).spatial?node(selected):node('R32');}
 function roomVisible(n){
@@ -200,9 +223,9 @@ function applyVisibility(){
  visiblePoints=[];
  for(const o of roomObjects){const {n,g}=o;if(o.sliced){root.remove(o.sliced);dispose(o.sliced);o.sliced=null;}g.visible=roomVisible(n);if(g.userData.outline)g.userData.outline.visible=n.id===selected&&!shotId;if(g.visible){if(n.id==='M1'){
    if(floor===null)visiblePoints.push(...n.points);
-   else {g.visible=false;o.sliced=new THREE.Group();root.add(o.sliced);for(const p of clipRouteToHeight(n.points,model.floorY.get(floor)-.01,model.floorY.get(floor)+4.5)){pathMesh(p,0xdbb575,o.sliced);visiblePoints.push(...p);}o.sliced.traverse(obj=>{obj.userData.node='M1';});}
+   else {g.visible=false;o.sliced=new THREE.Group();root.add(o.sliced);for(const p of clipRouteToHeight(n.points,model.floorY.get(floor)-.01,model.floorY.get(floor)+SCALE.floorHeight-.05)){pathMesh(p,0xdbb575,o.sliced);visiblePoints.push(...p);}o.sliced.traverse(obj=>{obj.userData.node='M1';});}
   }else visiblePoints.push([n.x-n.w/2,n.y-2,n.z-n.d/2],[n.x+n.w/2,n.y+3,n.z+n.d/2]);}}
- const bounds=floor===null?null:[model.floorY.get(floor)-2,model.floorY.get(floor)+4.5];
+ const bounds=floor===null?null:[model.floorY.get(floor)-2,model.floorY.get(floor)+SCALE.floorHeight-.05];
  for(const o of routeObjects){
   if(o.sliced){root.remove(o.sliced);dispose(o.sliced);o.sliced=null;}
   const inPart=[o.r.from,o.r.to].every(id=>sceneMatches(node(id),{part:$('part').value}));
@@ -225,6 +248,7 @@ function applyVisibility(){
   if(!l.enabled)l.el.hidden=true;
  }
  for(const l of floorLabels){l.g.visible=$('floor-guides').checked&&scope==='all'&&(floor===null||floor===l.floor);l.enabled=l.g.visible&&(floor!==null||[...new Set(model.nodes.filter(n=>n.spatial).map(n=>n.level)),24,36].includes(l.floor));}
+ updateScaleReference();
  $('view-title').textContent=floor!==null?`${floorName(floor)} 空間`:scope==='route'?(route()?reverse?`${route().to} → ${route().from}`:`${route().from} → ${route().to}`:'場景定位'):scope==='act'?graph.acts[contextNode().act]:'雙棟概覽';
  $('view-floor').textContent=floor!==null?floorName(floor):scope==='route'?(route()?locationLabel(route(),reverse):''):scope==='act'?locationLabel(contextNode()):'A 棟 1–26F · B 棟 1–50F · 共用地基';
 }
@@ -242,6 +266,15 @@ function fit(points=visiblePoints){
  for(const id of ['iso','front','top'])$(id).setAttribute('aria-pressed',String(id===view));
 }
 function focus(){const n=shotId?shot(shotId):contextNode(),m=markerById.get(markerId),p=m?markerPosition(m,model)||n.position:n.position;fit([[p[0]-8,p[1]-5,p[2]-8],[p[0]+8,p[1]+7,p[2]+8]]);}
+function updateScaleReference(){
+ if(!scaleReference)return;
+ const n=node(selected),s=shotId?shot(shotId):null,owner=s?shotObjects.find(o=>o.s.id===s.id):roomObjects.find(o=>o.n.id===n.id);
+ const playback=route()?.steps.some(step=>step.id===selected&&step.image!==n.image);
+ scaleReference.visible=$('human-scale').checked&&!playback&&!!owner?.g.visible;
+ if(s)scaleReference.position.set(...s.position);
+ else if(n.id==='M1')scaleReference.position.set(...n.position);
+ else if(n.spatial){const spot=owner?.g.userData.referenceSpot;scaleReference.visible=scaleReference.visible&&!!spot;if(spot)scaleReference.position.set(spot[0],n.y+SCALE.floorSurface,spot[1]);}
+}
 function renderList(){
  const list=searchScenes(graph,flow,filters());
  $('scene-list').innerHTML=list.map(n=>`<li><button data-select="${n.node}" data-select-shot="${n.shot}" aria-pressed="${(shotId||selected)===n.id}"><span><b>${n.id}</b>${esc(n.name)}</span><small>${esc(locationLabel(n))}</small></button></li>`).join('');$('empty').hidden=!!list.length;
@@ -252,6 +285,7 @@ function renderDetails(){
  $('node-id').textContent=s?`${s.id} · ${s.type}`:`${n.id} · ${graph.acts[n.act]}`;
  $('node-title').textContent=s?s.name:n.name;$('node-floor').textContent=locationLabel(current,reverse&&!!s);
  $('node-goal').textContent=s?flow.images[s.id].content:n.goal;
+ $('metric-size').textContent=s?(s.travel==='電梯車廂'?`車廂 ${SCALE.liftWidth} × ${SCALE.liftDepth} × ${SCALE.liftHeight} 公尺 · 估算`:`步道參考寬 ${SCALE.corridorWidth} 公尺`):n.id==='M1'?`跨層夾道 · 參考寬 ${SCALE.corridorWidth} 公尺`:n.spatial?`${n.w} × ${n.d} 公尺 · 平面估算`:'非實體演出節點';
  $('node-spatial').textContent=s?`${s.from} → ${s.id} → ${s.to}`:n.floor.description;
  $('exploration').hidden=!s?.play;
  $('exploration').innerHTML=s?.play?`<h3>逐層探路</h3><p class="route-rule"><b>辨路依據</b> ${esc(s.play.clue)}</p><p class="route-rule"><b>操作與開通</b> ${esc(s.play.action)}</p><p class="route-rule"><b>錯路與復原</b> ${esc(s.play.recovery)}</p>`:'';
@@ -332,6 +366,8 @@ function bind(){
  $('floor').onchange=()=>{floor=$('floor').value==='all'?null:Number($('floor').value);$('act').value='all';$('flow-range').value='filtered';if(floor!==null){const n=model.nodes.find(n=>n.spatial&&sceneMatches(n,{part:$('part').value})&&(n.level===floor||n.id==='M1'&&n.floor.levels.includes(floor)));const s=model.shots.find(s=>sceneMatches(node(s.node),{part:$('part').value})&&s.floor.levels.length===1&&s.floor.levels[0]===floor);if(n){selected=n.id;shotId='';routeId=model.routes.find(r=>r.from===n.id)?.id||'';}else if(s){selected=s.node;shotId=s.id;routeId=s.route;}reverse=false;}renderList();renderDetails();applyVisibility();saveHash();fit();};
  $('scope').onchange=()=>{scope=$('scope').value;floor=null;$('floor').value='all';renderList();applyVisibility();fit();};
  $('height').onchange=()=>{model=buildCurrentModel(graph,flow,$('height').value==='actual');build();renderDetails();fit();};
+ $('human-scale').onchange=updateScaleReference;
+ $('full-walls').onchange=()=>{build();};
  for(const id of ['labels','shots','floor-guides'])$(id).onchange=applyVisibility;
  $('scene-names').onchange=placeLabels;
  $('scene-list').onclick=e=>{const b=e.target.closest('[data-select]');if(b){const s=shot(b.dataset.selectShot);choose(b.dataset.select,s?.route,s?.id);}};
@@ -362,6 +398,10 @@ function useFlowFallback(){
  flowPanel.fallback();
 }
 try {
+ document.querySelector('.left>.checks').insertAdjacentHTML('beforeend','<label><input id="human-scale" type="checkbox" checked>170 公分人形</label><label><input id="full-walls" type="checkbox" checked>完整牆高</label>');
+ $('node-floor').insertAdjacentHTML('afterend','<p id="metric-size" class="reading"></p>');
+ document.querySelector('.view-head>div>small').textContent='公尺尺度 · 配置估算';
+ $('height').querySelector('[value="actual"]').textContent='層高 3.2 公尺';
  $('counts').textContent=`2 棟樓 · ${model.nodes.length} 個流程節點 · ${model.shots.length} 個次場景 · ${model.routes.length} 條動線`;
  $('act').insertAdjacentHTML('beforeend',graph.acts.map((a,i)=>`<option value="${i}">${esc(a)}</option>`).join(''));
  $('floor').insertAdjacentHTML('beforeend',FLOORS.map(f=>`<option value="${f}">${floorName(f)}</option>`).join(''));

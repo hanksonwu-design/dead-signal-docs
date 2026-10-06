@@ -2,6 +2,7 @@ import {layout as upper, offsets as upperOffsets, routePoints} from './spatial.j
 import {orthogonalize} from './sandbox-routes.js';
 import {transitionPath} from './transition-spaces.js';
 import {towerShift,connectTowers,liftPath,anchoredShots,TOWERS} from './tower-routes.js';
+import {SCALE,metricStairPath} from './human-scale.js';
 export {TOWERS} from './tower-routes.js';
 
 // Lower-room dimensions are greybox proposals. Floors and topology come from the published flow.
@@ -40,7 +41,7 @@ export const floorName = f => f < 0 ? `B${-f}` : `${f}F`;
 export function heights(actual=false,activeFloors=[]) {
  const occupied = new Set([...Object.values(upper).map(v=>v[2]),...activeFloors,24,36,43,44,50]);
  const map = new Map(); let y=0;
- FLOORS.forEach((f,i)=>{if(i)y+=actual||occupied.has(FLOORS[i-1])?5:.8;map.set(f,y);});
+ FLOORS.forEach((f,i)=>{if(i)y+=actual||occupied.has(FLOORS[i-1])?SCALE.floorHeight:.8;map.set(f,y);});
  return map;
 }
 const distance=(a,b)=>Math.hypot(...a.map((v,i)=>v-b[i]));
@@ -100,7 +101,9 @@ export function buildCurrentModel(graph,flow,actual=false) {
   else if(flowRoute.travel.includes('跨棟橋'))special=connectTowers(edge,points,children,floorY,a,b);
   if(special)points=special.points;
   else points=points.map(p=>p.map((v,i)=>v+(i===0?a.shiftX:0)));
-  const shots=special?anchoredShots(children,points,special.anchors):children.map((s,i)=>({...s,...locateShot(points,s.floor,floorY,(i+.5)/children.length)}));
+  points=metricStairPath(points,TOWERS.map(t=>[t.x-27,t.x+27]));
+  const anchors=special?.anchors.map(a=>({...a,index:points.findIndex(p=>distance(p,a.position)<1e-6)}));
+  const shots=special?anchoredShots(children,points,anchors):children.map((s,i)=>({...s,...locateShot(points,s.floor,floorY,(i+.5)/children.length)}));
   if(shots.some((s,i)=>i&&s.along<shots[i-1].along-1e-6))throw new Error(`Reversed shot order: ${edge.id}`);
   return {...edge,...flowRoute,spatial:true,points,shots,shafts:special?.shafts||[]};
  });
@@ -111,7 +114,7 @@ export function buildCurrentModel(graph,flow,actual=false) {
   spine.push([-24+m.shiftX,y,20]);
   if(f<end)spine.push([-24+m.shiftX,(y+floorY.get(f+1)+.3)/2,16]);
  }
- m.points=spine;m.position=spine[Math.floor(spine.length/2)];
+ m.points=metricStairPath(spine,TOWERS.map(t=>[t.x-27,t.x+27]));m.position=m.points[Math.floor(m.points.length/2)];
  const shots=routes.flatMap(r=>r.shots||[]);
  if(shots.length!==flow.subscenes.length)throw new Error('Missing spatial subscene');
  return {nodes,routes,shots,floorY,towers:TOWERS};
