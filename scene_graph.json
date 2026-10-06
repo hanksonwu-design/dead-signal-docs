@@ -1233,7 +1233,7 @@
       "id": "R32-R32-41",
       "fromId": "R32",
       "toId": "R32",
-      "gate": "projection_reveal_complete 且正在封鎖來源核對；S6-02 尚未核對，不在顯形或防禦中",
+      "gate": "projection_reveal_complete、四熱點全讀及 S6-01 已核對，且 finale.r32.phase = seal_verify；S6-02 尚未核對，不在顯形或防禦中",
       "motion": "嘗試跨出門檻，短轉場回到同一門框；雙結與敲聲重現。核對後只供回看記錄，不重走循環。",
       "kind": "回返",
       "back": false,

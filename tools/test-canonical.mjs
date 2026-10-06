@@ -173,8 +173,8 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     系統: new Set(['操作提示', '選項介面', '確認警示', '取得提示', '筆記更新', '狀態顯示', '狀態更新',
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
-  const counts = [[21, 17, 8], [62, 27, 19], [92, 33, 11], [133, 24, 12],
-    [54, 18, 11], [51, 13, 12], [66, 6, 11], [23, 12, 4]];
+  const counts = [[21, 17, 8], [65, 27, 19], [92, 33, 11], [133, 24, 12],
+    [54, 18, 11], [51, 13, 12], [66, 7, 11], [25, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
