@@ -18,7 +18,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "P0-C06-puzzle",
@@ -37,7 +38,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "P0-C05-horror",
@@ -56,7 +58,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "條件出現"
     },
     {
       "id": "P0-V02-event",
@@ -75,7 +78,8 @@
         0.27,
         -0.28
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "P1-C05-item",
@@ -94,7 +98,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "P1-C08-puzzle",
@@ -113,7 +118,28 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "P1-V01-horror",
+      "node": "P1",
+      "shot": "",
+      "category": "horror",
+      "title": "管後錯位腳步",
+      "image": "P1-V01",
+      "content": "管線岔口、工具箱、泵體、封閉梯間及地基處理室門牌；泵體遮住凹室。",
+      "requirements": "留光有／無、梯間鐵網濕手印前／後分層；任何序幕畫面均不露肉身。",
+      "source": "09_劇本/09-03_正式劇本_序幕.md",
+      "heading": "node-p1-script",
+      "spec": "10_製作規格/10-01_製作規格_序幕.md",
+      "specHeading": "node-p1-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": "條件出現"
     },
     {
       "id": "P2-D01-puzzle",
@@ -132,14 +158,15 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
-      "id": "P2-F01-event",
+      "id": "P2-F01-horror",
       "node": "P2",
       "shot": "",
-      "category": "event",
-      "title": "首次凝固",
+      "category": "horror",
+      "title": "首次凝固・靜止回憶",
       "image": "P2-F01",
       "content": "首次凝固的無臉人物與房間",
       "requirements": "獨立凝固構圖按既有圖層預算；編號牌熱點位置不跳動。",
@@ -151,7 +178,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": "主線揭露"
     },
     {
       "id": "P2-C04-horror",
@@ -170,7 +198,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "條件出現"
     },
     {
       "id": "R1-C03-puzzle",
@@ -189,7 +218,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R1-C06-horror",
@@ -208,7 +238,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "R2-D01-item",
@@ -227,7 +258,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R2-C01-puzzle",
@@ -246,7 +278,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R2-D03-event",
@@ -265,7 +298,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R3-C02-item",
@@ -284,7 +318,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R3-D01-puzzle",
@@ -303,13 +338,14 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
-      "id": "R3-F01-event",
+      "id": "R3-F01-horror",
       "node": "R3",
       "shot": "",
-      "category": "event",
+      "category": "horror",
       "title": "床位殘留・靜止回憶",
       "image": "R3-F01",
       "content": "蜷縮人物與床位殘留",
@@ -322,7 +358,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "條件出現"
     },
     {
       "id": "R4-C01-item",
@@ -341,7 +378,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R4-C04-puzzle",
@@ -360,7 +398,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R4-C05-horror",
@@ -379,7 +418,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "條件出現"
     },
     {
       "id": "R4b-D01-item",
@@ -398,7 +438,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R4b-C02-event",
@@ -417,7 +458,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R5-C02-item",
@@ -436,7 +478,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R5-D02-puzzle",
@@ -455,7 +498,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R5-C05-event",
@@ -474,7 +518,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R6-D01-item",
@@ -493,7 +538,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R6-D02-event",
@@ -512,7 +558,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R6-C04-horror",
@@ -531,7 +578,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "條件出現"
     },
     {
       "id": "R7-D01-item",
@@ -550,7 +598,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R7-D03-puzzle",
@@ -569,7 +618,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R7-D05-event",
@@ -588,7 +638,48 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R7-V01-horror",
+      "node": "R7",
+      "shot": "",
+      "category": "horror",
+      "title": "空工位間的清喉嚨聲",
+      "image": "R7-V01",
+      "content": "聊天工位、共用教戰手冊、白板、排行榜、刻痕隔板與跨棟橋鋁門。",
+      "requirements": "白板正反、榜單補全、手機自動重撥開／關、老周原處置狀態；現時頸殼交付中空側弧、向內折／靜止差分，皺褶撥號手保留人形，播放來源時停新增動態與擬音。選填遭遇不占通橋條件。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "node-r7-script",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r7-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "條件出現"
+    },
+    {
+      "id": "R7-C03-horror",
+      "node": "R7",
+      "shot": "",
+      "category": "horror",
+      "title": "老周與重撥",
+      "image": "R7-C03",
+      "content": "舊手機、347 刻痕、家人照片與撥號前靜格",
+      "requirements": "手機播放／自動重撥開關、刻痕、照片各焦點；另交歷史撥號前的凝固手勢疊圖。家庭留言不是現時通話，現時怨靈循環不畫進歷史層。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-17",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r7-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": "選填查看"
     },
     {
       "id": "R8-C01-item",
@@ -607,7 +698,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R8-C02-puzzle",
@@ -626,7 +718,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R8-F01-event",
@@ -645,7 +738,28 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R8-C03-horror",
+      "node": "R8",
+      "shot": "",
+      "category": "horror",
+      "title": "坐下以前的倒影",
+      "image": "R8-C03",
+      "content": "原螢幕反射面",
+      "requirements": "主動查看的正常表面；倒影姿勢差異只按一次事件，不新增追認鏡頭。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-28",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r8-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "R9-D01-item",
@@ -664,7 +778,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R9-C02-puzzle",
@@ -683,7 +798,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R9-D02-event",
@@ -702,7 +818,28 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R9-C01-horror",
+      "node": "R9",
+      "shot": "",
+      "category": "horror",
+      "title": "實牆後的拉簾聲",
+      "image": "R9-C01",
+      "content": "拉不開的窗、布簾與假家庭相框",
+      "requirements": "窗封閉結構、布簾背面及相框分焦點，不能看見外界。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-32",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r9-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "選填查看"
     },
     {
       "id": "R10-C03-item",
@@ -721,7 +858,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R10-D01-puzzle",
@@ -740,7 +878,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R10-F01-event",
@@ -759,14 +898,35 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
-      "id": "R11-V01-boss",
+      "id": "R10-C04-horror",
+      "node": "R10",
+      "shot": "",
+      "category": "horror",
+      "title": "缺燈與晚到的繼電聲",
+      "image": "R10-C04",
+      "content": "電子點燈、控制器與缺燈位置",
+      "requirements": "正常、熄兩秒、復亮及第三拍缺一盞的原差分；節奏另交原動畫／聲音，不能用全滅靜圖改掉三拍。",
+      "source": "10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "s-uppertech-46",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r10-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "選填查看"
+    },
+    {
+      "id": "R11-V01-horror",
       "node": "R11",
       "shot": "",
-      "category": "boss",
-      "title": "阿尋",
+      "category": "horror",
+      "title": "阿尋・訊號遭遇",
       "image": "R11-V01",
       "content": "第三排靠牆座位、S-03 門端、終端、隔板凹位、椅子與 UPS 維修座。",
       "requirements": "原椅／回訪少一椅、傳輸 99%／完成校驗、遭遇前後分層；阿尋交付三層窄扇笑膜、斜耳機、頜線延遲與鍵縫節指結構，十一身分維持視窗而非實體臉。安全來源頁與攻防速查頁明確分開。",
@@ -778,7 +938,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": "正式遭遇"
     },
     {
       "id": "R11-D02-puzzle",
@@ -797,7 +958,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R11-D01-item",
@@ -816,7 +978,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R12-C01-puzzle",
@@ -835,7 +998,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R12-D02-item",
@@ -854,7 +1018,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R12-D04-horror",
@@ -873,7 +1038,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "R13-D01-puzzle",
@@ -892,7 +1058,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R13-D02-item",
@@ -911,7 +1078,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R13-V01-horror",
@@ -930,7 +1098,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "正式遭遇"
     },
     {
       "id": "R14-C01-puzzle",
@@ -949,7 +1118,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R14-C02-item",
@@ -968,7 +1138,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R14-C04-horror",
@@ -987,7 +1158,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "選填查看"
     },
     {
       "id": "R15-D01-puzzle",
@@ -1006,7 +1178,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R15-C04-horror",
@@ -1025,7 +1198,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": "條件出現"
     },
     {
       "id": "R16-D06-puzzle",
@@ -1044,7 +1218,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R16-D02-item",
@@ -1063,7 +1238,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R16-D07-event",
@@ -1082,7 +1258,28 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R16-C01-horror",
+      "node": "R16",
+      "shot": "",
+      "category": "horror",
+      "title": "同步反射與風扇停轉",
+      "image": "R16-C01",
+      "content": "機櫃索引、指標標籤與鎖定後螢幕",
+      "requirements": "櫃門與原「客戶信任」標籤、底層人員編號、舊工作階段恢復／權限遮蔽各局部和差分；依原三秒安全回景後時機，不在閱讀中插事件。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-41",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r16-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "R17-D10-puzzle",
@@ -1101,7 +1298,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R17-D05-item",
@@ -1120,7 +1318,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R17-D04-event",
@@ -1139,7 +1338,28 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R17-V01-horror",
+      "node": "R17",
+      "shot": "",
+      "category": "horror",
+      "title": "站在玻璃另一側的倒影",
+      "image": "R17-V01",
+      "content": "檔案架、玻璃辦公隔間、康桌面、中繼終端與 32-S 服務門。",
+      "requirements": "玻璃反射、宿舍接縫主觀錯置與回訪差分分層；外窗遠處暗紅霧、繃緊白絲與桌邊微動紙角另層，C-02／L-04 及桌面線索清晰。紙上編號日期不變，C-02 與 L-04 分開。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "node-r17-script",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r17-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "R18-C02-puzzle",
@@ -1158,7 +1378,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R18-V02-horror",
@@ -1177,7 +1398,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": "正式遭遇"
     },
     {
       "id": "R19-C03-item",
@@ -1196,7 +1418,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R19-C04-puzzle",
@@ -1215,13 +1438,14 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
-      "id": "R19-F01-event",
+      "id": "R19-F01-horror",
       "node": "R19",
       "shot": "",
-      "category": "event",
+      "category": "horror",
       "title": "十一分四十・凝固",
       "image": "R19-F01",
       "content": "十一分四十秒凝固構圖",
@@ -1234,7 +1458,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "選填查看"
     },
     {
       "id": "R20-D02-item",
@@ -1253,7 +1478,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R20-D01-puzzle",
@@ -1272,7 +1498,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R20-V03-horror",
@@ -1291,7 +1518,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "正式遭遇"
     },
     {
       "id": "R21-D02-item",
@@ -1310,7 +1538,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R21-D03-puzzle",
@@ -1329,7 +1558,28 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R21-D04-horror",
+      "node": "R21",
+      "shot": "",
+      "category": "horror",
+      "title": "等待主管指令的走廊",
+      "image": "R21-D04",
+      "content": "門端主管驗證與釋放請求",
+      "requirements": "原憑據已驗證／釋放待提交／已提交各態；原辦公室外走廊同框差分保留噤聲者面向 R22 與已抹除空位，不重生敵人。",
+      "source": "09_劇本/09-07_正式劇本_第四幕.md",
+      "heading": "s-0907-34",
+      "spec": "10_製作規格/10-05_製作規格_第四幕.md",
+      "specHeading": "node-r21-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": "主線揭露"
     },
     {
       "id": "R22-C01-puzzle",
@@ -1348,7 +1598,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R22-V02-horror",
@@ -1367,7 +1618,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": "正式遭遇"
     },
     {
       "id": "R22-C06-event",
@@ -1386,7 +1638,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R23-D01-item",
@@ -1405,7 +1658,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R23-D02-puzzle",
@@ -1424,7 +1678,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R23-D08-event",
@@ -1443,7 +1698,48 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R23-V01-horror",
+      "node": "R23",
+      "shot": "",
+      "category": "horror",
+      "title": "離手後的扶手握痕",
+      "image": "R23-V01",
+      "content": "深層門檻、檔案架、斜撐、三來源查證桌、紙本庫與傾斜門楣；HP-02 離手後，未碰過的扶手空段多出握痕。",
+      "requirements": "紙本庫關／開、折頁原樣／展開；原離場手部扶門框與側身表現共用此圖及手部層，低動態可直接切原出口；遠格輪廓只在原選填條件顯示。HP-02 另交手已收回、門框遮擋、五道包覆摺痕終態；僅遮擋時換圖，無直視壓陷或人手現形，資料與 R24 出口不變。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "node-r23-script",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r23-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "主線時機"
+    },
+    {
+      "id": "R23-C02-horror",
+      "node": "R23",
+      "shot": "",
+      "category": "horror",
+      "title": "遠格輪廓／架後壓章",
+      "image": "R23-C02",
+      "content": "最遠檔案格與架後縫",
+      "requirements": "原有／無輪廓差分，不讓近看揭出新人物身分。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-16",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r23-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": "選填查看"
     },
     {
       "id": "R24-C01-item",
@@ -1462,7 +1758,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R24-D02-puzzle",
@@ -1481,7 +1778,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R24-D04-event",
@@ -1500,7 +1798,28 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R24-C02-horror",
+      "node": "R24",
+      "shot": "",
+      "category": "horror",
+      "title": "灰塵中的空矩形",
+      "image": "R24-C02",
+      "content": "灰塵中的空矩形",
+      "requirements": "原桌面前／後局部，物件消失與可讀原件區分。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-27",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r24-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "選填查看"
     },
     {
       "id": "R25-C01-item",
@@ -1519,7 +1838,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R25-D02-puzzle",
@@ -1538,7 +1858,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R25-C02-event",
@@ -1557,7 +1878,28 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R25-C03-horror",
+      "node": "R25",
+      "shot": "",
+      "category": "horror",
+      "title": "比手先到的反射",
+      "image": "R25-C03",
+      "content": "門端金屬邊提前半拍的反射、稽核列與另時機的 C-12 凝固輪廓",
+      "requirements": "第七次鏡像在兩組時間查讀後首次前往 C-12 時呈現，無聲、現在式金屬邊反射與手部差分；不要求先得 F5，不代開欄或提交。C-12 螢幕內 H-08 仍限 F5 保存後、危險段前選填查看，靜止且與金屬邊反射不同層、不同時機。原回傳欄與歷史來源不變。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-36",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r25-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "R26-V01-boss",
@@ -1576,7 +1918,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": "正式遭遇"
     },
     {
       "id": "R26-D06-puzzle",
@@ -1595,7 +1938,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R26-C03-event",
@@ -1614,7 +1958,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "M1-C01-horror",
@@ -1633,7 +1978,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": "主線揭露"
     },
     {
       "id": "M1-C02-horror",
@@ -1652,7 +1998,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": "選填查看"
     },
     {
       "id": "R27-C01-item",
@@ -1671,7 +2018,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R27-D01-puzzle",
@@ -1690,7 +2038,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R27-C03-event",
@@ -1709,7 +2058,28 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R27-C02-horror",
+      "node": "R27",
+      "shot": "",
+      "category": "horror",
+      "title": "同一張價目的覆寫",
+      "image": "R27-C02",
+      "content": "同一張價目",
+      "requirements": "選填回看版與首訪版同來源，不新增一份收藏。",
+      "source": "09_劇本/09-09_正式劇本_第六幕.md",
+      "heading": "s-0909-12",
+      "spec": "10_製作規格/10-07_製作規格_第六幕.md",
+      "specHeading": "node-r27-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "選填查看"
     },
     {
       "id": "U1-C01-item",
@@ -1728,7 +2098,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U1-C02-puzzle",
@@ -1747,7 +2118,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U2-C01-puzzle",
@@ -1766,7 +2138,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U2-C02-event",
@@ -1785,7 +2158,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U2b-C01-puzzle",
@@ -1804,7 +2178,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U2b-V02-horror",
@@ -1823,7 +2198,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": "正式遭遇"
     },
     {
       "id": "U3-C05-item",
@@ -1842,7 +2218,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U3-C01-puzzle",
@@ -1861,7 +2238,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U3-C03-puzzle",
@@ -1880,7 +2258,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R28-D01-item",
@@ -1899,7 +2278,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R28-D02-event",
@@ -1918,7 +2298,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R29-D01-item",
@@ -1937,7 +2318,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R29-D02-puzzle",
@@ -1956,7 +2338,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R29-D06-event",
@@ -1975,7 +2358,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U4-C02-puzzle",
@@ -1994,7 +2378,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U4-V01-horror",
@@ -2013,7 +2398,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "U4-D01-item",
@@ -2032,7 +2418,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U4b-C01-puzzle",
@@ -2051,7 +2438,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U4b-C02-event",
@@ -2070,7 +2458,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U5-C01-item",
@@ -2089,7 +2478,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U5-C02-puzzle",
@@ -2108,7 +2498,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U5-V02-horror",
@@ -2127,7 +2518,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "正式遭遇"
     },
     {
       "id": "U6-C01-puzzle",
@@ -2146,7 +2538,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U6-D01-item",
@@ -2165,7 +2558,28 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "U6-V01-horror",
+      "node": "U6",
+      "shot": "",
+      "category": "horror",
+      "title": "槽外逆行水紋",
+      "image": "U6-V01",
+      "content": "三水槽、調節閥、液位標尺、工具箱與固定保養梯；活動踏板仍未固定；HP-04 槽外淺排水槽的逆行水紋。",
+      "requirements": "初始3／0／3、各合法中間水位、平衡2／2／2及關閥差分；總量六格守恆。槽外普通流向／逆行波紋／到梯腳終態與低動態兩態另層；首次有效導水後安全實景呈現，三槽標尺、閥輪及配重不被異常改寫。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "node-u6-script",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-u6-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "U6b-C01-puzzle",
@@ -2184,7 +2598,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "U6b-C02-event",
@@ -2194,7 +2609,7 @@
       "title": "鎖定後的步道",
       "image": "U6b-C02",
       "content": "踏面鎖點與往 R30 落腳處",
-      "requirements": "鎖好後可辨承重，來源管線與 U6 一致。",
+      "requirements": "鎖好後可辨承重，來源管線與 U6 一致；護欄外廢管是否仍在架依 HP-05 呈現狀態對位，不改活躍配重管。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
       "heading": "s-0909-42",
       "spec": "10_製作規格/10-10_製作規格_第八幕.md",
@@ -2203,7 +2618,28 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "U6b-V01-horror",
+      "node": "U6b",
+      "shot": "",
+      "category": "horror",
+      "title": "從上方傳來的落管聲",
+      "image": "U6b-V01",
+      "content": "配重踏板維修艙、水平泡、止回栓、踏面與配重管；HP-05 護欄外斷管與頭頂封閉檢修層，獨立維修視角。",
+      "requirements": "水位未平衡／水平、止回栓未扣／扣上、踏面不可走／可走分開。斷管在架／落下／空架、頂縫落灰及低動態兩態另層；首次扣栓成功後呈現，水平泡及承重不變，不提前沉降。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "node-u6b-script",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-u6b-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "R30-D01-puzzle",
@@ -2222,7 +2658,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R30-C02-puzzle",
@@ -2241,7 +2678,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R30-D02-event",
@@ -2260,7 +2698,48 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R30-V03-horror",
+      "node": "R30",
+      "shot": "",
+      "category": "horror",
+      "title": "沉降與三聲空車",
+      "image": "R30-V03",
+      "content": "三輛空車與末車底板局部",
+      "requirements": "空車撞向焊死核心門；底板只露腕帶、水瓶與目的地空白的園區轉運標籤，不加可取物或另一具遺體。沉降、滑車動畫另製。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-48",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r30-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "主線時機"
+    },
+    {
+      "id": "R30-C03-horror",
+      "node": "R30",
+      "shot": "",
+      "category": "horror",
+      "title": "粉塵裡的自己",
+      "image": "R30-C03",
+      "content": "粉塵站姿與安全踏點",
+      "requirements": "輪廓有／無差分依原事件，近看不追加鏡像台詞。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-49",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r30-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "R31-D01-puzzle",
@@ -2279,7 +2758,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R31-D03-puzzle",
@@ -2298,14 +2778,15 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
-      "id": "R31-F01-event",
+      "id": "R31-F01-horror",
       "node": "R31",
       "shot": "",
-      "category": "event",
-      "title": "歷史解凍",
+      "category": "horror",
+      "title": "唯一歷史解凍",
       "image": "R31-F01",
       "content": "解凍前後與倒影站位",
       "requirements": "依原八個時間區段交八張低動態定格、同十二秒；動畫與人物／反射分層。十二秒解凍仍為全劇唯一歷史動作特例。",
@@ -2317,7 +2798,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": "主線揭露"
     },
     {
       "id": "R32-V01-boss",
@@ -2336,7 +2818,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": "正式遭遇"
     },
     {
       "id": "R32-D09-puzzle",
@@ -2355,7 +2838,8 @@
         0.29,
         0.21
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R32-D04-event",
@@ -2374,7 +2858,8 @@
         -0.26,
         -0.29
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "R33-V01-event",
@@ -2393,7 +2878,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "POST-V01-event",
@@ -2412,7 +2898,8 @@
         -0.28,
         0.27
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R2-R3-01-C01-item",
@@ -2431,7 +2918,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R2-R3-02-C01-item",
@@ -2450,7 +2938,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R3-R4-01-C01-item",
@@ -2469,7 +2958,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R3-R5-01-puzzle",
@@ -2494,7 +2984,8 @@
         "action": "在全景辨認防滑踏板，點擊沿牆通路走到 A 棟內側的半段鋼梯；支架近看可自行查看。",
         "recovery": "錯點晾衣繩只拉近鬆脫掛鉤；回全景仍站在排水台，不能踏空。",
         "state": "route_local.t-r3-r5-01.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R3-R5-02-puzzle",
@@ -2519,7 +3010,8 @@
         "action": "移開桌腳插銷，沿原滑槽收起摺桌，露出通往下一層的維修梯入口。",
         "recovery": "封門近看可見連續焊縫；插銷未鬆時桌子只晃動，操作可取消，不損壞道具。",
         "state": "route_local.t-r3-r5-02.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R3-R5-03-puzzle",
@@ -2544,7 +3036,8 @@
         "action": "對照兩側支架，選固定在樑上的窄梯；水錶不必拆取。",
         "recovery": "空管側只到有護欄的斷頭平台；看見斷面後可原路退回，不隨機坍塌。",
         "state": "route_local.t-r3-r5-03.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R3-R5-04-puzzle",
@@ -2569,7 +3062,8 @@
         "action": "沿舊地磚穿過半扇小門上樓；可停下近看修補扣環與招牌背面的舊字。",
         "recovery": "查看吊帶只開近看，關閉仍回背巷；行走不以查完生活細節為前置。",
         "state": "route_local.t-r3-r5-04.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R3-R5-05-puzzle",
@@ -2594,7 +3088,8 @@
         "action": "解開門邊夾扣，把布束在原掛鉤，沿雙輪痕走最後一段梯進入 8F 工坊。",
         "recovery": "窗洞只供查看；回身仍見同一曬布夾，已束起的布不會在回訪時重新擋路。",
         "state": "route_local.t-r3-r5-05.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R5-R6-01-puzzle",
@@ -2619,7 +3114,8 @@
         "action": "把濾籃掛回槽壁掛架，再沿刻線開啟旁通，露出止滑踏板通往吊籃後道。",
         "recovery": "關錯方向只維持原水位；可立即轉回，不耗工具、不灌進已走通道。",
         "state": "route_local.t-r5-r6-01.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R5-R6-02-puzzle",
@@ -2644,7 +3140,8 @@
         "action": "轉動原位棘輪將空籃提到限位，插上繫在鏈上的止擋銷，再走旁側維修梯抵達 11F。",
         "recovery": "未插銷時出口顯示對重仍懸著；鬆手由棘輪接住，不要求反應速度，不把衣籃當電梯。",
         "state": "route_local.t-r5-r6-02.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R6-R7-01-puzzle",
@@ -2669,7 +3166,8 @@
         "action": "沿線槽查看檢修扇，撥開原門閂，側身上樓。",
         "recovery": "左側封板不能拆；近看後回同一走廊，不播放判錯音或新增帳號權限。",
         "state": "route_local.t-r6-r7-01.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R6-R7-02-puzzle",
@@ -2694,7 +3192,8 @@
         "action": "把擋視線的空衣架推到側邊，沿水箱工作臺找出固定梯入口。",
         "recovery": "竹竿處只可近看裂口，不提供走鋼索或跳躍；已推開的衣架保持原位。",
         "state": "route_local.t-r6-r7-02.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R6-R7-03-puzzle",
@@ -2719,7 +3218,8 @@
         "action": "沿磨痕打開工作通道，踏上最後一小段梯，15F 的隊尾與白板才進入視野。",
         "recovery": "錯門只見封磚剖面；關閉近看回同一位置。原 R7 遭遇與白板調查仍在入房後開始。",
         "state": "route_local.t-r6-r7-03.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R7-R8-01-C01-item",
@@ -2738,7 +3238,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R7-R8-02-C01-item",
@@ -2757,7 +3258,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R11-R12-01-puzzle",
@@ -2782,7 +3284,8 @@
         "action": "沿完整接頭查看牆邊踏板，走進檢修缺口。",
         "recovery": "斷管側只到牆前，能退回本層；身後跨幕門不因此重新開放。",
         "state": "route_local.t-r11-r12-01.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R11-R12-02-puzzle",
@@ -2807,7 +3310,8 @@
         "action": "依管路近看選旁通閥，排掉踏板積水，再從塔腳爬上短梯。",
         "recovery": "選錯只讓水停在原刻線；可原位復位，沒有窒息倒數。",
         "state": "route_local.t-r11-r12-02.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R11-R12-03-puzzle",
@@ -2832,7 +3336,8 @@
         "action": "鬆開卡榫，把空盤架推至止擋，改走牆邊窄梯。",
         "recovery": "推到斷邊方向會被導槽止擋攔住；退回仍能操作，不掉落或消耗力氣條。",
         "state": "route_local.t-r11-r12-03.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R11-R12-04-puzzle",
@@ -2857,7 +3362,8 @@
         "action": "查看兩側支撐後，沿暗側護欄穿入上行缺口。",
         "recovery": "亮側停在有欄杆的平台；可回身，不強迫使用發光棒或感知。",
         "state": "route_local.t-r11-r12-04.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R11-R12-05-puzzle",
@@ -2882,7 +3388,8 @@
         "action": "沿已固定的折梯上到落腳臺，進入 21F。",
         "recovery": "可停在原安全地面或退回 19F；兩側固定扣維持到位，無需重扣。",
         "state": "route_local.t-r11-r12-05.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R11-R12-06-puzzle",
@@ -2907,7 +3414,8 @@
         "action": "先放下橋板再扣住另一端，走過同層窄溝接往 22F 梯口。",
         "recovery": "井口沒有跳躍熱區；橋板未扣不開出口，收回重放不損壞。",
         "state": "route_local.t-r11-r12-06.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R11-R12-07-puzzle",
@@ -2932,7 +3440,8 @@
         "action": "扳下本地斷電柄，確認轉軸靜止，穿過 B 棟 22F → A 棟 22F 管線橋，再沿 A 棟短梯上 23F，親自進入修理舖。",
         "recovery": "不停機時出口只提示轉動部件阻路，不造成突襲傷害；不改 R12 配電選擇。",
         "state": "route_local.t-r11-r12-07.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R12-R14-01-puzzle",
@@ -2957,7 +3466,8 @@
         "action": "拉開掛在鉤上的防塵片，沿側洞爬架移到 A 棟內側的短梯。",
         "recovery": "焊門不是材料任務；近看就能看清全圈封死，回訪不重新蓋住防塵片。",
         "state": "route_local.t-r12-r14-01.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R12-R14-02-puzzle",
@@ -2982,7 +3492,8 @@
         "action": "轉動手輪拉回空車，讓原止退齒卡住，露出 26F 入口。",
         "recovery": "直接推車被未鬆的牽引纜留住；可收手改用手輪，不追逐滑車。",
         "state": "route_local.t-r12-r14-02.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R12-R14-03-puzzle",
@@ -3007,7 +3518,8 @@
         "action": "開啟旁通讓錶針落入刻線區，再關閉漏水支管，沿止滑跨棟廊到 B 棟 26F，循短梯上 27F 貨梯轉接間。",
         "recovery": "順序反了只維持洩壓狀態；鬆手可重做，不爆管、不新增倒數。",
         "state": "route_local.t-r12-r14-03.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R13-R14-01-C01-item",
@@ -3026,7 +3538,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R13-R14-02-C01-item",
@@ -3045,7 +3558,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R13-R14-03-C01-item",
@@ -3064,7 +3578,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R13-R15-01-C01-item",
@@ -3083,7 +3598,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R13-R15-02-C01-item",
@@ -3102,7 +3618,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R13-R15-03-C01-item",
@@ -3121,7 +3638,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R15-R16-01-puzzle",
@@ -3146,7 +3664,8 @@
         "action": "拉起內簾到止擋，撐上原防夾桿，從固定側梯到 29F。",
         "recovery": "撐桿繫在旁邊；取消可重做，不需回修理區借工具。",
         "state": "route_local.t-r15-r16-01.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R15-R16-02-puzzle",
@@ -3171,7 +3690,8 @@
         "action": "查看到站刻線與實體牌，拉開外閘進入車廂，再親手關妥外閘及內閘。",
         "recovery": "門未扣妥會保留可見缺口，按上行不動；補關即可。未上行可重新開門退回。",
         "state": "route_local.t-r15-r16-02.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R15-R16-03-puzzle",
@@ -3196,7 +3716,8 @@
         "action": "按 30F 上行；到站後核對實體牌與平層刻線，親手開閘，走出 30F 平台。",
         "recovery": "中途不能開閘；取消移動演出只略過動畫，仍停在經驗證的 30F 門內，不寫目的房到訪。",
         "state": "route_local.t-r15-r16-03.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R15-R16-04-puzzle",
@@ -3221,7 +3742,8 @@
         "action": "取下踏板嵌入凹槽並扣緊兩端，走過踏板，扳妥檢修箱啟用柄，再返回原車廂。",
         "recovery": "缺一扣便保留歪斜差分且不能上踏板；可重放。未啟用仍能回 29F，不開 31F。",
         "state": "route_local.t-r15-r16-04.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R15-R16-05-puzzle",
@@ -3246,7 +3768,8 @@
         "action": "親手關妥兩道閘門，按 31F；到站核對 B 棟 31F 牌與平層刻線，再開閘。",
         "recovery": "操作取消不清空 30F 成果；未啟用按鍵保持不可用。可回已通過樓層，不重解踏板。",
         "state": "route_local.t-r15-r16-05.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R15-R16-06-puzzle",
@@ -3271,7 +3794,8 @@
         "action": "離開車廂，沿固定平台點門進 R16；到訪只在真正跨入房門後提交。",
         "recovery": "可依章內回訪規則搭原梯返回 30F／29F；原鎖場與門禁優先，不能跳往其他樓層。",
         "state": "route_local.t-r15-r16-06.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R12-R15-01-C01-item",
@@ -3290,7 +3814,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R12-R15-02-C01-item",
@@ -3309,7 +3834,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R12-R15-03-C01-item",
@@ -3328,7 +3854,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R17-R14-01-C01-item",
@@ -3347,7 +3874,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R17-R14-02-C01-item",
@@ -3366,7 +3894,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R17-R14-03-C01-item",
@@ -3385,7 +3914,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R17-R14-04-C01-item",
@@ -3404,7 +3934,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R17-R18-01-puzzle",
@@ -3429,7 +3960,8 @@
         "action": "查看側梯踏板接點，從貨架外側穿過，再登 34F。",
         "recovery": "壓斷主梯不可攀爬；可退回本層，但原單向門已關，不能回到 R17 或改走 L-04。",
         "state": "route_local.t-r17-r18-01.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R17-R18-02-puzzle",
@@ -3454,7 +3986,8 @@
         "action": "依扣環位置打開檢修蓋，沿背板後短梯上行。",
         "recovery": "箱牆不可拆；檢修蓋卸下後掛在原掛鉤，不占背包，也不在回訪突然復位。",
         "state": "route_local.t-r17-r18-02.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R17-R18-03-puzzle",
@@ -3479,7 +4012,8 @@
         "action": "在原位轉手輪，將空貨臺對準兩側停靠孔，壓下繫繩鎖銷後通過。",
         "recovery": "未對孔不開柵；轉過頭可倒轉手輪，不需要站上移動貨臺操作。",
         "state": "route_local.t-r17-r18-03.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R17-R18-04-puzzle",
@@ -3504,7 +4038,8 @@
         "action": "從鉸鏈側拉開檢修片，沿管線背後的維修步道上到 37F，親自進入 R18 的安全觀察點。",
         "recovery": "封死門沒有可搜的鑰匙；拉開片後固定在止擋，返回仍是同一卸貨護角。",
         "state": "route_local.t-r17-r18-04.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R20-R21-01-C01-item",
@@ -3523,7 +4058,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R20-R21-02-C01-item",
@@ -3542,7 +4078,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R21-R22-01-C01-item",
@@ -3561,7 +4098,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R24-R25-01-C01-item",
@@ -3580,7 +4118,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R27-U1-01-C01-item",
@@ -3599,7 +4138,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-R29-U4-01-puzzle",
@@ -3624,7 +4164,8 @@
         "action": "原必要查證與責任收束完成後，查看平層刻線，進入車廂並親手關妥兩道閘門。",
         "recovery": "未完成原門檻不能離房；選填核可、SQ-M 和收集數量都不鎖梯。尚未上行可退回。",
         "state": "route_local.t-r29-u4-01.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R29-U4-02-puzzle",
@@ -3649,7 +4190,8 @@
         "action": "按 48F 上行；到站後核對三項實體線索，親手拉開閘門，走到 48F 平台。",
         "recovery": "假停靠處拉閘只碰到鎖住的門扣，可收手繼續；不扣資源、不墜落、不新增房間。",
         "state": "route_local.t-r29-u4-02.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-R29-U4-03-puzzle",
@@ -3674,7 +4216,8 @@
         "action": "自行點入 U4；R30 不可逆提交前，依原門檻可叫回 L2 返回 47F。",
         "recovery": "叫梯從最近有效停靠點移來，到站才開外閘。R30 不可逆提交即封回程，不等到制動後。",
         "state": "route_local.t-r29-u4-03.open"
-      }
+      },
+      "timing": ""
     },
     {
       "id": "T-U3-R28-01-C01-item",
@@ -3693,7 +4236,8 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
     },
     {
       "id": "T-U5-U6-01-C01-item",
@@ -3712,7 +4256,28 @@
         0.8,
         0
       ],
-      "play": null
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "T-R2-R3-01-horror",
+      "node": "R2",
+      "shot": "T-R2-R3-01",
+      "category": "horror",
+      "title": "封門下的遮光",
+      "image": "T-R2-R3-01",
+      "content": "後廚服務巷：R2 出餐小窗、碗架、磨刀石、封住的後門與紅扶手；HP-01 門底亮縫由遠及近被遮住。",
+      "requirements": "來路 R2-V01；去路 T-R2-R3-02。依原門檻可原路折返；完成本房必要操作，依 R2-03 推開送餐車露出梯口；無額外證據或鑰匙。亮縫普通／分段遮蔽／終態與低動態兩態另層，首次正向可操作全景呈現，直接走或開近看不補播，門扣及紅梯不動。背景獨立構圖，材質可共用；不水平翻圖當反向。",
+      "source": "10_製作規格/10-02_製作規格_第一幕.md",
+      "heading": "transition-r2-r3",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r2-images",
+      "offset": [
+        -0.8,
+        -1.3
+      ],
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "T-R15-R16-03-horror",
@@ -3731,7 +4296,28 @@
         -0.8,
         -1.3
       ],
-      "play": null
+      "play": null,
+      "timing": "主線時機"
+    },
+    {
+      "id": "T-R24-R25-01-horror",
+      "node": "R24",
+      "shot": "T-R24-R25-01",
+      "category": "horror",
+      "title": "封板內的壓力",
+      "image": "T-R24-R25-01",
+      "content": "飯廳服務轉角：43F 服務口、封死傳菜窗、舊收碗槽，以及上行至 44F 的連續梯段、扶手和 R25 門框；HP-03 轉角遮擋後，封板多出鼓面折線。",
+      "requirements": "來路 R24-V01；去路 R25-V01。依原門檻可原路折返；E4-01／E4-02／E3-02 第四層鎖定成立；act5.r24.board_locked = true。封板原樣／鼓面折線終態另層，轉角遮擋時換圖，無直視變形；釘位不動、窗仍封住。首次正向安全全景才呈現，保護期優先且不延遲上梯；低動態同樣在遮擋時切換。背景獨立構圖，材質可共用；不水平翻圖當反向。",
+      "source": "10_製作規格/10-06_製作規格_第五幕.md",
+      "heading": "transition-r24-r25",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r24-images",
+      "offset": [
+        -0.8,
+        -1.3
+      ],
+      "play": null,
+      "timing": "主線時機"
     },
     {
       "id": "T-R29-U4-02-horror",
@@ -3750,7 +4336,8 @@
         -0.8,
         -1.3
       ],
-      "play": null
+      "play": null,
+      "timing": "主線時機"
     }
   ]
 }

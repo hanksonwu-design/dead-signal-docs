@@ -84,11 +84,31 @@ async function layout(page){
   for(const scene of ['R11','R26','R32','R33','POST']){
    await open(page,{scene});assert(await page.locator('#marker-list button').count()>0);
    if(['R33','POST'].includes(scene))assert.equal(await page.locator(`.content-marker[data-marker^="${scene}-"]`).count(),0);
-   else assert.equal(await page.locator('#marker-list [data-category="boss"]').count(),1);
+   else if(scene==='R11'){
+    assert.equal(await page.locator('#marker-list [data-category="boss"]').count(),0);
+    assert.match(await page.locator('#marker-list').innerText(),/訊號遭遇/);
+   }else assert.equal(await page.locator('#marker-list [data-category="boss"]').count(),1);
   }
   await open(page,{scene:'R2',marker:'R32-V01-boss'});assert(await page.locator('#marker-detail').isHidden());
   await open(page,{scene:'R2',marker:'does-not-exist'});assert(await page.locator('#marker-detail').isHidden());
   pass('boss encounters and nonphysical endings are distinct; mismatched or invalid marker URLs are discarded');
+  for(const image of ['T-R2-R3-01','R23-V01','T-R24-R25-01','U6-V01','U6b-V01','R25-C03','R24-C02']){
+   const m=data.find(m=>m.id===image+'-horror');
+   const params={scene:m.node,marker:m.id};
+   if(m.shot){params.shot=m.shot;params.route=flow.subscenes.find(s=>s.id===m.shot).route;}
+   await open(page,params);
+   assert((await page.locator('#marker-detail .marker-meta').innerText()).includes(m.timing));
+   assert((await page.locator(`[data-marker-select="${m.id}"]`).innerText()).includes(m.timing));
+   assert((await page.locator(`.content-marker[data-marker="${m.id}"]`).getAttribute('title')).includes(m.timing));
+   await page.locator('#focus').click();await page.waitForTimeout(200);await layout(page);
+  }
+  pass('mainline and optional horror labels resolve across all five new cues and the revised mirror beat');
+  for(const width of [1440,390]){
+   await page.setViewportSize({width,height:width>800?1000:844});
+   await open(page,{scene:'R23',marker:'R23-V01-horror'});await page.locator('#focus').click();await page.waitForTimeout(200);
+   await layout(page);assert(await page.locator('.content-marker[data-marker="R23-V01-horror"]').isVisible());
+   await page.screenshot({path:path.join(out,`horror-r23-${width}.png`),fullPage:true});
+  }
   for(const width of [1920,1440,390,320]){
    await page.setViewportSize({width,height:width>800?1000:844});await open(page);
    await page.locator('[data-marker-select="R2-D01-item"]').click();await page.waitForTimeout(200);

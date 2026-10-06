@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {MAIN_MARKERS,MARKER_CATEGORIES} from './marker-definitions.js';
+import {MAIN_MARKERS,MARKER_CATEGORIES,MARKER_TIMINGS,TRANSITION_HORROR} from './marker-definitions.js';
 import {markerPosition,markerInContext,showContentMarkers} from './model-markers.js';
 import {buildCurrentModel} from './current-spatial.js';
 import {buildModelMarkers,writeModelMarkers} from '../tools/build-model-markers.mjs';
@@ -23,7 +23,7 @@ test('all scene markers resolve to current canonical assets and sources without 
   assert.equal(m.content,flow.images[m.image].content);
   if(m.shot)assert(flow.subscenes.some(s=>s.id===m.shot&&s.node===m.node));
  }
- assert.deepEqual(data.filter(m=>m.category==='boss').map(m=>m.node),['R11','R26','R32']);
+ assert.deepEqual(data.filter(m=>m.category==='boss').map(m=>m.node),['R26','R32']);
  assert.equal(JSON.stringify({graph,flow}),before);
  writeModelMarkers(true);
 });
@@ -32,9 +32,23 @@ test('canonical exploration operations and recovery remain intact, including ele
  for(const s of flow.subscenes.filter(s=>s.play)){
   const m=data.find(m=>m.shot===s.id&&m.category==='puzzle');assert.deepEqual(m.play,s.play);
  }
- assert.equal(data.filter(m=>m.shot&&m.category==='horror').length,2);
+ assert.equal(data.filter(m=>m.shot&&m.category==='horror').length,TRANSITION_HORROR.length);
  assert(data.some(m=>m.node==='U2b'&&m.category==='horror'));
  assert(data.some(m=>m.node==='U5'&&m.category==='horror'));
+});
+
+test('horror timing distinguishes optional, conditional and mainline beats without inventing bosses',()=>{
+ for(const m of data.filter(m=>['horror','boss'].includes(m.category)))assert(MARKER_TIMINGS.includes(m.timing),m.id);
+ assert.equal(data.find(m=>m.image==='R11-V01').category,'horror');
+ assert.equal(data.find(m=>m.id==='R25-C03-horror').timing,'主線時機');
+ assert.equal(data.find(m=>m.id==='R24-C02-horror').timing,'選填查看');
+ assert.equal(data.find(m=>m.id==='P1-V01-horror').timing,'條件出現');
+ for(const image of ['T-R2-R3-01','R23-V01','T-R24-R25-01','U6-V01','U6b-V01']){
+  assert.equal(data.find(m=>m.id===`${image}-horror`).timing,'主線時機');
+ }
+ for(let act=0;act<10;act++)assert(data.some(m=>['horror','boss'].includes(m.category)&&graph.nodes.find(n=>n.id===m.node).act===act),`Act ${act}`);
+ const invalid=structuredClone(MAIN_MARKERS);invalid.R25.at(-1)[3]='always';
+ assert.throws(()=>build(invalid),/horror timing/);
 });
 
 test('invalid image, category, ownership, boss classification, coverage and duplicates fail the build',()=>{
