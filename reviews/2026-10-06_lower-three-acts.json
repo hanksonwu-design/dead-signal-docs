@@ -1,0 +1,38 @@
+{
+  "chapters": 10,
+  "blocks": 1563,
+  "beforeBlocks": 1563,
+  "relocated": [
+    {
+      "act": "第六幕",
+      "nodes": [
+        "M1",
+        "R27",
+        "U1",
+        "U2",
+        "U2b",
+        "U3"
+      ]
+    },
+    {
+      "act": "第七幕",
+      "nodes": [
+        "R28",
+        "R29",
+        "U4",
+        "U4b",
+        "U5"
+      ]
+    },
+    {
+      "act": "第八幕",
+      "nodes": [
+        "U6",
+        "U6b",
+        "R30",
+        "R31"
+      ]
+    }
+  ],
+  "checks": "Source blocks, original scene IDs, route conditions and illustration references retained"
+}

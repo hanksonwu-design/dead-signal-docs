@@ -264,6 +264,7 @@ function openReader(path, updateHash = true, headingText = "") {
   const visited = new Set();
   while (doc && !visited.has(doc.path)) {
     visited.add(doc.path);
+    headingText = doc.headingAliases?.[headingText] || headingText;
     const destination = doc.anchorRedirects?.[headingText] || doc.redirect;
     if (!destination) break;
     const [targetPath, anchor] = destination.split("#");
@@ -271,7 +272,7 @@ function openReader(path, updateHash = true, headingText = "") {
     if (!target) break;
     path = targetPath;
     doc = target;
-    headingText ||= anchor || "";
+    headingText = anchor || headingText;
   }
   if (doc?.archived) {
     const links = [...doc.content.matchAll(/\[[^\]]+\]\(([^)]+\.md)\)/g)];

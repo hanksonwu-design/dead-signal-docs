@@ -4,7 +4,7 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { MASTER, ACTS, CANONICAL_FILES, SPLIT_MARKER } from './screenplay-files.mjs';
+import { MASTER, APPENDIX, ACTS, FINALE, CANONICAL_FILES, SPLIT_MARKER } from './screenplay-files.mjs';
 
 export const ROOT = fileURLToPath(new URL("..", import.meta.url));
 export const DOCS_DIR = join(ROOT, "docs");
@@ -92,8 +92,36 @@ export function buildDocuments() {
       if (story && spec) story.anchorRedirects = Object.fromEntries(
         [...spec.content.matchAll(/<a id="([^"]+)"><\/a>/g)].map(match => [match[1], spec.path]));
     }
+    // The former sixth act contained all three chapters, including their specifications.
+    const lowerPaths = ACTS.slice(6, 9).flatMap(act => [act.path, act.specPath]);
+    const lowerAnchors = documents.filter(doc => lowerPaths.includes(doc.path))
+      .flatMap(doc => [...doc.content.matchAll(/<a id="([^"]+)"><\/a>/g)].map(match => [match[1], doc.path]));
+    for (const oldPath of [ACTS[6].path, ACTS[6].specPath]) {
+      const doc = documents.find(d => d.path === oldPath);
+      const own = new Set([...doc.content.matchAll(/<a id="([^"]+)"><\/a>/g)].map(m => m[1]));
+      doc.anchorRedirects = { ...doc.anchorRedirects, ...Object.fromEntries(lowerAnchors.filter(([id]) => !own.has(id))) };
+    }
+    // Only the historical finale paths and all-in-one index interpret act-7 as the finale.
+    for (const finalPath of [FINALE.path, FINALE.specPath]) {
+      const doc = documents.find(d => d.path === finalPath);
+      doc.headingAliases = {};
+      for (const match of doc.content.matchAll(/<a id="((?:act|spec-act|image-routes-act)-9[^"]*)"><\/a>/g)) {
+        const old = match[1].replace('-9', '-7');
+        doc.headingAliases[old] = match[1];
+        index.anchorRedirects[old] = `${doc.path}#${match[1]}`;
+      }
+    }
+    const finaleAliases = Object.assign({}, ...documents.filter(d => [FINALE.path, FINALE.specPath].includes(d.path)).map(d => d.headingAliases));
+    for (const doc of documents.filter(d => [FINALE.path, FINALE.specPath].includes(d.path))) doc.headingAliases = finaleAliases;
   }
-  return documents.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+  const order = [ ...ACTS.map(a => a.path), MASTER, APPENDIX, ...ACTS.map(a => a.specPath) ];
+  return documents.sort((a, b) => {
+    if (a.folder === b.folder && (order.includes(a.path) || order.includes(b.path))) {
+      const rank = doc => order.includes(doc.path) ? order.indexOf(doc.path) : order.length;
+      return rank(a) - rank(b);
+    }
+    return a.path < b.path ? -1 : a.path > b.path ? 1 : 0;
+  });
 }
 
 export function buildPayload() {

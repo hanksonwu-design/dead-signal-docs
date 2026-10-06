@@ -15,7 +15,7 @@ const link=(label,doc,heading)=>`<a href="${esc(source(doc,heading))}" target="_
 const locationLabel=(item,back=false)=>`${back?item.building.reverseLabel:item.building.label} · ${back?item.floor.reverseLabel:item.floor.label}`;
 let model=buildCurrentModel(graph,flow),selected='R6',routeId='',shotId='',reverse=false,scope='all',floor=null,view='iso';
 const node=id=>model.nodes.find(n=>n.id===id),shot=id=>model.shots.find(s=>s.id===id),route=()=>model.routes.find(r=>r.id===routeId);
-const host=$('canvas-host'),colors=[0x719eae,0x8bab8e,0x6fae9c,0x93a8bd,0xbd969c,0xc2aa7e,0x8dabbe,0xbdc5ae];
+const host=$('canvas-host'),colors=[0x719eae,0x8bab8e,0x6fae9c,0x93a8bd,0xbd969c,0xc2aa7e,0x8dabbe,0xb69aa6,0x87b5ad,0xbdc5ae];
 let renderer,camera,controls,scene,root,resizeObserver;
 let roomObjects=[],routeObjects=[],shotObjects=[],labels=[],floorLabels=[],visiblePoints=[];
 const material=(color,opacity=1)=>new THREE.MeshStandardMaterial({color,roughness:.8,metalness:.08,transparent:opacity<1,opacity,depthWrite:opacity>=1});

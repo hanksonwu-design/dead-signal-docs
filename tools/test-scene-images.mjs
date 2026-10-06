@@ -116,13 +116,13 @@ test('required events read in play order while optional branches remain optional
   order(3, ['id="s-0906-58"', 'id="s-0906-60"', 'id="s-0906-59"']);
   order(3, ['id="s-0906-33"', 'id="subscene-t-r12-r15-01-script"']);
   order(4, ['id="s-0907-34"', '[R21-D04]', '現場門控的授權欄與走廊同框']);
-  order(6, ['id="s-0909-40"', 'id="s-0909-41"', '玩家選擇離開水槽旁，沿固定保養梯下到低位台']);
+  order(8, ['id="s-0909-40"', 'id="s-0909-41"', '玩家選擇離開水槽旁，沿固定保養梯下到低位台']);
   order(6, ['門內橫閂與外側護板', '斜側接景同時保留兩端門框', 'id="subscene-u3-v02-script"']);
   const act2 = master.documents.get(ACTS[2].path);
   assert(act2.includes('舊住宅門下兩級通往 R9；內井旁側道通往 R10。兩路均可自由通行'));
   assert(act2.includes('也可先走另一側道，兩路都可自由通行'));
   assert(master.documents.get(ACTS[4].path).includes('保存成功後進入上部片尾'));
-  assert(master.documents.get(ACTS[6].path).includes('選填 H-07 未播放也能前進'));
+  assert(master.documents.get(ACTS[8].path).includes('選填 H-07 未播放也能前進'));
 });
 
 test('branch, return-only, one-way and ending access remain distinct', () => {
@@ -346,7 +346,7 @@ test('R29 compares existing signatures and keeps a single informed approval acti
 });
 
 test('R27 prose, hotspot and artwork keep the same unknown-read indicator location', () => {
-  const spec = master.documents.get(ACTS[6].specPath);
+  const spec = ACTS.slice(6, 9).map(a => master.documents.get(a.specPath)).join('\n');
   const locationLines = spec.split('\n').filter(line => /右[上下]/.test(line) && /讀取心跳|未知節點讀取/.test(line));
   assert.equal(locationLines.length, 3);
   assert(locationLines.every(line => line.includes('右下角')));

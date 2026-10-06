@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "Cards follow prologue, I-VIII, finale order",
+    "Reading handoffs and new-window specification at 1440px",
+    "Published legacy bookmarks reach moved scenes and finale",
+    "GitHub Pages static payload preserves legacy finale bookmark",
+    "Flow filters show 6/5/4 main nodes at 1440px",
+    "3D chapter filters, rendered pixels, camera and overflow at 1440px",
+    "Reading handoffs and new-window specification at 390px",
+    "Flow filters show 6/5/4 main nodes at 390px",
+    "3D chapter filters, rendered pixels, camera and overflow at 390px"
+  ],
+  "errors": []
+}

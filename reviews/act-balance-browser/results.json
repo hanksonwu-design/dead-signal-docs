@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "act3-return: current static text, anchor and responsive layout at 1440px",
+    "act5-reading: current static text, anchor and responsive layout at 1440px",
+    "act8-door: current static text, anchor and responsive layout at 1440px",
+    "finale-continue: current static text, anchor and responsive layout at 1440px",
+    "balance-checks: current static text, anchor and responsive layout at 1440px",
+    "act3-return: current static text, anchor and responsive layout at 390px",
+    "act5-reading: current static text, anchor and responsive layout at 390px",
+    "act8-door: current static text, anchor and responsive layout at 390px",
+    "finale-continue: current static text, anchor and responsive layout at 390px",
+    "balance-checks: current static text, anchor and responsive layout at 390px"
+  ],
+  "errors": [],
+  "scope": "Document website only; no game-engine playtest."
+}

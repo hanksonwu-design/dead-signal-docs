@@ -10,7 +10,8 @@ const master = parseMaster();
 const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
 const docs = master.documents, access = collectSceneAccess(graph, docs);
 const images = collectSceneImages(graph, docs), routes = bindImageRoutes(graph, images);
-const spec = docs.get(ACTS[6].specPath), story = docs.get(ACTS[6].path);
+const spec = ACTS.slice(6, 9).map(a => docs.get(a.specPath)).join('\n');
+const story = ACTS.slice(6, 9).map(a => docs.get(a.path)).join('\n');
 let passed = 0;
 const test = (name, fn) => { fn(); passed++; console.log(`PASS ${name}`); };
 

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT, MASTER, parseMaster, buildSync, deriveGraph, canonicalFile } from './sync-canonical.mjs';
-import { ACTS, APPENDIX, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER } from './screenplay-files.mjs';
+import { ACTS, FINALE, APPENDIX, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER, legacyFinalHeading } from './screenplay-files.mjs';
 import { buildDocuments } from './build-docs.mjs';
 import { validateProductionOrder, reorderProduction } from './reorder-production-specs.mjs';
 import { stripReadingInline } from './reading-scene-flow.mjs';
@@ -24,7 +24,7 @@ test('source manifest accounts for every retained block without empty placeholde
   for (const [id, text] of master.blocks) assert(text.replace(/<a id="[^"]+"><\/a>/g, '').trim(), id);
 });
 
-test('eight reading acts and eight production files keep unique blocks and paired navigation', () => {
+test('ten reading acts and ten production files keep unique blocks and paired navigation', () => {
   assert.deepEqual([...master.documents.keys()], CANONICAL_FILES);
   const index = master.documents.get(MASTER);
   assert(index.includes(SPLIT_MARKER));
@@ -51,7 +51,7 @@ test('eight reading acts and eight production files keep unique blocks and paire
     }
     for (const technical of ['進行目的：', '**狀態、素材與驗收**', '本幕台詞清單', '本節目標']) assert(!story.includes(technical), act.path);
     assert(story.indexOf(`<a id="act-${act.act}-continue">`) > story.lastIndexOf('<!-- import:'));
-    if (act.act < 7) assert(story.includes(`${path.posix.basename(ACTS[act.act + 1].path)}#act-${act.act + 1}`));
+    if (act.act < ACTS.length - 1) assert(story.includes(`${path.posix.basename(ACTS[act.act + 1].path)}#act-${act.act + 1}`));
     for (const node of graph.nodes.filter(node => node.act === act.act)) {
       const id = node.id.toLowerCase();
       assert(story.includes(`<a id="node-${id}-script">`), id);
@@ -65,7 +65,7 @@ test('eight reading acts and eight production files keep unique blocks and paire
     }
   }
   assert.equal(sceneCount, 342);
-  assert(block('s-0900-2').includes('八份同幕製作規格維護技術條件'));
+  assert(block('s-0900-2').includes('十份同幕製作規格維護技術條件'));
   assert(!block('s-0900-2').includes('同一份文件內'));
   for (const section of ['book-payoffs', 'book-first-play', 'book-pending', 'book-sources']) {
     assert.equal(canonicalFile(master, section), APPENDIX);
@@ -77,7 +77,7 @@ test('eight reading acts and eight production files keep unique blocks and paire
 });
 
 test('production specifications follow overview, room flow, shared reference and delivery order', () => {
-  assert.deepEqual(validateProductionOrder(master.documents, graph), { acts: 8, nodes: 48, subscenes: 72, passages: 21 });
+  assert.deepEqual(validateProductionOrder(master.documents, graph), { acts: 10, nodes: 48, subscenes: 72, passages: 21 });
   assert.deepEqual(reorderProduction(master, graph).documents, master.documents);
 });
 
@@ -97,7 +97,7 @@ test('production order validation rejects a return to front-loaded children or m
 test('reading scripts omit pause notes without removing production timing', () => {
   for (const act of ACTS) assert(!master.documents.get(act.path).includes('〔停頓〕'), act.name);
   assert(!block('s-0900-4').includes('〔停頓〕'));
-  const finaleSpec = master.documents.get(ACTS[7].specPath);
+  const finaleSpec = master.documents.get(FINALE.specPath);
   assert(finaleSpec.includes('離體知情後提供玩家自行繼續的停頓'));
   assert(finaleSpec.includes('疊層短暫減弱'));
 });
@@ -108,7 +108,7 @@ test('reading scripts describe playable events without editorial prohibitions', 
   assert(block('s-0900-4').includes('按遊玩順序直接描述畫面、聲音、台詞、操作與結果'));
   const prologue = master.documents.get(ACTS[0].path);
   const actOne = master.documents.get(ACTS[1].path);
-  const finale = master.documents.get(ACTS[7].path);
+  const finale = master.documents.get(FINALE.path);
   assert(prologue.includes('「停止使用／禁止下行」'));
   assert(actOne.includes('「依編號等候；未經帶領不得離座。」'));
   assert(actOne.includes('我說不做，他們不讓我走。'));
@@ -135,7 +135,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
 });
 
 test('every static screenplay cue names its shot size without changing protected framing', () => {
-  const counts = [22, 55, 77, 97, 43, 29, 41, 20];
+  const counts = [22, 55, 77, 98, 43, 30, 17, 16, 8, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -174,7 +174,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
   const counts = [[21, 17, 8], [65, 27, 19], [92, 33, 11], [133, 24, 12],
-    [54, 18, 11], [51, 13, 12], [66, 7, 11], [25, 12, 3]];
+    [54, 18, 11], [52, 13, 12], [17, 3, 2], [29, 3, 5], [21, 1, 4], [26, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
@@ -482,6 +482,48 @@ test('R13 date observation does not invent lock-date knowledge or a cause of dea
   assert(!master.text.includes('這張床在撤離當天被用過一次'));
 });
 
+test('operations-assistant background separates prior work, deceptive offer and coerced training', () => {
+  const profile = block('s-0201-9');
+  for (const phrase of ['營運助理，任職約兩年', '訂單異常', '交接紀錄', '已被集團拘禁的朋友在脅迫下',
+    '一個月的強制培訓', '受控任職', '工作熟練不代表她自願留園', '沒有工程、程式、財務或法律專業']) {
+    assert(profile.includes(phrase), phrase);
+  }
+  const retired = /付款風控|客服後台|多語客服|KYC|海外支付平台營運/;
+  assert.doesNotMatch(master.text, retired);
+  for (const file of ['docs/02_角色/02-01_主角_內控主管.md', 'docs/01_世界觀/01-03_年表與時間軸.md']) {
+    assert(read(file).includes('跨境電商營運助理'), file);
+    assert.doesNotMatch(read(file), retired, file);
+  }
+  const source = block('s-0913-3');
+  const spec = master.documents.get(ACTS[5].specPath);
+  for (const field of ['原工作：跨境電商營運助理（約兩年）', '工作內容：訂單異常追查、交接紀錄核對',
+    '誘入時承諾職缺：海外電商營運助理', '到場分配：內控培訓']) {
+    assert(source.includes(field), field);
+    assert(spec.includes(field), field);
+  }
+  assert(source.includes('不能僅憑職稱認定自願或偽造'));
+  assert(source.includes('不另發證據或增加取得門檻'));
+  assert(block('s-0913-2').includes('| HR-026 | 海外電商營運助理 |'));
+});
+
+test('occupational habits use visible clues without early identity disclosure or extra puzzle gates', () => {
+  for (const act of ACTS.filter(act => act.act < 5)) {
+    assert(!master.documents.get(act.path).includes('營運助理'), act.path);
+  }
+  const versions = block('s-0908-8');
+  assert(versions.includes('原工作欄寫「跨境電商營運助理（約兩年）」'));
+  assert(versions.includes('未把兩張卡正式合併'));
+  assert(master.documents.get(ACTS[5].specPath).includes('不增加收集物或閱讀檢查旗標'));
+  assert(block('s-0904-16').includes('也可直接點可見梯段上行'));
+  assert(block('s-0906-4').includes('托盤與插口留在同一近看'));
+  assert(master.documents.get(ACTS[3].specPath).includes('查看不記完成'));
+  assert(master.documents.get(ACTS[7].specPath).includes('不是新增排序謎題'));
+  assert(block('s-0909-26').includes('先比字，再看每頁批准了什麼'));
+  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
+  assert(novel.indexOf('跨境電商營運助理') > novel.indexOf('## 第五幕'));
+  assert(novel.includes('轉介來自受控員工，沒有安排管理職面試'));
+});
+
 test('R24 production and sensitive-sequence summary retain actual evidence requirements', () => {
   const pack = block('s-0807-11');
   for (const phrase of ['只疊版面不發', '原職稱', '未安排管理職面試', '倒填三個曆月',
@@ -689,11 +731,19 @@ test('website separates reading and production categories and preserves old act 
   const index = documents.find(doc => doc.path === MASTER);
   for (const [anchor, file] of master.anchorFiles) {
     if (file === MASTER) assert(!index.anchorRedirects[anchor]);
+    else if (legacyFinalHeading(MASTER, anchor) !== anchor) {
+      const current = legacyFinalHeading(MASTER, anchor);
+      assert.equal(index.anchorRedirects[anchor], `${master.anchorFiles.get(current)}#${current}`, anchor);
+    }
     else assert.equal(index.anchorRedirects[anchor], file, anchor);
   }
   for (const act of ACTS) {
     const story = documents.find(doc => doc.path === act.path);
     const expected = Object.fromEntries([...master.anchorFiles].filter(([, file]) => file === act.specPath));
+    if (act.act === 6) {
+      const paths = ACTS.slice(6, 9).flatMap(a => [a.path, a.specPath]);
+      Object.assign(expected, Object.fromEntries([...master.anchorFiles].filter(([, file]) => paths.includes(file) && file !== act.path)));
+    }
     assert.deepEqual(story.anchorRedirects, expected);
     assert(!story.anchorRedirects[`node-${graph.nodes.find(node => node.act === act.act).id.toLowerCase()}-script`]);
   }
@@ -896,7 +946,7 @@ test('two boss domains retain local geometry, original sources and no extra prog
   assert(block('s-0102-24').includes('R31 仍是唯一歷史解凍'));
   assert.equal(master.anchorFiles.get('boss-domains'), APPENDIX);
   assert.equal(master.anchorFiles.get('abiao-domain'), ACTS[5].specPath);
-  assert.equal(master.anchorFiles.get('xiaohua-domain'), ACTS[7].specPath);
+  assert.equal(master.anchorFiles.get('xiaohua-domain'), FINALE.specPath);
   assert(graph.edges.every(edge => !/domain|領域/.test(edge.gate)), 'domains do not become new route gates');
 });
 
@@ -1001,7 +1051,7 @@ test('uncanny audiovisual inventory, novel and pending asset estimates agree', (
     '矩形反光卡住胸殼', '近處的纖維像原來的衣料']) assert(novel.includes(phrase), phrase);
 });
 
-test('gameplay progression maps every original node once and links all eight production acts', () => {
+test('gameplay progression maps every original node once and links all ten production acts', () => {
   const flow = block('s-0412-4');
   const table = flow.split('<a id="core-gameplay-nodes"></a>')[1]
     .split('<a id="core-gameplay-audit"></a>')[0];
@@ -1156,7 +1206,7 @@ test('player-facing feedback and ending choices agree with production wording', 
     '此工作階段不接受本訊號。', '三格關聯自洽。鎖定。', '遠端工作階段已恢復／刪除排程 01:30']) assert(!master.text.includes(stale), stale);
   assert(block('s-0910-29').includes('長按「緊急接管」四秒'));
   assert(block('s-0910-29').includes('取消不提交'));
-  const finale = master.documents.get(ACTS[7].path);
+  const finale = master.documents.get(FINALE.path);
   for (const text of ['收到收件證明後', '收到副本的收件證明後', '這時才保全本地原件',
     '她確認留下', '封鎖沒有解除', '沒有送出定位', 'P1 的肉身仍昏迷存活']) assert(finale.includes(text), text);
   const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
@@ -1182,7 +1232,7 @@ test('horror rewrite removes raid exposition but retains confiscation and dated 
   const route = block('s-0906-52');
   assert(route.includes('RT-1 的可用支路為 L-04，RT-3 的可用支路為 C-02'));
   assert(route.includes('本輪供電與既有憑據'));
-  const lower = master.documents.get(ACTS[6].specPath);
+  const lower = ACTS.slice(6, 9).map(a => master.documents.get(a.specPath)).join('\n');
   for (const text of ['BREACH_OUTSIDE_IN', 'BOARD_ASSAULT_RECONSTRUCTION',
     '封焊日期早於本次震損', '時間碼相差 11 秒', '只留維修通話',
     '舊鍵僅為存檔相容', '目的地空白的園區轉運標籤', 'PULL_BRAKE']) assert(lower.includes(text), text);

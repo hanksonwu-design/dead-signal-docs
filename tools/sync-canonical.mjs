@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { readSceneFloor } from './scene-floors.mjs';
-import { MASTER, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER } from './screenplay-files.mjs';
+import { MASTER, ACTS, FINALE, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER, legacyFinalHeading } from './screenplay-files.mjs';
 export { MASTER } from './screenplay-files.mjs';
 
 export const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -95,7 +95,8 @@ function retiredAnchor(id) {
   if (id === '0900') return 'appendix-rules';
   if (id === '0911') return 'doc-0911';
   if (id === '0913') return 'appendix-clues';
-  if (/^09(?:0[3-9]|10)$/.test(id)) return `act-${Number(id.slice(2)) - 3}`;
+  if (id === '0910') return `act-${FINALE.act}`;
+  if (/^090[3-9]$/.test(id)) return `act-${Number(id.slice(2)) - 3}`;
   return 'book-toc';
 }
 
@@ -105,6 +106,7 @@ function isRetired(source) {
 
 function topicView(source, original, master) {
   const fields = metadata(original);
+  if (source.id === '0301') fields.set('文件', '03-01 全劇流程大綱');
   fields.set('狀態', '正式稿衍生查閱；待審／未實機驗收');
   fields.set('更新', '2026-09-30');
   fields.set('來源', `${canonicalFile(master, source.first)}#${source.first}`);
@@ -154,7 +156,7 @@ export function rewriteLinks(content, file, master, warnings = []) {
     if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(href)) return whole;
     const [target, ...fragment] = href.split('#');
     const absolute = target ? path.posix.normalize(path.posix.join(path.posix.dirname(file), target)) : file;
-    const ref = decodeURIComponent(fragment.join('#'));
+    const ref = legacyFinalHeading(absolute, decodeURIComponent(fragment.join('#')));
     if (master.documents.has(absolute)) {
       if (!ref) return whole;
       if (master.anchors.has(ref)) return `[${label}](${masterLink(file, ref, master)})`;
@@ -190,7 +192,9 @@ export function deriveGraph(master, existing) {
     const goal = nav.match(/^進行目的：(.*)$/m)?.[1];
     assert(goal, `Goal: ${node.id}`);
     const source = canonicalFile(master, `node-${id}-script`);
-    Object.assign(node, { goal, source, heading: `node-${id}-script`, pack: canonicalFile(master, `node-${id}-pack`), packAnchor: `node-${id}-pack`, spatialHeading: `node-${id}-level`, duplicatePack: false });
+    const chapter = ACTS.find(act => act.path === source);
+    assert(chapter, `Unknown chapter owner: ${node.id}`);
+    Object.assign(node, { act: chapter.act, goal, source, heading: `node-${id}-script`, pack: canonicalFile(master, `node-${id}-pack`), packAnchor: `node-${id}-pack`, spatialHeading: `node-${id}-level`, duplicatePack: false });
     for (const line of nav.split('\n')) {
       const cells = line.split('|').slice(1, -1).map(cell => cell.trim());
       const route = cells[0]?.match(/^([A-Za-z0-9]+) ([↔→]) ([A-Za-z0-9]+)$/);
@@ -207,6 +211,7 @@ export function deriveGraph(master, existing) {
     Object.assign(edge, route);
   }
   graph.atlas = MASTER;
+  graph.acts = ACTS.map(act => `${act.act < 5 ? '上部' : '下部'}・${act.name}／${act.subtitle}`);
   graph.source = MASTER;
   graph.notes[0] = `${graph.nodes.length} 個導覽節點（上部 ${graph.nodes.filter(node => node.part === 1).length}、下部 ${graph.nodes.filter(node => node.part === 2).length}）；含共用子節點、操作鏡位與片尾，不等於獨立房間數。`;
   const endingOrder = master.blocks.get('s-0608-18').match(/順序固定為([^。]+)。/)?.[1];

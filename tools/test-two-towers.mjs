@@ -101,7 +101,7 @@ test('power, source identity, optional approval, return locks and old-save rules
 test('in-transit anomalies appear before arrival actions in reading order', () => {
   for (const [act, anchor, press, anomaly, leave] of [
     [3, 'ascent-t-r15-r16-03-script', '按下 30F 按鍵', '金屬倒影裡的閘門', '走出 30F 平台'],
-    [6, 'ascent-t-r29-u4-02-script', '按下 48F 按鍵', '空送物袋響起', '走到 48F 平台'],
+    [7, 'ascent-t-r29-u4-02-script', '按下 48F 按鍵', '空送物袋響起', '走到 48F 平台'],
   ]) {
     const text = master.documents.get(ACTS[act].path).split(`<a id="${anchor}"></a>`)[1].split('<!-- scene-image-subscene-')[0];
     assert(text.indexOf(press) > 0 && text.indexOf(press) < text.indexOf(anomaly) && text.indexOf(anomaly) < text.indexOf(leave), anchor);
