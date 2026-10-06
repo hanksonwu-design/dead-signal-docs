@@ -99,18 +99,18 @@ async function canvasCheck(page, name) {
     page.setDefaultTimeout(45000);
     await page.goto(base);
     await page.locator('[data-folder="09_劇本"]').click();
-    assert.equal(await page.locator('#documentGrid .doc-card').count(), 10);
+    assert.equal(await page.locator('#documentGrid .doc-card').count(), ACTS.length + 2);
     const cardTitles = await page.locator('#documentGrid .doc-card h3').allInnerTexts();
-    assert.equal(cardTitles.length, 10);
+    assert.equal(cardTitles.length, ACTS.length + 2);
     assert(cardTitles.every(title => title.startsWith('遊戲劇本')));
     assert.match(await page.locator('[data-folder="09_劇本"]').innerText(), /遊戲劇本/);
     await page.screenshot({ path: path.join(out, 'chapter-list.png') });
-    pass('eight visible acts, one index and one shared appendix');
+    pass('all current acts, one index and one shared appendix');
     await page.locator('[data-folder="10_製作規格"]').click();
-    assert.equal(await page.locator('#documentGrid .doc-card').count(), 8);
+    assert.equal(await page.locator('#documentGrid .doc-card').count(), ACTS.length);
     assert((await page.locator('#documentGrid .doc-card h3').allInnerTexts()).every(title => title.startsWith('製作規格')));
     await page.screenshot({ path: path.join(out, 'spec-list.png') });
-    pass('eight production files are discoverable in their own category');
+    pass('all current production files are discoverable in their own category');
 
     for (const act of ACTS) {
       await page.goto(docUrl(act.path, `act-${act.act}`));
@@ -143,9 +143,9 @@ async function canvasCheck(page, name) {
       await readerReady(specs, `act-${act.act}`);
       await specs.close();
     }
-    pass('all eight acts open separate specification windows, preserve reading position and retain return links');
+    pass('all acts open separate specification windows, preserve reading position and retain return links');
     pass('specification links support keyboard activation with no opener access');
-    pass('all eight rendered stories exclude editorial prohibition and production labels');
+    pass('all rendered stories exclude editorial prohibition and production labels');
     await page.goto(docUrl(ACTS[4].path, 'node-r18-script'));
     await readerReady(page, 'node-r18-script');
     const r18Specs = await openSpecification(page, 'node-r18-spec');
@@ -193,7 +193,7 @@ async function canvasCheck(page, name) {
     }
     await page.goto(docUrl(chapter, 'node-r8-script'));
     await readerReady(page, 'node-r8-script');
-    pass('all eight old act specification bookmarks redirect to their new owner');
+    pass('all old act specification bookmarks redirect to their new owner');
 
     const samePage = page.locator('[data-doc-heading="node-r11-script"]').first();
     await samePage.click();
@@ -278,7 +278,7 @@ async function canvasCheck(page, name) {
         ['player-language', '玩家用語與製作識別碼分層'],
         ['reading-load', '必要查證的閱讀節奏'],
         ['s-0905-46', '再從原件選取 6C2A'],
-        ['s-0908-21', '另外三人的來源仍須各自展開並核對'],
+        ['s-0908-21', '同一錯字只能支持共用範本'],
         ['s-0909-55', '備份資料已接回'],
         ['s-0910-29', '長按「緊急接管」四秒'],
       ]) {
@@ -294,10 +294,10 @@ async function canvasCheck(page, name) {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(docUrl(ACTS[5].path, 's-0908-21'));
     await readerReady(page, 's-0908-21');
-    assert((await page.locator('#readerContent').innerText()).includes('另外三人的來源仍須各自展開並核對'));
+    assert((await page.locator('#readerContent').innerText()).includes('同一錯字只能支持共用範本'));
     await page.goto(docUrl(ACTS[6].path, 's-0909-17'));
     await readerReady(page, 's-0909-17');
-    assert((await page.locator('#readerContent').innerText()).includes('不重做配鏈教學'));
+    assert((await page.locator('#readerContent').innerText()).includes('上方已選好的承重鏈及解開的煞扣保持原狀'));
     pass('revised investigations and continuous mechanisms render in their owning acts');
 
     await page.setViewportSize({ width: 390, height: 844 });
@@ -369,18 +369,17 @@ async function canvasCheck(page, name) {
 
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(`${base}/#scene=R8`);
-    await page.locator('.scene-node[data-node="R8"][aria-pressed="true"]').waitFor();
-    assert.equal(await page.locator('.scene-node').count(), 48);
-    assert((await page.locator('.scene-edge').allInnerTexts()).some(t => t.includes('不作出口門檻')));
-    assert((await page.locator('.scene-edge').allInnerTexts()).some(t => t.includes('T-R7-R8')));
+    await page.locator('#scene-list [data-select="R8"][aria-pressed="true"]').waitFor();
+    assert.equal(await page.locator('#scene-list [data-select]').count(), 48);
+    assert((await page.locator('.route-comparison').allInnerTexts()).some(t => t.includes('不作出口門檻')));
     const popupPromise = context.waitForEvent('page');
-    await page.locator('.scene-detail .scene-source [data-source]').first().click();
+    await page.locator('#node-links a').first().click();
     const popup = await popupPromise;
     await readerReady(popup, 'node-r8-script');
     await popup.close();
     pass('48-node graph opens correct canonical scene');
     const specPopupPromise = context.waitForEvent('page');
-    await page.locator('.scene-source [data-heading="node-r8-pack"]').click();
+    await page.locator('#node-links a').nth(1).click();
     const specPopup = await specPopupPromise;
     await readerReady(specPopup, 'node-r8-pack');
     assert.equal(await specPopup.evaluate(() => state.selected.path), ACTS[2].specPath);

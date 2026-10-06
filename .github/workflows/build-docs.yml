@@ -5,7 +5,7 @@ name: Build docs.json
 on:
   push:
     branches: [main]
-    paths: ["docs/**", "tools/*.mjs", "scene_graph.json", "scene-flow.json", "scene-overview.js", "scene-browser.js", "scene-browser.css", "app.js", "index.html", "building/scene-data.json", "building/data.js", "building/current-spatial.js", "building/tower-routes.js"]
+    paths: ["docs/**", "tools/*.mjs", "scene_graph.json", "scene-flow.json", "scene-overview.js", "scene-redirect.js", "app.js", "index.html", "building/scene-data.json", "building/data.js", "building/current-spatial.js", "building/tower-routes.js", "building/scene-workspace*"]
   workflow_dispatch:
 
 permissions:
@@ -31,6 +31,7 @@ jobs:
           node tools/test-scene-images.mjs
           node tools/test-scene-flow.mjs
           node tools/test-scene-overview.mjs
+          node --test building/scene-workspace.test.mjs
           node tools/test-two-towers.mjs
           node tools/test-canonical.mjs
           node --test tools/test-act-balance.mjs

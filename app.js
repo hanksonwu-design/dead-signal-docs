@@ -38,7 +38,6 @@ function refreshState() {
   state.documents.forEach(doc => { if (doc.folder === "08_製作管理") doc.folderLabel = "製作時程提交表"; });
   if (state.folder === "08_製作管理" && !productionCategories.includes(state.category)) state.category = "上部";
   if (state.folder === "04_核心玩法" && !coreCategories.includes(state.category)) state.category = coreCategories[0];
-  if (state.folder !== "06_關卡規格" && location.hash.startsWith("#scene=")) { history.replaceState(null,"",location.pathname+location.search); window.sceneReturnId=null; }
   const q = state.query.trim().toLowerCase();
   state.filtered = state.documents.filter((doc) => {
     const inFolder = state.folder === "all" || doc.folder === state.folder;
@@ -89,7 +88,7 @@ function renderNav() {
     Number(a[0] === "09_故事劇情") - Number(b[0] === "09_故事劇情") ||
     a[0].localeCompare(b[0], "zh-Hant")
   );
-  $("folderNav").innerHTML = folders.map(([key, count]) => `
+  $("folderNav").innerHTML = folders.map(([key, count]) => key === "06_關卡規格" ? `<a class="folder-link" href="building/" style="text-decoration:none"><span class="folder-icon">▱</span><span>場景與流程</span></a>` : `
     <button class="folder-link ${state.folder === key ? "active" : ""}" data-folder="${esc(key)}" type="button">
       <span class="folder-icon">▱</span><span>${esc(state.documents.find((d) => d.folder === key)?.folderLabel || key)}</span><span class="nav-count">${count}</span>
     </button>`).join("");
@@ -108,26 +107,16 @@ function renderNav() {
 }
 
 function renderHeading() {
-  const sceneMode = state.folder === "06_關卡規格" && state.view === "cards";
-  $("hero").classList.toggle("hidden", sceneMode);
-  document.querySelector('[data-view="cards"]').textContent = state.folder === "06_關卡規格" ? "節點" : "卡片";
   const folderLabel = state.folder === "all" ? "全部文件" : (state.documents.find((d) => d.folder === state.folder)?.folderLabel || state.folder);
   const suffix = state.category !== "all" ? ` · ${state.category}` : state.status !== "all" ? ` · ${state.status}` : "";
   $("sectionTitle").textContent = `${folderLabel}${suffix}`;
-  $("sectionEyebrow").textContent = sceneMode ? "SCENE CONNECTIONS" : state.query ? "SEARCH RESULTS" : "DOCUMENTS";
-  $("resultCount").textContent = sceneMode ? "上下部 · 場景流程" : `${state.filtered.length} 份文件`;
+  $("sectionEyebrow").textContent = state.query ? "SEARCH RESULTS" : "DOCUMENTS";
+  $("resultCount").textContent = `${state.filtered.length} 份文件`;
   $("breadcrumbs").innerHTML = `企劃庫 <span>/</span> ${esc(folderLabel)}${state.status !== "all" ? ` <span>/</span> ${esc(state.status)}` : ""}`;
 }
 
 function renderCards() {
   const grid = $("documentGrid");
-  const sceneMode = state.folder === "06_關卡規格" && state.view === "cards";
-  grid.classList.toggle("scene-mode", sceneMode);
-  if (sceneMode) {
-    $("emptyState").classList.add("hidden");
-    window.SceneBrowser.render({root:grid,docs:state.documents.filter(d=>d.folder===state.folder&&!d.archived),allDocs:state.documents,query:state.query,openReader,clearQuery:()=>{state.query='';$("searchInput").value='';refreshState();}});
-    return;
-  }
   grid.classList.toggle("list-view", state.view === "list");
   $("emptyState").classList.toggle("hidden", state.filtered.length !== 0);
   const core = state.folder === "04_核心玩法" || state.folder === "08_製作管理";
@@ -288,9 +277,6 @@ function openReader(path, updateHash = true, headingText = "") {
     if (updateHash) history.replaceState(null, "", `#doc=${encodeURIComponent(path)}&heading=${encodeURIComponent(headingText)}`);
     return;
   }
-  const previousScene = new URLSearchParams(location.hash.slice(1)).get("scene");
-  if (previousScene) window.sceneReturnId = previousScene;
-  else if (state.folder !== "06_關卡規格") window.sceneReturnId = null;
   state.selected = doc;
   $("readerPath").textContent = `${doc.folderLabel} / ${documentDisplayTitle(doc.title)}`;
   // Front matter is useful metadata for cards and filters, but not part of the
@@ -347,22 +333,12 @@ function closeReader() {
   $("readerOverlay").classList.add("hidden");
   $("readerOverlay").setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
-  const scene = window.sceneReturnId;
-  history.replaceState(null, "", scene ? `#scene=${encodeURIComponent(scene)}` : location.pathname + location.search);
+  history.replaceState(null, "", location.pathname + location.search);
 }
 
 function syncHash() {
+  if (window.SceneRedirect.follow()) return;
   const value = new URLSearchParams(location.hash.slice(1));
-  if (value.has("scene")) {
-    state.selected = null;
-    $("readerOverlay").classList.add("hidden");
-    $("readerOverlay").setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-    window.sceneReturnId = value.get("scene");
-    state.folder="06_關卡規格";state.view="cards";
-    document.querySelectorAll(".view-button").forEach(b=>b.classList.toggle("active",b.dataset.view===state.view));
-    renderNav();renderHeading();renderCards();return;
-  }
   const path = documentAliases[value.get("doc")] || value.get("doc");
   if (path && state.documents.some((doc) => doc.path === path)) openReader(path, false, value.get("heading") || "");
 }
@@ -380,10 +356,8 @@ async function loadDocuments() {
     const data = await response.json();
     state.documents = (data.documents || []).map(doc => {
       const category = doc.category || (doc.content || "").match(/^導覽分類:\s*(.+)$/m)?.[1]?.trim() || "";
-      return {...doc, summary: (doc.content || "").match(/^摘要:\s*(.+)$/m)?.[1]?.trim() || doc.summary, folderLabel: doc.folder === "06_關卡規格" ? "關卡流程" : doc.folderLabel, category: category === "類型圖文" ? "介面與玩法" : category === "製作交接" ? "製作參考" : category, weeklyDetail: /^導覽層級:\s*每週細表\s*$/m.test(doc.content || ""), archived: category === "批次存檔"};
+      return {...doc, summary: (doc.content || "").match(/^摘要:\s*(.+)$/m)?.[1]?.trim() || doc.summary, folderLabel: doc.folder === "06_關卡規格" ? "場景與流程" : doc.folderLabel, category: category === "類型圖文" ? "介面與玩法" : category === "製作交接" ? "製作參考" : category, weeklyDetail: /^導覽層級:\s*每週細表\s*$/m.test(doc.content || ""), archived: category === "批次存檔"};
     });
-    try { await window.SceneBrowser.load(); } catch(error) { console.warn(error.message); }
-    if (new URLSearchParams(location.hash.slice(1)).has("scene")) state.folder="06_關卡規格";
     refreshState();
     syncHash();
   } catch (error) {

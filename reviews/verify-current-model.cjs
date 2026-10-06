@@ -102,13 +102,13 @@ async function floorGuides(page,name){
   pass('50F core and the 47F trade rooms render in both height modes');
   for(const f of [23,27,31,32,37,40,41,42,44,45,46,47,48,49,50]){
    await page.locator('#floor').selectOption(String(f));
-   const shown=await page.locator('#scene-list [data-select]').evaluateAll(es=>es.map(e=>e.dataset.select).sort());
+   const shown=await page.locator('#scene-list [data-select-shot=""]').evaluateAll(es=>es.map(e=>e.dataset.select).sort());
    const expected=flow.nodes.filter(n=>n.floor.levels?.includes(f)).map(n=>n.id).sort();
    assert.deepEqual(shown,expected,`${f}F scene filter`);
    await bounds(page);await canvas(page,`redistributed-${f}`);
   }
   pass('all relocated floors and intervening landings render with the exact room list; M1 stops at 45F');
-  await page.locator('#floor').selectOption('all');await page.locator('#search').fill('not-found-scene');assert(await page.locator('#empty').isVisible());await page.locator('#search').fill('R25');assert.equal(await page.locator('#scene-list [data-select]').count(),1);await page.locator('#search').fill('');
+  await page.locator('#floor').selectOption('all');await page.locator('#search').fill('not-found-scene');assert(await page.locator('#empty').isVisible());await page.locator('#search').fill('R25');assert.equal(await page.locator('#scene-list [data-select="R25"][data-select-shot=""]').count(),1);await page.locator('#search').fill('');
   await page.locator('#act').selectOption('5');assert.equal(await page.locator('#scope').inputValue(),'act');await page.locator('#act').selectOption('all');
   await page.locator('#shots').uncheck();assert.equal(await page.locator('.model-label.shot:visible').count(),0);await page.locator('#shots').check();
   pass('search, chapter, floor, scope and secondary marker controls work');
@@ -132,9 +132,9 @@ async function floorGuides(page,name){
   assert.equal(await page.locator('.room-tag').count(),27);assert.match(await page.locator('#room-floor').innerText(),/自訂配置/);await page.locator('#room-picker').selectOption('R23');assert.equal(await page.locator('#room-name').innerText(),'舊存檔自訂房間');
   assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),savedText);
   pass('legacy editor preserves custom R23 and modified upper-room coordinates without migration');
-  await page.goto(base+'/#scene=U6b');await page.waitForSelector('.scene-3d');await page.locator('.scene-3d').click();await page.waitForSelector('#loading',{state:'detached'});assert.match(await page.locator('#node-id').innerText(),/^U6b/);
-  await page.locator('#flow-link').click();await page.waitForSelector('.scene-detail');assert.match(await page.locator('.scene-detail .eyebrow').innerText(),/U6b/i);
-  pass('lower scenes open the 3D model and return to their canonical flow');
+  await page.goto(base+'/#scene=U6b');await page.waitForURL('**/building/**');await page.waitForSelector('#loading',{state:'detached'});assert.match(await page.locator('#node-id').innerText(),/^U6b/);
+  await page.locator('#flow-link').click();await page.waitForSelector('#folderNav a[href="building/"]');
+  pass('legacy lower-scene URLs open the unified workspace and return to the document library');
   await page.goBack();await page.waitForSelector('#canvas-host canvas');await page.waitForFunction(()=>document.querySelector('#node-id')?.textContent.startsWith('U6b'));
   await canvas(page,'history-return');pass('browser Back restores an interactive model');
   assert.deepEqual(errors,[]);pass('no browser JavaScript errors');

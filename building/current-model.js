@@ -12,6 +12,8 @@ import {createElement,KeyRound,Puzzle,Clapperboard,Ghost,Skull} from 'lucide';
 import markerData from './scene-markers.json';
 import {MARKER_CATEGORIES} from './marker-definitions.js';
 import {showContentMarkers,markerPosition,markerInContext} from './model-markers.js';
+import {searchScenes,sceneMatches,sceneArtwork,connectedRoutes} from './scene-workspace.js';
+import {createFlowPanel} from './flow-panel.js';
 
 const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -24,6 +26,9 @@ const host=$('canvas-host'),colors=[0x719eae,0x8bab8e,0x6fae9c,0x93a8bd,0xbd969c
 let renderer,camera,controls,scene,root,resizeObserver;
 let roomObjects=[],routeObjects=[],shotObjects=[],labels=[],floorLabels=[],visiblePoints=[];
 let namesAtScale=false;
+let flowPanel,webglReady=false;
+const filters=()=>({part:$('part').value,act:$('act').value,query:$('search').value,floor});
+function renderFlow(){flowPanel?.render({scene:selected,shot:shotId,route:routeId,visibleIds:[...new Set(searchScenes(graph,flow,filters()).map(n=>n.node))]});}
 let markerPins=[],markerId='',markersAtScale=false;
 const markerIcons={item:KeyRound,puzzle:Puzzle,event:Clapperboard,horror:Ghost,boss:Skull};
 const markerById=new Map(markerData.markers.map(m=>[m.id,m]));
@@ -51,6 +56,8 @@ function buildMarkerPins(){
  }
 }
 function renderMarkers(){
+ const alternate=route()?.steps.some(s=>s.id===(shotId||selected)&&s.image!==(shotId?shot(shotId):node(selected)).image);
+ $('marker-section').hidden=!!alternate;
  const items=markerData.markers.filter(m=>markerInContext(m,selected,shotId)&&categoryEnabled(m.category));
  if(markerId&&!items.some(m=>m.id===markerId))markerId='';
  $('marker-count').textContent=`${items.length}`;$('marker-empty').hidden=!!items.length;
@@ -135,6 +142,7 @@ function latticeGate(x,y,z,parent){
  box(2,.1,.1,x,y+2.2,z,mat,parent);
 }
 function build(){
+ if(!webglReady)return;
  if(root){scene.remove(root);dispose(root);}for(const l of [...labels,...floorLabels,...markerPins])l.el.remove();labels=[];floorLabels=[];markerPins=[];roomObjects=[];routeObjects=[];shotObjects=[];
  root=new THREE.Group();scene.add(root);
  const glass=sharedGlassBoundary({...node('R19'),floor:node('R19').level},{...node('R20'),floor:node('R19').level});
@@ -182,6 +190,7 @@ function build(){
 }
 function contextNode(){return node(selected).spatial?node(selected):node('R32');}
 function roomVisible(n){
+ if(!sceneMatches(n,{part:$('part').value}))return false;
  if(floor!==null)return n.floor.levels.includes(floor);
  if(scope==='route'){const r=route();return r?(r.from===n.id||r.to===n.id):n.id===contextNode().id;}
  if(scope==='act')return n.act===contextNode().act||model.routes.some(r=>r.spatial&&(r.from===n.id&&node(r.to).act===contextNode().act||r.to===n.id&&node(r.from).act===contextNode().act));
@@ -196,12 +205,13 @@ function applyVisibility(){
  const bounds=floor===null?null:[model.floorY.get(floor)-2,model.floorY.get(floor)+4.5];
  for(const o of routeObjects){
   if(o.sliced){root.remove(o.sliced);dispose(o.sliced);o.sliced=null;}
-  o.g.visible=floor===null&&(scope==='all'||scope==='route'&&o.r.id===routeId||scope==='act'&&(node(o.r.from).act===contextNode().act||node(o.r.to).act===contextNode().act));
+  const inPart=[o.r.from,o.r.to].every(id=>sceneMatches(node(id),{part:$('part').value}));
+  o.g.visible=inPart&&floor===null&&(scope==='all'||scope==='route'&&o.r.id===routeId||scope==='act'&&(node(o.r.from).act===contextNode().act||node(o.r.to).act===contextNode().act));
   if(o.g.visible)visiblePoints.push(...o.r.points);
-  if(bounds){const pieces=clipRouteToHeight(o.r.points,...bounds);if(pieces.length){o.sliced=new THREE.Group();root.add(o.sliced);for(const p of pieces){pathMesh(p,o.color,o.sliced);visiblePoints.push(...p);}o.sliced.traverse(obj=>{obj.userData.route=o.r.id;});}}
+  if(bounds&&inPart){const pieces=clipRouteToHeight(o.r.points,...bounds);if(pieces.length){o.sliced=new THREE.Group();root.add(o.sliced);for(const p of pieces){pathMesh(p,o.color,o.sliced);visiblePoints.push(...p);}o.sliced.traverse(obj=>{obj.userData.route=o.r.id;});}}
  }
  for(const {s,g} of shotObjects){
-  g.visible=$('shots').checked&&(floor!==null?s.floor.levels.includes(floor):scope==='route'?s.route===routeId:scope==='act'?node(s.node).act===contextNode().act:true);
+  g.visible=$('shots').checked&&sceneMatches(node(s.node),{part:$('part').value})&&(floor!==null?s.floor.levels.includes(floor):scope==='route'?s.route===routeId:scope==='act'?node(s.node).act===contextNode().act:true);
   // Cabin views depict different moments of one car, never simultaneous cars.
   if(g.userData.cabin)g.userData.cabin.visible=s.id===shotId;
  }
@@ -219,6 +229,7 @@ function applyVisibility(){
  $('view-floor').textContent=floor!==null?floorName(floor):scope==='route'?(route()?locationLabel(route(),reverse):''):scope==='act'?locationLabel(contextNode()):'A 棟 1–26F · B 棟 1–50F · 共用地基';
 }
 function fit(points=visiblePoints){
+ if(!webglReady||!controls)return;
  if(!points.length)points=[contextNode().position];
  const box=new THREE.Box3().setFromPoints(points.map(p=>new THREE.Vector3(...p))),center=box.getCenter(new THREE.Vector3());
  const direction=(view==='top'?new THREE.Vector3(.001,1,.001):view==='front'?new THREE.Vector3(0,.06,1):new THREE.Vector3(1,.65,1.25)).normalize();
@@ -232,9 +243,9 @@ function fit(points=visiblePoints){
 }
 function focus(){const n=shotId?shot(shotId):contextNode(),m=markerById.get(markerId),p=m?markerPosition(m,model)||n.position:n.position;fit([[p[0]-8,p[1]-5,p[2]-8],[p[0]+8,p[1]+7,p[2]+8]]);}
 function renderList(){
- const q=$('search').value.trim().toLowerCase(),act=$('act').value;
- const list=model.nodes.filter(n=>(act==='all'||String(n.act)===act)&&(floor===null||n.floor.levels.includes(floor)||n.id==='M1'&&n.floor.levels.includes(floor))&&`${n.id} ${n.name} ${locationLabel(n)}`.toLowerCase().includes(q));
- $('scene-list').innerHTML=list.map(n=>`<li><button data-select="${n.id}" aria-pressed="${selected===n.id}"><span><b>${n.id}</b>${esc(n.name)}</span><small>${esc(locationLabel(n))}</small></button></li>`).join('');$('empty').hidden=!!list.length;
+ const list=searchScenes(graph,flow,filters());
+ $('scene-list').innerHTML=list.map(n=>`<li><button data-select="${n.node}" data-select-shot="${n.shot}" aria-pressed="${(shotId||selected)===n.id}"><span><b>${n.id}</b>${esc(n.name)}</span><small>${esc(locationLabel(n))}</small></button></li>`).join('');$('empty').hidden=!!list.length;
+ renderFlow();
 }
 function renderDetails(){
  const n=node(selected),s=shotId?shot(shotId):null,current=s||n,r=route();
@@ -244,7 +255,14 @@ function renderDetails(){
  $('node-spatial').textContent=s?`${s.from} → ${s.id} → ${s.to}`:n.floor.description;
  $('exploration').hidden=!s?.play;
  $('exploration').innerHTML=s?.play?`<h3>逐層探路</h3><p class="route-rule"><b>辨路依據</b> ${esc(s.play.clue)}</p><p class="route-rule"><b>操作與開通</b> ${esc(s.play.action)}</p><p class="route-rule"><b>錯路與復原</b> ${esc(s.play.recovery)}</p>`:'';
- $('node-links').innerHTML=link('遊戲劇本',current.source,current.heading)+link('製作規格',s?s.spec:n.pack,s?s.specHeading:n.packAnchor)+link(current.image,current.spec||n.pack,flow.images[current.image].heading);
+ const artwork=sceneArtwork(flow,current,r),primary=flow.images[r?.steps.find(step=>step.id===current.id)?.image||current.image];
+ const playback=primary.id!==current.image,owner=playback?node(primary.node):current;
+ if(playback){$('node-id').textContent=`${n.id} · ${graph.acts[owner.act]} · 後果演出`;$('node-title').textContent=n.name+'／肉身回返';$('node-goal').textContent=primary.content;}
+ $('node-links').innerHTML=link('遊戲劇本',owner.source,owner.heading)+link('製作規格',owner.spec||owner.pack,owner.specHeading||owner.packAnchor)+link(primary.id,primary.spec,primary.heading);
+ const phases=!s?graph.phases[n.id]||[]:[],quests=!s?n.quests:[];
+ $('phases-section').hidden=!phases.length;$('phases').innerHTML=phases.map(p=>`<li>${esc(p)}</li>`).join('');
+ $('quests-section').hidden=!quests.length;$('quests').innerHTML=quests.map(q=>`<li>${esc(q)}</li>`).join('');
+ $('quest-links').innerHTML=quests.length?link('主支線與特殊收集', '03_敘事結構/03-05_主支線與特殊收集.md',''):'';
  const related=model.routes.filter(r=>r.from===n.id||r.to===n.id);
  $('route').innerHTML=related.map(r=>`<option value="${r.id}">${r.from} ${r.back?'↔':'→'} ${r.to} · ${esc(r.kind)}</option>`).join('');$('route').value=routeId;
  $('reverse').disabled=!r?.back;$('forward').setAttribute('aria-pressed',String(!reverse));$('reverse').setAttribute('aria-pressed',String(reverse));
@@ -256,23 +274,28 @@ function renderDetails(){
  $('presentation-note').hidden=n.spatial&&(!r||r.spatial);
  $('presentation-note').textContent=!n.spatial?'演出節點 · 不配置實體房間':r?.from===r?.to?'原場景回返 · 不新增實體通道':'結局演出連接 · 非可步行路線';
  $('access').innerHTML=n.access.map(a=>`<li><b>${esc(a.label)}</b> ${esc(a.location)} ${esc(a.state)}</li>`).join('');
- $('images').innerHTML=current.details.map(id=>{const i=flow.images[id];return `<li>${link(id,i.spec,i.heading)} ${esc(i.content)}</li>`;}).join('');
+ $('connections').innerHTML=connectedRoutes(model.routes,n.id).map(c=>`<article class="route-comparison"><button data-connection="${c.id}" aria-pressed="${c.id===routeId}">${esc(c.relation)} · ${c.from} ${c.back?'↔':'→'} ${c.to} · ${esc(c.kind)}</button><p>${esc(locationLabel(c))}</p><p><b>通行條件</b> ${esc(c.gate)}</p><p><b>回訪限制</b> ${esc(c.returnRule)}</p>${!c.spatial?'<p>演出銜接 · 非新增步行通道</p>':''}</article>`).join('');
+ $('image-count').textContent=`(${artwork.length})`;
+ $('images').innerHTML=artwork.map(i=>`<li data-image="${i.id}">${link(i.id,i.spec,i.heading)} <small>${esc(i.kind)}${i.status==='pending'?' · 待製作':''}</small><p>${esc(i.content)}</p><p>${esc(i.requirements)}</p></li>`).join('');
  $('reference').hidden=!n.reference;if(n.reference){$('reference-image').src='../'+n.reference.url;$('reference-caption').textContent=n.reference.kind;}
- $('flow-link').href='../#'+new URLSearchParams({scene:selected,...(r?{route:r.id}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{})});
- renderMarkers();
+ renderMarkers();renderFlow();
 }
 function saveHash(){history.replaceState(null,'','#'+new URLSearchParams({scene:selected,...(routeId?{route:routeId}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{}),...(markerId?{marker:markerId}:{})}));}
 function choose(id,preferred=null,shot='',refit=true,keepDirection=false){
  if(!node(id))return;selected=id;markerId='';
+ if(!sceneMatches(node(id),{part:$('part').value}))$('part').value='all';
+ if(!sceneMatches(node(id),{act:$('act').value}))$('act').value='all';
  const related=model.routes.filter(r=>r.from===id||r.to===id);routeId=related.find(r=>r.id===preferred)?.id||related.find(r=>r.from===id)?.id||related[0]?.id||'';
  shotId=shot&&model.shots.some(s=>s.id===shot&&s.node===id&&s.route===routeId)?shot:'';
  if(!keepDirection||!route()?.back)reverse=false;
+ if(scope==='route'&&route()&&[route().from,route().to].some(id=>!sceneMatches(node(id),{part:$('part').value})))$('part').value='all';
  const target=shotId?model.shots.find(s=>s.id===shotId):node(id);
  if(floor!==null&&!target.floor.levels.includes(floor)&&!(id==='M1'&&target.floor.levels.includes(floor))){$('floor').value='all';floor=null;}
- renderList();renderDetails();applyVisibility();saveHash();if(refit)fit();
+ renderList();renderDetails();applyVisibility();saveHash();document.querySelector('.right').scrollTop=0;if(refit)fit();
 }
 function readHash(){const p=new URLSearchParams(location.hash.slice(1)),id=node(p.get('scene'))?p.get('scene'):'R6';if(p.get('route')){scope='route';$('scope').value=scope;}choose(id,p.get('route'),p.get('shot'),false);reverse=p.get('direction')==='return'&&!!route()?.back;const m=markerById.get(p.get('marker'));if(m&&markerInContext(m,selected,shotId))markerId=m.id;renderDetails();applyVisibility();saveHash();}
 function placeLabels(){
+ if(!webglReady)return;
  const w=host.clientWidth,h=host.clientHeight,occupied=[];
  const headerBottom=document.querySelector('.view-head').offsetTop+document.querySelector('.view-head').offsetHeight+12;
  const bounds={left:8,right:w-8,top:headerBottom,bottom:h-95},active=shotId||selected;
@@ -303,20 +326,27 @@ function placeLabels(){
  }
 }
 function bind(){
- $('search').oninput=renderList;$('act').onchange=()=>{renderList();if($('act').value!=='all'){const n=model.nodes.find(n=>String(n.act)===$('act').value);scope='act';$('scope').value=scope;choose(n.id);}};
- $('floor').onchange=()=>{floor=$('floor').value==='all'?null:Number($('floor').value);if(floor!==null){const n=model.nodes.find(n=>n.spatial&&(n.level===floor||n.id==='M1'&&n.floor.levels.includes(floor)));const s=model.shots.find(s=>s.floor.levels.length===1&&s.floor.levels[0]===floor);if(n){selected=n.id;shotId='';routeId=model.routes.find(r=>r.from===n.id)?.id||'';}else if(s){selected=s.node;shotId=s.id;routeId=s.route;}reverse=false;}renderList();renderDetails();applyVisibility();saveHash();fit();};
+ $('search').oninput=()=>{if($('search').value.trim())$('flow-range').value='filtered';renderList();};
+ $('part').onchange=()=>{$('act').value='all';floor=null;$('floor').value='all';$('flow-range').value='filtered';scope='all';$('scope').value=scope;const first=model.nodes.find(n=>sceneMatches(n,filters()));choose(sceneMatches(node(selected),filters())?selected:first.id);};
+ $('act').onchange=()=>{if($('act').value!=='all'){const n=model.nodes.find(n=>String(n.act)===$('act').value);scope='act';$('scope').value=scope;$('flow-range').value='act';choose(n.id);}else{scope='all';$('scope').value=scope;$('flow-range').value='filtered';renderList();applyVisibility();fit();}};
+ $('floor').onchange=()=>{floor=$('floor').value==='all'?null:Number($('floor').value);$('act').value='all';$('flow-range').value='filtered';if(floor!==null){const n=model.nodes.find(n=>n.spatial&&sceneMatches(n,{part:$('part').value})&&(n.level===floor||n.id==='M1'&&n.floor.levels.includes(floor)));const s=model.shots.find(s=>sceneMatches(node(s.node),{part:$('part').value})&&s.floor.levels.length===1&&s.floor.levels[0]===floor);if(n){selected=n.id;shotId='';routeId=model.routes.find(r=>r.from===n.id)?.id||'';}else if(s){selected=s.node;shotId=s.id;routeId=s.route;}reverse=false;}renderList();renderDetails();applyVisibility();saveHash();fit();};
  $('scope').onchange=()=>{scope=$('scope').value;floor=null;$('floor').value='all';renderList();applyVisibility();fit();};
  $('height').onchange=()=>{model=buildCurrentModel(graph,flow,$('height').value==='actual');build();renderDetails();fit();};
  for(const id of ['labels','shots','floor-guides'])$(id).onchange=applyVisibility;
  $('scene-names').onchange=placeLabels;
- $('scene-list').onclick=e=>{const b=e.target.closest('[data-select]');if(b)choose(b.dataset.select);};
- $('route').onchange=()=>{routeId=$('route').value;shotId='';reverse=false;scope='route';$('scope').value=scope;floor=null;$('floor').value='all';renderDetails();renderList();applyVisibility();saveHash();fit();};
+ $('scene-list').onclick=e=>{const b=e.target.closest('[data-select]');if(b){const s=shot(b.dataset.selectShot);choose(b.dataset.select,s?.route,s?.id);}};
+ const selectRoute=id=>{routeId=id;shotId='';reverse=false;scope='route';$('scope').value=scope;floor=null;$('floor').value='all';if([route().from,route().to].some(id=>!sceneMatches(node(id),{part:$('part').value})))$('part').value='all';renderDetails();renderList();applyVisibility();saveHash();fit();};
+ $('route').onchange=()=>selectRoute($('route').value);
+ $('connections').onclick=e=>{const b=e.target.closest('[data-connection]');if(b){selectRoute(b.dataset.connection);$('route').focus({preventScroll:true});$('route').scrollIntoView({block:'nearest'});}};
  $('steps').onclick=e=>{const b=e.target.closest('[data-step]');if(!b)return;const id=b.dataset.step;choose(b.dataset.type==='subscene'?shot(id).node:id,routeId,b.dataset.type==='subscene'?id:'',false,true);focus();};
  for(const [id,value] of [['forward',false],['reverse',true]])$(id).onclick=()=>{if(value&&!route()?.back)return;reverse=value;renderDetails();applyVisibility();saveHash();};
  for(const id of ['iso','front','top'])$(id).onclick=()=>{view=id;fit();};
  $('reset').onclick=()=>{view='iso';fit();};$('focus').onclick=focus;
- $('zoom-in').onclick=()=>{camera.zoom=Math.min(12,camera.zoom*1.25);camera.updateProjectionMatrix();};$('zoom-out').onclick=()=>{camera.zoom=Math.max(.2,camera.zoom/1.25);camera.updateProjectionMatrix();};
+ $('zoom-in').onclick=()=>{if(webglReady){camera.zoom=Math.min(12,camera.zoom*1.25);camera.updateProjectionMatrix();}};$('zoom-out').onclick=()=>{if(webglReady){camera.zoom=Math.max(.2,camera.zoom/1.25);camera.updateProjectionMatrix();}};
  window.addEventListener('hashchange',()=>{readHash();fit();});
+ $('retry-3d').onclick=()=>location.reload();
+}
+function bindCanvas(){
  let down;
  renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
  renderer.domElement.addEventListener('pointerup',e=>{
@@ -326,18 +356,29 @@ function bind(){
   const d=hit.object.userData;if(d.shot)choose(shot(d.shot).node,shot(d.shot).route,d.shot,false);else if(d.node)choose(d.node,null,'',false);else if(d.route){const r=model.routes.find(r=>r.id===d.route);choose(r.from,r.id,'',false);}
  });
 }
+function useFlowFallback(){
+ webglReady=false;renderer?.setAnimationLoop(null);resizeObserver?.disconnect();
+ $('loading')?.remove();document.body.classList.add('no-webgl');$('fallback-status').hidden=false;
+ flowPanel.fallback();
+}
 try {
  $('counts').textContent=`2 棟樓 · ${model.nodes.length} 個流程節點 · ${model.shots.length} 個次場景 · ${model.routes.length} 條動線`;
  $('act').insertAdjacentHTML('beforeend',graph.acts.map((a,i)=>`<option value="${i}">${esc(a)}</option>`).join(''));
  $('floor').insertAdjacentHTML('beforeend',FLOORS.map(f=>`<option value="${f}">${floorName(f)}</option>`).join(''));
+ initMarkers();
+ flowPanel=createFlowPanel(graph,flow,(id,preferred,shot)=>{const current=route(),next=preferred||(current&&[current.from,current.to].includes(id)?current.id:null);scope='route';$('scope').value=scope;choose(id,next,shot,true,next===routeId);flowPanel.locate();});
+ readHash();bind();
+} catch(error){$('loading')?.remove();$('error').hidden=false;$('error').textContent=`場景資料無法載入：${error.message}`;throw error;}
+try {
  scene=new THREE.Scene();scene.background=new THREE.Color(0x111a1c);camera=new THREE.OrthographicCamera(-40,40,40,-40,.1,1500);
  renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setSize(host.clientWidth,host.clientHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;host.append(renderer.domElement);
  scene.add(new THREE.HemisphereLight(0xe7f3ea,0x334543,2.3));const light=new THREE.DirectionalLight(0xfff1d5,2.3);light.position.set(40,150,80);scene.add(light);
  controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.12;controls.maxPolarAngle=Math.PI*.495;controls.minZoom=.2;controls.maxZoom=12;
- initMarkers();build();readHash();bind();fit();$('loading').remove();
+ webglReady=true;build();bindCanvas();fit();$('loading').remove();
+ renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();useFlowFallback();});
  const clearLabelSizes=()=>{for(const l of [...labels,...markerPins])l.sizes={};for(const l of floorLabels)l.size=null;};
  resizeObserver=new ResizeObserver(()=>{clearLabelSizes();renderer.setSize(host.clientWidth,host.clientHeight);fit();});resizeObserver.observe(host);
  document.fonts.ready.then(clearLabelSizes);
  renderer.setAnimationLoop(()=>{controls.update();placeLabels();renderer.render(scene,camera);});
  window.addEventListener('pagehide',event=>{if(event.persisted)return;resizeObserver.disconnect();renderer.setAnimationLoop(null);controls.dispose();dispose(root);renderer.dispose();});
-} catch(error){$('loading')?.remove();$('error').hidden=false;$('error').textContent=`模型無法載入：${error.message}`;console.error(error);}
+} catch(error){useFlowFallback();console.warn('3D fallback:',error.message);}
