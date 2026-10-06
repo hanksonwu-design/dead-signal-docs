@@ -7,6 +7,7 @@ import {dressCurrentRoom} from './current-props.js';
 import {sharedGlassBoundary} from './story-props.js';
 import {clipRouteToHeight} from './floor-route-view.js';
 import {dressTransition,transitionFor} from './transition-spaces.js';
+import {showSceneNames,placeModelLabel} from './model-label-layout.js';
 
 const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -18,6 +19,7 @@ const node=id=>model.nodes.find(n=>n.id===id),shot=id=>model.shots.find(s=>s.id=
 const host=$('canvas-host'),colors=[0x719eae,0x8bab8e,0x6fae9c,0x93a8bd,0xbd969c,0xc2aa7e,0x8dabbe,0xb69aa6,0x87b5ad,0xbdc5ae];
 let renderer,camera,controls,scene,root,resizeObserver;
 let roomObjects=[],routeObjects=[],shotObjects=[],labels=[],floorLabels=[],visiblePoints=[];
+let namesAtScale=false;
 const material=(color,opacity=1)=>new THREE.MeshStandardMaterial({color,roughness:.8,metalness:.08,transparent:opacity<1,opacity,depthWrite:opacity>=1});
 function box(w,h,d,x,y,z,mat,parent){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);o.position.set(x,y,z);parent.add(o);return o;}
 function line(points,color,parent){const o=new THREE.Line(new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(...p))),new THREE.LineBasicMaterial({color,transparent:true,opacity:.7}));parent.add(o);return o;}
@@ -54,7 +56,15 @@ function walls(n,g){
   for(const [lo,hi] of gaps){piece(lo);cursor=Math.max(cursor,hi);}piece(length/2);
  }
 }
-function label(id,position,isShot){const el=document.createElement('button');el.className='model-label'+(isShot?' shot':'');el.dataset[isShot?'shot':'node']=id;el.textContent=id;const itemData=isShot?shot(id):node(id);el.title=`${itemData.name} · ${locationLabel(itemData)}`;el.setAttribute('aria-label',el.title);el.onclick=()=>choose(isShot?shot(id).node:id,isShot?shot(id).route:null,isShot?id:'',false);host.append(el);const item={el,id,position:new THREE.Vector3(...position),isShot,enabled:true};labels.push(item);return item;}
+function label(id,position,isShot){
+ const el=document.createElement('button');el.className='model-label'+(isShot?' shot':'');el.dataset[isShot?'shot':'node']=id;
+ const itemData=isShot?shot(id):node(id),code=document.createElement('span'),name=document.createElement('small');
+ code.className='model-label-code';code.textContent=id;name.className='model-label-name';name.textContent=itemData.name;name.hidden=true;el.append(code,name);
+ el.title=`${id} · ${itemData.name} · ${locationLabel(itemData)}`;el.setAttribute('aria-label',el.title);
+ el.onclick=()=>choose(isShot?shot(id).node:id,isShot?shot(id).route:null,isShot?id:'',false);host.append(el);
+ const item={el,name,id,position:new THREE.Vector3(...position),isShot,enabled:true,hovered:false,sizes:{}};
+ el.onpointerenter=()=>{item.hovered=true;};el.onpointerleave=()=>{item.hovered=false;};labels.push(item);return item;
+}
 function latticeGate(x,y,z,parent){
  const mat=material(0xc8b891);
  for(const side of[-1,1])box(.1,2.2,.1,x+side,y+1.1,z,mat,parent);
@@ -194,14 +204,30 @@ function readHash(){const p=new URLSearchParams(location.hash.slice(1)),id=node(
 function placeLabels(){
  const w=host.clientWidth,h=host.clientHeight,occupied=[];
  const headerBottom=document.querySelector('.view-head').offsetTop+document.querySelector('.view-head').offsetHeight+12;
- const sorted=[...labels].sort((a,b)=>Number(b.id===(shotId||selected))-Number(a.id===(shotId||selected))||Number(a.isShot)-Number(b.isShot));
+ const bounds={left:8,right:w-8,top:headerBottom,bottom:h-95},active=shotId||selected;
+ namesAtScale=showSceneNames(h*camera.zoom/(camera.top-camera.bottom),namesAtScale);
+ const priority=l=>l.id===active?3:l.hovered||l.el===document.activeElement?2:l.isShot?0:1;
+ const sorted=[...labels].sort((a,b)=>priority(b)-priority(a));
  for(const l of sorted){
   if(!l.enabled){l.el.hidden=true;continue;}const p=l.position.clone().project(camera),x=(p.x+1)*w/2,y=(1-p.y)*h/2;
-  const width=l.isShot?102:35,height=24,rect=[x-width/2,y-height,x+width/2,y];
-  const visible=p.z>-1&&p.z<1&&x>width/2&&x<w-width/2&&rect[1]>headerBottom&&y<h-95&&!occupied.some(b=>rect[0]<b[2]+3&&rect[2]>b[0]-3&&rect[1]<b[3]+3&&rect[3]>b[1]-3);
-  l.el.hidden=!visible;if(visible){occupied.push(rect);l.el.style.left=x+'px';l.el.style.top=y+'px';}
+  if(p.z<=-1||p.z>=1||x<bounds.left||x>bounds.right||y<bounds.top||y>bounds.bottom){l.el.hidden=true;continue;}
+  const named=$('scene-names').checked&&(namesAtScale||priority(l)>=2);
+  let rect=null;
+  // Measure both modes once per resize. Crowded labels fall back to the ID.
+  for(const expanded of named?[true,false]:[false]){
+   l.name.hidden=!expanded;l.el.hidden=false;
+   const size=l.sizes[String(expanded)]??={width:l.el.offsetWidth,height:l.el.offsetHeight};
+   rect=placeModelLabel({x,y,z:p.z,...size},bounds,occupied);if(rect)break;
+  }
+  l.el.hidden=!rect;if(rect){occupied.push(rect);l.el.style.left=(rect[0]+rect[2])/2+'px';l.el.style.top=rect[3]+'px';}
  }
- for(const l of floorLabels){const p=l.position.clone().project(camera),x=(p.x+1)*w/2,y=(1-p.y)*h/2;const rect=[x-30,y-7,x,y+7];l.el.hidden=!l.enabled||p.z<-1||p.z>1||x<30||x>w-20||y<80||y>h-95||occupied.some(b=>rect[0]<b[2]+3&&rect[2]>b[0]-3&&rect[1]<b[3]+3&&rect[3]>b[1]-3);if(!l.el.hidden){occupied.push(rect);l.el.style.left=x+'px';l.el.style.top=y+'px';}}
+ for(const l of floorLabels){
+  if(!l.enabled){l.el.hidden=true;continue;}
+  const p=l.position.clone().project(camera),x=(p.x+1)*w/2,y=(1-p.y)*h/2;l.el.hidden=false;
+  const size=l.size??={width:l.el.offsetWidth,height:l.el.offsetHeight};
+  const rect=placeModelLabel({x:x-size.width/2,y:y+size.height/2,z:p.z,...size},bounds,occupied);
+  l.el.hidden=!rect;if(rect){occupied.push(rect);l.el.style.left=rect[2]+'px';l.el.style.top=(rect[1]+rect[3])/2+'px';}
+ }
 }
 function bind(){
  $('search').oninput=renderList;$('act').onchange=()=>{renderList();if($('act').value!=='all'){const n=model.nodes.find(n=>String(n.act)===$('act').value);scope='act';$('scope').value=scope;choose(n.id);}};
@@ -209,6 +235,7 @@ function bind(){
  $('scope').onchange=()=>{scope=$('scope').value;floor=null;$('floor').value='all';renderList();applyVisibility();fit();};
  $('height').onchange=()=>{model=buildCurrentModel(graph,flow,$('height').value==='actual');build();renderDetails();fit();};
  for(const id of ['labels','shots','floor-guides'])$(id).onchange=applyVisibility;
+ $('scene-names').onchange=placeLabels;
  $('scene-list').onclick=e=>{const b=e.target.closest('[data-select]');if(b)choose(b.dataset.select);};
  $('route').onchange=()=>{routeId=$('route').value;shotId='';reverse=false;scope='route';$('scope').value=scope;floor=null;$('floor').value='all';renderDetails();renderList();applyVisibility();saveHash();fit();};
  $('steps').onclick=e=>{const b=e.target.closest('[data-step]');if(!b)return;const id=b.dataset.step;choose(b.dataset.type==='subscene'?shot(id).node:id,routeId,b.dataset.type==='subscene'?id:'',false,true);focus();};
@@ -235,7 +262,9 @@ try {
  scene.add(new THREE.HemisphereLight(0xe7f3ea,0x334543,2.3));const light=new THREE.DirectionalLight(0xfff1d5,2.3);light.position.set(40,150,80);scene.add(light);
  controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.12;controls.maxPolarAngle=Math.PI*.495;controls.minZoom=.2;controls.maxZoom=12;
  build();readHash();bind();fit();$('loading').remove();
- resizeObserver=new ResizeObserver(()=>{renderer.setSize(host.clientWidth,host.clientHeight);fit();});resizeObserver.observe(host);
+ const clearLabelSizes=()=>{for(const l of labels)l.sizes={};for(const l of floorLabels)l.size=null;};
+ resizeObserver=new ResizeObserver(()=>{clearLabelSizes();renderer.setSize(host.clientWidth,host.clientHeight);fit();});resizeObserver.observe(host);
+ document.fonts.ready.then(clearLabelSizes);
  renderer.setAnimationLoop(()=>{controls.update();placeLabels();renderer.render(scene,camera);});
  window.addEventListener('pagehide',event=>{if(event.persisted)return;resizeObserver.disconnect();renderer.setAnimationLoop(null);controls.dispose();dispose(root);renderer.dispose();});
 } catch(error){$('loading')?.remove();$('error').hidden=false;$('error').textContent=`模型無法載入：${error.message}`;console.error(error);}
