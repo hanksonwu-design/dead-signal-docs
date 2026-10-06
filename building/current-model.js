@@ -8,9 +8,8 @@ import {sharedGlassBoundary} from './story-props.js';
 import {clipRouteToHeight} from './floor-route-view.js';
 import {dressTransition,transitionFor} from './transition-spaces.js';
 import {showSceneNames,placeModelLabel} from './model-label-layout.js';
-import {createElement,KeyRound,Puzzle,Clapperboard,Ghost,Skull} from 'lucide';
 import markerData from './scene-markers.json';
-import {MARKER_CATEGORIES} from './marker-definitions.js';
+import {MARKER_CATEGORIES,markerIcon} from './marker-presentation.js';
 import {showContentMarkers,markerPosition,markerInContext} from './model-markers.js';
 import {searchScenes,sceneMatches,sceneArtwork,connectedRoutes} from './scene-workspace.js';
 import {createFlowPanel} from './flow-panel.js';
@@ -32,9 +31,7 @@ let scaleReference;
 const filters=()=>({part:$('part').value,act:$('act').value,query:$('search').value,floor});
 function renderFlow(){flowPanel?.render({scene:selected,shot:shotId,route:routeId,visibleIds:[...new Set(searchScenes(graph,flow,filters()).map(n=>n.node))]});}
 let markerPins=[],markerId='',markersAtScale=false;
-const markerIcons={item:KeyRound,puzzle:Puzzle,event:Clapperboard,horror:Ghost,boss:Skull};
 const markerById=new Map(markerData.markers.map(m=>[m.id,m]));
-const markerIcon=category=>createElement(markerIcons[category],{width:16,height:16,'aria-hidden':'true',focusable:'false'});
 const categoryEnabled=category=>$(`marker-${category}`).checked;
 function initMarkers(){
  $('scene-list').insertAdjacentHTML('beforebegin',`<fieldset class="marker-filters"><legend><label><input id="content-markers" type="checkbox" checked>內容標示</label></legend><div class="checks">${Object.entries(MARKER_CATEGORIES).map(([id,title])=>`<label data-category="${id}" title="${esc(title)}"><input id="marker-${id}" type="checkbox" checked>${esc(title)}</label>`).join('')}</div></fieldset>`);

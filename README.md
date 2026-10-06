@@ -73,6 +73,7 @@ npm --prefix building run build
   全劇模型為查閱模式，不讀寫配置存檔；正式導覽已移除舊沙盒入口。既有上部 3D 編輯器封存保留於 `building/editor.html` 原網址，仍有 26 個原始節點、30 條故事連線與出口接點，沿用原本機儲存鍵、匯入／匯出和復原功能；不清除舊配置，舊自訂 R23 等編號不會被新正式場景取代。
   先同步正式資料，再於 `building/` 執行 `npm run build`，同時產生全劇 `index.html` 與上部 `editor.html`。執行 `node building/current-spatial.test.mjs` 驗證全流程幾何與資料；`reviews/verify-current-model.cjs` 檢查桌面／手機、圖號、樓層、連結與舊存檔隔離。
   `building/scene-workspace.test.mjs` 驗證整合資料、圖像覆蓋與舊網址；`reviews/verify-scene-workspace.cjs` 檢查同步選取、章節總覽、手機與無 WebGL 的備援介面。`scene-overview.js` 是共用流程排版，`scene-redirect.js` 僅處理舊網址轉址。
+  遊戲劇本閱讀頁與模型共用五類關鍵標示：類別維護於 `building/marker-categories.js`、Lucide 圖示於 `building/marker-presentation.js`、配色於 `marker-colors.css`。閱讀頁依同一份 `building/scene-markers.json` 定位段落；共用全景圖的晚發事件由 `building/screenplay-marker-placement.js` 指向實際發生段落，BOSS 不提前標在進場全景。標籤只在網頁呈現，不改動劇情原文、演出方式、圖號或製作規格連結；「關鍵標示」開關保留本機閱讀偏好。`npm --prefix building run build` 一併重建 `screenplay-markers.js`；`node tools/build-reader-markers.mjs` 與 `node --test tools/test-screenplay-markers.mjs` 檢查全十幕的定位及一致性。
 - GitHub Pages 設為從 main 分支的根目錄發布。
 
 本地週表的規格連結納入文件檢查；Google 試算表中的派工、工期與完成狀態仍須另行核對，不能視為已同步。概念圖像、配音素材、Godot 功能與真人試玩也不因文件一致而視為已驗收。

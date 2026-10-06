@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#0c1119" />
     <title>灰燈寨 · 企劃文件瀏覽器</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="marker-colors.css" />
     <script src="scene-redirect.js?v=20261006"></script>
   </head>
   <body>
@@ -90,6 +91,7 @@
           <button class="quiet-button" id="closeReader" type="button">← 返回文件</button>
           <div class="reader-actions">
             <span class="reader-path" id="readerPath"></span>
+            <label class="screenplay-toggle" id="reading-marker-control" hidden><input type="checkbox" id="reading-markers" aria-label="顯示關鍵標示" checked />關鍵標示</label>
             <button class="icon-button" id="copyPath" type="button" title="複製檔案路徑">⧉</button>
           </div>
         </div>
@@ -97,6 +99,7 @@
       </article>
     </div>
 
-    <script src="app.js?v=20261006-workspace"></script>
+    <script src="screenplay-markers.js?v=20261006"></script>
+    <script src="app.js?v=20261006-reading-markers"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 // Editorial index only. Descriptions, requirements and links come from canonical image rows.
-export const MARKER_CATEGORIES={item:'道具／線索',puzzle:'解謎／操作',event:'事件',horror:'恐怖點',boss:'BOSS'};
+export {MARKER_CATEGORIES} from './marker-categories.js';
 export const MARKER_TIMINGS=['主線時機','選填查看','條件出現','正式遭遇','主線揭露'];
 export const MAIN_MARKERS={
  P0:[['item','C04','泡水求援箱'],['puzzle','C06','維修柵門卡榫'],['horror','C05','積水與濕鞋印','條件出現'],['event','V02','趨光夢境']],

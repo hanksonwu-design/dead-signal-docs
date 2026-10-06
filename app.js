@@ -197,16 +197,17 @@ function inlineMarkdown(value) {
   return html;
 }
 
-function renderMarkdown(raw) {
+function renderMarkdown(raw, lineOffset = 0) {
   const lines = raw.replace(/\r\n/g, "\n").split("\n");
   const out = [];
   let i = 0;
   let paragraph = [];
+  let paragraphLine = 0;
   let listType = null;
   let table = null;
   let code = null;
 
-  const flushParagraph = () => { if (paragraph.length) { out.push(`<p>${inlineMarkdown(paragraph.join(" "))}</p>`); paragraph = []; } };
+  const flushParagraph = () => { if (paragraph.length) { out.push(`<p data-source-line="${lineOffset + paragraphLine}">${inlineMarkdown(paragraph.join(" "))}</p>`); paragraph = []; } };
   const closeList = () => { if (listType) { out.push(`</${listType}>`); listType = null; } };
   const closeTable = () => { if (table) { out.push(`</tbody></table></div>`); table = null; } };
   const closeCode = () => { if (code !== null) { out.push(`<pre><code>${esc(code.join("\n"))}</code></pre>`); code = null; } };
@@ -220,17 +221,17 @@ function renderMarkdown(raw) {
     if (/^\s*<!--.*-->\s*$/.test(line)) { i += 1; continue; }
     if (/^\s*---\s*$/.test(line)) { flushParagraph(); closeList(); closeTable(); out.push("<hr>"); i += 1; continue; }
     const heading = line.match(/^(#{1,6})\s+(.+)$/);
-    if (heading) { flushParagraph(); closeList(); closeTable(); const level = heading[1].length; out.push(`<h${level}>${inlineMarkdown(documentDisplayTitle(heading[2]))}</h${level}>`); i += 1; continue; }
-    if (/^\s*>/.test(line)) { flushParagraph(); closeList(); closeTable(); const quote = []; while (i < lines.length && /^\s*>/.test(lines[i])) { quote.push(lines[i].replace(/^\s*>\s?/, "")); i += 1; } out.push(`<blockquote>${renderMarkdown(quote.join("\n"))}</blockquote>`); continue; }
+    if (heading) { flushParagraph(); closeList(); closeTable(); const level = heading[1].length; out.push(`<h${level} data-source-line="${lineOffset + i}">${inlineMarkdown(documentDisplayTitle(heading[2]))}</h${level}>`); i += 1; continue; }
+    if (/^\s*>/.test(line)) { flushParagraph(); closeList(); closeTable(); const quote = [], start = i; while (i < lines.length && /^\s*>/.test(lines[i])) { quote.push(lines[i].replace(/^\s*>\s?/, "")); i += 1; } out.push(`<blockquote>${renderMarkdown(quote.join("\n"), lineOffset + start)}</blockquote>`); continue; }
     if (/^\s*\|/.test(line)) {
       flushParagraph(); closeList();
       if (!table) {
         const header = line.split("|").slice(1, -1).map((cell) => `<th>${inlineMarkdown(cell.trim())}</th>`).join("");
-        table = true; out.push(`<div class="md-table-wrap"><table><thead><tr>${header}</tr></thead><tbody>`); i += 1;
+        table = true; out.push(`<div class="md-table-wrap"><table><thead><tr data-source-line="${lineOffset + i}">${header}</tr></thead><tbody>`); i += 1;
         if (i < lines.length && /^\s*\|?\s*:?-{2,}/.test(lines[i])) i += 1;
         continue;
       }
-      const cells = line.split("|").slice(1, -1).map((cell) => `<td>${inlineMarkdown(cell.trim())}</td>`).join(""); out.push(`<tr>${cells}</tr>`); i += 1; continue;
+      const cells = line.split("|").slice(1, -1).map((cell) => `<td>${inlineMarkdown(cell.trim())}</td>`).join(""); out.push(`<tr data-source-line="${lineOffset + i}">${cells}</tr>`); i += 1; continue;
     }
     if (table) closeTable();
     const list = line.match(/^\s*([-*+] |\d+\. )(.+)$/);
@@ -238,10 +239,10 @@ function renderMarkdown(raw) {
       flushParagraph(); if (!listType) { listType = /^\d/.test(list[1]) ? "ol" : "ul"; out.push(`<${listType}>`); }
       const checked = list[2].match(/^\[([ xX])\]\s*(.*)$/); const text = checked ? checked[2] : list[2];
       const cls = checked ? (checked[1].toLowerCase() === "x" ? "task-done" : "task-open") : "";
-      out.push(`<li class="${cls}">${inlineMarkdown(text)}</li>`); i += 1; continue;
+      out.push(`<li class="${cls}" data-source-line="${lineOffset + i}">${inlineMarkdown(text)}</li>`); i += 1; continue;
     }
     if (!line.trim()) { flushParagraph(); closeList(); closeTable(); i += 1; continue; }
-    closeList(); paragraph.push(line.trim()); i += 1;
+    closeList(); if (!paragraph.length) paragraphLine = i; paragraph.push(line.trim()); i += 1;
   }
   flushParagraph(); closeList(); closeTable(); closeCode();
   return out.join("\n");
@@ -285,6 +286,7 @@ function openReader(path, updateHash = true, headingText = "") {
     ? doc.content.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "")
     : doc.content;
   $("readerContent").innerHTML = renderMarkdown(body);
+  window.ScreenplayMarkers?.decorate($("readerContent"), body, doc.path);
   const headings = [...$("readerContent").querySelectorAll("h2")];
   if (headings.length > 3) {
     const nav = document.createElement("nav");
@@ -377,4 +379,5 @@ $("copyPath").addEventListener("click", async () => { if (!state.selected) retur
 document.querySelectorAll(".view-button").forEach((button) => button.addEventListener("click", () => { state.view = button.dataset.view; document.querySelectorAll(".view-button").forEach((item) => item.classList.toggle("active", item === button)); renderCards(); renderHeading(); }));
 document.addEventListener("keydown", (event) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") { event.preventDefault(); $("searchInput").focus(); } if (event.key === "Escape" && state.selected) closeReader(); });
 window.addEventListener("hashchange", syncHash);
+window.ScreenplayMarkers?.setup();
 loadDocuments();
