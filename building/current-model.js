@@ -259,7 +259,6 @@ function renderDetails(){
  $('images').innerHTML=current.details.map(id=>{const i=flow.images[id];return `<li>${link(id,i.spec,i.heading)} ${esc(i.content)}</li>`;}).join('');
  $('reference').hidden=!n.reference;if(n.reference){$('reference-image').src='../'+n.reference.url;$('reference-caption').textContent=n.reference.kind;}
  $('flow-link').href='../#'+new URLSearchParams({scene:selected,...(r?{route:r.id}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{})});
- $('editor-link').href='editor.html#scene='+(n.part===1?n.id:'R6');
  renderMarkers();
 }
 function saveHash(){history.replaceState(null,'','#'+new URLSearchParams({scene:selected,...(routeId?{route:routeId}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{}),...(markerId?{marker:markerId}:{})}));}

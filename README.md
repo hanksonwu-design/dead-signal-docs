@@ -67,7 +67,7 @@ npm --prefix building run build
 - 場景節點圖：`scene_graph.json`；銜接次場景、圖號與參考圖：`scene-flow.json`。
 - 全劇 3D 空間模型：`building/`，可加 `#scene=R25`，也接受與關卡流程相同的 `route`、`shot`、`direction` 參數。全部場景的「3D 空間 ↗」都可連入。
   模型涵蓋 B3 至 50F 的 48 個流程節點、72 個次場景與 56 條動線；其中 46 個節點有空間配置（含 M1 跨層脊柱），51 條為實體銜接。R33／POST 及 5 條回返／結局演出不虛構房間或通道。主場景、次場景、圖號、通行條件與來源由 `scene_graph.json`／`scene-flow.json` 直接嵌入，尺寸與平面配置仍屬灰盒提案。
-  全劇模型為查閱模式，不讀寫配置存檔。既有上部 3D 編輯器保留於 `building/editor.html`，仍有 26 個原始節點、30 條故事連線與出口接點，沿用原本機儲存鍵、匯入／匯出和復原功能；舊自訂 R23 等編號不會被新正式場景取代。
+  全劇模型為查閱模式，不讀寫配置存檔；正式導覽已移除舊沙盒入口。既有上部 3D 編輯器封存保留於 `building/editor.html` 原網址，仍有 26 個原始節點、30 條故事連線與出口接點，沿用原本機儲存鍵、匯入／匯出和復原功能；不清除舊配置，舊自訂 R23 等編號不會被新正式場景取代。
   先同步正式資料，再於 `building/` 執行 `npm run build`，同時產生全劇 `index.html` 與上部 `editor.html`。執行 `node building/current-spatial.test.mjs` 驗證全流程幾何與資料；`reviews/verify-current-model.cjs` 檢查桌面／手機、圖號、樓層、連結與舊存檔隔離。
 - GitHub Pages 設為從 main 分支的根目錄發布。
 

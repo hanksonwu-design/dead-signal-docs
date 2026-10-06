@@ -52,3 +52,18 @@ test('unknown physical nodes and unbound routes fail instead of inventing geomet
  const editor=readFileSync(new URL('./model-source.js',import.meta.url),'utf8');
  assert(editor.includes("const storageKey='dead-signal-building-sandbox-v2'"));
 });
+test('formal navigation excludes the archived editor while its original URL and recovery controls remain',()=>{
+ for(const file of ['current-template.html','index.html']){
+  const text=readFileSync(new URL(file,import.meta.url),'utf8');
+  assert(!/editor-link|href="editor\.html/.test(text),file);
+  assert(text.includes('id="flow-link"'),file);
+ }
+ assert(!readFileSync(new URL('current-model.js',import.meta.url),'utf8').includes('editor-link'));
+ for(const file of ['template.html','editor.html']){
+  const text=readFileSync(new URL(file,import.meta.url),'utf8');
+  assert(text.includes('舊配置沙盒（封存）'),file);
+  assert(text.includes('封存 · 舊單棟配置'),file);
+  for(const id of ['scene-export','scene-import','edit-mode-switch'])assert(text.includes(`id="${id}"`),id);
+  assert(text.includes('href="index.html"'),file);
+ }
+});

@@ -65,6 +65,9 @@ async function floorGuides(page,name){
   await page.goto(base);await page.evaluate(({key,savedText})=>localStorage.setItem(key,savedText),{key,savedText});
   await page.goto(base+'/building/#scene=R6');await page.waitForSelector('#canvas-host canvas');await page.waitForSelector('#loading',{state:'detached'});
   assert(await page.locator('#error').isHidden());assert.equal(await page.locator('#scene-list [data-select]').count(),48);
+  assert.equal(await page.locator('#editor-link,a[href*="editor.html"]').count(),0);
+  assert(await page.locator('#flow-link').isVisible());
+  pass('formal model navigation contains no archived sandbox entry');
   assert.equal(await page.locator('.model-label[data-node]').count(),46);assert.equal(await page.locator('.model-label[data-shot]').count(),72);
   assert.match(await page.locator('#counts').innerText(),/48.*72.*56/);await bounds(page);await canvas(page,'all-1440');
   pass('full B3-50F model renders 48 beats, 46 physical nodes and 72 secondary markers');
@@ -123,6 +126,9 @@ async function floorGuides(page,name){
   pass('mobile floor-guide control fits and hides only reference geometry');
   assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),savedText);
   await page.setViewportSize({width:1440,height:1000});await page.goto(base+'/building/editor.html#scene=R2');await page.locator('#loading').waitFor({state:'detached'});
+  assert.match(await page.title(),/舊配置沙盒（封存）/);
+  assert.match(await page.locator('.header-meta').innerText(),/封存 · 舊單棟配置/);
+  assert(await page.locator('#scene-export').isVisible());assert(await page.locator('#scene-import').isVisible());
   assert.equal(await page.locator('.room-tag').count(),27);assert.match(await page.locator('#room-floor').innerText(),/自訂配置/);await page.locator('#room-picker').selectOption('R23');assert.equal(await page.locator('#room-name').innerText(),'舊存檔自訂房間');
   assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),savedText);
   pass('legacy editor preserves custom R23 and modified upper-room coordinates without migration');
