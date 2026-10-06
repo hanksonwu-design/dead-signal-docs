@@ -2,7 +2,7 @@ export const names={r12:'R12｜回收接頭',r22:'R22｜雙路釋放',u4:'U4｜�
 export function start(id){return {id,step:0,seen:false,done:false,reset:false,latched:false,centered:true,phase:'安全',side:'左',closed:[],route:'',msg:'先觀察現場，再選擇行動。',events:[]};}
 export function act(old,a){let s=structuredClone(old);s.events.push({action:a,at:Date.now()});if(s.done)return s;
  const say=x=>{s.msg=x;return s;};
- if(a==='觀察'){s.seen=true;return say(({r12:'接口標「低壓」且為方形凹槽。圓形不合，另一個方形已裂。',r22:'門框磨痕：敲兩下、左掌向下壓兩次。另一側 A 扣承壓、B 桿釋放。兩路都可通過。',u4:'門號重複，但門框缺角與扶手焊疤是固定地標。地上有可用廢布。',ud1:'搖輪在掃擊區，乾燥凹位安全。只在成功躲避後的窗口轉輪。',ud2:'左右霜線指出來向。轉向隔板擋一側，固定冷櫃可躲。封口不會封住後方維修路。'})[s.id]);}
+ if(a==='觀察'){s.seen=true;return say(({r12:'接口標「低壓」且為方形凹槽。圓形不合，另一個方形已裂。',r22:'門框四格操作牌：敲兩下、左掌向下壓兩次。磨痕只標接觸位置。另一側 A 扣承壓、B 桿釋放。兩路都可通過。',u4:'門號重複，但門框缺角與扶手焊疤是固定地標。地上有可用廢布。',ud1:'搖輪在掃擊區，乾燥凹位安全。只在成功躲避後的窗口轉輪。',ud2:'左右霜線指出來向。轉向隔板擋一側，固定冷櫃可躲。封口不會封住後方維修路。'})[s.id]);}
  if(!s.seen)return say('尚未核對現場；可先按「觀察」。');
  if(s.id==='r12'){
   if(a==='完整方形接頭'){s.step=1;return say('接頭入座，仍須親手接妥兩個原回路。');}
@@ -12,9 +12,9 @@ export function act(old,a){let s=structuredClone(old);s.events.push({action:a,at
  if(s.id==='r22'){
   if(a==='手勢路'||a==='手動路'){if(s.route)return say('已確認'+s.route+'；本段沿此路操作，另一條路可重新試玩。');s.route=a;return say('已確認'+a+'，門仍關著。');}
   let seq=s.route==='手勢路'?['敲門框','敲門框','掌心下壓','掌心下壓']:['解 A 扣','拉 B 桿'];
-  if(s.step<seq.length){if(!s.route)return say('先選路線。');if(a===seq[s.step]){s.step++;return say(s.step===seq.length?'門栓完全退入、踏面開放。噤聲者留在原地。請自行走到安全踏台。':'完成這一步；門尚未完全打開。');}if(s.route==='手勢路')s.step=0;return say('順序不合；手勢重新開始，手動已完成段保留。此頁不模擬巡行安全窗。');}
-  if(a==='走到安全踏台'&&s.step===seq.length){s.step=10;return say('已親手突破封鎖。可以停下整理，再主動點深層出口。');}
-  if(a==='深層出口'&&s.step===10){s.step=11;return say('扶手布結。聲音：「這次，等我一起走。」主角：「……這次？」');}
+  if(s.step<seq.length){if(!s.route)return say('先選路線。');if(a===seq[s.step]){s.step++;const feedback=s.route==='手勢路'?['指節落進舊凹痕，再收回。門仍關著。','第二次敲擊完成，等玩家抬起左掌。門仍關著。','左掌對到第一道掌痕，尚未驗證門控。','第四次接觸完成，本地門控驗證，主管鎖退入。原噤聲者低頭，踏面開放。請自行走到安全踏台。']:['A 扣已鬆，B 端仍牽住踏面；退回後成果保留。','B 桿拉下，連桿落位，踏面開放。原噤聲者仍站直。請自行走到安全踏台。'];return say(feedback[s.step-1]);}if(s.route==='手勢路')s.step=0;return say('順序不合；手勢重新開始，手動已完成段保留。此頁不模擬巡行安全窗。');}
+  if(a==='走到安全踏台'&&s.step===seq.length){s.step=10;return say('已親手突破封鎖。同一根扶手在前景，原扣件留在身後。可以停下整理，再主動點深層出口。');}
+  if(a==='深層出口'&&s.step===10){s.step=11;return say('扶手布結。聲音：「這次，等我一起走。」主角：「……這次？」手微鬆，掌心留空；門仍開著。');}
   if(a==='跨門'&&s.step===11){s.done=true;return say('上部完成事件成立。原型不寫正式遊戲存檔。');}
   return say('依序走到安全踏台、查看深層出口，再自行跨門。');
  }
