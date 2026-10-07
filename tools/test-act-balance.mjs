@@ -24,7 +24,7 @@ test('balance edits retain the ten acts, routes, secondary scenes and image work
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 547);
+  assert.equal(Object.keys(flow.images).length, 557);
   assert.deepEqual(ACTS.map(a => graph.nodes.filter(n => n.act === a.act).length), [3, 6, 6, 6, 5, 4, 6, 5, 4, 3]);
   assert.deepEqual(ACTS.map(a => (story(a.act).match(/^#### (?:\[|POST ·)/gm) ?? []).length), [22, 38, 47, 54, 41, 51, 15, 16, 21, 37]);
 });

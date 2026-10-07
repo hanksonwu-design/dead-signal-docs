@@ -72,7 +72,7 @@ test('new art requirements reuse pending image IDs and mark old concepts explici
     }
   }
   includes(appendix, ['本次深化的造型尚未繪製', '同一圖號內的分層和差分另估工時']);
-  assert.equal(Object.keys(flow.images).length, 547);
+  assert.equal(Object.keys(flow.images).length, 557);
 });
 
 test('aesthetic changes preserve attack timing, safe reading and staged Xiaohua reveal', () => {

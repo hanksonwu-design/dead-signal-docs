@@ -43,7 +43,7 @@ test('shared review state cannot grant sources, costs, transitions or a second t
 test('new reading interactions stay on existing source beats and image work orders', () => {
   const flow = JSON.parse(read('scene-flow.json'));
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 547);
+  assert.equal(Object.keys(flow.images).length, 557);
   for (const [act, id, label] of [[6, 'R27-C01', '收頁／回景'], [6, 'U3-C05', 'M 靜圖'], [7, 'R29-C01', '原紙近看'], [7, 'U4-C01', '三組配對'], [8, 'R31-C02', '當前狀態']]) {
     assert(flow.images[id], `Missing image ${id}`);
     const row = spec(act).split('\n').find(line => line.startsWith(`| ${id} |`));

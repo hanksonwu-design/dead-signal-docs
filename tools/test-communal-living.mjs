@@ -25,7 +25,7 @@ test('communal rooms have independent work orders and reversible local entrances
     assert.equal((master.documents.get(row.act.path).match(new RegExp(`\\[${id}\\]\\(`, 'g')) || []).length, 1, id);
     if (id.includes('-V')) assert(row.content.startsWith('房內次場景：'), id);
   }
-  assert.equal(collection.rows.length, 547);
+  assert.equal(collection.rows.length, 557);
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
   assert(graph.edges.every(edge => !/commons|meal_roll|water_log/.test(edge.gate)));
@@ -67,5 +67,5 @@ test('generation remains repeatable and new interior views stay out of the 72 tr
   for (const act of [ACTS[1], ACTS[2]]) assert.equal(outputs.get(act.path), master.documents.get(act.path));
   assert.equal(flow.subscenes.length, 72);
   assert(!flow.subscenes.some(row => ids.includes(row.id)));
-  includes(outputs.get('08_製作管理/08-13_劇情節點與場景道具總表.md'), ['另有 10 個房內選填探索鏡位', 'R4-V02', 'R6-V03']);
+  includes(outputs.get('08_製作管理/08-13_劇情節點與場景道具總表.md'), ['另有 13 個房內選填探索鏡位', 'R4-V02', 'R6-V03']);
 });
