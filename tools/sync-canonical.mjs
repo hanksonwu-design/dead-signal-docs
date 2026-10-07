@@ -181,6 +181,7 @@ export function rewriteLinks(content, file, master, warnings = []) {
 
 export function deriveGraph(master, existing) {
   const graph = structuredClone(existing);
+  graph.phases = {};
   const routes = new Map();
   for (const node of graph.nodes) {
     const id = node.id.toLowerCase();
@@ -191,6 +192,12 @@ export function deriveGraph(master, existing) {
     const nav = master.text.slice(start, end);
     const goal = nav.match(/^進行目的：(.*)$/m)?.[1];
     assert(goal, `Goal: ${node.id}`);
+    const phaseLine = nav.match(/^房內順序：(.*)$/m);
+    if (phaseLine) {
+      const phases = phaseLine[1].split('→').map(step => step.trim());
+      assert(phases.every(Boolean), `Empty phase: ${node.id}`);
+      graph.phases[node.id] = phases;
+    }
     const source = canonicalFile(master, `node-${id}-script`);
     const chapter = ACTS.find(act => act.path === source);
     assert(chapter, `Unknown chapter owner: ${node.id}`);
@@ -248,6 +255,7 @@ export function buildSync() {
   const graph = deriveGraph(master, JSON.parse(read(path.join(ROOT, 'scene_graph.json'))));
   outputs.set('scene_graph.json', JSON.stringify(graph, null, 2) + '\n');
   const model = JSON.parse(read(path.join(ROOT, 'building/scene-data.json')));
+  model.phases = structuredClone(graph.phases);
   model.nodes = model.nodes.map(node => {
     const canonical = graph.nodes.find(item => item.id === node.id);
     assert(canonical, `Model node ${node.id}`);
