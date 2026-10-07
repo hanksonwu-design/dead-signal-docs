@@ -38,7 +38,7 @@ test('ten hearing scenes have canonical script beats, production layers and unch
     for (const term of ['波形', '字幕']) assert(flow.images[image].requirements.includes(term), `${image}: ${term}`);
     has(contract, node, image);
   }
-  assert.equal(Object.keys(flow.images).length, 538);
+  assert.equal(Object.keys(flow.images).length, 547);
   assert.equal(flow.subscenes.length, 72);
   const graph = JSON.parse(read('scene_graph.json'));
   assert.equal(graph.nodes.length, 48);

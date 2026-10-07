@@ -63,7 +63,7 @@ test('seven optional interior nodes each have a unique view and close-up without
   includes(spec, ['只接回 V03', '只接回 V05', '只接回 V07', '分別接 V03／V05／V07', '舊公共梯實牆封閉']);
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
-  assert.equal(collection.rows.length, 538);
+  assert.equal(collection.rows.length, 547);
 });
 
 test('optional exploration preserves existing waits, gates, source states and irreversible return lock', () => {
@@ -100,7 +100,7 @@ test('corridor anomaly is optional and once-only while sources stay on their act
 test('interior inventory is distinct from transition routes and generation is repeatable', () => {
   const {outputs, flow} = buildSceneImageOutputs(graph);
   const inventory = outputs.get('08_製作管理/08-13_劇情節點與場景道具總表.md');
-  includes(inventory, ['另有 7 個房內選填探索鏡位', '房內選填探索鏡位', 'R29-V08']);
+  includes(inventory, ['另有 10 個房內選填探索鏡位', '房內選填探索鏡位', 'R29-V08']);
   for (const act of [ACTS[7], ACTS[8]]) assert.equal(outputs.get(act.path), master.documents.get(act.path));
   assert.equal(flow.subscenes.length, 72);
   assert(!flow.routes.some(route => route.steps.some(step => /^R29-V0[2-8]$/.test(step.id))));

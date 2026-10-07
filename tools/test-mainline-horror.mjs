@@ -31,7 +31,7 @@ test('six progress cues have inline screenplay images, production contracts and 
   has(flow.images[image].requirements,'低動態');
   has(appendix,`| ${id} |`);
  }
- assert.equal(Object.keys(flow.images).length,538);
+ assert.equal(Object.keys(flow.images).length,547);
  assert.equal(flow.subscenes.length,72);
 });
 

@@ -4,6 +4,7 @@ export const READING_PLACEMENTS = Object.freeze({
   'P1-V01-horror': '〔環境／異常聲〕左側管後兩下腳步',
   'P2-C04-horror': '| **搪瓷盆** |',
   'R1-C06-horror': '（動畫演出）原電視熄滅。',
+  'R6-V02-horror': '第一次從回收間退回食堂、站穩之後',
   'R7-V01-horror': '〔環境／異常聲〕一聲清喉嚨在近處。',
   'R9-C01-horror': '（動畫演出）帆布旁一道暗縫在 3 秒內退去。',
   'R11-V01-horror': '（介面呈現）其他螢幕一起跳出來電視窗。',

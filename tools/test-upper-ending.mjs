@@ -83,7 +83,7 @@ test('work orders and split contract preserve a complete upper part without inve
   includes(block(appendix, 's-0307-6'), ['最少必要內容', '猜到主管身分', '尚不能宣稱已能促成購買']);
   includes(block(appendix, 's-0810-24'), ['上部收尾補強交付', '須另估工時', '均待製作']);
   const flow = JSON.parse(read('scene-flow.json'));
-  assert.equal(Object.keys(flow.images).length, 538);
+  assert.equal(Object.keys(flow.images).length, 547);
   for (const id of ['R8-C02', 'R16-D01', 'R16-D02', 'R16-D06', 'R22-V01', 'R22-C02', 'R22-C03', 'R22-C06']) {
     assert(flow.images[id], `Missing work order ${id}`);
   }

@@ -664,6 +664,28 @@
       "timing": "條件出現"
     },
     {
+      "id": "R6-V02-horror",
+      "node": "R6",
+      "shot": "",
+      "category": "horror",
+      "title": "空食堂的整齊放匙聲",
+      "image": "R6-V02",
+      "fragmentForms": [],
+      "reading": "",
+      "content": "房內次場景：11F 集體食堂、固定長桌與點名取餐窗",
+      "requirements": "A 棟 11F；接 V01／V03，首次與空桌聲同構圖，來路洗衣機、服務門及返回熱區可辨；紅霧白絲在窗外。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "dining-r6-v02-script",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r6-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": "選填查看"
+    },
+    {
       "id": "R7-D01-item",
       "node": "R7",
       "shot": "",
@@ -5335,7 +5357,7 @@
       ],
       "reading": "",
       "content": "清潔時段、限時熱水與領餐欄",
-      "requirements": "三頁／焦點各可讀；不是額外通關文件。",
+      "requirements": "三頁／焦點各可讀；領餐欄含「11F 配膳，2F 分送」，不把封窗畫成可跨樓通路；不是額外通關文件。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
       "heading": "s-0904-29",
       "spec": "10_製作規格/10-02_製作規格_第一幕.md",
@@ -5343,6 +5365,54 @@
       "offset": [
         0.35,
         0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R4-C06-item",
+      "node": "R4",
+      "shot": "",
+      "category": "item",
+      "title": "編號掛鉤、補過的毛巾袋、插銷空孔與截短簾布",
+      "image": "R4-C06",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "編號掛鉤、補過的毛巾袋、插銷空孔與截短簾布",
+      "requirements": "各焦點分圖，含肥皂盒墊凳腳；關閉回 V02，不含人物裸露。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "wash-r4-v02-script",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r4-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R4-D02-puzzle",
+      "node": "R4",
+      "shot": "",
+      "category": "puzzle",
+      "title": "洗浴到場與供水核對",
+      "image": "R4-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "洗浴排班頁與供水檢點副聯",
+      "requirements": "同日期／班次、已到／水未開／覆核章分頁可讀；雙頁並排依選填核對，不製新三格；關閉回 V02。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "wash-r4-v02-script",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r4-images",
+      "offset": [
+        0,
+        -0.35
       ],
       "play": null,
       "timing": ""
@@ -5438,8 +5508,8 @@
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
       "specHeading": "node-r6-images",
       "offset": [
-        0.27,
-        -0.28
+        0,
+        0.35
       ],
       "play": null,
       "timing": ""
@@ -5462,8 +5532,8 @@
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
       "specHeading": "node-r6-images",
       "offset": [
-        0,
-        0.35
+        0.35,
+        0
       ],
       "play": null,
       "timing": ""
@@ -5487,8 +5557,105 @@
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
       "specHeading": "node-r6-images",
       "offset": [
-        0.35,
+        -0.35,
         0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R6-C05-item",
+      "node": "R6",
+      "shot": "",
+      "category": "item",
+      "title": "凳腳地栓、座號餐盤輪廓、修補碗與放行牌",
+      "image": "R6-C05",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "凳腳地栓、座號餐盤輪廓、修補碗與放行牌",
+      "requirements": "各焦點分圖；不替缺席者補姓名或死因；關閉回 V02。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "dining-r6-v02-script",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r6-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R6-D04-item",
+      "node": "R6",
+      "shot": "",
+      "category": "item",
+      "title": "供餐簽領頁、日期、11-C 批次與整批覆核章",
+      "image": "R6-D04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "供餐簽領頁、日期、11-C 批次與整批覆核章",
+      "requirements": "應領 24／簽領 24 及分批進食／隨班回工位可讀；與 D05 並排要先實讀；關閉回 V02。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "dining-r6-v02-script",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r6-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R6-C06-item",
+      "node": "R6",
+      "shot": "",
+      "category": "item",
+      "title": "收碗槽、普通鐵盤、主管餐盒與 2F 分送牌",
+      "image": "R6-C06",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "收碗槽、普通鐵盤、主管餐盒與 2F 分送牌",
+      "requirements": "各焦點分圖；餐盒屬另一批次，分送牌不是現時捷徑；關閉回 V03。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "dining-r6-v03-script",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r6-images",
+      "offset": [
+        0.29,
+        0.21
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R6-D05-puzzle",
+      "node": "R6",
+      "shot": "",
+      "category": "puzzle",
+      "title": "整批簽領與實配核對",
+      "image": "R6-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "〔操作／介面比對〕把已讀簽領頁與底聯",
+      "content": "配膳底聯與簽領並排核對",
+      "requirements": "沿 D04 同日期與 11-C，實配 21／扣留 3 可讀；主管餐盒另列批次；原件、缺頁、選欄、核對／取消差分，筆記用原圖，關閉回開啟前鏡位。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "dining-r6-v03-script",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r6-images",
+      "offset": [
+        -0.26,
+        -0.29
       ],
       "play": null,
       "timing": ""

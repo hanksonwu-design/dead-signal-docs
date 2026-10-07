@@ -46,5 +46,5 @@ test('optional non-graphic disclosure has art coverage and matching content noti
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 538);
+  assert.equal(Object.keys(flow.images).length, 547);
 });

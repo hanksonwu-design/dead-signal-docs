@@ -21,7 +21,7 @@ test('published flow is generated from canonical specs without changing story do
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 538);
+  assert.equal(Object.keys(flow.images).length, 547);
 });
 
 test('all original directions and only original routes survive expansion', () => {
@@ -178,8 +178,8 @@ test('exploration rule omissions, duplicate IDs and evidence-state substitutions
 
 test('close-ups are attached to their actual scene, never traversable steps', () => {
   const detailIds = [...flow.nodes, ...flow.subscenes].flatMap(n => n.details);
-  assert.equal(detailIds.length, 391);
-  assert.equal(new Set(detailIds).size, 391);
+  assert.equal(detailIds.length, 397);
+  assert.equal(new Set(detailIds).size, 397);
   const steps = new Set(flow.routes.flatMap(r => r.steps.map(s => s.image)));
   for (const id of detailIds) assert(!steps.has(id), id);
   for (const child of flow.subscenes) for (const id of child.details) assert(id.startsWith(`${child.id}-C`));

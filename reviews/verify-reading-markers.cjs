@@ -239,6 +239,28 @@ async function bounds(page) {
     pass('fragment labels and source links navigate both ways within acts, across acts, and through alternative C in dynamic/static mode');
     for (const width of [1440,320]) {
       await page.setViewportSize({width,height:width>800?1000:844});
+      for (const [act,heading,ids] of [
+        [1,'communal-wash-script',['R4-V02','R4-C06','R4-D02']],
+        [2,'communal-dining-script',['R6-V02','R6-C05','R6-D04','R6-V03','R6-C06','R6-D05']],
+      ]) {
+        await page.goto(url(ACTS[act].path,heading,width<800)); await ready(page);
+        await page.waitForFunction(id=>document.activeElement?.id===id,heading);
+        for (const id of ids) {
+          const link=page.locator('#readerContent p a').filter({hasText:new RegExp(`^${id}$`)});
+          assert.equal(await link.count(),1,id);
+          assert.equal(await link.getAttribute('target'),'_blank');
+        }
+        if (act===2) {
+          assert((await page.locator('[data-reading-markers~="R6-V02-horror"]').evaluate(el=>el.closest('p').textContent)).includes('第一次從回收間退回食堂'));
+          assert((await page.locator('[data-reading-markers~="R6-D05-puzzle"]').evaluate(el=>el.closest('p').textContent)).includes('把已讀簽領頁與底聯'));
+        }
+        await bounds(page);
+        await page.screenshot({path:path.join(out,`${heading}-${width}.png`)});
+      }
+    }
+    pass('communal wash and dining views keep unique work-order links and optional source/scare cues on desktop/mobile');
+    for (const width of [1440,320]) {
+      await page.setViewportSize({width,height:width>800?1000:844});
       const heading='manager-suites-script';
       await page.goto(url(ACTS[7].path,heading,width<800)); await ready(page);
       await page.waitForFunction(id=>document.activeElement?.id===id,heading);
