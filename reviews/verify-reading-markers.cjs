@@ -123,6 +123,27 @@ async function bounds(page) {
       }
     }
     pass('door-breath and speaker-window cues label the authored operation beats in desktop/mobile static reading');
+    for (const width of [1440, 390]) {
+      await page.setViewportSize({width, height: width > 800 ? 1000 : 844});
+      for (const [act, id, phrase] of [
+        [6, 'R27-C01', '把待核的那一列暫留桌側'],
+        [6, 'U3-C05', '可放大靜格裡停在補口袋旁'],
+        [7, 'R29-C01', '提價那一列可翻回桌上的原頁'],
+        [7, 'U4-C01', '比對缺角、焊疤'],
+        [8, 'R31-C02', '檢查掛載條件時，點開鑑識座'],
+      ]) {
+        await page.goto(url(ACTS[act].path, '', true)); await ready(page);
+        const link = page.locator('#readerContent a').filter({hasText: new RegExp(`^${id}$`)});
+        assert.equal(await link.count(), 1, id + ': unique inline work order');
+        const text = await link.evaluate(el => {
+          const p = el.closest('p'); p.scrollIntoView({block: 'center'}); return p.textContent;
+        });
+        assert(text.includes(phrase), id + ': authored interaction'); await bounds(page);
+        assert.equal(await link.getAttribute('data-doc-window'), 'true');
+        await page.screenshot({path: path.join(out, `core-return-${id}-${width}.png`)});
+      }
+    }
+    pass('five late-game close-ups stay on their interaction paragraphs with unique work-order links on desktop/mobile');
     await page.goto(url(ACTS[0].path)); await ready(page);
     assert.match(await page.locator('[data-reading-markers~="P2-C04-horror"]').locator('xpath=ancestor::tr').innerText(), /搪瓷盆.*第四個人/s);
     await page.goto(url(ACTS[9].path)); await ready(page);
