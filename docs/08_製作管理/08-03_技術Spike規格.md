@@ -620,6 +620,7 @@ act2.r08.e201_seen
 act2.r08.e202_seen
 act2.r09.memory_card_revisited
 act2.r10.e209_seen
+act2.r10.e209_decoded           # 原卡與 R7 快捷鍵頁實際比對完成；不由持有原件自動推得
 act2.r10.e211_seen
 act2.r11.e203_seen
 act2.r11.ahsun_restored

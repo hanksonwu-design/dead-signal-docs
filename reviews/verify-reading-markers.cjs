@@ -193,6 +193,50 @@ async function bounds(page) {
       }
     }
     pass('six revised reading hubs retain their inline work orders and readable desktop/mobile source cues');
+    const chains = [
+      [1,'第一層揭露','h-0904-524'], [2,'產線關聯','h-0905-652'],
+      [3,'第二層揭露','h-0906-451'], [3,'服務門路由','h-0906-626'],
+      [4,'第三層揭露','h-0907-385'], [5,'第四層揭露','h-0908-194'],
+      [5,'阿彪對峙','h-0908-515'], [8,'第五層揭露','h-0909-502'],
+    ];
+    for (const width of [1440,390,320]) {
+      await page.setViewportSize({width,height:width>800?1000:844});
+      for (const [act,name,heading] of chains) {
+        await page.goto(url(ACTS[act].path,heading,width<800)); await ready(page);
+        await page.waitForFunction(id=>document.activeElement?.id===id,heading);
+        const title=page.locator('#readerContent strong').filter({hasText:`${name}｜三格關聯`});
+        assert.equal(await title.count(),1,name);
+        const table=title.locator('xpath=ancestor::p/following-sibling::div[1]/table');
+        assert.deepEqual(await table.locator('tbody tr td:first-child').allTextContents().then(cells=>cells.map(c=>c.slice(0,4))),['碎片 A','碎片 B','碎片 C']);
+        assert(await table.locator('a[data-doc-link]').count()>=3,name+': original sources');
+        await table.evaluate(el=>{
+          const panel=document.querySelector('.reader-panel');
+          panel.scrollTop+=el.getBoundingClientRect().top-140;
+        });
+        await bounds(page);
+        if (['第一層揭露','阿彪對峙','第五層揭露'].includes(name)) await page.screenshot({path:path.join(out,`fragment-chain-${act}-${width}.png`)});
+      }
+    }
+    pass('eight A/B/C groups render ordered source tables in dynamic desktop and static 390/320px readers');
+    for (const staticMode of [false,true]) {
+      await page.setViewportSize({width:1440,height:1000});
+      for (const [from,heading,label,to,source] of [
+        [1,'h-0904-524','第一層揭露／碎片 A',1,'s-0904-12'],
+        [6,'h-0909-502','第五層揭露／碎片 A',8,'s-0909-10'],
+        [2,'h-0905-652','產線關聯／碎片 C',2,'s-0905-39'],
+      ]) {
+        await page.goto(url(ACTS[from].path,'',staticMode)); await ready(page);
+        await page.locator('#readerContent a').filter({hasText:new RegExp(`^${label}$`)}).last().click();
+        await page.waitForFunction(({file,heading})=>state.selected.path===file&&new URLSearchParams(location.hash.slice(1)).get('heading')===heading,{file:ACTS[to].path,heading});
+        assert.equal(await page.locator(`#readerContent #${heading}`).count(),1);
+        const back=page.locator(`#readerContent table a[data-doc-heading="${source}"]`).first();
+        assert.equal(await back.getAttribute('data-doc-link'),ACTS[from].path);
+        await back.click();
+        await page.waitForFunction(({file,source})=>state.selected.path===file&&new URLSearchParams(location.hash.slice(1)).get('heading')===source,{file:ACTS[from].path,source});
+        assert.equal(await page.locator(`#readerContent #${source}`).count(),1);
+      }
+    }
+    pass('fragment labels and source links navigate both ways within acts, across acts, and through alternative C in dynamic/static mode');
     await page.goto(url(ACTS[0].path)); await ready(page);
     assert.match(await page.locator('[data-reading-markers~="P2-C04-horror"]').locator('xpath=ancestor::tr').innerText(), /搪瓷盆.*第四個人/s);
     await page.goto(url(ACTS[9].path)); await ready(page);
