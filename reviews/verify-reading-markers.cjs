@@ -237,6 +237,33 @@ async function bounds(page) {
       }
     }
     pass('fragment labels and source links navigate both ways within acts, across acts, and through alternative C in dynamic/static mode');
+    for (const width of [1440,320]) {
+      await page.setViewportSize({width,height:width>800?1000:844});
+      const heading='manager-suites-script';
+      await page.goto(url(ACTS[7].path,heading,width<800)); await ready(page);
+      await page.waitForFunction(id=>document.activeElement?.id===id,heading);
+      for(let n=2;n<=8;n++) {
+        const id=`R29-V0${n}`;
+        const link=page.locator('#readerContent p a').filter({hasText:new RegExp(`^${id}$`)});
+        assert.equal(await link.count(),1,id);
+        assert((await link.evaluate(el=>el.closest('p').textContent)).includes('（靜態畫面／全景）'));
+        assert.equal(await link.getAttribute('target'),'_blank');
+      }
+      assert((await page.locator('[data-reading-markers~="R29-V02-horror"]').evaluate(el=>el.closest('p').textContent)).includes('第一次從任一套房退回走廊'));
+      assert.equal(await page.locator('[data-reading-markers~="R29-C05-item"]').innerText(),'道具／線索（物證／文證）');
+      await bounds(page);
+      await page.screenshot({path:path.join(out,`manager-suites-${width}.png`)});
+      await page.goto(url(ACTS[8].path,'manager-suite-identity-script',width<800)); await ready(page);
+      await page.waitForFunction(()=>document.activeElement?.id==='manager-suite-identity-script');
+      const source=page.locator('[data-reading-markers~="R31-D08-item"]');
+      assert((await source.evaluate(el=>el.closest('p').textContent)).includes('三欄一致'));
+      assert.equal(await page.locator('#readerContent p').filter({hasText:'三欄一致，她才確認'}).count(),1);
+      const footprint=page.locator('#readerContent p a').filter({hasText:/^R31-C01$/});
+      assert((await footprint.evaluate(el=>el.closest('p').textContent)).includes('舊站定痕'));
+      await bounds(page);
+      await page.screenshot({path:path.join(out,`manager-identity-${width}.png`)});
+    }
+    pass('seven suite views keep unique shot links, optional horror timing and post-reveal identity reading on desktop/mobile');
     await page.goto(url(ACTS[0].path)); await ready(page);
     assert.match(await page.locator('[data-reading-markers~="P2-C04-horror"]').locator('xpath=ancestor::tr').innerText(), /搪瓷盆.*第四個人/s);
     await page.goto(url(ACTS[9].path)); await ready(page);

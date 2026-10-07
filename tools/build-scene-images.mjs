@@ -283,9 +283,11 @@ export function buildSceneImageOutputs(graph, documents) {
   const transitions = subscenes.filter(s => s.type === '可查看過渡');
   const exploration = subscenes.filter(s => s.play);
   const exits = collection.rows.filter(r => r.kind === '出口接景');
+  const roomViews = collection.rows.filter(r => r.kind === '操作鏡位' && r.content.startsWith('房內次場景：'));
   const summary = `<a id="inventory-scene-images"></a>\n\n## 場景畫面與靜態圖\n\n` +
     `**${collection.groups.length} 個流程節點，下分 ${subscenes.length} 個次場景節點（${exploration.length} 個探路次場景、${transitions.length} 個可查看過渡、${exits.length} 個轉場接景）；合計 ${collection.rows.length} 列圖像製作項目（場景／操作／演出 ${views.length} 列，近看／文件／介面／回憶 ${details.length} 列），對應 ${routes.length} 條動線。**\n\n` +
     `原規格的 ${hotspots.length} 個 H／B 熱點編號均有逐項對圖；包含已撤除事件的相容參照，不代表新增同數量的可點物件。其餘節點沿原場次與操作名稱列圖。\n\n` +
+    (roomViews.length ? `另有 ${roomViews.length} 個房內選填探索鏡位，已計入上述場景／操作圖像項目，不併入跨主場景的 ${subscenes.length} 個過渡次場景。各房與衛浴的分岔、返回及前置依所屬製作規格，不能按圖號當成必走直線。\n\n` : '') +
     '一列可能包含多頁、正反面、子鏡位或差分，不等於一張輸出圖；共用圖也不能重複算獨立背景。全部仍待正式圖像與遊戲實作交付，現有概念圖不能當完成品。完整拆圖與來源以各幕製作單為準。\n\n' +
     table(['節點', '樓層', '場景／操作／演出項目', '近看等項目', '逐件圖號與拆圖', '出入口與銜接'], collection.groups.map(g => [
       g.node, `${floorLabel(g.node)} · ${buildingLabel(g.node)}`, g.rows.filter(r => r.view).length, g.rows.filter(r => !r.view).length,
@@ -296,7 +298,8 @@ export function buildSceneImageOutputs(graph, documents) {
     table(['所屬主場景', '次場景／主圖', '樓層', '類型／名稱', '正向來路 → 去路', '近看圖'], subscenes.map(s => [
       s.node, specLink(s, inventory), `${floorLabel(s.id)} · ${buildingLabel(s.id)}`, `${s.type} · ${s.name}`, `${s.from} → ${s.to}`,
       s.details.map(d => d.id).join('、') || '無新增近看',
-    ])) + '\n\n### 全部動線圖像對照\n\n' +
+    ])) + (roomViews.length ? '\n\n### 房內選填探索鏡位\n\n' +
+      table(['所屬場景', '鏡位／圖號', '名稱', '連接與製作來源'], roomViews.map(row => [row.node, specLink(row, inventory), row.content.replace('房內次場景：', ''), `[所屬場景規格](../${row.act.specPath}#node-${row.node.toLowerCase()}-level)`])) : '') + '\n\n### 全部動線圖像對照\n\n' +
     table(['動線', '接景方式', '對應圖號'], routes.map(({ edge, mode, rows }) => [
       `${edge.fromId}→${edge.toId}`, mode, rows.map(r => specLink(r, inventory)).join(' → '),
     ]));

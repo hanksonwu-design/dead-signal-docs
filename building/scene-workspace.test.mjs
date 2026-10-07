@@ -16,7 +16,7 @@ test('scene search covers parts, chapters, secondary scenes, goals and collectio
  assert.equal(searchScenes(graph,flow,{query:'no-such-scene'}).length,0);
  for(const entry of searchScenes(graph,flow,{floor:36}))assert(entry.floor.levels.includes(36));
 });
-test('all 523 artwork records are available, including non-marker assets and secondary details',()=>{
+test('all artwork records are available, including non-marker assets and secondary details',()=>{
  const actual=new Set(flow.nodes.flatMap(n=>sceneArtwork(flow,n).map(i=>i.id)));
  assert.deepEqual([...actual].sort(),Object.keys(flow.images).sort());
  for(const s of flow.subscenes)assert.deepEqual(sceneArtwork(flow,s).map(i=>i.id),[...new Set([s.image,...s.details])] );
