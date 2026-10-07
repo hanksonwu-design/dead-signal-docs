@@ -110,6 +110,19 @@ async function bounds(page) {
       }
     }
     pass('R7 arrival and U2 wet-cloth cues label their exact beats on desktop/mobile and static Pages');
+    for (const width of [1440, 390]) {
+      await page.setViewportSize({width, height: width > 800 ? 1000 : 844});
+      for (const [act, id, phrase] of [[4, 'R19-V01-horror', '確認屏息後'], [5, 'R25-V02-puzzle', '每輪播放 5 秒']]) {
+        await page.goto(url(ACTS[act].path, '', true)); await ready(page);
+        const cue = page.locator(`[data-reading-markers~="${id}"]`);
+        const text = await cue.evaluate(el => {
+          const p = el.closest('p'); p.scrollIntoView({block: 'center'}); return p.textContent;
+        });
+        assert(text.includes(phrase), id); await bounds(page);
+        await page.screenshot({path: path.join(out, `hearing-${id}-${width}.png`)});
+      }
+    }
+    pass('door-breath and speaker-window cues label the authored operation beats in desktop/mobile static reading');
     await page.goto(url(ACTS[0].path)); await ready(page);
     assert.match(await page.locator('[data-reading-markers~="P2-C04-horror"]').locator('xpath=ancestor::tr').innerText(), /搪瓷盆.*第四個人/s);
     await page.goto(url(ACTS[9].path)); await ready(page);

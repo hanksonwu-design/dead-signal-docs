@@ -103,6 +103,24 @@ async function layout(page){
    await page.locator('#focus').click();await page.waitForTimeout(200);await layout(page);
   }
   pass('mainline and optional labels resolve across all six HP cues, first-arrival R7 and the revised mirror beat');
+  for(const id of ['R18-V02-horror','R19-V01-horror','R20-V03-horror','R25-V02-puzzle','U2b-V02-horror','U5-V02-horror']){
+   const m=data.find(m=>m.id===id);
+   await open(page,{scene:m.node,marker:id});
+   await page.locator('#marker-detail summary').click();
+   assert((await page.locator('#marker-detail').innerText()).includes('波形'),id);
+   assert.equal(m.category,m.node==='R25'?'puzzle':'horror');
+   await page.locator('#focus').click();await page.waitForTimeout(200);await layout(page);
+  }
+  pass('hearing and cover markers use canonical production layers, with speaker timing classified as a puzzle');
+  for(const width of [1440,390]){
+   await page.setViewportSize({width,height:width>800?1000:844});
+   for(const [scene,marker] of [['R19','R19-V01-horror'],['R25','R25-V02-puzzle']]){
+    await open(page,{scene,marker});await page.locator('#focus').click();await page.waitForTimeout(200);
+    await layout(page);
+    assert(await page.locator(`.content-marker[data-marker="${marker}"]`).isVisible(),`${marker} at ${width}px`);
+    await page.screenshot({path:path.join(out,`hearing-${scene.toLowerCase()}-${width}.png`),fullPage:true});
+   }
+  }
   for(const width of [1440,390]){
    await page.setViewportSize({width,height:width>800?1000:844});
    for(const scene of ['R23','U2']){

@@ -74,9 +74,9 @@ function selectMarker(id,refit){
  $('marker-detail').focus({preventScroll:true});
  if(matchMedia('(max-width:800px)').matches)$('marker-detail').scrollIntoView({block:'center',behavior:'instant'});
 }
-function placeMarkers(bounds,occupied,w,h,scale){
+function placeMarkers(bounds,occupied,w,h,scale,selectedOnly=false){
  markersAtScale=showContentMarkers(scale,markersAtScale);
- const sorted=[...markerPins].sort((a,b)=>Number(b.m.id===markerId)-Number(a.m.id===markerId)||Number(markerInContext(b.m,selected,shotId))-Number(markerInContext(a.m,selected,shotId)));
+ const sorted=markerPins.filter(l=>(l.m.id===markerId)===selectedOnly).sort((a,b)=>Number(markerInContext(b.m,selected,shotId))-Number(markerInContext(a.m,selected,shotId)));
  for(const l of sorted){
   if(!l.enabled||!markersAtScale){l.el.hidden=true;continue;}
   const p=l.position.clone().project(camera),x=(p.x+1)*w/2,y=(1-p.y)*h/2;
@@ -332,6 +332,8 @@ function placeLabels(){
  const bounds={left:8,right:w-8,top:headerBottom,bottom:h-95},active=shotId||selected;
  const scale=h*camera.zoom/(camera.top-camera.bottom);
  namesAtScale=showSceneNames(scale,namesAtScale);
+ // Reserve the selected content pin before placing lower-priority scene names.
+ placeMarkers(bounds,occupied,w,h,scale,true);
  const priority=l=>l.id===active?3:l.hovered||l.el===document.activeElement?2:l.isShot?0:1;
  const sorted=[...labels].sort((a,b)=>priority(b)-priority(a));
  for(const l of sorted){
