@@ -10,6 +10,7 @@ import {dressTransition,transitionFor} from './transition-spaces.js';
 import {showSceneNames,placeModelLabel} from './model-label-layout.js';
 import markerData from './scene-markers.json';
 import {MARKER_CATEGORIES,markerIcon} from './marker-presentation.js';
+import {fragmentLabel} from './fragment-forms.js';
 import {showContentMarkers,markerPosition,markerInContext} from './model-markers.js';
 import {searchScenes,sceneMatches,sceneArtwork,connectedRoutes} from './scene-workspace.js';
 import {createFlowPanel} from './flow-panel.js';
@@ -48,8 +49,14 @@ function buildMarkerPins(){
   const p=markerPosition(m,model);if(!p)continue;
   const el=document.createElement('button'),name=document.createElement('span');
   el.className='content-marker';el.dataset.marker=m.id;el.dataset.category=m.category;
-  name.textContent=m.title;el.append(markerIcon(m.category),name);name.hidden=true;
-   el.title=`${MARKER_CATEGORIES[m.category]}${m.timing?' · '+m.timing:''} · ${m.title} · ${m.shot||m.node} · 場景內位置示意`;
+  const title=fragmentLabel(m.title,m.fragmentForms);
+  name.textContent=m.title;
+  if(m.fragmentForms.length){
+   const form=document.createElement('span');form.className='fragment-form';
+   form.textContent=title.slice(m.title.length);name.append(form);
+  }
+  el.append(markerIcon(m.category),name);name.hidden=true;
+   el.title=`${MARKER_CATEGORIES[m.category]}${m.timing?' · '+m.timing:''} · ${title} · ${m.shot||m.node} · 場景內位置示意`;
   el.setAttribute('aria-label',el.title);el.hidden=true;el.onclick=()=>selectMarker(m.id,false);host.append(el);
   markerPins.push({el,name,m,position:new THREE.Vector3(...p),sizes:{},enabled:false});
  }
@@ -60,10 +67,10 @@ function renderMarkers(){
  const items=markerData.markers.filter(m=>markerInContext(m,selected,shotId)&&categoryEnabled(m.category));
  if(markerId&&!items.some(m=>m.id===markerId))markerId='';
  $('marker-count').textContent=`${items.length}`;$('marker-empty').hidden=!!items.length;
-  $('marker-list').innerHTML=items.map(m=>`<li><button data-marker-select="${m.id}" data-category="${m.category}" aria-pressed="${markerId===m.id}"><span>${esc(m.title)}</span><small>${MARKER_CATEGORIES[m.category]}${m.timing?' · '+esc(m.timing):''} · ${m.image}</small></button></li>`).join('');
+  $('marker-list').innerHTML=items.map(m=>`<li><button data-marker-select="${m.id}" data-category="${m.category}" aria-pressed="${markerId===m.id}"><span>${esc(fragmentLabel(m.title,m.fragmentForms))}</span><small>${MARKER_CATEGORIES[m.category]}${m.timing?' · '+esc(m.timing):''} · ${m.image}</small></button></li>`).join('');
  for(const button of $('marker-list').querySelectorAll('button'))button.prepend(markerIcon(button.dataset.category));
  const m=markerById.get(markerId);$('marker-detail').hidden=!m;
-  $('marker-detail').innerHTML=m?`<h4>${esc(m.title)}</h4><p class="marker-meta">${MARKER_CATEGORIES[m.category]}${m.timing?' · '+esc(m.timing):''} · ${node(m.node).spatial?'場景內位置示意':'非實體演出節點'}</p><p class="reading">${esc(m.content)}</p>${m.play?`<p class="route-rule"><b>辨路依據</b> ${esc(m.play.clue)}</p><p class="route-rule"><b>操作</b> ${esc(m.play.action)}</p><p class="route-rule"><b>復原</b> ${esc(m.play.recovery)}</p>`:''}<details class="details"><summary>條件與製作要求</summary><p>${esc(m.requirements)}</p></details><div class="links">${link('原文依據',m.source,m.heading)}${link(m.image,m.spec,m.specHeading)}</div>`:'';
+  $('marker-detail').innerHTML=m?`<h4>${esc(fragmentLabel(m.title,m.fragmentForms))}</h4><p class="marker-meta">${MARKER_CATEGORIES[m.category]}${m.timing?' · '+esc(m.timing):''} · ${node(m.node).spatial?'場景內位置示意':'非實體演出節點'}</p><p class="reading">${esc(m.content)}</p>${m.play?`<p class="route-rule"><b>辨路依據</b> ${esc(m.play.clue)}</p><p class="route-rule"><b>操作</b> ${esc(m.play.action)}</p><p class="route-rule"><b>復原</b> ${esc(m.play.recovery)}</p>`:''}<details class="details"><summary>條件與製作要求</summary><p>${esc(m.requirements)}</p></details><div class="links">${link('原文依據',m.source,m.heading)}${link(m.image,m.spec,m.specHeading)}</div>`:'';
  for(const p of markerPins)p.el.setAttribute('aria-pressed',String(p.m.id===markerId));
 }
 function selectMarker(id,refit){

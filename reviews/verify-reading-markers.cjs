@@ -43,13 +43,33 @@ async function bounds(page) {
         const strip = el => ({text: el.textContent, links: [...el.querySelectorAll('a')].map(a => [a.textContent, a.href, a.target]), headings: [...el.querySelectorAll('h1,h2,h3,h4,h5,h6')].map(h => h.textContent)});
         return {same: JSON.stringify(strip(copy)) === JSON.stringify(strip(plain)),
           markers: [...content.querySelectorAll('[data-reading-markers]')].flatMap(el => el.dataset.readingMarkers.split(' ').map(id => ({id, category: el.dataset.category}))),
+          cues: [...content.querySelectorAll('[data-reading-markers]')].map(el => ({ids: el.dataset.readingMarkers.split(' '), text: el.textContent, title: el.title})),
           max: Math.max(...[...content.querySelectorAll('.screenplay-cues')].map(row => row.children.length))};
       });
       assert(result.same, act.name + ': original text, headings and links');
       assert.deepEqual(result.markers.sort((a,b) => a.id.localeCompare(b.id)), expected[act.path].map(({id, category}) => ({id, category})).sort((a,b) => a.id.localeCompare(b.id)));
       assert(result.max <= 2, 'sparse category labels');
+      const categories = {item:'道具／線索',puzzle:'解謎／操作',event:'事件',horror:'恐怖點',boss:'BOSS'};
+      for (const cue of result.cues) {
+        const matches = cue.ids.map(id => expected[act.path].find(m => m.id === id));
+        const forms = ['物證','聲證','影證','文證'].filter(form => matches.some(m => m.fragmentForms.includes(form)));
+        for (const m of matches) assert.deepEqual(m.fragmentForms, forms, 'different media and ordinary actions do not inherit each other\'s parentheses');
+        assert.equal(cue.text, categories[matches[0].category] + (forms.length ? `（${forms.join('／')}）` : ''));
+        assert.equal(cue.title, matches.map(m => m.title + (m.fragmentForms.length ? `（${m.fragmentForms.join('／')}）` : '')).join('、'));
+      }
     }
     pass(`${Object.values(expected).flat().length} markers render exactly once across ten acts; narrative text, headings and source links are unchanged`);
+    pass('all fragment parentheses and source-name tooltips agree with 3D metadata, including mixed forms');
+    await page.evaluate(file => openReader(file), ACTS[2].path);
+    const sourceCue=page.locator('[data-reading-markers~="R7-C03-item"]');
+    assert((await sourceCue.evaluate(el=>el.closest('p').textContent)).includes('347 道記號'));
+    assert.equal(await sourceCue.innerText(),'道具／線索（物證／聲證／文證）');
+    assert.equal(await page.locator('[data-reading-markers~="R7-C03-horror"]').innerText(),'恐怖點');
+    assert((await page.locator('[data-reading-markers~="R9-C01-horror"]').evaluate(el=>el.closest('p').textContent)).includes('帆布旁一道暗縫在 3 秒內退去'));
+    await page.evaluate(file => openReader(file), ACTS[9].path);
+    for(const id of ['R32-D01-item','R32-D02-item','R32-F01-item']) assert.equal(await page.locator(`[data-reading-markers~="${id}"]`).innerText(),'道具／線索（影證）');
+    assert.equal(await page.locator('[data-reading-markers~="R32-D09-puzzle"]').innerText(),'解謎／操作');
+    pass('source cues follow their authored reading beats, while the same-image scare and final comparison remain untyped');
     const labels = ['item', 'puzzle', 'event', 'horror', 'boss'];
     const readerStyle = {};
     for (const category of labels) {
@@ -97,6 +117,15 @@ async function bounds(page) {
       await popup.close();
     }
     pass('static Pages payload and 390/320px layouts remain readable; specification links still open a separate page');
+    for (const width of [1440,390,320]) {
+      await page.setViewportSize({width,height:width>800?1000:844});
+      await page.goto(url(ACTS[5].path,'s-0908-25',true)); await ready(page);
+      const cue = page.locator('[data-reading-markers~="R24-D04-event"]');
+      assert.equal(await cue.innerText(),'事件（影證／文證）');
+      await cue.scrollIntoViewIfNeeded(); await bounds(page);
+      await page.screenshot({path:path.join(out,`fragment-mixed-${width}.png`)});
+    }
+    pass('mixed-form parentheses wrap without overflow on static desktop and mobile readers');
     for (const width of [1440, 390]) {
       await page.setViewportSize({width, height: width > 800 ? 1000 : 844});
       for (const [act, node, phrase] of [[2, 'R7', '一聲清喉嚨在近處'], [6, 'U2', '初次從門邊望進內井']]) {
@@ -144,6 +173,26 @@ async function bounds(page) {
       }
     }
     pass('five late-game close-ups stay on their interaction paragraphs with unique work-order links on desktop/mobile');
+    for (const width of [1440, 390]) {
+      await page.setViewportSize({width, height: width > 800 ? 1000 : 844});
+      for (const [act, id, phrase] of [
+        [2, 'R7-D01', '人設、素材與應對章各留一枚頁籤'],
+        [3, 'R16-D01', '原識別碼與人員列並在旁邊'],
+        [5, 'R23-D02', '來源標頭和頁碼留在局部旁'],
+        [7, 'R29-D01', '透明疊片對齊同欄筆勢'],
+        [8, 'R30-D01', '同拍攝方向的震前／震後快照'],
+        [8, 'R31-D01', '兩組，可自由切換'],
+      ]) {
+        await page.goto(url(ACTS[act].path, '', true)); await ready(page);
+        const link = page.locator('#readerContent a').filter({hasText: new RegExp(`^${id}$`)});
+        assert.equal(await link.count(), 1, id);
+        assert((await page.locator('#readerContent').innerText()).includes(phrase), id);
+        await link.evaluate(el => el.closest('p').scrollIntoView({block: 'center'}));
+        await bounds(page);
+        await page.screenshot({path: path.join(out, `reading-load-${id}-${width}.png`)});
+      }
+    }
+    pass('six revised reading hubs retain their inline work orders and readable desktop/mobile source cues');
     await page.goto(url(ACTS[0].path)); await ready(page);
     assert.match(await page.locator('[data-reading-markers~="P2-C04-horror"]').locator('xpath=ancestor::tr').innerText(), /搪瓷盆.*第四個人/s);
     await page.goto(url(ACTS[9].path)); await ready(page);

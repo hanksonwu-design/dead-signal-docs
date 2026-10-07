@@ -5,9 +5,20 @@ import {fileURLToPath} from 'node:url';
 import {ROOT,parseMaster} from './sync-canonical.mjs';
 import {collectSceneImages} from './build-scene-images.mjs';
 import {MAIN_MARKERS,MARKER_CATEGORIES,MARKER_TIMINGS,HORROR_TIMING,TRANSITION_HORROR} from '../building/marker-definitions.js';
+import {FRAGMENT_IMAGE_FORMS,FRAGMENT_SOURCE_OPTIONS} from '../building/fragment-sources.js';
+import {FRAGMENT_FORMS} from '../building/fragment-forms.js';
 
-export function buildModelMarkers(graph,flow,rows,master,definitions=MAIN_MARKERS){
+export function buildModelMarkers(graph,flow,rows,master,definitions=MAIN_MARKERS,fragmentForms=FRAGMENT_IMAGE_FORMS,sourceOptions=FRAGMENT_SOURCE_OPTIONS){
  const markers=[],seen=new Set(),images=new Map(rows.map(r=>[r.id,r]));
+ for(const [image,forms] of Object.entries(fragmentForms)){
+  assert(images.has(image)&&flow.images[image],`Unknown fragment image: ${image}`);
+  assert(Array.isArray(forms)&&forms.length&&forms.every(form=>FRAGMENT_FORMS.includes(form)),`Invalid fragment forms: ${image}`);
+  assert.equal(new Set(forms).size,forms.length,`Duplicate fragment form: ${image}`);
+ }
+ for(const [image,options] of Object.entries(sourceOptions)){
+  assert(fragmentForms[image],`Options without fragment source: ${image}`);
+  assert(['item','event','puzzle'].includes(options.category||'item'),`Invalid fragment category: ${image}`);
+ }
  const offsets=[[-.28,.27],[.29,.21],[-.26,-.29],[.27,-.28],[0,.35],[.35,0],[-.35,0],[0,-.35]];
  function add(node,shot,category,image,title,index,play=null,timing=''){
   const row=images.get(image),asset=flow.images[image];
@@ -26,7 +37,9 @@ export function buildModelMarkers(graph,flow,rows,master,definitions=MAIN_MARKER
   assert.equal(master.anchorFiles.get(source[2]),sourceFile,`Marker source anchor: ${image}`);
   assert.equal(master.anchorFiles.get(asset.heading),asset.spec,`Marker spec anchor: ${image}`);
   const id=`${image}-${category}`;assert(!seen.has(id),`Duplicate marker: ${id}`);seen.add(id);
-  markers.push({id,node,shot,category,title,image,content:asset.content,requirements:asset.requirements,
+  const options=sourceOptions[image]||{},isFragment=fragmentForms[image]&&category===(options.category||'item');
+  if(isFragment&&options.title)title=options.title;
+  markers.push({id,node,shot,category,title,image,fragmentForms:isFragment?FRAGMENT_FORMS.filter(form=>fragmentForms[image].includes(form)):[],reading:isFragment?options.reading||'':'',content:asset.content,requirements:asset.requirements,
    source:sourceFile,heading:source[2],spec:asset.spec,specHeading:asset.heading,
    offset:shot?(category==='horror'?[-.8,-1.3]:[.8,0]):offsets[index%offsets.length],play,timing});
  }
@@ -40,6 +53,14 @@ export function buildModelMarkers(graph,flow,rows,master,definitions=MAIN_MARKER
  for(const [id,title] of TRANSITION_HORROR){
   const s=flow.subscenes.find(s=>s.id===id);assert(s,`Missing horror subscene: ${id}`);
   add(s.node,s.id,'horror',s.image,title,0,null,'主線時機');
+ }
+ for(const image of Object.keys(fragmentForms)){
+  const category=sourceOptions[image]?.category||'item';
+  if(seen.has(`${image}-${category}`))continue;
+  const row=images.get(image);
+  assert(graph.nodes.some(n=>n.id===row.node),`Unknown fragment node: ${image}`);
+  const shot=flow.subscenes.find(s=>s.image===image||s.details.includes(image));
+  add(row.node,shot?.id||'',category,image,flow.images[image].content,markers.filter(m=>m.node===row.node&&!m.shot).length);
  }
  return {version:1,markers};
 }

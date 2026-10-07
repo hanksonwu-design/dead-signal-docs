@@ -38,6 +38,10 @@ async function layout(page){
   const page=await browser.newPage({viewport:{width:1440,height:1000}});page.on('pageerror',e=>errors.push(e.message));
   await open(page,{scene:'R2'});
   assert.equal(await page.locator('.content-marker').count(),data.filter(m=>!['R33','POST'].includes(m.node)).length);
+  for(const pin of await page.locator('.content-marker').evaluateAll(es=>es.map(el=>({id:el.dataset.marker,text:el.textContent,title:el.title,aria:el.getAttribute('aria-label')})))){
+   const m=data.find(m=>m.id===pin.id),expected=m.title+(m.fragmentForms.length?`（${m.fragmentForms.join('／')}）`:'');
+   assert.equal(pin.text,expected);assert(pin.title.includes(expected));assert.equal(pin.aria,pin.title);
+  }
   assert.equal(await page.locator(visible).count(),0);
   await page.locator('#focus').click();await page.waitForTimeout(200);
   assert(await page.locator(visible).count()>0);await layout(page);
@@ -112,6 +116,33 @@ async function layout(page){
    await page.locator('#focus').click();await page.waitForTimeout(200);await layout(page);
   }
   pass('hearing and cover markers use canonical production layers, with speaker timing classified as a puzzle');
+  for(const [id,label] of [['R2-D01-item','接收名冊（物證）'],['R2-D03-event','訓練錄音（聲證）'],['R19-F01-item','十一分四十的記憶靜格（影證）'],['R29-D01-item','三個月份簽核（文證）'],['R24-D04-event','祈願快取・靜止（影證／文證）'],['R24-C01-item','隨身碟內的康錄音（聲證）'],['R32-D01-item','P1 現時檢修鏡頭（影證）']]){
+   const m=data.find(m=>m.id===id);await open(page,{scene:m.node,marker:id});
+   assert.equal(await page.locator('#marker-detail h4').innerText(),label);
+   assert.equal(await page.locator(`[data-marker-select="${id}"] span`).innerText(),label);
+  }
+  for(const image of ['R8-D01','R16-D03','R21-C01','R26-D03','R32-D02','R32-F01']){
+   const m=data.find(m=>m.image===image&&m.fragmentForms.length);await open(page,{scene:m.node,marker:m.id});
+   assert((await page.locator('#marker-detail h4').innerText()).includes(m.fragmentForms[0]));
+  }
+  await open(page,{scene:'R32',marker:'R32-D09-puzzle'});
+  assert.equal(await page.locator('#marker-detail h4').innerText(),'肉身與位置對照');
+  await open(page,{scene:'R12',marker:'R12-D04-horror'});
+  assert.equal(await page.locator('#marker-detail h4').innerText(),'無主手機');
+  for(const width of [1440,390,320]){
+   await page.setViewportSize({width,height:width>800?1000:844});
+   await open(page,{scene:'R24',marker:'R24-D04-event'});await page.locator('#focus').click();await page.waitForTimeout(200);
+   await layout(page);assert(await page.locator('.content-marker[data-marker="R24-D04-event"]').isVisible());
+   await page.screenshot({path:path.join(out,`fragment-mixed-${width}.png`),fullPage:true});
+  }
+  pass('all four fragment types and mixed forms match across pins, tooltips, accessible names, lists and details');
+  for(const width of [1440,390,320]){
+   await page.setViewportSize({width,height:width>800?1000:844});
+   await open(page,{scene:'R7',marker:'R7-C03-item'});await page.locator('#focus').click();await page.waitForTimeout(200);
+   await layout(page);assert(await page.locator('.content-marker[data-marker="R7-C03-item"]').isVisible());
+   await page.screenshot({path:path.join(out,`fragment-three-forms-${width}.png`),fullPage:true});
+  }
+  pass('added sources work without inheriting scare/board labels; long three-form pins stay readable');
   for(const width of [1440,390]){
    await page.setViewportSize({width,height:width>800?1000:844});
    for(const [scene,marker] of [['R19','R19-V01-horror'],['R25','R25-V02-puzzle']]){

@@ -135,7 +135,8 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
 });
 
 test('every static screenplay cue names its shot size without changing protected framing', () => {
-  const counts = [22, 56, 80, 98, 45, 30, 17, 16, 10, 20];
+  // R7's duplicate printed-process close-up is now part of its first manual shot.
+  const counts = [22, 56, 79, 98, 45, 30, 17, 16, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);

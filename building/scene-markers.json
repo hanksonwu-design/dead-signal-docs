@@ -8,6 +8,8 @@
       "category": "item",
       "title": "泡水求援箱",
       "image": "P0-C04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "泡水求援箱",
       "requirements": "腐蝕斷線、按鍵原位／陷住差分；兩次按壓動畫另製。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -28,6 +30,8 @@
       "category": "puzzle",
       "title": "維修柵門卡榫",
       "image": "P0-C06",
+      "fragmentForms": [],
+      "reading": "",
       "content": "維修柵門與鏽卡榫",
       "requirements": "未拉／鬆動／可穿三態；沒有鎖孔解謎。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -48,6 +52,8 @@
       "category": "horror",
       "title": "積水與濕鞋印",
       "image": "P0-C05",
+      "fragmentForms": [],
+      "reading": "",
       "content": "積水、洩水孔與濕鞋印",
       "requirements": "原方向／末枚停在牆縫旁兩版；近看與全景差分一致，只在遮擋時換圖。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -68,6 +74,8 @@
       "category": "event",
       "title": "趨光夢境",
       "image": "P0-V02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "趨光夢境與低動態替代",
       "requirements": "亮點、翼緣遮擋、接回踏台的靜態關鍵畫面；非熱點，不以靜態圖取代原夢境動畫。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -88,6 +96,8 @@
       "category": "item",
       "title": "維修台防水袋",
       "image": "P1-C05",
+      "fragmentForms": [],
+      "reading": "",
       "content": "抽水泵維修台與防水工作袋",
       "requirements": "兩個焦點；保留袋口、擺位與遮擋，不能穿透泵體看到身體。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -108,6 +118,8 @@
       "category": "puzzle",
       "title": "左岔門牌與管線",
       "image": "P1-C08",
+      "fragmentForms": [],
+      "reading": "",
       "content": "左岔路門牌與管線標籤",
       "requirements": "「地基處理室」可讀，與主圖位置一致；普通蛾與裝飾標籤不另加熱點。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -128,6 +140,8 @@
       "category": "horror",
       "title": "管後錯位腳步",
       "image": "P1-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "管線岔口、工具箱、泵體、封閉梯間及地基處理室門牌；泵體遮住凹室。",
       "requirements": "留光有／無、梯間鐵網濕手印前／後分層；任何序幕畫面均不露肉身。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -148,6 +162,8 @@
       "category": "puzzle",
       "title": "束帶椅與拖痕關聯",
       "image": "P2-D01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "勒痕與拖痕的筆記關聯",
       "requirements": "沿兩項已見原件縮頁；未關聯／已關聯分態，不生成錄音。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -168,6 +184,8 @@
       "category": "horror",
       "title": "首次凝固・靜止回憶",
       "image": "P2-F01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "首次凝固的無臉人物與房間",
       "requirements": "獨立凝固構圖按既有圖層預算；編號牌熱點位置不跳動。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -188,6 +206,8 @@
       "category": "horror",
       "title": "水面第四人反射",
       "image": "P2-C04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "搪瓷盆水面與第四人反射",
       "requirements": "盆內反射出不在全景中的第四人，無可辨臉；此近看可遮住門邊，關閉後才揭露全景少一人的原差分，不製作走離動畫。",
       "source": "09_劇本/09-03_正式劇本_序幕.md",
@@ -208,6 +228,8 @@
       "category": "puzzle",
       "title": "叫號機三鍵",
       "image": "R1-C03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "叫號機三鍵與椅側號牌",
       "requirements": "叫號／鈴聲測試／重置測試同樣式；等待序列各態、五個編號可讀。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -228,6 +250,8 @@
       "category": "horror",
       "title": "熄滅電視的反射",
       "image": "R1-C06",
+      "fragmentForms": [],
+      "reading": "",
       "content": "熄滅的電視表面",
       "requirements": "主動查看為同步的手與櫃檯反射；慢半拍另作一次事件，不在近看重播，也不藉缺失反射提前暗示離體。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -248,6 +272,10 @@
       "category": "item",
       "title": "接收名冊",
       "image": "R2-D01",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
       "content": "接收名冊與工作動線頁",
       "requirements": "逐頁交可讀原件；工號、接收欄、押入／受控轉介、轉介者不予放行、對外聯絡監看及流程圖不能畫成假字；不另增原件或圖號。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -268,6 +296,8 @@
       "category": "puzzle",
       "title": "送餐車與梯口",
       "image": "R2-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "送餐車、輪卡與梯口",
       "requirements": "阻塞／解除／停入凹位差分，紅扶手在前後鏡位連續。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -288,6 +318,10 @@
       "category": "event",
       "title": "訓練錄音",
       "image": "R2-D03",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "",
       "content": "接待電腦訓練錄音頁",
       "requirements": "播放／停止及來源標籤；既存音訊另製，筆記不播放。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -308,6 +342,10 @@
       "category": "item",
       "title": "枕下全家福",
       "image": "R3-C02",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
       "content": "枕頭下全家福",
       "requirements": "獨立清晰原件及枕邊取看構圖；家庭成員身分不補推論。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -328,6 +366,10 @@
       "category": "puzzle",
       "title": "取衣牌與床號",
       "image": "R3-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "取衣牌、未寄家書與床號工位對照",
       "requirements": "各件分頁，未領／撤名資訊分開。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -348,6 +390,8 @@
       "category": "horror",
       "title": "床位殘留・靜止回憶",
       "image": "R3-F01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "蜷縮人物與床位殘留",
       "requirements": "同一床位的靜止疊層；不移動歷史身體。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -368,6 +412,10 @@
       "category": "item",
       "title": "名字與正字遺言",
       "image": "R4-C01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "名字、日期、正字記號與遺言牆",
       "requirements": "分段高解析母圖供橫移；各段閱讀不重排位置，完整轉錄另排。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -388,6 +436,10 @@
       "category": "puzzle",
       "title": "符號 F1",
       "image": "R4-C04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "牆角符號與數字 F1",
       "requirements": "47 清楚可描摹；回訪多一筆版獨立差分，不改已得代碼。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -408,6 +460,8 @@
       "category": "horror",
       "title": "門外摩擦痕",
       "image": "R4-C05",
+      "fragmentForms": [],
+      "reading": "",
       "content": "門外下緣與摩擦痕",
       "requirements": "同門框局部；恐怖聲音與差分依原事件，不新增門外人物。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -428,6 +482,10 @@
       "category": "item",
       "title": "香火簿",
       "image": "R4b-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "香火簿",
       "requirements": "原姓名、日期、欄位分頁；與後幕資料相同來源不換姓名。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -448,6 +506,11 @@
       "category": "event",
       "title": "未領餐券與代留物",
       "image": "R4b-C02",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
       "content": "未領餐券與代留物",
       "requirements": "票面／小物／餐盒局部，留置用途可見，無新增收藏要求。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -468,6 +531,10 @@
       "category": "item",
       "title": "繡布與縫紉位置",
       "image": "R5-C02",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
       "content": "繡布與縫紉位置",
       "requirements": "#05 數字與布紋可讀，近看時針線停在字外；現時細足指節與空袖差分和凝固記憶分層，歷史層保持靜止。不把文化袖口字條當繡布線索。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -488,6 +555,8 @@
       "category": "puzzle",
       "title": "姓名關聯調查板",
       "image": "R5-D02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "姓名關聯與第一層三格調查板",
       "requirements": "各來源縮圖沿既有原件，未得／已得／放置／鎖定分態；不新增第四格。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -508,6 +577,8 @@
       "category": "event",
       "title": "安定角落",
       "image": "R5-C05",
+      "fragmentForms": [],
+      "reading": "",
       "content": "安定角落",
       "requirements": "沿用照片原件 P1-C02，角落局部另取本房，不重畫新照片。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -528,6 +599,10 @@
       "category": "item",
       "title": "帳號名單與匯款單",
       "image": "R6-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "留存帳號名單與匯款單",
       "requirements": "兩份分頁；48 帳號與不同人共用頭像可查，不替所有帳號指定真人。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -548,6 +623,11 @@
       "category": "event",
       "title": "本機紀錄與來電",
       "image": "R6-D02",
+      "fragmentForms": [
+        "聲證",
+        "文證"
+      ],
+      "reading": "",
       "content": "同步座本機紀錄與來電",
       "requirements": "待機／記錄／通話／掛斷可辨，聲源留本機。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -568,6 +648,8 @@
       "category": "horror",
       "title": "空椅",
       "image": "R6-C04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "空椅坐墊與椅腳",
       "requirements": "凹痕、磨損及椅腳原位各可辨；只沿原一次椅腳聲，不畫成剛有人離開的事實。",
       "source": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -588,8 +670,12 @@
       "category": "item",
       "title": "教戰手冊",
       "image": "R7-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "教戰手冊人設、素材與應對章",
-      "requirements": "按原頁籤分頁；第 3 頁來源及 #12 不改寫。",
+      "requirements": "首頁流程、人設／素材／應對頁籤、代碼／勾記／抽查格局部及完整原頁；來源、頁碼與版次同框，交已讀及焦點接續態。第 3 頁來源及 #12 不改寫。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
       "heading": "s-0905-11",
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -608,6 +694,10 @@
       "category": "puzzle",
       "title": "完整排行",
       "image": "R7-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "完整排行榜、同欄班表與最低列便條",
       "requirements": "三份分頁；E1-06、E1-14 各依原條件取得。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -628,6 +718,10 @@
       "category": "event",
       "title": "代班與配給",
       "image": "R7-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "代班簽認紙背面與配給扣除通知",
       "requirements": "CARE-01／02 工號、日期、撤回欄可對讀。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -648,6 +742,8 @@
       "category": "horror",
       "title": "空工位間的清喉嚨聲",
       "image": "R7-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "聊天工位、共用教戰手冊、白板、排行榜、刻痕隔板與跨棟橋鋁門；HA-R7-01 首次入場時近、中、遠三處空工位可同框辨認。",
       "requirements": "白板正反、榜單補全、手機自動重撥開／關、老周原處置狀態；現時頸殼交付中空側弧、向內折／靜止差分，皺褶撥號手保留人形，播放來源時停新增動態與擬音。HA 沿用清喉嚨聲與環境字幕，不加人影差分；選填遭遇不占通橋條件。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -668,6 +764,8 @@
       "category": "horror",
       "title": "老周與重撥",
       "image": "R7-C03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "舊手機、347 刻痕、家人照片與撥號前靜格",
       "requirements": "手機播放／自動重撥開關、刻痕、照片各焦點；另交歷史撥號前的凝固手勢疊圖。家庭留言不是現時通話，現時怨靈循環不畫進歷史層。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -688,6 +786,10 @@
       "category": "item",
       "title": "鞋盒記憶卡",
       "image": "R8-C01",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
       "content": "鞋盒、不成對的鞋、三張撕過照片及背面記憶卡",
       "requirements": "鞋、三片照片正反面、卡片貼附／取出與回訪缺角差分各交清晰局部；不補可辨人臉。照片記憶另見 F02。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -708,6 +810,8 @@
       "category": "puzzle",
       "title": "紙墊手與讀卡盤",
       "image": "R8-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "紙墊、手與讀卡托盤；修補袋短尾雙結與小修理桌草圖",
       "requirements": "紙邊放下／扶起／手移開／紙墊移妥；手與紙獨立疊圖。另交原記憶的撐布邊／掌心托結靜止差分及同源文字，不與現時放蛾動畫混層。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -728,6 +832,10 @@
       "category": "event",
       "title": "靜止回憶",
       "image": "R8-F01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
       "content": "窗與紙的關係記憶",
       "requirements": "靜止原構圖及紙緣局部；現在回憶的台詞不畫成過去字幕。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -748,6 +856,8 @@
       "category": "horror",
       "title": "坐下以前的倒影",
       "image": "R8-C03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "原螢幕反射面",
       "requirements": "主動查看的正常表面；倒影姿勢差異只按一次事件，不新增追認鏡頭。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -768,6 +878,10 @@
       "category": "item",
       "title": "原始意願聯",
       "image": "R9-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "素材索引、卡片盤點與原始意願聯",
       "requirements": "214／已刪 17／實存 197 各在原欄；同意書與意願聯分頁，姓名維持遮蔽。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -788,6 +902,8 @@
       "category": "puzzle",
       "title": "點歌機讀卡",
       "image": "R9-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "點歌機、播放狀態與讀卡槽",
       "requirements": "一般播放停在副歌前、無電／有電、未插／已插／取回及 room_07/customer_test 已刪除頁各態；沒有私密影像縮圖，聲源依原設備。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -808,6 +924,10 @@
       "category": "event",
       "title": "匿名求助",
       "image": "R9-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "空白處置表與匿名求助附頁",
       "requirements": "交付求助頁正反面：正面家屬威脅、背面被迫聲稱自願與本人否認；原件無署名。未填處置欄不得製成已核准；附頁獨立已讀狀態。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -828,6 +948,8 @@
       "category": "horror",
       "title": "實牆後的拉簾聲",
       "image": "R9-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "拉不開的窗、布簾與假家庭相框",
       "requirements": "窗封閉結構、布簾背面及相框分焦點，不能看見外界。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -848,6 +970,10 @@
       "category": "item",
       "title": "未寄外聯草稿",
       "image": "R10-C03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "祭台側縫、底部卡槽與未寄外聯草稿",
       "requirements": "現實層紙本撕缺末行、遮蔽家書及聯絡附頁分頁可讀；不搬動祭台。過去停在送出前的手另交 R10-F01，不把歷史手勢放到現實層。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -868,6 +994,10 @@
       "category": "puzzle",
       "title": "祈願卡背管理章",
       "image": "R10-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "祈願卡背面管理章",
       "requirements": "章、日期、房號及塗去姓名；與 R7 排班對照才能解讀。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -888,6 +1018,10 @@
       "category": "event",
       "title": "未送求助・靜止回憶",
       "image": "R10-F01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
       "content": "供桌底卡槽的未送出求救靜格",
       "requirements": "已讀供桌與卡背並建立關聯才可見；手停在送出前，沒有按下、傳送成功或現時求救。與側縫紙本分圖，不把過去手勢畫進現實層。",
       "source": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -908,6 +1042,8 @@
       "category": "horror",
       "title": "缺燈與晚到的繼電聲",
       "image": "R10-C04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "電子點燈、控制器與缺燈位置",
       "requirements": "正常、熄兩秒、復亮及第三拍缺一盞的原差分；節奏另交原動畫／聲音，不能用全滅靜圖改掉三拍。",
       "source": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -928,6 +1064,8 @@
       "category": "horror",
       "title": "阿尋・訊號遭遇",
       "image": "R11-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "第三排靠牆座位、S-03 門端、終端、隔板凹位、椅子與 UPS 維修座。",
       "requirements": "原椅／回訪少一椅、傳輸 99%／完成校驗、遭遇前後分層；阿尋交付三層窄扇笑膜、斜耳機、頜線延遲與鍵縫節指結構，十一身分維持視窗而非實體臉。安全來源頁與攻防速查頁明確分開。現場波形辨鈴聲收束／桌側抓刮，操作鏡位與方向字幕交 R11-V02，不增加追逐。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -948,6 +1086,8 @@
       "category": "puzzle",
       "title": "未送名單缺段校驗",
       "image": "R11-D02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "未送完名單與本地缺段校驗",
       "requirements": "99% 截圖、R8 已實讀末段、核對及提交各態；資料不得從空卡生成。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -968,6 +1108,10 @@
       "category": "item",
       "title": "名單版本",
       "image": "R11-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "個人草稿 v01 與擴大名冊 v02",
       "requirements": "同頁並列來源、版本、範圍，保留完整可讀原件。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -988,6 +1132,8 @@
       "category": "puzzle",
       "title": "三接頭",
       "image": "R12-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三個接頭與低壓插接處",
       "requirements": "各接頭正面輪廓、卡榫與插口；斷電確認、選取、接妥三態。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1008,6 +1154,10 @@
       "category": "item",
       "title": "缺藥清單",
       "image": "R12-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "缺藥清單與空藥格",
       "requirements": "藥格局部和清單原件；不製作可服用藥品道具。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1028,6 +1178,8 @@
       "category": "horror",
       "title": "無主手機",
       "image": "R12-D04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "本地來電與語言來源頁",
       "requirements": "原鈴聲及已核對版本，聲音仍來自現場設備。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1048,6 +1200,10 @@
       "category": "puzzle",
       "title": "三日期紙",
       "image": "R13-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "三張帶日期的叫號紙",
       "requirements": "D-15／D-16／D-18 各一頁，可排序；缺 D-17 由比對取得，不印答案提示。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1068,6 +1224,10 @@
       "category": "item",
       "title": "停藥回執",
       "image": "R13-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "RX-17 停藥回執與照護註記",
       "requirements": "完整回執與現時需求分頁；必經原件不得被支線完成條件擋住。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1088,6 +1248,8 @@
       "category": "horror",
       "title": "斷藥者",
       "image": "R13-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "候診椅、藥袋、三張叫號紙、叫號器、健康終端、病床與後簾。",
       "requirements": "叫號前／D-17 已叫／照護註記已存分開；斷藥者另交節段指尖繞空掌心內折、濕袖及原逼近／退回差分，取代老周式頸殼意象；數藥節拍不是密碼。後簾通行依兩件必要操作，不因看圖就開門。另交 HA-R13-02 現場波形中斷、簾邊人影及方向字幕並存預覽，無聲仍可退 R12。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1108,6 +1270,8 @@
       "category": "puzzle",
       "title": "三繼電線",
       "image": "R14-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "餐食、藥品與設備三條繼電線",
       "requirements": "端點形狀及圖示可辨，線路可選／已接差分不只靠顏色。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1128,6 +1292,11 @@
       "category": "item",
       "title": "識別牌刮痕",
       "image": "R14-C02",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
       "content": "內壁刮痕與識別牌碎片",
       "requirements": "兩個可比焦點；凝固層單獨輸出，人物靜止。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1148,6 +1317,8 @@
       "category": "horror",
       "title": "門縫",
       "image": "R14-C04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "樓層顯示與門縫",
       "requirements": "28／30M／31 顯示差分及原門縫亮度；衣物、束帶與標籤結成的窄繭保留原呼吸／開關門同步節奏，不新增第二組節拍。低動態以原呼吸相位差分呈現，不增加可進樓層。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1168,6 +1339,8 @@
       "category": "puzzle",
       "title": "三路供電",
       "image": "R15-D01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三路電力、原操作紀錄與確認頁",
       "requirements": "原操作紀錄、三路差異、三份可能失去的暫存來源名稱、長按前／中／取消／鎖定與操作完成紀錄各頁；不得只畫成功選項。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1188,6 +1361,8 @@
       "category": "horror",
       "title": "故障支路靜止手影",
       "image": "R15-C04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "維修支路隔離開關",
       "requirements": "銘牌「維修支路／保持隔離」、接點接入／斷開兩態；不只顏色變化。原 E-08 條件成立才疊靜止工具手、跨管線錯接肘影及胸側殼緣；標字與斷電指向不遮，歷史手勢另層。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1208,6 +1383,8 @@
       "category": "puzzle",
       "title": "第二層調查板",
       "image": "R16-D06",
+      "fragmentForms": [],
+      "reading": "",
       "content": "技術核心第二層調查板",
       "requirements": "原三格、來源縮頁與確認前後差分；保留草稿，確認後只顯一則完成回饋及原結論。必要資料依本房原件，不增加收集門檻。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1228,8 +1405,12 @@
       "category": "item",
       "title": "分流執行回執",
       "image": "R16-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "分流處置與執行回執",
-      "requirements": "RX-17／D-17／日期及 R13 回執影本各可讀；不要求完成缺藥支線。原核可／已執行局部與草稿接續態另交，不自動開第三機櫃。",
+      "requirements": "已核指標側欄與門檻／核可者／執行狀態同列局部；RX-17／D-17／日期及 R13 回執影本各可讀，不要求完成缺藥支線。原頁、局部與草稿接續態另交，不自動開第三機櫃。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
       "heading": "s-0906-37",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
@@ -1248,6 +1429,8 @@
       "category": "event",
       "title": "反擊確認",
       "image": "R16-D07",
+      "fragmentForms": [],
+      "reading": "",
       "content": "舊操作索引與權限反擊確認",
       "requirements": "未讀／已讀、長按取消／確認分態；依原權限解鎖，不新增可抹除對象或減免來源、電力、代價。",
       "source": "10_製作規格/10-04_製作規格_第三幕.md",
@@ -1268,6 +1451,8 @@
       "category": "horror",
       "title": "同步反射與風扇停轉",
       "image": "R16-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "機櫃索引、指標標籤與鎖定後螢幕",
       "requirements": "櫃門與原「客戶信任」標籤、底層人員編號、舊工作階段恢復／權限遮蔽各局部和差分；依原三秒安全回景後時機，不在閱讀中插事件。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1288,6 +1473,8 @@
       "category": "puzzle",
       "title": "正路日期比對",
       "image": "R17-D10",
+      "fragmentForms": [],
+      "reading": "",
       "content": "32-S 正路日期比對桌",
       "requirements": "E3-03、E3-06 與第三來源並排；正路 C-02 與無日期 L-04 分開回饋，原日期不重寫。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1308,6 +1495,10 @@
       "category": "item",
       "title": "歷史收件與震損自檢",
       "image": "R17-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "中繼接線、封包標頭、歷史收件回執與震損自檢",
       "requirements": "接線近景及三份來源分頁；RT-1／L-04、RT-3／C-02 同樣清楚，不標正解。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1326,8 +1517,13 @@
       "node": "R17",
       "shot": "",
       "category": "event",
-      "title": "康的語音備忘",
+      "title": "康的語音備忘與改接附件",
       "image": "R17-D04",
+      "fragmentForms": [
+        "聲證",
+        "文證"
+      ],
+      "reading": "",
       "content": "康語音備忘頁",
       "requirements": "日期、原檔及播放狀態可讀；聲音素材另製。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1348,6 +1544,8 @@
       "category": "horror",
       "title": "站在玻璃另一側的倒影",
       "image": "R17-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "檔案架、玻璃辦公隔間、康桌面、中繼終端與 32-S 服務門。",
       "requirements": "玻璃反射、宿舍接縫主觀錯置與回訪差分分層；外窗遠處暗紅霧、繃緊白絲與桌邊微動紙角另層，C-02／L-04 及桌面線索清晰。紙上編號日期不變，C-02 與 L-04 分開。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -1368,6 +1566,8 @@
       "category": "puzzle",
       "title": "走廊磨痕",
       "image": "R18-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "出口門框兩處磨痕",
       "requirements": "兩處同框可比，門牌及安全位置不可被遮。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1388,6 +1588,8 @@
       "category": "horror",
       "title": "聽息辨影・掩體巡行",
       "image": "R18-V02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "走廊原掩體與下一門牌",
       "requirements": "由入口至掩體、再至出口的原安全站位各交一圖；按原灰盒順序編子圖，不增掩體或傳送。另交現場波形／方向字幕、正常側耳／轉向發聲位置的警戒／退避合成預覽，簾幕與振膜保持可見；補救只退回已到達掩體。N2 交部分遮蔽與屏息態；失敗復位分 N0／N1／N3 已到達狀態，N4 為通過終態。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1408,6 +1610,10 @@
       "category": "item",
       "title": "符號 F2",
       "image": "R19-C03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "椅腳內側 F2 刻痕",
       "requirements": "26 清晰；方向、椅腳彎折及比例與 R21 回查相同。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1428,6 +1634,8 @@
       "category": "puzzle",
       "title": "玻璃定位片",
       "image": "R19-C04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "玻璃下緣定位片與維修小標",
       "requirements": "缺口、刻格及「定位片／由缺口起算」可讀；此側不顯示 R20 操作序位表。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1448,6 +1656,8 @@
       "category": "horror",
       "title": "門外呼吸・關門屏息",
       "image": "R19-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "隔音收容室、束帶椅、單向玻璃壓條、地漏與椅外側側門。",
       "requirements": "門內操作位與門鉸後安全牆角、C07 控制器同框；交沿門框退回牆角的鏡位差分，不新增房間。門縫由開到合；原影子到離開的靜態關鍵圖，完整威脅動畫另製。另交門外低幅呼吸波形、方向字幕、門下影邊及自身屏息提示合成預覽；低音量不等於安全，通過或抹除即結束本段。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1468,6 +1678,8 @@
       "category": "horror",
       "title": "十一分四十・凝固",
       "image": "R19-F01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "十一分四十秒凝固構圖",
       "requirements": "完整凍結背景及椅／地漏／角落高解析局部；90 秒觀察全程不演歷史人物移動。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1488,6 +1700,10 @@
       "category": "item",
       "title": "原通話",
       "image": "R20-D02",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "",
       "content": "歷史通話及 #15 來源",
       "requirements": "原聲源與讀取／播放狀態可辨。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1508,6 +1724,8 @@
       "category": "puzzle",
       "title": "A／B／C 三軌",
       "image": "R20-D01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "A／B／C 三條聲軌",
       "requirements": "各來源、時間刻度與字幕完整可讀，A 開 B 關 C 可任選；不烘焙正解提示。播放器標歷史來源日期，與現場聽覺帶分框；交精簡並存／完整閱讀收起現場帶兩態。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1528,6 +1746,8 @@
       "category": "horror",
       "title": "現場與錄音・桌下屏息",
       "image": "R20-V03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "控制桌下的躲藏與屏息位置",
       "requirements": "桌下低位獨立構圖，桌緣、走廊反射來向、入口側實心擋板安全位與退回控制台的位置連續。交成功側耳後主動返回／未完成退避／完成後空反射三態；成功返回或抹除才結算段 C。屏息及安全窗依原攻防；速查不暫停，完整來源閱讀另依安全入口，不新增房間。另交現場呼吸波形／方向字幕與桌緣遮擋合成預覽，與歷史錄音分層。",
       "source": "10_製作規格/10-05_製作規格_第四幕.md",
@@ -1548,6 +1768,10 @@
       "category": "item",
       "title": "小花排程與求助",
       "image": "R21-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "小花排程、早期退回與後來核可及原申請附頁",
       "requirements": "個案識別與日期清楚；三份分頁及 R21-04 求助／覆核兩附頁分開交付。求助全文、收件章、附件索引、附件已閱、出勤態度、不予轉送與原核可欄皆須清晰可讀；只製文件與無聲轉錄，不製受害影像。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1568,6 +1792,8 @@
       "category": "puzzle",
       "title": "三處置單",
       "image": "R21-D03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三份處置單",
       "requirements": "退回／減輕但核准／完整核可各獨立頁，可按日期排序。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1588,6 +1814,8 @@
       "category": "horror",
       "title": "等待主管指令的走廊",
       "image": "R21-D04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "門端主管驗證與釋放請求",
       "requirements": "原憑據已驗證／釋放待提交／已提交各態；原辦公室外走廊同框差分保留噤聲者面向 R22 與已抹除空位，不重生敵人。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1608,6 +1836,8 @@
       "category": "puzzle",
       "title": "兩套釋放流程",
       "image": "R22-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "破損樓梯門、兩套釋放機構與選路頁",
       "requirements": "主管快速釋放／本地緊急釋放各清晰局部，未選／已選不可改／取消前返回各態；不以低光或長按偷選路。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1628,6 +1858,8 @@
       "category": "horror",
       "title": "掩體巡行",
       "image": "R22-V02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "完整掩體、A 防火扣、B 釋放桿",
       "requirements": "三個固定位置分圖，同一踏面及擴音器定位連續；按原窗口移動。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1648,6 +1880,8 @@
       "category": "event",
       "title": "扶手布結",
       "image": "R22-C06",
+      "fragmentForms": [],
+      "reading": "",
       "content": "扶手布結、主角掌心與門檻",
       "requirements": "布結繫法及斷邊同終幕來源；搭扶手／鬆掌留空與低動態靜止差分，R8 已看記憶／只看現物／未看文字分態，不在此補主人或歷史來源。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -1668,6 +1902,10 @@
       "category": "item",
       "title": "同人 A／B／C 檔案",
       "image": "R23-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "同一人 A／B／C 三份檔案",
       "requirements": "各完整頁與原職稱折頁、印章邊、灰塵點局部；A 同頁分清原工作／工作內容、誘入承諾與到場分配，字句依共用附錄原件字表；日期與面試欄可釘在桌側。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1688,8 +1926,10 @@
       "category": "puzzle",
       "title": "三來源比對桌",
       "image": "R23-D02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三來源比對桌",
-      "requirements": "已看欄／未看欄、比對草稿／確認差分，不靠重翻背記。",
+      "requirements": "職稱／日期／印章三種局部並排、來源標頭與頁碼常駐、原頁展開及返回態；已看欄／未看欄、釘選、比對草稿／確認差分分開，不預填版本答案。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
       "heading": "s-0908-8",
       "spec": "10_製作規格/10-06_製作規格_第五幕.md",
@@ -1708,6 +1948,8 @@
       "category": "event",
       "title": "人物暫記",
       "image": "R23-D08",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三版本處理與人物板暫定註記",
       "requirements": "保存／標疑／關閉皆保留原件；暫定文件聲稱自願（待核）不是定案，不抹去既有受困與加害紀錄。",
       "source": "10_製作規格/10-06_製作規格_第五幕.md",
@@ -1728,6 +1970,8 @@
       "category": "horror",
       "title": "離手後的扶手握痕",
       "image": "R23-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "深層門檻、檔案架、斜撐、三來源查證桌、紙本庫與傾斜門楣；HP-02 離手後，未碰過的扶手空段多出握痕。",
       "requirements": "紙本庫關／開、折頁原樣／展開；原離場手部扶門框與側身表現共用此圖及手部層，低動態可直接切原出口；遠格輪廓只在原選填條件顯示。HP-02 另交手已收回、門框遮擋、五道包覆摺痕終態；僅遮擋時換圖，無直視壓陷或人手現形，資料與 R24 出口不變。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1748,6 +1992,8 @@
       "category": "horror",
       "title": "遠格輪廓／架後壓章",
       "image": "R23-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "最遠檔案格與架後縫",
       "requirements": "原有／無輪廓差分，不讓近看揭出新人物身分。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1766,8 +2012,12 @@
       "node": "R24",
       "shot": "",
       "category": "item",
-      "title": "隨身碟",
+      "title": "隨身碟內的康錄音",
       "image": "R24-C01",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "",
       "content": "隨身碟與屬性列",
       "requirements": "標準版 v4、147 次播放及原屬性；不誤寫 147 人，不切康臉。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1788,6 +2038,8 @@
       "category": "puzzle",
       "title": "四人欄位",
       "image": "R24-D02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "四人欄位並排桌",
       "requirements": "一人一列，來源頁籤與已讀標記可見；每人日期獨立，不套共用日期。三類查看位置與返回全景控制共用此介面，收起／重開保留原列及釘欄，不新增分段完成彈窗。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1808,6 +2060,11 @@
       "category": "event",
       "title": "祈願快取・靜止",
       "image": "R24-D04",
+      "fragmentForms": [
+        "影證",
+        "文證"
+      ],
+      "reading": "",
       "content": "小花祈願監控快取與凝固疊圖",
       "requirements": "原始祈願頁、情緒操控素材標註、來源與前置核對各頁；凝固人物獨立疊圖、不動，不播放校正結果。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1828,6 +2085,8 @@
       "category": "horror",
       "title": "灰塵中的空矩形",
       "image": "R24-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "灰塵中的空矩形",
       "requirements": "原桌面前／後局部，物件消失與可讀原件區分。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1848,6 +2107,10 @@
       "category": "item",
       "title": "符號 F5",
       "image": "R25-C01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "門端回傳與 F5 欄",
       "requirements": "C-12 原請求、校驗尾碼 09、47-26-81-35-09 各保留前導零。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1868,6 +2131,8 @@
       "category": "puzzle",
       "title": "七分鐘與十一秒",
       "image": "R25-D02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "七分鐘全尺與十一秒放大尺",
       "requirements": "兩尺度共用對齊位置，退出放大不重排；拖曳與逐格移位同資料。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1888,6 +2153,8 @@
       "category": "puzzle",
       "title": "喇叭波形・安靜窗",
       "image": "R25-V02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "A／B／C 三喇叭控制點",
       "requirements": "每處固定圖顯示編號、振膜、本地開關及下一段安全方向，不能遙控三處。另交現場設備波形與方向字幕合成預覽，5 秒播放／3.8 秒安靜同步振膜；不生成追兵或正解提示。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1908,6 +2175,8 @@
       "category": "event",
       "title": "管理門・阿彪關卡後",
       "image": "R25-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "管理維修門五個指示燈",
       "requirements": "五段齊全／主管權限未釋出／可確認分態，取消仍留 R25。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1928,6 +2197,8 @@
       "category": "horror",
       "title": "比手先到的反射",
       "image": "R25-C03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "門端金屬邊提前半拍的反射、稽核列與另時機的 C-12 凝固輪廓",
       "requirements": "第七次鏡像在兩組時間查讀後首次前往 C-12 時呈現，無聲、現在式金屬邊反射與手部差分；不要求先得 F5，不代開欄或提交。C-12 螢幕內 H-08 仍限 F5 保存後、危險段前選填查看，靜止且與金屬邊反射不同層、不同時機。原回傳欄與歷史來源不變。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1948,6 +2219,8 @@
       "category": "boss",
       "title": "阿彪",
       "image": "R26-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "C-07 椅、阿彪、主管站位、門側終端、椅邊凹位、門側安全角與原厚門。",
       "requirements": "接觸／查證／停止命令／抹除／處置後分層；阿彪另交雙層制服硬殼、細縫腰身與反向雙肘結構，保留工牌位置和核可手掌，原 C-07 凝固人像不套異構。無直接往 M1 的出口。現場波形只同步原壓掌／鉤臂，退位與鬆柄鏡位交 R26-V02；閱讀及戰後撤下。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1968,6 +2241,8 @@
       "category": "puzzle",
       "title": "四源三因果卡",
       "image": "R26-D06",
+      "fragmentForms": [],
+      "reading": "",
       "content": "四來源合成三張因果卡",
       "requirements": "B01～B04 原來源縮頁、三卡可排序／確認；原件可回查，不新增第四張因果卡。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -1988,6 +2263,8 @@
       "category": "event",
       "title": "拒絕與主管接管",
       "image": "R26-C03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "停止命令與主管接管位置",
       "requirements": "兩種預覽、取消、提交後差分；抹除名冊空框獨立，不給安息選項。",
       "source": "09_劇本/09-08_正式劇本_第五幕.md",
@@ -2008,6 +2285,8 @@
       "category": "horror",
       "title": "七窗中的靜止身影",
       "image": "M1-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "第 3、5、7 窗遠看",
       "requirements": "三張獨立遠景，不製作可放大身體傷口的細節圖；其他四窗只沿通行畫面。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2028,6 +2307,8 @@
       "category": "horror",
       "title": "對講機",
       "image": "M1-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "管道對講聲源",
       "requirements": "固定設備與管線局部，E-09 原反應沿原聲音，不增加可拿對講機。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2048,6 +2329,11 @@
       "category": "item",
       "title": "價目面孔",
       "image": "R27-C01",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
       "content": "展示人像及價格覆層",
       "requirements": "各原人像清晰、價格與姓名分層；既有編號／價目與 D01 同列來源對位，交待核列側欄及收頁／回景焦點差分，不能把三編號當三個人。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2068,6 +2354,10 @@
       "category": "puzzle",
       "title": "三別名鏈",
       "image": "R27-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "三組別名對應名冊",
       "requirements": "各組入園、轉運、日期與校驗尾碼分頁可比；已見片段側頁沿原圖裁切並標來源，無來源時只呈本地摘錄，交待核／草稿／回景恢復態，不靠背記。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2088,6 +2378,8 @@
       "category": "event",
       "title": "最後安定處",
       "image": "R27-C03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "低壓維修座",
       "requirements": "一輪可用／已用差分，三鏈完成狀態與安定互不代替。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2108,6 +2400,8 @@
       "category": "horror",
       "title": "同一張價目的覆寫",
       "image": "R27-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "同一張價目",
       "requirements": "選填回看版與首訪版同來源，不新增一份收藏。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2128,6 +2422,10 @@
       "category": "item",
       "title": "收件架",
       "image": "U1-C01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "收件架、架腳、水痕與短箋",
       "requirements": "「下層會濕，信先放上格」及避水位置可辨；不是管圖答案。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2148,6 +2446,8 @@
       "category": "puzzle",
       "title": "三管圖",
       "image": "U1-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三片管圖",
       "requirements": "各片獨立可旋轉圖與接合口，不能把正解烘焙在底圖。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2168,6 +2468,8 @@
       "category": "horror",
       "title": "風柵前的濕布",
       "image": "U2-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "洗衣內井、真牽引鏈、空曬衣桿鏈、煞扣、扶手與往橋下通道；HP-06 封窗風柵前的濕布、衣夾及洗衣店褪色字樣。",
       "requirements": "試真鏈／試空鏈、煞扣未解／已解；不因試錯爆電或失去主線道具。追加普通垂落／貼柵凹面／鬆回布料層、氣流與衣夾音、環境字幕；低動態兩態版及靜音可辨版。全程露出門、短階、雙鏈接點與凹位，不新增圖號。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2188,6 +2490,8 @@
       "category": "puzzle",
       "title": "真鏈與空鏈",
       "image": "U2-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "兩條鏈與連接端",
       "requirements": "各自從手邊到負載的可讀局部，空鏈只接空桿。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2208,6 +2512,8 @@
       "category": "event",
       "title": "煞扣準備",
       "image": "U2-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "安全試行與煞扣",
       "requirements": "鬆緊和扣位前後差分，解扣不直接完成橋下轉輪。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2228,6 +2534,8 @@
       "category": "puzzle",
       "title": "手輪離合",
       "image": "U2b-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "手輪與離合器",
       "requirements": "握位、受力與離合狀態可見，操作1.5秒沿原安全窗。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2248,6 +2556,8 @@
       "category": "horror",
       "title": "UD-01・聽聲收架",
       "image": "U2b-V02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "乾燥凹位與手輪作業位",
       "requirements": "兩固定鏡位，互相看得懂退路；原襲擊動畫另製。另交晾架受力聲的現場波形、方向字幕與凹位遮擋預覽，沿原 UD-01 前兆及兩段收架窗口，不延伸至 U2／U3。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2268,6 +2578,11 @@
       "category": "item",
       "title": "針線盒",
       "image": "U3-C05",
+      "fragmentForms": [
+        "物證",
+        "影證"
+      ],
+      "reading": "",
       "content": "針線盒與布料",
       "requirements": "LM-03 原關聯物件、M 靜圖的手／斜補線裁切與現時布邊同尺度近看；交切頁來源標籤、原照片頁返回焦點及等效短讀，不新增背景、歷史動畫或背包工具。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2288,6 +2603,8 @@
       "category": "puzzle",
       "title": "三燈罩",
       "image": "U3-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三燈罩凹槽與卡榫",
       "requirements": "寬／裂／窄各原件及接座局部，裂口可辨，不靠顏色猜。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2308,6 +2625,8 @@
       "category": "puzzle",
       "title": "橋栓刻度",
       "image": "U3-C03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "側槽兩條刻線與橋栓刻度",
       "requirements": "高解析局部，檢修燈照明前／後可讀，未對齊止擋仍可見。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -2328,6 +2647,10 @@
       "category": "item",
       "title": "醫療移交與外聯",
       "image": "R28-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "醫療評估、目的地缺失移交單與外聯來源",
       "requirements": "各頁原件、同意欄與拒絕註記分開；不補死因或目的地。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2348,6 +2671,8 @@
       "category": "event",
       "title": "遠端快取抉擇",
       "image": "R28-D02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "遠端三頁標題與摘要預覽",
       "requirements": "只顯示原摘要，不在預覽底圖偷露全文。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2366,10 +2691,14 @@
       "node": "R29",
       "shot": "",
       "category": "item",
-      "title": "三月份簽核",
+      "title": "三個月份簽核",
       "image": "R29-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "M-3／M-2／M-1 三個月份簽核頁",
-      "requirements": "2025 年 8、9、10 月各月原件與 R21 排程原簽名並排；三筆錨點、錯選退回、疊合完成及回景恢復態。側頁復用 R19 已見靜格或已讀摘要並標原地點；未見版不預覽。只描既有筆畫，不要求現場寫新簽名或提交核可。",
+      "requirements": "2025 年 8、9、10 月原件與 R21 排程原簽名並排及透明疊片；月份／來源／頁碼常駐，保留各頁移交內容入口。三筆錨點、錯選退回、疊合完成及回景恢復態。側頁復用 R19 已見靜格或已讀摘要並標原地點；未見版不預覽。只描既有筆畫，不要求現場寫新簽名或提交核可。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
       "heading": "s-0909-26",
       "spec": "10_製作規格/10-09_製作規格_第七幕.md",
@@ -2388,6 +2717,8 @@
       "category": "puzzle",
       "title": "本機索引",
       "image": "R29-D02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "本地資料目錄與鑑識結果",
       "requirements": "必要捕捉完成／尚未完成各態，資料目錄供 R31 沿原權限使用。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2408,6 +2739,8 @@
       "category": "event",
       "title": "簽核抉擇",
       "image": "R29-D06",
+      "fragmentForms": [],
+      "reading": "",
       "content": "可移交的單擊提交與關閉結果",
       "requirements": "先讀 D05 批次明細，再單擊「可移交」，1.2 秒內提交；無二次確認框、無長按、提交後不可取消。提交前可關閉佇列，兩路狀態不混用，主線索引均保留。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2428,6 +2761,8 @@
       "category": "puzzle",
       "title": "布結辨路",
       "image": "U4-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "廢布繫單結",
       "requirements": "未繫／繫好差分，無需從別處收集新道具。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2448,6 +2783,8 @@
       "category": "horror",
       "title": "原場景回返",
       "image": "U4-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "重複門牌廊、固定缺角、焊疤、冷凝管、廢布與檢修蓋。",
       "requirements": "單結未綁／已綁、一次回返／已核對、外蓋未開／已開；地標位置不跟鏡頭左右翻轉。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2468,6 +2805,10 @@
       "category": "item",
       "title": "MR-01・選填",
       "image": "U4-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "MR-01 維修委託來源",
       "requirements": "器材號、日期及紙角可讀，與 U6 回聯比對，不當必過門票。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2488,6 +2829,8 @@
       "category": "puzzle",
       "title": "內插銷",
       "image": "U4b-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "內銷、拉片與受力方向",
       "requirements": "拉片與銷分層，未抽／抽出可辨，不提示錯誤扭轉方向。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2508,6 +2851,8 @@
       "category": "event",
       "title": "閘後腳點",
       "image": "U4b-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "同組管線與閘後落腳點",
       "requirements": "與 U4 及 U5 入口對位，不能畫出繞開閘的路。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2528,6 +2873,8 @@
       "category": "item",
       "title": "霜面方向",
       "image": "U5-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "左右霜面與投送口",
       "requirements": "各側獨立圖，霜方向及來源可視辨，不只靠聲音。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2548,6 +2895,8 @@
       "category": "puzzle",
       "title": "遮板拉柄",
       "image": "U5-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "左右遮板與拉柄",
       "requirements": "各未封／拉動／封住，另交轉向隔板左擋／右擋、卡榫咬住／解除／回中位差分。卡榫近看與同側拉柄同框可及，已封側不再出同一攻擊；不畫六秒倒數條。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2568,6 +2917,8 @@
       "category": "horror",
       "title": "UD-02・辨向封阻",
       "image": "U5-V02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "冰櫃掩體與左右遮板作業位",
       "requirements": "固定掩體及兩側三圖，來向／退路一致；每側獨立操作。另交孔口摩擦現場波形、方向字幕、霜線與卡榫到位合成預覽；原 UD-02 擋同側後封板，兩側完成停止。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -2588,6 +2939,8 @@
       "category": "puzzle",
       "title": "三槽水位",
       "image": "U6-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三槽液位與調節閥",
       "requirements": "透明水位疊層與每格刻度獨立，左右導中兩順序都可；不使用只演正解的影片。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2608,6 +2961,10 @@
       "category": "item",
       "title": "MR-02・選填",
       "image": "U6-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
       "content": "工具箱外袋 MR-02 退回聯背面",
       "requirements": "正面位置與背面器材號、日期、紙角可比。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2628,6 +2985,8 @@
       "category": "horror",
       "title": "槽外逆行水紋",
       "image": "U6-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三水槽、調節閥、液位標尺、工具箱與固定保養梯；活動踏板仍未固定；HP-04 槽外淺排水槽的逆行水紋。",
       "requirements": "初始3／0／3、各合法中間水位、平衡2／2／2及關閥差分；總量六格守恆。槽外普通流向／逆行波紋／到梯腳終態與低動態兩態另層；首次有效導水後安全實景呈現，三槽標尺、閥輪及配重不被異常改寫。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2648,6 +3007,8 @@
       "category": "puzzle",
       "title": "水平泡與定位銷",
       "image": "U6b-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "水平泡與止回栓",
       "requirements": "水平泡偏／正、栓開／扣合；平衡不能自動代扣栓。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2668,6 +3029,8 @@
       "category": "event",
       "title": "鎖定後的步道",
       "image": "U6b-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "踏面鎖點與往 R30 落腳處",
       "requirements": "鎖好後可辨承重，來源管線與 U6 一致；護欄外廢管是否仍在架依 HP-05 呈現狀態對位，不改活躍配重管。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2688,6 +3051,8 @@
       "category": "horror",
       "title": "從上方傳來的落管聲",
       "image": "U6b-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "配重踏板維修艙、水平泡、止回栓、踏面與配重管；HP-05 護欄外斷管與頭頂封閉檢修層，獨立維修視角。",
       "requirements": "水位未平衡／水平、止回栓未扣／扣上、踏面不可走／可走分開。斷管在架／落下／空架、頂縫落灰及低動態兩態另層；首次扣栓成功後呈現，水平泡及承重不變，不提前沉降。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2708,8 +3073,10 @@
       "category": "puzzle",
       "title": "五源剖面",
       "image": "R30-D01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "五來源與空間剖面",
-      "requirements": "五個原來源各可讀、剖面底圖獨立；以外段斷裂、核心封門、現時通路三個查看方向分組呈現原件局部，日期、位置及原頁入口可見。可拖放亦可選取安置，不自動排答案；三組不是三次提交。",
+      "requirements": "五原來源及獨立剖面底圖；三個查看方向呈現局部，同向震前／震後快照並排保留基準刻度，日期、位置及原頁入口可見。內側焊珠可對回 C04 與原維修單。可拖放亦可選取安置，五位置不預填；三組不是三次提交。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
       "heading": "s-0909-45",
       "spec": "10_製作規格/10-10_製作規格_第八幕.md",
@@ -2728,6 +3095,8 @@
       "category": "puzzle",
       "title": "煞車",
       "image": "R30-C02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "制動桿、棘爪與維修籠",
       "requirements": "未固定／拉桿／卡住，籠與階梯状態不能互相代替。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2748,6 +3117,8 @@
       "category": "event",
       "title": "不可逆確認",
       "image": "R30-D02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "不可逆確認與五點提交",
       "requirements": "取消／繼續圖，未確認仍可回頭，沒有死亡倒數。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2768,6 +3139,8 @@
       "category": "horror",
       "title": "沉降與三聲空車",
       "image": "R30-V03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "三輛空車與末車底板局部",
       "requirements": "空車撞向焊死核心門；底板只露腕帶、水瓶與目的地空白的園區轉運標籤，不加可取物或另一具遺體。沉降、滑車動畫另製。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2788,6 +3161,8 @@
       "category": "horror",
       "title": "粉塵裡的自己",
       "image": "R30-C03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "粉塵站姿與安全踏點",
       "requirements": "輪廓有／無差分依原事件，近看不追加鏡像台詞。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2808,8 +3183,10 @@
       "category": "puzzle",
       "title": "五份身分來源",
       "image": "R31-D01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "五列身分鑑識資料",
-      "requirements": "帳號、簽名、02:20:11、門未驗證、02:20:22 下行各原欄清晰可並排；側欄重用 R25 已確認時間尺、R29 筆勢局部與來源標頭，中央本房三來源仍待核對，已讀／待核／草稿差分分開。",
+      "requirements": "帳號與簽勢／門端與方向兩組切換及五列全貌；帳號、簽名、02:20:11、門未驗證、02:20:22 下行各原欄清晰可並排。側欄重用 R25 已確認時間尺、R29 筆勢局部與來源標頭，中央本房三來源仍待核對，已讀／待核／草稿差分分開。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
       "heading": "s-0909-53",
       "spec": "10_製作規格/10-10_製作規格_第八幕.md",
@@ -2828,6 +3205,8 @@
       "category": "puzzle",
       "title": "重掛備份",
       "image": "R31-D03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "01:50 排程與接回備份頁",
       "requirements": "五段碼、本地目錄、現場電力分別核對，未掛載／接回／來源缺失各態。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2848,6 +3227,8 @@
       "category": "horror",
       "title": "唯一歷史解凍",
       "image": "R31-F01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "解凍前後與倒影站位",
       "requirements": "依原八個時間區段交八張低動態定格、同十二秒；動畫與人物／反射分層。十二秒解凍仍為全劇唯一歷史動作特例。",
       "source": "09_劇本/09-17_正式劇本_第八幕.md",
@@ -2868,6 +3249,8 @@
       "category": "boss",
       "title": "小花・真相揭露後",
       "image": "R32-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "頂層內井地板、小花、維修與責任終端、真實側牆、連續扶手及回返門框。",
       "requirements": "庇護／封閉／三拍攻防／停戰／五結局各必要差分；初入只在封窗板縫見紅光與細白絲，完整翼膜於既定揭露節點才顯現，並與窗縫白絲接合。另交原身量人形、沿內牆低垂翼拱、厚褶／透紅薄緣及四根粗毛觸鬚兩左兩右的結構表；低辮、雙結與人類手掌保持可辨。霧、白絲、翼膜分層；仍在塔內，不新增露天屋頂。現場波形沿三拍聲響與 R32-V02 操作鏡位，停戰即撤下，不預告真相或標出假門答案。",
       "source": "09_劇本/09-10_正式劇本_終幕.md",
@@ -2888,6 +3271,8 @@
       "category": "puzzle",
       "title": "肉身與位置對照",
       "image": "R32-D09",
+      "fragmentForms": [],
+      "reading": "",
       "content": "肉身、連續位置與主觀移動核對",
       "requirements": "三來源沿現時鏡頭及原靜格，錯配退回、已查／確認各態，不能從預覽直接完成揭露；收起回 R32-V01，祈願卡沿原熱點承接主動繼續，不另交倒數彈窗。",
       "source": "09_劇本/09-10_正式劇本_終幕.md",
@@ -2908,6 +3293,8 @@
       "category": "event",
       "title": "結局抉擇",
       "image": "R32-D04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "五種行動預覽",
       "requirements": "A 完整責任／B 遮自身責任／C 保全定位／D 留下／E 接管各頁；預覽不提交。",
       "source": "09_劇本/09-10_正式劇本_終幕.md",
@@ -2928,6 +3315,8 @@
       "category": "event",
       "title": "結局演出",
       "image": "R33-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "沿結局重用 P1 凹室、維修台與照護構圖；D 留在 R32 室內。",
       "requirements": "非可探索新房；A／B／C／E 回接肉身，D 仍被留住，不能提供回序幕出口。",
       "source": "09_劇本/09-10_正式劇本_終幕.md",
@@ -2948,6 +3337,8 @@
       "category": "event",
       "title": "終幕後演出",
       "image": "POST-V01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "片尾名冊、字幕與條件成立才播放的康彩蛋；非探索節點。",
       "requirements": "姓名已知／未知、抹除空框依實際紀錄；彩蛋不回頭賦予玩家新證據。",
       "source": "09_劇本/09-10_正式劇本_終幕.md",
@@ -2968,6 +3359,8 @@
       "category": "item",
       "title": "後廚服務巷近看",
       "image": "T-R2-R3-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "碗架與磨刀石；收碗留後門紙牌",
       "requirements": "生活磨耗與文字各清晰局部；紙牌沒有新密碼。每個列名物件均交清晰局部；關閉回 T-R2-R3-01，不把下一鏡當返回位置。",
       "source": "10_製作規格/10-02_製作規格_第一幕.md",
@@ -2988,6 +3381,8 @@
       "category": "item",
       "title": "住宅側平台近看",
       "image": "T-R2-R3-02-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "門牌拆痕與扶手接頭",
       "requirements": "不復原被拆門牌上的姓名，不增加住戶房間。每個列名物件均交清晰局部；關閉回 T-R2-R3-02，不把下一鏡當返回位置。",
       "source": "10_製作規格/10-02_製作規格_第一幕.md",
@@ -3008,6 +3403,8 @@
       "category": "item",
       "title": "洗衣窄巷近看",
       "image": "T-R3-R4-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "水磨石槽、塑膠盆、洗衣板；用後關水紙牌",
       "requirements": "器具各獨立焦點，可共用高解析母圖；靜止晾衣不變成人形嚇點。每個列名物件均交清晰局部；關閉回 T-R3-R4-01，不把下一鏡當返回位置。",
       "source": "10_製作規格/10-02_製作規格_第一幕.md",
@@ -3028,6 +3425,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R3-R5-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "晒衣排水台：斷掉的公共梯橫在頭頂；住戶把洗衣槽接在另一側的維修踏板，滴水沿外露落水管往下跑。",
       "requirements": "來路 R3-V01；去路 T-R3-R5-02。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -3054,6 +3453,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R3-R5-02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "封門早餐攤：一張摺桌卡在兩戶門框間，蒸籠已乾；前方紅漆箭頭被新焊鐵片截斷，桌下舊排水溝穿過牆腳。",
       "requirements": "來路 T-R3-R5-01；去路 T-R3-R5-03。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -3080,6 +3481,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R3-R5-03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "斷橋水錶龕：水錶排被切斷的過橋分成兩半，一邊接空管，一邊的梯架仍固定在混凝土樑上。供水輪值牌壓著住戶手寫的修補紀錄。",
       "requirements": "來路 T-R3-R5-02；去路 T-R3-R5-04。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -3106,6 +3509,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R3-R5-04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "舊招牌背巷：鐵窗格與撤下的理髮、修鞋招牌重疊；補鞋工作燈的外殼仍掛著，吊帶把修補過的風管固定在小門上方；門下的舊地磚接向上行踏階。",
       "requirements": "來路 T-R3-R5-03；去路 T-R3-R5-05。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -3132,6 +3537,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R3-R5-05",
+      "fragmentForms": [],
+      "reading": "",
       "content": "曬布工場外檐：大片晾布遮住內井，對面窗格看似有站立的人影；移開垂布才看出是疊放的人台，腳邊有送衣推車的雙輪磨痕。",
       "requirements": "來路 T-R3-R5-04；去路 R5-V01。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -3158,6 +3565,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R5-R6-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "共用熱水槽：工坊的厚柱留在下方；上層共用洗衣台積水越過紅磚邊，原主梯整段塌進井內。小槽另一端的止滑踏板被水遮住。",
       "requirements": "來路 R5-V01；去路 T-R5-R6-02。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -3184,6 +3593,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R5-R6-02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "送衣吊籃背側：搬衣籃停在窗洞外，對重鐵架擋住貼牆小梯；鐵牌寫著「不載人」，衣籃縫裡夾著同尺寸的工服袖口。",
       "requirements": "來路 T-R5-R6-01；去路 R6-V01。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-04_正式劇本_第一幕.md",
@@ -3210,6 +3621,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R6-R7-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "分租電錶走廊：11F 玻璃門後只接一小段上行梯。12F 的電錶龕被分租隔板擠成窄道，左右各貼一張相同的「產線」箭頭。",
       "requirements": "來路 R6-V01；去路 T-R6-R7-02。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3236,6 +3649,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R6-R7-02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "天井晾衣層：兩排竹竿橫過內井，肥皂盒旁放著補過的塑膠衣夾；對面公共梯只剩第一階，右側舊水箱有固定工作臺。",
       "requirements": "來路 T-R6-R7-01；去路 T-R6-R7-03。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3262,6 +3677,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R6-R7-03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "封窗候工道：14F 原住戶窗前被加上排隊欄杆；兩扇同色門分列左右，一扇後面是封死的管井，另一扇地上保留椅腳和鞋底的拖痕。",
       "requirements": "來路 T-R6-R7-02；去路 R7-V01。逐層探路；來路、斷路、可行側路與局部機關各分層。交未處理／已開通差分及低動態版；非動畫略過。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3288,6 +3705,8 @@
       "category": "item",
       "title": "A 棟產線橋頭近看",
       "image": "T-R7-R8-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "A 棟門牌、橋板接縫與對岸 B 棟字牌",
       "requirements": "透視與承重方向清楚，橋外沒有天空或可攀逃路。每個列名物件均交清晰局部；關閉回 T-R7-R8-01，不把下一鏡當返回位置。",
       "source": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -3308,6 +3727,8 @@
       "category": "item",
       "title": "B 棟視訊橋頭近看",
       "image": "T-R7-R8-02-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "兩端棟別牌、橋座與異批地磚",
       "requirements": "同一住商遺跡與後加隔音層分清；霧與白絲置於橋板外側獨立圖層，兩端棟別牌、橋座與地磚保持可讀；不新增錄音。每個列名物件均交清晰局部；關閉回 T-R7-R8-02，不把下一鏡當返回位置。",
       "source": "10_製作規格/10-03_製作規格_第二幕.md",
@@ -3328,6 +3749,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R11-R12-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "舊插線交換間：15F 服務門在身後關上。16F 滿牆舊電話盒，完整公共梯被倒塌隔牆壓住；黃白套管分別轉向兩個缺口。",
       "requirements": "來路 R11-V01；去路 T-R11-R12-02。逐層探路；白套管斷在牆內，黃套管旁還有完整踏板；辨認靠接頭形狀而非顏色。 沿完整接頭查看牆邊踏板，走進檢修缺口。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3354,6 +3777,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R11-R12-02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "水塔下的租戶廚房：鍋架與水塔支柱共用同一堵牆。地面雨水映出一段像人在走的影子，抬眼是上方鬆動的百葉片。",
       "requirements": "來路 T-R11-R12-01；去路 T-R11-R12-03。逐層探路；圖上旁通接往溢流口，另一閥直接通向踏板下；水痕提供第二個佐證。 依管路近看選旁通閥，排掉踏板積水，再從塔腳爬上短梯。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3380,6 +3805,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R11-R12-03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "電線盤迴廊：樓板邊疊著拆下的電線盤，一個盤架橫在去路。後方廢棄長梯斷在半空，牆邊窄梯仍接到樑下。",
       "requirements": "來路 T-R11-R12-02；去路 T-R11-R12-04。逐層探路；盤架只可沿地面導槽移動，止擋位置會留出貼牆通路。 鬆開卡榫，把空盤架推至止擋，改走牆邊窄梯。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3406,6 +3833,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R11-R12-04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "修鞋店後牆：鞋楦掛在被打通的店牆上，舊價目表被線材報廢單覆住。兩道拱形洞口一明一暗，明處能看見斷樑。",
       "requirements": "來路 T-R11-R12-03；去路 T-R11-R12-05。逐層探路；亮處不是出口；暗處仍有連續腳踏和固定護欄，原微光足以辨認。 查看兩側支撐後，沿暗側護欄穿入上行缺口。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3432,6 +3861,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R11-R12-05",
+      "fragmentForms": [],
+      "reading": "",
       "content": "封存工具外間：檢修小門前的折梯已展開並扣妥，壁上工位牌的名字被劃掉改成工具號；原落腳臺接到通往搬運井的短道。",
       "requirements": "來路 T-R11-R12-04；去路 T-R11-R12-06。逐層探路；折梯兩側固定扣已入座，上端接著原有落腳臺；全景可沿梯腳、護欄與落腳臺確認同一條上行路。 沿已固定的折梯上到落腳臺，進入 21F。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3458,6 +3889,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R11-R12-06",
+      "fragmentForms": [],
+      "reading": "",
       "content": "舊搬運井外圈：包裝箱壓住住戶門牌，吊籃井在樓板中央敞開；沿外圈可見一截掛在鉤上的檢修橋板。",
       "requirements": "來路 T-R11-R12-05；去路 T-R11-R12-07。逐層探路；橋板跨的是同層窄溝，不是整座井；兩端鉤座距離清楚可見。 先放下橋板再扣住另一端，走過同層窄溝接往 22F 梯口。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3484,6 +3917,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R11-R12-07",
+      "fragmentForms": [],
+      "reading": "",
       "content": "打包機後側跨棟橋：B 棟 22F 的打包帶垂在通路上，無載轉軸擋住橋頭。封閉管線橋另一端是 A 棟 22F 舊診所招牌，橋後短梯才上 A 棟 23F 修理舖。",
       "requirements": "來路 T-R11-R12-06；去路 R12-V01。逐層探路；止轉指示與可見轉軸必須一起停下；這個開關只管當前小機器。 扳下本地斷電柄，確認轉軸靜止，穿過 B 棟 22F → A 棟 22F 管線橋，再沿 A 棟短梯上 23F，親自進入修理舖。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-05_正式劇本_第二幕.md",
@@ -3510,6 +3945,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R12-R14-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "焊封中繼平台：24F 標牌仍被封閉告示壓住；正前住戶門整圈焊死，維修管卻繞過門楣進入側面低洞。",
       "requirements": "來路 R12-V01；去路 T-R12-R14-02。逐層探路；封的是房門和公共梯，側洞另有固定爬架與護套，不需要開焊門。 拉開掛在鉤上的防塵片，沿側洞爬架移到 A 棟內側的短梯。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3536,6 +3973,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R12-R14-02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "配重車停靠臺：送貨車空車停在傾斜短軌上，壓住上行轉角。腳邊坡度指向內井，牆側保留一個固定停車槽。",
       "requirements": "來路 T-R12-R14-01；去路 T-R12-R14-03。逐層探路；只能用牆上的手輪把空車拉向停車槽，直接推車會讓重量朝井口移動。 轉動手輪拉回空車，讓原止退齒卡住，露出 26F 入口。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3562,6 +4001,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R12-R14-03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "冷卻水旁通跨棟廊：A 棟 26F 的住戶蓄水桶排在粗管下；漏水遮住跨棟廊入口。兩端 A／B 棟 26F 牌與固定橋座可對位，B 棟側短梯上接 27F 貨梯轉接間。橋側斷板露出紅霧，蠶絲黏在外側管架上；水沿絲線落下，直到霧裡才失去聲音。",
       "requirements": "來路 T-R12-R14-02；去路 R14-V01。逐層探路；暗紅霧與外管白絲另層，避開橋座、棟別牌、旁通錶針及漏水支管；管壓由刻痕與錶針雙重顯示；接到集水溝的是旁通，不是斷頭支管。 開啟旁通讓錶針落入刻線區，再關閉漏水支管，沿止滑跨棟廊到 B 棟 26F，循短梯上 27F 貨梯轉接間。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3588,6 +4029,8 @@
       "category": "item",
       "title": "診所後簾送物平台近看",
       "image": "T-R13-R14-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "舊字牌與輪痕",
       "requirements": "後簾來路在下方，舊搬運字牌與新管制貼紙分層可讀。 可下返診所；不用讀完生活文字。 每個列名焦點交清晰局部；關閉回 T-R13-R14-01，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3608,6 +4051,8 @@
       "category": "item",
       "title": "廚房背側轉梯近看",
       "image": "T-R13-R14-02-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "折梯踏紋與料理檯舊槽",
       "requirements": "封門在料理檯旁，轉梯踏紋接向上層送物口。 封門只可近看；不新增鑰匙或藥品需求。 每個列名焦點交清晰局部；關閉回 T-R13-R14-02，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3628,6 +4073,8 @@
       "category": "item",
       "title": "送物跨棟廊近看",
       "image": "T-R13-R14-03-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "A／B 棟 26F 字牌、送物廊隔網與貨梯側短梯",
       "requirements": "同組搬運標記接到 27F 貨梯框，繼電器仍在目的房。 進房不代做 R14 繼電器；可沿原路返回。 每個列名焦點交清晰局部；關閉回 T-R13-R14-03，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3648,6 +4095,8 @@
       "category": "item",
       "title": "診所後勤管廊近看",
       "image": "T-R13-R15-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "繼電器回路牌與門插銷",
       "requirements": "病患安息且 R14 繼電器接回後，原條件分岔才開。 條件未滿仍可回 R12，不用 R15 供電作進房前置。 每個列名焦點交清晰局部；關閉回 T-R13-R15-01，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3668,6 +4117,8 @@
       "category": "item",
       "title": "排氣背側折梯近看",
       "image": "T-R13-R15-02-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "厚柱梯座與薄風管",
       "requirements": "能踩的是入柱梯座，不是風管外殼。 錯點風管只近看，回原踏點。 每個列名焦點交清晰局部；關閉回 T-R13-R15-02，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3688,6 +4139,8 @@
       "category": "item",
       "title": "照護後勤跨棟廊近看",
       "image": "T-R13-R15-03-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "兩端棟別牌、分道隔網與機房門下短梯",
       "requirements": "同一回路護套穿過上方門框，不會接去技術核心。 通行不替玩家選供電方案，也不開 R16。 每個列名焦點交清晰局部；關閉回 T-R13-R15-03，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3708,6 +4161,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R15-R16-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "舊維修排隊外間：牆上空維修號牌留在等候凳上；焊死的公共梯旁露出輕型內簾手動鏈，側洞通向 B 棟 29F 候梯口。",
       "requirements": "來路 R15-V01；去路 T-R15-R16-02。逐層探路；輕型內簾可以提起，焊住的防火門不能開。 拉起內簾到止擋，撐上原防夾桿，從固定側梯到 29F。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3734,6 +4189,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R15-R16-02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "29F 拉閘門候梯口：B 棟 29F 的鐵製拉閘門後是停妥的單人維修電梯。外門框保留實體樓層牌與平層刻線，舊送餐單被檢修牌覆住；井道上方標著 30F 必停。",
       "requirements": "來路 T-R15-R16-01；去路 T-R15-R16-03。逐層探路；車廂地板和平台齊平，外門機械扣到位才可進；31F 按鍵尚未啟用。 查看到站刻線與實體牌，拉開外閘進入車廂，再親手關妥外閘及內閘。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3760,6 +4217,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R15-R16-03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "L1 車廂首次上行：內閘交叉鐵條把井壁切成細格；初始 29F 字牌與車廂平齊，30F 停靠牌在上方。擦亮的金屬板映著同一扇內閘；按鍵後另交井壁移動與倒影異常差分。",
       "requirements": "來路 T-R15-R16-02；去路 T-R15-R16-04。逐層探路；首段只能選 30F；門扣和實體平層刻線是開門依據，不以樓層顯示燈或聲音單獨判斷。 按 30F 上行；到站後核對實體牌與平層刻線，親手開閘，走出 30F 平台。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3786,6 +4245,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R15-R16-04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "30F 停靠與檢修平台：車廂停在身後，平台側邊缺一塊檢修踏板，原掛架就在牆上。對面是覆著老租戶磁磚的檢修箱，上行啟用接點留在箱內。",
       "requirements": "來路 T-R15-R16-03；去路 T-R15-R16-05。逐層探路；掛架踏板與凹槽同形；裝妥後才能走到原地檢修箱，不向 31F 借工具。 取下踏板嵌入凹槽並扣緊兩端，走過踏板，扳妥檢修箱啟用柄，再返回原車廂。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3812,6 +4273,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R15-R16-05",
+      "fragmentForms": [],
+      "reading": "",
       "content": "L1 車廂第二段上行：同一車廂初始停在 30F，31F 按鍵亮起；先前拉閘聲不再出現，金屬板只照出眼前的閘門。關妥並按鍵後才播 30F→31F 井壁移動。",
       "requirements": "來路 T-R15-R16-04；去路 T-R15-R16-06。逐層探路；30F 踏板到位及啟用柄均成立才允許上行；這不是取得 R16 權限。 親手關妥兩道閘門，按 31F；到站核對 B 棟 31F 牌與平層刻線，再開閘。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3838,6 +4301,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R15-R16-06",
+      "fragmentForms": [],
+      "reading": "",
       "content": "31F 核心門前平台：拉開外閘，前方短平台接到 R16 防火門；回頭看得見 B 棟 31F 樓層牌與停在門內的原車廂，沒有新增可探索支門。",
       "requirements": "來路 T-R15-R16-05；去路 R16-V01。逐層探路；停靠只代表抵達平台，原必要調查仍在 R16 房內。 離開車廂，沿固定平台點門進 R16；到訪只在真正跨入房門後提交。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3864,6 +4329,8 @@
       "category": "item",
       "title": "回程閥箱外廊近看",
       "image": "T-R12-R15-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "回程門扣與閥箱編號",
       "requirements": "兩端已到訪及 SQ-T 完成後才可用，閥箱標示接往低負荷側路。 條件未滿留在 R12；不以進過此圖代替 SQ-T。 每個列名焦點交清晰局部；關閉回 T-R12-R15-01，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3884,6 +4351,8 @@
       "category": "item",
       "title": "回程配重隔牆近看",
       "image": "T-R12-R15-02-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "牽引纜與固定踏板",
       "requirements": "玩家站在牽引纜外側的固定踏板，不搭配重車。 近看纜索後回原站位，不重置搬運機關。 每個列名焦點交清晰局部；關閉回 T-R12-R15-02，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3904,6 +4373,8 @@
       "category": "item",
       "title": "低負荷回程跨棟廊近看",
       "image": "T-R12-R15-03-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "回程跨棟廊雙端門扣、棟別牌與低負荷標示",
       "requirements": "上方標示 27F 機房；本段只縮短繞行，不省略樓層。 不改供電選擇與犧牲紀錄。 每個列名焦點交清晰局部；關閉回 T-R12-R15-03，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3924,6 +4395,8 @@
       "category": "item",
       "title": "伺服器外側回程臺近看",
       "image": "T-R17-R14-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "L-04 支路牌、下行扶手與樓層牌",
       "requirements": "L-04 固定往下，與 C-02 的上行口分開；支路內不進伺服器室。 原假路只觸發一次；沿途不取物、不寫 C-02 或新增猜測次數。 每個列名焦點交清晰局部；關閉回 T-R17-R14-01，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3944,6 +4417,8 @@
       "category": "item",
       "title": "物流背牆平台近看",
       "image": "T-R17-R14-02-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "L-04 支路牌、下行扶手與樓層牌",
       "requirements": "L-04 固定往下，與 C-02 的上行口分開；支路內不進伺服器室。 原假路只觸發一次；沿途不取物、不寫 C-02 或新增猜測次數。 每個列名焦點交清晰局部；關閉回 T-R17-R14-02，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3964,6 +4439,8 @@
       "category": "item",
       "title": "換側橋下返面近看",
       "image": "T-R17-R14-03-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "L-04 支路牌、下行扶手與樓層牌",
       "requirements": "L-04 固定往下，與 C-02 的上行口分開；支路內不進伺服器室。 原假路只觸發一次；沿途不取物、不寫 C-02 或新增猜測次數。 每個列名焦點交清晰局部；關閉回 T-R17-R14-03，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -3984,6 +4461,8 @@
       "category": "item",
       "title": "搬運標籤梯口近看",
       "image": "T-R17-R14-04-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "L-04 支路牌、下行扶手與樓層牌",
       "requirements": "L-04 固定往下，與 C-02 的上行口分開；支路內不進伺服器室。 原假路只觸發一次；沿途不取物、不寫 C-02 或新增猜測次數。 每個列名焦點交清晰局部；關閉回 T-R17-R14-04，不自動移至下一房。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -4004,6 +4483,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R17-R18-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "C-02 支路外臺：32F 的 C-02 門端留在下方，33F 主梯被貨架壓斷；C-02 金屬路由牌仍指向牆後的卸貨窄道。",
       "requirements": "來路 R17-V01；去路 T-R17-R18-02。逐層探路；路由只證明支路方向，公共梯損壞後仍要沿承重踏板繞行；L-04 不在這一側。 查看側梯踏板接點，從貨架外側穿過，再登 34F。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -4030,6 +4511,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R17-R18-02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "貨箱標線隔間：牆上搬運高度的刮痕被白飾板攔腰遮掉，兩條貼地拖痕一條進入箱牆，一條轉入背板後。",
       "requirements": "來路 T-R17-R18-01；去路 T-R17-R18-03。逐層探路；箱牆固定，檢修蓋的四角扣仍完整；蓋後可看見固定側梯。 依扣環位置打開檢修蓋，沿背板後短梯上行。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -4056,6 +4539,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R17-R18-03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "轉運臺隔柵：鐵柵背後有滑動貨臺，舊住宅門楣仍嵌在頂上。柵條影子隨空轉的吊鉤擺動，像有人在低頭排隊。",
       "requirements": "來路 T-R17-R18-02；去路 T-R17-R18-04。逐層探路；貨臺在固定短軌上橫移，只能補齊同層兩段步道，不能載人跨樓層。 在原位轉手輪，將空貨臺對準兩側停靠孔，壓下繫繩鎖銷後通過。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -4082,6 +4567,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R17-R18-04",
+      "fragmentForms": [],
+      "reading": "",
       "content": "包覆中的門楣：36F 舊倉儲平台仍有卸貨護角，居民門楣被新的平整飾板蓋住半截；普通樓梯被封板截斷，板背露出管線。",
       "requirements": "來路 T-R17-R18-03；去路 R18-V01。逐層探路；正面的住宅門已封死，護角旁另有留鉸鏈的檢修片，不能把兩扇門混為一扇。 從鉸鏈側拉開檢修片，沿管線背後的維修步道上到 37F，親自進入 R18 的安全觀察點。 主圖交上下段踏點、封閉口與通行差分；不新增未編號可走房間。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -4108,6 +4595,8 @@
       "category": "item",
       "title": "吸音板後工作臺近看",
       "image": "T-R20-R21-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "護套接縫、上下梯口與內側網門",
       "requirements": "身後玻璃已被轉角遮住；護套與固定踏步連到上方，沒有第二片收容室玻璃。 原件可在筆記回查；要重看實景可沿已開路下返，不重播追逐。 每個列名焦點交清晰局部；關閉回 T-R20-R21-01，不自動移至下一房。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -4128,6 +4617,8 @@
       "category": "item",
       "title": "辦公門下工作梯近看",
       "image": "T-R20-R21-02-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "40F 門牌、兩道隔開的梯口",
       "requirements": "玩家梯與輪廓所在梯各有固定護欄，匯向辦公室外的不同站位。 未抹除者留在門外；已抹除的位置維持空白，不重生或增加攻擊。 每個列名焦點交清晰局部；關閉回 T-R20-R21-02，不自動移至下一房。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -4148,6 +4639,8 @@
       "category": "item",
       "title": "候放平台與上行釋放梯近看",
       "image": "T-R21-R22-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "候放線、扶手與42F門牌",
       "requirements": "來路是 40F 辦公室釋放口，上方 42F 才是釋放機構。 可依原回訪條件下返；本段不提前執行釋放 A／B 路。 每個列名焦點交清晰局部；關閉回 T-R21-R22-01，不自動移至下一房。",
       "source": "09_劇本/09-07_正式劇本_第四幕.md",
@@ -4168,6 +4661,8 @@
       "category": "item",
       "title": "飯廳服務轉角近看",
       "image": "T-R24-R25-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "收碗槽與磁磚腰線接縫",
       "requirements": "生活局部可略過，不補用餐聲、人物或新線索。每個列名物件均交清晰局部；關閉回 T-R24-R25-01，不把下一鏡當返回位置。",
       "source": "10_製作規格/10-06_製作規格_第五幕.md",
@@ -4188,6 +4683,8 @@
       "category": "item",
       "title": "展示牆後服務梯近看",
       "image": "T-R27-U1-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "45F 展板背框、46F 收件架與同一立管",
       "requirements": "兩端樓層牌、門框與連續扶手可對位；管線用於辨向，不踩管壁。 未完成原房條件不能出發；近看可直接關閉，沒有新密碼、收集或消耗。 每個列名焦點交清晰局部；關閉回 T-R27-U1-01，不自動移至下一房。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -4208,6 +4705,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R29-U4-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "47F 簽核架後候梯口：簽核架後方不是直通樓梯，而是 B 棟 47F 的短程拉閘門電梯。外閘旁掛著按房號分色的送物袋，門框釘著 47F 實體牌。",
       "requirements": "來路 R29-V01；去路 T-R29-U4-02。逐層探路；本梯只有 47F／48F，電源來自已恢復的維修保留支路；不由 R29 核可選項供電。 原必要查證與責任收束完成後，查看平層刻線，進入車廂並親手關妥兩道閘門。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -4234,6 +4733,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R29-U4-02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "L2 冷藏線車廂：初始停在 47F，井壁保留封住的送物口與上方實體 48F 牌；空送物袋掛在車廂內側。按鍵後交井壁移動、無落地平台封口亮假到站燈與袋內刮擦差分，最後才交真正 48F 停靠。",
       "requirements": "來路 T-R29-U4-01；去路 T-R29-U4-03。逐層探路；假停靠處看得到封板，沒有落地平台；真正 48F 有實體牌、平層刻線與完整踏面，靜音仍可辨認。 按 48F 上行；到站後核對三項實體線索，親手拉開閘門，走到 48F 平台。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -4260,6 +4761,8 @@
       "category": "puzzle",
       "title": "辨路與開通",
       "image": "T-R29-U4-03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "48F 門牌廊前平台：車廂外是一段接向門牌迴廊的短平台。外閘邊有凹掉一角的 48F 字牌，前方走廊才出現重複門牌；電梯不替玩家放置布標。",
       "requirements": "來路 T-R29-U4-02；去路 U4-V01。逐層探路；抵達平台不代表已解 U4 迴廊；來路可返，目的房機關仍保持初始狀態。 自行點入 U4；R30 不可逆提交前，依原門檻可叫回 L2 返回 47F。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -4286,6 +4789,8 @@
       "category": "item",
       "title": "服務橋後交易梯近看",
       "image": "T-U3-R28-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "落位橋端、固定梯架與47F交易門",
       "requirements": "兩端樓層牌、門框與連續扶手可對位；管線用於辨向，不踩管壁。 未完成原房條件不能出發；近看可直接關閉，沒有新密碼、收集或消耗。 每個列名焦點交清晰局部；關閉回 T-U3-R28-01，不自動移至下一房。",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
@@ -4306,6 +4811,8 @@
       "category": "item",
       "title": "冷藏維修上行道近看",
       "image": "T-U5-U6-01-C01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "已封兩側投送孔、固定梯與49F水箱管",
       "requirements": "兩端樓層牌、門框與連續扶手可對位；管線用於辨向，不踩管壁。 未完成原房條件不能出發；近看可直接關閉，沒有新密碼、收集或消耗。 每個列名焦點交清晰局部；關閉回 T-U5-U6-01，不自動移至下一房。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -4326,6 +4833,8 @@
       "category": "horror",
       "title": "封門下的遮光",
       "image": "T-R2-R3-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "後廚服務巷：R2 出餐小窗、碗架、磨刀石、封住的後門與紅扶手；HP-01 門底亮縫由遠及近被遮住。",
       "requirements": "來路 R2-V01；去路 T-R2-R3-02。依原門檻可原路折返；完成本房必要操作，依 R2-03 推開送餐車露出梯口；無額外證據或鑰匙。亮縫普通／分段遮蔽／終態與低動態兩態另層，首次正向可操作全景呈現，直接走或開近看不補播，門扣及紅梯不動。背景獨立構圖，材質可共用；不水平翻圖當反向。",
       "source": "10_製作規格/10-02_製作規格_第一幕.md",
@@ -4346,6 +4855,8 @@
       "category": "horror",
       "title": "金屬倒影中的開閘",
       "image": "T-R15-R16-03",
+      "fragmentForms": [],
+      "reading": "",
       "content": "L1 車廂首次上行：內閘交叉鐵條把井壁切成細格；初始 29F 字牌與車廂平齊，30F 停靠牌在上方。擦亮的金屬板映著同一扇內閘；按鍵後另交井壁移動與倒影異常差分。",
       "requirements": "來路 T-R15-R16-02；去路 T-R15-R16-04。逐層探路；首段只能選 30F；門扣和實體平層刻線是開門依據，不以樓層顯示燈或聲音單獨判斷。 按 30F 上行；到站後核對實體牌與平層刻線，親手開閘，走出 30F 平台。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-06_正式劇本_第三幕.md",
@@ -4366,6 +4877,8 @@
       "category": "horror",
       "title": "封板內的壓力",
       "image": "T-R24-R25-01",
+      "fragmentForms": [],
+      "reading": "",
       "content": "飯廳服務轉角：43F 服務口、封死傳菜窗、舊收碗槽，以及上行至 44F 的連續梯段、扶手和 R25 門框；HP-03 轉角遮擋後，封板多出鼓面折線。",
       "requirements": "來路 R24-V01；去路 R25-V01。依原門檻可原路折返；E4-01／E4-02／E3-02 第四層鎖定成立；act5.r24.board_locked = true。封板原樣／鼓面折線終態另層，轉角遮擋時換圖，無直視變形；釘位不動、窗仍封住。首次正向安全全景才呈現，保護期優先且不延遲上梯；低動態同樣在遮擋時切換。背景獨立構圖，材質可共用；不水平翻圖當反向。",
       "source": "10_製作規格/10-06_製作規格_第五幕.md",
@@ -4386,6 +4899,8 @@
       "category": "horror",
       "title": "假到站燈與袋內刮擦",
       "image": "T-R29-U4-02",
+      "fragmentForms": [],
+      "reading": "",
       "content": "L2 冷藏線車廂：初始停在 47F，井壁保留封住的送物口與上方實體 48F 牌；空送物袋掛在車廂內側。按鍵後交井壁移動、無落地平台封口亮假到站燈與袋內刮擦差分，最後才交真正 48F 停靠。",
       "requirements": "來路 T-R29-U4-01；去路 T-R29-U4-03。逐層探路；假停靠處看得到封板，沒有落地平台；真正 48F 有實體牌、平層刻線與完整踏面，靜音仍可辨認。 按 48F 上行；到站後核對三項實體線索，親手拉開閘門，走到 48F 平台。 主圖交來去路、門扣、停靠及異常差分；依拉閘門電梯契約驗收。",
       "source": "09_劇本/09-16_正式劇本_第七幕.md",
@@ -4398,6 +4913,3075 @@
       ],
       "play": null,
       "timing": "主線時機"
+    },
+    {
+      "id": "P0-C01-item",
+      "node": "P0",
+      "shot": "",
+      "category": "item",
+      "title": "斷梯、壓住出口的混凝土",
+      "image": "P0-C01",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "斷梯、壓住出口的混凝土",
+      "requirements": "同鏡交代堵塞深度；不畫可通行的縫隙。",
+      "source": "09_劇本/09-03_正式劇本_序幕.md",
+      "heading": "s-0903-5",
+      "spec": "10_製作規格/10-01_製作規格_序幕.md",
+      "specHeading": "node-p0-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "P1-C06-item",
+      "node": "P1",
+      "shot": "",
+      "category": "item",
+      "title": "管縫祈願紙",
+      "image": "P1-C06",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "管縫祈願紙",
+      "requirements": "紙摺、膠帶及正面筆跡；終幕引用同一原件，不在此補作者姓名。",
+      "source": "09_劇本/09-03_正式劇本_序幕.md",
+      "heading": "s-0903-17",
+      "spec": "10_製作規格/10-01_製作規格_序幕.md",
+      "specHeading": "node-p1-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "P2-C01-item",
+      "node": "P2",
+      "shot": "",
+      "category": "item",
+      "title": "椅面、束帶與椅腳勒痕",
+      "image": "P2-C01",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "椅面、束帶與椅腳勒痕",
+      "requirements": "椅面／椅腳分焦點；實景觀察可讀，不把感知當唯一辨識方式。",
+      "source": "09_劇本/09-03_正式劇本_序幕.md",
+      "heading": "s-0903-22",
+      "spec": "10_製作規格/10-01_製作規格_序幕.md",
+      "specHeading": "node-p2-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "P2-C02-item",
+      "node": "P2",
+      "shot": "",
+      "category": "item",
+      "title": "通向門口的地面拖痕",
+      "image": "P2-C02",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "通向門口的地面拖痕",
+      "requirements": "保留起點、方向及與椅腳相對位置。",
+      "source": "09_劇本/09-03_正式劇本_序幕.md",
+      "heading": "s-0903-22",
+      "spec": "10_製作規格/10-01_製作規格_序幕.md",
+      "specHeading": "node-p2-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "P2-C03-item",
+      "node": "P2",
+      "shot": "",
+      "category": "item",
+      "title": "房號牌與重置脈衝",
+      "image": "P2-C03",
+      "fragmentForms": [
+        "聲證",
+        "文證"
+      ],
+      "reading": "查看牆面編號牌時，同時感到一段短促聲響",
+      "content": "凝固編號牌與門邊剪影",
+      "requirements": "編號牌保留房號標頭與固定點；剪影點擊只回應「無法深度查看」，不交可深入放大的臉或身分資料。",
+      "source": "09_劇本/09-03_正式劇本_序幕.md",
+      "heading": "s-0903-23",
+      "spec": "10_製作規格/10-01_製作規格_序幕.md",
+      "specHeading": "node-p2-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "P2-C05-item",
+      "node": "P2",
+      "shot": "",
+      "category": "item",
+      "title": "上行口實體維修標牌",
+      "image": "P2-C05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "上行口實體維修標牌",
+      "requirements": "與凝固編號牌並排可核對；梯段、厚門未鎖狀態一併可見。",
+      "source": "09_劇本/09-03_正式劇本_序幕.md",
+      "heading": "s-0903-26",
+      "spec": "10_製作規格/10-01_製作規格_序幕.md",
+      "specHeading": "node-p2-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R1-C04-item",
+      "node": "R1",
+      "shot": "",
+      "category": "item",
+      "title": "布幕後震損門框",
+      "image": "R1-C04",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "布幕後震損門框",
+      "requirements": "向內彎折、斷裂螺栓、較早焊珠三局部；紅霧、繃緊白絲為獨立感知遮罩，保留斷裂邊緣與受力方向。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-7",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r1-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R1-C05-item",
+      "node": "R1",
+      "shot": "",
+      "category": "item",
+      "title": "封存袋口標籤",
+      "image": "R1-C05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "封存袋口標籤",
+      "requirements": "接收編號、代管欄、空白退還欄；證件不露可識別國家版式。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-8",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r1-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R2-D02-item",
+      "node": "R2",
+      "shot": "",
+      "category": "item",
+      "title": "半頁績效板與覆核聯",
+      "image": "R2-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "半頁績效板與覆核聯",
+      "requirements": "破損邊、工位欄與覆核欄可並排；不提前補上 R7 完整榜單。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-13",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r2-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R2-D04-item",
+      "node": "R2",
+      "shot": "",
+      "category": "item",
+      "title": "值班本最後一頁",
+      "image": "R2-D04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "值班本最後一頁",
+      "requirements": "E4-00-A 原欄及日期保持字表，不自動解出後幕時間線。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-14",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r2-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R2-D05-item",
+      "node": "R2",
+      "shot": "",
+      "category": "item",
+      "title": "配給宣傳與收存登記",
+      "image": "R2-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "配給宣傳與收存登記",
+      "requirements": "兩份分頁，可反序閱讀；空白退還欄不自行填值。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-15",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r2-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R3-C01-item",
+      "node": "R3",
+      "shot": "",
+      "category": "item",
+      "title": "床位牌背面與信件收件人",
+      "image": "R3-C01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "床位牌背面與信件收件人",
+      "requirements": "兩來源分頁，姓名依字表；可並排關聯，不靠感知讀實體字。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-19",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r3-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R3-C04-item",
+      "node": "R3",
+      "shot": "",
+      "category": "item",
+      "title": "床架纖維與窗邊斷布",
+      "image": "R3-C04",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "床架纖維與窗邊斷布",
+      "requirements": "兩個同尺度局部，床單粗纖維／斷口可比；遠窗白絲另層，與證物纖維清楚區分。近處窗框、管線可辨，遠處為暗紅霧；依[紅霧與白絲共用規格](../09_劇本/09-15_正式劇本_共用附錄.md#red-mist-silk-contract)交付，不提前證明墜落原因。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-21",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r3-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R3-C05-item",
+      "node": "R3",
+      "shot": "",
+      "category": "item",
+      "title": "補過的拖鞋",
+      "image": "R3-C05",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "補過的拖鞋",
+      "requirements": "修補線與磨耗可辨，留在床邊不作背包道具。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-22",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r3-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R4-C02-item",
+      "node": "R4",
+      "shot": "",
+      "category": "item",
+      "title": "兩段普通刻字",
+      "image": "R4-C02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "兩段普通刻字",
+      "requirements": "各有獨立焦點與局部，不用亮色提示必讀，不加證據獎勵。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-26",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r4-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R4-C03-item",
+      "node": "R4",
+      "shot": "",
+      "category": "item",
+      "title": "刻痕殘響與所選姓名",
+      "image": "R4-C03",
+      "fragmentForms": [
+        "聲證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "血字兩種訊號選擇",
+      "requirements": "原痕／選取預覽／確認後三態；#4 與 #4′互斥，不能兩態同時顯示。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-27",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r4-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R4-D01-item",
+      "node": "R4",
+      "shot": "",
+      "category": "item",
+      "title": "清潔時段、限時熱水與領餐欄",
+      "image": "R4-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "清潔時段、限時熱水與領餐欄",
+      "requirements": "三頁／焦點各可讀；不是額外通關文件。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-29",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r4-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R4b-C01-item",
+      "node": "R4b",
+      "shot": "",
+      "category": "item",
+      "title": "水杯與祈禱卡",
+      "image": "R4b-C01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "水杯與祈禱卡",
+      "requirements": "杯垢局部、卡片原件各一頁；杯中無香灰。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-33",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r4b-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R5-C03-item",
+      "node": "R5",
+      "shot": "",
+      "category": "item",
+      "title": "袖口修補註記、窄布與覆貼價牌",
+      "image": "R5-C03",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "袖口修補註記、窄布與覆貼價牌",
+      "requirements": "「袖口先別剪，還能補」、拆縫痕與新單覆舊價牌可辨；至少字條與價牌兩焦點。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-39",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r5-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R5-D01-item",
+      "node": "R5",
+      "shot": "",
+      "category": "item",
+      "title": "餐券與換班板",
+      "image": "R5-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "餐券與換班板",
+      "requirements": "兩原件同框比對，冷飯另有桌面局部。",
+      "source": "09_劇本/09-04_正式劇本_第一幕.md",
+      "heading": "s-0904-41",
+      "spec": "10_製作規格/10-02_製作規格_第一幕.md",
+      "specHeading": "node-r5-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R6-C02-item",
+      "node": "R6",
+      "shot": "",
+      "category": "item",
+      "title": "出勤板",
+      "image": "R6-C02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "出勤板",
+      "requirements": "原版／零人版同版面差分，只在正文時機替換。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-5",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r6-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R6-C03-item",
+      "node": "R6",
+      "shot": "",
+      "category": "item",
+      "title": "本地換班鐘",
+      "image": "R6-C03",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "〔環境／設備聲〕可查本地設備的 #5 換班鐘",
+      "content": "共用內巷門與服務告示",
+      "requirements": "路線提示只在已查來源後顯示。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-7",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r6-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R6-D03-item",
+      "node": "R6",
+      "shot": "",
+      "category": "item",
+      "title": "撤權帳號與留存鈴聲",
+      "image": "R6-D03",
+      "fragmentForms": [
+        "聲證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "撤權帳號與留存鈴聲",
+      "requirements": "頭像、權限及 #13 原來源頁分開可讀，選填回訪不擋離幕。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-8",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r6-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R7-C01-item",
+      "node": "R7",
+      "shot": "",
+      "category": "item",
+      "title": "白板正反面",
+      "image": "R7-C01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "白板正反面",
+      "requirements": "兩張可讀圖；反面僅原回訪／感知條件開放。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-13",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r7-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R7-C02-item",
+      "node": "R7",
+      "shot": "",
+      "category": "item",
+      "title": "耳機、隔間腳本、快捷鍵與班表關聯",
+      "image": "R7-C02",
+      "fragmentForms": [
+        "影證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "耳機、隔間腳本、快捷鍵與班表關聯",
+      "requirements": "設備局部與原件分頁；K-114 凝固疊圖獨立交付，人物、手及只留「我」的輸入框皆靜止。返回現時才可顯示工作階段恢復。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-15",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r7-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R7-C03-item",
+      "node": "R7",
+      "shot": "",
+      "category": "item",
+      "title": "舊手機留言、家庭照與刻痕",
+      "image": "R7-C03",
+      "fragmentForms": [
+        "物證",
+        "聲證",
+        "文證"
+      ],
+      "reading": "〔玩家〕可用隔板的 347 道記號",
+      "content": "舊手機、347 刻痕、家人照片與撥號前靜格",
+      "requirements": "手機播放／自動重撥開關、刻痕、照片各焦點；另交歷史撥號前的凝固手勢疊圖。家庭留言不是現時通話，現時怨靈循環不畫進歷史層。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-17",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r7-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R7-D02-item",
+      "node": "R7",
+      "shot": "",
+      "category": "item",
+      "title": "本批次接收分配聯",
+      "image": "R7-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "本批次接收分配聯",
+      "requirements": "只有指定那本有此聯，其他副本不複製同一張。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-12",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r7-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R7-D04-item",
+      "node": "R7",
+      "shot": "",
+      "category": "item",
+      "title": "工位音檔與標準問候頁",
+      "image": "R7-D04",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "",
+      "content": "工位音檔與標準問候頁",
+      "requirements": "#10／#12 來源、播放狀態清楚；共用音檔不另發一份。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-18",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r7-images",
+      "offset": [
+        0.29,
+        0.21
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R7-D06-item",
+      "node": "R7",
+      "shot": "",
+      "category": "item",
+      "title": "點歌單折住的背面",
+      "image": "R7-D06",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "點歌單折住的背面",
+      "requirements": "SG-01 正面／展開背面；重疊裁切資訊依原件。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-20",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r7-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R8-D01-item",
+      "node": "R8",
+      "shot": "",
+      "category": "item",
+      "title": "小花話術腳本",
+      "image": "R8-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "小花話術腳本",
+      "requirements": "刪改筆跡及原承諾保留，不代替兩種候選來源的選擇。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-23",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r8-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R8-D02-item",
+      "node": "R8",
+      "shot": "",
+      "category": "item",
+      "title": "名單備份末頁與原始欄位",
+      "image": "R8-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "名單備份末頁與原始欄位",
+      "requirements": "AX-17／版本 02／段號 100／100／尾段校驗值 6C2A 依原件；讀卡／無卡／來源不可用各態。段號不是時刻。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-59",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r8-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R8-D03-item",
+      "node": "R8",
+      "shot": "",
+      "category": "item",
+      "title": "收據紙花、小帳、修理單與私人雙結夾頁",
+      "image": "R8-D03",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "收據紙花、小帳、修理單與私人雙結夾頁",
+      "requirements": "每份獨立可讀頁；私人夾頁補舊班表一角、換工承諾落空與否認同意文字，修理桌草圖同頁保留。窗／紙註記不擅自補成結局提示。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-25",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r8-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R8-D05-item",
+      "node": "R8",
+      "shot": "",
+      "category": "item",
+      "title": "音軌庫與歌曲剪接單",
+      "image": "R8-D05",
+      "fragmentForms": [
+        "聲證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "音軌庫與歌曲剪接單",
+      "requirements": "#11／#12 本地音軌來源及 SG-02 同曲號、重疊裁切線各頁可查；沿原設備播放。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-30",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r8-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R8-F02-item",
+      "node": "R8",
+      "shot": "",
+      "category": "item",
+      "title": "照片關聯的小花上鏡靜格",
+      "image": "R8-F02",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "照片關聯的小花上鏡靜格",
+      "requirements": "獨立於窗／紙關係記憶；笑後嘴角、剪影臉與背景出口燈全部凝固。出口燈只在歷史層，不能指引現在通行。",
+      "source": "10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "s-uppertech-13",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r8-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R9-C02-item",
+      "node": "R9",
+      "shot": "",
+      "category": "item",
+      "title": "刪除狀態與空房回聲",
+      "image": "R9-C02",
+      "fragmentForms": [
+        "聲證",
+        "文證"
+      ],
+      "reading": "〔玩家〕只對已取得的 `E2-02` 作相應補充",
+      "content": "點歌機、播放狀態與讀卡槽",
+      "requirements": "一般播放停在副歌前、無電／有電、未插／已插／取回及 room_07/customer_test 已刪除頁各態；沒有私密影像縮圖，聲源依原設備。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-33",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r9-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R9-C03-item",
+      "node": "R9",
+      "shot": "",
+      "category": "item",
+      "title": "房卡正反面",
+      "image": "R9-C03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "房卡正反面",
+      "requirements": "房號、付款末四碼與背面視訊組縮寫各清晰；不補完整付款資料或新通行權。",
+      "source": "10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "s-uppertech-45",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r9-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R9-C04-item",
+      "node": "R9",
+      "shot": "",
+      "category": "item",
+      "title": "床下塑膠袋與未用拍攝用品",
+      "image": "R9-C04",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "床下塑膠袋與未用拍攝用品",
+      "requirements": "袋口、一次性床單與原拍攝道具分層局部；不新增身體、傷勢或血跡。選填，不發新證據。",
+      "source": "10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "s-uppertech-45",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r9-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R9-D03-item",
+      "node": "R9",
+      "shot": "",
+      "category": "item",
+      "title": "歌曲原始專案 A／B／C",
+      "image": "R9-D03",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "",
+      "content": "歌曲原始專案 A／B／C",
+      "requirements": "來源名、時間刻度、重疊區可辨；排列 B→A→C 與保存前後差分。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-35",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r9-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R9-F01-item",
+      "node": "R9",
+      "shot": "",
+      "category": "item",
+      "title": "短租房的兩層記憶靜格",
+      "image": "R9-F01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "唱歌與假裝回家的兩個時態",
+      "requirements": "兩張靜止構圖，人物與布景分層，不演工作示範。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-32",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r9-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R10-C01-item",
+      "node": "R10",
+      "shot": "",
+      "category": "item",
+      "title": "杯底水痕、供桌與家人留下的物件",
+      "image": "R10-C01",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "杯底水痕、供桌與家人留下的物件",
+      "requirements": "水杯、四瓣紙花、祖先照片、平安符、念珠與遮蔽家人電話各清晰局部；不用單一信仰作邪惡標記，不補聯絡資料或紙花作者。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-37",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r10-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R10-C02-item",
+      "node": "R10",
+      "shot": "",
+      "category": "item",
+      "title": "三張祈願卡",
+      "image": "R10-C02",
+      "fragmentForms": [
+        "聲證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "三張祈願卡",
+      "requirements": "每卡一焦點，原順序與回看差分保持一致。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-38",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r10-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R11-C02-item",
+      "node": "R11",
+      "shot": "",
+      "category": "item",
+      "title": "座位編號、登入框與手的姿勢",
+      "image": "R11-C02",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "座位編號、登入框與手的姿勢",
+      "requirements": "編號與掌位兩焦點；凝固手勢疊圖與現在操作分開。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-44",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r11-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R11-C04-item",
+      "node": "R11",
+      "shot": "",
+      "category": "item",
+      "title": "歷史截圖下緣",
+      "image": "R11-C04",
+      "fragmentForms": [
+        "影證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "歷史截圖下緣",
+      "requirements": "E4-00-B 局部高解析；來源與時間欄不被裁掉。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-49",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r11-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R11-C05-item",
+      "node": "R11",
+      "shot": "",
+      "category": "item",
+      "title": "家庭照片正反面",
+      "image": "R11-C05",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "家庭照片正反面",
+      "requirements": "正面臉被燈光遮住；背面只留原日期與未完成電話號碼，不補姓名或可撥完整號碼。",
+      "source": "10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "s-uppertech-14",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r11-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R11-C06-item",
+      "node": "R11",
+      "shot": "",
+      "category": "item",
+      "title": "鍵盤磨損與快捷鍵",
+      "image": "R11-C06",
+      "fragmentForms": [
+        "物證"
+      ],
+      "reading": "",
+      "content": "鍵盤磨損與快捷鍵",
+      "requirements": "鍵面磨損、操作位置與原快捷鍵各可讀；熟悉感不等於指紋或身分驗證。",
+      "source": "10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "s-uppertech-14",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r11-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R11-D03-item",
+      "node": "R11",
+      "shot": "",
+      "category": "item",
+      "title": "十一個未關閉聊天視窗",
+      "image": "R11-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "十一個未關閉聊天視窗",
+      "requirements": "W01–W11 各一可讀頁／視窗底圖；不以一張糊縮圖代替全文。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-47",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r11-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R11-D04-item",
+      "node": "R11",
+      "shot": "",
+      "category": "item",
+      "title": "回訪未送出的名字",
+      "image": "R11-D04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "回訪未送出的名字",
+      "requirements": "沿原讀取資格，已讀與未讀分開，不自動公開全部姓名。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "s-0905-50",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r11-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R12-C02-item",
+      "node": "R12",
+      "shot": "",
+      "category": "item",
+      "title": "巡檢牌正反面",
+      "image": "R12-C02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "巡檢牌正反面",
+      "requirements": "PT-01 背面壓痕可拓讀，不把拓片當新實體物品。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-9",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r12-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R12-D01-item",
+      "node": "R12",
+      "shot": "",
+      "category": "item",
+      "title": "工具櫃與藥品櫃存取紀錄",
+      "image": "R12-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "工具櫃與藥品櫃存取紀錄",
+      "requirements": "MAINT-A3／SUPERVISOR、日期及存取欄分頁可並排。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-5",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r12-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R12-D03-item",
+      "node": "R12",
+      "shot": "",
+      "category": "item",
+      "title": "漏電工單與跳脫紀錄",
+      "image": "R12-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "漏電工單與跳脫紀錄",
+      "requirements": "維修支路、隔離要求及原時戳可對讀。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-8",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r12-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R12-D04-item",
+      "node": "R12",
+      "shot": "",
+      "category": "item",
+      "title": "無主手機的本地聲音來源",
+      "image": "R12-D04",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "",
+      "content": "本地來電與語言來源頁",
+      "requirements": "原鈴聲及已核對版本，聲音仍來自現場設備。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-6",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r12-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R12-F01-item",
+      "node": "R12",
+      "shot": "",
+      "category": "item",
+      "title": "燒焦開關凝固近看",
+      "image": "R12-F01",
+      "fragmentForms": [
+        "聲證",
+        "影證"
+      ],
+      "reading": "",
+      "content": "燒焦開關凝固近看",
+      "requirements": "燒痕、接點及工具位置靜止；不演過去觸電動作。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-8",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r12-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R13-C03-item",
+      "node": "R13",
+      "shot": "",
+      "category": "item",
+      "title": "病床床紙與日期",
+      "image": "R13-C03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "病床床紙與日期",
+      "requirements": "原態／選填安息後回訪差分，僅既有狀態改變。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-16",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r13-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R13-D04-item",
+      "node": "R13",
+      "shot": "",
+      "category": "item",
+      "title": "健康評估與覆核資料",
+      "image": "R13-D04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "健康評估與覆核資料",
+      "requirements": "原件分頁，姓名與因果依原資料，不由未見內容補齊。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-15",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r13-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R13-F01-item",
+      "node": "R13",
+      "shot": "",
+      "category": "item",
+      "title": "連續七日的候診椅靜格",
+      "image": "R13-F01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "連續七日的候診椅靜格",
+      "requirements": "七日各有日期、同一坐姿及最後一天未叫號的原序列；人物靜止，不把歷史候診與現時 E-07 輪廓混為一張。",
+      "source": "10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "s-uppertech-61",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r13-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R14-C03-item",
+      "node": "R14",
+      "shot": "",
+      "category": "item",
+      "title": "既存到站訊號",
+      "image": "R14-C03",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "〔操作／介面比對＋介面點選〕在通電控制器核對識別牌原定停靠碼與 #9",
+      "content": "貨梯控制器與局部電源",
+      "requirements": "#9／#12 核對頁、到站選擇及關電差分；本機有電才可播放。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-21",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r14-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R14-D01-item",
+      "node": "R14",
+      "shot": "",
+      "category": "item",
+      "title": "停靠表、三張破損標籤與交接備註",
+      "image": "R14-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "停靠表、三張破損標籤與交接備註",
+      "requirements": "三標籤各可移動對齊；保留裂口、標籤號與日期。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-20",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r14-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R14-D02-item",
+      "node": "R14",
+      "shot": "",
+      "category": "item",
+      "title": "餐食、設備、人員與接收欄",
+      "image": "R14-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "餐食、設備、人員與接收欄",
+      "requirements": "各欄可展開，不以「設備」標籤直接證明物件本質。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-20",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r14-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R14-D03-item",
+      "node": "R14",
+      "shot": "",
+      "category": "item",
+      "title": "缺頁轉運單與貨梯裂圖",
+      "image": "R14-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "缺頁轉運單與貨梯裂圖",
+      "requirements": "缺頁保持缺失；PT-02 裂口可疊合，與 E2-11 延伸分開。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-23",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r14-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R15-C05-item",
+      "node": "R15",
+      "shot": "",
+      "category": "item",
+      "title": "維修箱小銘牌正反",
+      "image": "R15-C05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "維修箱小銘牌正反",
+      "requirements": "PT-03 剖面與背面刻線清晰，與其他兩片來源按原條件比對。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-33",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r15-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R15-D02-item",
+      "node": "R15",
+      "shot": "",
+      "category": "item",
+      "title": "歷史電壓紀錄",
+      "image": "R15-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "歷史電壓紀錄",
+      "requirements": "兩週前頁、日期與 E4-00-C 欄可讀。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-32",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r15-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R16-D01-item",
+      "node": "R16",
+      "shot": "",
+      "category": "item",
+      "title": "指標圖表與底層映射",
+      "image": "R16-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "指標圖表與底層映射",
+      "requirements": "原資料列選取與識別碼／人員列並排態；信任／服從／崩潰／離開風險各可核對，來源標頭、原頁與核對焦點保留，關閉回機櫃通道。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-37",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r16-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R16-D03-item",
+      "node": "R16",
+      "shot": "",
+      "category": "item",
+      "title": "第三機櫃客戶分級頁",
+      "image": "R16-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "第三機櫃客戶分級頁",
+      "requirements": "人員表與客戶表欄名並排態；三個 K 編號、原評級／處置及核可欄完整可查，交全文與局部切換，未核對不預顯同範本結論。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-38",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r16-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R16-D04-item",
+      "node": "R16",
+      "shot": "",
+      "category": "item",
+      "title": "管理權限摘要與本地憑證",
+      "image": "R16-D04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "管理權限摘要與本地憑證",
+      "requirements": "已讀／取得狀態；不能藉預覽產生權限。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-39",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r16-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R16-D05-item",
+      "node": "R16",
+      "shot": "",
+      "category": "item",
+      "title": "香火簿資料列與 L-48 索引",
+      "image": "R16-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "香火簿資料列與 L-48 索引",
+      "requirements": "依來源資格顯示，低權限內容不變成全份執行結果。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-42",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r16-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R17-C03-item",
+      "node": "R17",
+      "shot": "",
+      "category": "item",
+      "title": "辦公室電話舊來電快取",
+      "image": "R17-C03",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "",
+      "content": "辦公室電話舊來電快取",
+      "requirements": "只有原留存記錄，略過不擋通行。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-61",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r17-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R17-D01-item",
+      "node": "R17",
+      "shot": "",
+      "category": "item",
+      "title": "兩份同車殘頁與宿舍欄邊緣筆跡",
+      "image": "R17-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "兩份同車殘頁與宿舍欄邊緣筆跡",
+      "requirements": "兩頁流水、日期與派任可並排；「宿舍」兩字提供高解析局部，沿同組筆跡參數，不主動標亮、不發證據、不提前判為主角。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-46",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r17-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R17-D02-item",
+      "node": "R17",
+      "shot": "",
+      "category": "item",
+      "title": "健康備註與共同安置資料",
+      "image": "R17-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "健康備註與共同安置資料",
+      "requirements": "有 R8 來源才可比對，原頁與外來縮圖分開。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-47",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r17-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R17-D03-item",
+      "node": "R17",
+      "shot": "",
+      "category": "item",
+      "title": "阿尋與老周留用檔案",
+      "image": "R17-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "阿尋與老周留用檔案",
+      "requirements": "E3-04／05 分頁，既有履歷欄不合併成一人。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-48",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r17-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R17-D06-item",
+      "node": "R17",
+      "shot": "",
+      "category": "item",
+      "title": "核心回報與受潮通風紀錄",
+      "image": "R17-D06",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "核心回報與受潮通風紀錄",
+      "requirements": "按供電／已讀資格顯示，原缺欄不補寫。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-53",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r17-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R17-D07-item",
+      "node": "R17",
+      "shot": "",
+      "category": "item",
+      "title": "8F–14F 舊報修附件",
+      "image": "R17-D07",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "8F–14F 舊報修附件",
+      "requirements": "受創前日期、高度標記、缺梯照片、名冊編號三頁，照片本身另交清晰圖；照片保持客觀舊影像，沒有現在所見的紅霧與白絲；不新增外牆場景。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-54",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r17-images",
+      "offset": [
+        0.29,
+        0.21
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R17-D08-item",
+      "node": "R17",
+      "shot": "",
+      "category": "item",
+      "title": "代購回條內摺與離園駁回聯",
+      "image": "R17-D08",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "代購回條內摺與離園駁回聯",
+      "requirements": "MC-01／MU-02 分頁，核准範圍不可合併。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-55",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r17-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R17-D09-item",
+      "node": "R17",
+      "shot": "",
+      "category": "item",
+      "title": "留車核准折頁",
+      "image": "R17-D09",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "留車核准折頁",
+      "requirements": "KX-01 管理卡尾碼與日期可讀。",
+      "source": "09_劇本/09-06_正式劇本_第三幕.md",
+      "heading": "s-0906-56",
+      "spec": "10_製作規格/10-04_製作規格_第三幕.md",
+      "specHeading": "node-r17-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R19-F01-item",
+      "node": "R19",
+      "shot": "",
+      "category": "item",
+      "title": "十一分四十的記憶靜格",
+      "image": "R19-F01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "十一分四十秒凝固構圖",
+      "requirements": "完整凍結背景及椅／地漏／角落高解析局部；90 秒觀察全程不演歷史人物移動。",
+      "source": "09_劇本/09-07_正式劇本_第四幕.md",
+      "heading": "s-0907-14",
+      "spec": "10_製作規格/10-05_製作規格_第四幕.md",
+      "specHeading": "node-r19-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R20-D03-item",
+      "node": "R20",
+      "shot": "",
+      "category": "item",
+      "title": "格位／操作序位維護表",
+      "image": "R20-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "格位／操作序位維護表",
+      "requirements": "與定位片並排；第二格 8、第四格 1，導出 F3=81，不能直接從螢幕左右猜。",
+      "source": "09_劇本/09-07_正式劇本_第四幕.md",
+      "heading": "s-0907-24",
+      "spec": "10_製作規格/10-05_製作規格_第四幕.md",
+      "specHeading": "node-r20-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R21-C01-item",
+      "node": "R21",
+      "shot": "",
+      "category": "item",
+      "title": "抽屜內折起的排程 F4",
+      "image": "R21-C01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "抽屜內折起的排程 F4",
+      "requirements": "折疊／展開兩態，35 保持清晰；不提前補完整五段碼。",
+      "source": "09_劇本/09-07_正式劇本_第四幕.md",
+      "heading": "s-0907-35",
+      "spec": "10_製作規格/10-05_製作規格_第四幕.md",
+      "specHeading": "node-r21-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R21-D01-item",
+      "node": "R21",
+      "shot": "",
+      "category": "item",
+      "title": "組織架構、人事名冊與入園流水",
+      "image": "R21-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "組織架構、人事名冊與入園流水",
+      "requirements": "隸屬欄與 E3-03-B 同流水可並排，不能只因職務相似併人。",
+      "source": "09_劇本/09-07_正式劇本_第四幕.md",
+      "heading": "s-0907-29",
+      "spec": "10_製作規格/10-05_製作規格_第四幕.md",
+      "specHeading": "node-r21-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R21-D03-item",
+      "node": "R21",
+      "shot": "",
+      "category": "item",
+      "title": "三份處置單",
+      "image": "R21-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "三份處置單",
+      "requirements": "退回／減輕但核准／完整核可各獨立頁，可按日期排序。",
+      "source": "09_劇本/09-07_正式劇本_第四幕.md",
+      "heading": "s-0907-31",
+      "spec": "10_製作規格/10-05_製作規格_第四幕.md",
+      "specHeading": "node-r21-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R22-C05-item",
+      "node": "R22",
+      "shot": "",
+      "category": "item",
+      "title": "平台足跡殘留",
+      "image": "R22-C05",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "平台足跡殘留",
+      "requirements": "E4-00-D 原方向與時間來源不變。",
+      "source": "09_劇本/09-07_正式劇本_第四幕.md",
+      "heading": "s-0907-44",
+      "spec": "10_製作規格/10-05_製作規格_第四幕.md",
+      "specHeading": "node-r22-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R23-C01-item",
+      "node": "R23",
+      "shot": "",
+      "category": "item",
+      "title": "門牌缺口與收存聯壓痕",
+      "image": "R23-C01",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "門牌缺口與收存聯壓痕",
+      "requirements": "兩處可同尺度對照；LM-01 靜止回憶另交局部疊圖。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-15",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r23-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R23-D03-item",
+      "node": "R23",
+      "shot": "",
+      "category": "item",
+      "title": "私人備註",
+      "image": "R23-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "私人備註",
+      "requirements": "T−6 週正式曆日依字表，不提前展開 R29 完整索引。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-10",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r23-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R23-D04-item",
+      "node": "R23",
+      "shot": "",
+      "category": "item",
+      "title": "監控對照附件",
+      "image": "R23-D04",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "監控對照附件",
+      "requirements": "紙條去向、老周與阿尋工位來源分開，無新監控實拍。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-11",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r23-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R23-D05-item",
+      "node": "R23",
+      "shot": "",
+      "category": "item",
+      "title": "C-07 換組申請",
+      "image": "R23-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "C-07 換組申請",
+      "requirements": "姓名不可復原，不因高解析製圖補出姓名。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-12",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r23-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R23-D06-item",
+      "node": "R23",
+      "shot": "",
+      "category": "item",
+      "title": "床位工位撤名、帶離與待交接欄",
+      "image": "R23-D06",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "床位工位撤名、帶離與待交接欄",
+      "requirements": "E-10 接收顯示「未查得」；未查得不畫成死亡證明。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-13",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r23-images",
+      "offset": [
+        0.29,
+        0.21
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R23-D07-item",
+      "node": "R23",
+      "shot": "",
+      "category": "item",
+      "title": "問詢卷與事前歸檔副聯",
+      "image": "R23-D07",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "問詢卷與事前歸檔副聯",
+      "requirements": "CARE-01～04 各原件可讀，副聯標 R7 來源；排列不新增分數。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-14",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r23-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R24-D01-item",
+      "node": "R24",
+      "shot": "",
+      "category": "item",
+      "title": "四位管理者檔案",
+      "image": "R24-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "四位管理者檔案",
+      "requirements": "各人完整原件一組，另有職缺／面試、建檔／倒填、轉任／撤號局部；錯字「記綠」與 VF-0818 不能校正。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-21",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r24-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R24-D03-item",
+      "node": "R24",
+      "shot": "",
+      "category": "item",
+      "title": "證件領回聯與代購歸檔副聯",
+      "image": "R24-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "證件領回聯與代購歸檔副聯",
+      "requirements": "MC-02 與 MC-01 分頁，裁切印章及原件位置 R17 可讀。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-23",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r24-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R25-D01-item",
+      "node": "R25",
+      "shot": "",
+      "category": "item",
+      "title": "門禁、電力、足跡與門端時間帶",
+      "image": "R25-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "門禁、電力、足跡與門端時間帶",
+      "requirements": "A／B／C 原件分層，可沿同日同時基平移；02:13、02:15、02:18、02:20:11、02:20:22、02:22 依字表。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-32",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r25-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R25-D03-item",
+      "node": "R25",
+      "shot": "",
+      "category": "item",
+      "title": "補給包庫存與通道附欄",
+      "image": "R25-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "補給包庫存與通道附欄",
+      "requirements": "B3-SUPPLY-04、02:20:31「一包→缺一」與碰撞峰值各可讀。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-34",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r25-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R25-D04-item",
+      "node": "R25",
+      "shot": "",
+      "category": "item",
+      "title": "四十八小時獨立對帳頁",
+      "image": "R25-D04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "四十八小時獨立對帳頁",
+      "requirements": "康備忘、失聯快取、L-48 三來源分頁，不放進七分鐘時間尺。由 R25-V01 桌面主動開啟，返回原全景；七分鐘頁保留已排形狀，兩組日期標頭分開。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-35",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r25-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R25-D05-item",
+      "node": "R25",
+      "shot": "",
+      "category": "item",
+      "title": "LM-02 原報失聯與改列調離",
+      "image": "R25-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "LM-02 原報失聯與改列調離",
+      "requirements": "工號、筆跡及覆寫壓痕清晰；靜止回憶局部另製。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-40",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r25-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R25-D06-item",
+      "node": "R25",
+      "shot": "",
+      "category": "item",
+      "title": "留車正反聯與核准副聯",
+      "image": "R25-D06",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "留車正反聯與核准副聯",
+      "requirements": "KX-02 正反、KX-01 副聯分頁；登車欄空白，不畫康已離樓。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-41",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r25-images",
+      "offset": [
+        0.29,
+        0.21
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R26-C01-item",
+      "node": "R26",
+      "shot": "",
+      "category": "item",
+      "title": "凝固耳機與等待命令姿態",
+      "image": "R26-C01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "凝固耳機與等待命令姿態",
+      "requirements": "原位置局部，過去不動；B03 本地歷史通話頁另交介面。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-49",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r26-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R26-C02-item",
+      "node": "R26",
+      "shot": "",
+      "category": "item",
+      "title": "家電維修收據",
+      "image": "R26-C02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "家電維修收據",
+      "requirements": "磨掉地址保持不可辨，選填不影響四必要來源。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-51",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r26-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R26-D02-item",
+      "node": "R26",
+      "shot": "",
+      "category": "item",
+      "title": "倉務誘入記錄、受控任用文件、例行隔離與追加欄",
+      "image": "R26-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "倉務誘入記錄、受控任用文件、例行隔離與追加欄",
+      "requirements": "每件原件分頁，共同工號與不同日期可比；原單的受控轉介、朋友關係與轉介者留置須可讀，B02 較晚自行追加處置仍可見。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-48",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r26-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R26-D03-item",
+      "node": "R26",
+      "shot": "",
+      "category": "item",
+      "title": "門側終端原通話與緩衝來源",
+      "image": "R26-D03",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "",
+      "content": "門側終端原通話與緩衝來源",
+      "requirements": "三秒歷史通話、索引及播放狀態可讀，不從筆記生成音訊。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-49",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r26-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R26-D04-item",
+      "node": "R26",
+      "shot": "",
+      "category": "item",
+      "title": "未送出處置表",
+      "image": "R26-D04",
+      "fragmentForms": [
+        "影證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "未送出處置表",
+      "requirements": "空白完成欄及 C-07 等待主管確認資料分頁；B04 不改過去命運。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-50",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r26-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R26-F01-item",
+      "node": "R26",
+      "shot": "",
+      "category": "item",
+      "title": "C-07 凝固房間與臉",
+      "image": "R26-F01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "C-07 凝固房間與臉",
+      "requirements": "完整靜止構圖，臉的高解析局部另交；普通臉無傷害展示，不新增身分資料。",
+      "source": "09_劇本/09-08_正式劇本_第五幕.md",
+      "heading": "s-0908-45",
+      "spec": "10_製作規格/10-06_製作規格_第五幕.md",
+      "specHeading": "node-r26-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R27-D02-item",
+      "node": "R27",
+      "shot": "",
+      "category": "item",
+      "title": "未知讀取回執",
+      "image": "R27-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "未知讀取回執",
+      "requirements": "原可知欄保留，不能揭露讀取者身分。 固定在展示索引右下角，與原 R27_H09 同位置。",
+      "source": "09_劇本/09-09_正式劇本_第六幕.md",
+      "heading": "s-0909-11",
+      "spec": "10_製作規格/10-07_製作規格_第六幕.md",
+      "specHeading": "node-r27-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R28-C03-item",
+      "node": "R28",
+      "shot": "",
+      "category": "item",
+      "title": "恒岳貿易舊玻璃字樣與覆貼層",
+      "image": "R28-C03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "恒岳貿易舊玻璃字樣與覆貼層",
+      "requirements": "舊字、覆貼邊緣及現行文件的桌面方向保持一致；只支持空間沿用，不推定舊商號參與現有交易。",
+      "source": "10_製作規格/10-09_製作規格_第七幕.md",
+      "heading": "node-r28-level",
+      "spec": "10_製作規格/10-09_製作規格_第七幕.md",
+      "specHeading": "node-r28-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R28-D03-item",
+      "node": "R28",
+      "shot": "",
+      "category": "item",
+      "title": "實際保留的遠端原頁",
+      "image": "R28-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "三個可選的遠端原頁",
+      "requirements": "各有獨立正文圖；只有實際選中的一頁可讀，其他以指紋／刪除態替代。",
+      "source": "09_劇本/09-16_正式劇本_第七幕.md",
+      "heading": "s-0909-24",
+      "spec": "10_製作規格/10-09_製作規格_第七幕.md",
+      "specHeading": "node-r28-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R29-C01-item",
+      "node": "R29",
+      "shot": "",
+      "category": "item",
+      "title": "價格手寫覆寫與筆勢",
+      "image": "R29-C01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "價格手寫覆寫與筆勢",
+      "requirements": "高解析墨線、壓痕及日期，與原責任欄同頁可回查；交原紙近看、返回原月份及筆畫焦點差分，沿原 H06 讀取。",
+      "source": "09_劇本/09-16_正式劇本_第七幕.md",
+      "heading": "s-0909-26",
+      "spec": "10_製作規格/10-09_製作規格_第七幕.md",
+      "specHeading": "node-r29-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R29-D03-item",
+      "node": "R29",
+      "shot": "",
+      "category": "item",
+      "title": "管理待遇與受困資料彙整",
+      "image": "R29-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "管理待遇與受困資料彙整",
+      "requirements": "MC-03 與 CARE／MC／KX 實讀副聯各分頁，未讀來源保持缺項；不包含 SQ-R／T／S。",
+      "source": "09_劇本/09-16_正式劇本_第七幕.md",
+      "heading": "s-0909-30",
+      "spec": "10_製作規格/10-09_製作規格_第七幕.md",
+      "specHeading": "node-r29-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R29-D04-item",
+      "node": "R29",
+      "shot": "",
+      "category": "item",
+      "title": "康覆核碼與第八日簽收",
+      "image": "R29-D04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "康覆核碼與第八日簽收",
+      "requirements": "KX-03 原日期與出口無外側回執，不畫成康已出樓。",
+      "source": "09_劇本/09-16_正式劇本_第七幕.md",
+      "heading": "s-0909-30",
+      "spec": "10_製作規格/10-09_製作規格_第七幕.md",
+      "specHeading": "node-r29-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R29-D05-item",
+      "node": "R29",
+      "shot": "",
+      "category": "item",
+      "title": "前兩週逾時批次與待核准名單",
+      "image": "R29-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "前兩週逾時批次與待核准名單",
+      "requirements": "批次編號、已知姓名、位置與觀察先可讀，未知家屬欄保持未解。",
+      "source": "09_劇本/09-16_正式劇本_第七幕.md",
+      "heading": "s-0909-31",
+      "spec": "10_製作規格/10-09_製作規格_第七幕.md",
+      "specHeading": "node-r29-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R29-D07-item",
+      "node": "R29",
+      "shot": "",
+      "category": "item",
+      "title": "FORM-IC-03 與 K-089 原表",
+      "image": "R29-D07",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "FORM-IC-03 與 K-089 原表",
+      "requirements": "框線、字型行距、「不值得繼續投入」及「無資產·結案」可與 E5-02 並排；選填不影響離房。",
+      "source": "09_劇本/09-16_正式劇本_第七幕.md",
+      "heading": "s-0909-28",
+      "spec": "10_製作規格/10-09_製作規格_第七幕.md",
+      "specHeading": "node-r29-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R29-D08-item",
+      "node": "R29",
+      "shot": "",
+      "category": "item",
+      "title": "已讀客戶原頁與求助、覆核及匿名陳述",
+      "image": "R29-D08",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "已讀客戶原頁與求助、覆核及匿名陳述",
+      "requirements": "K-114／K-207／K-089 只列實讀頁；R21 兩附頁與 R9 求助正反面復用原圖，按各頁新版已讀鍵顯示，未知來源不自動補發。",
+      "source": "09_劇本/09-16_正式劇本_第七幕.md",
+      "heading": "s-0909-29",
+      "spec": "10_製作規格/10-09_製作規格_第七幕.md",
+      "specHeading": "node-r29-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "U6-F01-item",
+      "node": "U6",
+      "shot": "",
+      "category": "item",
+      "title": "SQ-R 主觀靜止回憶",
+      "image": "U6-F01",
+      "fragmentForms": [
+        "影證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "SQ-R 主觀靜止回憶",
+      "requirements": "原30–45秒記憶構圖及摘要，不演修理工受罰。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-41",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-u6-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R30-C04-item",
+      "node": "R30",
+      "shot": "",
+      "category": "item",
+      "title": "核心內門焊珠與支撐件",
+      "image": "R30-C04",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "核心內門焊珠與支撐件",
+      "requirements": "內側焊珠、支撐件、門扇各局部，與早於震損的撤離維修單並排。",
+      "source": "10_製作規格/10-10_製作規格_第八幕.md",
+      "heading": "s-0808-12",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r30-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R30-C05-item",
+      "node": "R30",
+      "shot": "",
+      "category": "item",
+      "title": "貨梯拖板與識別牌刮痕",
+      "image": "R30-C05",
+      "fragmentForms": [
+        "物證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "貨梯拖板與識別牌刮痕",
+      "requirements": "停靠痕、刮痕與既有識別來源核對；只支持曾經移交，不能補成死亡證明。",
+      "source": "10_製作規格/10-10_製作規格_第八幕.md",
+      "heading": "s-0808-12",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r30-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R30-D01-item",
+      "node": "R30",
+      "shot": "",
+      "category": "item",
+      "title": "剖面原始快照與圖資",
+      "image": "R30-D01",
+      "fragmentForms": [
+        "影證",
+        "文證"
+      ],
+      "reading": "〔玩家〕必要材料本地可讀，E3-07 隨有效前情",
+      "content": "五來源與空間剖面",
+      "requirements": "五原來源及獨立剖面底圖；三個查看方向呈現局部，同向震前／震後快照並排保留基準刻度，日期、位置及原頁入口可見。內側焊珠可對回 C04 與原維修單。可拖放亦可選取安置，五位置不預填；三組不是三次提交。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-45",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r30-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R30-D03-item",
+      "node": "R30",
+      "shot": "",
+      "category": "item",
+      "title": "H-07 原播放來源",
+      "image": "R30-D03",
+      "fragmentForms": [
+        "聲證"
+      ],
+      "reading": "",
+      "content": "H-07 原播放來源",
+      "requirements": "十一秒差值與來源時戳可讀，僅穩定後選填播放。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-50",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r30-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R30-D04-item",
+      "node": "R30",
+      "shot": "",
+      "category": "item",
+      "title": "L-48 通風與失聯表",
+      "image": "R30-D04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "L-48 通風與失聯表",
+      "requirements": "封鎖、失聯與核心封焊時間分欄可讀；姓名按已讀來源，沒有來源不自動填名。",
+      "source": "10_製作規格/10-10_製作規格_第八幕.md",
+      "heading": "s-0808-12",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r30-images",
+      "offset": [
+        0.29,
+        0.21
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R30-D05-item",
+      "node": "R30",
+      "shot": "",
+      "category": "item",
+      "title": "空名帳號撤銷與目的地空白列",
+      "image": "R30-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "空名帳號撤銷與目的地空白列",
+      "requirements": "原帳號、撤銷欄與空白目的地同頁；保持失蹤未確認，不畫死亡章。",
+      "source": "10_製作規格/10-10_製作規格_第八幕.md",
+      "heading": "s-0808-12",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r30-images",
+      "offset": [
+        -0.26,
+        -0.29
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R30-F01-item",
+      "node": "R30",
+      "shot": "",
+      "category": "item",
+      "title": "凝固暗渠",
+      "image": "R30-F01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "凝固暗渠",
+      "requirements": "沿 P0 空間素材重組20–40秒靜止構圖，不開新可探索暗渠。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-46",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r30-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R31-D01-item",
+      "node": "R31",
+      "shot": "",
+      "category": "item",
+      "title": "帳號、簽名與門端原始紀錄",
+      "image": "R31-D01",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "（介面呈現）R29 已核筆勢與 R25 已排妥的七分鐘尺",
+      "content": "五列身分鑑識資料",
+      "requirements": "帳號與簽勢／門端與方向兩組切換及五列全貌；帳號、簽名、02:20:11、門未驗證、02:20:22 下行各原欄清晰可並排。側欄重用 R25 已確認時間尺、R29 筆勢局部與來源標頭，中央本房三來源仍待核對，已讀／待核／草稿差分分開。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-53",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r31-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R31-D02-item",
+      "node": "R31",
+      "shot": "",
+      "category": "item",
+      "title": "三張原核可附件",
+      "image": "R31-D02",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "三張原核可附件",
+      "requirements": "沿用 R21 三份處置單原圖與筆勢局部，已讀為回顧、缺旗標為補查並確認，不重領證據或新增重考介面。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-54",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r31-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R31-D03-item",
+      "node": "R31",
+      "shot": "",
+      "category": "item",
+      "title": "01:50 排程與覆寫舊紀錄",
+      "image": "R31-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "01:50 排程與接回備份頁",
+      "requirements": "五段碼、本地目錄、現場電力分別核對，未掛載／接回／來源缺失各態。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-55",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r31-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R31-D04-item",
+      "node": "R31",
+      "shot": "",
+      "category": "item",
+      "title": "外部握手與 C-12 舊請求",
+      "image": "R31-D04",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "外部握手與 C-12 舊請求",
+      "requirements": "原來源可讀，R19 摘要僅實讀才帶入，不揭小花現時肉身。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-56",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r31-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R31-D07-item",
+      "node": "R31",
+      "shot": "",
+      "category": "item",
+      "title": "P1 檢修索引與回返門端原始紀錄",
+      "image": "R31-D07",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "P1 檢修索引與回返門端原始紀錄",
+      "requirements": "必得原件全文可讀，尚不顯示當下肉身影像。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-62",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r31-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R31-F01-item",
+      "node": "R31",
+      "shot": "",
+      "category": "item",
+      "title": "十二秒歷史影像",
+      "image": "R31-F01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "解凍前後與倒影站位",
+      "requirements": "依原八個時間區段交八張低動態定格、同十二秒；動畫與人物／反射分層。十二秒解凍仍為全劇唯一歷史動作特例。",
+      "source": "09_劇本/09-17_正式劇本_第八幕.md",
+      "heading": "s-0909-59",
+      "spec": "10_製作規格/10-10_製作規格_第八幕.md",
+      "specHeading": "node-r31-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R32-C01-item",
+      "node": "R32",
+      "shot": "",
+      "category": "item",
+      "title": "筆記、門框、祈願紙、雙結與廣播來源",
+      "image": "R32-C01",
+      "fragmentForms": [
+        "聲證",
+        "文證"
+      ],
+      "reading": "",
+      "content": "筆記、門框、祈願紙、雙結與廣播來源",
+      "requirements": "四原件分兩組同頁對照，物件各有可讀局部；已讀／未讀及原件筆記分層，共用來源板另交 S6 三源未齊／待關聯／矛盾原件／關聯完成差分。祈願紙沿 P1 原圖，不自動合成全知往事，不交六選三句卡。",
+      "source": "09_劇本/09-10_正式劇本_終幕.md",
+      "heading": "s-0910-8",
+      "spec": "10_製作規格/10-08_製作規格_終幕.md",
+      "specHeading": "node-r32-images",
+      "offset": [
+        0.27,
+        -0.28
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R32-D01-item",
+      "node": "R32",
+      "shot": "",
+      "category": "item",
+      "title": "P1 現時檢修鏡頭",
+      "image": "R32-D01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "P1 現時檢修鏡頭",
+      "requirements": "泵體遮擋、通道與肉身同框，時間和連續影格可核對；監視串流不是一張假照片。",
+      "source": "09_劇本/09-10_正式劇本_終幕.md",
+      "heading": "s-0910-5",
+      "spec": "10_製作規格/10-08_製作規格_終幕.md",
+      "specHeading": "node-r32-images",
+      "offset": [
+        0,
+        0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R32-D02-item",
+      "node": "R32",
+      "shot": "",
+      "category": "item",
+      "title": "倒下前後連續紀錄 E6-02",
+      "image": "R32-D02",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "倒下前後連續紀錄 E6-02",
+      "requirements": "原時戳、包與身體位置的關鍵靜格各頁；不是十四日連續昏迷。",
+      "source": "09_劇本/09-10_正式劇本_終幕.md",
+      "heading": "s-0910-6",
+      "spec": "10_製作規格/10-08_製作規格_終幕.md",
+      "specHeading": "node-r32-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R32-D03-item",
+      "node": "R32",
+      "shot": "",
+      "category": "item",
+      "title": "指定回返門端原始紀錄",
+      "image": "R32-D03",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "指定回返門端原始紀錄",
+      "requirements": "鎖舌釋放與未抵外側時間分開，沿 R31 必得索引來源。",
+      "source": "09_劇本/09-10_正式劇本_終幕.md",
+      "heading": "s-0910-10",
+      "spec": "10_製作規格/10-08_製作規格_終幕.md",
+      "specHeading": "node-r32-images",
+      "offset": [
+        -0.35,
+        0
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R32-D05-item",
+      "node": "R32",
+      "shot": "",
+      "category": "item",
+      "title": "責任原件、收件證明及定位",
+      "image": "R32-D05",
+      "fragmentForms": [
+        "文證"
+      ],
+      "reading": "",
+      "content": "責任原件、收件證明及定位",
+      "requirements": "上傳中／失敗可重試／外側收件／另送定位各態；不將傳輸成功畫成已放行。",
+      "source": "09_劇本/09-10_正式劇本_終幕.md",
+      "heading": "s-0910-21",
+      "spec": "10_製作規格/10-08_製作規格_終幕.md",
+      "specHeading": "node-r32-images",
+      "offset": [
+        0,
+        -0.35
+      ],
+      "play": null,
+      "timing": ""
+    },
+    {
+      "id": "R32-F01-item",
+      "node": "R32",
+      "shot": "",
+      "category": "item",
+      "title": "M6-01 自身最後靜格",
+      "image": "R32-F01",
+      "fragmentForms": [
+        "影證"
+      ],
+      "reading": "",
+      "content": "M6-01 自身最後靜格",
+      "requirements": "手試圖撐起、包在泵體內側，與 P1 真實位置相符。",
+      "source": "09_劇本/09-10_正式劇本_終幕.md",
+      "heading": "s-0910-6",
+      "spec": "10_製作規格/10-08_製作規格_終幕.md",
+      "specHeading": "node-r32-images",
+      "offset": [
+        -0.28,
+        0.27
+      ],
+      "play": null,
+      "timing": ""
     }
   ]
 }

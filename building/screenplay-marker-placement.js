@@ -5,6 +5,7 @@ export const READING_PLACEMENTS = Object.freeze({
   'P2-C04-horror': '| **搪瓷盆** |',
   'R1-C06-horror': '（動畫演出）原電視熄滅。',
   'R7-V01-horror': '〔環境／異常聲〕一聲清喉嚨在近處。',
+  'R9-C01-horror': '（動畫演出）帆布旁一道暗縫在 3 秒內退去。',
   'R11-V01-horror': '（介面呈現）其他螢幕一起跳出來電視窗。',
   'R12-D04-horror': '（介面呈現）維修檯上一支無主舊手機亮起。',
   'R13-V01-horror': '（動畫演出）退出後，現時輪廓才逐顆數不存在的藥',
@@ -39,7 +40,7 @@ export function locateReadingMarkers(raw, markers, placements = READING_PLACEMEN
     return !code && !!line.trim() && !/^\s*(?:<!--|<a |#)/.test(line);
   });
   for (const m of markers) {
-    const needle = placements[m.id];
+    const needle = m.reading || placements[m.id];
     let matches = lines.flatMap((line, i) => eligible[i] && (needle ? line.includes(needle) : line.includes(`[${m.image}](`)) ? [i] : []);
     // Older transition close-ups use a plain image number beside their local description.
     if (!needle && !matches.length) matches = lines.flatMap((line, i) => eligible[i] && line.startsWith('**近看：**') && line.includes(`（${m.image}）`) ? [i] : []);

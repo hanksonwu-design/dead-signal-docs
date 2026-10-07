@@ -177,7 +177,8 @@ kbd { color: var(--faint); border: 1px solid var(--line); border-radius: 3px; pa
 .screenplay-toggle input { width: 16px; height: 16px; margin: 0; accent-color: var(--cyan); }
 .screenplay-toggle:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
 .screenplay-cues { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 5px; letter-spacing: 0; }
-.screenplay-cue { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; line-height: 1.7; }
+.screenplay-cue { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; min-width: 0; font-size: 12px; font-weight: 600; line-height: 1.7; }
+.screenplay-cue span { min-width: 0; overflow-wrap: anywhere; }
 .screenplay-cue svg { flex: none; width: 16px; height: 16px; }
 .hide-screenplay-cues .screenplay-cues { display: none; }
 .reader-actions { min-width: 0; }

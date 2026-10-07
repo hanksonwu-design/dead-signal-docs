@@ -1,5 +1,6 @@
 import {MARKER_CATEGORIES, markerIcon} from './marker-presentation.js';
 import {locateReadingMarkers} from './screenplay-marker-placement.js';
+import {fragmentLabel, readingCueGroups} from './fragment-forms.js';
 
 const data = __READING_MARKERS__;
 const preferenceKey = 'dead-signal:screenplay-cues:v1';
@@ -35,14 +36,13 @@ export function decorate(content, raw, path) {
   for (const [target, items] of groups) {
     const row = document.createElement('span');
     row.className = 'screenplay-cues';
-    for (const category of Object.keys(MARKER_CATEGORIES)) {
-      const matches = items.filter(m => m.category === category);
-      if (!matches.length) continue;
+    for (const {category, forms, matches} of readingCueGroups(items, MARKER_CATEGORIES)) {
       const label = document.createElement('span'), name = document.createElement('span');
       label.className = 'screenplay-cue';
       label.dataset.category = category;
       label.dataset.readingMarkers = matches.map(m => m.id).join(' ');
-      name.textContent = MARKER_CATEGORIES[category];
+      name.textContent = fragmentLabel(MARKER_CATEGORIES[category], forms);
+      label.title = matches.map(m => fragmentLabel(m.title, m.fragmentForms)).join('、');
       label.append(markerIcon(category), name);
       row.append(label);
     }

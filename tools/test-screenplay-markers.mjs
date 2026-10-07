@@ -5,6 +5,7 @@ import {readingMarkerData} from './build-reader-markers.mjs';
 import {ACTS} from './screenplay-files.mjs';
 import {locateReadingMarkers, screenplayBody, READING_PLACEMENTS} from '../building/screenplay-marker-placement.js';
 import {MARKER_CATEGORIES} from '../building/marker-categories.js';
+import {readingCueGroups} from '../building/fragment-forms.js';
 
 const read = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 const data = readingMarkerData();
@@ -20,11 +21,41 @@ test('all canonical markers appear once across ten reading acts with the same ca
     const original = model.find(x => x.id === m.id);
     assert.equal(m.category, original.category);
     assert.equal(m.image, original.image);
+    assert.deepEqual(m.fragmentForms, original.fragmentForms);
+    assert.equal(m.title, original.title);
+    assert.equal(m.reading, original.reading);
     assert(MARKER_CATEGORIES[m.category]);
     assert(!/^(?:\s*<|#{1,6} |\s*$)/.test(body(m.path).split('\n')[m.line]), m.id);
   }
   assert(Object.values(data).every(markers => markers.length > 0));
   assert(model.filter(m => m.shot).every(m => placements.some(p => p.id === m.id)), 'transition markers retained');
+});
+
+test('source reading overrides follow acquisition beats and retain sparse, distinct forms', () => {
+  const groups = new Map();
+  for (const m of placements) {
+    if (m.reading) assert(body(m.path).split('\n')[m.line].includes(m.reading), m.id);
+    const key = `${m.path}:${m.line}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(m);
+  }
+  for (const [key, items] of groups) assert(readingCueGroups(items, MARKER_CATEGORIES).length <= 2, key);
+  const source = placements.find(m => m.id === 'R9-C03-item');
+  const scare = placements.find(m => m.id === 'R9-C01-horror');
+  assert(scare.line > source.line, 'the fake window occurs after investigating the room');
+  assert.match(body(scare.path).split('\n')[scare.line], /帆布旁一道暗縫/);
+});
+
+test('fragment types use one formatter in the reader and every model label surface', () => {
+  for (const file of ['building/current-model.js', 'building/screenplay-reader.js']) assert.match(read(file), /from '\.\/fragment-forms.js'/);
+  const ui = read('building/current-model.js');
+  assert.match(ui, /const title=fragmentLabel\(m.title,m.fragmentForms\)/);
+  assert.match(ui, /form.textContent=title.slice\(m.title.length\)/);
+  for (const surface of ["$('marker-list').innerHTML=", "$('marker-detail').innerHTML="]) {
+    const line = ui.split('\n').find(line => line.includes(surface));
+    assert(line.includes('fragmentLabel(m.title,m.fragmentForms)'), surface);
+  }
+  assert(placements.filter(m => m.fragmentForms.length).length > 0);
 });
 
 test('late horror and bosses stay on their occurrence rather than reused establishing shots', () => {

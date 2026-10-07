@@ -12,7 +12,7 @@ export function readingMarkerData() {
   for (const m of markers) {
     const owner = graph.nodes.find(n => n.id === m.node)?.source;
     assert(data[owner], `Missing reading chapter: ${m.id}`);
-    data[owner].push({id: m.id, image: m.image, category: m.category});
+    data[owner].push({id: m.id, image: m.image, category: m.category, title: m.title, fragmentForms: m.fragmentForms, reading: m.reading});
   }
   for (const [file, items] of Object.entries(data)) {
     const {issues} = locateReadingMarkers(screenplayBody(read(`docs/${file}`)), items);
