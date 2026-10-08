@@ -118,7 +118,8 @@ test('reading scripts describe playable events without editorial prohibitions', 
 });
 
 test('screenplay presentation cues distinguish motion, stills, transitions and interfaces', () => {
-  const labels = ['動畫演出', '靜態畫面／景別', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
+  const labels = ['動畫演出', '動畫演出／第一人稱過場', '動畫演出／第一人稱互動',
+    '動畫演出／第一人稱動作回饋', '靜態畫面／景別', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
   assert(!master.text.includes('〔演出〕'));
   for (const label of labels) assert(block('s-0900-4').includes(`（${label}）`), label);
   for (const act of ACTS) {
@@ -174,8 +175,9 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     系統: new Set(['操作提示', '選項介面', '確認警示', '取得提示', '筆記更新', '狀態顯示', '狀態更新',
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
+  // U2b and U5 separate the existing follow-up input from its preceding defense.
   const counts = [[21, 17, 8], [73, 29, 19], [105, 34, 11], [141, 24, 10],
-    [56, 18, 11], [53, 15, 12], [21, 4, 2], [46, 7, 5], [26, 3, 4], [27, 12, 3]];
+    [56, 18, 11], [53, 15, 12], [22, 4, 2], [47, 7, 5], [26, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
@@ -203,6 +205,8 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     ['s-0907-40', '系統／狀態更新', '第四次正確輸入後'],
     ['s-0908-32', '操作／介面拖曳', '把三帶對到同一時間尺'],
     ['s-0909-32', '操作／介面點選', '玩家已展開批次，再主動點「可移交」'],
+    ['s-0909-18', '操作／物件操作', '回到作業位，利用六秒窗口轉輪 1.5 秒'],
+    ['s-0909-39', '操作／物件操作', '查看同側滑軌，再一次拉下獨立遮板'],
     ['s-0910-23', '系統／送出回饋', '收到副本的收件證明後'],
     ['s-0910-29', '操作／介面長按', '長按「緊急接管」四秒'],
     ['s-0904-6', '環境／設備聲', '每顯示一個編號'],
@@ -228,9 +232,9 @@ test('frozen history and H-08 remain still while present action and the unique t
     ['s-0908-25', '近景', '凝固或原快取靜格'], ['s-0909-20', '中景', '25–45 秒靜止回憶'],
   ]) {
     assert(block(id).includes(`（靜態畫面／${size}）${text}`), id);
-    assert(!block(id).includes('（動畫演出）'), id);
+    assert.doesNotMatch(block(id), /（動畫演出(?:／[^）]+)?）/, id);
   }
-  assert(block('s-0905-17').includes('（動畫演出）回到現時，老周的迴聲'));
+  assert(block('s-0905-17').includes('（動畫演出／第一人稱互動）回到現時，老周的迴聲'));
   assert(block('s-0906-11').includes('（動畫演出）退出後，現時輪廓'));
   assert(block('s-0907-12').includes('（靜態差分）玩家轉開鏡頭後才撤去該靜格'));
   assert(block('s-0907-25').includes('（靜態畫面／中景）主角收手時，門邊那隻手仍是靜格。'));
