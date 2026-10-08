@@ -175,7 +175,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
   const counts = [[21, 17, 8], [73, 29, 19], [105, 34, 11], [141, 24, 10],
-    [56, 18, 11], [52, 15, 12], [21, 4, 2], [46, 7, 5], [26, 3, 4], [27, 12, 3]];
+    [56, 18, 11], [53, 15, 12], [21, 4, 2], [46, 7, 5], [26, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);

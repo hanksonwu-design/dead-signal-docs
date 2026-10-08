@@ -88,3 +88,56 @@ test('ending B releases the door by choice after upload, with matching VO and ar
   includes(appendix, ['是決定停止等待', '她不讀心、不知道終端上的遮蔽內容', '沒有原諒主角的責任']);
   includes(novel, ['這次，別再說會回來。', '本地的簽核沒有因為這個答案消失']);
 });
+
+test('controlled contact and rations remain distinct from private freedom and old resident commerce', () => {
+  includes(appendix, [
+    '以受監看的指定通話機會施壓', '通話仍由康核定',
+    '沒有私人對外聯絡權', '執行話務或監看不等於取得對外線的開放權',
+    '舊居民與獨立商戶留下現金交易的價目表', '點名、配給與扣餐紀錄',
+    '被逼邀約朋友的人仍受拘禁', '原轉介者不因此放行',
+  ]);
+  assert.doesNotMatch(appendix, /轉賣聯絡權|食物可以用錢買，也可以用工時/);
+});
+
+test('R24 concludes identity-record rewriting without deleting evidence or changing the required chain', () => {
+  const conclusion = '他們撤掉原本的受困者身分，再用後補的『自願』文件掩蓋入園經過。';
+  includes(block('s-0908-22'), [conclusion, '原接收聯、轉任撤號紀錄與後補文件', '已核可的處置單仍留在同頁', 'E4-01', 'E4-02', 'E3-02']);
+  assert.equal(spec(5).split(conclusion).length - 1, 2);
+  includes(spec(5), ['不刪除證據庫原件、已讀狀態或處置單', 'E4-01／E4-02／E3-02 的鎖定條件維持不變']);
+  for (const source of master.documents.values()) {
+    assert(!source.includes('把他曾是受害者的證據刪掉'));
+  }
+});
+
+test('Kang recording remains a coercive promise rather than an author-certified guarantee', () => {
+  const promise = '你可以待在那邊，也可以到這邊來。到這邊來的人，不會被送去校正區。';
+  for (const source of [story(5), spec(5), appendix, novel]) includes(source, [promise]);
+  includes(appendix, ['用局部真話包裝脅迫', '是康的承諾，不是永久保障', '職位與待遇仍可被撤回', '錄音證明他說過什麼，不替承諾背書']);
+  includes(spec(5), ['康的原始承諾，而非系統保證', '本人仍受離園與私人通聯限制']);
+  includes(novel, ['住宿和配給確實換過', '證件卻仍被扣著']);
+  for (const source of master.documents.values()) {
+    assert.doesNotMatch(source, /他從不說謊|康從不說謊|錄音裡沒有一個字是假的|他說的每一句都是真的/);
+  }
+});
+
+test('R16 proves common grading and approved actions, not accurate mind prediction', () => {
+  const conclusion = '同一組欄位同時評估螢幕兩側的人。他們把客戶和受困的人，塞進同一張評級表。';
+  includes(block('s-0906-40'), [conclusion, 'E2-04', 'E2-05', 'E2-14']);
+  assert.equal(spec(3).split(conclusion).length - 1, 2);
+  includes(spec(3), ['不新增模型準確率題目或必要證據', '核可及執行回執分開保留']);
+  includes(appendix, ['詐騙所得是園區持續運作的重要收入', '評級資料另被包裝出售', '評分也會誤判', '管理者核可處置']);
+  for (const source of master.documents.values()) {
+    assert.doesNotMatch(source, /詐騙只是資料來源|意識數據才是園區的高價產品|讓陌生人愛上你，和讓被囚禁的人保持聽話，讀的是同一/);
+  }
+});
+
+test('evacuation distinguishes departing personnel, abandoned captives and unknown resident fates', () => {
+  const timeline = row(appendix, '**T−2 週 +2 日**');
+  // The first same-day row is the audit trigger; inspect the separately described closure as well.
+  includes(timeline.join(' '), ['康完成 48 小時對帳']);
+  assert.match(appendix, /^\| \*\*T−2 週 \+2 日\*\* \| 撤離人員.*控制區出口.*留下未被撤出的受困者.*康留守交接.*下落逐案核實/m);
+  includes(appendix, ['不表示所有人同日死亡', '並非所有集團人員都在這一天離開']);
+  for (const source of master.documents.values()) {
+    assert.doesNotMatch(source, /拋下所有人|把所有人一起鎖在樓內|鎖死所有人|與所有人一起被鎖死|→ 所有人死/);
+  }
+});
