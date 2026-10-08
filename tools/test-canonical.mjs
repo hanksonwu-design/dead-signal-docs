@@ -781,7 +781,7 @@ test('act V varies investigation controls without removing evidence or adding pe
 
 test('act VI adjacent views retain actions and safety while removing repeated setup', () => {
   assert(block('s-0909-17').includes('未主動轉輪不啟動襲擊'));
-  assert(block('s-0909-37').includes('上方外扣保持鬆開，布標留在來路'));
+  for (const text of ['上方外扣保持鬆開', '蓋板停在支撐定位', '布標留在來路']) assert(block('s-0909-37').includes(text), text);
   assert(block('s-0909-37').includes('玩家在這一側處理實際卡住的內銷'));
   assert(block('s-0909-42').includes('U6 水位已平衡'));
   assert(block('s-0909-42').includes('親手扣上止回栓'));

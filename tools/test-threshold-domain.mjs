@@ -84,7 +84,7 @@ test('existing image orders and navigation counts cover the domain without new r
   assert(!body.slice(0, body.indexOf('| 素材 |')).includes('\n\n'), 'Do not split the production table');
 });
 
-const sequence = ['繫布標', '穿過內門', '核對地標', '鬆外扣', '進入 U4b', '抽內銷'];
+const sequence = ['繫布標', '穿過內門', '核對地標', '鬆外扣', '掀蓋至支撐位', '進入 U4b', '抽內銷'];
 test('the model derives room phases from canonical navigation instead of preserving stale labels', () => {
   const graph = JSON.parse(read('scene_graph.json'));
   const model = JSON.parse(read('building/scene-data.json'));

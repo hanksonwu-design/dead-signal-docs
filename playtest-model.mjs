@@ -19,9 +19,9 @@ export function act(old,a){let s=structuredClone(old);s.events.push({action:a,at
   return say('依序走到安全踏台、查看深層出口，再自行跨門。');
  }
  if(s.id==='u4'){
-  const seq=['繫布標','穿過內門','核對地標','鬆外扣','進入 U4b','抽內銷'];
+  const seq=['繫布標','穿過內門','核對地標','鬆外扣','掀蓋至支撐位','進入 U4b','抽內銷'];
   if(a!==seq[s.step])return say(s.step===2?'請核對布標斷邊、缺角與焊疤；相同門號不足以證明回返。':'這一步仍被前一道條件阻擋，可看現場回饋。');
-  s.step++;s.done=s.step===seq.length;return say(['','布標已繫，單結與斷邊可辨。','一直向前跨過內門，卻回到原鏡位。固定地標與剛繫的布標仍在。','確認一次領域回返；只改查旁路，檢修蓋尚未開。','外扣鬆開，露出安全上踏台。','低位鏡頭看見內銷，上方內門的窄影仍在。','服務閘開啟，可去 U5；只是繞過回返門檻，領域未解除。'][s.step]);
+  s.step++;s.done=s.step===seq.length;return say(['','布標已繫，單結與斷邊可辨。','一直向前跨過內門，卻回到原鏡位。固定地標與剛繫的布標仍在。','確認一次領域回返；只改查旁路，檢修蓋尚未開。','外扣已鬆，蓋板仍蓋著；須親手掀到支撐位。','蓋板已撐開，安全上踏台露出；可自行下降。','低位鏡頭看見內銷，上方內門的窄影仍在。','服務閘開啟，可去 U5；只是繞過回返門檻，領域未解除。'][s.step]);
  }
  if(s.reset){if(a==='安全復位'){s.reset=false;s.centered=true;s.blocked=false;s.defended=false;s.phase='安全';return say('控制位置恢復；已完成段保留，自行開始下一個前兆。');}return say('需在安全位親手復位，不能硬吃攻擊繼續累積。');}
  if(s.id==='ud2'&&a==='隔板回中位'&&s.phase==='安全'){s.centered=true;return say('隔板回中位；已封側保持封閉，自行確認下一輪。');}

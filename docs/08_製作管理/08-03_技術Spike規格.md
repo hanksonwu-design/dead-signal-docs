@@ -728,6 +728,7 @@ RoomRoot (Node2D)
 ~~~text
 act3.r12.breaker_repaired
 act3.r12.shared_access_seen
+act3.r12.local_access_verified
 act3.r12.e08_trace_seen
 act3.r12.e213_seen
 act3.r12.office_relay_ready

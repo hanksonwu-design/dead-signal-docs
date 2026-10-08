@@ -825,9 +825,9 @@
       "lower.u2.bridge_clear = true"
     ],
     "U3": [
-      "依本地雙刻線判斷（可對照 U2 同一構件）",
+      "查看燈座、遮光葉與側槽",
       "配罩並隔離眩光",
-      "調整檢修燈照出橋栓",
+      "調整檢修燈照出本地雙刻線（可對照 U2 同一構件）",
       "手動對齊與落橋；一行可略過的修理桌承諾，不提交回憶已讀",
       "選填回程：從工場側退開送件門內閂並推至門擋，經 U3-V02 雙向回訪 U1；不綁 LM-03",
       "安全時可選比對補線與餘料、進入完整 LM-03 回憶；未看也能自行過橋"
@@ -838,7 +838,7 @@
       "鬆外扣掀蓋，從 U4b 安全上踏台繞過作用門檻"
     ],
     "U4b": [
-      "lower.u4.return_verified = true；U4 檢修蓋外扣已手動鬆開",
+      "lower.u4.return_verified = true；lower.u4.outer_clasp_released = true；lower.u4.hatch_open = true（蓋板已到支撐定位）",
       "跨入低位夾道，解除內銷並打開冷藏後場服務口",
       "lower.u4.service_latch_open = true"
     ],

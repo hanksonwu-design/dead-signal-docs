@@ -595,7 +595,7 @@
       "name": "燈具修理工場",
       "act": 6,
       "part": 2,
-      "goal": "依本地雙刻線配罩、隔離眩光並調整檢修燈 → 手動對齊橋栓與落橋；一行修理桌承諾後可直接過橋，完整 LM-03 回憶選填",
+      "goal": "配罩、隔離眩光並調整檢修燈照出本地雙刻線 → 手動對齊橋栓與落橋；一行修理桌承諾後可直接過橋，完整 LM-03 回憶選填",
       "source": "09_劇本/09-09_正式劇本_第六幕.md",
       "heading": "node-u3-script",
       "pack": "10_製作規格/10-07_製作規格_第六幕.md",
@@ -1389,7 +1389,7 @@
       "id": "U4-U4b-split",
       "fromId": "U4",
       "toId": "U4b",
-      "gate": "lower.u4.return_verified = true；U4 檢修蓋外扣已手動鬆開",
+      "gate": "lower.u4.return_verified = true；lower.u4.outer_clasp_released = true；lower.u4.hatch_open = true（蓋板已到支撐定位）",
       "motion": "從 U4 沿相同扶手／管線與高差地標抵達 檢修蓋下服務夾道 的獨立鏡位。",
       "kind": "主線",
       "back": true,
@@ -1512,9 +1512,9 @@
       "lower.u2.bridge_clear = true"
     ],
     "U3": [
-      "依本地雙刻線判斷（可對照 U2 同一構件）",
+      "查看燈座、遮光葉與側槽",
       "配罩並隔離眩光",
-      "調整檢修燈照出橋栓",
+      "調整檢修燈照出本地雙刻線（可對照 U2 同一構件）",
       "手動對齊與落橋；一行可略過的修理桌承諾，不提交回憶已讀",
       "選填回程：從工場側退開送件門內閂並推至門擋，經 U3-V02 雙向回訪 U1；不綁 LM-03",
       "安全時可選比對補線與餘料、進入完整 LM-03 回憶；未看也能自行過橋"
@@ -1525,7 +1525,7 @@
       "鬆外扣掀蓋，從 U4b 安全上踏台繞過作用門檻"
     ],
     "U4b": [
-      "lower.u4.return_verified = true；U4 檢修蓋外扣已手動鬆開",
+      "lower.u4.return_verified = true；lower.u4.outer_clasp_released = true；lower.u4.hatch_open = true（蓋板已到支撐定位）",
       "跨入低位夾道，解除內銷並打開冷藏後場服務口",
       "lower.u4.service_latch_open = true"
     ],
