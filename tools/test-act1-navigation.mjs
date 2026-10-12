@@ -97,3 +97,50 @@ test('shared rules and novel use the same door causes and return path', () => {
   has(novel, '我沿洗衣窄巷回到二樓宿舍', '四樓早餐攤', '斜舌在身後扣回', '僅工坊側放行');
   assert(!novel.includes('四樓共用水槽'));
 });
+
+test('Act 1 completion notes distinguish required actions, optional checks and deferred F1 decoding', () => {
+  has(block('s-0904-6'), '**成功條件（主線必要）：**', '既存的五人待叫序列',
+    '**完成條件（選填測試）：**', '鈴聲與重置測試可略過');
+  has(block('s-0904-16'), '訓練檔的必要查閱後', '解開煞扣', '餐車推至牆邊凹位');
+  has(block('s-0904-19'), '**成功條件（主線必要，離幕前補齊）：**',
+    '實際近看全家福', '只進入片段尚未取得照片');
+  has(block('s-0904-22'), '**完成條件（選填調查）：**', '略過仍可完成第一幕');
+  has(block('s-0904-26'), 'F1 隨同幅近看記錄');
+  has(block('s-0904-27'), '**完成條件（選填取捨）：**', '兩種選擇皆成立');
+  has(block('s-0904-28'), '**完成條件（選填重看）：**', '本幕保留未解',
+    '不必在此解出答案才能離幕');
+});
+
+test('all seven Act 1 ascent scenes name the local condition without gating optional close-ups', () => {
+  const text = story(1);
+  for (const route of ['T-R3-R5', 'T-R5-R6']) {
+    const children = flow.subscenes.filter(s => s.id.startsWith(`${route}-`));
+    assert.equal(children.length, route === 'T-R3-R5' ? 5 : 2);
+    for (const child of children) {
+      const passage = text.split(`<a id="ascent-${child.id.toLowerCase()}-script"></a>`)[1];
+      assert(passage, child.id);
+      const note = passage.trimStart().split('\n')[0];
+      assert.match(note, /^\*\*(成功|完成)條件（通路操作）：\*\*/, child.id);
+    }
+  }
+  has(block('s-0904-49'), '支架近看可略過', '這段是安靜穿行', '將布束掛妥');
+  has(block('s-0904-45'), '積水退去、止滑踏板露出', '並插妥止擋銷', '親自進入 R6 才接續第二幕');
+});
+
+test('Act 1 annotations preserve separate acquisition, deduction and physical door confirmation', () => {
+  has(block('s-0904-40'), '只移開衣架尚未取得線索');
+  ordered(block('s-0904-42'), '五個人物碎片已親查取得', '仍須另行提交下方的必要三格',
+    '放入三格並正式提交正確關聯', '才可到現場核對門端');
+  has(block('s-0904-44'), '親自到低壓門端核對', '直到插銷退開', 'F1 維持未解也可通行');
+  const images = [
+    ['R1-C03', '成功條件（主線必要）'], ['R2-C01', '成功條件（主線必要）'],
+    ['R3-D01', '完成條件（選填調查）'], ['R4-C04', '完成條件（選填重看）'],
+    ['R5-D02', '成功條件（主線必要）'], ['R5-C04', '成功條件（主線必要）']
+  ];
+  const markers = JSON.parse(readFileSync(new URL('../building/scene-markers.json', import.meta.url), 'utf8')).markers;
+  for (const [image, label] of images) {
+    has(spec(1).split('\n').find(line => line.startsWith(`| ${image} |`)), label);
+    has(flow.images[image].requirements, label);
+    for (const marker of markers.filter(m => m.image === image)) has(marker.requirements, label);
+  }
+});
