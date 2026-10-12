@@ -64,7 +64,7 @@ test('ten reading acts and ten production files keep unique blocks and paired na
       }
     }
   }
-  assert.equal(sceneCount, 342);
+  assert.equal(sceneCount, 343);
   assert(block('s-0900-2').includes('十份同幕製作規格維護技術條件'));
   assert(!block('s-0900-2').includes('同一份文件內'));
   for (const section of ['book-payoffs', 'book-first-play', 'book-pending', 'book-sources']) {
@@ -140,7 +140,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
 
 test('every static screenplay cue names its shot size without changing protected framing', () => {
   // R7's duplicate printed-process close-up is now part of its first manual shot.
-  const counts = [22, 59, 82, 98, 45, 30, 17, 23, 10, 20];
+  const counts = [23, 61, 82, 98, 45, 30, 17, 23, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -179,7 +179,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
   // U2b and U5 separate the existing follow-up input from its preceding defense.
-  const counts = [[21, 17, 8], [73, 29, 19], [105, 34, 11], [141, 24, 10],
+  const counts = [[21, 17, 8], [75, 29, 19], [105, 34, 11], [141, 24, 10],
     [56, 18, 11], [53, 15, 12], [22, 4, 2], [47, 7, 5], [26, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
@@ -369,7 +369,7 @@ test('forged consent remains a source claim and does not erase coercion or later
 
 test('ten expanded routes preserve original departure gates and ordered scene coverage', () => {
   const routes = [
-    ['R3', 'R5', 1, 's-0904-23', null, 5, '可自由前往工坊，無額外門鎖；尚缺人物碎片或第一層證據時，只限制 R5→R6 離幕'],
+    ['R3', 'R5', 1, 's-0904-49', null, 5, '可自由前往工坊，無額外門鎖；尚缺人物碎片或第一層證據時，只限制 R5→R6 離幕'],
     ['R5', 'R6', 1, 's-0904-45', null, 2, '第一層人物鏈與必要三格鎖定，再於現場門端核對訊號鑰匙；F1 隨必要血字近看記錄，不另作門禁'],
     ['R6', 'R7', 2, 's-0905-8', null, 3, '查看產線玻璃門，記下已見的中層路線後自行前往；設備同步、來電與帳號清單不擋通行'],
     ['R2', 'R3', 1, 's-0904-16', 's-0602-22', 2,
@@ -835,7 +835,7 @@ test('reading chapters omit editorial notes while production contracts remain av
     assert(!/（新增待審）/.test(story), act.path);
     beats += [...story.matchAll(/^#### (?:\[|POST ·)/gm)].length;
   }
-  assert.equal(beats, 342);
+  assert.equal(beats, 343);
   assert(block('s-0903-3').includes('「……看著亮的地方。」'));
   assert(block('s-0903-3').includes('「別先走。」'));
   assert(!block('s-0903-3').includes('音訊檔名與製作註解'));
@@ -1154,7 +1154,7 @@ test('gameplay inventory and novel share the source contracts while production s
   assert(novel.includes('那張照片已經清楚了'));
   const assets = block('s-0810-21').split('<a id="core-gameplay-assets"></a>')[1];
   assert(assets.includes('未宣稱圖稿或引擎已完成'));
-  assert(assets.includes('維持 48 個宏觀流程節點、342 場次與 15 個訊號槽'));
+  assert(assets.includes('維持 48 個宏觀流程節點、343 場次與 15 個訊號槽'));
   assert(assets.includes('56 條動線包含新增的 U3↔U1 回程捷徑'));
   assert(assets.includes('須另估工時'));
 });

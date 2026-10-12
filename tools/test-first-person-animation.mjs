@@ -223,7 +223,7 @@ test('all screenplay animation cues name a documented presentation method', () =
 
 test('P2 to R1 shares one first-person door action after reaching the upper landing', () => {
   ordered(block('s-0903-26'), '親手**點擊梯口上行', 'B3–B1 到 1F',
-    '第一人稱動作回饋', '抵達頂端', '暖白光', '接續第一幕');
+    '抵達頂端', '單向通行／通過後自閉', '第一人稱動作回饋', '暖白光', '接續第一幕');
   const arrival = block('s-0904-3');
   ordered(arrival, '承接序幕頂端同一次推門', '眼前門扇先遮住大部分畫面',
     '手從視野下緣伸出', '視點在大廳入口停穩', '取得控制');
