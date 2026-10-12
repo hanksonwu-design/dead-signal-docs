@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="886" viewBox="0 0 1200 886" role="img" aria-labelledby="title desc">
+<title id="title">L10｜生活夾層 · 六個操作面板</title><desc id="desc">各房原機構的摘要，不是六房直接相通；實際串接仍依場景與流程。 U1 · B 棟 46F：三片管圖 → 服務門插栓：旋轉管圖核對焊封上支管、住戶橫支管、下彎接頭。
+排除死路、確認路線後，仍須手動退栓。；U3 · B 棟 46F：固定燈架 → 橋栓 → 拉桿：斷電裝窄口罩，遮眩光、閉遮光葉、燈框置中。
+看清雙刻線，對齊橋栓後親手拉桿落橋。；U4 · B 棟 48F：一次回返 → 三組地標比對：核對門框缺角、扶手焊疤、單結斷邊布。
+確認同址後領域仍在，沿冷凝管找檢修蓋。；U4b · 48F 蓋下：掀蓋固定後，另按下降：U4 先鬆外扣、掀蓋並固定支撐。
+下降到 U4b 才能操作內銷與服務扣。；U6 · B 棟 49F：三槽 3／0／3 → 2／2／2：左右各移一格水到中槽，總量六格。
+親手關閥後，沿固定保養梯下降。；U6b · 49F 蓋下：核水平泡 → 手動止回栓：不踩尚未固定的活動踏面。
+確認水平、手動扣栓，固定後才接 R30。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="886" fill="#0b1418"/>
+<text class="title" x="32" y="52">L10｜生活夾層 · 六個操作面板</text>
+<text class="subtitle" x="32" y="91">各房原機構的摘要，不是六房直接相通；實際串接仍依場景與流程。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · U1 · B 棟 46F</text>
+<text class="panel-title" x="58" y="233">三片管圖 → 服務門插栓</text>
+<text class="body" x="58" y="276">旋轉管圖核對焊封上支管、住戶橫支管、下彎接頭。</text>
+<text class="body" x="58" y="310">排除死路、確認路線後，仍須手動退栓。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · U3 · B 棟 46F</text>
+<text class="panel-title" x="636" y="233">固定燈架 → 橋栓 → 拉桿</text>
+<text class="body" x="636" y="276">斷電裝窄口罩，遮眩光、閉遮光葉、燈框置中。</text>
+<text class="body" x="636" y="310">看清雙刻線，對齊橋栓後親手拉桿落橋。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · U4 · B 棟 48F</text>
+<text class="panel-title" x="58" y="453">一次回返 → 三組地標比對</text>
+<text class="body" x="58" y="496">核對門框缺角、扶手焊疤、單結斷邊布。</text>
+<text class="body" x="58" y="530">確認同址後領域仍在，沿冷凝管找檢修蓋。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · U4b · 48F 蓋下</text>
+<text class="panel-title" x="636" y="453">掀蓋固定後，另按下降</text>
+<text class="body" x="636" y="496">U4 先鬆外扣、掀蓋並固定支撐。</text>
+<text class="body" x="636" y="530">下降到 U4b 才能操作內銷與服務扣。</text></g>
+<g data-panel="5"><rect x="32" y="596" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="596" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="633" fill="#79d8dc">05 · U6 · B 棟 49F</text>
+<text class="panel-title" x="58" y="673">三槽 3／0／3 → 2／2／2</text>
+<text class="body" x="58" y="716">左右各移一格水到中槽，總量六格。</text>
+<text class="body" x="58" y="750">親手關閥後，沿固定保養梯下降。</text></g>
+<g data-panel="6"><rect x="610" y="596" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="596" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="633" fill="#79d8dc">06 · U6b · 49F 蓋下</text>
+<text class="panel-title" x="636" y="673">核水平泡 → 手動止回栓</text>
+<text class="body" x="636" y="716">不踩尚未固定的活動踏面。</text>
+<text class="body" x="636" y="750">確認水平、手動扣栓，固定後才接 R30。</text></g>
+<path d="M32 821H1168" stroke="#425155"/><text class="footer" x="32" y="855">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

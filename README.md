@@ -35,6 +35,8 @@ npm --prefix building run build
 
 現行概念與規則圖解對照於 `assets/illustrations/manifest.json`；圖解文字維護於 `tools/illustration-boards.mjs`，雙棟動線圖由 `scene-flow.json` 產生。`node tools/build-illustration-boards.mjs --check` 驗證圖解未過期；`node --test tools/test-current-illustrations.mjs` 檢查文件與 3D 引用、退役圖隔離及正式工單狀態。示意更新不等於正式圖像完成，舊圖保留追溯，不回填現行頁面。
 
+最新補圖與逐項適用性檢查見[示意圖第二輪檢查](reviews/2026-10-12-illustration-supplement.md)。電梯、鬼打牆、燈架／水箱、修復權限與現場聽覺的參考隨共用附錄或本房製作規格維護。
+
 場景主圖、過渡鏡位、物件近看及文件頁只在各幕製作規格的 `scene-images` 表格維護；既有 H／B 熱點與圖號的對應在同房 `hotspot-images` 表格維護。新增原熱點時也須補對圖，不能只在正文列出物件。`build-scene-images.mjs` 檢查原熱點覆蓋，並同步劇本段落中的圖號連結、各幕連線圖號、場景道具總表與 `scene-flow.json`；加 `--check` 可檢查是否同步。一列可能含多頁或差分，並非已完成的一張圖。48 個宏觀流程節點與 56 條動線不等於全部畫面節點；新畫面不能默默新增關卡門檻。更動原動線時，先執行 `sync-canonical.mjs` 更新場景圖，再重建圖單與相關查表。
 
 「場景與流程」統一於 `building/`：以 3D 為主，下方可展開章節流程總覽，按「主場景 → 過渡次場景 → 下一場景」連接；選取會同步更新 3D、流程圖及右側詳情。可篩選上下部、章節與樓層，搜尋主場景、次場景、目標及支線；右側保留正式房內步驟、支線收集、全部出入路線條件與完整圖像需求。未具備 WebGL 或繪圖環境中斷時，切換至同一頁的流程總覽。這是製作查閱介面，不模擬解鎖或任務完成狀態。

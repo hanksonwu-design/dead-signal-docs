@@ -37,7 +37,7 @@ test('3D references do not silently keep retired illustration pixels', () => {
 });
 
 test('diagram files are reproducible and include accessible text and a pending-assets boundary', () => {
-  assert.equal(buildBoards().size, 17);
+  assert.equal(buildBoards().size, 29);
   for (const [id, svg] of buildBoards()) {
     assert.equal(read(`assets/illustrations/current/${id}.svg`), svg, id);
     assert(svg.includes('aria-labelledby="title desc"'), id);
@@ -70,4 +70,45 @@ test('work-order totals remain current and concept art never marks game assets c
   assert(appendix.includes('557 列：153 列場景／操作／演出與 404 列近看等細節'));
   assert.doesNotMatch(appendix, /523 (?:張圖像工單|列圖像|列：140)/);
   assert(appendix.includes('只有該段明列的必要條件限制推進'));
+});
+
+test('supplemental routes keep stops, floors and manual actions distinct', () => {
+  const body = id => JSON.stringify(BOARDS[id]);
+  assert.match(body('REF-LIFT'), /29F／30F／31F/);
+  assert.match(body('REF-LIFT'), /47F／48F/);
+  assert.match(body('REF-LIFT'), /兩端卡妥/);
+  assert.match(body('REF-U4'), /一長兩短焊疤/);
+  assert.match(body('REF-U4'), /門仍受影響/);
+  assert.match(body('REF-U4'), /仍在 48F 蓋下/);
+  assert.match(body('L07'), /U4 → U4b → U5/);
+  assert.match(body('L07'), /U6 → U6b → R30/);
+  assert(flow.nodes.find(n => n.id === 'M1').reference.url.endsWith('V39_current.png'));
+  assert(flow.nodes.find(n => n.id === 'U4').reference.url.endsWith('domain_u4_current.png'));
+});
+
+test('mechanism and ending guides preserve independent prerequisites', () => {
+  const body = id => JSON.stringify(BOARDS[id]);
+  assert.match(body('REF-R12'), /雙短線門禁線 → 右座/);
+  assert.match(body('REF-R12'), /長線設備線 → 左座/);
+  assert.match(body('REF-R12'), /待權限核驗/);
+  assert.match(body('REF-MECHANISM'), /遮光葉開／閉 × 內／中／外/);
+  assert.match(body('REF-MECHANISM'), /3／0／3 → 2／2／2/);
+  assert.match(body('REF-MECHANISM'), /平水不自動扣栓/);
+  assert.match(body('V25'), /R26 → R25 → M1/);
+  assert.match(body('V24'), /同一出口/);
+  assert.match(body('V15'), /肉身昏迷存活/);
+  assert.match(body('L09'), /R33 承接結果/);
+  assert.match(body('REF-HEARING'), /補救不套用其他 Boss 或 UD/);
+});
+
+test('new concepts retain provenance and explicit geometric limits', () => {
+  const provenance = JSON.parse(read('assets/illustrations/2026-10-12-supplement-prompts.json'));
+  for (const id of ['V39', 'REF-LIFT', 'REF-U4', 'REF-MECHANISM']) {
+    assert(provenance.prompts[id].length > 100, id);
+    assert(provenance.selectedAssets.find(f => f.id === id), id);
+  }
+  const u4 = read('docs/10_製作規格/10-09_製作規格_第七幕.md');
+  assert(u4.includes('牆面斑駁不代替門框缺角'));
+  const appendix = read(`docs/${APPENDIX}`);
+  assert(appendix.includes('液面替代 3／0／3 或 2／2／2 差分'));
 });

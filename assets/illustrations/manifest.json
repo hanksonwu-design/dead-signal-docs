@@ -226,6 +226,127 @@
       "heading": "fig-v27",
       "retiredAsset": "assets/07_視聽與介面/assets/current_design/V27.png",
       "scope": "沿用既有震損圖；舊軍事攻堅 PNG 不回到現行引用。"
+    },
+    {
+      "id": "L04",
+      "asset": "assets/illustrations/current/L04.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "fig-l04",
+      "retiredAsset": "assets/06_關卡規格/assets/level_flow/L04.png",
+      "scope": "第 1 格為選擇前總覽，第 2～4 格為互斥供電方案；部分供電的繼電器回訪在技術核心調查之後。三路均保留必要主線來源。"
+    },
+    {
+      "id": "L07",
+      "asset": "assets/illustrations/current/L07.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-09_製作規格_第七幕.md",
+      "heading": "fig-l07",
+      "retiredAsset": "assets/06_關卡規格/assets/level_flow/L07.png",
+      "scope": "六格依序涵蓋第七、八幕：R29 → L2 → U4／U4b／U5 → U6／U6b → R30 → R31。47F、48F、49F、50F 分開；R29 不直接連到 R30。"
+    },
+    {
+      "id": "L09",
+      "asset": "assets/illustrations/current/L09.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-08_製作規格_終幕.md",
+      "heading": "fig-l09",
+      "retiredAsset": "assets/06_關卡規格/assets/level_flow/L09.png",
+      "scope": "A～E 為 R32 已提交行動的互斥後果；第 6 格說明肉身回返與時間切換，R33 只承接結果。"
+    },
+    {
+      "id": "L10",
+      "asset": "assets/illustrations/current/L10.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-07_製作規格_第六幕.md",
+      "heading": "fig-l10",
+      "retiredAsset": "assets/06_關卡規格/assets/level_flow/L10.png",
+      "scope": "六格對照 U1、U3、U4、U4b、U6、U6b。各房樓層與操作分開；平水、關閥、下梯及扣栓不是自動連做。"
+    },
+    {
+      "id": "V15",
+      "asset": "assets/illustrations/current/V15.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-08_製作規格_終幕.md",
+      "heading": "fig-v15",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V15.png",
+      "scope": "D／E 各分準備與提交後果；四秒完成前可取消。D 肉身仍活著、封鎖持續；E 只處理已核對的本地錨點並接肉身回返。"
+    },
+    {
+      "id": "V24",
+      "asset": "assets/illustrations/current/V24.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
+      "heading": "fig-v24",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V24.png",
+      "scope": "R20 歷史播放器與現場帶分框，R21 保留上行路；R22 手勢路與手動路為同一出口的兩種釋放方法，不新增兩扇門。"
+    },
+    {
+      "id": "V25",
+      "asset": "assets/illustrations/current/V25.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-06_製作規格_第五幕.md",
+      "heading": "fig-v25",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V25.png",
+      "scope": "六格分開偽造自願書、既存錄音、七分鐘／48 小時、喇叭窗口及 R26 返回 R25 的離幕門檻。F5 不是單獨開門條件。"
+    },
+    {
+      "id": "V39",
+      "asset": "assets/07_視聽與介面/assets/current_design/V39_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-07_製作規格_第六幕.md",
+      "heading": "fig-v39",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V39.png",
+      "scope": "01 管理門後窄道、02 七窗視線、03 指定窗位遠景、04 展示廊門口。B 棟 44F→45F 全程在樓體包覆內；3／5／7 窗有靜止人影，1／2／4／6 為空。人物與遮蔽依 M1-C01 工單；七窗近看可略過，概念不代替逐窗正式圖。"
+    },
+    {
+      "id": "REF-LIFT",
+      "asset": "assets/07_視聽與介面/assets/current_design/lift_details_current.png",
+      "kind": "current-concept",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "illustration-lift",
+      "scope": "車廂閘門與平台材質；L1 29／30／31F，L2 47／48F，真假停靠與手動離車依規則圖及原工單。",
+      "supplement": [
+        "assets/illustrations/current/REF-LIFT.svg"
+      ]
+    },
+    {
+      "id": "REF-U4",
+      "asset": "assets/07_視聽與介面/assets/current_design/domain_u4_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-09_製作規格_第七幕.md",
+      "heading": "illustration-u4",
+      "scope": "48F 同址回返材質；門框邊缺角、一長兩短焊疤、單結布的精確幾何依附圖與工單，暗影不新增人物。",
+      "supplement": [
+        "assets/illustrations/current/REF-U4.svg"
+      ]
+    },
+    {
+      "id": "REF-MECHANISM",
+      "asset": "assets/07_視聽與介面/assets/current_design/mechanism_details_current.png",
+      "kind": "current-concept",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "illustration-mechanisms",
+      "scope": "跨房材質參照；U3 固定燈架六組合及橋栓，U6 三槽守恆與關閥，U6b 手動扣止回栓，各狀態以規則圖和原工單為準。",
+      "supplement": [
+        "assets/illustrations/current/REF-MECHANISM.svg"
+      ]
+    },
+    {
+      "id": "REF-R12",
+      "asset": "assets/illustrations/current/REF-R12.svg",
+      "kind": "current-diagram",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "illustration-r12",
+      "scope": "完整方口低壓接頭、追線、合蓋試電與帳號核驗分開，修復不等於取得權限。"
+    },
+    {
+      "id": "REF-HEARING",
+      "asset": "assets/illustrations/current/REF-HEARING.svg",
+      "kind": "current-diagram",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "illustration-hearing",
+      "scope": "波形不作距離尺；校正區補救不套 Boss 或 UD，安全查證與失敗保存依原契約。"
     }
   ]
 }

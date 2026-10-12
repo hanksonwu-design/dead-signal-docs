@@ -1510,7 +1510,7 @@
       "id": "R20",
       "image": "R20-V01",
       "reference": {
-        "url": "assets/07_視聽與介面/assets/current_design/V24.png",
+        "url": "assets/illustrations/current/V24.svg",
         "label": "上部末段：校正與突破",
         "kind": "概念參考，非正式素材"
       },
@@ -1910,7 +1910,7 @@
       "id": "M1",
       "image": "M1-V01",
       "reference": {
-        "url": "assets/07_視聽與介面/assets/current_design/V39.png",
+        "url": "assets/07_視聽與介面/assets/current_design/V39_current.png",
         "label": "維修脊柱的七扇窗",
         "kind": "概念參考，非正式素材"
       },
@@ -2307,7 +2307,7 @@
       "id": "R29",
       "image": "R29-V01",
       "reference": {
-        "url": "assets/06_關卡規格/assets/level_flow/L07.png",
+        "url": "assets/illustrations/current/L07.svg",
         "label": "簽核、制動與真相停頓",
         "kind": "概念參考，非正式素材"
       },
@@ -2373,7 +2373,11 @@
     {
       "id": "U4",
       "image": "U4-V01",
-      "reference": null,
+      "reference": {
+        "url": "assets/07_視聽與介面/assets/current_design/domain_u4_current.png",
+        "label": "U4 同鏡位回返與檢修蓋材質參考",
+        "kind": "概念參考，非正式素材"
+      },
       "floor": {
         "description": "48F 門牌迴廊；一次原鏡回返只在本層。U4b 在本層檢修蓋下，服務閘接同層 U5。 原光源、材質與證據焦點依本房規格。",
         "source": "10_製作規格/10-09_製作規格_第七幕.md",
@@ -2857,7 +2861,7 @@
       "id": "R33",
       "image": "R33-V01",
       "reference": {
-        "url": "assets/06_關卡規格/assets/level_flow/L09.png",
+        "url": "assets/illustrations/current/L09.svg",
         "label": "五種人物後果",
         "kind": "概念參考，非正式素材"
       },

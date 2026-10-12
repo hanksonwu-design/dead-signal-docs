@@ -695,7 +695,7 @@ test('all Markdown document and image links resolve; master anchors are unique',
   const explicit = [...master.text.matchAll(/<a id="([^"]+)"><\/a>/g)].map(m => m[1]);
   assert.equal(explicit.length, new Set(explicit).size);
   const imageRefs = [...master.text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)];
-  assert.equal(imageRefs.length, 74);
+  assert.equal(imageRefs.length, 82);
   const files = readdirSync(path.join(ROOT, 'docs'), {recursive:true}).filter(f => f.endsWith('.md'));
   const errors = [];
   for (const relative of files) {

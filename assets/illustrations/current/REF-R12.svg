@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="734" viewBox="0 0 1200 734" role="img" aria-labelledby="title desc">
+<title id="title">REF-R12｜R12 · 低壓接頭與獨立權限核驗</title><desc id="desc">A 棟 23F；修好電路只恢復供電，不自動取得門禁權限。 挑件：圓口／裂方口／完整方口：原方口低壓插座只收完整方口接頭。
+核對端型、低壓標記與完整卡榫，再壓入。；追線：先看終點、套環與接座刻記：雙短線門禁線 → 右座。
+長線設備線 → 左座。
+一座一線，不只憑長短或左右猜。；測試：收手、合護蓋，再試主斷路器：兩片試驗片都立起，才保存修復。
+錯接只跳脫，可復位重試，不扣資源。
+修好顯示供電正常／待權限核驗。；權限：本地帳號另作完整比對：依原外側門禁紀錄核對完整帳號與角色。
+自動帶入前綴不等於完成驗證。
+後續部分供電回訪只操作原辦公室繼電器。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="734" fill="#0b1418"/>
+<text class="title" x="32" y="52">REF-R12｜R12 · 低壓接頭與獨立權限核驗</text>
+<text class="subtitle" x="32" y="91">A 棟 23F；修好電路只恢復供電，不自動取得門禁權限。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 挑件</text>
+<text class="panel-title" x="58" y="233">圓口／裂方口／完整方口</text>
+<text class="body" x="58" y="276">原方口低壓插座只收完整方口接頭。</text>
+<text class="body" x="58" y="310">核對端型、低壓標記與完整卡榫，再壓入。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 追線</text>
+<text class="panel-title" x="636" y="233">先看終點、套環與接座刻記</text>
+<text class="body" x="636" y="276">雙短線門禁線 → 右座。</text>
+<text class="body" x="636" y="310">長線設備線 → 左座。</text>
+<text class="body" x="636" y="344">一座一線，不只憑長短或左右猜。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="447" fill="#79d8dc">03 · 測試</text>
+<text class="panel-title" x="58" y="487">收手、合護蓋，再試主斷路器</text>
+<text class="body" x="58" y="530">兩片試驗片都立起，才保存修復。</text>
+<text class="body" x="58" y="564">錯接只跳脫，可復位重試，不扣資源。</text>
+<text class="body" x="58" y="598">修好顯示供電正常／待權限核驗。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · 權限</text>
+<text class="panel-title" x="636" y="487">本地帳號另作完整比對</text>
+<text class="body" x="636" y="530">依原外側門禁紀錄核對完整帳號與角色。</text>
+<text class="body" x="636" y="564">自動帶入前綴不等於完成驗證。</text>
+<text class="body" x="636" y="598">後續部分供電回訪只操作原辦公室繼電器。</text></g>
+<path d="M32 669H1168" stroke="#425155"/><text class="footer" x="32" y="703">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

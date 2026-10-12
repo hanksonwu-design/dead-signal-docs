@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="734" viewBox="0 0 1200 734" role="img" aria-labelledby="title desc">
+<title id="title">V24｜R20～R22 · 校正與同一出口</title><desc id="desc">來源錄音與現場威脅分開；兩種釋放方法通往同一扇門。 R20 · 37F：三條歷史聲軌：固定台反覆查來源與日期。
+歷史播放器不是怨靈距離圖。
+現場聽覺帶另框，安全查聽停攻。；R20 · 同一玻璃：兩側位置可對照：玻璃、門框與現有通路維持原址。
+輪廓依當前原觸發顯示，不另開房間。；R21 · 41F：折痕排程與實景核對：依既有上行次場景抵達，查必要欄位。
+折痕、頁面和實景對位，不憑空補來源。；R22 · 42F：手勢路／手動路 → 同一出口：擇一完成原釋放機構，踏面與扶手落位。
+玩家自行跨門，才保存上部完成。
+深入下一區，不是全樓解封或已逃出。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="734" fill="#0b1418"/>
+<text class="title" x="32" y="52">V24｜R20～R22 · 校正與同一出口</text>
+<text class="subtitle" x="32" y="91">來源錄音與現場威脅分開；兩種釋放方法通往同一扇門。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · R20 · 37F</text>
+<text class="panel-title" x="58" y="233">三條歷史聲軌</text>
+<text class="body" x="58" y="276">固定台反覆查來源與日期。</text>
+<text class="body" x="58" y="310">歷史播放器不是怨靈距離圖。</text>
+<text class="body" x="58" y="344">現場聽覺帶另框，安全查聽停攻。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · R20 · 同一玻璃</text>
+<text class="panel-title" x="636" y="233">兩側位置可對照</text>
+<text class="body" x="636" y="276">玻璃、門框與現有通路維持原址。</text>
+<text class="body" x="636" y="310">輪廓依當前原觸發顯示，不另開房間。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="447" fill="#79d8dc">03 · R21 · 41F</text>
+<text class="panel-title" x="58" y="487">折痕排程與實景核對</text>
+<text class="body" x="58" y="530">依既有上行次場景抵達，查必要欄位。</text>
+<text class="body" x="58" y="564">折痕、頁面和實景對位，不憑空補來源。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · R22 · 42F</text>
+<text class="panel-title" x="636" y="487">手勢路／手動路 → 同一出口</text>
+<text class="body" x="636" y="530">擇一完成原釋放機構，踏面與扶手落位。</text>
+<text class="body" x="636" y="564">玩家自行跨門，才保存上部完成。</text>
+<text class="body" x="636" y="598">深入下一區，不是全樓解封或已逃出。</text></g>
+<path d="M32 669H1168" stroke="#425155"/><text class="footer" x="32" y="703">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

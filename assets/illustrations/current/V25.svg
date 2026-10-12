@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="920" viewBox="0 0 1200 920" role="img" aria-labelledby="title desc">
+<title id="title">V25｜第五幕 · 兩把時間尺與兩道門檻</title><desc id="desc">F5 只是第五段校驗碼；不是讀到一段碼就能離幕。 R23：偽造的自願文件：讀實際接收、脅迫與偽造來源。
+紙上自願字樣不證明被害者同意。；R24：康的既存 30 秒錄音：在當地設備播放與查來源。
+不是康正在遠端對話或即時指揮。；R25 · 七分鐘頁：02:15～02:22 的歷史旁路：三帶同尺，另放大核對 02:20:11～:22。
+確認保存對時，不是現時七分鐘倒數。；R25 · 日期頁：48 小時與第五段回傳：另頁核對失聯、資料缺口及封鎖，取得 E4-05。
+親展門端回傳取得 F5，保留第五段前導零。；R25 → R26：三喇叭窗口仍要親手操作：對時、E4-05、F5 完成後，依 A／B／C 時序斷喇叭。
+三處皆斷才進 R26，不由 F5 自動開門。；R26 → R25 → M1：完成處置，再回原控制點：阿彪處置使出口放行；五段校驗碼已齊。
+回 R25 核對確認，再親自跨入 M1。
+選填彩蛋不作離幕門檻。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="920" fill="#0b1418"/>
+<text class="title" x="32" y="52">V25｜第五幕 · 兩把時間尺與兩道門檻</text>
+<text class="subtitle" x="32" y="91">F5 只是第五段校驗碼；不是讀到一段碼就能離幕。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#e6bc68"/>
+<text class="phase" x="58" y="193" fill="#e6bc68">01 · R23</text>
+<text class="panel-title" x="58" y="233">偽造的自願文件</text>
+<text class="body" x="58" y="276">讀實際接收、脅迫與偽造來源。</text>
+<text class="body" x="58" y="310">紙上自願字樣不證明被害者同意。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#e6bc68"/>
+<text class="phase" x="636" y="193" fill="#e6bc68">02 · R24</text>
+<text class="panel-title" x="636" y="233">康的既存 30 秒錄音</text>
+<text class="body" x="636" y="276">在當地設備播放與查來源。</text>
+<text class="body" x="636" y="310">不是康正在遠端對話或即時指揮。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · R25 · 七分鐘頁</text>
+<text class="panel-title" x="58" y="453">02:15～02:22 的歷史旁路</text>
+<text class="body" x="58" y="496">三帶同尺，另放大核對 02:20:11～:22。</text>
+<text class="body" x="58" y="530">確認保存對時，不是現時七分鐘倒數。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · R25 · 日期頁</text>
+<text class="panel-title" x="636" y="453">48 小時與第五段回傳</text>
+<text class="body" x="636" y="496">另頁核對失聯、資料缺口及封鎖，取得 E4-05。</text>
+<text class="body" x="636" y="530">親展門端回傳取得 F5，保留第五段前導零。</text></g>
+<g data-panel="5"><rect x="32" y="596" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="596" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="633" fill="#79d8dc">05 · R25 → R26</text>
+<text class="panel-title" x="58" y="673">三喇叭窗口仍要親手操作</text>
+<text class="body" x="58" y="716">對時、E4-05、F5 完成後，依 A／B／C 時序斷喇</text>
+<text class="body" x="58" y="750">叭。</text>
+<text class="body" x="58" y="784">三處皆斷才進 R26，不由 F5 自動開門。</text></g>
+<g data-panel="6"><rect x="610" y="596" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="596" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="633" fill="#79d8dc">06 · R26 → R25 → M1</text>
+<text class="panel-title" x="636" y="673">完成處置，再回原控制點</text>
+<text class="body" x="636" y="716">阿彪處置使出口放行；五段校驗碼已齊。</text>
+<text class="body" x="636" y="750">回 R25 核對確認，再親自跨入 M1。</text>
+<text class="body" x="636" y="784">選填彩蛋不作離幕門檻。</text></g>
+<path d="M32 855H1168" stroke="#425155"/><text class="footer" x="32" y="889">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

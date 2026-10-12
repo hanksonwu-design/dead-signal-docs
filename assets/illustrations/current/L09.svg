@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="954" viewBox="0 0 1200 954" role="img" aria-labelledby="title desc">
+<title id="title">L09｜終幕 · 五種已提交後果</title><desc id="desc">R32 行動決定分支，R33 承接結果；不是片尾再選一次的五格選單。 A · 承認：責任資料完整外送：回返與室內救援後，在 P1 指認責任頁簽名。
+承擔不等於獲赦免，也不證明全員獲救。；B · 隱瞞：剪去外送副本的責任路徑：同樣回返並獲救，只交代自己的受困經過。
+被剪的是副本，本地原件仍在。；C · 鬆手：搭紙 → 停手 → 主動鬆開：小花自己跨離門框，普通紙留在門邊。
+之後回 P1，用空白紀錄紙標出設備位置。；D · 留下：翼內暖光，遠窗仍封閉：主動放棄本次回返，兩椅靠近。
+P1 肉身仍昏迷存活，未發求援。
+不是死亡或永生。；E · 空位：記得小花，卻失去回應：局部抹除後回返、獲救與照護。
+後日桌邊敲兩下，對面沒有第二組回聲。
+不是失憶、赦免或勝利。；共同銜接：A／B／C／E 的肉身回返：接回 P1，再以時間切換表達救援與照護。
+不讓玩家由 50F 瞬間步行下樓。
+D 沿自己的翼內結果收束。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="954" fill="#0b1418"/>
+<text class="title" x="32" y="52">L09｜終幕 · 五種已提交後果</text>
+<text class="subtitle" x="32" y="91">R32 行動決定分支，R33 承接結果；不是片尾再選一次的五格選單。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#a6cfa7"/>
+<text class="phase" x="58" y="193" fill="#a6cfa7">01 · A · 承認</text>
+<text class="panel-title" x="58" y="233">責任資料完整外送</text>
+<text class="body" x="58" y="276">回返與室內救援後，在 P1 指認責任頁簽名。</text>
+<text class="body" x="58" y="310">承擔不等於獲赦免，也不證明全員獲救。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#a6cfa7"/>
+<text class="phase" x="636" y="193" fill="#a6cfa7">02 · B · 隱瞞</text>
+<text class="panel-title" x="636" y="233">剪去外送副本的責任路徑</text>
+<text class="body" x="636" y="276">同樣回返並獲救，只交代自己的受困經過。</text>
+<text class="body" x="636" y="310">被剪的是副本，本地原件仍在。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="234" fill="#a6cfa7"/>
+<text class="phase" x="58" y="413" fill="#a6cfa7">03 · C · 鬆手</text>
+<text class="panel-title" x="58" y="453">搭紙 → 停手 → 主動鬆開</text>
+<text class="body" x="58" y="496">小花自己跨離門框，普通紙留在門邊。</text>
+<text class="body" x="58" y="530">之後回 P1，用空白紀錄紙標出設備位置。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="234" fill="#dcb3e4"/>
+<text class="phase" x="636" y="413" fill="#dcb3e4">04 · D · 留下</text>
+<text class="panel-title" x="636" y="453">翼內暖光，遠窗仍封閉</text>
+<text class="body" x="636" y="496">主動放棄本次回返，兩椅靠近。</text>
+<text class="body" x="636" y="530">P1 肉身仍昏迷存活，未發求援。</text>
+<text class="body" x="636" y="564">不是死亡或永生。</text></g>
+<g data-panel="5"><rect x="32" y="630" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="630" width="5" height="234" fill="#dcb3e4"/>
+<text class="phase" x="58" y="667" fill="#dcb3e4">05 · E · 空位</text>
+<text class="panel-title" x="58" y="707">記得小花，卻失去回應</text>
+<text class="body" x="58" y="750">局部抹除後回返、獲救與照護。</text>
+<text class="body" x="58" y="784">後日桌邊敲兩下，對面沒有第二組回聲。</text>
+<text class="body" x="58" y="818">不是失憶、赦免或勝利。</text></g>
+<g data-panel="6"><rect x="610" y="630" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="630" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="667" fill="#79d8dc">06 · 共同銜接</text>
+<text class="panel-title" x="636" y="707">A／B／C／E 的肉身回返</text>
+<text class="body" x="636" y="750">接回 P1，再以時間切換表達救援與照護。</text>
+<text class="body" x="636" y="784">不讓玩家由 50F 瞬間步行下樓。</text>
+<text class="body" x="636" y="818">D 沿自己的翼內結果收束。</text></g>
+<path d="M32 889H1168" stroke="#425155"/><text class="footer" x="32" y="923">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

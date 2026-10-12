@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="734" viewBox="0 0 1200 734" role="img" aria-labelledby="title desc">
+<title id="title">V15｜D／E · 主動提交與不同後果</title><desc id="desc">互斥關係行動；長按完成前可取消，完成後不能由片尾重新選擇。 D · 準備：回看肉身與不回返後果：看明 P1 肉身仍活著、本次不回返、封鎖持續。
+自行確認，四秒長按或等價輔助完成才提交。
+閒置與預覽不算同意。；D · 結果：主觀坐下，翼膜留置：兩椅靠近，遠窗仍被封住。
+肉身昏迷存活，不發求援、不接 P1 回返。；E · 準備：本地主管控制器：核對來源、錨點、供電及權限。
+預覽索引撤銷、抹除、切中繼與機械封存。
+四秒操作可取消，完成才提交。；E · 結果：局部錨點鬆斷，接肉身回返：硬碟與原件仍留本地，主角記憶保留。
+獨立定位沿原排程一次，接回返與救援。
+不是遠端清除全樓或赦免責任。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="734" fill="#0b1418"/>
+<text class="title" x="32" y="52">V15｜D／E · 主動提交與不同後果</text>
+<text class="subtitle" x="32" y="91">互斥關係行動；長按完成前可取消，完成後不能由片尾重新選擇。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · D · 準備</text>
+<text class="panel-title" x="58" y="233">回看肉身與不回返後果</text>
+<text class="body" x="58" y="276">看明 P1 肉身仍活著、本次不回返、封鎖持續。</text>
+<text class="body" x="58" y="310">自行確認，四秒長按或等價輔助完成才提交。</text>
+<text class="body" x="58" y="344">閒置與預覽不算同意。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · D · 結果</text>
+<text class="panel-title" x="636" y="233">主觀坐下，翼膜留置</text>
+<text class="body" x="636" y="276">兩椅靠近，遠窗仍被封住。</text>
+<text class="body" x="636" y="310">肉身昏迷存活，不發求援、不接 P1 回返。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="447" fill="#79d8dc">03 · E · 準備</text>
+<text class="panel-title" x="58" y="487">本地主管控制器</text>
+<text class="body" x="58" y="530">核對來源、錨點、供電及權限。</text>
+<text class="body" x="58" y="564">預覽索引撤銷、抹除、切中繼與機械封存。</text>
+<text class="body" x="58" y="598">四秒操作可取消，完成才提交。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · E · 結果</text>
+<text class="panel-title" x="636" y="487">局部錨點鬆斷，接肉身回返</text>
+<text class="body" x="636" y="530">硬碟與原件仍留本地，主角記憶保留。</text>
+<text class="body" x="636" y="564">獨立定位沿原排程一次，接回返與救援。</text>
+<text class="body" x="636" y="598">不是遠端清除全樓或赦免責任。</text></g>
+<path d="M32 669H1168" stroke="#425155"/><text class="footer" x="32" y="703">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

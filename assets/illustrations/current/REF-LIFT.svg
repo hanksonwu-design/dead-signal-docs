@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="988" viewBox="0 0 1200 988" role="img" aria-labelledby="title desc">
+<title id="title">REF-LIFT｜L1／L2 · 鐵拉閘門與真假停靠</title><desc id="desc">每次抵達仍在車廂內；核對實體地標後，由玩家開閘與跨平台。 L1 · B 棟 29F → 30F：倒影開閘，實閘仍鎖住：只開放 30F 按鈕，先閉閘才上行。
+核對實閘後倒影復位，不新增停靠樓層。；L1 · 30F 平台：踏板雙端卡榫＋檢修柄：從原凹槽取踏板，兩端卡妥才可踩過。
+操作檢修柄後回車廂，才開放 31F。
+未啟用時仍可依原規則回 29F。；L1 · 30F → 31F：閉雙閘 → 按樓層 → 手動離車：核 B 棟 31F 樓牌與平層線，再開閘。
+跨原門口才到訪 R16；略過動畫不代跨門。；L2 · B 棟 47F → 48F：假停靠燈亮，門後卻是實牆：沒有平台，閘鎖不鬆，拉閘只碰止擋。
+空布袋在車內；刮聲不證明有人。
+取消查看可繼續，不新增暗樓層。；L2 · 真 48F：實體樓牌＋平層線＋完整踏面：三項核對後親手開閘、過平台，再進 U4。
+R30 不可逆邊界前仍可依原路回 47F。；停靠界線：兩部梯不共用任意樓層：L1：29F／30F／31F，已完成平台按原條件回訪。
+L2：47F／48F，假停靠不算新場景。
+門閘、平台與房間入口分開交圖。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="988" fill="#0b1418"/>
+<text class="title" x="32" y="52">REF-LIFT｜L1／L2 · 鐵拉閘門與真假停靠</text>
+<text class="subtitle" x="32" y="91">每次抵達仍在車廂內；核對實體地標後，由玩家開閘與跨平台。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · L1 · B 棟 29F → 30F</text>
+<text class="panel-title" x="58" y="233">倒影開閘，實閘仍鎖住</text>
+<text class="body" x="58" y="276">只開放 30F 按鈕，先閉閘才上行。</text>
+<text class="body" x="58" y="310">核對實閘後倒影復位，不新增停靠樓層。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · L1 · 30F 平台</text>
+<text class="panel-title" x="636" y="233">踏板雙端卡榫＋檢修柄</text>
+<text class="body" x="636" y="276">從原凹槽取踏板，兩端卡妥才可踩過。</text>
+<text class="body" x="636" y="310">操作檢修柄後回車廂，才開放 31F。</text>
+<text class="body" x="636" y="344">未啟用時仍可依原規則回 29F。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="447" fill="#79d8dc">03 · L1 · 30F → 31F</text>
+<text class="panel-title" x="58" y="487">閉雙閘 → 按樓層 → 手動離車</text>
+<text class="body" x="58" y="530">核 B 棟 31F 樓牌與平層線，再開閘。</text>
+<text class="body" x="58" y="564">跨原門口才到訪 R16；略過動畫不代跨門。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · L2 · B 棟 47F → 48F</text>
+<text class="panel-title" x="636" y="487">假停靠燈亮，門後卻是實牆</text>
+<text class="body" x="636" y="530">沒有平台，閘鎖不鬆，拉閘只碰止擋。</text>
+<text class="body" x="636" y="564">空布袋在車內；刮聲不證明有人。</text>
+<text class="body" x="636" y="598">取消查看可繼續，不新增暗樓層。</text></g>
+<g data-panel="5"><rect x="32" y="664" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="664" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="701" fill="#79d8dc">05 · L2 · 真 48F</text>
+<text class="panel-title" x="58" y="741">實體樓牌＋平層線＋完整踏面</text>
+<text class="body" x="58" y="784">三項核對後親手開閘、過平台，再進 U4。</text>
+<text class="body" x="58" y="818">R30 不可逆邊界前仍可依原路回 47F。</text></g>
+<g data-panel="6"><rect x="610" y="664" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="664" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="701" fill="#79d8dc">06 · 停靠界線</text>
+<text class="panel-title" x="636" y="741">兩部梯不共用任意樓層</text>
+<text class="body" x="636" y="784">L1：29F／30F／31F，已完成平台按原條件回訪。</text>
+<text class="body" x="636" y="818">L2：47F／48F，假停靠不算新場景。</text>
+<text class="body" x="636" y="852">門閘、平台與房間入口分開交圖。</text></g>
+<path d="M32 923H1168" stroke="#425155"/><text class="footer" x="32" y="957">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

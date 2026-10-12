@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="988" viewBox="0 0 1200 988" role="img" aria-labelledby="title desc">
+<title id="title">REF-MECHANISM｜U3／U6 · 光學與水箱操作拆解</title><desc id="desc">前兩列是不同房間的機關，不是同一個巨型裝置；光照與平水不代替手動固定。 U3 · B 棟 46F：斷電裝完整窄口罩：寬口、裂口、窄口三件依端型與卡榫辨識。
+完整窄口罩雙卡榫貼齊，固定燈架不拿走。；U3 · 六種燈架組合：遮光葉開／閉 × 內／中／外：先遮招牌眩光，閉遮光葉、燈框置中。
+此組合看清兩條原刻線，不移動刻線。
+關燈基準另交，不靠顏色猜答案。；U3 · 機械提交：橋栓對位 → 拉桿全程：偏二／偏一／對齊各交差分。
+孔露出後仍須親手拉桿，橋才落下。
+完成後關燈不重設橋；捷徑另按原退栓。；U6 · B 棟 49F：三槽守恆：3／0／3 → 2／2／2：左右各移一格到中央，順序任選，總量六。
+舊出水口封帽，乾龍頭不是補水來源。
+倒影或廢管驚擾不改真實水量。；U6 · 安全下降：手動關閥 → 固定保養梯：重新開閥須再平水、關閥，不可直接走踏面。
+沿固定梯到 U6b，仍在 49F 蓋下。；U6b · 最後固定：水平泡居中 → 扣止回栓：確認水平後親手扣栓，固定活動踏面。
+只有此時才可通 R30；平水不自動扣栓。
+構件外形看材質圖，位置與狀態依原工單。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="988" fill="#0b1418"/>
+<text class="title" x="32" y="52">REF-MECHANISM｜U3／U6 · 光學與水箱操作拆解</text>
+<text class="subtitle" x="32" y="91">前兩列是不同房間的機關，不是同一個巨型裝置；光照與平水不代替手動固定。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · U3 · B 棟 46F</text>
+<text class="panel-title" x="58" y="233">斷電裝完整窄口罩</text>
+<text class="body" x="58" y="276">寬口、裂口、窄口三件依端型與卡榫辨識。</text>
+<text class="body" x="58" y="310">完整窄口罩雙卡榫貼齊，固定燈架不拿走。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · U3 · 六種燈架組合</text>
+<text class="panel-title" x="636" y="233">遮光葉開／閉 × 內／中／外</text>
+<text class="body" x="636" y="276">先遮招牌眩光，閉遮光葉、燈框置中。</text>
+<text class="body" x="636" y="310">此組合看清兩條原刻線，不移動刻線。</text>
+<text class="body" x="636" y="344">關燈基準另交，不靠顏色猜答案。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="447" fill="#79d8dc">03 · U3 · 機械提交</text>
+<text class="panel-title" x="58" y="487">橋栓對位 → 拉桿全程</text>
+<text class="body" x="58" y="530">偏二／偏一／對齊各交差分。</text>
+<text class="body" x="58" y="564">孔露出後仍須親手拉桿，橋才落下。</text>
+<text class="body" x="58" y="598">完成後關燈不重設橋；捷徑另按原退栓。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · U6 · B 棟 49F</text>
+<text class="panel-title" x="636" y="487">三槽守恆：3／0／3 → 2／2／2</text>
+<text class="body" x="636" y="530">左右各移一格到中央，順序任選，總量六。</text>
+<text class="body" x="636" y="564">舊出水口封帽，乾龍頭不是補水來源。</text>
+<text class="body" x="636" y="598">倒影或廢管驚擾不改真實水量。</text></g>
+<g data-panel="5"><rect x="32" y="664" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="664" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="701" fill="#79d8dc">05 · U6 · 安全下降</text>
+<text class="panel-title" x="58" y="741">手動關閥 → 固定保養梯</text>
+<text class="body" x="58" y="784">重新開閥須再平水、關閥，不可直接走踏面。</text>
+<text class="body" x="58" y="818">沿固定梯到 U6b，仍在 49F 蓋下。</text></g>
+<g data-panel="6"><rect x="610" y="664" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="664" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="701" fill="#79d8dc">06 · U6b · 最後固定</text>
+<text class="panel-title" x="636" y="741">水平泡居中 → 扣止回栓</text>
+<text class="body" x="636" y="784">確認水平後親手扣栓，固定活動踏面。</text>
+<text class="body" x="636" y="818">只有此時才可通 R30；平水不自動扣栓。</text>
+<text class="body" x="636" y="852">構件外形看材質圖，位置與狀態依原工單。</text></g>
+<path d="M32 923H1168" stroke="#425155"/><text class="footer" x="32" y="957">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

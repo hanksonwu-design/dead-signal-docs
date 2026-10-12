@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="734" viewBox="0 0 1200 734" role="img" aria-labelledby="title desc">
+<title id="title">L04｜R15 · 三種互斥供電方案</title><desc id="desc">先看代價，再完成一種機構；三路都保留必要主線證據。 選擇之前：三路並列，不是四步連做：先查各路與暫存紀錄代價。
+完成所選機構並確認，才保存供電。
+必要主線來源不因方案消失。；部分供電：先接醫療與核心：接妥兩組斷路器後繼續原調查。
+完成技術核心調查才回 R12 切辦公室繼電器。
+仍需持本地憑據驗證門端。；全面供電：備援後三次穩壓：依表針與刻度調校，首輪 30 秒。
+錯誤只重做當次，調校期間無遭遇。
+完成恢復設備，不代替後續門端驗證。；定向供電：冷卻 → 核心 → 索引 → 中繼：按原可重看操作記憶，親手依序輸入。
+確認本地路由回饋後保存。
+熟悉權限不等於抹除或自動完成推理。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="734" fill="#0b1418"/>
+<text class="title" x="32" y="52">L04｜R15 · 三種互斥供電方案</text>
+<text class="subtitle" x="32" y="91">先看代價，再完成一種機構；三路都保留必要主線證據。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 選擇之前</text>
+<text class="panel-title" x="58" y="233">三路並列，不是四步連做</text>
+<text class="body" x="58" y="276">先查各路與暫存紀錄代價。</text>
+<text class="body" x="58" y="310">完成所選機構並確認，才保存供電。</text>
+<text class="body" x="58" y="344">必要主線來源不因方案消失。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 部分供電</text>
+<text class="panel-title" x="636" y="233">先接醫療與核心</text>
+<text class="body" x="636" y="276">接妥兩組斷路器後繼續原調查。</text>
+<text class="body" x="636" y="310">完成技術核心調查才回 R12 切辦公室繼電器。</text>
+<text class="body" x="636" y="344">仍需持本地憑據驗證門端。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="447" fill="#79d8dc">03 · 全面供電</text>
+<text class="panel-title" x="58" y="487">備援後三次穩壓</text>
+<text class="body" x="58" y="530">依表針與刻度調校，首輪 30 秒。</text>
+<text class="body" x="58" y="564">錯誤只重做當次，調校期間無遭遇。</text>
+<text class="body" x="58" y="598">完成恢復設備，不代替後續門端驗證。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · 定向供電</text>
+<text class="panel-title" x="636" y="487">冷卻 → 核心 → 索引 → 中繼</text>
+<text class="body" x="636" y="530">按原可重看操作記憶，親手依序輸入。</text>
+<text class="body" x="636" y="564">確認本地路由回饋後保存。</text>
+<text class="body" x="636" y="598">熟悉權限不等於抹除或自動完成推理。</text></g>
+<path d="M32 669H1168" stroke="#425155"/><text class="footer" x="32" y="703">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

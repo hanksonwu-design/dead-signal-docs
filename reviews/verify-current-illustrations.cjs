@@ -40,7 +40,7 @@ async function ready(page, doc, heading) {
       assert.deepEqual(result, { outside: [], overlap: [], panelOverflow: [] }, id);
       const shot = await page.screenshot();
       assert((await sharp(shot).stats()).channels.slice(0, 3).some(c => c.stdev > 10), `${id} nonblank`);
-      if (['L02', 'L05', 'V38', 'WORLD', 'CORE'].includes(id)) writeFileSync(path.join(out, `${id}.png`), shot);
+      if (['L02', 'L05', 'V38', 'WORLD', 'CORE', 'REF-U4', 'REF-MECHANISM', 'REF-LIFT'].includes(id)) writeFileSync(path.join(out, `${id}.png`), shot);
       pass(`${id}: SVG text stays in bounds, without overlap, and renders nonblank`);
     }
     await page.goto(base);
@@ -50,17 +50,19 @@ async function ready(page, doc, heading) {
         const doc = figure.source.replace(/^docs\//, ''), heading = figure.heading;
         await page.evaluate(hash => { location.hash = hash; }, new URLSearchParams({ doc, heading }).toString());
         await ready(page, doc, heading);
-        const target = page.locator(`#readerContent img[src$="${figure.asset.split('/').at(-1)}"]`);
-        assert.equal(await target.count(), 1, `${figure.id} embedded once`);
-        await target.scrollIntoViewIfNeeded();
-        await target.evaluate(img => img.decode());
-        assert(await target.evaluate(img => img.naturalWidth > 0 && img.naturalHeight > 0), figure.id);
+        for (const asset of [figure.asset, ...(figure.supplement || [])]) {
+          const target = page.locator(`#readerContent img[src$="${asset.split('/').at(-1)}"]`);
+          assert.equal(await target.count(), 1, `${figure.id} embedded once: ${asset}`);
+          await target.scrollIntoViewIfNeeded();
+          await target.evaluate(img => img.decode());
+          assert(await target.evaluate(img => img.naturalWidth > 0 && img.naturalHeight > 0), asset);
+        }
         const fits = await page.evaluate(() => {
           const panel = document.querySelector('.reader-panel');
           return document.documentElement.scrollWidth <= innerWidth + 1 && panel.scrollWidth <= panel.clientWidth + 1;
         });
         assert(fits, `${figure.id} reader ${width}px`);
-        if (['L02', 'V13', 'WORLD-ART'].includes(figure.id)) await page.screenshot({ path: path.join(out, `${figure.id}-reader-${width}.png`) });
+        if (['L02', 'V13', 'WORLD-ART', 'V39', 'REF-U4', 'REF-LIFT', 'REF-MECHANISM'].includes(figure.id)) await page.screenshot({ path: path.join(out, `${figure.id}-reader-${width}.png`) });
       }
       pass(`All ${manifest.figures.length} manifest images load in the reader at ${width}px without overflow`);
     }
@@ -69,7 +71,7 @@ async function ready(page, doc, heading) {
       await page.goto(`${base}/building/#scene=R1`);
       await page.waitForSelector('#loading', { state: 'detached' });
       assert(await page.locator('#error').isHidden());
-      for (const id of ['R1', 'R16', 'R22', 'R32']) {
+      for (const id of ['R1', 'R16', 'R22', 'R32', 'M1', 'U4']) {
         await page.evaluate(id => { location.hash = `scene=${id}`; }, id);
         await page.waitForFunction(id => document.querySelector('#node-id').textContent.startsWith(`${id} · `), id);
         const img = page.locator('#reference-image');

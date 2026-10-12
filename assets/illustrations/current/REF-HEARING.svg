@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="988" viewBox="0 0 1200 988" role="img" aria-labelledby="title desc">
+<title id="title">REF-HEARING｜現場波形 · 察覺與失敗分界</title><desc id="desc">聲音大小不是距離或危險值；各房原聲源、視覺前兆與遭遇判定共同成立。 現在／歷史：現場帶與來源播放器分開：現場帶只顯當下可聽聲；日期聲軌另框。
+配樂、選單音、歷史錄音不混入現場判讀。；正常巡行：側耳不代表已發現：看門影、水痕、布簾與方向字幕。
+波形歸平只表示無可辨聲，不顯示安全。
+靜音與關波形仍保留非聲音前兆。；校正區補救：失誤後 2.2 秒內接受退避：沿已走路回有效安全位，使用實際退程。
+不瞬移，也不能利用失敗抵達未走掩體。
+補救不套用其他 Boss 或 UD 招式。；安全查證：完整來源停攻停表：完整閱讀、調查板與必要台詞受保護。
+一般速查與只停錄音不等於暫停世界。
+回操作給原完整前兆，未完成仍需應對。；被抓與保存：按該房規則，不統一即死：校正區回已到達有效安全位，保留來源與步驟。
+恐慌沿原代價；Boss 與 UD 各依原受擊規則。
+已解除遭遇不因重播聲音復活。；圖層交付：聲源／字幕／波形讀同一時鐘：方向不明就如實標示，不揭穿牆座標。
+低動態以短條與文字取代滾動，不改成本。
+真暫停、失焦、讀檔不殘留上一輪波峰。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="988" fill="#0b1418"/>
+<text class="title" x="32" y="52">REF-HEARING｜現場波形 · 察覺與失敗分界</text>
+<text class="subtitle" x="32" y="91">聲音大小不是距離或危險值；各房原聲源、視覺前兆與遭遇判定共同成立。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 現在／歷史</text>
+<text class="panel-title" x="58" y="233">現場帶與來源播放器分開</text>
+<text class="body" x="58" y="276">現場帶只顯當下可聽聲；日期聲軌另框。</text>
+<text class="body" x="58" y="310">配樂、選單音、歷史錄音不混入現場判讀。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 正常巡行</text>
+<text class="panel-title" x="636" y="233">側耳不代表已發現</text>
+<text class="body" x="636" y="276">看門影、水痕、布簾與方向字幕。</text>
+<text class="body" x="636" y="310">波形歸平只表示無可辨聲，不顯示安全。</text>
+<text class="body" x="636" y="344">靜音與關波形仍保留非聲音前兆。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="447" fill="#79d8dc">03 · 校正區補救</text>
+<text class="panel-title" x="58" y="487">失誤後 2.2 秒內接受退避</text>
+<text class="body" x="58" y="530">沿已走路回有效安全位，使用實際退程。</text>
+<text class="body" x="58" y="564">不瞬移，也不能利用失敗抵達未走掩體。</text>
+<text class="body" x="58" y="598">補救不套用其他 Boss 或 UD 招式。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · 安全查證</text>
+<text class="panel-title" x="636" y="487">完整來源停攻停表</text>
+<text class="body" x="636" y="530">完整閱讀、調查板與必要台詞受保護。</text>
+<text class="body" x="636" y="564">一般速查與只停錄音不等於暫停世界。</text>
+<text class="body" x="636" y="598">回操作給原完整前兆，未完成仍需應對。</text></g>
+<g data-panel="5"><rect x="32" y="664" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="664" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="701" fill="#79d8dc">05 · 被抓與保存</text>
+<text class="panel-title" x="58" y="741">按該房規則，不統一即死</text>
+<text class="body" x="58" y="784">校正區回已到達有效安全位，保留來源與步驟。</text>
+<text class="body" x="58" y="818">恐慌沿原代價；Boss 與 UD 各依原受擊規則。</text>
+<text class="body" x="58" y="852">已解除遭遇不因重播聲音復活。</text></g>
+<g data-panel="6"><rect x="610" y="664" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="664" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="701" fill="#79d8dc">06 · 圖層交付</text>
+<text class="panel-title" x="636" y="741">聲源／字幕／波形讀同一時鐘</text>
+<text class="body" x="636" y="784">方向不明就如實標示，不揭穿牆座標。</text>
+<text class="body" x="636" y="818">低動態以短條與文字取代滾動，不改成本。</text>
+<text class="body" x="636" y="852">真暫停、失焦、讀檔不殘留上一輪波峰。</text></g>
+<path d="M32 923H1168" stroke="#425155"/><text class="footer" x="32" y="957">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>
