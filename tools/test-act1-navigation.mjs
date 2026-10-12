@@ -99,7 +99,7 @@ test('shared rules and novel use the same door causes and return path', () => {
 });
 
 test('Act 1 completion notes distinguish required actions, optional checks and deferred F1 decoding', () => {
-  has(block('s-0904-6'), '**成功條件（主線必要）：**', '既存的五人待叫序列',
+  has(block('s-0904-6'), '**成功條件（主線必要）：**', '既存的三人待叫序列',
     '**完成條件（選填測試）：**', '鈴聲與重置測試可略過');
   has(block('s-0904-16'), '訓練檔的必要查閱後', '解開煞扣', '餐車推至牆邊凹位');
   has(block('s-0904-19'), '**成功條件（主線必要，離幕前補齊）：**',

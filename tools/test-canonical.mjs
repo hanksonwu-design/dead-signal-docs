@@ -1099,10 +1099,10 @@ test('R1 signal tests have local useful effects without completing or resetting 
   const signal = block('s-0602-4').split('<a id="signal-tests"></a>')[1];
   for (const phrase of ['選填播放 5 點，少於 5 點停用', '不由播放代讀',
     '已候坐時不重送、不扣款', '不清主線進度、不補穩定度',
-    '不需要先做 #1 或 #2', '批次中停用另外兩項', '不重付費、不重算五人',
+    '不需要先做 #1 或 #2', '批次中停用另外兩項', '不重付費、不重算三人',
     '測試效果不跨房持續', '必要叫號完成旗標不回退']) assert(signal.includes(phrase), phrase);
   assert(block('s-0904-6').includes('鈴聲只讓它們轉頭'));
-  assert(block('s-0904-6').includes('叫號完成後，五張椅子保持空著'));
+  assert(block('s-0904-6').includes('叫號完成後，三張椅子保持空著'));
   assert(!block('s-0602-4').includes('播放其他訊號 → 激怒'));
   assert(!block('s-0904-6').includes('依原教學錯誤回饋'));
   assert(block('s-0404-11').includes('其他房不自動繼承有效性'));
