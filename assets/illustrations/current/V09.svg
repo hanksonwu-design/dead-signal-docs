@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+<title id="title">V09｜R11 · 阿尋查證與完成傳輸</title><desc id="desc">十一個身分是視窗，不是十一個完整人形。 原狀態：十一視窗與 99%：保留待完成傳輸的終端。
+這是訊號遭遇，不另加生命條或戰利品。；安全查證：退出暴露操作再讀原件：從原安全入口選同一終端的完整查證。
+未讀來源也可查；閱讀本身不能提交。；核對：三項原來源：核對撤銷紀錄、封包尾段及待完成傳輸。
+已讀成果保存，未提交操作可取消。；主動提交：回到操作空檔：返回操作後，依兩招前兆應對。
+在原六秒空檔自行提交校驗與傳輸。
+查證完成不等於自動結束遭遇。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="700" fill="#0b1418"/>
+<text class="title" x="32" y="52">V09｜R11 · 阿尋查證與完成傳輸</text>
+<text class="subtitle" x="32" y="91">十一個身分是視窗，不是十一個完整人形。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 原狀態</text>
+<text class="panel-title" x="58" y="233">十一視窗與 99%</text>
+<text class="body" x="58" y="276">保留待完成傳輸的終端。</text>
+<text class="body" x="58" y="310">這是訊號遭遇，不另加生命條或戰利品。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 安全查證</text>
+<text class="panel-title" x="636" y="233">退出暴露操作再讀原件</text>
+<text class="body" x="636" y="276">從原安全入口選同一終端的完整查證。</text>
+<text class="body" x="636" y="310">未讀來源也可查；閱讀本身不能提交。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · 核對</text>
+<text class="panel-title" x="58" y="453">三項原來源</text>
+<text class="body" x="58" y="496">核對撤銷紀錄、封包尾段及待完成傳輸。</text>
+<text class="body" x="58" y="530">已讀成果保存，未提交操作可取消。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · 主動提交</text>
+<text class="panel-title" x="636" y="453">回到操作空檔</text>
+<text class="body" x="636" y="496">返回操作後，依兩招前兆應對。</text>
+<text class="body" x="636" y="530">在原六秒空檔自行提交校驗與傳輸。</text>
+<text class="body" x="636" y="564">查證完成不等於自動結束遭遇。</text></g>
+<path d="M32 635H1168" stroke="#425155"/><text class="footer" x="32" y="669">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

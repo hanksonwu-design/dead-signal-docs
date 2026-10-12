@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="734" viewBox="0 0 1200 734" role="img" aria-labelledby="title desc">
+<title id="title">V29｜上部收尾 · 完成當部，再留下懸念</title><desc id="desc">R22 在 B 棟 42F；先解通路並親自跨門，不是鎖門後突然中斷。 通路成果：手勢或手動路擇一完成：原踏面落位、扶手和釋放通路可辨。
+完成原門檻後，玩家主動跨門。；懸念：布結、空掌與向內的蛾：已看 R8 者可比對同一布結。
+手鬆開，掌心留空；灰蛾往內飛。
+不提前揭露小花完整蛾形或離體答案。；當部完成：跨門保存 → 片尾：完成保存後才進上部片尾。
+收束已完成的逃離校正區成果。
+保留未解關係，不用單張「未完待續」代替。；下部：承接或獨立開局：承接讀取上部合法成果。
+獨立開局依原基準狀態，不虛構上部選擇。
+兩路沿同一 R23 正式入口。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="734" fill="#0b1418"/>
+<text class="title" x="32" y="52">V29｜上部收尾 · 完成當部，再留下懸念</text>
+<text class="subtitle" x="32" y="91">R22 在 B 棟 42F；先解通路並親自跨門，不是鎖門後突然中斷。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 通路成果</text>
+<text class="panel-title" x="58" y="233">手勢或手動路擇一完成</text>
+<text class="body" x="58" y="276">原踏面落位、扶手和釋放通路可辨。</text>
+<text class="body" x="58" y="310">完成原門檻後，玩家主動跨門。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 懸念</text>
+<text class="panel-title" x="636" y="233">布結、空掌與向內的蛾</text>
+<text class="body" x="636" y="276">已看 R8 者可比對同一布結。</text>
+<text class="body" x="636" y="310">手鬆開，掌心留空；灰蛾往內飛。</text>
+<text class="body" x="636" y="344">不提前揭露小花完整蛾形或離體答案。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="447" fill="#79d8dc">03 · 當部完成</text>
+<text class="panel-title" x="58" y="487">跨門保存 → 片尾</text>
+<text class="body" x="58" y="530">完成保存後才進上部片尾。</text>
+<text class="body" x="58" y="564">收束已完成的逃離校正區成果。</text>
+<text class="body" x="58" y="598">保留未解關係，不用單張「未完待續」代替。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · 下部</text>
+<text class="panel-title" x="636" y="487">承接或獨立開局</text>
+<text class="body" x="636" y="530">承接讀取上部合法成果。</text>
+<text class="body" x="636" y="564">獨立開局依原基準狀態，不虛構上部選擇。</text>
+<text class="body" x="636" y="598">兩路沿同一 R23 正式入口。</text></g>
+<path d="M32 669H1168" stroke="#425155"/><text class="footer" x="32" y="703">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

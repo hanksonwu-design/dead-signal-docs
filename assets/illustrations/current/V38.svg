@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="886" viewBox="0 0 1200 886" role="img" aria-labelledby="title desc">
+<title id="title">V38｜R32 · 小花三拍防禦</title><desc id="desc">原身量人形、低垂翼拱、四鬚兩左兩右；雙揭露完成後才顯形。 開始前：安全觀察與自行確認：先看桌下低縫、門框退線、斷鉚釘與扶手。
+顯形期間不判攻擊；玩家確認才開始。；第一拍 · XH-01：腰高掃線 → 桌下低位：3.5 秒灰粉掃線；桌架低縫仍空。
+側牆仍在掃線內，不是這一拍的正解。；第二拍 · XH-02：抱繭 → 收手退過門框線：3.5 秒薄膜包向桌下與兩側。
+一次操作完成撤手與後退，蹲低無效。；第三拍 · XH-03：灰粉 → 核對真實側牆：3.5 秒內看斷鉚釘與連續扶手。
+假門沒有相接扶手；不靠聲音標出答案。；失敗與恢復：只重試當拍：保留已過拍數，六秒恢復後給完整前兆。
+不扣新資源，不自動選留下結局。；防禦完成：停戰不等於解封：三拍後才開五路關係行動。
+A／B／C 放行、D 留下、E 接管，各依原提交。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="886" fill="#0b1418"/>
+<text class="title" x="32" y="52">V38｜R32 · 小花三拍防禦</text>
+<text class="subtitle" x="32" y="91">原身量人形、低垂翼拱、四鬚兩左兩右；雙揭露完成後才顯形。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 開始前</text>
+<text class="panel-title" x="58" y="233">安全觀察與自行確認</text>
+<text class="body" x="58" y="276">先看桌下低縫、門框退線、斷鉚釘與扶手。</text>
+<text class="body" x="58" y="310">顯形期間不判攻擊；玩家確認才開始。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 第一拍 · XH-01</text>
+<text class="panel-title" x="636" y="233">腰高掃線 → 桌下低位</text>
+<text class="body" x="636" y="276">3.5 秒灰粉掃線；桌架低縫仍空。</text>
+<text class="body" x="636" y="310">側牆仍在掃線內，不是這一拍的正解。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · 第二拍 · XH-02</text>
+<text class="panel-title" x="58" y="453">抱繭 → 收手退過門框線</text>
+<text class="body" x="58" y="496">3.5 秒薄膜包向桌下與兩側。</text>
+<text class="body" x="58" y="530">一次操作完成撤手與後退，蹲低無效。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · 第三拍 · XH-03</text>
+<text class="panel-title" x="636" y="453">灰粉 → 核對真實側牆</text>
+<text class="body" x="636" y="496">3.5 秒內看斷鉚釘與連續扶手。</text>
+<text class="body" x="636" y="530">假門沒有相接扶手；不靠聲音標出答案。</text></g>
+<g data-panel="5"><rect x="32" y="596" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="596" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="633" fill="#79d8dc">05 · 失敗與恢復</text>
+<text class="panel-title" x="58" y="673">只重試當拍</text>
+<text class="body" x="58" y="716">保留已過拍數，六秒恢復後給完整前兆。</text>
+<text class="body" x="58" y="750">不扣新資源，不自動選留下結局。</text></g>
+<g data-panel="6"><rect x="610" y="596" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="596" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="633" fill="#79d8dc">06 · 防禦完成</text>
+<text class="panel-title" x="636" y="673">停戰不等於解封</text>
+<text class="body" x="636" y="716">三拍後才開五路關係行動。</text>
+<text class="body" x="636" y="750">A／B／C 放行、D 留下、E 接管，各依原提交。</text></g>
+<path d="M32 821H1168" stroke="#425155"/><text class="footer" x="32" y="855">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

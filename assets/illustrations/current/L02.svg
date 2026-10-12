@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="886" viewBox="0 0 1200 886" role="img" aria-labelledby="title desc">
+<title id="title">L02｜R1 · 三人叫號與通路</title><desc id="desc">設備、椅列與內門維持同一方向；不是向玩家逼近的追擊。 01 · 初入：三張空椅：先查舊出口、電視、指派號牌與機台功能。
+櫃檯後內門仍關著，窄口被殘影占住。；02 · 殘留出現：同批三人候坐：查完指定來源後三人才出現。
+號牌由管理者指派，沒有自助取號口。；03 · 第一號：身體先起，頭影後接：張口被提示音蓋過。
+低頭影由衣領折頸接回，轉往櫃檯後內門。；04 · 第二號：縮肩後被迫撐笑：眼神與呼吸仍恐懼，號牌握緊。
+沿同一通道走向內門，不向玩家聚攏。；05 · 第三號：抓椅抗拒，膝先轉：仍看焊死出口，上身留椅，手指逐節滑脫。
+最後仍被叫號帶向內門，手影最後淡去。；06 · 通路留下：空椅與關閉的內門：三人淡去，窄口讓路；不是安息或獲救。
+玩家自行走到鎖舌損壞的內門，再親手開門。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="886" fill="#0b1418"/>
+<text class="title" x="32" y="52">L02｜R1 · 三人叫號與通路</text>
+<text class="subtitle" x="32" y="91">設備、椅列與內門維持同一方向；不是向玩家逼近的追擊。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 初入</text>
+<text class="panel-title" x="58" y="233">三張空椅</text>
+<text class="body" x="58" y="276">先查舊出口、電視、指派號牌與機台功能。</text>
+<text class="body" x="58" y="310">櫃檯後內門仍關著，窄口被殘影占住。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 殘留出現</text>
+<text class="panel-title" x="636" y="233">同批三人候坐</text>
+<text class="body" x="636" y="276">查完指定來源後三人才出現。</text>
+<text class="body" x="636" y="310">號牌由管理者指派，沒有自助取號口。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · 第一號</text>
+<text class="panel-title" x="58" y="453">身體先起，頭影後接</text>
+<text class="body" x="58" y="496">張口被提示音蓋過。</text>
+<text class="body" x="58" y="530">低頭影由衣領折頸接回，轉往櫃檯後內門。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · 第二號</text>
+<text class="panel-title" x="636" y="453">縮肩後被迫撐笑</text>
+<text class="body" x="636" y="496">眼神與呼吸仍恐懼，號牌握緊。</text>
+<text class="body" x="636" y="530">沿同一通道走向內門，不向玩家聚攏。</text></g>
+<g data-panel="5"><rect x="32" y="596" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="596" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="633" fill="#79d8dc">05 · 第三號</text>
+<text class="panel-title" x="58" y="673">抓椅抗拒，膝先轉</text>
+<text class="body" x="58" y="716">仍看焊死出口，上身留椅，手指逐節滑脫。</text>
+<text class="body" x="58" y="750">最後仍被叫號帶向內門，手影最後淡去。</text></g>
+<g data-panel="6"><rect x="610" y="596" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="596" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="633" fill="#79d8dc">06 · 通路留下</text>
+<text class="panel-title" x="636" y="673">空椅與關閉的內門</text>
+<text class="body" x="636" y="716">三人淡去，窄口讓路；不是安息或獲救。</text>
+<text class="body" x="636" y="750">玩家自行走到鎖舌損壞的內門，再親手開門。</text></g>
+<path d="M32 821H1168" stroke="#425155"/><text class="footer" x="32" y="855">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

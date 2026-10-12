@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="666" viewBox="0 0 1200 666" role="img" aria-labelledby="title desc">
+<title id="title">L03｜R11 · 凝視與敲擊對照</title><desc id="desc">左右兩招並列，不能套同一種躲法；非連續密碼。 凝視：看終端連線：前兆三秒 → 關本地介面。
+成功：視線失同步 → 六秒操作空檔。；敲擊：看固定來向：前兆三秒 → 收手退到對側凹位。
+成功：空桌受擊 → 六秒操作空檔。；查證：安全入口讀原件：完整閱讀期間停攻；閱讀不能提交。
+回到暴露操作時給完整前兆。；失誤：保存已讀成果：依 R11 原代價，取消未提交操作。
+沒有新生命值，不把上一招正解當通用解。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="666" fill="#0b1418"/>
+<text class="title" x="32" y="52">L03｜R11 · 凝視與敲擊對照</text>
+<text class="subtitle" x="32" y="91">左右兩招並列，不能套同一種躲法；非連續密碼。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 凝視</text>
+<text class="panel-title" x="58" y="233">看終端連線</text>
+<text class="body" x="58" y="276">前兆三秒 → 關本地介面。</text>
+<text class="body" x="58" y="310">成功：視線失同步 → 六秒操作空檔。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 敲擊</text>
+<text class="panel-title" x="636" y="233">看固定來向</text>
+<text class="body" x="636" y="276">前兆三秒 → 收手退到對側凹位。</text>
+<text class="body" x="636" y="310">成功：空桌受擊 → 六秒操作空檔。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · 查證</text>
+<text class="panel-title" x="58" y="453">安全入口讀原件</text>
+<text class="body" x="58" y="496">完整閱讀期間停攻；閱讀不能提交。</text>
+<text class="body" x="58" y="530">回到暴露操作時給完整前兆。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · 失誤</text>
+<text class="panel-title" x="636" y="453">保存已讀成果</text>
+<text class="body" x="636" y="496">依 R11 原代價，取消未提交操作。</text>
+<text class="body" x="636" y="530">沒有新生命值，不把上一招正解當通用解。</text></g>
+<path d="M32 601H1168" stroke="#425155"/><text class="footer" x="32" y="635">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

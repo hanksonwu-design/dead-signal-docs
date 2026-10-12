@@ -44,7 +44,7 @@ test('concept studies do not create apparitions, animate history or resolve miss
   assert(!appendix.includes('風聲出現時，腳尖才離開地面'));
 });
 
-test('new art requirements reuse pending image IDs and mark old concepts explicitly', () => {
+test('refreshed concepts reuse pending image IDs without claiming delivered animation', () => {
   const flow = JSON.parse(read('scene-flow.json'));
   const work = {
     'R1-V01': '頸影多折一節',
@@ -69,10 +69,10 @@ test('new art requirements reuse pending image IDs and mark old concepts explici
     for (const id of ids) {
       const block = text.split(`<a id="fig-${id}"></a>`)[1]?.split('<a id=')[0];
       assert(block, id);
-      includes(block, ['**造型版本：**', '待重製']);
+      includes(block, ['**造型版本：**', '仍待製作']);
     }
   }
-  includes(appendix, ['本次深化的造型尚未繪製', '同一圖號內的分層和差分另估工時']);
+  includes(appendix, ['正式變形結構、角色拆件、攻防動態、低動態與音效仍待製作', '同一圖號內的分層和差分另估工時']);
   assert.equal(Object.keys(flow.images).length, 557);
 });
 

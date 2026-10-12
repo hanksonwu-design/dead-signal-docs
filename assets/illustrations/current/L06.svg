@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="666" viewBox="0 0 1200 666" role="img" aria-labelledby="title desc">
+<title id="title">L06｜R26 · 防禦與停戰分界</title><desc id="desc">每次只判一招；防禦成功不代替查證或最終選擇。 AB-01：壓框來向 → 對側凹位：點凹位自動收手。
+成功空台受壓，六秒空檔。；AB-02：拉柄受牽 → 鬆手停操作：停止按鈕與鍵盤操作等效。
+成功拉柄回中，六秒空檔。；受擊：回門側安全角：取消未提交操作，保留已查來源。
+R26 不增加恐慌或穩定扣罰。；停戰：四來源查證完成：永久停止本輪攻擊，再進處置。
+沿原厚門回 R25，不直接通往 M1。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="666" fill="#0b1418"/>
+<text class="title" x="32" y="52">L06｜R26 · 防禦與停戰分界</text>
+<text class="subtitle" x="32" y="91">每次只判一招；防禦成功不代替查證或最終選擇。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · AB-01</text>
+<text class="panel-title" x="58" y="233">壓框來向 → 對側凹位</text>
+<text class="body" x="58" y="276">點凹位自動收手。</text>
+<text class="body" x="58" y="310">成功空台受壓，六秒空檔。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · AB-02</text>
+<text class="panel-title" x="636" y="233">拉柄受牽 → 鬆手停操作</text>
+<text class="body" x="636" y="276">停止按鈕與鍵盤操作等效。</text>
+<text class="body" x="636" y="310">成功拉柄回中，六秒空檔。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · 受擊</text>
+<text class="panel-title" x="58" y="453">回門側安全角</text>
+<text class="body" x="58" y="496">取消未提交操作，保留已查來源。</text>
+<text class="body" x="58" y="530">R26 不增加恐慌或穩定扣罰。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · 停戰</text>
+<text class="panel-title" x="636" y="453">四來源查證完成</text>
+<text class="body" x="636" y="496">永久停止本輪攻擊，再進處置。</text>
+<text class="body" x="636" y="530">沿原厚門回 R25，不直接通往 M1。</text></g>
+<path d="M32 601H1168" stroke="#425155"/><text class="footer" x="32" y="635">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

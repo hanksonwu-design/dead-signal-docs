@@ -1,0 +1,231 @@
+{
+  "version": 1,
+  "updated": "2026-10-12",
+  "scope": "現行概念與規則圖解；正式圖像、動畫、音效與實機仍待製作驗收。",
+  "figures": [
+    {
+      "id": "V02",
+      "asset": "assets/illustrations/current/V02.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-01_製作規格_序幕.md",
+      "heading": "fig-v02",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V02.png",
+      "scope": "依物證／聲證／影證／文證標示筆記來源；客觀原音由現場設備播放，筆記只保存已知摘要與原件連結。"
+    },
+    {
+      "id": "V01",
+      "asset": "assets/illustrations/current/V01.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-02_製作規格_第一幕.md",
+      "heading": "fig-v01",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V01.png",
+      "scope": "以 R3 床位牌背面的姓名與床邊信件收件人示範查看、手動關聯及三圖層；不是枕頭與床單的另一組解鎖題。歷史靜格保持靜止。"
+    },
+    {
+      "id": "L02",
+      "asset": "assets/06_關卡規格/assets/level_flow/L02_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-02_製作規格_第一幕.md",
+      "heading": "fig-l02",
+      "retiredAsset": "assets/06_關卡規格/assets/level_flow/L02.png",
+      "supplement": [
+        "assets/illustrations/current/L02.svg"
+      ],
+      "scope": "六格依序為空椅、三人出現、第一號、第二號、第三號與空椅讓路。三人受管制走向櫃檯後內門；逐號姿態、轉身方向及手影差分依下方流程圖與 R1-01～03。第六格內門仍關閉，由玩家親手開門。"
+    },
+    {
+      "id": "V32",
+      "asset": "assets/07_視聽與介面/assets/current_design/V32_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-02_製作規格_第一幕.md",
+      "heading": "fig-v32",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V32.png",
+      "scope": "01 三位等號者局部，02 墜落者凝固伸手與缺梯，03 縫紉者空袖，04 低標者歷史靜格。各依原場景；概念臉、號牌文字與服裝不是正式臉稿或新增原件。"
+    },
+    {
+      "id": "L03",
+      "asset": "assets/illustrations/current/L03.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "fig-l03",
+      "retiredAsset": "assets/06_關卡規格/assets/level_flow/L03.png",
+      "scope": "兩招並列：凝視關閉本地操作介面，敲擊收手退到來向對側；三秒前兆、六秒空檔與安全查證分開。"
+    },
+    {
+      "id": "V09",
+      "asset": "assets/illustrations/current/V09.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "fig-v09",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V09.png",
+      "scope": "十一視窗、99% 狀態、安全查證、三來源核對與主動提交分開；完成查證不會自動完成傳輸。"
+    },
+    {
+      "id": "V10",
+      "asset": "assets/illustrations/current/V10.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "fig-v10",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V10.png",
+      "scope": "新版規則圖解區分關介面與退對側兩種防禦；三層窄扇笑膜與同一雙手節指見角色材質參照及 R11 工單。"
+    },
+    {
+      "id": "V33",
+      "asset": "assets/07_視聽與介面/assets/current_design/V33_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "fig-v33",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V33.png",
+      "scope": "01 通報者只有求助原件與凝固的手，02 貨梯窄繭，03 斷藥者空掌節指，04 電房靜止局部。分別依 R10／R14／R13／R15，不補全缺席者或推定死亡。"
+    },
+    {
+      "id": "V34",
+      "asset": "assets/07_視聽與介面/assets/current_design/V34_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "fig-v34",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V34.png",
+      "scope": "01 封鎖後者以缺席餐位與生活物呈現，02 空椅與空帳號，03 反光邊緣半層空殼，04 鏡像者沿主角現時衣著。未知身分與原出場限制不變。"
+    },
+    {
+      "id": "L05",
+      "asset": "assets/illustrations/current/L05.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
+      "heading": "fig-l05",
+      "retiredAsset": "assets/06_關卡規格/assets/level_flow/L05.png",
+      "scope": "01–02 R18、03–04 R19、05–06 R20，三房均在 B 棟 37F。R19 當前空椅、走廊反射與歷史凝固分層；R20 歷史來源播放器與現場聽覺帶分框。"
+    },
+    {
+      "id": "V07",
+      "asset": "assets/illustrations/current/V07.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
+      "heading": "fig-v07",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V07.png",
+      "scope": "新版規則圖解標示 R18 在 B 棟 37F；巡行不補拖曳／腳步音，前兆依門牌、水痕、布簾、振膜與原呼吸。正常巡行、失誤後警戒、已到安全位復原分開。現場波形與方向字幕依 R18-V02，按鍵讀實際綁定。"
+    },
+    {
+      "id": "V29",
+      "asset": "assets/illustrations/current/V29.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
+      "heading": "fig-v29",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V29.png",
+      "scope": "先完成上部釋放通路，呈現布結、空掌與向內灰蛾，再由玩家跨門保存並進片尾。下部承接／獨立開局各沿原基準，不以關門與未完待續代替當部完成。"
+    },
+    {
+      "id": "L06",
+      "asset": "assets/illustrations/current/L06.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-06_製作規格_第五幕.md",
+      "heading": "fig-l06",
+      "retiredAsset": "assets/06_關卡規格/assets/level_flow/L06.png",
+      "scope": "壓掌退到受力對側，鉤臂鬆柄停止操作；命中回門側安全角。四來源查證完成才停攻並開處置，防禦不代替查證。"
+    },
+    {
+      "id": "V12",
+      "asset": "assets/illustrations/current/V12.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-06_製作規格_第五幕.md",
+      "heading": "fig-v12",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V12.png",
+      "scope": "區分兩招、四來源查證、五秒拒絕與本地撤權。雙層制服硬殼及反肘依角色材質圖與 R26 工單；拒絕不表示安息。"
+    },
+    {
+      "id": "V30",
+      "asset": "assets/illustrations/current/V30.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-07_製作規格_第六幕.md",
+      "heading": "fig-v30",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V30.png",
+      "scope": "U1 管圖、U2 洗衣內井、U3 固定燈架與橋栓各自操作；U4 在 48F，須經 R28／R29 與 L2 抵達，不是 U3 同層隔壁。固定燈架不是手提燈，亮燈不自動落橋。"
+    },
+    {
+      "id": "L08",
+      "asset": "assets/illustrations/current/L08.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-08_製作規格_終幕.md",
+      "heading": "fig-l08",
+      "retiredAsset": "assets/06_關卡規格/assets/level_flow/L08.png",
+      "scope": "三種前兆各配固定退位：掃線到桌下、抱繭退過門框線、灰粉依斷鉚釘及連續扶手到真壁龕；拍間停攻，自行轉位並確認。"
+    },
+    {
+      "id": "V38",
+      "asset": "assets/illustrations/current/V38.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-08_製作規格_終幕.md",
+      "heading": "fig-v38",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V38.png",
+      "scope": "安全觀察、桌下低位、門框退線、真壁龕依序呈現。每招 3.5 秒前兆；失敗只重試當拍並有六秒恢復。三拍完成停戰不代表解封。"
+    },
+    {
+      "id": "V13",
+      "asset": "assets/07_視聽與介面/assets/current_design/V13_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-08_製作規格_終幕.md",
+      "heading": "fig-v13",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V13.png",
+      "scope": "01 肉身與連續紀錄，02 祈願紙及分開的來源，03 來源邊界，04 三源核對後室內顯形。小花維持原身量，由低垂翼拱與四鬚包住窗柱。設備及紙面為版面示意，正式文字、時間、雙結及連續影像依原件工單。"
+    },
+    {
+      "id": "V14",
+      "asset": "assets/07_視聽與介面/assets/current_design/V14_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-08_製作規格_終幕.md",
+      "heading": "fig-v14",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V14.png",
+      "scope": "上排 A／B／C 是互斥行動：完整公開、刪修副本、搭紙鬆手；下排為適用分支的肉身回返、時間轉場後室內救援及照護。不是攻堅或玩家步行下樓；概念簽名為占位，正式原件仍依梁樂瑤同源稿。"
+    },
+    {
+      "id": "ART02",
+      "asset": "assets/illustrations/current/ART02.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-08_製作規格_終幕.md",
+      "heading": "fig-art02",
+      "retiredAsset": "assets/07_視聽與介面/assets/moth_imagery/02_庇護_半展翼.png",
+      "scope": "改以庇護與封閉的顯示界線圖解：揭露前維持人形局部，三源核對後才顯室內低垂翼拱與四鬚。原半展翼藝術圖退役為意象研究，不作現行遊戲姿態。"
+    },
+    {
+      "id": "CHAR-MATERIALS",
+      "asset": "assets/07_視聽與介面/assets/current_design/character_materials_current.png",
+      "kind": "current-concept",
+      "scope": "R11 窄扇笑膜與 R26 雙層制服材質；不是完整變形結構表。",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "illustration-refresh"
+    },
+    {
+      "id": "WORLD-ART",
+      "asset": "assets/07_視聽與介面/assets/current_design/world_spaces_current.png",
+      "kind": "current-concept",
+      "scope": "跨棟橋、電梯、繞道、食堂、衛浴、套間材質提案，原平面與流程不變。",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "illustration-refresh"
+    },
+    {
+      "id": "WORLD",
+      "asset": "assets/illustrations/current/WORLD.svg",
+      "kind": "current-diagram",
+      "scope": "從現行場景資料核對樓棟、停靠與圖像數量。",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "illustration-refresh"
+    },
+    {
+      "id": "CORE",
+      "asset": "assets/illustrations/current/CORE.svg",
+      "kind": "current-diagram",
+      "scope": "既有探索、碎片、推理、操作及威脅循環。",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "illustration-refresh"
+    },
+    {
+      "id": "V27-RETIRED",
+      "asset": "assets/07_視聽與介面/assets/current_design/V27_damage_routes.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-09_製作規格_第七幕.md",
+      "heading": "fig-v27",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/V27.png",
+      "scope": "沿用既有震損圖；舊軍事攻堅 PNG 不回到現行引用。"
+    }
+  ]
+}

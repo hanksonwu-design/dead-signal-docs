@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="734" viewBox="0 0 1200 734" role="img" aria-labelledby="title desc">
+<title id="title">V10｜R11 · 兩招、兩種防禦</title><desc id="desc">三層窄扇笑膜；同一雙手接出節指。完整臉仍失焦。 AX-01 · 前兆：凝視連向終端 · 3 秒：三層表情與十一視窗眼形聚焦。
+視線沿螢幕連通，不是畫外新敵人。；AX-01 · 回應：關閉本地操作介面：停止終端操作，切斷凝視連線。
+只停止拖曳、介面仍開著，並不成立。
+成功後眼形失同步，給完整六秒空檔。；AX-02 · 前兆：單側三道抓痕 · 3 秒：左或右桌沿浮出三道抓痕與敲聲。
+本輪來向固定，方向字幕同步。；AX-02 · 回應：退到來向的另一側：點對側隔板凹位，自動收手取消未提交。
+只關介面仍留原桌側會命中。
+節指敲在空桌，不追蹤改向；空檔六秒。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="734" fill="#0b1418"/>
+<text class="title" x="32" y="52">V10｜R11 · 兩招、兩種防禦</text>
+<text class="subtitle" x="32" y="91">三層窄扇笑膜；同一雙手接出節指。完整臉仍失焦。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#ffa18b"/>
+<text class="phase" x="58" y="193" fill="#ffa18b">01 · AX-01 · 前兆</text>
+<text class="panel-title" x="58" y="233">凝視連向終端 · 3 秒</text>
+<text class="body" x="58" y="276">三層表情與十一視窗眼形聚焦。</text>
+<text class="body" x="58" y="310">視線沿螢幕連通，不是畫外新敵人。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · AX-01 · 回應</text>
+<text class="panel-title" x="636" y="233">關閉本地操作介面</text>
+<text class="body" x="636" y="276">停止終端操作，切斷凝視連線。</text>
+<text class="body" x="636" y="310">只停止拖曳、介面仍開著，並不成立。</text>
+<text class="body" x="636" y="344">成功後眼形失同步，給完整六秒空檔。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#ffa18b"/>
+<text class="phase" x="58" y="447" fill="#ffa18b">03 · AX-02 · 前兆</text>
+<text class="panel-title" x="58" y="487">單側三道抓痕 · 3 秒</text>
+<text class="body" x="58" y="530">左或右桌沿浮出三道抓痕與敲聲。</text>
+<text class="body" x="58" y="564">本輪來向固定，方向字幕同步。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · AX-02 · 回應</text>
+<text class="panel-title" x="636" y="487">退到來向的另一側</text>
+<text class="body" x="636" y="530">點對側隔板凹位，自動收手取消未提交。</text>
+<text class="body" x="636" y="564">只關介面仍留原桌側會命中。</text>
+<text class="body" x="636" y="598">節指敲在空桌，不追蹤改向；空檔六秒。</text></g>
+<path d="M32 669H1168" stroke="#425155"/><text class="footer" x="32" y="703">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

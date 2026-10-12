@@ -21,6 +21,7 @@
 node tools/build-scene-images.mjs
 node tools/sync-canonical.mjs
 node tools/build-story-inventory.mjs
+node tools/build-illustration-boards.mjs
 node tools/test-scene-images.mjs
 node tools/test-scene-flow.mjs
 node tools/test-scene-overview.mjs
@@ -31,6 +32,8 @@ npm --prefix building run build
 ```
 
 `node tools/sync-canonical.mjs --check` 檢查分類副本與場景資料；`node tools/build-docs.mjs --check` 檢查網站資料包。縮寫小說仍需人工依主稿複核，不從規格機械拼接。修改前備份為 `archive/2026-09-30-canonical-sync/before-sync.zip`。
+
+現行概念與規則圖解對照於 `assets/illustrations/manifest.json`；圖解文字維護於 `tools/illustration-boards.mjs`，雙棟動線圖由 `scene-flow.json` 產生。`node tools/build-illustration-boards.mjs --check` 驗證圖解未過期；`node --test tools/test-current-illustrations.mjs` 檢查文件與 3D 引用、退役圖隔離及正式工單狀態。示意更新不等於正式圖像完成，舊圖保留追溯，不回填現行頁面。
 
 場景主圖、過渡鏡位、物件近看及文件頁只在各幕製作規格的 `scene-images` 表格維護；既有 H／B 熱點與圖號的對應在同房 `hotspot-images` 表格維護。新增原熱點時也須補對圖，不能只在正文列出物件。`build-scene-images.mjs` 檢查原熱點覆蓋，並同步劇本段落中的圖號連結、各幕連線圖號、場景道具總表與 `scene-flow.json`；加 `--check` 可檢查是否同步。一列可能含多頁或差分，並非已完成的一張圖。48 個宏觀流程節點與 56 條動線不等於全部畫面節點；新畫面不能默默新增關卡門檻。更動原動線時，先執行 `sync-canonical.mjs` 更新場景圖，再重建圖單與相關查表。
 

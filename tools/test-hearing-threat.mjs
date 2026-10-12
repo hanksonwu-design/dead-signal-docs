@@ -152,14 +152,14 @@ test('narrative, production summary and work orders all retain the later R18 saf
   has(flow.images['R18-V02'].requirements, '失敗復位分 N0／N1／N3 已到達狀態', 'N4 為通過終態');
 });
 
-test('illustration captions distinguish old concepts from current silent patrol and recording layers', () => {
+test('current diagrams distinguish silent patrol, alert recovery and recording layers', () => {
   const sequence = block(appendix, 's-0409-8');
   const illustration = block(appendix, 's-0409-11');
   has(sequence, '輪廓沿原巡行方向檢查，尚未發現玩家', '部分掩體須屏息', '只有失誤後的警戒');
   assert(!sequence.includes('威脅停留朝向掩體'));
   assert(!illustration.includes('拖拽聲'));
-  has(illustration, 'V07 PNG 為舊構圖參考', 'R18 實際為 B 棟 37F');
-  has(spec(4), '此 PNG 尚未重繪', '06 的三條波形是歷史來源播放器', '與新增現場聽覺帶分框');
+  has(illustration, 'V07 已改為現行規則圖解', 'R18 實際為 B 棟 37F', '已到安全位復原');
+  has(spec(4), 'assets/illustrations/current/V07.svg', '歷史來源播放器與現場聽覺帶分框', '現場波形與方向字幕依 R18-V02');
 });
 
 test('signal 15 only pauses existing local targets in an allowed playback window', () => {

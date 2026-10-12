@@ -204,7 +204,7 @@
       "id": "R1",
       "image": "R1-V01",
       "reference": {
-        "url": "assets/06_關卡規格/assets/level_flow/L02.png",
+        "url": "assets/06_關卡規格/assets/level_flow/L02_current.png",
         "label": "入口大廳：叫號與讓路",
         "kind": "概念參考，非正式素材"
       },
@@ -1260,7 +1260,7 @@
       "id": "R16",
       "image": "R16-V01",
       "reference": {
-        "url": "assets/07_視聽與介面/assets/current_design/V34.png",
+        "url": "assets/07_視聽與介面/assets/current_design/V34_current.png",
         "label": "怨靈的昆蟲身體恐怖：巡行與未知",
         "kind": "概念參考，非正式素材"
       },
@@ -1400,7 +1400,7 @@
       "id": "R18",
       "image": "R18-V01",
       "reference": {
-        "url": "assets/06_關卡規格/assets/level_flow/L05.png",
+        "url": "assets/illustrations/current/L05.svg",
         "label": "噤聲者三段操作",
         "kind": "概念參考，非正式素材"
       },
@@ -1620,7 +1620,7 @@
       "id": "R22",
       "image": "R22-V01",
       "reference": {
-        "url": "assets/07_視聽與介面/assets/current_design/V29.png",
+        "url": "assets/illustrations/current/V29.svg",
         "label": "上下部承接與當部收尾",
         "kind": "概念參考，非正式素材"
       },
@@ -1857,7 +1857,7 @@
       "id": "R26",
       "image": "R26-V01",
       "reference": {
-        "url": "assets/06_關卡規格/assets/level_flow/L06.png",
+        "url": "assets/illustrations/current/L06.svg",
         "label": "阿彪：壓掌與鉤臂的防禦",
         "kind": "概念參考，非正式素材"
       },
@@ -2777,7 +2777,7 @@
       "id": "R32",
       "image": "R32-V01",
       "reference": {
-        "url": "assets/07_視聽與介面/assets/current_design/V13.png",
+        "url": "assets/07_視聽與介面/assets/current_design/V13_current.png",
         "label": "終幕揭露與室內囚禁",
         "kind": "概念參考，非正式素材"
       },

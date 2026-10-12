@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1174" viewBox="0 0 1200 1174" role="img" aria-labelledby="title desc">
+<title id="title">V02｜筆記本 · 四種碎片與來源</title><desc id="desc">來源分類不等於解鎖順序；只保存玩家已取得的資訊。 物證：縮圖＋描述：實體物件、全家福、繃布等。
+保留取得位置與原件連結。
+帶文字的物件依實際讀取內容另標文證。；聲證：來源摘要＋主觀回想：現場設備播放客觀原音。
+筆記保存來源與已聽摘要。
+歷史錄音不是現場威脅雷達。；影證：定格畫面：監控截圖或原指定凝固瞬間。
+原畫幅、時間與遮擋一起保存。
+單張影格不證明畫外事件。；文證：放大閱讀：檔案、備忘、簽核紀錄與刻痕。
+保留頁次、正反面與來源。
+必要閱讀不受攻擊計時干擾。；觀察：當時的位置與阻礙：只記已見出口、已到位置與尋路目標。
+不顯示尚未探索的全樓層地圖。；關聯：保留待查證狀態：手動連起已看來源；錯配可拆線。
+同名或相似外觀不自動證明因果。；路線：已走與未知通路分開：只標已走路段及已見的未確認通路。
+查看路線不等於取得傳送權限。；播放：聲源留在現場：已核對原音由當地有電設備輸出。
+筆記只記來源，不新增遠端播放能力。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="1174" fill="#0b1418"/>
+<text class="title" x="32" y="52">V02｜筆記本 · 四種碎片與來源</text>
+<text class="subtitle" x="32" y="91">來源分類不等於解鎖順序；只保存玩家已取得的資訊。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#e6bc68"/>
+<text class="phase" x="58" y="193" fill="#e6bc68">01 · 物證</text>
+<text class="panel-title" x="58" y="233">縮圖＋描述</text>
+<text class="body" x="58" y="276">實體物件、全家福、繃布等。</text>
+<text class="body" x="58" y="310">保留取得位置與原件連結。</text>
+<text class="body" x="58" y="344">帶文字的物件依實際讀取內容另標文證。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 聲證</text>
+<text class="panel-title" x="636" y="233">來源摘要＋主觀回想</text>
+<text class="body" x="636" y="276">現場設備播放客觀原音。</text>
+<text class="body" x="636" y="310">筆記保存來源與已聽摘要。</text>
+<text class="body" x="636" y="344">歷史錄音不是現場威脅雷達。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#a6cfa7"/>
+<text class="phase" x="58" y="447" fill="#a6cfa7">03 · 影證</text>
+<text class="panel-title" x="58" y="487">定格畫面</text>
+<text class="body" x="58" y="530">監控截圖或原指定凝固瞬間。</text>
+<text class="body" x="58" y="564">原畫幅、時間與遮擋一起保存。</text>
+<text class="body" x="58" y="598">單張影格不證明畫外事件。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#dcb3e4"/>
+<text class="phase" x="636" y="447" fill="#dcb3e4">04 · 文證</text>
+<text class="panel-title" x="636" y="487">放大閱讀</text>
+<text class="body" x="636" y="530">檔案、備忘、簽核紀錄與刻痕。</text>
+<text class="body" x="636" y="564">保留頁次、正反面與來源。</text>
+<text class="body" x="636" y="598">必要閱讀不受攻擊計時干擾。</text></g>
+<g data-panel="5"><rect x="32" y="664" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="664" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="701" fill="#79d8dc">05 · 觀察</text>
+<text class="panel-title" x="58" y="741">當時的位置與阻礙</text>
+<text class="body" x="58" y="784">只記已見出口、已到位置與尋路目標。</text>
+<text class="body" x="58" y="818">不顯示尚未探索的全樓層地圖。</text></g>
+<g data-panel="6"><rect x="610" y="664" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="664" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="701" fill="#79d8dc">06 · 關聯</text>
+<text class="panel-title" x="636" y="741">保留待查證狀態</text>
+<text class="body" x="636" y="784">手動連起已看來源；錯配可拆線。</text>
+<text class="body" x="636" y="818">同名或相似外觀不自動證明因果。</text></g>
+<g data-panel="7"><rect x="32" y="884" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="884" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="921" fill="#79d8dc">07 · 路線</text>
+<text class="panel-title" x="58" y="961">已走與未知通路分開</text>
+<text class="body" x="58" y="1004">只標已走路段及已見的未確認通路。</text>
+<text class="body" x="58" y="1038">查看路線不等於取得傳送權限。</text></g>
+<g data-panel="8"><rect x="610" y="884" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="884" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="921" fill="#79d8dc">08 · 播放</text>
+<text class="panel-title" x="636" y="961">聲源留在現場</text>
+<text class="body" x="636" y="1004">已核對原音由當地有電設備輸出。</text>
+<text class="body" x="636" y="1038">筆記只記來源，不新增遠端播放能力。</text></g>
+<path d="M32 1109H1168" stroke="#425155"/><text class="footer" x="32" y="1143">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

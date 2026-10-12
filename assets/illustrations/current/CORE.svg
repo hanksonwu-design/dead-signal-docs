@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="920" viewBox="0 0 1200 920" role="img" aria-labelledby="title desc">
+<title id="title">CORE｜核心循環 · 調查、判斷、操作與回報</title><desc id="desc">現場機關與推理各有門檻；不是所有前進都需要三格鎖定。 探索：主圖 → 原件近看：主場景與過渡次場景各有對應圖號。
+關閉近看回原鏡位；出入口狀態可辨。；來源：物證／聲證／影證／文證：保存已取得的來源與已知範圍。
+同一來源可依現有內容有多種型態。；推理：有指定鏈時才排 A → B → C：核對有關聯的三片，排列原因果。
+正確後才鎖定結論；錯配可退回查原件。
+三片不是每間房的固定收集數。；操作：看該段成功條件：機關需親手操作；推理結論不自動開所有門。
+原必要操作成功後，才成立對應通行條件。；威脅：只在指定暴露階段：觀察聲音、輪廓與前兆，選相應避位。
+必要查證安全；失誤保留原已得成果。；回報：路開／來源保存／人物更新：看得見操作結果，再自行移動。
+依原條件回訪，接下一輪不同情境。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="920" fill="#0b1418"/>
+<text class="title" x="32" y="52">CORE｜核心循環 · 調查、判斷、操作與回報</text>
+<text class="subtitle" x="32" y="91">現場機關與推理各有門檻；不是所有前進都需要三格鎖定。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 探索</text>
+<text class="panel-title" x="58" y="233">主圖 → 原件近看</text>
+<text class="body" x="58" y="276">主場景與過渡次場景各有對應圖號。</text>
+<text class="body" x="58" y="310">關閉近看回原鏡位；出入口狀態可辨。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 來源</text>
+<text class="panel-title" x="636" y="233">物證／聲證／影證／文證</text>
+<text class="body" x="636" y="276">保存已取得的來源與已知範圍。</text>
+<text class="body" x="636" y="310">同一來源可依現有內容有多種型態。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · 推理</text>
+<text class="panel-title" x="58" y="453">有指定鏈時才排 A → B → C</text>
+<text class="body" x="58" y="496">核對有關聯的三片，排列原因果。</text>
+<text class="body" x="58" y="530">正確後才鎖定結論；錯配可退回查原件。</text>
+<text class="body" x="58" y="564">三片不是每間房的固定收集數。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · 操作</text>
+<text class="panel-title" x="636" y="453">看該段成功條件</text>
+<text class="body" x="636" y="496">機關需親手操作；推理結論不自動開所有門。</text>
+<text class="body" x="636" y="530">原必要操作成功後，才成立對應通行條件。</text></g>
+<g data-panel="5"><rect x="32" y="630" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="630" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="667" fill="#79d8dc">05 · 威脅</text>
+<text class="panel-title" x="58" y="707">只在指定暴露階段</text>
+<text class="body" x="58" y="750">觀察聲音、輪廓與前兆，選相應避位。</text>
+<text class="body" x="58" y="784">必要查證安全；失誤保留原已得成果。</text></g>
+<g data-panel="6"><rect x="610" y="630" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="630" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="667" fill="#79d8dc">06 · 回報</text>
+<text class="panel-title" x="636" y="707">路開／來源保存／人物更新</text>
+<text class="body" x="636" y="750">看得見操作結果，再自行移動。</text>
+<text class="body" x="636" y="784">依原條件回訪，接下一輪不同情境。</text></g>
+<path d="M32 855H1168" stroke="#425155"/><text class="footer" x="32" y="889">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

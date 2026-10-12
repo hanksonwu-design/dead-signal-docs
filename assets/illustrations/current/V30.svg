@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+<title id="title">V30｜下部生活區 · 逐房操作與領域</title><desc id="desc">U1／U2／U3 在 B 棟 46F；U4 在 48F，途中須經 R28／R29 與 L2。 U1：核對管圖與方向：依原管圖開通生活區路線。
+已開方向與返回入口分開保存。；U2：洗衣內井與橋下夾層：操作原機構通往 U2b。
+威脅仍沿原入口確認與安全撤離，不全區追逐。；U3：固定燈架，不是手提燈：遮光葉開／閉 × 燈框內／中／外三位。
+比對固定標記與光束，橋栓對位後手動落橋。
+燈亮本身不會自動開門。；U4：門檻領域與同址回返：由既定上行路與 47F→48F L2 抵達。
+對照原地標、前移越檻／同址回返。
+不是 U3 同層隔壁的新傳送門。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="700" fill="#0b1418"/>
+<text class="title" x="32" y="52">V30｜下部生活區 · 逐房操作與領域</text>
+<text class="subtitle" x="32" y="91">U1／U2／U3 在 B 棟 46F；U4 在 48F，途中須經 R28／R29 與 L2。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · U1</text>
+<text class="panel-title" x="58" y="233">核對管圖與方向</text>
+<text class="body" x="58" y="276">依原管圖開通生活區路線。</text>
+<text class="body" x="58" y="310">已開方向與返回入口分開保存。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · U2</text>
+<text class="panel-title" x="636" y="233">洗衣內井與橋下夾層</text>
+<text class="body" x="636" y="276">操作原機構通往 U2b。</text>
+<text class="body" x="636" y="310">威脅仍沿原入口確認與安全撤離，不全區追逐。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · U3</text>
+<text class="panel-title" x="58" y="453">固定燈架，不是手提燈</text>
+<text class="body" x="58" y="496">遮光葉開／閉 × 燈框內／中／外三位。</text>
+<text class="body" x="58" y="530">比對固定標記與光束，橋栓對位後手動落橋。</text>
+<text class="body" x="58" y="564">燈亮本身不會自動開門。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · U4</text>
+<text class="panel-title" x="636" y="453">門檻領域與同址回返</text>
+<text class="body" x="636" y="496">由既定上行路與 47F→48F L2 抵達。</text>
+<text class="body" x="636" y="530">對照原地標、前移越檻／同址回返。</text>
+<text class="body" x="636" y="564">不是 U3 同層隔壁的新傳送門。</text></g>
+<path d="M32 635H1168" stroke="#425155"/><text class="footer" x="32" y="669">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

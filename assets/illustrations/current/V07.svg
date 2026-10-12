@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="734" viewBox="0 0 1200 734" role="img" aria-labelledby="title desc">
+<title id="title">V07｜R18 · B 棟 37F 聽覺潛行</title><desc id="desc">正常巡行與發現後警戒分開；巡行不補腳步或拖曳聲。 正常巡行：先看位置，再判斷移動：看門牌、水痕、布簾及振膜。
+輪廓沿原方向檢查，尚未發現玩家。
+只有原階段已有的呼吸才入現場帶。；現場聽覺帶：現在 · 隨已發生聲音更新：方向文字、音量包絡與波形同步。
+音量不是距離尺；配合視線與遮擋。
+無聲模式保留同等輪廓與方向資訊。；被注意：失誤後才進警戒：收手，按原 2.2 秒救援窗退避。
+部分掩體須屏息，按鍵讀目前綁定。
+不以假方向聲或突增爆音誤導。；復位與通過：只退到已到達的安全位：復位按 N0／N1／N3 已到達狀態。
+N2 不是失敗復位點；N4 是通過終態。
+安全後仍由玩家親手開門去 R19。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="734" fill="#0b1418"/>
+<text class="title" x="32" y="52">V07｜R18 · B 棟 37F 聽覺潛行</text>
+<text class="subtitle" x="32" y="91">正常巡行與發現後警戒分開；巡行不補腳步或拖曳聲。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#dcb3e4"/>
+<text class="phase" x="58" y="193" fill="#dcb3e4">01 · 正常巡行</text>
+<text class="panel-title" x="58" y="233">先看位置，再判斷移動</text>
+<text class="body" x="58" y="276">看門牌、水痕、布簾及振膜。</text>
+<text class="body" x="58" y="310">輪廓沿原方向檢查，尚未發現玩家。</text>
+<text class="body" x="58" y="344">只有原階段已有的呼吸才入現場帶。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 現場聽覺帶</text>
+<text class="panel-title" x="636" y="233">現在 · 隨已發生聲音更新</text>
+<text class="body" x="636" y="276">方向文字、音量包絡與波形同步。</text>
+<text class="body" x="636" y="310">音量不是距離尺；配合視線與遮擋。</text>
+<text class="body" x="636" y="344">無聲模式保留同等輪廓與方向資訊。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#dcb3e4"/>
+<text class="phase" x="58" y="447" fill="#dcb3e4">03 · 被注意</text>
+<text class="panel-title" x="58" y="487">失誤後才進警戒</text>
+<text class="body" x="58" y="530">收手，按原 2.2 秒救援窗退避。</text>
+<text class="body" x="58" y="564">部分掩體須屏息，按鍵讀目前綁定。</text>
+<text class="body" x="58" y="598">不以假方向聲或突增爆音誤導。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#a6cfa7"/>
+<text class="phase" x="636" y="447" fill="#a6cfa7">04 · 復位與通過</text>
+<text class="panel-title" x="636" y="487">只退到已到達的安全位</text>
+<text class="body" x="636" y="530">復位按 N0／N1／N3 已到達狀態。</text>
+<text class="body" x="636" y="564">N2 不是失敗復位點；N4 是通過終態。</text>
+<text class="body" x="636" y="598">安全後仍由玩家親手開門去 R19。</text></g>
+<path d="M32 669H1168" stroke="#425155"/><text class="footer" x="32" y="703">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

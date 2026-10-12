@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="734" viewBox="0 0 1200 734" role="img" aria-labelledby="title desc">
+<title id="title">V01｜R3 · 查看、關聯與三圖層</title><desc id="desc">以床位牌與信件示範；不是枕頭與床單的另一組解鎖題。 直接查看：現在的宿舍：查看床位牌背面的姓名。
+查看床邊信件的收件人。
+原件近看可收起再查。；玩家比對：姓名與收件人：在筆記中手動連起兩項已見來源。
+確認床位歸屬後，才接原床邊記憶入口。
+筆記不替未知人物補名字。；感知：同一房間的殘留：沿原感知入口辨認現時殘留。
+現場門框、床位和退路維持原址。
+不是切換到另一間可探索房。；過去：同鏡位凝固靜格：歷史人物、手與物件保持靜止。
+查完回到原現在鏡位。
+R31 的指定解凍另依正式劇本。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="734" fill="#0b1418"/>
+<text class="title" x="32" y="52">V01｜R3 · 查看、關聯與三圖層</text>
+<text class="subtitle" x="32" y="91">以床位牌與信件示範；不是枕頭與床單的另一組解鎖題。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · 直接查看</text>
+<text class="panel-title" x="58" y="233">現在的宿舍</text>
+<text class="body" x="58" y="276">查看床位牌背面的姓名。</text>
+<text class="body" x="58" y="310">查看床邊信件的收件人。</text>
+<text class="body" x="58" y="344">原件近看可收起再查。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · 玩家比對</text>
+<text class="panel-title" x="636" y="233">姓名與收件人</text>
+<text class="body" x="636" y="276">在筆記中手動連起兩項已見來源。</text>
+<text class="body" x="636" y="310">確認床位歸屬後，才接原床邊記憶入口。</text>
+<text class="body" x="636" y="344">筆記不替未知人物補名字。</text></g>
+<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="58" y="447" fill="#79d8dc">03 · 感知</text>
+<text class="panel-title" x="58" y="487">同一房間的殘留</text>
+<text class="body" x="58" y="530">沿原感知入口辨認現時殘留。</text>
+<text class="body" x="58" y="564">現場門框、床位和退路維持原址。</text>
+<text class="body" x="58" y="598">不是切換到另一間可探索房。</text></g>
+<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
+<text class="phase" x="636" y="447" fill="#79d8dc">04 · 過去</text>
+<text class="panel-title" x="636" y="487">同鏡位凝固靜格</text>
+<text class="body" x="636" y="530">歷史人物、手與物件保持靜止。</text>
+<text class="body" x="636" y="564">查完回到原現在鏡位。</text>
+<text class="body" x="636" y="598">R31 的指定解凍另依正式劇本。</text></g>
+<path d="M32 669H1168" stroke="#425155"/><text class="footer" x="32" y="703">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>

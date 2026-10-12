@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="886" viewBox="0 0 1200 886" role="img" aria-labelledby="title desc">
+<title id="title">L05｜校正區 · 三房各自承接</title><desc id="desc">R18、R19、R20 均在 B 棟 37F；不是一段不停歇的追逐。 R18：01 · 觀察巡行：先辨正常巡行肩影、門牌與水痕。
+現場帶只顯示已發生的原聲源。；R18：02 · 移動與退避：依掩體和原屏息要求前進。
+失誤退回已到達安全位，成功才進門。；R19：03 · 慢關厚門：2.4 秒累積收合，放手可暫停，連點不加速。
+當前椅位是空椅；厚門提供原遮蔽。；R19：04 · 屏息與凝固分層：至少 3.2 秒前兆後，確認才進 5.2 秒停留。
+原歷史人體靜止，不畫成現在椅上住戶。；R20：05 · 玻璃反射與來源：玻璃輪廓是走廊反射，不是新增完整怨靈。
+三條波形是歷史來源播放器，不是雷達。；R20：06 · 比對與操作：歷史播放器與新增現場聽覺帶分框。
+完成原校正條件後，仍需親自操作前進。</desc>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="886" fill="#0b1418"/>
+<text class="title" x="32" y="52">L05｜校正區 · 三房各自承接</text>
+<text class="subtitle" x="32" y="91">R18、R19、R20 均在 B 棟 37F；不是一段不停歇的追逐。</text>
+<g data-panel="1"><rect x="32" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · R18</text>
+<text class="panel-title" x="58" y="233">01 · 觀察巡行</text>
+<text class="body" x="58" y="276">先辨正常巡行肩影、門牌與水痕。</text>
+<text class="body" x="58" y="310">現場帶只顯示已發生的原聲源。</text></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · R18</text>
+<text class="panel-title" x="636" y="233">02 · 移動與退避</text>
+<text class="body" x="636" y="276">依掩體和原屏息要求前進。</text>
+<text class="body" x="636" y="310">失誤退回已到達安全位，成功才進門。</text></g>
+<g data-panel="3"><rect x="32" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="413" fill="#79d8dc">03 · R19</text>
+<text class="panel-title" x="58" y="453">03 · 慢關厚門</text>
+<text class="body" x="58" y="496">2.4 秒累積收合，放手可暫停，連點不加速。</text>
+<text class="body" x="58" y="530">當前椅位是空椅；厚門提供原遮蔽。</text></g>
+<g data-panel="4"><rect x="610" y="376" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="376" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="413" fill="#79d8dc">04 · R19</text>
+<text class="panel-title" x="636" y="453">04 · 屏息與凝固分層</text>
+<text class="body" x="636" y="496">至少 3.2 秒前兆後，確認才進 5.2 秒停留。</text>
+<text class="body" x="636" y="530">原歷史人體靜止，不畫成現在椅上住戶。</text></g>
+<g data-panel="5"><rect x="32" y="596" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="596" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="58" y="633" fill="#79d8dc">05 · R20</text>
+<text class="panel-title" x="58" y="673">05 · 玻璃反射與來源</text>
+<text class="body" x="58" y="716">玻璃輪廓是走廊反射，不是新增完整怨靈。</text>
+<text class="body" x="58" y="750">三條波形是歷史來源播放器，不是雷達。</text></g>
+<g data-panel="6"><rect x="610" y="596" width="558" height="200" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="596" width="5" height="200" fill="#79d8dc"/>
+<text class="phase" x="636" y="633" fill="#79d8dc">06 · R20</text>
+<text class="panel-title" x="636" y="673">06 · 比對與操作</text>
+<text class="body" x="636" y="716">歷史播放器與新增現場聽覺帶分框。</text>
+<text class="body" x="636" y="750">完成原校正條件後，仍需親自操作前進。</text></g>
+<path d="M32 821H1168" stroke="#425155"/><text class="footer" x="32" y="855">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+</svg>
