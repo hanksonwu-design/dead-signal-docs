@@ -150,6 +150,7 @@ function imageAssetUrl(href) {
 
 function inlineMarkdown(value) {
   let html = esc(value);
+  html = html.replace(/&lt;a id=&quot;([A-Za-z0-9_-]+)&quot;&gt;&lt;\/a&gt;/g, '<span id="$1" class="md-anchor"></span>');
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, href) => {
     const url = imageAssetUrl(href);
     return url ? `<a class="md-image-link" href="${url}" target="_blank" rel="noreferrer"><img alt="${alt}" src="${url}" loading="lazy" decoding="async" /></a>` : `<span>${alt}</span>`;

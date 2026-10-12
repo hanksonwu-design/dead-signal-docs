@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT, MASTER, parseMaster, buildSync, deriveGraph, canonicalFile } from './sync-canonical.mjs';
-import { ACTS, FINALE, APPENDIX, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER, legacyFinalHeading } from './screenplay-files.mjs';
+import { ACTS, FINALE, APPENDIX, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER, legacyFinalHeading, ILLUSTRATION_CATALOG } from './screenplay-files.mjs';
 import { buildDocuments } from './build-docs.mjs';
 import { validateProductionOrder, reorderProduction } from './reorder-production-specs.mjs';
 import { stripReadingInline } from './reading-scene-flow.mjs';
@@ -726,7 +726,8 @@ test('website separates reading and production categories and preserves old act 
   }
   assert.deepEqual(screenplays.map(doc => doc.path).sort(), [...READING_FILES].sort());
   const specs = documents.filter(doc => doc.folder === '10_製作規格' && !doc.archived);
-  assert.deepEqual(specs.map(doc => doc.path).sort(), ACTS.map(act => act.specPath).sort());
+  assert.deepEqual(specs.map(doc => doc.path).sort(), [...ACTS.map(act => act.specPath), ILLUSTRATION_CATALOG].sort());
+  assert.equal(specs[0].path, ILLUSTRATION_CATALOG);
   for (const spec of specs) {
     assert(spec.title.startsWith('製作規格'), spec.path);
     assert.equal(spec.folderLabel, '製作規格');

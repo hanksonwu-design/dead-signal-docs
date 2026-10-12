@@ -4,7 +4,7 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { MASTER, APPENDIX, ACTS, FINALE, CANONICAL_FILES, SPLIT_MARKER } from './screenplay-files.mjs';
+import { MASTER, APPENDIX, ACTS, FINALE, CANONICAL_FILES, SPLIT_MARKER, ILLUSTRATION_CATALOG } from './screenplay-files.mjs';
 
 export const ROOT = fileURLToPath(new URL("..", import.meta.url));
 export const DOCS_DIR = join(ROOT, "docs");
@@ -114,7 +114,7 @@ export function buildDocuments() {
     const finaleAliases = Object.assign({}, ...documents.filter(d => [FINALE.path, FINALE.specPath].includes(d.path)).map(d => d.headingAliases));
     for (const doc of documents.filter(d => [FINALE.path, FINALE.specPath].includes(d.path))) doc.headingAliases = finaleAliases;
   }
-  const order = [ ...ACTS.map(a => a.path), MASTER, APPENDIX, ...ACTS.map(a => a.specPath) ];
+  const order = [ ...ACTS.map(a => a.path), MASTER, APPENDIX, ILLUSTRATION_CATALOG, ...ACTS.map(a => a.specPath) ];
   return documents.sort((a, b) => {
     if (a.folder === b.folder && (order.includes(a.path) || order.includes(b.path))) {
       const rank = doc => order.includes(doc.path) ? order.indexOf(doc.path) : order.length;

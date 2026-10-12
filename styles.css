@@ -129,6 +129,8 @@ kbd { color: var(--faint); border: 1px solid var(--line); border-radius: 3px; pa
 .reader-content pre code { color: #b9c5d3; background: transparent; padding: 0; white-space: pre; }
 .reader-content hr { border: 0; border-top: 1px solid var(--line); margin: 30px 0; }
 .md-table-wrap { overflow-x: auto; margin: 20px 0; border: 1px solid var(--line); }
+#illustration-catalog ~ .md-table-wrap table { min-width: 820px; }
+#illustration-catalog ~ .md-table-wrap td:first-child { white-space: nowrap; }
 .reader-content table { border-collapse: collapse; min-width: 100%; font-size: 12px; }
 .reader-content th, .reader-content td { text-align: left; vertical-align: top; padding: 10px 11px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); line-height: 1.65; }
 .reader-content th { color: var(--accent); background: rgba(223,181,116,.07); font-weight: 500; white-space: nowrap; }

@@ -1,6 +1,7 @@
 // The index retains its historical path so published bookmarks remain valid.
 export const MASTER = '09_劇本/09-14_全劇本與關卡整合稿.md';
 export const APPENDIX = '09_劇本/09-15_正式劇本_共用附錄.md';
+export const ILLUSTRATION_CATALOG = '10_製作規格/10-11_製作規格_示意圖目錄.md';
 export const LEGACY_ACTS = [
   ['序幕', '雨夜與地底'],
   ['第一幕', '門面與棚'],
