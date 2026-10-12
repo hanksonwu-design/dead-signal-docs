@@ -211,8 +211,14 @@ export function buildSceneImageOutputs(graph, documents) {
     Object.assign(child, { type: current.type, play: current.play });
   }
   for (const route of routes) route.mode = flow.routes.find(r => r.id === route.edge.id).mode;
-  const floorLabel = id => [...flow.nodes, ...flow.subscenes].find(n => n.id === id).floor.label;
-  const buildingLabel = id => [...flow.nodes, ...flow.subscenes].find(n => n.id === id).building.label;
+  const floorLabel = (id, reverse = false) => {
+    const floor = [...flow.nodes, ...flow.subscenes].find(n => n.id === id).floor;
+    return reverse ? floor.reverseLabel : floor.label;
+  };
+  const buildingLabel = (id, reverse = false) => {
+    const building = [...flow.nodes, ...flow.subscenes].find(n => n.id === id).building;
+    return reverse ? building.reverseLabel : building.label;
+  };
   const outputs = new Map();
   for (const act of ACTS) {
     let story = read(act.path);
@@ -238,12 +244,25 @@ export function buildSceneImageOutputs(graph, documents) {
         const heading = story.match(new RegExp(`<a id="${anchor}"></a>\\n(#{1,6} [^\\n]+)`))?.[0];
         assert(heading, `Transition reading anchor: ${route}`);
         const routeChildren = children.filter(s => s.id.startsWith(`${route}-`));
-        const body = `**次場景順序：** ${routeChildren.map(s => `[${s.id} · ${s.name}](#${subsceneAnchor(s, 'script')})`).join(' → ')}\n\n` +
+        // A return passage can be narrated in reverse without reversing the canonical route.
+        for (const child of routeChildren) {
+          assert(story.includes(`<a id="${subsceneAnchor(child, 'script')}"></a>`),
+            `Missing reading subscene: ${child.id}`);
+        }
+        const readingChildren = [...routeChildren].sort((a, b) =>
+          story.indexOf(`<a id="${subsceneAnchor(a, 'script')}"></a>`) -
+          story.indexOf(`<a id="${subsceneAnchor(b, 'script')}"></a>`));
+        const reverse = readingChildren.length > 1 && readingChildren[0] === routeChildren.at(-1);
+        assert.deepEqual(readingChildren, reverse ? [...routeChildren].reverse() : routeChildren,
+          `Disconnected reading passage: ${route}`);
+        if (reverse) assert(routes.some(r => r.edge.back &&
+          `T-${r.edge.fromId}-${r.edge.toId}` === route), `One-way reading passage reversed: ${route}`);
+        const body = `**次場景順序：** ${readingChildren.map(s => `[${s.id} · ${s.name}](#${subsceneAnchor(s, 'script')})`).join(' → ')}\n\n` +
           `[通路圖像製作單](../${act.specPath}#subscenes-${group.node.toLowerCase()})`;
         story = section(story, route.toLowerCase(), body, heading);
         for (const child of routeChildren) {
           const childBody = `<a id="${subsceneAnchor(child, 'script')}"></a>\n###### 次場景 ${child.id} · ${child.name}\n\n` +
-            `**樓層：**${floorLabel(child.id)} · ${buildingLabel(child.id)}\n\n` +
+            `**樓層：**${floorLabel(child.id, reverse)} · ${buildingLabel(child.id, reverse)}\n\n` +
             `**近看：** ${child.details.map(d => `${d.content}（${d.id}）`).join('；')}。\n\n` +
             `[次場景製作規格](../${act.specPath}#${subsceneAnchor(child, 'spec')})`;
           // Each marker is placed beside its actual shot, never ahead of a route's entry condition.

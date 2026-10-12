@@ -131,7 +131,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
     assert.match(story, /（靜態畫面／(?:遠景|全景|中景|近景|特寫)）/, act.path);
     assert(story.includes('（介面呈現）'), act.path);
   }
-  for (const id of ['s-0904-16', 's-0905-22', 's-0906-14', 's-0908-28']) {
+  for (const id of ['s-0904-16', 's-0905-22', 's-0906-16', 's-0908-28']) {
     assert(block(id).includes('（鏡位切換）'), id);
   }
   assert(block('s-0903-3').includes('（配音演出）保留人的氣息與猶豫。'));
@@ -178,8 +178,8 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     系統: new Set(['操作提示', '選項介面', '確認警示', '取得提示', '筆記更新', '狀態顯示', '狀態更新',
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
-  // U2b and U5 separate the existing follow-up input from its preceding defense.
-  const counts = [[21, 17, 8], [75, 29, 19], [105, 34, 11], [141, 24, 10],
+  // Act 3 spells out branch selection and return; U2b/U5 separate follow-up inputs.
+  const counts = [[21, 17, 8], [75, 29, 19], [105, 34, 11], [144, 24, 10],
     [56, 18, 11], [53, 15, 12], [22, 4, 2], [47, 7, 5], [26, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
@@ -380,7 +380,7 @@ test('ten expanded routes preserve original departure gates and ordered scene co
       '可沿窄橋自由前往；教戰手冊與留存排行榜在 R11 離幕前核對，老周安息及配給支線不擋通行'],
     ['R11', 'R12', 2, 's-0905-55', 's-0603-36', 7,
       '阿尋必要校驗、arc.ahsun.scope_confirmed 與幕尾 K1-01 成立，再完成現場第一鑰匙門端驗證；SQ-C1／SQ-S 不擋主線'],
-    ['R13', 'R14', 3, 's-0906-14', 's-0604-28', 3,
+    ['R13', 'R14', 3, 's-0906-16', 's-0604-28', 3,
       'E-07 已依本房叫號序列與照護註記安息，診所後門開啟；可退回 R12 不受本條阻擋'],
     ['R17', 'R18', 3, 's-0906-62', 's-0604-29', 4,
       '正確日期證據與 K2-01 成立；假路返回後可重排；離幕前可回查已發現未完成的 SQ-M1／SQ-T，支線不擋主線'],
