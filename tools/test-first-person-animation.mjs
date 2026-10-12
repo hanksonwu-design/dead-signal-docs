@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { ACTS, APPENDIX } from './screenplay-files.mjs';
 import { parseMaster } from './sync-canonical.mjs';
+import { stripReadingInline } from './reading-scene-flow.mjs';
 import { READING_PLACEMENTS } from '../building/screenplay-marker-placement.js';
 
 const master = parseMaster();
@@ -11,7 +12,7 @@ const spec = act => master.documents.get(ACTS[act].specPath);
 const common = master.documents.get(APPENDIX);
 const block = id => {
   assert(master.blocks.has(id), `Missing source block: ${id}`);
-  return master.blocks.get(id);
+  return stripReadingInline(master.blocks.get(id));
 };
 const has = (text, ...phrases) => phrases.forEach(phrase => assert(text.includes(phrase), `Missing contract: ${phrase}`));
 const ordered = (text, ...phrases) => {
@@ -200,4 +201,68 @@ test('second-batch art coverage, reader anchors and offscreen still anomalies re
   }
   has(common, '第二批製作次序', '不另加強制觀賞時間', '保留靜態異常', '不補物件自行移動');
   has(block('s-0907-25'), '主角收回自己的手', '門邊那隻手仍是靜格', '轉開或遮擋後再看');
+});
+
+test('all screenplay animation cues name a documented presentation method', () => {
+  const kinds = ['第一人稱過場', '第一人稱互動', '第一人稱動作回饋', '場景局部動畫',
+    '設備內影片', '設備即時影像', '歷史解凍過場', '片尾旁觀過場'];
+  const seen = new Set();
+  for (const act of ACTS) {
+    const cues = [...story(act.act).matchAll(/（動畫演出([^）]*)）/g)];
+    assert(cues.length > 0, act.name);
+    for (const [, suffix] of cues) {
+      assert(suffix.startsWith('／') && kinds.includes(suffix.slice(1)), `${act.name}: ${suffix}`);
+      seen.add(suffix.slice(1));
+    }
+  }
+  assert.deepEqual([...seen].sort(), [...kinds].sort());
+  for (const kind of kinds) has(common, `（動畫演出／${kind}）`);
+  assert(!common.includes('（動畫演出）'));
+  has(common, '一次性異常不改成持續循環', '分類本身不新增輸入、鎖定時間或改變既有判定');
+});
+
+test('P2 to R1 shares one first-person door action after reaching the upper landing', () => {
+  ordered(block('s-0903-26'), '親手**點擊梯口上行', 'B3–B1 到 1F',
+    '第一人稱動作回饋', '抵達頂端', '暖白光', '接續第一幕');
+  const arrival = block('s-0904-3');
+  ordered(arrival, '承接序幕頂端同一次推門', '眼前門扇先遮住大部分畫面',
+    '手從視野下緣伸出', '視點在大廳入口停穩', '取得控制');
+  assert(!arrival.includes('門框先遮住大部分畫面'));
+  has(row(0, 'P2-V02'), '兩幕共用一次推門演出與輸入');
+  has(row(1, 'R1-V01'), '接 P2-V02 同一次推門', '停穩後回本圖自由查看');
+});
+
+test('device playback, live feeds and status panels keep distinct sources', () => {
+  has(block('s-0904-5'), '（動畫演出／設備內影片）接待員', '（動畫演出／場景局部動畫）完成指定觀察後');
+  has(block('s-0905-29'), '（動畫演出／設備內影片）沿', '固定 2 秒', '聲音晚 0.3 秒');
+  has(block('s-0910-5'), '（動畫演出／設備即時影像）泵體後內凹室', '時間持續前進', '至少兩次');
+  has(block('s-0906-43'), '（介面呈現）32F 中繼顯示未通電');
+  assert(!block('s-0906-43').includes('（動畫演出'));
+  for (const [act, image, kind] of [[1, 'R1-C02', '設備內影片'], [2, 'R8-D04', '設備內影片'],
+    [9, 'R32-D01', '設備即時影像'], [3, 'R16-C02', '介面呈現']]) has(row(act, image), kind);
+  has(row(9, 'R32-D01'), '至少兩次可辨呼吸', '低動態版亦須有連續差分');
+});
+
+test('history thaw and observer epilogue labels cannot spread to present-day scenes', () => {
+  for (const act of ACTS) {
+    const thawCount = [...story(act.act).matchAll(/（動畫演出／歷史解凍過場）/g)].length;
+    const observerCount = [...story(act.act).matchAll(/（動畫演出／片尾旁觀過場）/g)].length;
+    assert.equal(thawCount, act.act === 8 ? 1 : 0, act.name);
+    assert.equal(observerCount, act.act === 9 ? 3 : 0, act.name);
+  }
+  has(block('s-0909-59'), '（動畫演出／歷史解凍過場）同一歷史鏡位中', '十二秒');
+  assert.equal([...block('s-0910-42').matchAll(/（動畫演出／片尾旁觀過場）/g)].length, 3);
+  has(row(8, 'R31-F01'), '歷史解凍過場', '八張低動態定格');
+  has(row(9, 'POST-V03'), '片尾旁觀過場', '不改成康眼中視角或主角回憶');
+  for (const image of ['R33-V03', 'R33-V04', 'R33-V05', 'R33-V07']) has(row(9, image), '第一人稱過場');
+});
+
+test('newly classified threat and feedback cues preserve player input and static reflections', () => {
+  has(block('s-0907-9'), '（動畫演出／第一人稱互動）確認屏息後，影子停在門下 5.2 秒');
+  has(block('s-0907-25'), '（動畫演出／第一人稱動作回饋）主角收回自己的手', '門邊那隻手仍是靜格');
+  has(block('s-0910-29'), '（動畫演出／第一人稱互動）主觀近景保留現時的核可手勢', '四秒');
+  for (const [act, id] of [[1, 'R1-C06-horror'], [2, 'R9-C01-horror'], [3, 'R13-V01-horror'],
+    [4, 'R19-V01-horror'], [1, 'T-R2-R3-01-horror']]) {
+    assert.equal(story(act).split(READING_PLACEMENTS[id]).length - 1, 1, id);
+  }
 });

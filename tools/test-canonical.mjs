@@ -118,13 +118,16 @@ test('reading scripts describe playable events without editorial prohibitions', 
 });
 
 test('screenplay presentation cues distinguish motion, stills, transitions and interfaces', () => {
-  const labels = ['動畫演出', '動畫演出／第一人稱過場', '動畫演出／第一人稱互動',
-    '動畫演出／第一人稱動作回饋', '靜態畫面／景別', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
+  const labels = ['動畫演出／第一人稱過場', '動畫演出／第一人稱互動',
+    '動畫演出／第一人稱動作回饋', '動畫演出／場景局部動畫', '動畫演出／設備內影片',
+    '動畫演出／設備即時影像', '動畫演出／歷史解凍過場', '動畫演出／片尾旁觀過場',
+    '靜態畫面／景別', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
   assert(!master.text.includes('〔演出〕'));
   for (const label of labels) assert(block('s-0900-4').includes(`（${label}）`), label);
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
-    assert(story.includes('（動畫演出）'), act.path);
+    assert.match(story, /（動畫演出／[^）]+）/, act.path);
+    assert(!story.includes('（動畫演出）'), act.path);
     assert.match(story, /（靜態畫面／(?:遠景|全景|中景|近景|特寫)）/, act.path);
     assert(story.includes('（介面呈現）'), act.path);
   }
@@ -215,9 +218,9 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   ]) assert(block(id).includes(`〔${cue}〕${text}`), `${id}: ${cue}`);
   for (const [id, cue, text] of [
     ['s-0908-31', '介面呈現', '進房時，時序軌'],
-    ['s-0909-22', '動畫演出', '主角在安全桌邊伸手'],
-    ['s-0909-44', '動畫演出', '粉塵往一側落'],
-    ['s-0910-34', '動畫演出', '既有分支演出中，她伸出手指向原簽名'],
+    ['s-0909-22', '動畫演出／第一人稱互動', '主角在安全桌邊伸手'],
+    ['s-0909-44', '動畫演出／場景局部動畫', '粉塵往一側落'],
+    ['s-0910-34', '動畫演出／第一人稱過場', '既有分支演出中，她伸出手指向原簽名'],
   ]) assert(block(id).includes(`（${cue}）${text}`), `${id}: automatic presentation`);
   for (const text of ['不是新增的玩家介面文字', '不把替代路徑變成兩步必做', '不另外插入一次確認',
     '預覽不外送，回執不明不重發', '不單憑分類認定說話者', '規則註記不直接顯示']) {
@@ -235,16 +238,16 @@ test('frozen history and H-08 remain still while present action and the unique t
     assert.doesNotMatch(block(id), /（動畫演出(?:／[^）]+)?）/, id);
   }
   assert(block('s-0905-17').includes('（動畫演出／第一人稱互動）回到現時，老周的迴聲'));
-  assert(block('s-0906-11').includes('（動畫演出）退出後，現時輪廓'));
+  assert(block('s-0906-11').includes('（動畫演出／場景局部動畫）退出後，現時輪廓'));
   assert(block('s-0907-12').includes('（靜態差分）玩家轉開鏡頭後才撤去該靜格'));
   assert(block('s-0907-25').includes('（靜態畫面／中景）主角收手時，門邊那隻手仍是靜格。'));
   assert(block('s-0909-5').includes('（靜態畫面／遠景）窗內的人與物保持不動'));
-  assert(block('s-0909-59').includes('（動畫演出）同一歷史鏡位中，十二秒解凍'));
+  assert(block('s-0909-59').includes('（動畫演出／歷史解凍過場）同一歷史鏡位中，十二秒解凍'));
   assert(block('s-0909-59').includes('（靜態差分）減少動態版用原八張定格、同十二秒。'));
   assert(block('s-0909-60').includes('（介面呈現）選用文字摘要'));
-  assert(block('s-0910-5').includes('（動畫演出）泵體後內凹室'));
+  assert(block('s-0910-5').includes('（動畫演出／設備即時影像）泵體後內凹室'));
   assert(block('s-0910-6').includes('（靜態畫面／近景）記憶不動'));
-  assert(block('s-0910-42').includes('（動畫演出）康刷白色管理卡'));
+  assert(block('s-0910-42').includes('（動畫演出／片尾旁觀過場）康刷白色管理卡'));
 });
 
 test('current document text uses reviewed Taiwan terminology without changing clue wording', () => {
