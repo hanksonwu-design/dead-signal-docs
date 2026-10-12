@@ -19,7 +19,8 @@ const row = label => {
 };
 
 test('insect silhouettes differ while reading acts retain recognizable human gestures', () => {
-  includes(story(1), ['頸影多折了一節', '五雙手各自壓著號牌', '裡頭卻沒有手臂']);
+  includes(story(1), ['頸影多折了一節', '號牌壓在膝上，另一隻手扣著椅緣',
+    '膝蓋卻先朝內門轉去', '手指逐節滑脫', '裡頭卻沒有手臂']);
   includes(story(2), ['中空的弧', '三層薄膜從頰側錯開', '同一張臉', '指影已繞到桌沿']);
   includes(story(3), ['指尖一節節向空掌心內折', '物流標籤結成窄繭', '整個局部靜止']);
   includes(story(4), ['肩線被接縫切成薄片']);
