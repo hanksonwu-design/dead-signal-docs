@@ -15,7 +15,7 @@
 
 劇情只修改 `docs/09_劇本/09-03` 至 `09-10` 的對應幕別；逐房技術規格只修改 `docs/10_製作規格/` 的同幕文件；跨幕共用規格只修改 `09-15_正式劇本_共用附錄.md`。`09-14_全劇本與關卡整合稿.md` 沿用舊檔名，但現在只是總目錄，不存放重複正文。50 份分類文件是可重建的查閱副本；舊 06 文件與其餘退役 09 文件只保留轉介入口。不要在副本維護第二套正文，也不要手動改 `docs.json`、`scene_graph.json`、`scene-flow.json` 或 `building/data.js` 的衍生欄位。
 
-製作規格依進場、操作、圖解、製作細節、離場及次場景排列；技術狀態和圖像工單放在標準 Markdown `<details>` 區塊，讀者點圖號或驗收連結時自動展開。各房只留個別條件，重複提醒統一於[共用製作規則](docs/09_劇本/09-15_正式劇本_共用附錄.md#production-reading-contract)。維護時保留原錨點及來源區塊；以 `node tools/reorder-production-specs.mjs --check` 與 `node --test tools/test-production-reading.mjs` 驗證順序、收合和重建一致性。
+製作規格依進場、操作、圖解、製作細節、離場及次場景排列；技術狀態和圖像工單放在標準 Markdown `<details>` 區塊。製作規格與示意圖目錄內的文件、圖號及同頁段落連結均另開視窗或分頁，保留原頁閱讀位置；新頁定位到圖號或驗收條目時自動展開，展開／收合按鈕則維持原地操作。各房只留個別條件，重複提醒統一於[共用製作規則](docs/09_劇本/09-15_正式劇本_共用附錄.md#production-reading-contract)。維護時保留原錨點及來源區塊；以 `node tools/reorder-production-specs.mjs --check` 與 `node --test tools/test-production-reading.mjs` 驗證順序、收合和重建一致性。
 
 修改主稿後執行：
 
@@ -37,6 +37,8 @@ npm --prefix building run build
 `node tools/sync-canonical.mjs --check` 檢查分類副本與場景資料；`node tools/build-docs.mjs --check` 檢查網站資料包。縮寫小說仍需人工依主稿複核，不從規格機械拼接。修改前備份為 `archive/2026-09-30-canonical-sync/before-sync.zip`。
 
 現行概念與規則圖解對照於 `assets/illustrations/manifest.json`；圖解文字維護於 `tools/illustration-boards.mjs`，雙棟動線圖由 `scene-flow.json` 產生。`node tools/build-illustration-boards.mjs --check` 驗證圖解未過期；`node --test tools/test-current-illustrations.mjs` 檢查文件與 3D 引用、退役圖隔離及正式工單狀態。示意更新不等於正式圖像完成，舊圖保留追溯，不回填現行頁面。
+
+29 張原文字卡圖解的構圖與操作差分維護於 `tools/illustration-visuals.mjs`；長篇規則仍由 `illustration-boards.mjs` 保存到 SVG 無障礙說明。每張必須有專屬視覺，不以通用文字卡退回代替；圖中相同構件、來向、避位及手動提交須與正文一致。新增圖解需同步新增繪圖與測試，17 張既有精確圖解仍由 `illustration-supplement-layouts.mjs` 管理。
 
 最新補圖與逐項適用性檢查見[示意圖第二輪檢查](reviews/2026-10-12-illustration-supplement.md)。電梯、鬼打牆、燈架／水箱、修復權限與現場聽覺的參考隨共用附錄或本房製作規格維護。
 

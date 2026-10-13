@@ -75,7 +75,7 @@ const pass = name => { checks.push(name); console.log(`PASS ${name}`); };
       }
       const scene = page.locator('#readerContent tbody tr').first().locator('td').nth(2).locator('a').first();
       assert.equal(await scene.getAttribute('target'), '_blank', 'scene specification opens separately');
-      assert(await page.locator('#readerContent a[data-doc-heading="catalog-group-4"]').evaluateAll(links => links.every(link => !link.hasAttribute('target'))), 'local category navigation stays on catalog');
+      assert(await page.locator('#readerContent a[data-doc-heading="catalog-group-4"]').evaluateAll(links => links.every(link => link.target === '_blank')), 'catalog category links also open separately');
       pass(`${width}px: all ${records.length} picture links open separately with decoded images, captions and precise return links`);
       await navigate(records.find(r => r.id === 'REF-LIFT').source, 'illustration-note-ref-lift');
       await page.locator('#illustration-note-ref-lift').scrollIntoViewIfNeeded();

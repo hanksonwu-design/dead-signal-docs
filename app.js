@@ -149,18 +149,29 @@ function imageAssetUrl(href) {
 }
 
 function inlineMarkdown(value) {
+  const documentLink = (target, heading, label, separate = false) => {
+    const attributes = `data-doc-link="${esc(target.path)}" data-doc-heading="${esc(heading)}"`;
+    if (separate) {
+      const page = new URL(location.href);
+      page.hash = new URLSearchParams({ doc: target.path, heading }).toString();
+      return `<a href="${esc(page.href)}" target="_blank" rel="noopener noreferrer" data-doc-window="true" ${attributes} title="${label}（另開新視窗或分頁）" aria-label="${label}（另開新視窗或分頁）">${label}</a>`;
+    }
+    const href = `#doc=${encodeURIComponent(target.path)}${heading ? `&amp;heading=${encodeURIComponent(heading)}` : ''}`;
+    return `<a href="${href}" ${attributes}>${label}</a>`;
+  };
+  const fromProductionSpec = state.selected?.folder === '10_製作規格';
   let html = esc(value);
   html = html.replace(/&lt;a id=&quot;([A-Za-z0-9_-]+)&quot;&gt;&lt;\/a&gt;/g, '<span id="$1" class="md-anchor"></span>');
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, href) => {
     const url = imageAssetUrl(href);
-    return url ? `<a class="md-image-link" href="${url}" target="_blank" rel="noreferrer"><img alt="${alt}" src="${url}" loading="lazy" decoding="async" /></a>` : `<span>${alt}</span>`;
+    return url ? `<a class="md-image-link" href="${url}" target="_blank" rel="noopener noreferrer"><img alt="${alt}" src="${url}" loading="lazy" decoding="async" /></a>` : `<span>${alt}</span>`;
   });
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, label, href) => {
     const asset = imageAssetUrl(href);
-    if (asset) return `<a href="${asset}" target="_blank" rel="noreferrer">${label}</a>`;
+    if (asset) return `<a href="${asset}" target="_blank" rel="noopener noreferrer">${label}</a>`;
     if (href.startsWith("#") && state.selected) {
       const heading = href.slice(1);
-      return `<a href="#doc=${encodeURIComponent(state.selected.path)}&amp;heading=${encodeURIComponent(heading)}" data-doc-link="${esc(state.selected.path)}" data-doc-heading="${esc(heading)}">${label}</a>`;
+      return documentLink(state.selected, heading, label, fromProductionSpec);
     }
     if (/\.md(?:#.*)?$/i.test(href) || href.startsWith("../")) {
       const file = href.split("#")[0].replace(/^\.\.\//, "");
@@ -170,17 +181,14 @@ function inlineMarkdown(value) {
       let heading = headingRef;
       try { heading = decodeURIComponent(headingRef); } catch (_) { /* Keep a literal heading if not encoded. */ }
       const docHref = target ? `#doc=${encodeURIComponent(target.path)}${heading ? `&amp;heading=${encodeURIComponent(heading)}` : ""}` : "";
+      if (target && (fromProductionSpec || (state.selected?.folder === '09_劇本' && target.folder === '10_製作規格'))) {
+        return documentLink(target, heading, label, true);
+      }
       if (target && target.folder === "06_關卡規格") return `<a href="${docHref}" target="_blank" rel="noopener noreferrer" data-scene-source="true" aria-label="${label}（另開視窗或分頁）">${label}</a>`;
       if (target?.weeklyDetail) return `<a href="${docHref}" target="_blank" rel="noopener noreferrer" data-week-detail="true" aria-label="${label}（另開新視窗）">${label}</a>`;
-      const fromIllustrationCatalog = state.selected?.path === "10_製作規格/10-11_製作規格_示意圖目錄.md";
-      if (target && (fromIllustrationCatalog || (state.selected?.folder === "09_劇本" && target.folder === "10_製作規格"))) {
-        const page = new URL(location.href);
-        page.hash = new URLSearchParams({ doc: target.path, heading }).toString();
-        return `<a href="${esc(page.href)}" target="_blank" rel="noopener noreferrer" data-doc-window="true" data-doc-link="${esc(target.path)}" data-doc-heading="${esc(heading)}" title="${label}（另開新視窗或分頁）" aria-label="${label}（另開新視窗或分頁）">${label}</a>`;
-      }
-      return target ? `<a href="${docHref}" data-doc-link="${esc(target.path)}" data-doc-heading="${esc(heading)}">${label}</a>` : `<span>${label}</span>`;
+      return target ? documentLink(target, heading, label) : `<span>${label}</span>`;
     }
-    return `<a href="${href}" target="_blank" rel="noreferrer">${label}</a>`;
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
   });
   const styleText = (text) => {
     const code = [];

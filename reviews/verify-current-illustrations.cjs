@@ -12,6 +12,15 @@ const flow = JSON.parse(readFileSync(path.join(root, 'scene-flow.json'), 'utf8')
 const checks = [], errors = [];
 mkdirSync(out, { recursive: true });
 const pass = name => { checks.push(name); console.log(`PASS ${name}`); };
+async function capture(page) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try { return await page.screenshot(); }
+    catch (error) {
+      if (attempt === 2 || !error.message.includes('Unable to capture screenshot')) throw error;
+      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    }
+  }
+}
 async function ready(page, doc, heading) {
   await page.waitForFunction(({ doc, heading }) => state.selected?.path === doc && document.getElementById(heading), { doc, heading });
 }
@@ -28,19 +37,26 @@ async function ready(page, doc, heading) {
       const result = await page.evaluate(async () => {
         await document.fonts.ready;
         const svg = document.querySelector('svg'), bounds = svg.viewBox.baseVal;
-        const texts = [...svg.querySelectorAll('text')].map(el => ({ text: el.textContent, box: el.getBBox() }));
+        const globalBox = el => {
+          const b = el.getBBox(), m = svg.getCTM().inverse().multiply(el.getCTM());
+          const corners = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]]
+            .map(([x, y]) => new DOMPoint(x, y).matrixTransform(m));
+          const x = Math.min(...corners.map(p => p.x)), y = Math.min(...corners.map(p => p.y));
+          return { x, y, width: Math.max(...corners.map(p => p.x)) - x, height: Math.max(...corners.map(p => p.y)) - y };
+        };
+        const texts = [...svg.querySelectorAll('text')].map(el => ({ text: el.textContent, box: globalBox(el) }));
         const outside = texts.filter(({ box: b }) => b.x < 0 || b.y < 0 || b.x + b.width > bounds.width || b.y + b.height > bounds.height).map(t => t.text);
         const overlap = texts.flatMap((a, i) => texts.slice(i + 1).filter(b => Math.min(a.box.x + a.box.width, b.box.x + b.box.width) - Math.max(a.box.x, b.box.x) > 1 && Math.min(a.box.y + a.box.height, b.box.y + b.box.height) - Math.max(a.box.y, b.box.y) > 1).map(b => `${a.text} / ${b.text}`));
         const panelOverflow = [...svg.querySelectorAll('[data-panel]')].flatMap(g => {
-          const r = g.querySelector('rect').getBBox();
-          return [...g.querySelectorAll('text')].filter(t => { const b = t.getBBox(); return b.x < r.x || b.x + b.width > r.x + r.width || b.y < r.y || b.y + b.height > r.y + r.height; }).map(t => t.textContent);
+          const r = globalBox(g.querySelector('rect'));
+          return [...g.querySelectorAll('text')].filter(t => { const b = globalBox(t); return b.x < r.x || b.x + b.width > r.x + r.width || b.y < r.y || b.y + b.height > r.y + r.height; }).map(t => t.textContent);
         });
         return { outside, overlap, panelOverflow };
       });
       assert.deepEqual(result, { outside: [], overlap: [], panelOverflow: [] }, id);
-      const shot = await page.screenshot();
+      const shot = await capture(page);
       assert((await sharp(shot).stats()).channels.slice(0, 3).some(c => c.stdev > 10), `${id} nonblank`);
-      if (['L02', 'L05', 'V38', 'WORLD', 'CORE', 'REF-U4', 'REF-MECHANISM', 'REF-LIFT'].includes(id)) writeFileSync(path.join(out, `${id}.png`), shot);
+      if (['V09', 'V10', 'V12', 'L09', 'L02', 'L05', 'V38', 'WORLD', 'CORE', 'REF-U4', 'REF-MECHANISM', 'REF-LIFT'].includes(id)) writeFileSync(path.join(out, `${id}.png`), shot);
       pass(`${id}: SVG text stays in bounds, without overlap, and renders nonblank`);
     }
     await page.goto(base);

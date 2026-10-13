@@ -102,14 +102,14 @@ test('reader supports safe inline row anchors without allowing arbitrary HTML', 
   const app = read('app.js');
   const esc = app.split('\n').find(line => line.startsWith('const esc ='));
   const inline = app.slice(app.indexOf('function inlineMarkdown(value)'), app.indexOf('function renderMarkdown(raw'));
-  const render = runInNewContext(`${esc}\n${inline}\ninlineMarkdown;`);
+  const render = runInNewContext(`${esc}\n${inline}\ninlineMarkdown;`, { state: { selected: null, documents: [] } });
   assert.equal(render('<a id="catalog-l02-rules"></a>L02-RULES'), '<span id="catalog-l02-rules" class="md-anchor"></span>L02-RULES');
   assert.equal(render('<script>alert(1)</script>'), '&lt;script&gt;alert(1)&lt;/script&gt;');
   assert(render('<a id="bad" onclick="alert(1)"></a>').startsWith('&lt;a'));
   assert(render('<a id="bad/path"></a>').startsWith('&lt;a'));
 });
 
-test('catalog opens referenced documents in another window while keeping its section anchors local', () => {
+test('production specifications and the catalog open document and section links separately', () => {
   const app = read('app.js');
   const esc = app.split('\n').find(line => line.startsWith('const esc ='));
   const inline = app.slice(app.indexOf('function inlineMarkdown(value)'), app.indexOf('function renderMarkdown(raw'));
@@ -130,7 +130,51 @@ test('catalog opens referenced documents in another window while keeping its sec
     assert(html.includes('https://example.test/dead-signal-docs/?static#doc='), href);
     assert(html.includes('heading='), href);
   }
-  assert(!render('[分類](#catalog-group-4)').includes('target="_blank"'));
+  assert(render('[分類](#catalog-group-4)').includes('target="_blank"'));
   state.selected = { path: ACTS[4].specPath, folder: '10_製作規格' };
-  assert(!render('[其他幕](10-07_製作規格_第六幕.md#node-u2-spec)').includes('target="_blank"'));
+  assert(render('[其他幕](10-07_製作規格_第六幕.md#node-u2-spec)').includes('target="_blank"'));
+});
+
+test('all production acts retain complete URLs, isolated openers and exact collapsed targets', () => {
+  const app = read('app.js'), esc = app.split('\n').find(line => line.startsWith('const esc ='));
+  const inline = app.slice(app.indexOf('function inlineMarkdown(value)'), app.indexOf('function renderMarkdown(raw'));
+  const state = { selected: null, documents: [
+    ...ACTS.flatMap(a => [{ path: a.specPath, folder: '10_製作規格' }, { path: a.path, folder: '09_劇本' }]),
+    { path: APPENDIX, folder: '09_劇本' },
+    { path: ILLUSTRATION_CATALOG, folder: '10_製作規格' },
+  ] };
+  const render = runInNewContext(`${esc}\n${inline}\ninlineMarkdown;`, {
+    state, URL, URLSearchParams, location: { href: 'https://example.test/dead-signal-docs/?static#doc=old' },
+    imageAssetUrl: href => href.endsWith('.png') ? 'assets/example.png' : null,
+    documentDisplayTitle: value => value,
+  });
+  for (const current of state.documents.filter(d => d.folder === '10_製作規格')) {
+    state.selected = current;
+    for (const [href, target, heading] of [
+      ['#node-r18-images', current.path, 'node-r18-images'],
+      [ACTS[4].specPath.split('/').at(-1) + '#node-r18-pack', ACTS[4].specPath, 'node-r18-pack'],
+      ['../' + ACTS[4].path + '#node-r18-script', ACTS[4].path, 'node-r18-script'],
+      ['../' + APPENDIX + '#production-reading-contract', APPENDIX, 'production-reading-contract'],
+    ]) {
+      const html = render(`[參照](${href})`);
+      const url = new URL(html.match(/href="([^"]+)"/)[1].replaceAll('&amp;', '&'));
+      const destination = new URLSearchParams(url.hash.slice(1));
+      assert.equal(url.pathname, '/dead-signal-docs/');
+      assert.equal(url.search, '?static');
+      assert.equal(destination.get('doc'), target);
+      assert.equal(destination.get('heading'), heading);
+      assert(html.includes('target="_blank"'));
+      assert(html.includes('rel="noopener noreferrer"'));
+      assert(html.includes('另開新視窗或分頁'));
+    }
+    for (const href of ['../../assets/example.png', 'https://example.test/reference']) {
+      const html = render(`[參照](${href})`);
+      assert(html.includes('target="_blank"'));
+      assert(html.includes('rel="noopener noreferrer"'));
+    }
+  }
+  state.selected = state.documents.find(d => d.path === ACTS[4].path);
+  assert(!render('[本幕段落](#node-r18-script)').includes('target="_blank"'));
+  assert(!render(`[附錄](../${APPENDIX}#reading-load)`).includes('target="_blank"'));
+  assert(render(`[製作規格](../${ACTS[4].specPath}#node-r18-pack)`).includes('target="_blank"'));
 });

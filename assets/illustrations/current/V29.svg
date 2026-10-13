@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="734" viewBox="0 0 1200 734" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1036" viewBox="0 0 1200 1036" role="img" aria-labelledby="title desc" data-layout="visual-v1">
 <title id="title">V29｜上部收尾 · 完成當部，再留下懸念</title><desc id="desc">R22 在 B 棟 42F；先解通路並親自跨門，不是鎖門後突然中斷。 通路成果：手勢或手動路擇一完成：原踏面落位、扶手和釋放通路可辨。
 完成原門檻後，玩家主動跨門。；懸念：布結、空掌與向內的蛾：已看 R8 者可比對同一布結。
 手鬆開，掌心留空；灰蛾往內飛。
@@ -7,36 +7,41 @@
 保留未解關係，不用單張「未完待續」代替。；下部：承接或獨立開局：承接讀取上部合法成果。
 獨立開局依原基準狀態，不虛構上部選擇。
 兩路沿同一 R23 正式入口。</desc>
-<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
-<rect width="1200" height="734" fill="#0b1418"/>
+<defs><marker id="vis-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#79d8dc"/></marker><marker id="vis-arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#e6bc68"/></marker><marker id="vis-arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#ffa18b"/></marker><clipPath id="visual-v29-0"><rect width="510" height="244"/></clipPath><clipPath id="visual-v29-1"><rect width="510" height="244"/></clipPath><clipPath id="visual-v29-2"><rect width="510" height="244"/></clipPath><clipPath id="visual-v29-3"><rect width="510" height="244"/></clipPath></defs>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:22px;font-weight:700;fill:#edf1ef}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="1036" fill="#0b1418"/>
 <text class="title" x="32" y="52">V29｜上部收尾 · 完成當部，再留下懸念</text>
 <text class="subtitle" x="32" y="91">R22 在 B 棟 42F；先解通路並親自跨門，不是鎖門後突然中斷。</text>
-<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<g data-panel="1"><rect x="32" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="193" fill="#79d8dc">01 · 通路成果</text>
-<text class="panel-title" x="58" y="233">手勢或手動路擇一完成</text>
-<text class="body" x="58" y="276">原踏面落位、扶手和釋放通路可辨。</text>
-<text class="body" x="58" y="310">完成原門檻後，玩家主動跨門。</text></g>
-<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="panel-title" x="58" y="229">手勢或手動路擇一完成</text>
+<desc>原踏面落位、扶手和釋放通路可辨。
+完成原門檻後，玩家主動跨門。</desc>
+<g transform="translate(56 272)" clip-path="url(#visual-v29-0)"><g data-visual="V29" data-step="1"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="217" y="42" width="80" height="155" rx="2" fill="#0b1418" stroke="#a6cfa7" stroke-width="2"/><path d="M212 197V37h90v160" fill="none" stroke="#a6cfa7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M220 45l49.6 13v129l-49.6 10Z" fill="#2e4246" stroke="#a6cfa7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><ellipse cx="256.2" cy="135" rx="3" ry="3" fill="#e6bc68" stroke="#e6bc68" stroke-width="2"/><path d="M255 231V164" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="636" y="193" fill="#79d8dc">02 · 懸念</text>
-<text class="panel-title" x="636" y="233">布結、空掌與向內的蛾</text>
-<text class="body" x="636" y="276">已看 R8 者可比對同一布結。</text>
-<text class="body" x="636" y="310">手鬆開，掌心留空；灰蛾往內飛。</text>
-<text class="body" x="636" y="344">不提前揭露小花完整蛾形或離體答案。</text></g>
-<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
-<text class="phase" x="58" y="447" fill="#79d8dc">03 · 當部完成</text>
-<text class="panel-title" x="58" y="487">跨門保存 → 片尾</text>
-<text class="body" x="58" y="530">完成保存後才進上部片尾。</text>
-<text class="body" x="58" y="564">收束已完成的逃離校正區成果。</text>
-<text class="body" x="58" y="598">保留未解關係，不用單張「未完待續」代替。</text></g>
-<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
-<text class="phase" x="636" y="447" fill="#79d8dc">04 · 下部</text>
-<text class="panel-title" x="636" y="487">承接或獨立開局</text>
-<text class="body" x="636" y="530">承接讀取上部合法成果。</text>
-<text class="body" x="636" y="564">獨立開局依原基準狀態，不虛構上部選擇。</text>
-<text class="body" x="636" y="598">兩路沿同一 R23 正式入口。</text></g>
-<path d="M32 669H1168" stroke="#425155"/><text class="footer" x="32" y="703">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+<text class="panel-title" x="636" y="229">布結、空掌與向內的蛾</text>
+<desc>已看 R8 者可比對同一布結。
+手鬆開，掌心留空；灰蛾往內飛。
+不提前揭露小花完整蛾形或離體答案。</desc>
+<g transform="translate(634 272)" clip-path="url(#visual-v29-1)"><g data-visual="V29" data-step="2"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M139 194l89 -20 66 29 -103 21Z" fill="#cad3c5" stroke="#d1d8cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><g transform="translate(175 197) scale(0.55)"><path d="M-23 48L-30 20Q-32 11-26 13L-14 29L-17 -7Q-16 -17-10 -8L-5 20L-4 -18Q-1 -26 3 -17L6 19L12 -10Q17 -18 19 -9L17 22L25 7Q31 4 30 14L25 42L12 55" fill="#3c4140" stroke="#e6bc68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M-23 48L-27 67H13L13 55" fill="#344046" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g><path d="M227 175q-20 -29-31 -16q-8 18 30 23q21 -31 34 -21q10 19-33 22m0 -8v16" fill="#796b53" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g></g></g>
+<g data-panel="3"><rect x="32" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="561" width="5" height="385" fill="#79d8dc"/>
+<text class="phase" x="58" y="598" fill="#79d8dc">03 · 當部完成</text>
+<text class="panel-title" x="58" y="634">跨門保存 → 片尾</text>
+<desc>完成保存後才進上部片尾。
+收束已完成的逃離校正區成果。
+保留未解關係，不用單張「未完待續」代替。</desc>
+<g transform="translate(56 677)" clip-path="url(#visual-v29-2)"><g data-visual="V29" data-step="3"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="217" y="42" width="80" height="155" rx="2" fill="#0b1418" stroke="#a6cfa7" stroke-width="2"/><path d="M212 197V37h90v160" fill="none" stroke="#a6cfa7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M220 45l49.6 13v129l-49.6 10Z" fill="#2e4246" stroke="#a6cfa7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><ellipse cx="256.2" cy="135" rx="3" ry="3" fill="#e6bc68" stroke="#e6bc68" stroke-width="2"/><path d="M337 178l6 7 15 -19" fill="none" stroke="#a6cfa7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></g></g></g>
+<g data-panel="4"><rect x="610" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="561" width="5" height="385" fill="#79d8dc"/>
+<text class="phase" x="636" y="598" fill="#79d8dc">04 · 下部</text>
+<text class="panel-title" x="636" y="634">承接或獨立開局</text>
+<desc>承接讀取上部合法成果。
+獨立開局依原基準狀態，不虛構上部選擇。
+兩路沿同一 R23 正式入口。</desc>
+<g transform="translate(634 677)" clip-path="url(#visual-v29-3)"><g data-visual="V29" data-step="4"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M76 72h145v134H76ZM281 72h145v134H281" fill="#2c444c" stroke="#607a80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><rect x="85" y="80" width="125" height="15" rx="2" fill="#111c21" stroke="#b9d3cc" stroke-width="2"/><rect x="85" y="102" width="125" height="15" rx="2" fill="#111c21" stroke="#b9d3cc" stroke-width="2"/><rect x="85" y="124" width="125" height="15" rx="2" fill="#111c21" stroke="#b9d3cc" stroke-width="2"/><rect x="85" y="146" width="125" height="15" rx="2" fill="#111c21" stroke="#b9d3cc" stroke-width="2"/><rect x="85" y="168" width="125" height="15" rx="2" fill="#111c21" stroke="#b9d3cc" stroke-width="2"/><rect x="291" y="116" width="122" height="65" rx="2" fill="#576970" stroke="#e6bc68" stroke-width="2"/><ellipse cx="353" cy="148" rx="23" ry="23" fill="#111c21" stroke="#b9d3cc" stroke-width="2"/><path d="M285 103l17 21m-16 63l17 -20m116 -63l-17 21m16 63l-17 -20" fill="none" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><g transform="translate(329 203) scale(0.55)"><path d="M-22 48L-29 23Q-31 13-24 16L-12 30L-10 -24Q-6 -33-2 -22L1 15L10 7L19 11L28 20L26 40L13 55" fill="#3c4140" stroke="#e6bc68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M-23 48L-27 67H13L13 55" fill="#344046" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g><path d="M232 153H270" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
+<path d="M32 971H1168" stroke="#425155"/><text class="footer" x="32" y="1005">視覺製作示意 · 非遊戲介面或完成素材 · 完整條件與差分依逐房製作規格</text>
 </svg>

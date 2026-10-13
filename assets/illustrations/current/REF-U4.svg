@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="988" viewBox="0 0 1200 988" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1441" viewBox="0 0 1200 1441" role="img" aria-labelledby="title desc" data-layout="visual-v1">
 <title id="title">REF-U4｜U4 · 同址回返與三組實體地標</title><desc id="desc">B 棟 48F；確認鬼打牆不等於領域解除，真正去路在蓋下。 先看，再留記號：門框缺角＋焊疤＋單結布：缺角在門框邊，斜尖朝扶手。
 一長兩短焊疤，長疤最近立柱。
 單結在疤下，長破邊朝下，不是小花雙結。；玩家前移越檻：只一次回到同一鏡位：儲存已回返狀態，停用再次跨檻重播。
@@ -11,50 +11,57 @@
 內銷與服務扣到 U4b 才能操作，再接 U5。；概念與交圖：同鏡位差分，不新增來源：材質圖只定構圖與明暗；精確幾何依本圖和工單。
 暗處陰影不作新人物或死因證據。
 已比對成果保存，不用重跑回返。</desc>
-<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
-<rect width="1200" height="988" fill="#0b1418"/>
+<defs><marker id="vis-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#79d8dc"/></marker><marker id="vis-arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#e6bc68"/></marker><marker id="vis-arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#ffa18b"/></marker><clipPath id="visual-ref-u4-0"><rect width="510" height="244"/></clipPath><clipPath id="visual-ref-u4-1"><rect width="510" height="244"/></clipPath><clipPath id="visual-ref-u4-2"><rect width="510" height="244"/></clipPath><clipPath id="visual-ref-u4-3"><rect width="510" height="244"/></clipPath><clipPath id="visual-ref-u4-4"><rect width="510" height="244"/></clipPath><clipPath id="visual-ref-u4-5"><rect width="510" height="244"/></clipPath></defs>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:22px;font-weight:700;fill:#edf1ef}.footer{font-size:19px;fill:#aebec2}</style>
+<rect width="1200" height="1441" fill="#0b1418"/>
 <text class="title" x="32" y="52">REF-U4｜U4 · 同址回返與三組實體地標</text>
 <text class="subtitle" x="32" y="91">B 棟 48F；確認鬼打牆不等於領域解除，真正去路在蓋下。</text>
-<g data-panel="1"><rect x="32" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="32" y="156" width="5" height="234" fill="#79d8dc"/>
+<g data-panel="1"><rect x="32" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="193" fill="#79d8dc">01 · 先看，再留記號</text>
-<text class="panel-title" x="58" y="233">門框缺角＋焊疤＋單結布</text>
-<text class="body" x="58" y="276">缺角在門框邊，斜尖朝扶手。</text>
-<text class="body" x="58" y="310">一長兩短焊疤，長疤最近立柱。</text>
-<text class="body" x="58" y="344">單結在疤下，長破邊朝下，不是小花雙結。</text></g>
-<g data-panel="2"><rect x="610" y="156" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="610" y="156" width="5" height="234" fill="#79d8dc"/>
+<text class="panel-title" x="58" y="229">門框缺角＋焊疤＋單結布</text>
+<desc>缺角在門框邊，斜尖朝扶手。
+一長兩短焊疤，長疤最近立柱。
+單結在疤下，長破邊朝下，不是小花雙結。</desc>
+<g transform="translate(56 272)" clip-path="url(#visual-ref-u4-0)"><g data-visual="REF-U4" data-step="1"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="218" y="42" width="80" height="155" rx="2" fill="#0b1418" stroke="#b9d3cc" stroke-width="2"/><path d="M213 197V37h90v160" fill="none" stroke="#b9d3cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><rect x="223" y="47" width="70" height="145" rx="2" fill="#283b40" stroke="#b9d3cc" stroke-width="2"/><ellipse cx="284" cy="135" rx="3" ry="3" fill="#e6bc68" stroke="#e6bc68" stroke-width="2"/><path d="M214 44l11 12 -11 7" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M289 121H450M342 121V221M430 121V221" fill="none" stroke="#b9d3cc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M343 128l11 15m-14 -5l7 7m-3 -1l5 6" fill="none" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M354 141q-14 9 3 16l12 42 -16 16 2 -40 -10 -20q-8 -16 9 -14Z" fill="#8fa09c" stroke="#d1d8cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g></g></g>
+<g data-panel="2"><rect x="610" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="636" y="193" fill="#79d8dc">02 · 玩家前移越檻</text>
-<text class="panel-title" x="636" y="233">只一次回到同一鏡位</text>
-<text class="body" x="636" y="276">儲存已回返狀態，停用再次跨檻重播。</text>
-<text class="body" x="636" y="310">仍是原 48F，不傳到別層或另一棟。</text>
-<text class="body" x="636" y="344">留光標記可略過，不占必要解題條件。</text></g>
-<g data-panel="3"><rect x="32" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="32" y="410" width="5" height="234" fill="#79d8dc"/>
-<text class="phase" x="58" y="447" fill="#79d8dc">03 · 手動比對</text>
-<text class="panel-title" x="58" y="487">缺角／焊疤／布結與朝向</text>
-<text class="body" x="58" y="530">將三組前後觀察一一關聯；錯配可拆。</text>
-<text class="body" x="58" y="564">全對後自行確認，同址回返才成立。</text>
-<text class="body" x="58" y="598">門號相同不足以代替三組核對。</text></g>
-<g data-panel="4"><rect x="610" y="410" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="610" y="410" width="5" height="234" fill="#79d8dc"/>
-<text class="phase" x="636" y="447" fill="#79d8dc">04 · 確認之後</text>
-<text class="panel-title" x="636" y="487">門仍受影響，改循冷凝管</text>
-<text class="body" x="636" y="530">冷凝管在受影響門檻之前下彎。</text>
-<text class="body" x="636" y="564">找到檢修蓋，手動鬆外扣、掀蓋、固定支撐。</text>
-<text class="body" x="636" y="598">不把看清鬼打牆寫成驅散怨靈。</text></g>
-<g data-panel="5"><rect x="32" y="664" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="32" y="664" width="5" height="234" fill="#79d8dc"/>
-<text class="phase" x="58" y="701" fill="#79d8dc">05 · 另按下降</text>
-<text class="panel-title" x="58" y="741">U4b · 仍在 48F 蓋下</text>
-<text class="body" x="58" y="784">蓋已撐妥才可下降，不自動落入下一房。</text>
-<text class="body" x="58" y="818">內銷與服務扣到 U4b 才能操作，再接 U5。</text></g>
-<g data-panel="6"><rect x="610" y="664" width="558" height="234" rx="4" fill="#152025" stroke="#425155"/>
-<rect x="610" y="664" width="5" height="234" fill="#79d8dc"/>
-<text class="phase" x="636" y="701" fill="#79d8dc">06 · 概念與交圖</text>
-<text class="panel-title" x="636" y="741">同鏡位差分，不新增來源</text>
-<text class="body" x="636" y="784">材質圖只定構圖與明暗；精確幾何依本圖和工單。</text>
-<text class="body" x="636" y="818">暗處陰影不作新人物或死因證據。</text>
-<text class="body" x="636" y="852">已比對成果保存，不用重跑回返。</text></g>
-<path d="M32 923H1168" stroke="#425155"/><text class="footer" x="32" y="957">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+<text class="panel-title" x="636" y="229">只一次回到同一鏡位</text>
+<desc>儲存已回返狀態，停用再次跨檻重播。
+仍是原 48F，不傳到別層或另一棟。
+留光標記可略過，不占必要解題條件。</desc>
+<g transform="translate(634 272)" clip-path="url(#visual-ref-u4-1)"><g data-visual="REF-U4" data-step="2"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="218" y="42" width="80" height="155" rx="2" fill="#0b1418" stroke="#b9d3cc" stroke-width="2"/><path d="M213 197V37h90v160" fill="none" stroke="#b9d3cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><rect x="223" y="47" width="70" height="145" rx="2" fill="#283b40" stroke="#b9d3cc" stroke-width="2"/><ellipse cx="284" cy="135" rx="3" ry="3" fill="#e6bc68" stroke="#e6bc68" stroke-width="2"/><path d="M214 44l11 12 -11 7" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M289 121H450M342 121V221M430 121V221" fill="none" stroke="#b9d3cc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M343 128l11 15m-14 -5l7 7m-3 -1l5 6" fill="none" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M354 141q-14 9 3 16l12 42 -16 16 2 -40 -10 -20q-8 -16 9 -14Z" fill="#8fa09c" stroke="#d1d8cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M192 217Q98 208 138 162Q186 130 193 192" fill="none" stroke="#dcb3e4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)" stroke-dasharray="7 5"/></g></g></g>
+<g data-panel="3"><rect x="32" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="561" width="5" height="385" fill="#79d8dc"/>
+<text class="phase" x="58" y="598" fill="#79d8dc">03 · 手動比對</text>
+<text class="panel-title" x="58" y="634">缺角／焊疤／布結與朝向</text>
+<desc>將三組前後觀察一一關聯；錯配可拆。
+全對後自行確認，同址回返才成立。
+門號相同不足以代替三組核對。</desc>
+<g transform="translate(56 677)" clip-path="url(#visual-ref-u4-2)"><g data-visual="REF-U4" data-step="3"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="218" y="42" width="80" height="155" rx="2" fill="#0b1418" stroke="#b9d3cc" stroke-width="2"/><path d="M213 197V37h90v160" fill="none" stroke="#b9d3cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><rect x="223" y="47" width="70" height="145" rx="2" fill="#283b40" stroke="#b9d3cc" stroke-width="2"/><ellipse cx="284" cy="135" rx="3" ry="3" fill="#e6bc68" stroke="#e6bc68" stroke-width="2"/><path d="M214 44l11 12 -11 7" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M289 121H450M342 121V221M430 121V221" fill="none" stroke="#b9d3cc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M343 128l11 15m-14 -5l7 7m-3 -1l5 6" fill="none" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M354 141q-14 9 3 16l12 42 -16 16 2 -40 -10 -20q-8 -16 9 -14Z" fill="#8fa09c" stroke="#d1d8cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><ellipse cx="220" cy="56" rx="23" ry="23" fill="none" stroke="#e6bc68" stroke-width="2"/><ellipse cx="347" cy="140" rx="24" ry="24" fill="none" stroke="#e6bc68" stroke-width="2"/><ellipse cx="358" cy="186" rx="24" ry="24" fill="none" stroke="#e6bc68" stroke-width="2"/></g></g></g>
+<g data-panel="4"><rect x="610" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="561" width="5" height="385" fill="#79d8dc"/>
+<text class="phase" x="636" y="598" fill="#79d8dc">04 · 確認之後</text>
+<text class="panel-title" x="636" y="634">門仍受影響，改循冷凝管</text>
+<desc>冷凝管在受影響門檻之前下彎。
+找到檢修蓋，手動鬆外扣、掀蓋、固定支撐。
+不把看清鬼打牆寫成驅散怨靈。</desc>
+<g transform="translate(634 677)" clip-path="url(#visual-ref-u4-3)"><g data-visual="REF-U4" data-step="4"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="218" y="42" width="80" height="155" rx="2" fill="#0b1418" stroke="#b9d3cc" stroke-width="2"/><path d="M213 197V37h90v160" fill="none" stroke="#b9d3cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><rect x="223" y="47" width="70" height="145" rx="2" fill="#283b40" stroke="#b9d3cc" stroke-width="2"/><ellipse cx="284" cy="135" rx="3" ry="3" fill="#e6bc68" stroke="#e6bc68" stroke-width="2"/><path d="M214 44l11 12 -11 7" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M289 121H450M342 121V221M430 121V221" fill="none" stroke="#b9d3cc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M343 128l11 15m-14 -5l7 7m-3 -1l5 6" fill="none" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M354 141q-14 9 3 16l12 42 -16 16 2 -40 -10 -20q-8 -16 9 -14Z" fill="#8fa09c" stroke="#d1d8cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M414 63V182H386V217" fill="none" stroke="#79d8dc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 191V230" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
+<g data-panel="5"><rect x="32" y="966" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="32" y="966" width="5" height="385" fill="#79d8dc"/>
+<text class="phase" x="58" y="1003" fill="#79d8dc">05 · 另按下降</text>
+<text class="panel-title" x="58" y="1039">U4b · 仍在 48F 蓋下</text>
+<desc>蓋已撐妥才可下降，不自動落入下一房。
+內銷與服務扣到 U4b 才能操作，再接 U5。</desc>
+<g transform="translate(56 1082)" clip-path="url(#visual-ref-u4-4)"><g data-visual="REF-U4" data-step="5"><path d="M20 185L211 61L489 103L303 231Z" fill="#33484e" stroke="#607a80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M170 146L260 91L387 111L295 169Z" fill="#071015" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M260 91L258 15L388 36L387 111Z" fill="#485b5d" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M359 51L376 124" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M217 136L282 164" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
+<g data-panel="6"><rect x="610" y="966" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
+<rect x="610" y="966" width="5" height="385" fill="#79d8dc"/>
+<text class="phase" x="636" y="1003" fill="#79d8dc">06 · 概念與交圖</text>
+<text class="panel-title" x="636" y="1039">同鏡位差分，不新增來源</text>
+<desc>材質圖只定構圖與明暗；精確幾何依本圖和工單。
+暗處陰影不作新人物或死因證據。
+已比對成果保存，不用重跑回返。</desc>
+<g transform="translate(634 1082)" clip-path="url(#visual-ref-u4-5)"><g data-visual="REF-U4" data-step="6"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="218" y="42" width="80" height="155" rx="2" fill="#0b1418" stroke="#b9d3cc" stroke-width="2"/><path d="M213 197V37h90v160" fill="none" stroke="#b9d3cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><rect x="223" y="47" width="70" height="145" rx="2" fill="#283b40" stroke="#b9d3cc" stroke-width="2"/><ellipse cx="284" cy="135" rx="3" ry="3" fill="#e6bc68" stroke="#e6bc68" stroke-width="2"/><path d="M214 44l11 12 -11 7" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M289 121H450M342 121V221M430 121V221" fill="none" stroke="#b9d3cc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M343 128l11 15m-14 -5l7 7m-3 -1l5 6" fill="none" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M354 141q-14 9 3 16l12 42 -16 16 2 -40 -10 -20q-8 -16 9 -14Z" fill="#8fa09c" stroke="#d1d8cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><ellipse cx="220" cy="56" rx="23" ry="23" fill="none" stroke="#e6bc68" stroke-width="2"/><ellipse cx="347" cy="140" rx="24" ry="24" fill="none" stroke="#e6bc68" stroke-width="2"/><ellipse cx="358" cy="186" rx="24" ry="24" fill="none" stroke="#e6bc68" stroke-width="2"/></g></g></g>
+<path d="M32 1376H1168" stroke="#425155"/><text class="footer" x="32" y="1410">視覺製作示意 · 非遊戲介面或完成素材 · 完整條件與差分依逐房製作規格</text>
 </svg>

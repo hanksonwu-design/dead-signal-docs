@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BOARDS } from './illustration-boards.mjs';
 import { buildSupplementLayouts } from './illustration-supplement-layouts.mjs';
+import { renderPanelVisual, VISUAL_DEFS } from './illustration-visuals.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIR = path.join(ROOT, 'assets/illustrations/current');
@@ -27,31 +28,36 @@ const textLines = (lines, x, y, cls, lineHeight = 34) => lines.map((line, i) =>
   `<text class="${cls}" x="${x}" y="${y + i * lineHeight}">${esc(line)}</text>`).join('\n');
 
 export function renderBoard(id, board) {
-  const prepared = board.panels.map(([phase, title, body, color = 'puzzle']) => ({ phase, title, lines: wrap(body), color }));
+  const prepared = board.panels.map(([phase, title, body, color = 'puzzle']) => ({ phase, title: wrap(title, 21), body, color }));
   let y = 156;
   const content = [];
+  const clips = [];
   for (let i = 0; i < prepared.length; i += 2) {
     const pair = prepared.slice(i, i + 2);
-    const height = 132 + Math.max(...pair.map(panel => panel.lines.length)) * 34;
+    const height = 385;
     pair.forEach((panel, column) => {
       const x = 32 + column * 578, color = colors[panel.color];
+      const clip = `visual-${id.toLowerCase()}-${i + column}`;
+      clips.push(`<clipPath id="${clip}"><rect width="510" height="244"/></clipPath>`);
       content.push(`<g data-panel="${i + column + 1}"><rect x="${x}" y="${y}" width="558" height="${height}" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="${x}" y="${y}" width="5" height="${height}" fill="${color}"/>
 <text class="phase" x="${x + 26}" y="${y + 37}" fill="${color}">${String(i + column + 1).padStart(2, '0')} · ${esc(panel.phase.replace(/^\d{2} · /, ''))}</text>
-<text class="panel-title" x="${x + 26}" y="${y + 77}">${esc(panel.title)}</text>
-${textLines(panel.lines, x + 26, y + 120, 'body')}</g>`);
+${textLines(panel.title, x + 26, y + 73, 'panel-title', 27)}
+<desc>${esc(panel.body)}</desc>
+<g transform="translate(${x + 24} ${y + 116})" clip-path="url(#${clip})">${renderPanelVisual(id, i + column)}</g></g>`);
     });
     y += height + 20;
   }
   const height = y + 70;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="${height}" viewBox="0 0 1200 ${height}" role="img" aria-labelledby="title desc">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="${height}" viewBox="0 0 1200 ${height}" role="img" aria-labelledby="title desc" data-layout="visual-v1">
 <title id="title">${esc(id + '｜' + board.title)}</title><desc id="desc">${esc(board.subtitle + ' ' + board.panels.map(p => p.slice(0, 3).join('：')).join('；'))}</desc>
-<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:26px;font-weight:700;fill:#edf1ef}.body{font-size:22px;fill:#d1dcdf}.footer{font-size:19px;fill:#aebec2}</style>
+<defs>${VISUAL_DEFS}${clips.join('')}</defs>
+<style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:22px;font-weight:700;fill:#edf1ef}.footer{font-size:19px;fill:#aebec2}</style>
 <rect width="1200" height="${height}" fill="#0b1418"/>
 <text class="title" x="32" y="52">${esc(id + '｜' + board.title)}</text>
 ${textLines(wrap(board.subtitle, 49), 32, 91, 'subtitle', 29)}
 ${content.join('\n')}
-<path d="M32 ${y + 5}H1168" stroke="#425155"/><text class="footer" x="32" y="${y + 39}">現行規則圖解 · 非遊戲介面或完成素材 · 狀態、差分與計時仍依逐房製作規格</text>
+<path d="M32 ${y + 5}H1168" stroke="#425155"/><text class="footer" x="32" y="${y + 39}">視覺製作示意 · 非遊戲介面或完成素材 · 完整條件與差分依逐房製作規格</text>
 </svg>\n`;
 }
 
