@@ -195,3 +195,11 @@ kbd { color: var(--faint); border: 1px solid var(--line); border-radius: 3px; pa
   .reader-topbar { gap: 8px; }
   .reader-actions { gap: 8px; }
 }
+
+/* Collection inventory: meaning is also written in each label. */
+.reader-content .collectible-required { color: #ffb4a8; font-weight: 700; }
+.reader-content .collectible-functional { color: #8fd7cf; font-weight: 700; }
+@media print {
+  .reader-content .collectible-required { color: #a33220; }
+  .reader-content .collectible-functional { color: #086b63; }
+}
