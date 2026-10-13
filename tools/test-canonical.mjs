@@ -729,7 +729,7 @@ test('website separates reading and production categories and preserves old act 
   }
   assert.deepEqual(screenplays.map(doc => doc.path).sort(), [...READING_FILES].sort());
   const specs = documents.filter(doc => doc.folder === '10_製作規格' && !doc.archived);
-  assert.deepEqual(specs.map(doc => doc.path).sort(), [...ACTS.map(act => act.specPath), ILLUSTRATION_CATALOG].sort());
+  assert.deepEqual(specs.map(doc => doc.path).sort(), [...ACTS.map(act => act.specPath), ILLUSTRATION_CATALOG, '10_製作規格/10-12_製作規格_收集物與筆記本總表.md'].sort());
   assert.equal(specs[0].path, ILLUSTRATION_CATALOG);
   for (const spec of specs) {
     assert(spec.title.startsWith('製作規格'), spec.path);
