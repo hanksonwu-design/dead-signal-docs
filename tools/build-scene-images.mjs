@@ -235,7 +235,7 @@ export function buildSceneImageOutputs(graph, documents) {
       if (!spec.includes(accessLink)) spec = spec.replace(navLink, `${navLink} · ${accessLink}`);
       const accessArt = ['R33', 'POST'].includes(group.node)
         ? `**銜接交圖：**${main.id} 依[演出銜接表](#node-${slug}-access)對位，不新增門口或移動熱區。`
-        : `**出入口交圖：**${main.id} 須依場次與狀態畫出[本場景出入口表](#node-${slug}-access)的來路、去路及封閉位置；既有操作鏡位與接景圖沿同一地標對位。門端差分、移動熱區與遮擋另分層，依[出入口共用契約](../09_劇本/09-15_正式劇本_共用附錄.md#scene-access-contract)驗收。${group.node === 'P1' ? '終幕肉身銜接只用 R33-V02 等終幕鏡位，不畫入 P1-V01，也不在序幕生成可查看凹室。' : ''}`;
+        : `**出入口交圖：**${main.id} 對照[本場景出入口表](#node-${slug}-access)分層交付，沿同一地標對位；依[出入口共用契約](../09_劇本/09-15_正式劇本_共用附錄.md#scene-access-contract)驗收。${group.node === 'P1' ? '終幕肉身銜接只用 R33-V02 等終幕鏡位，不畫入 P1-V01，也不在序幕生成可查看凹室。' : ''}`;
       spec = section(spec, `access-art-${slug}`, accessArt, `<!-- scene-images:${group.node}:end -->`);
       const transitionRoutes = new Set(group.rows.filter(r => r.kind === '過渡場景').map(r => r.id.replace(/-\d+$/, '')));
       for (const route of transitionRoutes) {
@@ -271,7 +271,7 @@ export function buildSceneImageOutputs(graph, documents) {
       }
       if (children.length) {
         const childBody = `<a id="subscenes-${group.node.toLowerCase()}"></a>\n#### 次場景節點\n\n` +
-          `以下次場景歸 ${group.node} 管理，節點編號沿用主圖圖號。來去方向為原動線的正向排列；反向通行與單向限制依原門檻，不因列出來路就新增返回出口。\n\n` +
+          `歸 ${group.node} 管理，以下按正向動線排列；回訪依[原門檻](#node-${slug}-nav)。\n\n` +
           children.map(s => `<a id="${subsceneAnchor(s, 'spec')}"></a>\n##### ${s.id} · ${s.name}\n\n` +
             `**樓層：**${floorLabel(s.id)} · ${buildingLabel(s.id)}\n\n` +
             `**類型：**${s.type}。**正向連接：**${s.from} → **${s.id}** → ${s.to}。\n\n` +
@@ -279,14 +279,14 @@ export function buildSceneImageOutputs(graph, documents) {
             `**近看：**${s.details.length ? `${s.details.map(d => d.id).join('、')}；關閉回 ${s.id}。` : '不新增近看；沿原轉場操作，不新增等待或讀取門檻。'}\n\n` +
             `[正文](../${act.path}#${subsceneAnchor(s, 'script')}) · [圖像製作單](#node-${group.node.toLowerCase()}-images) · [原門檻與回訪](#node-${group.node.toLowerCase()}-nav) · ${s.source}`
           ).join('\n\n');
-        const placement = spec.includes('<!-- production:ordered:v1 -->')
+        const placement = /<!-- production:ordered:v[12] -->/.test(spec)
           ? `<!-- production-subscenes:${group.node.toLowerCase()} -->` : `<!-- scene-images:${group.node}:end -->`;
         spec = section(spec, `subscenes-${group.node.toLowerCase()}`, childBody, placement);
       }
     }
     const actRoutes = routes.filter(r => graph.nodes.find(n => n.id === r.edge.fromId).act === act.act);
     const routeBody = `<a id="image-routes-act-${act.act}"></a>\n\n### 本幕連線與接景圖\n\n` +
-      '每條既有動線均指定畫面。兩端接景使用已列主圖與門框遮擋，不另造中間房；出口接景必須交指定鏡位，動畫及低動態版共用定位。後果演出不開放探索。進入條件與回訪仍依原動線表，圖號不是通行權限。\n\n' +
+      '按遊玩順序列出主場景與接景圖；通行條件見各列動線，交付依[共用製作規則](../09_劇本/09-15_正式劇本_共用附錄.md#production-reading-contract)。\n\n' +
       table(['原動線', '接景方式', '畫面節點／圖號', '操作與條件來源'], actRoutes.map(({ edge, rows, mode }) => [
         `${edge.fromId}→${edge.toId}`, mode, rows.map(r => specLink(r, act.specPath)).join(' → '),
         `[門檻、方向與回訪](#node-${edge.fromId.toLowerCase()}-nav)`,

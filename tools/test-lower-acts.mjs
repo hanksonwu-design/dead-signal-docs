@@ -13,7 +13,7 @@ const documents = buildDocuments();
 test('three lower acts have 6, 5 and 4 nodes with stable order, identities and production ownership', () => {
   assert.equal(ACTS.length, 10);
   assert.equal(master.sources.length, 72);
-  assert.equal(master.blocks.size, 1564);
+  assert.equal(master.blocks.size, 1548);
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
   for (const [i, ids] of LOWER_ACT_NODES.entries()) {

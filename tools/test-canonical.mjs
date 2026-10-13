@@ -9,6 +9,7 @@ import { stripReadingInline } from './reading-scene-flow.mjs';
 
 const read = file => readFileSync(path.join(ROOT, file), 'utf8').replace(/\r\n/g, '\n');
 const master = parseMaster();
+const productionRules = master.documents.get(APPENDIX).split('<a id="production-reading-contract"></a>')[1];
 const graph = JSON.parse(read('scene_graph.json'));
 const model = JSON.parse(read('building/scene-data.json'));
 let passed = 0;
@@ -404,7 +405,8 @@ test('ten expanded routes preserve original departure gates and ordered scene co
     assert.equal(flow.subscenes.filter(s=>s.route===edge.id).length,views);
     assert(block('s-0810-23').includes(`| [${route}](../${ACTS[act].specPath}#${anchor}) | ${views} |`));
     const spec = master.documents.get(ACTS[act].specPath).split(`<a id="${anchor}"></a>`)[1].split('<a id=')[0];
-    assert(spec.includes('#transition-rules') || spec.includes('#ascent-route-contract'));
+    assert(spec.includes('#transition-rules') || spec.includes('#ascent-route-contract') ||
+      (master.documents.get(ACTS[act].specPath).includes('#production-reading-contract') && productionRules.includes('#transition-rules') && productionRules.includes('#ascent-route-contract')));
     viewCount += views;
   }
   assert.equal(viewCount, 30);
@@ -426,7 +428,8 @@ test('versioned route saves cannot skip exploration, destination operations or c
   assert(leaving.indexOf('選「繼續」，沿原流程存檔') < leaving.indexOf('<a id="transition-r11-r12-script">'));
   assert(leaving.includes('房內仍然一片昏暗，尚未傳出敲擊聲'));
   assert(block('s-0906-3').includes('鏡頭由同一門框進入修理舖'));
-  assert(block('s-0603-36').includes('尚未抵達目的房不得取得該房道具'));
+  assert(master.documents.get(ACTS[2].specPath).includes('#production-reading-contract'));
+  assert(productionRules.includes('尚未抵達目的房不先取得該房道具'));
   assert(block('s-0904-25').includes('住宅門回 R3，綠磁磚折角進 R4'));
   assert(block('s-0905-22').includes('可近看接縫與舊窗，也可直接跨過門檻進 R8'));
   assert(block('s-0907-3').includes('玩家停在入口安全站位'));
@@ -1166,7 +1169,8 @@ test('reading scripts keep implementation states in production documents', () =>
     assert(!states.test(master.documents.get(act.path)), act.name);
     for (const label of ['旗標', '原子操作', '相容鍵']) assert(!master.documents.get(act.path).includes(label), `${act.name}: ${label}`);
     const spec = master.documents.get(act.specPath);
-    for (const anchor of ['player-language', 'reading-load']) assert(spec.includes(`#${anchor}`), act.name);
+    for (const anchor of ['player-language', 'reading-load']) assert(spec.includes(`#${anchor}`) ||
+      (spec.includes('#production-reading-contract') && productionRules.includes(`#${anchor}`)), act.name);
   }
   const production = [master.documents.get(APPENDIX), ...ACTS.map(act => master.documents.get(act.specPath))].join('\n');
   for (const key of ['arc.ahsun.scope_confirmed', 'packet_checksum', 'authority_familiarity',

@@ -69,7 +69,9 @@ test('refreshed concepts reuse pending image IDs without claiming delivered anim
     for (const id of ids) {
       const block = text.split(`<a id="fig-${id}"></a>`)[1]?.split('<a id=')[0];
       assert(block, id);
-      includes(block, ['**造型版本：**', '仍待製作']);
+      assert(text.includes('#production-reading-contract'));
+      includes(appendix.split('<a id="production-reading-contract"></a>')[1],
+        ['完整角色結構', '前兆／命中／恢復', '低動態與拆件', '仍按各房工單交付', '#insect-dark-design']);
     }
   }
   includes(appendix, ['正式變形結構、角色拆件、攻防動態、低動態與音效仍待製作', '同一圖號內的分層和差分另估工時']);

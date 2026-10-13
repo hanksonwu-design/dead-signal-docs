@@ -1453,7 +1453,11 @@
     {
       "id": "R19",
       "image": "R19-V01",
-      "reference": null,
+      "reference": {
+        "url": "assets/illustrations/current/REF-GLASS.svg",
+        "label": "R19／R20：玻璃定位片與維護表",
+        "kind": "概念參考，非正式素材"
+      },
       "floor": {
         "description": "37F 隔音收容室，與 R20 共用同一片玻璃；側門短折角不跨樓層。 原光源、材質與證據焦點依本房規格。",
         "source": "10_製作規格/10-05_製作規格_第四幕.md",
@@ -1566,7 +1570,11 @@
     {
       "id": "R21",
       "image": "R21-V01",
-      "reference": null,
+      "reference": {
+        "url": "assets/illustrations/current/REF-PAPER.svg",
+        "label": "R21：三份處置單與折頁 F4",
+        "kind": "概念參考，非正式素材"
+      },
       "floor": {
         "description": "40F 紀律辦公室；來路經 39F 工作梯，第三層鎖定後由釋放口經 41F 候放平台上行至 42F R22。 原光源、材質與證據焦點依本房規格。",
         "source": "10_製作規格/10-05_製作規格_第四幕.md",
@@ -1676,7 +1684,11 @@
     {
       "id": "R23",
       "image": "R23-V01",
-      "reference": null,
+      "reference": {
+        "url": "assets/illustrations/current/REF-VERSIONS.svg",
+        "label": "R23／R24：三版本與四人查證",
+        "kind": "概念參考，非正式素材"
+      },
       "floor": {
         "description": "43F 深層檔案室；原 42F 梯段在此銜接，同層架道接 R24。既有空間材質、光源與生活物件沿本房原文。",
         "source": "10_製作規格/10-06_製作規格_第五幕.md",
@@ -2084,7 +2096,11 @@
     {
       "id": "U2",
       "image": "U2-V01",
-      "reference": null,
+      "reference": {
+        "url": "assets/illustrations/current/REF-LAUNDRY.svg",
+        "label": "U2／U2b：雙鏈與收架剖面",
+        "kind": "概念參考，非正式素材"
+      },
       "floor": {
         "description": "46F 洗衣內井；固定短階下到同層橋下低位 U2b，晾架及 U3 刻線仍是同一構件。 原光源、材質與證據焦點依本房規格。",
         "source": "10_製作規格/10-07_製作規格_第六幕.md",
@@ -2652,7 +2668,11 @@
     {
       "id": "R30",
       "image": "R30-V01",
-      "reference": null,
+      "reference": {
+        "url": "assets/07_視聽與介面/assets/current_design/brake_storyboard_current.png",
+        "label": "R30：沉降、三輛空車與手動制動",
+        "kind": "概念參考，非正式素材"
+      },
       "floor": {
         "description": "49F 運送通道；原切口與固定維修籠都在本層。制動後經既有上行踏面至 50F R31，籠不升降、不載人跳層。 原光源、材質與證據焦點依本房規格。",
         "source": "10_製作規格/10-10_製作規格_第八幕.md",

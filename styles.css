@@ -129,6 +129,12 @@ kbd { color: var(--faint); border: 1px solid var(--line); border-radius: 3px; pa
 .reader-content pre code { color: #b9c5d3; background: transparent; padding: 0; white-space: pre; }
 .reader-content hr { border: 0; border-top: 1px solid var(--line); margin: 30px 0; }
 .md-table-wrap { overflow-x: auto; margin: 20px 0; border: 1px solid var(--line); }
+.reader-content .md-details { margin: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.reader-content .md-details > summary { padding: 12px 0; color: var(--accent); cursor: pointer; overflow-wrap: anywhere; }
+.reader-content .md-details > summary:hover { text-decoration: underline; }
+.reader-content .md-details > summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.reader-content .md-details-body { min-width: 0; padding-bottom: 8px; }
+.reader-content.production-spec .md-table-wrap table { min-width: 760px; }
 #illustration-catalog ~ .md-table-wrap table { min-width: 820px; }
 #illustration-catalog ~ .md-table-wrap td:first-child { white-space: nowrap; }
 .reader-content table { border-collapse: collapse; min-width: 100%; font-size: 12px; }

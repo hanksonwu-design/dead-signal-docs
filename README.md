@@ -15,6 +15,8 @@
 
 劇情只修改 `docs/09_劇本/09-03` 至 `09-10` 的對應幕別；逐房技術規格只修改 `docs/10_製作規格/` 的同幕文件；跨幕共用規格只修改 `09-15_正式劇本_共用附錄.md`。`09-14_全劇本與關卡整合稿.md` 沿用舊檔名，但現在只是總目錄，不存放重複正文。50 份分類文件是可重建的查閱副本；舊 06 文件與其餘退役 09 文件只保留轉介入口。不要在副本維護第二套正文，也不要手動改 `docs.json`、`scene_graph.json`、`scene-flow.json` 或 `building/data.js` 的衍生欄位。
 
+製作規格依進場、操作、圖解、製作細節、離場及次場景排列；技術狀態和圖像工單放在標準 Markdown `<details>` 區塊，讀者點圖號或驗收連結時自動展開。各房只留個別條件，重複提醒統一於[共用製作規則](docs/09_劇本/09-15_正式劇本_共用附錄.md#production-reading-contract)。維護時保留原錨點及來源區塊；以 `node tools/reorder-production-specs.mjs --check` 與 `node --test tools/test-production-reading.mjs` 驗證順序、收合和重建一致性。
+
 修改主稿後執行：
 
 ```powershell

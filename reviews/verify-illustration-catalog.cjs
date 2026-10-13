@@ -50,7 +50,7 @@ const pass = name => { checks.push(name); console.log(`PASS ${name}`); };
         const popupPromise = page.waitForEvent('popup');
         await link.click();
         const detail = await popupPromise;
-        await detail.waitForFunction(({ doc, heading }) => state.selected?.path === doc && document.getElementById(heading), { doc: r.source, heading: r.heading });
+        await detail.waitForFunction(({ doc, heading }) => typeof state !== 'undefined' && state.selected?.path === doc && document.getElementById(heading), { doc: r.source, heading: r.heading });
         assert.equal(await page.evaluate(() => location.hash), originalHash, 'catalog remains open at its original row');
         assert.equal(await detail.evaluate(() => window.opener), null, 'new window isolates opener');
         const image = detail.locator(`#readerContent img[src$="${encodeURIComponent(r.asset.split('/').at(-1))}"]`);
@@ -65,7 +65,7 @@ const pass = name => { checks.push(name); console.log(`PASS ${name}`); };
           const nextPopup = detail.waitForEvent('popup');
           await back.click();
           const popup = await nextPopup;
-          await popup.waitForFunction(({ doc, heading }) => state.selected?.path === doc && document.getElementById(heading), { doc: ILLUSTRATION_CATALOG, heading: rowHeading });
+          await popup.waitForFunction(({ doc, heading }) => typeof state !== 'undefined' && state.selected?.path === doc && document.getElementById(heading), { doc: ILLUSTRATION_CATALOG, heading: rowHeading });
           await popup.close();
         } else {
           await back.click();

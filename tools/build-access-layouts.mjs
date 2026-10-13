@@ -136,8 +136,7 @@ export function buildAccessLayouts(graph, documents) {
     const begin = `<!-- access-layout:${node.id}:begin -->`, end = `<!-- access-layout:${node.id}:end -->`;
     const body = `${begin}\n<a id="node-${slug}-access-layout"></a>\n##### 出入口配置草圖\n\n` +
       `![${node.id} 出入口配置草圖](../../${file})\n\n` +
-      `**構圖提案：**${layout.note} 各門端位置對應上表；數字只供製作辨識，不是玩家介面或解謎提示。\n\n` +
-      `門框、視線及熱區仍須灰盒驗收，依[共用契約](../09_劇本/09-15_正式劇本_共用附錄.md#scene-access-contract)，不計入遊戲圖像交付數。\n${end}`;
+      `**構圖提案：**${layout.note} 各門端位置對應上表；數字只供製作辨識，不是玩家介面或解謎提示。\n${end}`;
     if (spec.includes(begin)) {
       assert.equal(spec.split(begin).length, 2);
       const start = spec.indexOf(begin), stop = spec.indexOf(end, start);

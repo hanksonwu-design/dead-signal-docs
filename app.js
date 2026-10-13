@@ -218,6 +218,22 @@ function renderMarkdown(raw, lineOffset = 0) {
     const line = lines[i];
     if (code !== null) { if (/^\s*(?:```|~~~)/.test(line)) closeCode(); else code.push(line); i += 1; continue; }
     if (/^\s*(?:```|~~~)/.test(line)) { flushParagraph(); closeList(); closeTable(); code = []; i += 1; continue; }
+    // Only the plain disclosure syntax is supported, never arbitrary HTML attributes.
+    if (line === '<details>' && /^<summary>[^<>]+<\/summary>$/.test(lines[i + 1] || '')) {
+      let depth = 1, end = i + 2, fence = null;
+      for (; end < lines.length; end += 1) {
+        const token = lines[end].match(/^\s*(`{3,}|~{3,})/);
+        if (token) { if (!fence) fence = token[1][0]; else if (fence === token[1][0]) fence = null; continue; }
+        if (fence) continue;
+        if (lines[end] === '<details>') depth += 1;
+        if (lines[end] === '</details>' && --depth === 0) break;
+      }
+      if (depth === 0) {
+        flushParagraph(); closeList(); closeTable();
+        out.push(`<details class="md-details"><summary>${esc(lines[i + 1].slice(9, -10))}</summary><div class="md-details-body">${renderMarkdown(lines.slice(i + 2, end).join('\n'), lineOffset + i + 2)}</div></details>`);
+        i = end + 1; continue;
+      }
+    }
     const anchor = line.match(/^<a id="([A-Za-z0-9_-]+)"><\/a>$/);
     if (anchor) { flushParagraph(); closeList(); closeTable(); out.push(`<span id="${anchor[1]}" class="md-anchor"></span>`); i += 1; continue; }
     if (/^\s*<!--.*-->\s*$/.test(line)) { i += 1; continue; }
@@ -281,6 +297,7 @@ function openReader(path, updateHash = true, headingText = "") {
     return;
   }
   state.selected = doc;
+  $("readerContent").classList.toggle('production-spec', doc.folder === '10_製作規格' && doc.path !== '10_製作規格/10-11_製作規格_示意圖目錄.md');
   $("readerPath").textContent = `${doc.folderLabel} / ${documentDisplayTitle(doc.title)}`;
   // Front matter is useful metadata for cards and filters, but not part of the
   // reading flow. Keep the body clean while preserving support for plain .md.
@@ -298,7 +315,7 @@ function openReader(path, updateHash = true, headingText = "") {
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = heading.textContent;
-      button.addEventListener("click", () => { heading.tabIndex = -1; heading.focus({preventScroll: true}); heading.scrollIntoView({block: "start"}); });
+      button.addEventListener("click", () => revealReaderTarget(heading));
       nav.appendChild(button);
     });
     $("readerContent").prepend(nav);
@@ -329,7 +346,14 @@ function scrollReaderTo(headingText) {
   const anchor = document.getElementById(headingText);
   const title = documentDisplayTitle(headingText);
   const target = anchor && content.contains(anchor) ? anchor : [...content.querySelectorAll("h1,h2,h3,h4,h5,h6")].find(h => h.textContent === title || h.textContent.startsWith(title + " ") || h.textContent.startsWith(title + "：") || h.textContent.toLowerCase().replace(/[*`]/g, "").replace(/[^\p{L}\p{N}_\- ]/gu, "").replace(/ /g, "-") === title);
-  if (target) requestAnimationFrame(() => { target.tabIndex = -1; target.focus({preventScroll: true}); target.scrollIntoView({block: "start"}); });
+  if (target) revealReaderTarget(target);
+}
+
+function revealReaderTarget(target) {
+  for (let parent = target.parentElement; parent; parent = parent.parentElement) {
+    if (parent.tagName === 'DETAILS') parent.open = true;
+  }
+  requestAnimationFrame(() => { target.tabIndex = -1; target.focus({preventScroll: true}); target.scrollIntoView({block: 'start'}); });
 }
 
 function closeReader() {
