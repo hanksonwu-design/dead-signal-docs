@@ -1,8 +1,197 @@
 {
   "version": 1,
-  "updated": "2026-10-12",
+  "updated": "2026-10-13",
   "scope": "現行概念與規則圖解；正式圖像、動畫、音效與實機仍待製作驗收。",
   "figures": [
+    {
+      "id": "REF-SILENCER",
+      "asset": "assets/07_視聽與介面/assets/current_design/silencer_poses_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
+      "heading": "fig-ref-silencer",
+      "scope": "三格依序為原巡行的靜止、側耳與玻璃接縫薄片肩影。空衣領、完整衣物與水痕分流維持同一個輪廓；前景推車及門框為遮蔽材質參考，精確掩體順序見 REF-CALIBRATION。"
+    },
+    {
+      "id": "REF-CALIBRATION",
+      "asset": "assets/illustrations/current/REF-CALIBRATION.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
+      "heading": "fig-ref-calibration",
+      "scope": "俯視關係示意只校核 N0–N4、完整掩體復位及 R19 側門繞至 R20。房間比例與開門方向依原主圖、正文和工單；三房都在 B 棟 37F。"
+    },
+    {
+      "id": "REF-AHSUN",
+      "asset": "assets/07_視聽與介面/assets/current_design/ahsun_domain_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "fig-ref-ahsun",
+      "scope": "六格按左至右、由上而下，依序為入場、領域壓迫、凝視、單側節指、收手後對照與有效校驗後。第五格空椅只供安全凹位與手退出的構圖研究，不是阿尋提前消失；十一視窗數量、原文及兩側凹位按正式圖單校核。完整結構見共用 REF-DEFENSES。"
+    },
+    {
+      "id": "REF-ABIAO",
+      "asset": "assets/07_視聽與介面/assets/current_design/abiao_domain_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-06_製作規格_第五幕.md",
+      "heading": "fig-ref-abiao",
+      "scope": "六格依序為房景基準、主管台聚焦、壓掌、反肘牽柄、拒絕後仍在、抹除後空框。第一格是建築基準，不另增阿彪尚未出現的劇情階段；門閂差分、臂連接與兩側凹位依原圖單及 REF-DEFENSES，不把反肘畫成額外背臂。"
+    },
+    {
+      "id": "REF-ASCENT-A",
+      "asset": "assets/07_視聽與介面/assets/current_design/ascent_a_3_7_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-02_製作規格_第一幕.md",
+      "heading": "fig-ref-ascent-a",
+      "supplement": [
+        "assets/illustrations/current/REF-ASCENT-A.svg"
+      ],
+      "scope": "六格依序為 3F 晒衣排水台、4F 封門早餐攤、5F 斷橋水錶龕、6F 舊招牌背巷、7F 曬布工場外檐，以及既有踏板／夾扣近看。斷橋格取水錶與護欄材質，實際去路仍須畫出入樑窄梯；各層落點按下圖，不以概念中的長梯跳層。"
+    },
+    {
+      "id": "REF-ASCENT-A-UPPER",
+      "asset": "assets/07_視聽與介面/assets/current_design/ascent_a_9_14_current.png",
+      "kind": "current-concept",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "fig-ref-ascent-a-upper",
+      "supplement": [
+        "assets/illustrations/current/REF-ASCENT-A-UPPER.svg"
+      ],
+      "scope": "六格依序為 9F 熱水槽、10F 送衣空籃、12F 電錶走廊、13F 晾衣層、14F 候工道，以及原棘輪／止擋近看。11F 的 R6 是兩段路之間的主場景，先完成本房才續行；衣籃只清路、不乘人。"
+    },
+    {
+      "id": "REF-ASCENT-B",
+      "asset": "assets/07_視聽與介面/assets/current_design/ascent_b_16_22_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-03_製作規格_第二幕.md",
+      "heading": "fig-ref-ascent-b",
+      "supplement": [
+        "assets/illustrations/current/REF-ASCENT-B.svg"
+      ],
+      "scope": "八格依序為 16F 交換間、17F 水塔下廚房、18F 電線盤、19F 修鞋店後牆、20F 工具外間、21F 搬運井外圈、22F 跨棟橋，以及原鉤座／梯扣近看。21F 只跨同層窄溝；22F 橋面同層 B→A，再沿 A 棟短梯進 23F R12。"
+    },
+    {
+      "id": "REF-ASCENT-HIGH",
+      "asset": "assets/07_視聽與介面/assets/current_design/ascent_b_33_36_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "fig-ref-ascent-high",
+      "supplement": [
+        "assets/illustrations/current/REF-ASCENT-HIGH.svg"
+      ],
+      "scope": "四格依序為 C-02 外臺、貨箱隔間、同層橫移貨臺與包覆門楣。外側施工架只定材質；正式去路必須接原固定梯與檢修片，舊公共梯、封住宅門仍不可通行。"
+    },
+    {
+      "id": "REF-SUITES",
+      "asset": "assets/07_視聽與介面/assets/current_design/manager_suites_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-09_製作規格_第七幕.md",
+      "heading": "fig-ref-suites",
+      "scope": "八格依序為生活翼走廊、47-01 室／衛浴、47-02 室／衛浴、47-03 室／衛浴及原儲熱桶細節。房號、配房夾與原件文字另交清晰差分；47-01 的本人身分仍待 R31 選填回查，三室都無對外聯絡與離園權限。"
+    },
+    {
+      "id": "REF-MIRROR",
+      "asset": "assets/07_視聽與介面/assets/current_design/mirror_nine_current.png",
+      "kind": "current-concept",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "fig-ref-mirror",
+      "supplement": [
+        "assets/illustrations/current/REF-MIRROR.svg"
+      ],
+      "scope": "九格依序為 P0、R1、R8、R16、R17、R22、R25、R30、R31。旁觀構圖只方便比較實手與反射，正式遊戲仍用原第一人稱鏡位；R17 須站於桌前，末格只是黑平板反射研究，不能替代完整十二秒解凍或提前揭臉。服裝比例沿 CHAR，不把此圖另立為臉稿。"
+    },
+    {
+      "id": "REF-BRAKE",
+      "asset": "assets/07_視聽與介面/assets/current_design/brake_storyboard_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-10_製作規格_第八幕.md",
+      "heading": "fig-ref-brake",
+      "supplement": [
+        "assets/illustrations/current/REF-BRAKE.svg"
+      ],
+      "scope": "六格依序為安全查看、三空車、末車翻底、親手拉桿、棘爪扣妥與穿固定籠上梯。籠與推車導軌保持分離；第五格只定制動後的構圖，後梯沉降封閉、三度傾角及桿熱區須另交精確差分。粉塵鏡像不疊在點桿時刻。"
+    },
+    {
+      "id": "REF-THAW",
+      "asset": "assets/07_視聽與介面/assets/current_design/thaw_storyboard_current.png",
+      "kind": "current-concept",
+      "source": "docs/10_製作規格/10-10_製作規格_第八幕.md",
+      "heading": "fig-ref-thaw",
+      "supplement": [
+        "assets/illustrations/current/REF-THAW.svg"
+      ],
+      "scope": "八格沿原核可、離框、持續觀看、下滑、看空位與轉身的順序研究光影。右拇指按／滑、固定歷史鏡位與最後揭臉必須按下方時序圖交付；點陣姿態與手指不作動作驗收，黑平板不顯示未揭露內容。"
+    },
+    {
+      "id": "REF-BRIDGES",
+      "asset": "assets/illustrations/current/REF-BRIDGES.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-04_製作規格_第三幕.md",
+      "heading": "fig-ref-bridges",
+      "scope": "各列各自對應 R12→R14、R13→R14、R13→R15、R12→R15。樓層、棟別和次場景名稱由現行動線讀取；四條路不因排在同一張圖而互通。"
+    },
+    {
+      "id": "REF-U1",
+      "asset": "assets/illustrations/current/REF-U1.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-07_製作規格_第六幕.md",
+      "heading": "fig-ref-u1",
+      "scope": "圖解拆開旋轉對接、上封／橫回水槽／下續維修道，以及普通插栓。線形是連接示意，旋轉初態按原圖單；送件窄門維持獨立內閂，不混入三個端點。"
+    },
+    {
+      "id": "REF-LAUNDRY",
+      "asset": "assets/illustrations/current/REF-LAUNDRY.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-07_製作規格_第六幕.md",
+      "heading": "fig-ref-laundry",
+      "scope": "上層兩鏈與下層手輪是同一組晾架。試動、解煞扣與下短階先完成；兩段收架後才走側階上原橋，乾燥凹位不是出口，圖不增設第三條鏈或載人電梯。"
+    },
+    {
+      "id": "REF-GLASS",
+      "asset": "assets/illustrations/current/REF-GLASS.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
+      "heading": "fig-ref-glass",
+      "scope": "六格維護表完整保留 4／8／3／1／6／2；兩側均從不對稱缺口計格，長痕再短痕得 81。此為製作端答案對照，R19 玩家近看只顯痕跡，不能提前帶出 R20 的序位表。"
+    },
+    {
+      "id": "REF-PAPER",
+      "asset": "assets/illustrations/current/REF-PAPER.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
+      "heading": "fig-ref-paper",
+      "scope": "原個案識別、完整日期及連續筆勢由既有來源交稿；三單確認併入 E3-02。第三層提交與抽屜展紙取第四格 35 各自完成，不新增一題按圖折紙。"
+    },
+    {
+      "id": "REF-VERSIONS",
+      "asset": "assets/illustrations/current/REF-VERSIONS.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-06_製作規格_第五幕.md",
+      "heading": "fig-ref-versions",
+      "scope": "A／B／C 為同一人的原件版本，整組形成一份 E4-01。印章、塵點與偏移只示核對部位，不替換正式原件；四人仍逐人核對日期及轉任／撤號，再提交原第四層三格。"
+    },
+    {
+      "id": "REF-TIME",
+      "asset": "assets/illustrations/current/REF-TIME.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-06_製作規格_第五幕.md",
+      "heading": "fig-ref-time",
+      "scope": "歷史七分鐘、局部十一秒、獨立 48 小時日期頁各自核對。F5 尾碼 09 與 VERIFY_ONLY／未開啟同框，A→B→C 是後續現場關喇叭操作，不是輸入完整碼自動開門。"
+    },
+    {
+      "id": "REF-UPPER-END",
+      "asset": "assets/illustrations/current/REF-UPPER-END.svg",
+      "kind": "current-diagram",
+      "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
+      "heading": "fig-ref-upper-end",
+      "scope": "四次手勢與兩安全窗的 A／B 機構各自成立，再匯同一退栓與踏面鏡位。玩家自行走到安全踏台、跨門保存後才進片尾，下部 R23 另依原開局承接。"
+    },
+    {
+      "id": "REF-DEFENSES",
+      "asset": "assets/illustrations/current/REF-DEFENSES.svg",
+      "kind": "current-diagram",
+      "source": "docs/09_劇本/09-15_正式劇本_共用附錄.md",
+      "heading": "fig-ref-defenses",
+      "scope": "折線是結構關係示意，不是新增肢體或角色尺寸。阿尋仍同一雙手，阿彪仍同一臂接兩段反肘；兩人的凝視／敲擊、壓掌／牽柄採各自防禦，查證與門端條件維持。"
+    },
     {
       "id": "V02",
       "asset": "assets/illustrations/current/V02.svg",

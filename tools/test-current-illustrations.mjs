@@ -37,7 +37,7 @@ test('3D references do not silently keep retired illustration pixels', () => {
 });
 
 test('diagram files are reproducible and include accessible text and a pending-assets boundary', () => {
-  assert.equal(buildBoards().size, 29);
+  assert.equal(buildBoards().size, 46);
   for (const [id, svg] of buildBoards()) {
     assert.equal(read(`assets/illustrations/current/${id}.svg`), svg, id);
     assert(svg.includes('aria-labelledby="title desc"'), id);

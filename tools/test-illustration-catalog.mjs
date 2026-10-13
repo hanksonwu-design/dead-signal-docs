@@ -20,7 +20,8 @@ const catalog = outputs.get('docs/' + ILLUSTRATION_CATALOG);
 test('catalog covers every canonical illustration once, including supplements and access layouts', () => {
   const embedded = [...documents].flatMap(([file, text]) => [...text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)]
     .map(m => path.posix.normalize(path.posix.join('docs', path.posix.dirname(file), m[1]))));
-  assert.equal(records.length, 82);
+  assert.equal(records.length, 110);
+  assert(catalog.includes(`更新: ${manifest.updated}`));
   assert.equal(records.filter(r => r.layout).length, 13);
   assert.deepEqual(records.map(r => r.asset).sort(), embedded.sort());
   assert.equal(new Set(records.map(r => r.id)).size, records.length);
@@ -106,4 +107,30 @@ test('reader supports safe inline row anchors without allowing arbitrary HTML', 
   assert.equal(render('<script>alert(1)</script>'), '&lt;script&gt;alert(1)&lt;/script&gt;');
   assert(render('<a id="bad" onclick="alert(1)"></a>').startsWith('&lt;a'));
   assert(render('<a id="bad/path"></a>').startsWith('&lt;a'));
+});
+
+test('catalog opens referenced documents in another window while keeping its section anchors local', () => {
+  const app = read('app.js');
+  const esc = app.split('\n').find(line => line.startsWith('const esc ='));
+  const inline = app.slice(app.indexOf('function inlineMarkdown(value)'), app.indexOf('function renderMarkdown(raw'));
+  const state = { selected: { path: ILLUSTRATION_CATALOG, folder: '10_製作規格' }, documents: [
+    ...ACTS.map(a => ({ path: a.specPath, folder: '10_製作規格' })),
+    { path: APPENDIX, folder: '09_劇本' },
+  ] };
+  const render = runInNewContext(`${esc}\n${inline}\ninlineMarkdown;`, {
+    state, URL, URLSearchParams, location: { href: 'https://example.test/dead-signal-docs/?static#doc=old' },
+    imageAssetUrl: href => href.endsWith('.png') ? 'assets/example.png' : null,
+    documentDisplayTitle: value => value,
+  });
+  for (const href of ['10-05_製作規格_第四幕.md#illustration-note-ref-silencer', '../' + APPENDIX + '#illustration-note-ref-mirror', '10-07_製作規格_第六幕.md#node-u2-spec']) {
+    const html = render(`[參考](${href})`);
+    assert(html.includes('target="_blank"'), href);
+    assert(html.includes('rel="noopener noreferrer"'), href);
+    assert(html.includes('data-doc-window="true"'), href);
+    assert(html.includes('https://example.test/dead-signal-docs/?static#doc='), href);
+    assert(html.includes('heading='), href);
+  }
+  assert(!render('[分類](#catalog-group-4)').includes('target="_blank"'));
+  state.selected = { path: ACTS[4].specPath, folder: '10_製作規格' };
+  assert(!render('[其他幕](10-07_製作規格_第六幕.md#node-u2-spec)').includes('target="_blank"'));
 });

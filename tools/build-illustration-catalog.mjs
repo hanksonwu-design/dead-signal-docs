@@ -101,10 +101,10 @@ export function annotateIllustrations(documents, records) {
   return outputs;
 }
 
-export function renderCatalog(records) {
+export function renderCatalog(records, updated) {
   const groups = [...ACTS.map(a => ({ id: String(a.act), title: `${a.name} · ${a.subtitle}` })), { id: 'common', title: '跨幕共用' }];
   const lines = ['---', '文件: 製作規格 · 示意圖目錄', '狀態: 現行示意圖索引；正式素材仍待製作與驗收',
-    '更新: 2026-10-12', '摘要: 依幕別查閱全部示意圖、出入口草圖與補充規則圖；每張圖標示場景編號、樓層、用途及功能作用。', '---', '',
+    `更新: ${updated}`, '摘要: 依幕別查閱全部示意圖、出入口草圖與補充規則圖；每張圖標示場景編號、樓層、用途及功能作用。', '---', '',
     '# 製作規格：示意圖目錄', '', '<a id="illustration-catalog"></a>', '',
     `[遊戲劇本總目錄](${link(ILLUSTRATION_CATALOG, MASTER, 'book-specs')}) · [現行版本與製作狀態](${link(ILLUSTRATION_CATALOG, APPENDIX, 'illustration-refresh')})`, '',
     `共 **${records.length} 張**現行示意圖，包含 ${records.filter(r => r.layout).length} 張出入口配置草圖。同組概念圖與規則圖各列一筆；圖名連到原文件的該張圖與註記，原圖檔另列。場景編號可查本房製作規格，圖下可返回本目錄。`, '',
@@ -123,9 +123,10 @@ export function renderCatalog(records) {
 
 export function buildIllustrationCatalog() {
   const documents = new Map(CANONICAL_FILES.map(f => [f, read('docs/' + f)]));
-  const records = collectIllustrations(documents, JSON.parse(read('scene_graph.json')), JSON.parse(read('scene-flow.json')), JSON.parse(read('assets/illustrations/manifest.json')));
+  const manifest = JSON.parse(read('assets/illustrations/manifest.json'));
+  const records = collectIllustrations(documents, JSON.parse(read('scene_graph.json')), JSON.parse(read('scene-flow.json')), manifest);
   const outputs = new Map([...annotateIllustrations(documents, records)].map(([file, text]) => ['docs/' + file, text]));
-  outputs.set('docs/' + ILLUSTRATION_CATALOG, renderCatalog(records));
+  outputs.set('docs/' + ILLUSTRATION_CATALOG, renderCatalog(records, manifest.updated));
   return { records, outputs };
 }
 

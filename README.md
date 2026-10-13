@@ -38,7 +38,11 @@ npm --prefix building run build
 
 最新補圖與逐項適用性檢查見[示意圖第二輪檢查](reviews/2026-10-12-illustration-supplement.md)。電梯、鬼打牆、燈架／水箱、修復權限與現場聽覺的參考隨共用附錄或本房製作規格維護。
 
+第三輪[缺圖補充與驗證](reviews/2026-10-13-illustration-gaps.md)新增 11 張點陣概念及 17 張精確圖解，目錄共 110 張。逐層路線、機關剖面、玻璃格位、文件比對與演出時序維護於 `tools/illustration-supplement-layouts.mjs`，由既有圖解建置命令一起重建；點陣提示詞與採用紀錄見 `assets/illustrations/2026-10-13-gap-prompts.json`。概念生成不更改正式工單的待製狀態。
+
 [示意圖目錄](docs/10_製作規格/10-11_製作規格_示意圖目錄.md)依幕別列出全部現行圖像，連到原圖位置及場景規格。用途與功能作用維護於 `tools/illustration-details.mjs`；`build-illustration-catalog.mjs` 統一重建目錄與圖下註記，場景編號、樓棟及樓層由正式資料讀取。新增圖像時須補對應說明；出入口草圖註記自動建立，既有圖像與正式工單不重複計數。`node tools/build-illustration-catalog.mjs --check` 與 `node --test tools/test-illustration-catalog.mjs` 檢查完整覆蓋、來源連結及重建穩定性。
+
+目錄的圖名、原圖檔、場景規格及跨文件參照另開視窗或分頁，保留原目錄位置；目錄內分類錨點維持原頁跳轉。新視窗保留目前部署路徑與查閱參數，連到該張圖的精確錨點。
 
 場景主圖、過渡鏡位、物件近看及文件頁只在各幕製作規格的 `scene-images` 表格維護；既有 H／B 熱點與圖號的對應在同房 `hotspot-images` 表格維護。新增原熱點時也須補對圖，不能只在正文列出物件。`build-scene-images.mjs` 檢查原熱點覆蓋，並同步劇本段落中的圖號連結、各幕連線圖號、場景道具總表與 `scene-flow.json`；加 `--check` 可檢查是否同步。一列可能含多頁或差分，並非已完成的一張圖。48 個宏觀流程節點與 56 條動線不等於全部畫面節點；新畫面不能默默新增關卡門檻。更動原動線時，先執行 `sync-canonical.mjs` 更新場景圖，再重建圖單與相關查表。
 

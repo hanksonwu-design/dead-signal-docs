@@ -172,7 +172,8 @@ function inlineMarkdown(value) {
       const docHref = target ? `#doc=${encodeURIComponent(target.path)}${heading ? `&amp;heading=${encodeURIComponent(heading)}` : ""}` : "";
       if (target && target.folder === "06_關卡規格") return `<a href="${docHref}" target="_blank" rel="noopener noreferrer" data-scene-source="true" aria-label="${label}（另開視窗或分頁）">${label}</a>`;
       if (target?.weeklyDetail) return `<a href="${docHref}" target="_blank" rel="noopener noreferrer" data-week-detail="true" aria-label="${label}（另開新視窗）">${label}</a>`;
-      if (state.selected?.folder === "09_劇本" && target?.folder === "10_製作規格") {
+      const fromIllustrationCatalog = state.selected?.path === "10_製作規格/10-11_製作規格_示意圖目錄.md";
+      if (target && (fromIllustrationCatalog || (state.selected?.folder === "09_劇本" && target.folder === "10_製作規格"))) {
         const page = new URL(location.href);
         page.hash = new URLSearchParams({ doc: target.path, heading }).toString();
         return `<a href="${esc(page.href)}" target="_blank" rel="noopener noreferrer" data-doc-window="true" data-doc-link="${esc(target.path)}" data-doc-heading="${esc(heading)}" title="${label}（另開新視窗或分頁）" aria-label="${label}（另開新視窗或分頁）">${label}</a>`;

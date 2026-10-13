@@ -3,6 +3,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BOARDS } from './illustration-boards.mjs';
+import { buildSupplementLayouts } from './illustration-supplement-layouts.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIR = path.join(ROOT, 'assets/illustrations/current');
@@ -70,7 +71,10 @@ export function worldBoard(flow) {
 
 export function buildBoards() {
   const flow = JSON.parse(readFileSync(path.join(ROOT, 'scene-flow.json'), 'utf8'));
-  return new Map(Object.entries({ ...BOARDS, WORLD: worldBoard(flow) }).map(([id, board]) => [id, renderBoard(id, board)]));
+  return new Map([
+    ...Object.entries({ ...BOARDS, WORLD: worldBoard(flow) }).map(([id, board]) => [id, renderBoard(id, board)]),
+    ...buildSupplementLayouts(flow),
+  ]);
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const check = process.argv.includes('--check');
