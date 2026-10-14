@@ -88,7 +88,7 @@ test('U3 mechanical alignment, not lighting or memory collection, controls the b
   assert(rows.filter(row => row['栓孔／止擋'] === '受擋').every(row => row['拉桿結果'] === '保持原位'));
   has(rows[2]['拉桿結果'], '手動拉完整行程後落橋');
   has(spec(6), '罩未固定時檢修燈不啟用', '招牌是另一支路', '不要求已讀 U2 局部或 LM-03',
-    '關燈後仍可在原全景操作可辨的拉桿', '僅在當前栓孔對正並完整拉下時',
+    '關燈後仍可在原全景操作可辨的拉桿', '必要校驗牌已實讀', '雙基準現物配對正確', '當前栓孔對正並完整拉下時',
     '調回錯位就恢復止擋', '拉桿取消則回起點、保留已設定栓位', '僅缺項回原初始位置',
     '不倒補回憶已讀', '送件門內閂仍另需手動開啟');
 });
@@ -194,7 +194,7 @@ test('U4 hatch table separates release, lifting and supported opening across can
   has(afterAnchor(spec(7), 'u4-hatch-state'), '回訪不自動落蓋或重扣', '抵達前取消或讀檔回 U4',
     '抵達後還原 U4b 安全位置', '缺少 `hatch_open` 視為未開蓋', '已有合法 U4b 通過紀錄',
     '退回 U4 最近的有效操作階段');
-  ordered(story(7), '順著滑槽鬆外扣', '直到支撐片卡入定位', '另點下降到 U4b');
+  ordered(story(7), '依銘片指出可退滑槽及支撐止點', '順槽鬆扣後', '直到支撐片卡入定位', '另點下降到 U4b');
 });
 
 test('U4 prototype cannot enter the lower platform after releasing only the clasp', () => {

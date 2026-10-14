@@ -44,8 +44,8 @@ test('the real return is a bounded Xiaohua domain, not a new ghost or a rewritte
 test('the reading order establishes landmarks before returning and a physical bypass afterward', () => {
   ordered(u4, '候梯口的機械低鳴', '內門的陰影', '先看兩個固定地標', '主動穿過原內門',
     '出發前的觀察與眼前局部並排', '確認後，筆記留下');
-  ordered(bypass, '初訪看得見的檢修蓋', '管線在內門之前', '鬆外扣', '安全上踏台');
-  ordered(u4b, '滴水終於拖出完整的回音', '沿受力方向抽出內銷', '閘後露出冷藏後場');
+  ordered(bypass, '初訪看得見的檢修蓋', '管線在內門之前', '依銘片指出可退滑槽及支撐止點', '順槽鬆扣後', '安全上踏台');
+  ordered(u4b, '滴水終於拖出完整的回音', '才親見銘片所說的內銷', '對照實物受力方向', '抽出內銷', '閘後露出冷藏後場');
   assert.doesNotMatch(u4 + bypass + u4b, /小花|雙結|巨翼|四鬚/);
   assert.equal(script.split(READING_PLACEMENTS['U4-V01-horror']).length - 1, 1);
   assert.equal(MAIN_MARKERS.U4.find(([category]) => category === 'horror')[2], '鬼打牆／門檻領域');

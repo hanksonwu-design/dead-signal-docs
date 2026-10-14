@@ -8,11 +8,11 @@ const read = file => readFileSync(new URL(`../${file}`, import.meta.url), 'utf8'
 const master = parseMaster();
 const inventory = read('docs/10_製作規格/10-12_製作規格_收集物與筆記本總表.md');
 const sourceRows = inventory.split('\n').filter(line => /^\| (?:<span[^>]*>)?OBS[4-9]-\d\d/.test(line));
-const expected = [3, 2, 4, 3, 3, 3].flatMap((count, index) =>
+const expected = [3, 2, 6, 5, 3, 3].flatMap((count, index) =>
   Array.from({ length: count }, (_, i) => `OBS${index + 4}-${String(i + 1).padStart(2, '0')}`));
-const fresh = ['OBS4-03', 'OBS5-01', 'OBS6-01', 'OBS6-02', 'OBS7-01'];
+const fresh = ['OBS4-03', 'OBS5-01', 'OBS6-01', 'OBS6-02', 'OBS6-05', 'OBS6-06', 'OBS7-01', 'OBS7-04', 'OBS7-05'];
 
-test('all 18 scene observations have one act-owned register row and a saved source in its production spec', () => {
+test('all 22 scene observations have one act-owned register row and a saved source in its production spec', () => {
   assert.deepEqual(sourceRows.map(row => row.match(/OBS[4-9]-\d\d/)[0]), expected);
   for (const id of expected) {
     const [, act, number] = id.match(/OBS(\d)-(\d\d)/);
@@ -31,14 +31,37 @@ test('the inventory keeps original evidence separate from the new observation na
     .filter(line => /^\| (?:<span[^>]*>)?(?:E\d-\d\d|M6-01|S6-0[123])/.test(line));
   assert.equal(evidence.length, 66);
   assert.equal(new Set(evidence.map(row => row.match(/(?:E\d-\d\d(?:-[A-D])?|M6-01|S6-0[123])/)[0])).size, 66);
-  assert.equal(sourceRows.length, 18);
+  assert.equal(sourceRows.length, 22);
   const side = inventory.split('## 六、')[1].split('## 七、')[0];
   assert.equal(new Set(side.match(/(?:CARE|MC|MU|PT|SG|KX|MR)-\d\d/g)).size, 19);
   const signals = inventory.split('## 四、')[1].split('## 五、')[0];
   assert.equal(new Set([...signals.matchAll(/^\| [^|]+\| (?:<span[^>]*>)?#(\d+)/gm)].map(m => m[1])).size, 15);
 });
 
-test('new optional observations never become navigation gates or additional scene nodes', () => {
+test('each added required clue has one physical source in story, spec and inventory and is visibly required', () => {
+  const added = [
+    [6, 'OBS6-05', '分租改管覆核籤'],
+    [6, 'OBS6-06', '檢修校驗牌'],
+    [7, 'OBS7-04', '檢修蓋解扣銘片'],
+    [7, 'OBS7-05', '封板與維修口配置銘片'],
+  ];
+  for (const [act, id, name] of added) {
+    const row = sourceRows.find(row => row.includes(id));
+    assert(row?.includes(`${id}〔必要〕</span>`), `${id}: required colour/label missing`);
+    assert(row.includes(name) && row.includes('| 新增原件 |'), `${id}: missing physical source`);
+    for (const file of [ACTS[act].path, ACTS[act].specPath]) {
+      assert(master.documents.get(file).includes(name), `${id}: source not authored in ${file}`);
+    }
+    const spec = master.documents.get(ACTS[act].specPath);
+    const key = id.toLowerCase().replace('-', '_');
+    assert(spec.includes(`observations.${key}.verified`), `${id}: read and verified states are not separated`);
+  }
+  // Existing required observations remain distinct from the four new short originals.
+  assert.equal(sourceRows.filter(row => row.includes('collectible-required')).length, 9);
+  assert(inventory.includes('9（已含於 OBS 欄）'), 'Required observations must not be added to the E/M/S total');
+});
+
+test('optional investigations stay separate while required checks use original mechanical completion states', () => {
   const graph = JSON.parse(read('scene_graph.json'));
   const derived = deriveGraph(master, structuredClone(graph));
   assert.equal(derived.nodes.length, 48);
@@ -66,7 +89,7 @@ test('physical source identifiers and dates agree between the reading script, sp
 
 test('shared rules retain source provenance, local objects, optionality and old-save compatibility', () => {
   const common = master.documents.get(APPENDIX).split('<a id="collection-investigation-contract"></a>')[1].split('<!-- import:s-0401-2:end -->')[0];
-  for (const phrase of ['5 組新增可讀原件', '紙、鉗、布袋、標籤及設備留現場', '舊檔缺這批觀察', '不能撤銷既有主線', '不補發來源', 'R32 既有安全觀察／防禦已完成的舊檔不新增前置']) {
+  for (const phrase of ['9 組新增可讀原件', '紙、鉗、布袋、標籤及設備留現場', '舊檔缺這批觀察', '不能撤銷既有主線', '不補發來源', 'R32 既有安全觀察／防禦已完成的舊檔不新增前置', '不能把尚不可見的內銷已讀當成開蓋前置', '後續房與結局仍讀原合法完成態']) {
     assert(common.includes(phrase), phrase);
   }
 });

@@ -182,7 +182,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   };
   // Act 3 spells out branch selection and return; U2b/U5 separate follow-up inputs.
   const counts = [[21, 17, 8], [75, 29, 19], [105, 34, 11], [144, 24, 10],
-    [57, 18, 12], [54, 15, 13], [26, 4, 2], [52, 7, 5], [29, 3, 4], [27, 12, 3]];
+    [57, 18, 12], [54, 15, 13], [26, 4, 2], [54, 7, 5], [29, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
