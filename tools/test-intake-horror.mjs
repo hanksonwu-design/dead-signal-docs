@@ -135,5 +135,5 @@ test('new visual layers reuse existing image orders and the novel reflects the s
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 557);
+  assert.equal(Object.keys(flow.images).length, 558);
 });

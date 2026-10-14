@@ -74,7 +74,7 @@ test('existing image orders and navigation counts cover the domain without new r
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 557);
+  assert.equal(Object.keys(flow.images).length, 558);
   const rows = spec.split('\n');
   has(rows.find(row => row.startsWith('| U4-V01 |')), '出發／越檻／同址回返', '低動態差分', '附方向字幕');
   has(rows.find(row => row.startsWith('| U4-C03 |')), '內門之前折入蓋底，初訪即有');

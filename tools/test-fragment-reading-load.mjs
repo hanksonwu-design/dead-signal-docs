@@ -37,7 +37,7 @@ test('R29 overlays preserve months, approval content and the original aftermath'
 });
 
 test('R30 visual comparison does not replace chronology, five-source placement or commitment', () => {
-  includes(block('s-0909-45'), ['同拍攝方向的震前／震後快照', '舊刻度、內側焊珠', '五個來源的位置仍由玩家親手安置', 'E3-07 隨有效前情']);
+  includes(block('s-0909-45'), ['同拍攝方向的震前／震後快照', '門外可見的施工位置', '原單施工附圖的內側標記', '五個來源的位置仍由玩家親手安置', 'E3-07 隨有效前情']);
   includes(block('s-0607-25'), ['不由焊珠形狀單獨推得封門日期', '五位置空白待玩家安置', '未確認原不可逆警示就不發 E5-06', '沉降及制動不因切換讀法提前觸發']);
 });
 

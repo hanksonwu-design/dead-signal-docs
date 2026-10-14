@@ -23,7 +23,7 @@ test('three optional interior views have art, local return paths and no new main
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(collection.rows.length, 557);
+  assert.equal(collection.rows.length, 558);
   assert.equal(collection.rows.filter(row => row.content.startsWith('房內次場景：')).length, 13);
   includes(spec(1), ['R1-V01 ↔ R1-V02', 'A 棟 1F', 'R5-V01 ↔ R5-V02', 'A 棟 8F', '不繞過衣架']);
   includes(spec(2), ['R8-V01 ↔ R8-V04', 'B 棟 15F', '各分岔仍從 V01 選擇']);

@@ -78,7 +78,7 @@ test('unlock, cancellation, open-door return, save migration and pre-brake lock 
 });
 
 test('two details and one return subscene are budgeted; diagrams are not shipped game art', () => {
-  assert.equal(images.rows.length, 557);
+  assert.equal(images.rows.length, 558);
   assert.equal(images.rows.filter(r => r.view).length, 153);
   const route = routes.find(r => r.edge.id === 'U3-U1-return');
   assert.equal(route.mode, '出口接景');

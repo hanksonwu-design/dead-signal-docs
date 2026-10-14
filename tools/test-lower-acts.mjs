@@ -34,7 +34,8 @@ test('three lower acts have 6, 5 and 4 nodes with stable order, identities and p
 test('website chapter order is narrative order despite stable historical filenames', () => {
   assert.deepEqual(documents.filter(d => d.folder === '09_劇本' && !d.archived).map(d => d.path),
     [...ACTS.map(a => a.path), MASTER, APPENDIX]);
-  assert.deepEqual(documents.filter(d => d.folder === '10_製作規格' && !d.archived).map(d => d.path), [ILLUSTRATION_CATALOG, ...ACTS.map(a => a.specPath)]);
+  assert.deepEqual(documents.filter(d => d.folder === '10_製作規格' && !d.archived).map(d => d.path),
+    [ILLUSTRATION_CATALOG, ...ACTS.map(a => a.specPath), '10_製作規格/10-12_製作規格_收集物與筆記本總表.md']);
 });
 
 test('legacy lower-act and finale bookmarks resolve without hijacking the new seventh act', () => {

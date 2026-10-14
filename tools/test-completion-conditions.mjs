@@ -63,7 +63,7 @@ test('all 26 later ascent interactions retain local completion notes and unchang
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 557);
+  assert.equal(Object.keys(flow.images).length, 558);
 });
 
 test('conditions preserve deferred evidence, alternative sources and optional activities', () => {

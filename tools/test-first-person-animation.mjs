@@ -110,7 +110,7 @@ test('all animation layers reuse current work orders and reader markers stay on 
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 557);
+  assert.equal(Object.keys(flow.images).length, 558);
 });
 
 test('R5 and R7 local animation preserves readable evidence, frozen history and playback completion', () => {

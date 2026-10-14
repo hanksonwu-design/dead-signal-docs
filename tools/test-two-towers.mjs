@@ -73,7 +73,8 @@ test('L1 requires the 30F landing and L2 has only its two real stops', () => {
   assert.deepEqual(l2.map(s => [s.floor.label, s.travel]), [
     ['47F', '電梯候梯'], ['47F → 48F', '電梯車廂'], ['48F', '電梯停靠'],
   ]);
-  assert([...l1, ...l2].every(s => s.play && s.details.length === 1 && s.building.entry === 'B'));
+  assert([...l1, ...l2].every(s => s.play && s.details.length === (s.id === 'T-R29-U4-02' ? 2 : 1) && s.building.entry === 'B'));
+  assert.deepEqual(l2[1].details, ['T-R29-U4-02-C01', 'T-R29-U4-02-C02']);
   assert(l1[3].play.action.includes('啟用柄') && l1[3].play.action.includes('扣緊兩端'));
   assert(l1[4].play.clue.includes('30F 踏板到位及啟用柄均成立'));
   assert(l2[1].play.clue.includes('沒有落地平台'));
