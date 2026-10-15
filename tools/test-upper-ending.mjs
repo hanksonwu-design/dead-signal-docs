@@ -91,3 +91,34 @@ test('work orders and split contract preserve a complete upper part without inve
   const chapter = novel.slice(novel.indexOf('## 第四幕'), novel.indexOf('## 第五幕'));
   includes(chapter, ['緊急鎖', '輪廓沒有低頭', '路是我打開的', '這次，等我一起走。', '我跨過門檻']);
 });
+
+test('the upper part announces a bounded goal and preserves the two original ways to achieve it', () => {
+  const entry = block(story(4), 's-0907-3');
+  includes(entry, ['校正前段', '紀律辦公室', '釋放接點']);
+  const contract = block(read(`docs/${APPENDIX}`), 's-0307-3');
+  includes(contract, ['upper-payoff-continuity-contract', '突破校正前段封鎖',
+    '不新增告示收集、已讀鍵、任務提交或離房條件', '不由看牌標亮 R21／R22',
+    '前三次不退栓，第四次才驗證憑據', '沒有節奏判定、第五拍或新增強制觀看秒數',
+    '下部仍會進入校正區深處']);
+  assert(!spec(4).includes('操作提示不直接寫出答案'), 'A complete operation sign cannot be hidden by stale artwork guidance');
+  const flow = JSON.parse(read('scene-flow.json'));
+  assert.equal(flow.nodes.length, 48);
+  assert.equal(flow.routes.length, 56);
+});
+
+test('R23 carries a present relationship question without inventing hearing, evidence or a new gate', () => {
+  const entry = block(story(5), 's-0908-5');
+  includes(entry, ['小花……我們是怎麼走散的？', '可一併略過', '不回放上部呼喚']);
+  assert(!entry.includes('這次，等我一起走。'), 'Skipping the upper scene must not invent a remembered line');
+  const production = spec(5);
+  includes(production, ['不新增已聽旗標', 'E3-02', 'E3-03', 'R23-D08']);
+  const contract = block(read(`docs/${APPENDIX}`), 's-0307-3');
+  includes(contract, ['回看可略過', '不增加確認、已讀要求或解鎖',
+    '不把小花加進三份原件的未記載欄位', '舊檔缺新換工觀察不補造原文',
+    'E4-01 仍靠 A／B／C 原核對成立']);
+  const investigation = block(story(5), 's-0908-8');
+  assert(investigation.indexOf('正式確認後取得 E4-01') < investigation.indexOf('[R23-D08]'),
+    'The relationship recall stays after the original version check');
+  const sources = read('docs/10_製作規格/10-12_製作規格_收集物與筆記本總表.md');
+  includes(sources, ['不另發 OBS、證據或背包物', '共 27 組']);
+});

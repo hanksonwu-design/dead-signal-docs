@@ -2,7 +2,7 @@
 <title id="title">V24｜R20～R22 · 校正與同一出口</title><desc id="desc">來源錄音與現場威脅分開；兩種釋放方法通往同一扇門。 R20 · 37F：三條歷史聲軌：固定台反覆查來源與日期。
 歷史播放器不是怨靈距離圖。
 現場聽覺帶另框，安全查聽停攻。；R20 · 同一玻璃：兩側位置可對照：玻璃、門框與現有通路維持原址。
-輪廓依當前原觸發顯示，不另開房間。；R21 · 40F：折痕排程與實景核對：依既有上行次場景抵達，查必要欄位。
+輪廓依當前原觸發顯示，不另開房間。；R21 · 40F：折痕排程與實景核對：依既有上行次場景抵達，查小花換工申請與處理回覆，分清退回處置與維持原組，併原三單核對。
 折痕、頁面和實景對位，不憑空補來源。；R22 · 42F：手勢路／手動路 → 同一出口：擇一完成原釋放機構，踏面與扶手落位。
 玩家自行跨門，才保存上部完成。
 深入下一區，不是全樓解封或已逃出。</desc>
@@ -30,7 +30,7 @@
 <rect x="32" y="561" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="598" fill="#79d8dc">03 · R21 · 40F</text>
 <text class="panel-title" x="58" y="634">折痕排程與實景核對</text>
-<desc>依既有上行次場景抵達，查必要欄位。
+<desc>依既有上行次場景抵達，查小花換工申請與處理回覆，分清退回處置與維持原組，併原三單核對。
 折痕、頁面和實景對位，不憑空補來源。</desc>
 <g transform="translate(56 677)" clip-path="url(#visual-v24-2)"><g data-visual="V24" data-step="3"><path d="M36 37h110l20 20v146h-130ZM146 37v20h20" fill="#d1d8cc" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M48 72h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M48 89h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M48 106h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M48 123h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M190 28h110l20 20v155h-130ZM300 28v20h20" fill="#d1d8cc" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M202 63h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M202 80h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M202 97h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M202 114h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M344 37h110l20 20v146h-130ZM454 37v20h20" fill="#d1d8cc" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M356 72h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M356 89h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M356 106h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M356 123h102" fill="none" stroke="#7c918e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M167 124H186" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/><path d="M320 124H340" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/><g transform="translate(428 201) scale(0.55)"><path d="M-22 48L-29 23Q-31 13-24 16L-12 30L-10 -24Q-6 -33-2 -22L1 15L10 7L19 11L28 20L26 40L13 55" fill="#3c4140" stroke="#e6bc68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M-23 48L-27 67H13L13 55" fill="#344046" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g></g></g></g>
 <g data-panel="4"><rect x="610" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>

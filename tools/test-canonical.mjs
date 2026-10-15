@@ -182,7 +182,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   };
   // Act 3 spells out branch selection and return; U2b/U5 separate follow-up inputs.
   const counts = [[21, 17, 8], [75, 29, 19], [105, 34, 11], [144, 24, 10],
-    [57, 18, 12], [54, 15, 13], [26, 4, 2], [54, 7, 5], [29, 3, 4], [27, 12, 3]];
+    [59, 18, 13], [54, 15, 13], [28, 4, 2], [57, 7, 5], [29, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
@@ -207,7 +207,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     ['s-0905-43', '操作／介面點選', '在同一通電終端選「比對兩版名單」'],
     ['s-0907-9', '操作／場景長按', '玩家按住慢關門'],
     ['s-0907-9', '操作／按鍵長按', '玩家依提示屏息'],
-    ['s-0907-40', '系統／狀態更新', '第四次正確輸入後'],
+    ['s-0907-40', '系統／狀態更新', '前三次門控仍維持「釋放指令：待提交」。第四次正確輸入後'],
     ['s-0908-32', '操作／介面拖曳', '把三帶對到同一時間尺'],
     ['s-0909-32', '操作／介面點選', '玩家已展開批次，再主動點「可移交」'],
     ['s-0909-18', '操作／物件操作', '回到作業位，利用六秒窗口轉輪 1.5 秒'],

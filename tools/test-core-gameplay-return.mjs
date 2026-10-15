@@ -13,7 +13,7 @@ const includes = (text, phrases) => {
 
 test('R27 physical comparison keeps the original chains and a local-only fallback', () => {
   includes(story(6), ['牌上的原編號與價目', '沒有親見片段時', '本地來源摘錄同樣能逐項核對']);
-  includes(spec(6), ['不新增第四份必要來源', '三鏈原子合併', '未見不生成縮圖', '獨立下部開局及零選填路線', '不替代日期、尾碼及轉運章判定']);
+  includes(spec(6), ['不新增第四鏈', '三鏈原子合併', '未見不生成縮圖', '獨立下部開局及零選填路線', '不替代日期、尾碼及轉運章判定']);
 });
 
 test('U3 close inspection and the photo remain optional and do not multiply rewards', () => {

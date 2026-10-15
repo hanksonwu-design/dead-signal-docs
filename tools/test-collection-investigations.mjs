@@ -8,9 +8,9 @@ const read = file => readFileSync(new URL(`../${file}`, import.meta.url), 'utf8'
 const master = parseMaster();
 const inventory = read('docs/10_製作規格/10-12_製作規格_收集物與筆記本總表.md');
 const sourceRows = inventory.split('\n').filter(line => /^\| (?:<span[^>]*>)?OBS[4-9]-\d\d/.test(line));
-const expected = [3, 2, 6, 5, 3, 3].flatMap((count, index) =>
+const expected = [4, 2, 8, 7, 3, 3].flatMap((count, index) =>
   Array.from({ length: count }, (_, i) => `OBS${index + 4}-${String(i + 1).padStart(2, '0')}`));
-const fresh = ['OBS4-03', 'OBS5-01', 'OBS6-01', 'OBS6-02', 'OBS6-05', 'OBS6-06', 'OBS7-01', 'OBS7-04', 'OBS7-05'];
+const fresh = ['OBS4-03', 'OBS4-04', 'OBS5-01', 'OBS6-01', 'OBS6-02', 'OBS6-05', 'OBS6-06', 'OBS6-07', 'OBS6-08', 'OBS7-01', 'OBS7-04', 'OBS7-05', 'OBS7-06', 'OBS7-07'];
 const requiredFieldClues = [
   { act: 6, id: 'OBS6-05', name: '分租改管覆核籤', alias: '覆核籤', node: 'U1', focus: 'U1-C02' },
   { act: 6, id: 'OBS6-06', name: '檢修校驗牌', alias: '校驗牌', node: 'U3', focus: 'U3-C03' },
@@ -25,7 +25,7 @@ const topicSource = id => {
 const tableRows = text => text.split('\n').filter(line => line.startsWith('| '));
 const roomRows = (text, node) => tableRows(text).filter(row => row.split('|')[1].replaceAll('`', '').trim() === node);
 
-test('all 22 scene observations have one act-owned register row and a saved source in its production spec', () => {
+test('all 27 scene observations have one act-owned register row and a saved source in its production spec', () => {
   assert.deepEqual(sourceRows.map(row => row.match(/OBS[4-9]-\d\d/)[0]), expected);
   for (const id of expected) {
     const [, act, number] = id.match(/OBS(\d)-(\d\d)/);
@@ -44,7 +44,7 @@ test('the inventory keeps original evidence separate from the new observation na
     .filter(line => /^\| (?:<span[^>]*>)?(?:E\d-\d\d|M6-01|S6-0[123])/.test(line));
   assert.equal(evidence.length, 66);
   assert.equal(new Set(evidence.map(row => row.match(/(?:E\d-\d\d(?:-[A-D])?|M6-01|S6-0[123])/)[0])).size, 66);
-  assert.equal(sourceRows.length, 22);
+  assert.equal(sourceRows.length, 27);
   const side = inventory.split('## 六、')[1].split('## 七、')[0];
   assert.equal(new Set(side.match(/(?:CARE|MC|MU|PT|SG|KX|MR)-\d\d/g)).size, 19);
   const signals = inventory.split('## 四、')[1].split('## 五、')[0];
@@ -64,8 +64,8 @@ test('each added required clue has one physical source in story, spec and invent
     assert(spec.includes(`observations.${key}.verified`), `${id}: read and verified states are not separated`);
   }
   // Existing required observations remain distinct from the four new short originals.
-  assert.equal(sourceRows.filter(row => row.includes('collectible-required')).length, 9);
-  assert(inventory.includes('9（已含於 OBS 欄）'), 'Required observations must not be added to the E/M/S total');
+  assert.equal(sourceRows.filter(row => row.includes('collectible-required')).length, 12);
+  assert(inventory.includes('12（已含於 OBS 欄）'), 'Required observations must not be added to the E/M/S total');
 });
 
 test('optional investigations stay separate while required checks use original mechanical completion states', () => {
@@ -96,7 +96,7 @@ test('physical source identifiers and dates agree between the reading script, sp
 
 test('shared rules retain source provenance, local objects, optionality and old-save compatibility', () => {
   const common = master.documents.get(APPENDIX).split('<a id="collection-investigation-contract"></a>')[1].split('<!-- import:s-0401-2:end -->')[0];
-  for (const phrase of ['9 組新增可讀原件', '紙、鉗、布袋、標籤及設備留現場', '舊檔缺這批觀察', '不能撤銷既有主線', '不補發來源', 'R32 既有安全觀察／防禦已完成的舊檔不新增前置', '不能把尚不可見的內銷已讀當成開蓋前置', '後續房與結局仍讀原合法完成態']) {
+  for (const phrase of ['14 組含新增可讀原件', '紙、鉗、布袋、標籤及設備留現場', '舊檔缺這批觀察', '不能撤銷既有主線', '不補發來源', 'R32 既有安全觀察／防禦已完成的舊檔不新增前置', '不能把尚不可見的內銷已讀當成開蓋前置', '後續房與結局仍讀原合法完成態']) {
     assert(common.includes(phrase), phrase);
   }
 });
@@ -187,7 +187,7 @@ test('shared level and Godot sources preserve immediate reads, atomic verificati
 
 test('UI source states and required or functional document colours have usable styles', () => {
   const ui = topicSource('0703');
-  assert.match(ui, /22 組 OBS.*9 件新增原件.*13 組既有物件/);
+  assert.match(ui, /27 組 OBS.*14 組含新增原件.*13 組既有物件/);
   assert.match(ui, /已讀摘記.*待核對.*已核對/);
   assert.match(ui, /未讀.*來源未查|來源未查.*未讀/);
   const css = read('styles.css');
@@ -213,7 +213,7 @@ test('art workloads and the physical-object register keep the four originals loc
       assert(row.includes(label === '08-10 workload' ? clue.focus : clue.node), `${clue.id}: ${label} source location missing`);
     }
   }
-  assert.match(art, /22 組 OBS.*9 件新增可讀原件.*13 組/);
+  assert.match(art, /27 組 OBS.*14 組含新增可讀原件.*13 組/);
   assert.match(art, /子項、文字及程式工時.*另列/);
   assert.match(art, /待排工.*實機驗收/);
   const observationSummary = physicalInventory.split(/\r?\n\r?\n/).find(paragraph => /^第四幕至終幕另有.*OBS/.test(paragraph));

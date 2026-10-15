@@ -33,7 +33,7 @@ test('R23 crops retain field identity and preserve all three versions with one c
 
 test('R29 overlays preserve months, approval content and the original aftermath', () => {
   includes(block('s-0909-26'), ['透明疊片', '月份、頁碼與來源', '2025 年 8、9、10 月', '提價', '原頁影像、頁碼、筆勢']);
-  includes(block('s-0607-8'), ['三個月份與提價資訊', '低動態改用靜態並排', '先保存 E5-02', '二十秒責任停頓後']);
+  includes(block('s-0607-8'), ['三個月份、返家陳述、評級與提價資訊', '低動態改用靜態並排', '先同次保存 E5-02', '二十秒責任停頓後']);
 });
 
 test('R30 visual comparison does not replace chronology, five-source placement or commitment', () => {
