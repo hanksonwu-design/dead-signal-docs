@@ -57,7 +57,9 @@ test('the domain preserves safe comparison, the old save contract and accessible
     '零穩定度、零留光槽、靜音、低動態', '不增加隨機出口', '恐慌扣罰或波形追逐',
     '布標不是驅邪道具', 'service_latch_open 只開機械通路');
   has(u4, '沒有留光時，原本三個地標的比對照常完成');
-  has(appendix, 'U4 回返、U4b 插銷不追逐');
+  const route = block(appendix, 's-0409-3').split(/\r?\n/).find(row => row.startsWith('| 第七幕 U4'));
+  assert.match(route, /U4[^|\n]*回返[^|\n]*U4b[^|\n]*內銷不追逐/);
+  assert.match(route, /U5[^|\n]*配置銘片[^|\n]*開戰前安全核對[^|\n]*自行確認才開始/);
 });
 
 test('the optional U4 recollection follows S6 confirmation without adding a fourth source', () => {

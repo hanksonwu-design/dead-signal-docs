@@ -56,7 +56,7 @@ test('refreshed diagrams preserve three captives, distinct defenses and fixed-la
   assert.match(body('V10'), /退到來向的另一側/);
   assert.match(body('V12'), /主動鬆柄、停止操作/);
   assert.match(body('V38'), /停戰不等於解封/);
-  assert.match(body('V30'), /固定燈架，不是手提燈/);
+  assert.match(body('V30'), /(?:燈架固定留場|固定燈架.{0,20}(?:不拿走|不是手提燈))/);
   assert.match(body('CORE'), /不是所有前進都需要三格鎖定/);
 });
 
@@ -78,7 +78,7 @@ test('supplemental routes keep stops, floors and manual actions distinct', () =>
   assert.match(body('REF-LIFT'), /47F／48F/);
   assert.match(body('REF-LIFT'), /兩端卡妥/);
   assert.match(body('REF-U4'), /一長兩短焊疤/);
-  assert.match(body('REF-U4'), /門仍受影響/);
+  assert.match(body('REF-U4'), /(?:門仍受影響|領域仍在|領域未解除)/);
   assert.match(body('REF-U4'), /仍在 48F 蓋下/);
   assert.match(body('L07'), /U4 → U4b → U5/);
   assert.match(body('L07'), /U6 → U6b → R30/);
@@ -91,7 +91,7 @@ test('mechanism and ending guides preserve independent prerequisites', () => {
   assert.match(body('REF-R12'), /雙短線門禁線 → 右座/);
   assert.match(body('REF-R12'), /長線設備線 → 左座/);
   assert.match(body('REF-R12'), /待權限核驗/);
-  assert.match(body('REF-MECHANISM'), /遮光葉開／閉 × 內／中／外/);
+  assert.match(body('REF-MECHANISM'), /遮光葉開／閉 × (?:燈框)?內／中／外/);
   assert.match(body('REF-MECHANISM'), /3／0／3 → 2／2／2/);
   assert.match(body('REF-MECHANISM'), /平水不自動扣栓/);
   assert.match(body('V25'), /R26 → R25 → M1/);

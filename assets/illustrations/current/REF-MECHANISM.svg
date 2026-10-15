@@ -1,9 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1441" viewBox="0 0 1200 1441" role="img" aria-labelledby="title desc" data-layout="visual-v1">
-<title id="title">REF-MECHANISM｜U3／U6 · 光學與水箱操作拆解</title><desc id="desc">前兩列是不同房間的機關，不是同一個巨型裝置；光照與平水不代替手動固定。 U3 · B 棟 46F：斷電裝完整窄口罩：寬口、裂口、窄口三件依端型與卡榫辨識。
-完整窄口罩雙卡榫貼齊，固定燈架不拿走。；U3 · 六種燈架組合：遮光葉開／閉 × 內／中／外：先遮招牌眩光，閉遮光葉、燈框置中。
-此組合看清兩條原刻線，不移動刻線。
-關燈基準另交，不靠顏色猜答案。；U3 · 機械提交：橋栓對位 → 拉桿全程：偏二／偏一／對齊各交差分。
-孔露出後仍須親手拉桿，橋才落下。
+<title id="title">REF-MECHANISM｜U3／U6 · 光學與水箱操作拆解</title><desc id="desc">不同房間的操作摘要；U3 修燈前後皆可讀牌，拉桿前須讀、核齊備。牌文依本房規格，U6 平水仍須固定。 U3 · B 棟 46F：斷電配罩；校驗牌可前後讀：固定座正面凸緣的檢修校驗牌在配罩／調燈前後皆可安全實讀，未開檢修燈亦可看清；原件不列正確燈角。
+寬口、裂口、窄口三件依端型與卡榫辨識。
+斷電後裝完整窄口罩、貼齊雙卡榫，固定燈架不拿走；完整拉桿前須實讀並核雙記。；U3 · 六種燈架組合：照清雙記 → 核固定座與動栓：遮光葉開／閉 × 燈框內／中／外；先遮招牌眩光，閉葉、置中才照清兩條原刻線。
+將牌示固定座與動栓肩對回現物；試移時只有動栓記號改位，光線不移動刻線。
+關燈基準另交，灰階仍能分辨兩個基準。；U3 · 機械提交：橋栓對位 → 拉桿全程：牌文實讀與雙基準現物配對後，仍須核當前橋栓對位、親手拉足行程才落橋。
+偏二／偏一／對齊各交差分；只讀牌、兩記可見或只配對都不完成。
 完成後關燈不重設橋；捷徑另按原退栓。；U6 · B 棟 49F：三槽守恆：3／0／3 → 2／2／2：左右各移一格到中央，順序任選，總量六。
 舊出水口封帽，乾龍頭不是補水來源。
 倒影或廢管驚擾不改真實水量。；U6 · 安全下降：手動關閥 → 固定保養梯：重新開閥須再平水、關閥，不可直接走踏面。
@@ -14,28 +15,29 @@
 <style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:22px;font-weight:700;fill:#edf1ef}.footer{font-size:19px;fill:#aebec2}</style>
 <rect width="1200" height="1441" fill="#0b1418"/>
 <text class="title" x="32" y="52">REF-MECHANISM｜U3／U6 · 光學與水箱操作拆解</text>
-<text class="subtitle" x="32" y="91">前兩列是不同房間的機關，不是同一個巨型裝置；光照與平水不代替手動固定。</text>
+<text class="subtitle" x="32" y="91">不同房間的操作摘要；U3 修燈前後皆可讀牌，拉桿前須讀、核齊備。牌文依本房規格，U6 平水仍須固定。</text>
 <g data-panel="1"><rect x="32" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="193" fill="#79d8dc">01 · U3 · B 棟 46F</text>
-<text class="panel-title" x="58" y="229">斷電裝完整窄口罩</text>
-<desc>寬口、裂口、窄口三件依端型與卡榫辨識。
-完整窄口罩雙卡榫貼齊，固定燈架不拿走。</desc>
+<text class="panel-title" x="58" y="229">斷電配罩；校驗牌可前後讀</text>
+<desc>固定座正面凸緣的檢修校驗牌在配罩／調燈前後皆可安全實讀，未開檢修燈亦可看清；原件不列正確燈角。
+寬口、裂口、窄口三件依端型與卡榫辨識。
+斷電後裝完整窄口罩、貼齊雙卡榫，固定燈架不拿走；完整拉桿前須實讀並核雙記。</desc>
 <g transform="translate(56 272)" clip-path="url(#visual-ref-mechanism-0)"><g data-visual="REF-MECHANISM" data-step="1"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M95 224V68M68 224H124" fill="none" stroke="#607a80" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" /><path d="M68 72l56 -17v49l-56 -18Z" fill="#4a595b" stroke="#607a80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M390 110V194M403 110V194M354 194H455" fill="none" stroke="#607a80" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><rect x="367" y="133" width="64" height="25" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M384 136v19" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M432 189v-40l19 -10" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M176 167l35 -29 25 45 -43 14ZM245 158l30 -15 23 41 -38 7ZM315 152l23 -11 17 39 -26 10Z" fill="#516769" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g></g></g>
 <g data-panel="2"><rect x="610" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="610" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="636" y="193" fill="#79d8dc">02 · U3 · 六種燈架組合</text>
-<text class="panel-title" x="636" y="229">遮光葉開／閉 × 內／中／外</text>
-<desc>先遮招牌眩光，閉遮光葉、燈框置中。
-此組合看清兩條原刻線，不移動刻線。
-關燈基準另交，不靠顏色猜答案。</desc>
+<text class="panel-title" x="636" y="229">照清雙記 → 核固定座與動栓</text>
+<desc>遮光葉開／閉 × 燈框內／中／外；先遮招牌眩光，閉葉、置中才照清兩條原刻線。
+將牌示固定座與動栓肩對回現物；試移時只有動栓記號改位，光線不移動刻線。
+關燈基準另交，灰階仍能分辨兩個基準。</desc>
 <g transform="translate(634 272)" clip-path="url(#visual-ref-mechanism-1)"><g data-visual="REF-MECHANISM" data-step="2"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M95 224V68M68 224H124" fill="none" stroke="#607a80" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" /><path d="M68 72l56 -17v49l-56 -18Z" fill="#4a595b" stroke="#607a80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M124 61L416 112L416 180L124 100Z" fill="#e6bc6819" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M390 110V194M403 110V194M354 194H455" fill="none" stroke="#607a80" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><rect x="367" y="133" width="64" height="25" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M384 136v19" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M432 189v-40l19 -10" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /></g></g></g>
 <g data-panel="3"><rect x="32" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="561" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="598" fill="#79d8dc">03 · U3 · 機械提交</text>
 <text class="panel-title" x="58" y="634">橋栓對位 → 拉桿全程</text>
-<desc>偏二／偏一／對齊各交差分。
-孔露出後仍須親手拉桿，橋才落下。
+<desc>牌文實讀與雙基準現物配對後，仍須核當前橋栓對位、親手拉足行程才落橋。
+偏二／偏一／對齊各交差分；只讀牌、兩記可見或只配對都不完成。
 完成後關燈不重設橋；捷徑另按原退栓。</desc>
 <g transform="translate(56 677)" clip-path="url(#visual-ref-mechanism-2)"><g data-visual="REF-MECHANISM" data-step="3"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M95 224V68M68 224H124" fill="none" stroke="#607a80" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" /><path d="M68 72l56 -17v49l-56 -18Z" fill="#4a595b" stroke="#607a80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M124 61L416 112L416 180L124 100Z" fill="#e6bc6819" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M390 110V194M403 110V194M354 194H455" fill="none" stroke="#607a80" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><rect x="367" y="133" width="64" height="25" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M403 136v19" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M432 189v-40l19 -10" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><g transform="translate(450 193) scale(0.55)"><path d="M-22 48L-29 23Q-31 13-24 16L-12 30L-10 -24Q-6 -33-2 -22L1 15L10 7L19 11L28 20L26 40L13 55" fill="#3c4140" stroke="#e6bc68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M-23 48L-27 67H13L13 55" fill="#344046" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g><path d="M445 155V183" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
 <g data-panel="4"><rect x="610" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>

@@ -1,43 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1441" viewBox="0 0 1200 1441" role="img" aria-labelledby="title desc" data-layout="visual-v1">
-<title id="title">L10｜生活夾層 · 六個操作面板</title><desc id="desc">各房原機構的摘要，不是六房直接相通；實際串接仍依場景與流程。 U1 · B 棟 46F：三片管圖 → 服務門插栓：旋轉管圖核對焊封上支管、住戶橫支管、下彎接頭。
-排除死路、確認路線後，仍須手動退栓。；U3 · B 棟 46F：固定燈架 → 橋栓 → 拉桿：斷電裝窄口罩，遮眩光、閉遮光葉、燈框置中。
-看清雙刻線，對齊橋栓後親手拉桿落橋。；U4 · B 棟 48F：一次回返 → 三組地標比對：核對門框缺角、扶手焊疤、單結斷邊布。
-確認同址後領域仍在，沿冷凝管找檢修蓋。；U4b · 48F 蓋下：掀蓋固定後，另按下降：U4 先鬆外扣、掀蓋並固定支撐。
-下降到 U4b 才能操作內銷與服務扣。；U6 · B 棟 49F：三槽 3／0／3 → 2／2／2：左右各移一格水到中槽，總量六格。
+<title id="title">L10｜生活夾層 · 六個操作面板</title><desc id="desc">各房操作摘要；必要原件與現物核對依本房時點接入機械提交，逐字內容依規格。六房串接依正式動線。 U1 · B 棟 46F：先讀覆核籤 → 核形刻 → 退栓：移收件架後實讀圖框背側分租改管覆核籤，再旋轉三片管圖。
+核上支封止、住戶支單橫刻與井側雙凹口短節，對回現場端點；門號改動不代表管路改動。
+排除死路、確認路線後，仍須手動退服務門插栓。；U3 · B 棟 46F：讀牌核雙記 → 手動落橋：固定座正面檢修校驗牌可在配罩／調燈前後安全實讀，牌文不給正確燈角。
+斷電裝窄口罩，遮眩光、閉遮光葉、燈框置中，照清兩條刻線。
+完整拉桿前須已實讀、將牌示固定座／動栓肩對回現物；一記固定、一記隨栓移，當前對齊後親手拉足行程落橋。；U4 · B 棟 48F：三地標核回返 → 讀片核外扣：核對門框缺角、扶手焊疤、單結斷邊布，確認一次同址回返，領域仍在。
+沿冷凝管找檢修蓋，實讀檢修蓋解扣銘片，核外扣滑槽與支撐止點；蓋下內銷先留待查。
+銘片不作第四個回返地標，也不要求再走一圈。；U4b · 48F 蓋下：蓋撐妥後下降 → 親查內銷：U4 依銘片核對上半段後，手動鬆外扣、掀蓋並固定支撐，再另按下降。
+到 U4b 才實查內銷與拉力片，依方向抽銷、打開服務柵門，確認固定落腳處再自行通往 U5。
+上層開蓋不代開下方服務閘，未下降不記內銷實見。；U6 · B 棟 49F：三槽 3／0／3 → 2／2／2：左右各移一格水到中槽，總量六格。
 親手關閥後，沿固定保養梯下降。；U6b · 49F 蓋下：核水平泡 → 手動止回栓：不踩尚未固定的活動踏面。
 確認水平、手動扣栓，固定後才接 R30。</desc>
 <defs><marker id="vis-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#79d8dc"/></marker><marker id="vis-arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#e6bc68"/></marker><marker id="vis-arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#ffa18b"/></marker><clipPath id="visual-l10-0"><rect width="510" height="244"/></clipPath><clipPath id="visual-l10-1"><rect width="510" height="244"/></clipPath><clipPath id="visual-l10-2"><rect width="510" height="244"/></clipPath><clipPath id="visual-l10-3"><rect width="510" height="244"/></clipPath><clipPath id="visual-l10-4"><rect width="510" height="244"/></clipPath><clipPath id="visual-l10-5"><rect width="510" height="244"/></clipPath></defs>
 <style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:22px;font-weight:700;fill:#edf1ef}.footer{font-size:19px;fill:#aebec2}</style>
 <rect width="1200" height="1441" fill="#0b1418"/>
 <text class="title" x="32" y="52">L10｜生活夾層 · 六個操作面板</text>
-<text class="subtitle" x="32" y="91">各房原機構的摘要，不是六房直接相通；實際串接仍依場景與流程。</text>
+<text class="subtitle" x="32" y="91">各房操作摘要；必要原件與現物核對依本房時點接入機械提交，逐字內容依規格。六房串接依正式動線。</text>
 <g data-panel="1"><rect x="32" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="193" fill="#79d8dc">01 · U1 · B 棟 46F</text>
-<text class="panel-title" x="58" y="229">三片管圖 → 服務門插栓</text>
-<desc>旋轉管圖核對焊封上支管、住戶橫支管、下彎接頭。
-排除死路、確認路線後，仍須手動退栓。</desc>
+<text class="panel-title" x="58" y="229">先讀覆核籤 → 核形刻 → 退栓</text>
+<desc>移收件架後實讀圖框背側分租改管覆核籤，再旋轉三片管圖。
+核上支封止、住戶支單橫刻與井側雙凹口短節，對回現場端點；門號改動不代表管路改動。
+排除死路、確認路線後，仍須手動退服務門插栓。</desc>
 <g transform="translate(56 272)" clip-path="url(#visual-l10-0)"><g data-visual="L10" data-step="1"><rect x="22" y="21" width="466" height="202" rx="2" fill="#23363c" stroke="#607a80" stroke-width="2"/><rect x="48" y="53" width="83" height="100" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M48 108h42V153" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M67 38q23 -20 43 0" fill="none" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><rect x="148" y="53" width="83" height="100" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M148 108h42V153" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M167 38q23 -20 43 0" fill="none" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><rect x="248" y="53" width="83" height="100" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M248 108h42V153" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M267 38q23 -20 43 0" fill="none" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><path d="M332 108h61v-52h47M393 108h47M393 108v73h47" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M434 45v22M434 101v16" fill="none" stroke="#ffa18b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /><path d="M394 178H456" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
 <g data-panel="2"><rect x="610" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="610" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="636" y="193" fill="#79d8dc">02 · U3 · B 棟 46F</text>
-<text class="panel-title" x="636" y="229">固定燈架 → 橋栓 → 拉桿</text>
-<desc>斷電裝窄口罩，遮眩光、閉遮光葉、燈框置中。
-看清雙刻線，對齊橋栓後親手拉桿落橋。</desc>
+<text class="panel-title" x="636" y="229">讀牌核雙記 → 手動落橋</text>
+<desc>固定座正面檢修校驗牌可在配罩／調燈前後安全實讀，牌文不給正確燈角。
+斷電裝窄口罩，遮眩光、閉遮光葉、燈框置中，照清兩條刻線。
+完整拉桿前須已實讀、將牌示固定座／動栓肩對回現物；一記固定、一記隨栓移，當前對齊後親手拉足行程落橋。</desc>
 <g transform="translate(634 272)" clip-path="url(#visual-l10-1)"><g data-visual="L10" data-step="2"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M95 224V68M68 224H124" fill="none" stroke="#607a80" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" /><path d="M68 72l56 -17v49l-56 -18Z" fill="#4a595b" stroke="#607a80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M124 61L416 112L416 180L124 100Z" fill="#e6bc6819" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M390 110V194M403 110V194M354 194H455" fill="none" stroke="#607a80" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><rect x="367" y="133" width="64" height="25" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M403 136v19" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M432 189v-40l19 -10" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><g transform="translate(450 193) scale(0.55)"><path d="M-22 48L-29 23Q-31 13-24 16L-12 30L-10 -24Q-6 -33-2 -22L1 15L10 7L19 11L28 20L26 40L13 55" fill="#3c4140" stroke="#e6bc68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M-23 48L-27 67H13L13 55" fill="#344046" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g><path d="M445 155V183" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
 <g data-panel="3"><rect x="32" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="561" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="598" fill="#79d8dc">03 · U4 · B 棟 48F</text>
-<text class="panel-title" x="58" y="634">一次回返 → 三組地標比對</text>
-<desc>核對門框缺角、扶手焊疤、單結斷邊布。
-確認同址後領域仍在，沿冷凝管找檢修蓋。</desc>
+<text class="panel-title" x="58" y="634">三地標核回返 → 讀片核外扣</text>
+<desc>核對門框缺角、扶手焊疤、單結斷邊布，確認一次同址回返，領域仍在。
+沿冷凝管找檢修蓋，實讀檢修蓋解扣銘片，核外扣滑槽與支撐止點；蓋下內銷先留待查。
+銘片不作第四個回返地標，也不要求再走一圈。</desc>
 <g transform="translate(56 677)" clip-path="url(#visual-l10-2)"><g data-visual="L10" data-step="3"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="218" y="42" width="80" height="155" rx="2" fill="#0b1418" stroke="#b9d3cc" stroke-width="2"/><path d="M213 197V37h90v160" fill="none" stroke="#b9d3cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><rect x="223" y="47" width="70" height="145" rx="2" fill="#283b40" stroke="#b9d3cc" stroke-width="2"/><ellipse cx="284" cy="135" rx="3" ry="3" fill="#e6bc68" stroke="#e6bc68" stroke-width="2"/><path d="M214 44l11 12 -11 7" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M289 121H450M342 121V221M430 121V221" fill="none" stroke="#b9d3cc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M343 128l11 15m-14 -5l7 7m-3 -1l5 6" fill="none" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M354 141q-14 9 3 16l12 42 -16 16 2 -40 -10 -20q-8 -16 9 -14Z" fill="#8fa09c" stroke="#d1d8cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><ellipse cx="220" cy="56" rx="23" ry="23" fill="none" stroke="#e6bc68" stroke-width="2"/><ellipse cx="347" cy="140" rx="24" ry="24" fill="none" stroke="#e6bc68" stroke-width="2"/><ellipse cx="358" cy="186" rx="24" ry="24" fill="none" stroke="#e6bc68" stroke-width="2"/></g></g></g>
 <g data-panel="4"><rect x="610" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="610" y="561" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="636" y="598" fill="#79d8dc">04 · U4b · 48F 蓋下</text>
-<text class="panel-title" x="636" y="634">掀蓋固定後，另按下降</text>
-<desc>U4 先鬆外扣、掀蓋並固定支撐。
-下降到 U4b 才能操作內銷與服務扣。</desc>
+<text class="panel-title" x="636" y="634">蓋撐妥後下降 → 親查內銷</text>
+<desc>U4 依銘片核對上半段後，手動鬆外扣、掀蓋並固定支撐，再另按下降。
+到 U4b 才實查內銷與拉力片，依方向抽銷、打開服務柵門，確認固定落腳處再自行通往 U5。
+上層開蓋不代開下方服務閘，未下降不記內銷實見。</desc>
 <g transform="translate(634 677)" clip-path="url(#visual-l10-3)"><g data-visual="L10" data-step="4"><path d="M20 185L211 61L489 103L303 231Z" fill="#33484e" stroke="#607a80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M170 146L260 91L387 111L295 169Z" fill="#071015" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M217 130L281 141M230 152L294 161M247 176L307 183" fill="none" stroke="#79d8dc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M333 136l44 15v42M358 151h32v11h-32" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><g transform="translate(394 165) scale(0.6)"><path d="M-22 48L-29 23Q-31 13-24 16L-12 30L-10 -24Q-6 -33-2 -22L1 15L10 7L19 11L28 20L26 40L13 55" fill="#3c4140" stroke="#e6bc68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M-23 48L-27 67H13L13 55" fill="#344046" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g></g></g></g>
 <g data-panel="5"><rect x="32" y="966" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="966" width="5" height="385" fill="#79d8dc"/>

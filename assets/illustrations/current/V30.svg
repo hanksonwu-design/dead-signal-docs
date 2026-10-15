@@ -1,22 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1036" viewBox="0 0 1200 1036" role="img" aria-labelledby="title desc" data-layout="visual-v1">
-<title id="title">V30｜下部生活區 · 逐房操作與領域</title><desc id="desc">U1／U2／U3 在 B 棟 46F；U4 在 48F，途中須經 R28／R29 與 L2。 U1：核對管圖與方向：依原管圖開通生活區路線。
-已開方向與返回入口分開保存。；U2：洗衣內井與橋下夾層：操作原機構通往 U2b。
-威脅仍沿原入口確認與安全撤離，不全區追逐。；U3：固定燈架，不是手提燈：遮光葉開／閉 × 燈框內／中／外三位。
-比對固定標記與光束，橋栓對位後手動落橋。
-燈亮本身不會自動開門。；U4：門檻領域與同址回返：由既定上行路與 47F→48F L2 抵達。
-對照原地標、前移越檻／同址回返。
-不是 U3 同層隔壁的新傳送門。</desc>
+<title id="title">V30｜下部生活區 · 逐房操作與領域</title><desc id="desc">操作摘要與原件全文依逐房規格；U1～U3 在 B 棟 46F，經 R28／R29、L2 才到 48F U4。 U1：讀覆核籤 → 核管圖形刻 → 退栓：移架後讀圖框背側分租改管覆核籤，再旋妥三片管圖。
+核對上支封止、住戶支單橫刻及井側雙凹口短節與實際去向，然後親手開服務門插栓。
+籤留本房；已讀來源、已核對結果與返回入口分開保存。；U2：洗衣內井與橋下夾層：操作原機構通往 U2b。
+威脅仍沿原入口確認與安全撤離，不全區追逐。；U3：讀牌核雙記 → 手動落橋：固定座正面檢修校驗牌在配罩／調燈前後皆可讀；配罩、遮光與三位燈框沿原操作，牌文不給燈角答案。
+照清後核一記在固定座、一記隨動栓移；完整拉桿前須實讀、核對及當前橋栓對齊皆成立，再手動落橋。
+燈架固定留場；燈亮不自動開門，送件門另開閂。；U4：核一次回返 → 讀片核扣 → 開蓋：由既定上行路與 47F→48F L2 抵達。
+核三組原地標確認一次同址回返後，才讀檢修蓋解扣銘片、核外扣滑槽與支撐止點並掀蓋固定。
+領域仍在；內銷須下降到 U4b 實查，不把銘片加作第四地標或再繞一圈。</desc>
 <defs><marker id="vis-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#79d8dc"/></marker><marker id="vis-arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#e6bc68"/></marker><marker id="vis-arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#ffa18b"/></marker><clipPath id="visual-v30-0"><rect width="510" height="244"/></clipPath><clipPath id="visual-v30-1"><rect width="510" height="244"/></clipPath><clipPath id="visual-v30-2"><rect width="510" height="244"/></clipPath><clipPath id="visual-v30-3"><rect width="510" height="244"/></clipPath></defs>
 <style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:22px;font-weight:700;fill:#edf1ef}.footer{font-size:19px;fill:#aebec2}</style>
 <rect width="1200" height="1036" fill="#0b1418"/>
 <text class="title" x="32" y="52">V30｜下部生活區 · 逐房操作與領域</text>
-<text class="subtitle" x="32" y="91">U1／U2／U3 在 B 棟 46F；U4 在 48F，途中須經 R28／R29 與 L2。</text>
+<text class="subtitle" x="32" y="91">操作摘要與原件全文依逐房規格；U1～U3 在 B 棟 46F，經 R28／R29、L2 才到 48F U4。</text>
 <g data-panel="1"><rect x="32" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="193" fill="#79d8dc">01 · U1</text>
-<text class="panel-title" x="58" y="229">核對管圖與方向</text>
-<desc>依原管圖開通生活區路線。
-已開方向與返回入口分開保存。</desc>
+<text class="panel-title" x="58" y="229">讀覆核籤 → 核管圖形刻 → 退栓</text>
+<desc>移架後讀圖框背側分租改管覆核籤，再旋妥三片管圖。
+核對上支封止、住戶支單橫刻及井側雙凹口短節與實際去向，然後親手開服務門插栓。
+籤留本房；已讀來源、已核對結果與返回入口分開保存。</desc>
 <g transform="translate(56 272)" clip-path="url(#visual-v30-0)"><g data-visual="V30" data-step="1"><rect x="22" y="21" width="466" height="202" rx="2" fill="#23363c" stroke="#607a80" stroke-width="2"/><rect x="48" y="53" width="83" height="100" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M48 108h42V153" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M67 38q23 -20 43 0" fill="none" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><rect x="148" y="53" width="83" height="100" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M148 108h42V153" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M167 38q23 -20 43 0" fill="none" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><rect x="248" y="53" width="83" height="100" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M248 108h42V153" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M267 38q23 -20 43 0" fill="none" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><path d="M332 108h61v-52h47M393 108h47M393 108v73h47" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M434 45v22M434 101v16" fill="none" stroke="#ffa18b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /><path d="M394 178H456" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
 <g data-panel="2"><rect x="610" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="610" y="156" width="5" height="385" fill="#79d8dc"/>
@@ -28,18 +30,18 @@
 <g data-panel="3"><rect x="32" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="561" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="598" fill="#79d8dc">03 · U3</text>
-<text class="panel-title" x="58" y="634">固定燈架，不是手提燈</text>
-<desc>遮光葉開／閉 × 燈框內／中／外三位。
-比對固定標記與光束，橋栓對位後手動落橋。
-燈亮本身不會自動開門。</desc>
+<text class="panel-title" x="58" y="634">讀牌核雙記 → 手動落橋</text>
+<desc>固定座正面檢修校驗牌在配罩／調燈前後皆可讀；配罩、遮光與三位燈框沿原操作，牌文不給燈角答案。
+照清後核一記在固定座、一記隨動栓移；完整拉桿前須實讀、核對及當前橋栓對齊皆成立，再手動落橋。
+燈架固定留場；燈亮不自動開門，送件門另開閂。</desc>
 <g transform="translate(56 677)" clip-path="url(#visual-v30-2)"><g data-visual="V30" data-step="3"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M95 224V68M68 224H124" fill="none" stroke="#607a80" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" /><path d="M68 72l56 -17v49l-56 -18Z" fill="#4a595b" stroke="#607a80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M124 61L416 112L416 180L124 100Z" fill="#e6bc6819" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M390 110V194M403 110V194M354 194H455" fill="none" stroke="#607a80" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /><rect x="367" y="133" width="64" height="25" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M403 136v19" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M432 189v-40l19 -10" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><g transform="translate(450 193) scale(0.55)"><path d="M-22 48L-29 23Q-31 13-24 16L-12 30L-10 -24Q-6 -33-2 -22L1 15L10 7L19 11L28 20L26 40L13 55" fill="#3c4140" stroke="#e6bc68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M-23 48L-27 67H13L13 55" fill="#344046" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g><path d="M445 155V183" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
 <g data-panel="4"><rect x="610" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="610" y="561" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="636" y="598" fill="#79d8dc">04 · U4</text>
-<text class="panel-title" x="636" y="634">門檻領域與同址回返</text>
+<text class="panel-title" x="636" y="634">核一次回返 → 讀片核扣 → 開蓋</text>
 <desc>由既定上行路與 47F→48F L2 抵達。
-對照原地標、前移越檻／同址回返。
-不是 U3 同層隔壁的新傳送門。</desc>
+核三組原地標確認一次同址回返後，才讀檢修蓋解扣銘片、核外扣滑槽與支撐止點並掀蓋固定。
+領域仍在；內銷須下降到 U4b 實查，不把銘片加作第四地標或再繞一圈。</desc>
 <g transform="translate(634 677)" clip-path="url(#visual-v30-3)"><g data-visual="V30" data-step="4"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="218" y="42" width="80" height="155" rx="2" fill="#0b1418" stroke="#b9d3cc" stroke-width="2"/><path d="M213 197V37h90v160" fill="none" stroke="#b9d3cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><rect x="223" y="47" width="70" height="145" rx="2" fill="#283b40" stroke="#b9d3cc" stroke-width="2"/><ellipse cx="284" cy="135" rx="3" ry="3" fill="#e6bc68" stroke="#e6bc68" stroke-width="2"/><path d="M214 44l11 12 -11 7" fill="none" stroke="#e6bc68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M289 121H450M342 121V221M430 121V221" fill="none" stroke="#b9d3cc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M343 128l11 15m-14 -5l7 7m-3 -1l5 6" fill="none" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d="M354 141q-14 9 3 16l12 42 -16 16 2 -40 -10 -20q-8 -16 9 -14Z" fill="#8fa09c" stroke="#d1d8cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M192 217Q98 208 138 162Q186 130 193 192" fill="none" stroke="#dcb3e4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)" stroke-dasharray="7 5"/></g></g></g>
 <path d="M32 971H1168" stroke="#425155"/><text class="footer" x="32" y="1005">視覺製作示意 · 非遊戲介面或完成素材 · 完整條件與差分依逐房製作規格</text>
 </svg>

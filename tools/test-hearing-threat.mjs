@@ -80,8 +80,15 @@ test('UD audio reuses voluntary, room-local controllers and ends before repair o
   has(block(story(6), 's-0909-18'), '3.5 秒完整前兆', '0.6 秒掃擊', '六秒窗口', '1.5 秒', '已完成段保留');
   has(block(story(7), 's-0909-38'), '自行確認開始 UD-02');
   has(block(story(7), 's-0909-39'), '3.5 秒前兆', '重試時維持相同來向', '同側滑軌');
-  has(contract, 'U1／U2 仍是', 'U3 修燈與 LM-03 保持安全', 'U4 回返、U4b 插銷不追逐',
-    '過渡攀梯與 U6 水箱不帶追兵');
+  const act6Route = contract.split(/\r?\n/).find(row => row.startsWith('| 第六幕 U1'));
+  const act7Route = contract.split(/\r?\n/).find(row => row.startsWith('| 第七幕 U4'));
+  assert.match(act6Route, /僅 U2b 的 UD-01 正式啟用/);
+  assert.match(act6Route, /U1[^|\n]*覆核籤[^|\n]*辨管[^|\n]*U2[^|\n]*辨鏈保持安全/);
+  assert.match(act6Route, /主動轉輪才起襲[^|\n]*兩段收架完成即止/);
+  assert.match(act6Route, /U3[^|\n]*校驗牌[^|\n]*修燈落橋[^|\n]*LM-03 保持安全/);
+  assert.match(act7Route, /U4[^|\n]*解扣銘片[^|\n]*回返[^|\n]*U4b[^|\n]*內銷不追逐/);
+  assert.match(act7Route, /U5[^|\n]*配置銘片[^|\n]*開戰前安全核對[^|\n]*自行確認才開始/);
+  has(act7Route, '兩側封妥後停止', '過渡攀梯與 U6 水箱不帶追兵');
 });
 
 test('borrowed hearing cues preserve encounter-specific defenses and safe conclusions', () => {
