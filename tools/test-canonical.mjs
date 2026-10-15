@@ -142,7 +142,7 @@ test('screenplay presentation cues distinguish motion, stills, transitions and i
 test('every static screenplay cue names its shot size without changing protected framing', () => {
   // R7's duplicate printed-process close-up is now part of its first manual shot.
   // Act 4 adds the optional physical wiring-label close-up.
-  const counts = [23, 61, 82, 98, 46, 30, 17, 23, 10, 20];
+  const counts = [23, 61, 82, 98, 46, 30, 17, 25, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -182,7 +182,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   };
   // Act 3 spells out branch selection and return; U2b/U5 separate follow-up inputs.
   const counts = [[21, 17, 8], [75, 29, 19], [105, 34, 11], [144, 24, 10],
-    [59, 18, 13], [54, 15, 13], [28, 4, 2], [57, 7, 5], [29, 3, 4], [27, 12, 3]];
+    [59, 18, 13], [55, 15, 13], [30, 4, 2], [59, 7, 5], [29, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);

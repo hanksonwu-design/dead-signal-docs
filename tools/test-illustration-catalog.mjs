@@ -27,7 +27,7 @@ test('catalog covers every canonical illustration once, including supplements an
   assert.equal(new Set(records.map(r => r.id)).size, records.length);
   for (const r of records) assert(existsSync(path.join(ROOT, r.asset)), r.id);
   assert(!catalog.includes('!['), 'the catalog must not duplicate original image embeds');
-  assert.equal(Object.keys(flow.images).length, 558, 'concept index does not create work orders');
+  assert.equal(Object.keys(flow.images).length, 559, 'concept index does not create work orders');
   assert(Object.values(flow.images).every(image => image.status === 'pending'));
 });
 

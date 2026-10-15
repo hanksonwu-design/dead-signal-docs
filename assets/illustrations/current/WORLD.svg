@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1441" viewBox="0 0 1200 1441" role="img" aria-labelledby="title desc" data-layout="visual-v1">
-<title id="title">WORLD｜雙棟動線與生活管理</title><desc id="desc">48 個主節點／72 個次場景／56 條動線；正式圖像 558 列均待製作。 跨棟橋：同層連接，不垂直跳樓：15F A 棟 → B 棟：T-R7-R8-02
+<title id="title">WORLD｜雙棟動線與生活管理</title><desc id="desc">48 個主節點／72 個次場景／56 條動線；正式圖像 559 列均待製作。 跨棟橋：同層連接，不垂直跳樓：15F A 棟 → B 棟：T-R7-R8-02
 22F B 棟 → A 棟：T-R11-R12-07
 26F A 棟 → B 棟：T-R12-R14-03
 26F A 棟 → B 棟：T-R13-R14-03
@@ -12,12 +12,12 @@ L1 必須完成 30F 平台；L2 假停靠不開閘。；逐層探路：坍塌不
 R6：11F 食堂與配膳回收。
 房內探索鏡位不冒充跨房主線。；主管套間：生活差異不等於自由：R29：47F 本人與其他主管的生活套間。
 獨立衛浴仍受管理；外部聯絡權限只屬康。；外界與素材：紅霧、白絲與可辨地標：窗縫外維持紅霧與白絲，不畫可自由出去的街景。
-圖像工單 558 列包含多頁和差分，不是同數量的獨立背景。</desc>
+圖像工單 559 列包含多頁和差分，不是同數量的獨立背景。</desc>
 <defs><marker id="vis-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#79d8dc"/></marker><marker id="vis-arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#e6bc68"/></marker><marker id="vis-arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#ffa18b"/></marker><clipPath id="visual-world-0"><rect width="510" height="244"/></clipPath><clipPath id="visual-world-1"><rect width="510" height="244"/></clipPath><clipPath id="visual-world-2"><rect width="510" height="244"/></clipPath><clipPath id="visual-world-3"><rect width="510" height="244"/></clipPath><clipPath id="visual-world-4"><rect width="510" height="244"/></clipPath><clipPath id="visual-world-5"><rect width="510" height="244"/></clipPath></defs>
 <style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:22px;font-weight:700;fill:#edf1ef}.footer{font-size:19px;fill:#aebec2}</style>
 <rect width="1200" height="1441" fill="#0b1418"/>
 <text class="title" x="32" y="52">WORLD｜雙棟動線與生活管理</text>
-<text class="subtitle" x="32" y="91">48 個主節點／72 個次場景／56 條動線；正式圖像 558 列均待製作。</text>
+<text class="subtitle" x="32" y="91">48 個主節點／72 個次場景／56 條動線；正式圖像 559 列均待製作。</text>
 <g data-panel="1"><rect x="32" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="193" fill="#79d8dc">01 · 跨棟橋</text>
@@ -65,7 +65,7 @@ R6：11F 食堂與配膳回收。
 <text class="phase" x="636" y="1003" fill="#79d8dc">06 · 外界與素材</text>
 <text class="panel-title" x="636" y="1039">紅霧、白絲與可辨地標</text>
 <desc>窗縫外維持紅霧與白絲，不畫可自由出去的街景。
-圖像工單 558 列包含多頁和差分，不是同數量的獨立背景。</desc>
+圖像工單 559 列包含多頁和差分，不是同數量的獨立背景。</desc>
 <g transform="translate(634 1082)" clip-path="url(#visual-world-5)"><g data-visual="WORLD" data-step="6"><rect x="0" y="0" width="510" height="244" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><path d="M0 0L90 38H420L510 0M90 38V150L0 244M420 38V150L510 244M90 150H420" fill="none" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M0 244L90 150H420L510 244Z" fill="#1a272e" stroke="#607a80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M125 150L-31 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M200 150L134 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M310 150L376 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M385 150L541 244" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M55 184H455M24 218H486" fill="none" stroke="#31494f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="179" y="53" width="151" height="115" rx="2" fill="#703b44" stroke="#dcb3e4" stroke-width="2"/><path d="M181 55l146 111m0 -111l-146 111m73 -110v110m-73 -55h146" fill="none" stroke="#d1c6cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g></g></g>
 <path d="M32 1376H1168" stroke="#425155"/><text class="footer" x="32" y="1410">視覺製作示意 · 非遊戲介面或完成素材 · 完整條件與差分依逐房製作規格</text>
 </svg>

@@ -75,7 +75,7 @@ test('refreshed concepts reuse pending image IDs without claiming delivered anim
     }
   }
   includes(appendix, ['正式變形結構、角色拆件、攻防動態、低動態與音效仍待製作', '同一圖號內的分層和差分另估工時']);
-  assert.equal(Object.keys(flow.images).length, 558);
+  assert.equal(Object.keys(flow.images).length, 559);
 });
 
 test('aesthetic changes preserve attack timing, safe reading and staged Xiaohua reveal', () => {

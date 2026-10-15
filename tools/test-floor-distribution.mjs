@@ -61,7 +61,7 @@ test('retired exits are not duplicated in current artwork or reading order',()=>
  const story=master.blocks.get('s-0906-59');
  assert(story.indexOf('ascent-t-r17-r14-04-script')<story.indexOf('先看見熟悉的搬運標記'));
  assert.equal(Object.values(flow.images).filter(i=>i.kind==='過渡場景').length,58);
- assert.equal(flow.subscenes.filter(s=>s.play).length,33);
+ assert.equal(flow.subscenes.filter(s=>s.play).length,35);
 });
 test('abridged novel and the transition inventory share the new distribution',()=>{
  const novel=readFileSync(new URL('../docs/09_故事劇情/17_縮寫短文.md',import.meta.url),'utf8');

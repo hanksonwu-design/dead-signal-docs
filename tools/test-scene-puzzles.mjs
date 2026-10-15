@@ -121,7 +121,7 @@ test('existing artwork work orders and 3D markers carry the same puzzle details'
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 558);
+  assert.equal(Object.keys(flow.images).length, 559);
   for (const [act, id, terms] of [
     [3, 'R12-C01', ['兩條線槽', '雙短線右座', '透明護蓋']],
     [6, 'U3-C02', ['三槽']],

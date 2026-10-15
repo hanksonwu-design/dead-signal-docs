@@ -301,7 +301,7 @@ export function buildSceneImageOutputs(graph, documents) {
   const details = collection.rows.filter(r => !r.view);
   const transitions = subscenes.filter(s => s.type === '可查看過渡');
   const exploration = subscenes.filter(s => s.play);
-  const exits = collection.rows.filter(r => r.kind === '出口接景');
+  const exits = subscenes.filter(s => s.type === '轉場接景');
   const roomViews = collection.rows.filter(r => r.kind === '操作鏡位' && r.content.startsWith('房內次場景：'));
   const summary = `<a id="inventory-scene-images"></a>\n\n## 場景畫面與靜態圖\n\n` +
     `**${collection.groups.length} 個流程節點，下分 ${subscenes.length} 個次場景節點（${exploration.length} 個探路次場景、${transitions.length} 個可查看過渡、${exits.length} 個轉場接景）；合計 ${collection.rows.length} 列圖像製作項目（場景／操作／演出 ${views.length} 列，近看／文件／介面／回憶 ${details.length} 列），對應 ${routes.length} 條動線。**\n\n` +

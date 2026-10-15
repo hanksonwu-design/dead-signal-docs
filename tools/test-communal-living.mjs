@@ -25,7 +25,7 @@ test('communal rooms have independent work orders and reversible local entrances
     assert.equal((master.documents.get(row.act.path).match(new RegExp(`\\[${id}\\]\\(`, 'g')) || []).length, 1, id);
     if (id.includes('-V')) assert(row.content.startsWith('房內次場景：'), id);
   }
-  assert.equal(collection.rows.length, 558);
+  assert.equal(collection.rows.length, 559);
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
   assert(graph.edges.every(edge => !/commons|meal_roll|water_log/.test(edge.gate)));

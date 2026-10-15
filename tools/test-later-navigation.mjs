@@ -98,5 +98,5 @@ test('the seven ascent scenes match budgeting without adding routes, evidence or
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 558);
+  assert.equal(Object.keys(flow.images).length, 559);
 });

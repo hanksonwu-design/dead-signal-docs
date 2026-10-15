@@ -63,7 +63,7 @@ test('seven optional interior nodes each have a unique view and close-up without
   includes(spec, ['只接回 V03', '只接回 V05', '只接回 V07', '分別接 V03／V05／V07', '舊公共梯實牆封閉']);
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
-  assert.equal(collection.rows.length, 558);
+  assert.equal(collection.rows.length, 559);
 });
 
 test('optional exploration preserves existing waits, gates, source states and irreversible return lock', () => {

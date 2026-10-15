@@ -256,6 +256,9 @@ test('72 secondary scene nodes retain their parent, ordered connections and dist
       const body = story.split(heading)[1].split(/\n(?:#{1,6} |<a id="subscene-)/)[0];
       assert(/（鏡位切換）|（靜態畫面／全景）/.test(body), `Missing prose after child heading: ${child.id}`);
       for (const detail of child.details) assert(body.includes(detail.id));
+    } else if (child.id === 'R28-V02') {
+      assert.deepEqual(child.details.map(d => d.id), ['R28-V02-C01']);
+      assert(story.includes('id="reception-r28-v02-script"'));
     } else assert.equal(child.details.length, 0, child.id);
   }
   for (const id of ['R20-V03', 'R33-V02', 'R31-F01', 'T-R2-R3-01-C01']) assert(!subscenes.some(s => s.id === id), id);
