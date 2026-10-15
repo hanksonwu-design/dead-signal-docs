@@ -539,7 +539,7 @@ test('occupational habits use visible clues without early identity disclosure or
 test('R24 production and sensitive-sequence summary retain actual evidence requirements', () => {
   const pack = block('s-0807-11');
   for (const phrase of ['只疊版面不發', '原職稱', '未安排管理職面試', '倒填三個曆月',
-    '同人轉任／撤號欄', '反序查閱也須返回確認', '不同人不必同一天']) assert(pack.includes(phrase), phrase);
+    '同人轉任／撤號欄', '補查後只做原整組確認', '不同人不必同一天']) assert(pack.includes(phrase), phrase);
   assert(block('s-0001-12').includes('R19 的記憶可不啟動，M1 必須通行但各窗觀察可略過'));
   assert(!block('s-0001-12').includes('四段必須確認必要資訊'));
 });
@@ -778,7 +778,7 @@ test('act V varies investigation controls without removing evidence or adding pe
   const timeline = block('s-0908-32');
   for (const text of ['A／B／C 三個來源位置', '整組確認一次後取得 E4-01', '尚未讀到的頁面保持未讀']) assert(versions.includes(text), text);
   assert(block('s-0606-4').includes('初見不醒目標示正解'));
-  for (const text of ['每人一列', '另外三人的來源須各自展開核對', '三個曆月', '仍由玩家主動關聯 E4-01／E4-02／E3-02']) assert(people.includes(text), text);
+  for (const text of ['對照列留在同一桌面', '另外三人的來源也須各自展開核對', '本人的轉任／撤號是 R24 新見來源，仍須實讀與核對', '三個曆月', '仍由玩家主動關聯 E4-01／E4-02／E3-02']) assert(people.includes(text), text);
   for (const text of ['三帶的日期與時鐘基準始終可見', '先保留同日與共用時基', '放大只改視窗尺度', '48 小時事件留在另一日期頁', '未持有碎片也能用本地原件完成', '02:20:11', '02:20:22']) assert(timeline.includes(text), text);
   for (const [spec, anchor] of [['s-0606-4', 's-0908-8'], ['s-0606-5', 's-0908-21'], ['s-0606-6', 's-0908-32']]) {
     assert(block(spec).includes(`](../${ACTS[5].path}#${anchor})`));
@@ -1203,7 +1203,7 @@ test('reading layers retain evidence distinctions without solving or revealing i
   const versions = block('s-0908-8');
   for (const text of ['原職稱', '灰塵點', '建檔晚於入境', '三個月前']) assert(versions.includes(text), text);
   const people = block('s-0908-21');
-  for (const text of ['記綠', 'VF-0818', '本人入境前三個曆月', '另外三人的來源須各自展開核對']) assert(people.includes(text), text);
+  for (const text of ['記綠', 'VF-0818', '本人入境前三個曆月', '另外三人的來源也須各自展開核對']) assert(people.includes(text), text);
   assert(block('s-0908-32').includes('那個帳號什麼時候有機會通過'));
   assert(block('s-0908-32').includes('還不能證明操作帳號的人是誰'));
   const backup = block('s-0909-55');

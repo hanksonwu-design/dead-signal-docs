@@ -64,11 +64,11 @@ test('the domain preserves safe comparison, the old save contract and accessible
 
 test('the optional U4 recollection follows S6 confirmation without adding a fourth source', () => {
   const reveal = block(finale, 's-0910-12');
-  ordered(reveal, '再確認一次', '關聯完成後，可回看已保存的 48F');
+  ordered(reveal, '完成原一次關聯確認', '關聯完成後，可回看已保存的 48F');
   has(finaleSpec, '不新增第四份證據', '未開回查也能繼續顯形',
     '舊檔未保留 U4 筆記時省略該回查', 'S6 本房三源仍可完整查證');
   const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  ordered(novel, '我想起四十八樓的布結', '把我留在門內的，是小花的領域');
+  ordered(novel, '我想起四十八樓的布結', '機械扣件已退開，她的領域仍把我留在門內');
 });
 
 test('existing image orders and navigation counts cover the domain without new rooms', () => {

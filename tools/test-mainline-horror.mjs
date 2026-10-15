@@ -76,7 +76,7 @@ test('R7 reuses its existing HA at first arrival before optional reading and kee
  has(production,'不限來向、不需先讀手冊、不另等閒置 4 秒','到點仍受保護或冷卻未到亦略過',
   'HA-R7-01 已依原規則停止','安息後及回訪不重播','舊檔已到過 R7 而尚無事件紀錄','不新增 HA 或 HP');
  assert(!production.includes('已讀手冊後首次從網咖方向'));
- const table=block(production,'s-0603-16').match(/\| 事件／類型[\s\S]*?(?=\n\n)/)?.[0];
+ const table=block(production,'s-0603-16').match(/\| 事件／類型[\s\S]*?(?=\r?\n\r?\n)/)?.[0];
  for(const node of ['R6','R7','R8','R9','R10','R11'])has(table,`HA-${node}-01`);
 });
 

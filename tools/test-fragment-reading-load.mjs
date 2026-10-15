@@ -31,6 +31,21 @@ test('R23 crops retain field identity and preserve all three versions with one c
   includes(read('docs/10_製作規格/10-06_製作規格_第五幕.md'), ['三種局部僅是閱讀入口', '原三版逐項核對與一次確認不變', '局部由同一原頁裁取']);
 });
 
+test('R24 reuses verified fields without inheriting its newly encountered removal source', () => {
+  const story = block('s-0908-21');
+  includes(story, ['本人的轉任／撤號是 R24 新見來源，仍須實讀與核對', '沿同一桌面', '三人']);
+  const spec = read('docs/10_製作規格/10-06_製作規格_第五幕.md');
+  includes(spec, ['不代讀本人的 R24 轉任／撤號', '不代寫 `r24.victim_ids_removed`', '也不代領 E4-02', '四人原欄均實讀及核對才寫']);
+});
+
+test('R32 continuous reading preserves source boundaries and the original final confirmations', () => {
+  includes(block('s-0910-6'), ['同一比較視圖', '未看的欄位保持待查']);
+  includes(block('s-0910-7'), ['再完成原一次確認', '不重輸入', '錯配免費退回']);
+  includes(block('s-0910-8'), ['四個原件仍各自實讀', '讀完一處不會代讀另一處']);
+  includes(block('s-0910-12'), ['完成原一次關聯確認', '本次實際提出與收手', '不再追加完成彈窗']);
+  includes(read('docs/10_製作規格/10-08_製作規格_終幕.md'), ['取消、跳過演出及讀檔均不補未讀來源', '不提前寫入 projection_reveal_complete', '不會代做 S6-03 現時試探']);
+});
+
 test('R29 overlays preserve months, approval content and the original aftermath', () => {
   includes(block('s-0909-26'), ['透明疊片', '月份、頁碼與來源', '2025 年 8、9、10 月', '提價', '原頁影像、頁碼、筆勢']);
   includes(block('s-0607-8'), ['三個月份、返家陳述、評級與提價資訊', '低動態改用靜態並排', '先同次保存 E5-02', '二十秒責任停頓後']);

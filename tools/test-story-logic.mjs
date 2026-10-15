@@ -75,6 +75,14 @@ test('R19 distinguishes declining before entry, pausing or saving, and completin
   includes(spec(4), ['進入後不可直接返回探索', 'Esc 暫停、存檔離開與摘要切換仍可用', '演出或等效摘要完成後提交']);
 });
 
+test('R19 record duration and supervisor confirmation cannot certify an unseen full procedure', () => {
+  includes(block('s-0907-14'), ['紀錄總長 11:40', '約 90 秒靜止片段', '不能由此斷言未呈現的時間']);
+  includes(appendix, ['約 90 秒的靜止片段', '命令本身不證明那次親自到場', '仍持續在同類處置欄位簽字']);
+  for (const source of [...master.documents.values(), novel]) {
+    assert.doesNotMatch(source, /11 分 40 秒，姿勢一次都沒有改變|十一分四十秒，姿勢一次都沒有改變|在房間裡站滿十一分四十秒|十一分四十秒，一次都沒有離開|因為她看完過|「等我確認」的意思是她會來/);
+  }
+});
+
 test('ending B releases the door by choice after upload, with matching VO and art coverage', () => {
   const prepare = block('s-0910-23');
   const release = block('s-0910-24');

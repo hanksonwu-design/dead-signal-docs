@@ -230,8 +230,8 @@ test('R32 replaces the repeated sentence quiz without skipping evidence or revel
   const story = chapter('09-10_正式劇本_終幕');
   assert(!story.includes('六句卡選三句'));
   assert(!story.includes('來源範圍已核對'));
-  assert(story.includes('四個原件各自可查'));
-  assert(story.includes('再確認一次：「讓我回來的，是她。」'));
+  assert(story.includes('四個原件仍各自實讀，讀完一處不會代讀另一處'));
+  assert(story.includes('完成原一次關聯確認：「讓我回來的，是她。」'));
   const beats = ['[R32-03]', '[R32-04]', '[R32-06]', '[R32-07]', '[R32-08]', '[R32-09]'];
   for (let i = 1; i < beats.length; i++) assert(story.indexOf(beats[i - 1]) < story.indexOf(beats[i]));
   assert(appendix.includes('四項齊備才由 sources 進 seal_verify'));
