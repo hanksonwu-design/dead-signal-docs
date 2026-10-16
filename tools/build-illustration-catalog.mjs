@@ -2,14 +2,13 @@ import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ACTS, APPENDIX, CANONICAL_FILES, MASTER, ILLUSTRATION_CATALOG } from './screenplay-files.mjs';
+import { ACTS, CANONICAL_FILES, ILLUSTRATION_CATALOG } from './screenplay-files.mjs';
 import { ILLUSTRATION_DETAILS } from './illustration-details.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const read = file => readFileSync(path.join(ROOT, file), 'utf8').replaceAll('\r\n', '\n');
 const slug = id => id.toLowerCase();
 const link = (from, to, heading) => (from === to && heading ? '' : path.posix.relative(path.posix.dirname(from), to)) + (heading ? '#' + heading : '');
-const cell = value => value.replaceAll('|', '／').replaceAll('\n', ' ');
 
 export function stripIllustrationNotes(text) {
   return text.replaceAll('\r\n', '\n')
@@ -110,26 +109,31 @@ export function annotateIllustrations(documents, records) {
 }
 
 export function renderCatalog(records, updated) {
-  const groups = [...ACTS.map(a => ({ id: String(a.act), title: `${a.name} · ${a.subtitle}` })), { id: 'common', title: '跨幕共用' }];
+  const groups = [...ACTS.map(a => ({ id: String(a.act), title: `${a.name} · ${a.subtitle}`, label: a.name })), { id: 'common', title: '跨幕共用', label: '跨幕共用' }];
   const lines = ['---', '文件: 製作規格 · 示意圖目錄', '狀態: 現行示意圖索引；正式素材仍待製作與驗收',
-    `更新: ${updated}`, '摘要: 依幕別查閱全部示意圖、出入口草圖與補充規則圖；每張圖標示場景編號、樓層、用途及功能作用。', '---', '',
+    `更新: ${updated}`, '摘要: 依幕別直接看圖；簡標圖號、名稱與場景，製作註記可展開查閱。', '---', '',
     '# 製作規格：示意圖目錄', '', '<a id="illustration-catalog"></a>', '',
-    `[遊戲劇本總目錄](${link(ILLUSTRATION_CATALOG, MASTER, 'book-specs')}) · [現行版本與製作狀態](${link(ILLUSTRATION_CATALOG, APPENDIX, 'illustration-refresh')})`, '',
-    `共 **${records.length} 張**現行示意圖，包含 ${records.filter(r => r.layout).length} 張出入口配置草圖。同組概念圖與規則圖各列一筆；圖名連到原文件的該張圖與註記，原圖檔另列。場景編號可查本房製作規格，圖下可返回本目錄。`, '',
-    '目錄依幕別、正文操作及幕末跨房參照的順序排列，跨幕共用圖另列。跨房整板的各格是指定場景參照，不能當作連續操作；各房按劇本流程連至適用圖。用途、功能與位置集中於本目錄，正文圖下只保留圖號、適用場景及連結。索引圖號不新增正式遊戲圖像工單，完成狀態仍以各房圖像表為準。', '',
-    groups.map(g => `[${g.title}](#catalog-group-${g.id})`).join(' · '), ''];
+    `共 **${records.length} 張**。依幕別及劇本順序看圖，點圖可開原圖；詳細說明收在「製作註記」。`, '',
+    groups.map(g => `[${g.label}](#catalog-group-${g.id})`).join(' · '), ''];
   for (const group of groups) {
     const rows = records.filter(r => r.group === group.id);
     if (!rows.length) continue;
-    lines.push(`<a id="catalog-group-${group.id}"></a>`, '', `## ${group.title}（${rows.length} 張）`, '',
-      '| 圖號 | 示意圖與原圖檔 | 場景編號 | 用途 | 功能作用 |', '| --- | --- | --- | --- | --- |');
+    lines.push(`<a id="catalog-group-${group.id}"></a>`, '', `## ${group.title}（${rows.length} 張）`, '');
     for (const r of rows) {
+      const asset = link(ILLUSTRATION_CATALOG, '../' + r.asset);
+      const scenes = r.scenes.map(n => `[${n.id}](${link(ILLUSTRATION_CATALOG, n.source, n.heading)})`).join('、');
+      const label = (r.group === 'common' ? '跨幕共用' + (scenes ? ' · ' : '') : '') + scenes;
       const locations = sceneLinks(r, ILLUSTRATION_CATALOG, true) + (r.subscenes.length ? '；次場景：' + r.subscenes.map(n => `[${n.id}](${link(ILLUSTRATION_CATALOG, n.source, n.heading)})（${n.building} · ${n.floor}）`).join('、') : '');
-      lines.push(`| <a id="catalog-${slug(r.id)}"></a>${r.id} | [${cell(r.title)}](${link(ILLUSTRATION_CATALOG, r.source, r.heading)}) · [原圖](${link(ILLUSTRATION_CATALOG, '../' + r.asset)}) | ${locations} | ${cell(r.purpose)} | ${cell(r.effect)} |`);
+      lines.push(`<a id="catalog-${slug(r.id)}"></a>`, '', `### ${r.id}｜${r.title}`, '',
+        `${label} · [製作規格](${link(ILLUSTRATION_CATALOG, r.source, r.heading)})`, '',
+        `![${r.title}](${asset})`, '',
+        '<details>', '<summary>製作註記</summary>', '',
+        `**類型：** ${r.kind}`, '', `**用途：** ${r.purpose}`, '', `**功能作用：** ${r.effect}`, '',
+        `**位置：** ${locations}`, '', `[原圖檔](${asset})`, '', '</details>', '');
     }
     lines.push('');
   }
-  return lines.join('\n');
+  return lines.join('\n').trimEnd() + '\n';
 }
 
 export function buildIllustrationCatalog() {

@@ -307,7 +307,8 @@ function openReader(path, updateHash = true, headingText = "") {
     return;
   }
   state.selected = doc;
-  $("readerContent").classList.toggle('production-spec', doc.folder === '10_製作規格' && doc.path !== '10_製作規格/10-11_製作規格_示意圖目錄.md');
+  const illustrationCatalog = doc.path === '10_製作規格/10-11_製作規格_示意圖目錄.md';
+  $("readerContent").classList.toggle('production-spec', doc.folder === '10_製作規格' && !illustrationCatalog);
   $("readerPath").textContent = `${doc.folderLabel} / ${documentDisplayTitle(doc.title)}`;
   // Front matter is useful metadata for cards and filters, but not part of the
   // reading flow. Keep the body clean while preserving support for plain .md.
@@ -317,7 +318,7 @@ function openReader(path, updateHash = true, headingText = "") {
   $("readerContent").innerHTML = renderMarkdown(body);
   window.ScreenplayMarkers?.decorate($("readerContent"), body, doc.path);
   const headings = [...$("readerContent").querySelectorAll("h2")];
-  if (headings.length > 3) {
+  if (headings.length > 3 && !illustrationCatalog) {
     const nav = document.createElement("nav");
     nav.className = "reader-toc";
     nav.setAttribute("aria-label", "章節跳轉");

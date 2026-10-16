@@ -55,7 +55,7 @@ npm --prefix building run build
 
 第三輪[缺圖補充與驗證](reviews/2026-10-13-illustration-gaps.md)新增 11 張點陣概念及 17 張精確圖解，目錄共 110 張。逐層路線、機關剖面、玻璃格位、文件比對與演出時序維護於 `tools/illustration-supplement-layouts.mjs`，由既有圖解建置命令一起重建；點陣提示詞與採用紀錄見 `assets/illustrations/2026-10-13-gap-prompts.json`。概念生成不更改正式工單的待製狀態。
 
-[示意圖目錄](docs/10_製作規格/10-11_製作規格_示意圖目錄.md)依幕別列出全部現行圖像，連到原圖位置及場景規格。用途與功能作用維護於 `tools/illustration-details.mjs`；`build-illustration-catalog.mjs` 統一重建目錄與圖下註記，場景編號、樓棟及樓層由正式資料讀取。新增圖像時須補對應說明；出入口草圖註記自動建立，既有圖像與正式工單不重複計數。`node tools/build-illustration-catalog.mjs --check` 與 `node --test tools/test-illustration-catalog.mjs` 檢查完整覆蓋、來源連結及重建穩定性。
+[示意圖目錄](docs/10_製作規格/10-11_製作規格_示意圖目錄.md)依幕別直接顯示全部現行圖像，以圖號、圖名及場景簡標；用途、功能與位置收在可展開的製作註記，並保留場景規格與原圖連結。用途與功能作用維護於 `tools/illustration-details.mjs`；`build-illustration-catalog.mjs` 統一重建目錄與圖下註記，場景編號、樓棟及樓層由正式資料讀取。新增圖像時須補對應說明；出入口草圖註記自動建立，既有圖像與正式工單不重複計數。`node tools/build-illustration-catalog.mjs --check` 與 `node --test tools/test-illustration-catalog.mjs` 檢查完整覆蓋、來源連結及重建穩定性。
 
 目錄的圖名、原圖檔、場景規格及跨文件參照另開視窗或分頁，保留原目錄位置；目錄內分類錨點維持原頁跳轉。新視窗保留目前部署路徑與查閱參數，連到該張圖的精確錨點。
 

@@ -16,6 +16,10 @@ const flow = JSON.parse(read('scene-flow.json'));
 const manifest = JSON.parse(read('assets/illustrations/manifest.json'));
 const { records, outputs } = buildIllustrationCatalog();
 const catalog = outputs.get('docs/' + ILLUSTRATION_CATALOG);
+const entries = new Map([...catalog.matchAll(/<a id="catalog-(?!group-)([^\"]+)"><\/a>/g)].map((match, index, matches) => [
+  match[1], catalog.slice(match.index, matches[index + 1]?.index ?? catalog.length),
+]));
+const catalogAsset = href => path.posix.normalize(path.posix.join('docs', path.posix.dirname(ILLUSTRATION_CATALOG), href));
 
 test('catalog covers every canonical illustration once, including supplements and access layouts', () => {
   const embedded = [...documents].flatMap(([file, text]) => [...text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)]
@@ -26,9 +30,37 @@ test('catalog covers every canonical illustration once, including supplements an
   assert.deepEqual(records.map(r => r.asset).sort(), embedded.sort());
   assert.equal(new Set(records.map(r => r.id)).size, records.length);
   for (const r of records) assert(existsSync(path.join(ROOT, r.asset)), r.id);
-  assert(!catalog.includes('!['), 'the catalog must not duplicate original image embeds');
+  const pictures = [...catalog.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)];
+  assert.equal(pictures.length, records.length, 'every catalog entry displays its existing illustration');
+  assert.deepEqual(pictures.map(m => catalogAsset(m[1])).sort(), records.map(r => r.asset).sort());
   assert.equal(Object.keys(flow.images).length, 559, 'concept index does not create work orders');
   assert(Object.values(flow.images).every(image => image.status === 'pending'));
+});
+
+test('each catalog entry shows a short label and its picture before collapsed production notes', () => {
+  assert.equal(entries.size, records.length);
+  assert(!catalog.includes('| 圖號 |'), 'pictures replace the text-heavy catalog table');
+  for (const r of records) {
+    const entry = entries.get(r.id.toLowerCase());
+    assert(entry, r.id);
+    const notes = [...entry.matchAll(/<details>\n<summary>製作註記<\/summary>\n([\s\S]*?)<\/details>/g)];
+    assert.equal(notes.length, 1, `${r.id}: one native details block, closed by default`);
+    const visible = entry.replace(notes[0][0], '');
+    const pictures = [...visible.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)];
+    assert.equal(pictures.length, 1, `${r.id}: picture remains outside production notes`);
+    assert.equal(catalogAsset(pictures[0][1]), r.asset, r.id);
+    assert(pictures[0].index < notes[0].index, `${r.id}: picture precedes notes`);
+    assert.match(visible, new RegExp(`^#{3,4} .*${r.id.replaceAll('-', '\\-')}`, 'm'), `${r.id}: visible figure label`);
+    assert(!visible.includes('**用途：**') && !visible.includes('**功能作用：**') && !visible.includes('次場景：'), r.id);
+    assert(notes[0][1].includes(r.purpose) && notes[0][1].includes(r.effect), `${r.id}: full production context is retained`);
+    for (const n of r.scenes) assert(visible.includes(`[${n.id}]`), `${r.id}: short scene link`);
+    for (const n of [...r.scenes, ...r.subscenes]) {
+      assert(notes[0][1].includes(`[${n.id}]`), `${r.id}: scene context remains in notes`);
+      assert(notes[0][1].includes(`（${n.building} · ${n.floor}）`), `${r.id}: location remains in notes`);
+      assert(!visible.includes(`（${n.building} · ${n.floor}）`), `${r.id}: location is collapsed`);
+    }
+    assert(!notes[0][1].includes('!['), `${r.id}: production notes do not repeat the image`);
+  }
 });
 
 test('each illustration has scene, current location, purpose, function and return navigation', () => {
