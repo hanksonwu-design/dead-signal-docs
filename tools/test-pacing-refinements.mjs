@@ -251,7 +251,7 @@ test('R32 replaces the repeated sentence quiz without skipping evidence or revel
 });
 
 test('Abiao conclusion retains coercion, his added restrictions and the protagonist order', () => {
-  const conclusion = '他被逼進來，後來卻自己加上了延後釋放；而這張處置表上的命令是我下的，他仍在等我確認完成。';
+  const conclusion = '他被逼進來，Michelle 簽核他去執行；後來延後釋放是他自己加的。這張處置表上的命令是我下的，他仍在等我確認完成。';
   assert(chapter('09-08_正式劇本_第五幕').includes(conclusion));
   assert(read('docs/10_製作規格/10-06_製作規格_第五幕.md').includes(conclusion));
   assert(appendix.includes('不把 C-07 首次執行改成他的自行決定'));
