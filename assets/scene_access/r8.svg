@@ -1,35 +1,89 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="914" viewBox="0 0 1100 914" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1080" viewBox="0 0 1100 1080" role="img" aria-labelledby="title desc">
   <title id="title">R8 出入口配置草圖</title>
-  <desc id="desc">視訊組。兩出口分列隔間與窗邊；側道接遮棚平台，不露出樓外天空。。來路／返回：窄橋門：隔音布旁略高的門檻，門外延續橋板與異批地磚。 經兩端橋頭回 R7；放蛾及讀卡不封住回程。 出口：短租房門：視訊隔間旁的舊住宅門，門後下兩級台階。 沿短轉場進 R9，可往返；紙墊、小帳、照片及歌曲不鎖此門。 出口：內井側道：窗邊通向有遮棚的共用平台，地面通道與封窗分開。 沿平台接景到 R10，可往返；不是翻窗，也不能從內井逃到樓外。</desc>
-  <rect width="1100" height="914" fill="#fbfcfc"/>
+  <desc id="desc">視訊組。三個跨房門端均接共用走道，不穿小花工作房；各工作房單人輪班使用。 房 1 小花，可進入；房 2 可短探索；房 3 停用，僅門口觀察；房 4 封閉，僅看外觀。共用準備區接共用走道。來路／返回：窄橋門：隔音布旁略高的門檻，門外延續橋板與異批地磚。 經兩端橋頭回 R7；放蛾及讀卡不封住回程。 出口：短租房門：共用走道南側的舊住宅門，門後下兩級台階。 沿短轉場進 R9，可往返；紙墊、小帳、照片及歌曲不鎖此門，不經小花房。 出口：內井側道：窗邊通向有遮棚的共用平台，地面通道與封窗分開。 沿平台接景到 R10，可往返；不是翻窗，也不能從內井逃到樓外。</desc>
+  <rect width="1100" height="1080" fill="#fbfcfc"/>
   <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
     <text x="40" y="52" font-size="30" font-weight="700">R8 · 視訊組 / 出入口配置</text>
-    <text x="40" y="92" font-size="20" >固定鏡位提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
-    <path d="M40 125H1060V600H40Z" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2"/>
-    <path d="M260 140H840V325H260Z M260 325L80 580H1020L840 325" fill="none" stroke="#bbc9c8" stroke-width="2"/>
-    <rect x="380" y="302" width="340" height="88" fill="#dce8e5" stroke="#a8b8b7"/>
-    <text x="550" y="337" font-size="23" text-anchor="middle" font-weight="700">視訊隔間</text>
-    <text x="550" y="373" font-size="20" text-anchor="middle">封窗與地面側道分開</text>
-    <g data-port="1">
-      <rect x="70" y="432" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
-      <text x="84" y="464" font-size="22" font-weight="700">1. 窄橋門</text>
-      <text x="84" y="497" font-size="17" fill="#147469">來路／可返回</text>
+    <text x="40" y="92" font-size="20" >分區平面提案 · 非比例平面圖 · 非遊戲背景完成稿</text>
+    <path d="M260 125H1060V660H260Z" fill="#f4f7f6" stroke="#a8b8b7" stroke-width="2"/>
+    <text x="650" y="143" font-size="15" text-anchor="middle">北側：四間單人工作房；房門均朝共用走道</text>
+    <rect x="270" y="330" width="770" height="310" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2" data-space="shared-corridor"/>
+    <g data-workroom="1" data-access="enter" data-door-to="shared-corridor">
+      <path d="M290 150H460V330H290Z" fill="#e5eeeb" stroke="#147469" stroke-width="2"/>
+      <text x="375" y="185" font-size="23" text-anchor="middle" font-weight="700">工作房 1</text>
+      <text x="375" y="221" font-size="21" text-anchor="middle">小花工作房</text>
+      <text x="375" y="256" font-size="14" text-anchor="middle">原必要查證與記憶入口</text>
+      <text x="375" y="289" font-size="18" text-anchor="middle" fill="#147469">可進入</text>
+      <path d="M344 330H406" stroke="#eef4f3" stroke-width="7"/>
+        <path d="M344 330V300M344 300L398 330" fill="none" stroke="#147469" stroke-width="2"/>
     </g>
-<g data-port="2">
-      <rect x="85" y="172" width="260" height="96" fill="white" stroke="#aa582a" stroke-width="3"/>
-      <text x="99" y="204" font-size="22" font-weight="700">2. 短租房門</text>
-      <text x="99" y="237" font-size="17" fill="#aa582a">雙向／門後下兩級</text>
+<g data-workroom="2" data-access="enter" data-door-to="shared-corridor">
+      <path d="M480 150H650V330H480Z" fill="#e5eeeb" stroke="#147469" stroke-width="2"/>
+      <text x="565" y="185" font-size="23" text-anchor="middle" font-weight="700">工作房 2</text>
+      <text x="565" y="221" font-size="21" text-anchor="middle">單人工作房</text>
+      <text x="565" y="256" font-size="14" text-anchor="middle">可進入短探索</text>
+      <text x="565" y="289" font-size="18" text-anchor="middle" fill="#147469">可進入</text>
+      <path d="M534 330H596" stroke="#eef4f3" stroke-width="7"/>
+        <path d="M534 330V300M534 300L588 330" fill="none" stroke="#147469" stroke-width="2"/>
     </g>
-<g data-port="3">
-      <rect x="755" y="172" width="260" height="96" fill="white" stroke="#147469" stroke-width="3"/>
-      <text x="769" y="204" font-size="22" font-weight="700">3. 內井側道</text>
-      <text x="769" y="237" font-size="17" fill="#147469">雙向／不可翻窗</text>
+<g data-workroom="3" data-access="threshold" data-door-to="shared-corridor">
+      <path d="M670 150H840V330H670Z" fill="#e9edef" stroke="#6a737b" stroke-width="2"/>
+      <text x="755" y="185" font-size="23" text-anchor="middle" font-weight="700">工作房 3</text>
+      <text x="755" y="221" font-size="21" text-anchor="middle">停用工作房</text>
+      <text x="755" y="256" font-size="14" text-anchor="middle">僅在門口觀察</text>
+      <text x="755" y="289" font-size="18" text-anchor="middle" fill="#6a737b">停在門口</text>
+      <path d="M724 330H786" stroke="#6a737b" stroke-width="7"/>
+        <path d="M731 321L779 339M731 339L779 321" stroke="#6a737b" stroke-width="2"/>
     </g>
-    <text x="550" y="580" font-size="17" text-anchor="middle">主鏡位：由前景看向後景；反向回訪不水平翻圖</text>
-    <text x="60" y="665" font-size="22" >1. 前景左側   R7↔R8</text>
-<text x="60" y="713" font-size="22" >2. 後景左側   R8↔R9</text>
-<text x="60" y="761" font-size="22" >3. 後景右側   R8↔R10</text>
-    <text x="40" y="852" font-size="21" >兩出口分列隔間與窗邊；側道接遮棚平台，不露出樓外天空。</text>
-    <text x="40" y="889" font-size="18" >完整門檻以本房出入口表及動線表為準；未知去向不提前顯示給玩家。</text>
+<g data-workroom="4" data-access="closed" data-door-to="shared-corridor">
+      <path d="M860 150H1030V330H860Z" fill="#e9edef" stroke="#6a737b" stroke-width="2"/>
+      <text x="945" y="185" font-size="23" text-anchor="middle" font-weight="700">工作房 4</text>
+      <text x="945" y="221" font-size="21" text-anchor="middle">封閉工作房</text>
+      <text x="945" y="256" font-size="14" text-anchor="middle">僅看封閉外觀</text>
+      <text x="945" y="289" font-size="18" text-anchor="middle" fill="#6a737b">不可進入</text>
+      <path d="M914 330H976" stroke="#6a737b" stroke-width="7"/>
+        <path d="M921 321L969 339M921 339L969 321" stroke="#6a737b" stroke-width="2"/>
+    </g>
+    <text x="650" y="395" font-size="27" text-anchor="middle" font-weight="700">共用走道</text>
+    <text x="650" y="433" font-size="19" text-anchor="middle">來回與分岔都走此處；各房門不互通</text>
+    <text x="435" y="550" font-size="23" text-anchor="middle" font-weight="700">南側走道</text>
+    <text x="435" y="585" font-size="17" text-anchor="middle">通往 R9／R10</text>
+    <g data-space="shared-preparation" data-connects-to="shared-corridor">
+      <rect x="690" y="500" width="330" height="100" fill="#dce8e5" stroke="#147469" stroke-width="2"/>
+      <path d="M660 550H690" stroke="#147469" stroke-width="4"/>
+      <text x="855" y="540" font-size="24" text-anchor="middle" font-weight="700">共用準備區</text>
+      <text x="855" y="575" font-size="18" text-anchor="middle">沿走道側邊進出，不擋通路</text>
+    </g>
+    <g data-port="1" data-connects-to="shared-corridor" data-route="R7↔R8">
+      <path d="M240 395H270" fill="none" stroke="#147469" stroke-width="4"/>
+      <circle cx="270" cy="395" r="6" fill="#147469"/>
+      <rect x="20" y="350" width="220" height="90" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="32" y="379" font-size="21" font-weight="700">1. 窄橋門</text>
+      <text x="32" y="408" font-size="18" >來路／可返回</text>
+      <text x="32" y="431" font-size="16" >R7↔R8</text>
+    </g>
+<g data-port="2" data-connects-to="shared-corridor" data-route="R8↔R9">
+      <path d="M600 700V640" fill="none" stroke="#147469" stroke-width="4"/>
+      <circle cx="600" cy="640" r="6" fill="#147469"/>
+      <rect x="450" y="700" width="300" height="100" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="462" y="729" font-size="21" font-weight="700">2. 短租房門</text>
+      <text x="462" y="758" font-size="18" >雙向／門後下兩級</text>
+      <text x="462" y="781" font-size="16" >R8↔R9</text>
+    </g>
+<g data-port="3" data-connects-to="shared-corridor" data-route="R8↔R10">
+      <path d="M240 565H270" fill="none" stroke="#147469" stroke-width="4"/>
+      <circle cx="270" cy="565" r="6" fill="#147469"/>
+      <rect x="20" y="520" width="220" height="90" fill="white" stroke="#147469" stroke-width="3"/>
+      <text x="32" y="549" font-size="21" font-weight="700">3. 內井側道</text>
+      <text x="32" y="578" font-size="18" >雙向／不可翻窗</text>
+      <text x="32" y="601" font-size="16" >R8↔R10</text>
+    </g>
+    <text x="550" y="815" font-size="18" text-anchor="middle">封窗只作外觀；R10 走地面側道，不翻窗，也不穿工作房。</text>
+    <text x="50" y="850" font-size="22" >1. 共用走道西端：窄橋門   R7↔R8</text>
+<text x="50" y="893" font-size="22" >2. 南側走道：短租房門   R8↔R9</text>
+<text x="50" y="936" font-size="22" >3. 南側走道西端：地面側口   R8↔R10</text>
+    <text x="40" y="972" font-size="18" >房 1–4 僅為製作標示，不是遊戲謎題或新增角色。</text>
+    <text x="40" y="1008" font-size="21" >三個跨房門端均接共用走道，不穿小花工作房；各工作房單人輪班使用。</text>
+    <text x="40" y="1048" font-size="18" >內部分區不增加跨房路線；完整門檻以本房出入口表及動線表為準。</text>
   </g>
 </svg>

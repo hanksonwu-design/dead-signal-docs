@@ -44,6 +44,39 @@ test('invalid or overlapping port assignments fail generation', () => {
   }
 });
 
+test('R8 keeps four single-user workrooms and every external doorway on shared circulation', () => {
+  const layout = LAYOUTS.find(l => l.id === 'R8'), node = graph.nodes.find(n => n.id === 'R8');
+  assert.deepEqual(layout.rooms.map(r => [r.number, r.access]), [[1, 'enter'], [2, 'enter'], [3, 'threshold'], [4, 'closed']]);
+  assert.equal(layout.rooms[0].name, '小花工作房');
+  const svg = renderLayout(layout, node, access.get('R8'));
+  assert.equal((svg.match(/data-workroom="/g) ?? []).length, 4);
+  assert.equal((svg.match(/data-door-to="shared-corridor"/g) ?? []).length, 4);
+  assert(svg.includes('data-space="shared-preparation" data-connects-to="shared-corridor"'));
+  assert(svg.includes('單人輪班使用'));
+  assert(svg.includes('房 1–4 僅為製作標示'));
+  const ports = [...svg.matchAll(/<g data-port="(\d+)" data-connects-to="([^"]+)" data-route="([^"]+)">([\s\S]*?)<\/g>/g)];
+  assert.equal(ports.length, 3);
+  assert.deepEqual(ports.map(p => p[3]).sort(), ['R7↔R8', 'R8↔R9', 'R8↔R10'].sort());
+  for (const [, , target, route, body] of ports) {
+    assert.equal(target, 'shared-corridor', route);
+    const point = body.match(/<circle cx="(\d+)" cy="(\d+)"/);
+    assert(point, route);
+    const [x, y] = point.slice(1).map(Number);
+    // North workrooms end at y=330. External doors must meet the west or
+    // south edge of shared circulation, clear of the preparation area.
+    assert((x === 270 && y >= 330 && y <= 640) || (y === 640 && x >= 270 && x <= 1040), route);
+    assert(!(x >= 690 && x <= 1020 && y >= 500 && y <= 600), route);
+    if (route === 'R7↔R8' || route === 'R8↔R10') assert.equal(x, 270, route);
+    if (route === 'R8↔R9') assert.equal(y, 640, route);
+  }
+  assert(ports.find(p => p[3] === 'R8↔R9')[4].includes('門後下兩級'));
+  assert(ports.find(p => p[3] === 'R8↔R10')[4].includes('不可翻窗'));
+  for (const edit of [l => l.rooms.pop(), l => { l.rooms[3].access = 'enter'; }]) {
+    const invalid = structuredClone(layout); edit(invalid);
+    assert.throws(() => renderLayout(invalid, node, access.get('R8')));
+  }
+});
+
 test('shared 32-S doorway and fixed ladder stay distinct from branches and movable platform', () => {
   const r17 = LAYOUTS.find(l => l.id === 'R17');
   assert.equal(r17.ports.filter(p => p[3].includes('R17→R14') || p[3].includes('R17→R18')).length, 1);
@@ -78,8 +111,8 @@ test('unlock, cancellation, open-door return, save migration and pre-brake lock 
 });
 
 test('two details and one return subscene are budgeted; diagrams are not shipped game art', () => {
-  assert.equal(images.rows.length, 559);
-  assert.equal(images.rows.filter(r => r.view).length, 153);
+  assert.equal(images.rows.length, 562);
+  assert.equal(images.rows.filter(r => r.view).length, 155);
   const route = routes.find(r => r.edge.id === 'U3-U1-return');
   assert.equal(route.mode, '出口接景');
   assert.deepEqual(route.rows.map(r => r.id), ['U3-V02']);

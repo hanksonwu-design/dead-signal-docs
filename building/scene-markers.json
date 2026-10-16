@@ -960,6 +960,28 @@
       "timing": "選填查看"
     },
     {
+      "id": "R8-C06-item",
+      "node": "R8",
+      "shot": "",
+      "category": "item",
+      "title": "工作房使用與門口狀態",
+      "image": "R8-C06",
+      "fragmentForms": [],
+      "reading": "",
+      "content": "另一房桌面換景痕、停用房門口斷接燈線與停用牌、封閉房門外封板與門牌座",
+      "requirements": "三焦點分圖；桌面由 V06 查看並返回 V06，兩門各在 V01 門外查看並返回 V01。文字可轉錄；未讀不記，無開鎖、人物身分或死亡推論。",
+      "source": "09_劇本/09-05_正式劇本_第二幕.md",
+      "heading": "workroom-r8-c06-script",
+      "spec": "10_製作規格/10-03_製作規格_第二幕.md",
+      "specHeading": "node-r8-images",
+      "offset": [
+        0.35,
+        0
+      ],
+      "play": null,
+      "timing": "選填查看"
+    },
+    {
       "id": "R9-D01-item",
       "node": "R9",
       "shot": "",
@@ -6013,7 +6035,7 @@
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
       "specHeading": "node-r8-images",
       "offset": [
-        0.35,
+        -0.35,
         0
       ],
       "play": null,
@@ -6037,8 +6059,8 @@
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
       "specHeading": "node-r8-images",
       "offset": [
-        -0.35,
-        0
+        0,
+        -0.35
       ],
       "play": null,
       "timing": ""
@@ -6062,8 +6084,8 @@
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
       "specHeading": "node-r8-images",
       "offset": [
-        0,
-        -0.35
+        -0.28,
+        0.27
       ],
       "play": null,
       "timing": ""
@@ -6087,8 +6109,8 @@
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
       "specHeading": "node-r8-images",
       "offset": [
-        -0.28,
-        0.27
+        0.29,
+        0.21
       ],
       "play": null,
       "timing": ""
@@ -6111,8 +6133,8 @@
       "spec": "10_製作規格/10-03_製作規格_第二幕.md",
       "specHeading": "node-r8-images",
       "offset": [
-        0.29,
-        0.21
+        -0.26,
+        -0.29
       ],
       "play": null,
       "timing": ""

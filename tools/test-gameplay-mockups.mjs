@@ -43,6 +43,6 @@ test('mockup notes preserve manual progression and disclose the scope and unimpl
   assert(provenance.finalEditPrompt.includes('acoustic panels'));
   assert(provenance.scope.includes('V07 only'));
   const flow = JSON.parse(read('scene-flow.json'));
-  assert.equal(Object.keys(flow.images).length, 559);
+  assert.equal(Object.keys(flow.images).length, 562);
   assert(Object.values(flow.images).every(i => i.status === 'pending'));
 });

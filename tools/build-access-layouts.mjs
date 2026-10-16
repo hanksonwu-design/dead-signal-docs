@@ -13,11 +13,16 @@ export const LAYOUTS = [
     ['front-left', '洗衣窄巷', '雙向', ['R3↔R4']],
     ['back-right', '工坊方向側路', '逐層上行／可返回', ['R3↔R5']],
   ], note: '2F 洗衣路在左近；另一側經 3F–7F 側路至 8F 工坊，不綁宿舍碎片。' },
-  { id: 'R8', landmark: ['視訊隔間', '封窗與地面側道分開'], ports: [
+  { id: 'R8', landmark: ['四間單人視訊工作房', '共用走道與共用準備區'], rooms: [
+    { number: 1, name: '小花工作房', access: 'enter', detail: '原必要查證與記憶入口' },
+    { number: 2, name: '單人工作房', access: 'enter', detail: '可進入短探索' },
+    { number: 3, name: '停用工作房', access: 'threshold', detail: '僅在門口觀察' },
+    { number: 4, name: '封閉工作房', access: 'closed', detail: '僅看封閉外觀' },
+  ], ports: [
     ['front-left', '窄橋門', '來路／可返回', ['R7↔R8']],
     ['back-left', '短租房門', '雙向／門後下兩級', ['R8↔R9']],
     ['back-right', '內井側道', '雙向／不可翻窗', ['R8↔R10']],
-  ], note: '兩出口分列隔間與窗邊；側道接遮棚平台，不露出樓外天空。' },
+  ], note: '三個跨房門端均接共用走道，不穿小花工作房；各工作房單人輪班使用。' },
   { id: 'R11', landmark: ['三排工位與安全邊界', '入口均在遭遇邊界外'], ports: [
     ['front-left', '隔板後長巷', '鎖場時停用', ['R9↔R11']],
     ['front-right', '平台側門', '鎖場時停用', ['R10↔R11']],
@@ -85,9 +90,87 @@ const slots = {
 const escape = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const text = (x, y, size, value, attrs = '') => `<text x="${x}" y="${y}" font-size="${size}" ${attrs}>${escape(value)}</text>`;
 
+// R8 is a small suite rather than a through-room. Keep its three existing routes
+// on the shared corridor; private workrooms never serve as another route's exit.
+const r8PortPositions = {
+  'front-left': { box: [20, 350, 220, 90], point: [270, 395], path: 'M240 395H270', place: '共用走道西端：窄橋門' },
+  'back-left': { box: [450, 700, 300, 100], point: [600, 640], path: 'M600 700V640', place: '南側走道：短租房門' },
+  'back-right': { box: [20, 520, 220, 90], point: [270, 565], path: 'M240 565H270', place: '南側走道西端：地面側口' },
+};
+
+function renderR8Layout(layout, node, rows) {
+  assert.deepEqual(layout.rooms.map(r => r.number), [1, 2, 3, 4], 'R8 must keep four workrooms');
+  assert.deepEqual(layout.rooms.map(r => r.access), ['enter', 'enter', 'threshold', 'closed'], 'R8 workroom access');
+  const height = 1080;
+  const rooms = layout.rooms.map((room, i) => {
+    const x = 290 + i * 190, center = x + 85;
+    const color = room.access === 'enter' ? '#147469' : '#6a737b';
+    const state = room.access === 'enter' ? '可進入' : room.access === 'threshold' ? '停在門口' : '不可進入';
+    const doorway = room.access === 'enter'
+      ? `<path d="M${center - 31} 330H${center + 31}" stroke="#eef4f3" stroke-width="7"/>
+        <path d="M${center - 31} 330V300M${center - 31} 300L${center + 23} 330" fill="none" stroke="${color}" stroke-width="2"/>`
+      : `<path d="M${center - 31} 330H${center + 31}" stroke="${color}" stroke-width="7"/>
+        <path d="M${center - 24} 321L${center + 24} 339M${center - 24} 339L${center + 24} 321" stroke="${color}" stroke-width="2"/>`;
+    return `<g data-workroom="${room.number}" data-access="${room.access}" data-door-to="shared-corridor">
+      <path d="M${x} 150H${x + 170}V330H${x}Z" fill="${room.access === 'enter' ? '#e5eeeb' : '#e9edef'}" stroke="${color}" stroke-width="2"/>
+      ${text(center, 185, 23, `工作房 ${room.number}`, 'text-anchor="middle" font-weight="700"')}
+      ${text(center, 221, 21, room.name, 'text-anchor="middle"')}
+      ${text(center, 256, 14, room.detail, 'text-anchor="middle"')}
+      ${text(center, 289, 18, state, `text-anchor="middle" fill="${color}"`)}
+      ${doorway}
+    </g>`;
+  });
+  const ports = layout.ports.map(([slot, label, state, routes], i) => {
+    const position = r8PortPositions[slot];
+    assert(position, `R8 port position: ${slot}`);
+    const [x, y, width, boxHeight] = position.box, [cx, cy] = position.point;
+    return `<g data-port="${i + 1}" data-connects-to="shared-corridor" data-route="${escape(routes.join(' ／ '))}">
+      <path d="${position.path}" fill="none" stroke="#147469" stroke-width="4"/>
+      <circle cx="${cx}" cy="${cy}" r="6" fill="#147469"/>
+      <rect x="${x}" y="${y}" width="${width}" height="${boxHeight}" fill="white" stroke="#147469" stroke-width="3"/>
+      ${text(x + 12, y + 29, 21, `${i + 1}. ${label}`, 'font-weight="700"')}
+      ${text(x + 12, y + 58, 18, state)}
+      ${text(x + 12, y + 81, 16, routes.join(' ／ '))}
+    </g>`;
+  });
+  const legend = layout.ports.map(([slot, , , routes], i) =>
+    text(50, 850 + i * 43, 22, `${i + 1}. ${r8PortPositions[slot].place}   ${routes.join(' ／ ')}`));
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="${height}" viewBox="0 0 1100 ${height}" role="img" aria-labelledby="title desc">
+  <title id="title">${escape(layout.id + ' 出入口配置草圖')}</title>
+  <desc id="desc">${escape(node.name + '。' + layout.note + ' 房 1 小花，可進入；房 2 可短探索；房 3 停用，僅門口觀察；房 4 封閉，僅看外觀。共用準備區接共用走道。' + rows.map(r => `${r.label}：${r.location} ${r.state}`).join(' '))}</desc>
+  <rect width="1100" height="${height}" fill="#fbfcfc"/>
+  <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
+    ${text(40, 52, 30, `${layout.id} · ${node.name} / 出入口配置`, 'font-weight="700"')}
+    ${text(40, 92, 20, '分區平面提案 · 非比例平面圖 · 非遊戲背景完成稿')}
+    <path d="M260 125H1060V660H260Z" fill="#f4f7f6" stroke="#a8b8b7" stroke-width="2"/>
+    ${text(650, 143, 15, '北側：四間單人工作房；房門均朝共用走道', 'text-anchor="middle"')}
+    <rect x="270" y="330" width="770" height="310" fill="#eef4f3" stroke="#a8b8b7" stroke-width="2" data-space="shared-corridor"/>
+    ${rooms.join('\n')}
+    ${text(650, 395, 27, '共用走道', 'text-anchor="middle" font-weight="700"')}
+    ${text(650, 433, 19, '來回與分岔都走此處；各房門不互通', 'text-anchor="middle"')}
+    ${text(435, 550, 23, '南側走道', 'text-anchor="middle" font-weight="700"')}
+    ${text(435, 585, 17, '通往 R9／R10', 'text-anchor="middle"')}
+    <g data-space="shared-preparation" data-connects-to="shared-corridor">
+      <rect x="690" y="500" width="330" height="100" fill="#dce8e5" stroke="#147469" stroke-width="2"/>
+      <path d="M660 550H690" stroke="#147469" stroke-width="4"/>
+      ${text(855, 540, 24, '共用準備區', 'text-anchor="middle" font-weight="700"')}
+      ${text(855, 575, 18, '沿走道側邊進出，不擋通路', 'text-anchor="middle"')}
+    </g>
+    ${ports.join('\n')}
+    ${text(550, 815, 18, '封窗只作外觀；R10 走地面側道，不翻窗，也不穿工作房。', 'text-anchor="middle"')}
+    ${legend.join('\n')}
+    ${text(40, 972, 18, '房 1–4 僅為製作標示，不是遊戲謎題或新增角色。')}
+    ${text(40, 1008, 21, layout.note)}
+    ${text(40, 1048, 18, '內部分區不增加跨房路線；完整門檻以本房出入口表及動線表為準。')}
+  </g>
+</svg>\n`;
+}
+
 export function renderLayout(layout, node, rows) {
   assert.equal(new Set(layout.ports.map(p => p[0])).size, layout.ports.length, `Repeated position: ${layout.id}`);
   assert.deepEqual(layout.ports.flatMap(p => p[3]).sort(), rows.map(r => r.route).sort(), `Layout route coverage: ${layout.id}`);
+  for (const [slot, label, state] of layout.ports) assert(slots[slot] && label.length <= 12 && state.length <= 16);
+  if (layout.id === 'R8') return renderR8Layout(layout, node, rows);
   const height = 770 + layout.ports.length * 48;
   const shapes = layout.ports.map(([slot, label, state, routes], i) => {
     assert(slots[slot] && label.length <= 12 && state.length <= 16);

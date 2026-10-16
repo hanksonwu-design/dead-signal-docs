@@ -39,6 +39,20 @@ test('fragment labels have deterministic parentheses, merge duplicate forms and 
  assert.equal(fragmentLabel('機關'),'機關');
 });
 
+test('R8 workroom observations stay optional ordinary items at their canonical inspection source',()=>{
+ for(const image of ['R8-C05','R8-C06']){
+  const markers=data.filter(m=>m.image===image);
+  assert.equal(markers.length,1,image);
+  const marker=markers[0];
+  assert.equal(marker.category,'item',image);
+  assert.equal(marker.timing,'選填查看',image);
+  assert.deepEqual(marker.fragmentForms,[],image);
+  assert.equal(marker.reading,'',image);
+  assert.equal(FRAGMENT_IMAGE_FORMS[image],undefined,image);
+ }
+ assert.equal(data.find(m=>m.image==='R8-C06').heading,'workroom-r8-c06-script');
+});
+
 test('fragment mapping fails for invalid, duplicate or unknown source classifications',()=>{
  for(const mutate of [d=>d['R2-D01']=['未知'],d=>d['R2-D01']=[],d=>d['R2-D01']=['物證','物證'],d=>d['R2-D01']='物證',d=>d['missing']=['物證'],d=>delete d['R2-D03']]){
   const forms=structuredClone(FRAGMENT_IMAGE_FORMS);mutate(forms);

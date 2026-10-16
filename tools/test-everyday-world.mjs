@@ -23,8 +23,8 @@ test('three optional interior views have art, local return paths and no new main
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(collection.rows.length, 559);
-  assert.equal(collection.rows.filter(row => row.content.startsWith('房內次場景：')).length, 13);
+  assert.equal(collection.rows.length, 562);
+  assert.equal(collection.rows.filter(row => row.content.startsWith('房內次場景：')).length, 15);
   includes(spec(1), ['R1-V01 ↔ R1-V02', 'A 棟 1F', 'R5-V01 ↔ R5-V02', 'A 棟 8F', '不繞過衣架']);
   includes(spec(2), ['R8-V01 ↔ R8-V04', 'B 棟 15F', '各分岔仍從 V01 選擇']);
   for (const id of [...views, ...details]) {
@@ -98,5 +98,5 @@ test('reader and model place optional life markers at their actual inspection pa
 test('canonical generation is repeatable with the new views included in inventory only', () => {
   const {outputs} = buildSceneImageOutputs(graph);
   for (const act of ACTS) assert.equal(outputs.get(act.path), master.documents.get(act.path));
-  includes(outputs.get('08_製作管理/08-13_劇情節點與場景道具總表.md'), ['另有 13 個房內選填探索鏡位', 'R1-V02', 'R5-V02', 'R8-V04']);
+  includes(outputs.get('08_製作管理/08-13_劇情節點與場景道具總表.md'), ['另有 15 個房內探索鏡位', 'R1-V02', 'R5-V02', 'R8-V04']);
 });

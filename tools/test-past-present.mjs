@@ -86,7 +86,7 @@ test('existing image orders carry the comparison work without extra maps or frag
   const graph = JSON.parse(read('scene_graph.json'));
   const collection = collectSceneImages(graph);
   const row = id => collection.rows.find(row => row.id === id)?.requirements ?? '';
-  assert.equal(collection.rows.length, 559);
+  assert.equal(collection.rows.length, 562);
   has(row('R3-C02'), '現時掀枕後摺邊', '不重發');
   has(row('R3-F01'), '床架、壁紙接縫', '低動態對照');
   has(row('R3-C04'), '舊梯沒有移動熱點');

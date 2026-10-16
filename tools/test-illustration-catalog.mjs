@@ -34,7 +34,7 @@ test('catalog covers every canonical illustration once, including supplements an
   const pictures = [...catalog.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)];
   assert.equal(pictures.length, records.length, 'every catalog entry displays its existing illustration');
   assert.deepEqual(pictures.map(m => catalogAsset(m[1])).sort(), records.map(r => r.asset).sort());
-  assert.equal(Object.keys(flow.images).length, 559, 'concept index does not create work orders');
+  assert.equal(Object.keys(flow.images).length, 562, 'concept index does not create work orders');
   assert(Object.values(flow.images).every(image => image.status === 'pending'));
 });
 

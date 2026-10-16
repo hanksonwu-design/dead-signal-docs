@@ -1,4 +1,5 @@
 // Schematic fixtures communicate narrative use and landmarks, not finished art assets.
+import {dressVideoSuite} from './video-suite.js';
 export function dressRoom(n,parent,{THREE,box,material,line,segment,y}){
  const m={metal:material(0x536774),wood:material(0x85634e),cloth:material(0x718d84),dark:material(0x253442),light:material(0xb3baab),red:material(0xa65d48)};
  const b=(w,h,d,dx,dy,dz,mat=m.metal)=>box(w,h,d,n.x+dx,y+dy,n.z+dz,mat,parent);
@@ -16,7 +17,7 @@ export function dressRoom(n,parent,{THREE,box,material,line,segment,y}){
  if(n.id==='R5'){for(const dx of[-5,2]){b(4,.2,2,dx,1,0,m.wood);b(1.2,.5,.6,dx,1.35,0,m.dark);}b(.65,2.4,.65,7,1.2,-3,m.light);for(let i=0;i<4;i++)b(.8,1.5,.15,-6+i*1.8,1.2,4,m.cloth);}
  if(n.id==='R6'){for(const dx of[-3,1])for(const dz of[-2,2])desk(dx,dz);b(.15,2,2,6,1.1,2,m.dark);}
  if(n.id==='R7'){for(const dz of[-7,-2,3,8])for(const dx of[-3,2])desk(dx,dz);for(const dz of[-5,5])b(.6,2.2,.6,0,1.1,dz,m.light);}
- if(n.id==='R8'){bed(3,-1);b(.2,2,6,-1,1.1,-1,material(0xaf9d82,.7));b(1.5,.12,1.5,-3,2,-2,m.light);b(.2,1.6,.2,-3,1,-2,m.dark);b(3,1.1,.15,-6.9,1.3,0,material(0x69a8ad,.4));}
+ if(n.id==='R8')dressVideoSuite(n,parent,{THREE,box,material,y});
  if(n.id==='R9'){bed(3,0);b(4,1.2,1.2,-3,.8,-3,m.cloth);b(.2,2,6,0,1.1,0,material(0x6b6175,.7));b(1.2,1,.5,-4,1,2,m.dark);}
  if(n.id==='R10'){b(2.2,.8,.8,1,.7,-1,m.wood);b(.8,.7,.12,1,1.25,-1.3,m.light);for(const dx of[-2,0,2])b(.6,.4,.6,dx,.45,1,m.wood);}
  if(n.id==='R11'){for(const dx of[-2.5,1.5])desk(dx,0);b(6,1.4,.15,0,.9,-3,m.light);b(.7,2.3,.7,3.5,1.15,3,m.metal);}

@@ -64,10 +64,10 @@ test('work-order totals remain current and concept art never marks game assets c
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.subscenes.length, 72);
   assert.equal(flow.routes.length, 56);
-  assert.equal(Object.keys(flow.images).length, 559);
+  assert.equal(Object.keys(flow.images).length, 562);
   assert(Object.values(flow.images).every(image => image.status === 'pending'));
   const appendix = read(`docs/${APPENDIX}`);
-  assert(appendix.includes('559 列：153 列場景／操作／演出與 406 列近看等細節'));
+  assert(appendix.includes('562 列：155 列場景／操作／演出與 407 列近看等細節'));
   assert.doesNotMatch(appendix, /523 (?:張圖像工單|列圖像|列：140)/);
   assert(appendix.includes('只有該段明列的必要條件限制推進'));
 });

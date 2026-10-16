@@ -88,7 +88,7 @@ test('published routes preserve every floor and original one-way boundary', () =
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);
   assert.equal(flow.subscenes.length, 72);
-  assert.equal(Object.keys(flow.images).length, 559);
+  assert.equal(Object.keys(flow.images).length, 562);
 });
 
 test('shared rules and novel use the same door causes and return path', () => {

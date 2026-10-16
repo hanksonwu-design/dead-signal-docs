@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "R8 exposes all new image orders and its optional observation marker",
+    "four-room cutaway renders nonblank with full partitions in top and perspective views",
+    "R8 remains usable on a narrow viewport",
+    "published static document payload contains the four-room specification"
+  ],
+  "errors": [],
+  "scope": "Documentation and schematic model only; engine gameplay remains unimplemented."
+}

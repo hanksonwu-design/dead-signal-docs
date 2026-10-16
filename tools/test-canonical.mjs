@@ -143,7 +143,7 @@ test('every static screenplay cue names its shot size without changing protected
   // R7's duplicate printed-process close-up is now part of its first manual shot.
   // Act 4 adds the optional physical wiring-label close-up.
   // Relationship beats reuse R7's paper crop, R17's personnel pages and R26's exit view.
-  const counts = [23, 61, 83, 99, 46, 31, 18, 25, 10, 20];
+  const counts = [23, 61, 85, 99, 46, 31, 18, 25, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -182,7 +182,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
   // Act 3 spells out branch selection and return; U2b/U5 separate follow-up inputs.
-  const counts = [[21, 17, 8], [75, 29, 19], [106, 35, 11], [144, 24, 10],
+  const counts = [[21, 17, 8], [75, 29, 19], [107, 35, 11], [144, 24, 10],
     [59, 18, 13], [56, 15, 13], [30, 4, 2], [59, 7, 5], [29, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
@@ -1124,7 +1124,7 @@ test('light markers have four authored choices and cannot strand a zero-slot pla
     '每處最多一個，全輪最多三個', '確認才扣槽，取消不扣',
     '不能搬動、收回、跨幕補槽或載入重生', '舊標記仍占槽但不要求為後幕預留',
     '反向鏡位只換投影', '不使用這三個留光槽']) assert(light.includes(phrase), phrase);
-  assert(block('s-0905-22').includes('從短租房或祈禱室回來時'));
+  assert(block('s-0905-22').includes('從 R9 搭景棚或祈禱室回來時'));
   assert(block('s-0906-3').includes('先前的光、借鉗掛位與原面板會對上同一工作檯'));
   assert(block('s-0906-43').includes('親手接通辦公區線路'));
   assert(block('s-0909-35').includes('沒有槽位也繼續沿單結'));

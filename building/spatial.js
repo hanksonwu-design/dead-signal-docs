@@ -1,3 +1,4 @@
+import {VIDEO_SUITE_DESCRIPTION} from './video-suite.js';
 // x, z, canonical floor, width, depth. Dimensions and local offsets remain proposals.
 export const layout={
  P0:[-17,7,-3,12,10],P1:[0,7,-3,12,10],P2:[17,7,-3,12,10],
@@ -24,7 +25,7 @@ export const rationale={
  R5:'8F 舊改衣工坊，由 2F 宿舍經 3F–7F 逐層側路抵達；厚柱後接 9F 水槽、10F 吊籃後道至 11F。',
  R6:'11F 生活網咖；玻璃門後經 12F 電錶廊、13F 晾衣層、14F 候工道，抵達 15F 聊天組。',
  R7:'沿長巷排列工位，以跨棟窄橋接 R8。R11 保持同一產線群的錯層工位，不能新增 R7→R11 捷徑。',
- R8:'位在內井另一側的視訊隔間；窄橋入口、下兩級至 R9 的門及通 R10 的側道分開。',
+ R8:VIDEO_SUITE_DESCRIPTION+'窄橋入口、下兩級至 R9 的門及通 R10 的側道均由共用走道分流。',
  R9:'緊鄰視訊區的隔音短租房，地面比 R8 低兩級；從後側折返到 R11 工位。',
  R10:'靠內井的小型共用祈禱平台，供桌避開通道；側門直連 R11，不必經 R9。',
  R11:'第三排靠牆工位，半層平台與隔板保留遭遇邊界；由 R9／R10 進入，服務門接上行脊柱。',

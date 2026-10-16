@@ -3,6 +3,7 @@ import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import graph from '../scene_graph.json';
 import flow from '../scene-flow.json';
 import {buildCurrentModel,FLOORS,floorName} from './current-spatial.js';
+import {VIDEO_SUITE_DESCRIPTION} from './video-suite.js';
 import {dressCurrentRoom} from './current-props.js';
 import {sharedGlassBoundary} from './story-props.js';
 import {clipRouteToHeight} from './floor-route-view.js';
@@ -290,7 +291,7 @@ function renderDetails(){
  $('node-title').textContent=s?s.name:n.name;$('node-floor').textContent=locationLabel(current,reverse&&!!s);
  $('node-goal').textContent=s?flow.images[s.id].content:n.goal;
  $('metric-size').textContent=s?(s.travel==='電梯車廂'?`車廂 ${SCALE.liftWidth} × ${SCALE.liftDepth} × ${SCALE.liftHeight} 公尺 · 估算`:`步道參考寬 ${SCALE.corridorWidth} 公尺`):n.id==='M1'?`跨層夾道 · 參考寬 ${SCALE.corridorWidth} 公尺`:n.spatial?`${n.w} × ${n.d} 公尺 · 平面估算`:'非實體演出節點';
- $('node-spatial').textContent=s?`${s.from} → ${s.id} → ${s.to}`:n.floor.description;
+ $('node-spatial').textContent=s?`${s.from} → ${s.id} → ${s.to}`:n.floor.description+(n.id==='R8'?' '+VIDEO_SUITE_DESCRIPTION:'');
  $('exploration').hidden=!s?.play;
  $('exploration').innerHTML=s?.play?`<h3>逐層探路</h3><p class="route-rule"><b>辨路依據</b> ${esc(s.play.clue)}</p><p class="route-rule"><b>操作與開通</b> ${esc(s.play.action)}</p><p class="route-rule"><b>錯路與復原</b> ${esc(s.play.recovery)}</p>`:'';
  const artwork=sceneArtwork(flow,current,r),primary=flow.images[r?.steps.find(step=>step.id===current.id)?.image||current.image];

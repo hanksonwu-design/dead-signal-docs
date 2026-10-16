@@ -1,6 +1,7 @@
 import {SCALE} from './human-scale.js';
+import {dressVideoSuite} from './video-suite.js';
 
-// Current viewer only. The archived editor keeps its original fixtures and saved layouts.
+// Current viewer fixtures. R8 shares its internal plan with the archived editor.
 export function dressCurrentRoom(n,parent,api) {
  const {THREE,box,material,line,y}=api;
  const m={metal:material(0x78928f),light:material(0xb4c4ba),dark:material(0x344346),wood:material(0xa18a68),cloth:material(0x819d87),red:material(0xad6752),glass:material(0x7cb2a3,.35)};
@@ -60,7 +61,7 @@ export function dressCurrentRoom(n,parent,api) {
  if(n.id==='R5'){for(const x of [-5,2]){table(x,0,1.5,.75);block('sewing-machine',.5,.32,.23,x,.91,0,m.dark);}shelf(7,-3,.8);for(let i=0;i<4;i++)block('garment',.46,1.3,.04,-6+i*1.8,1.05,4,m.cloth);}
  if(n.id==='R6')for(const x of [-3,1])for(const z of [-2,2])desk(x,z);
  if(n.id==='R7')for(const z of [-7,-2,3,8])for(const x of [-3,2])desk(x,z);
- if(n.id==='R8'){bed(3,-1);block('curtain',.035,2.2,4,-1,1.1,-1,m.cloth);block('camera-tripod',.06,1.35,.06,-3,.675,-2);block('camera',.18,.13,.15,-3,1.42,-2,m.dark);panel(-6,0,1.2,1.8);}
+ if(n.id==='R8')dressVideoSuite(n,parent,api);
  if(n.id==='R9'){bed(3,0);block('sofa-seat',1.8,.43,.75,-3,.215,-3,m.cloth);block('sofa-back',1.8,.78,.14,-3,.39,-3.3,m.cloth);block('curtain',.035,2.2,4,0,1.1,0,m.cloth);}
  if(n.id==='R10')shrine(1,-1);
  if(n.id==='R11'){for(const x of [-2.5,1.5])desk(x,0);block('work-partition',5,1.4,.055,0,.7,-3,m.light);shelf(3.5,3,.8);}
