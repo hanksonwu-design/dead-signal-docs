@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ACTS, CANONICAL_FILES, ILLUSTRATION_CATALOG } from './screenplay-files.mjs';
 import { ILLUSTRATION_DETAILS } from './illustration-details.mjs';
+import { ALLOWED_ILLUSTRATION_TYPES, ILLUSTRATION_TYPES } from './illustration-types.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const read = file => readFileSync(path.join(ROOT, file), 'utf8').replaceAll('\r\n', '\n');
@@ -41,6 +42,10 @@ export function collectIllustrations(documents, graph, flow, manifest) {
         effect: '對照入口、出口、回訪及封閉位置，協助製作門框、移動熱區與遮擋；實際通行仍依本房條件。',
       } : ILLUSTRATION_DETAILS[base];
       assert(details, `Missing scene, purpose or function: ${id}`);
+      const types = layout ? ['探索', '場景配置'] : ILLUSTRATION_TYPES[base];
+      assert(Array.isArray(types) && types.length >= 1 && types.length <= 3 &&
+        new Set(types).size === types.length && types.every(type => ALLOWED_ILLUSTRATION_TYPES.includes(type)),
+      `Missing or invalid illustration types: ${id}`);
       const scenes = details.scenes.map(id => {
         const node = nodes.get(id), place = places.get(id);
         assert(node && place, `Unknown scene: ${base}/${id}`);
@@ -57,7 +62,7 @@ export function collectIllustrations(documents, graph, flow, manifest) {
         heading: layout ? heading : `illustration-note-${slug(id)}`, layout: Boolean(layout),
         group: details.shared || !act ? 'common' : String(act.act),
         kind: layout ? '出入口草圖' : asset.endsWith('.svg') ? '規則圖解' : '概念／構圖參考',
-        scenes, subscenes, purpose: details.purpose, effect: details.effect, image: m[0] });
+        types, scenes, subscenes, purpose: details.purpose, effect: details.effect, image: m[0] });
     }
   }
   assert.equal(new Set(records.map(r => r.id)).size, records.length, 'Duplicate illustration IDs');
@@ -73,7 +78,7 @@ function sceneLinks(record, from, locations = false) {
 export function illustrationNote(record) {
   if (ACTS.some(a => a.specPath === record.source)) return [
     `<!-- illustration-info:${record.id}:begin -->`,
-    `**圖號：** ${record.id}　**類型：** ${record.kind}`,
+    `**圖號：** ${record.id}　**類型：** ${record.types.join('、')}　**圖像形式：** ${record.kind}`,
     '', `**場景編號：** ${sceneLinks(record, record.source)}`,
     ...(record.subscenes.length ? ['', '**次場景編號：** ' + record.subscenes.map(n => `[${n.id}](${link(record.source, n.source, n.heading)})`).join('、')] : []),
     '', `[用途、功能與圖像目錄](${link(record.source, ILLUSTRATION_CATALOG, 'catalog-' + slug(record.id))}) · [原圖檔](${link(record.source, '../' + record.asset)})`,
@@ -81,7 +86,7 @@ export function illustrationNote(record) {
   ].join('\n');
   const lines = [
     `<!-- illustration-info:${record.id}:begin -->`,
-    `**圖號：** ${record.id}　**類型：** ${record.kind}`,
+    `**圖號：** ${record.id}　**類型：** ${record.types.join('、')}　**圖像形式：** ${record.kind}`,
     '',
     `**場景編號：** ${sceneLinks(record, record.source, true)}`,
   ];
@@ -111,7 +116,7 @@ export function annotateIllustrations(documents, records) {
 export function renderCatalog(records, updated) {
   const groups = [...ACTS.map(a => ({ id: String(a.act), title: `${a.name} · ${a.subtitle}`, label: a.name })), { id: 'common', title: '跨幕共用', label: '跨幕共用' }];
   const lines = ['---', '文件: 製作規格 · 示意圖目錄', '狀態: 現行示意圖索引；正式素材仍待製作與驗收',
-    `更新: ${updated}`, '摘要: 依幕別直接看圖；簡標圖號、名稱與場景，製作註記可展開查閱。', '---', '',
+    `更新: ${updated}`, '摘要: 依幕別直接看圖；簡標圖號、類型與場景，製作註記可展開查閱。', '---', '',
     '# 製作規格：示意圖目錄', '', '<a id="illustration-catalog"></a>', '',
     `共 **${records.length} 張**。依幕別及劇本順序看圖，點圖可開原圖；詳細說明收在「製作註記」。`, '',
     groups.map(g => `[${g.label}](#catalog-group-${g.id})`).join(' · '), ''];
@@ -125,10 +130,10 @@ export function renderCatalog(records, updated) {
       const label = (r.group === 'common' ? '跨幕共用' + (scenes ? ' · ' : '') : '') + scenes;
       const locations = sceneLinks(r, ILLUSTRATION_CATALOG, true) + (r.subscenes.length ? '；次場景：' + r.subscenes.map(n => `[${n.id}](${link(ILLUSTRATION_CATALOG, n.source, n.heading)})（${n.building} · ${n.floor}）`).join('、') : '');
       lines.push(`<a id="catalog-${slug(r.id)}"></a>`, '', `### ${r.id}｜${r.title}`, '',
-        `${label} · [製作規格](${link(ILLUSTRATION_CATALOG, r.source, r.heading)})`, '',
+        `**類型：** ${r.types.join('、')} · ${label} · [製作規格](${link(ILLUSTRATION_CATALOG, r.source, r.heading)})`, '',
         `![${r.title}](${asset})`, '',
         '<details>', '<summary>製作註記</summary>', '',
-        `**類型：** ${r.kind}`, '', `**用途：** ${r.purpose}`, '', `**功能作用：** ${r.effect}`, '',
+        `**圖像形式：** ${r.kind}`, '', `**用途：** ${r.purpose}`, '', `**功能作用：** ${r.effect}`, '',
         `**位置：** ${locations}`, '', `[原圖檔](${asset})`, '', '</details>', '');
     }
     lines.push('');

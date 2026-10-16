@@ -7,6 +7,7 @@ import { ACTS, APPENDIX, CANONICAL_FILES, ILLUSTRATION_CATALOG } from './screenp
 import { ROOT } from './sync-canonical.mjs';
 import { annotateIllustrations, buildIllustrationCatalog, collectIllustrations, stripIllustrationNotes } from './build-illustration-catalog.mjs';
 import { ILLUSTRATION_DETAILS } from './illustration-details.mjs';
+import { ALLOWED_ILLUSTRATION_TYPES, ILLUSTRATION_TYPES } from './illustration-types.mjs';
 import { BOARDS } from './illustration-boards.mjs';
 
 const read = file => readFileSync(path.join(ROOT, file), 'utf8').replaceAll('\r\n', '\n');
@@ -51,6 +52,9 @@ test('each catalog entry shows a short label and its picture before collapsed pr
     assert.equal(catalogAsset(pictures[0][1]), r.asset, r.id);
     assert(pictures[0].index < notes[0].index, `${r.id}: picture precedes notes`);
     assert.match(visible, new RegExp(`^#{3,4} .*${r.id.replaceAll('-', '\\-')}`, 'm'), `${r.id}: visible figure label`);
+    assert(visible.includes(`**類型：** ${r.types.join('、')}`), `${r.id}: gameplay types remain visible above the picture`);
+    assert(visible.indexOf('**類型：**') < pictures[0].index, `${r.id}: types precede the picture`);
+    assert(notes[0][1].includes(`**圖像形式：** ${r.kind}`), `${r.id}: rendering format stays separate from gameplay type`);
     assert(!visible.includes('**用途：**') && !visible.includes('**功能作用：**') && !visible.includes('次場景：'), r.id);
     assert(notes[0][1].includes(r.purpose) && notes[0][1].includes(r.effect), `${r.id}: full production context is retained`);
     for (const n of r.scenes) assert(visible.includes(`[${n.id}]`), `${r.id}: short scene link`);
@@ -60,6 +64,27 @@ test('each catalog entry shows a short label and its picture before collapsed pr
       assert(!visible.includes(`（${n.building} · ${n.floor}）`), `${r.id}: location is collapsed`);
     }
     assert(!notes[0][1].includes('!['), `${r.id}: production notes do not repeat the image`);
+  }
+});
+
+test('illustration types cover all content and distinguish gameplay from art references', () => {
+  assert.deepEqual(Object.keys(ILLUSTRATION_TYPES).sort(), Object.keys(ILLUSTRATION_DETAILS).sort());
+  for (const r of records) {
+    assert(r.types.length >= 1 && r.types.length <= 3, r.id);
+    assert.equal(new Set(r.types).size, r.types.length, r.id);
+    assert(r.types.every(type => ALLOWED_ILLUSTRATION_TYPES.includes(type)), r.id);
+    if (r.layout) assert.deepEqual(r.types, ['探索', '場景配置']);
+    else assert.deepEqual(r.types, ILLUSTRATION_TYPES[r.base]);
+    const source = documents.get(r.source).split(`<!-- illustration-info:${r.id}:begin -->`)[1]?.split(`<!-- illustration-info:${r.id}:end -->`)[0];
+    assert(source?.includes(`**類型：** ${r.types.join('、')}`), `${r.id}: source notes agree with the catalog`);
+  }
+  assert(ILLUSTRATION_TYPES['REF-MECHANISM'].includes('操作') && ILLUSTRATION_TYPES['REF-MECHANISM'].includes('解謎'));
+  assert(ILLUSTRATION_TYPES.V07.includes('潛行'));
+  assert(ILLUSTRATION_TYPES.V38.includes('戰鬥／防禦'));
+  assert(ILLUSTRATION_TYPES.V02.includes('介面'));
+  assert(ILLUSTRATION_TYPES.CHAR.includes('角色設定') && !ILLUSTRATION_TYPES.CHAR.includes('解謎'));
+  for (const r of records.filter(r => r.id.endsWith('-RULES'))) {
+    assert.deepEqual(r.types, records.find(main => main.id === r.base)?.types, `${r.id}: paired visuals describe the same gameplay`);
   }
 });
 
