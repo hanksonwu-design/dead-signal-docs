@@ -351,7 +351,7 @@ test('R29 compares existing signatures and keeps a single informed approval acti
 test('R27 prose, hotspot and artwork keep the same unknown-read indicator location', () => {
   const spec = ACTS.slice(6, 9).map(a => master.documents.get(a.specPath)).join('\n');
   const locationLines = spec.split('\n').filter(line => /右[上下]/.test(line) && /讀取心跳|未知節點讀取/.test(line));
-  assert.equal(locationLines.length, 3);
+  assert(locationLines.length > 0, 'the canonical location remains after duplicated prose is removed');
   assert(locationLines.every(line => line.includes('右下角')));
   assert(row('R27-D02').requirements.includes('展示索引右下角'));
 });

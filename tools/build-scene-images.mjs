@@ -279,7 +279,7 @@ export function buildSceneImageOutputs(graph, documents) {
             `**近看：**${s.details.length ? `${s.details.map(d => d.id).join('、')}；關閉回 ${s.id}。` : '不新增近看；沿原轉場操作，不新增等待或讀取門檻。'}\n\n` +
             `[正文](../${act.path}#${subsceneAnchor(s, 'script')}) · [圖像製作單](#node-${group.node.toLowerCase()}-images) · [原門檻與回訪](#node-${group.node.toLowerCase()}-nav) · ${s.source}`
           ).join('\n\n');
-        const placement = /<!-- production:ordered:v[12] -->/.test(spec)
+        const placement = /<!-- production:ordered:v[123] -->/.test(spec)
           ? `<!-- production-subscenes:${group.node.toLowerCase()} -->` : `<!-- scene-images:${group.node}:end -->`;
         spec = section(spec, `subscenes-${group.node.toLowerCase()}`, childBody, placement);
       }

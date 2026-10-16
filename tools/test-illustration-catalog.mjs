@@ -36,13 +36,18 @@ test('each illustration has scene, current location, purpose, function and retur
     const text = documents.get(r.source);
     const note = text.split(`<!-- illustration-info:${r.id}:begin -->`)[1]?.split(`<!-- illustration-info:${r.id}:end -->`)[0];
     assert(note, r.id);
-    for (const field of ['圖號', '類型', '場景編號', '用途', '功能作用']) assert(note.includes(`**${field}：**`), r.id);
-    assert(note.includes('返回示意圖目錄'), r.id);
+    const production = ACTS.some(a => a.specPath === r.source);
+    for (const field of production ? ['圖號', '類型', '場景編號'] : ['圖號', '類型', '場景編號', '用途', '功能作用']) assert(note.includes(`**${field}：**`), r.id);
+    assert(note.includes(production ? '用途、功能與圖像目錄' : '返回示意圖目錄'), r.id);
+    if (production) {
+      assert(!note.includes('**用途：**') && !note.includes('**功能作用：**'), r.id);
+      assert(catalog.includes(r.purpose) && catalog.includes(r.effect), r.id);
+    }
     assert(r.purpose && r.effect, r.id);
     assert(text.includes(`<a id="${r.heading}"></a>`), r.id);
     for (const n of [...r.scenes, ...r.subscenes]) {
       assert(note.includes(`[${n.id}]`), r.id);
-      assert(note.includes(`（${n.building} · ${n.floor}）`), r.id);
+      assert((production ? catalog : note).includes(`（${n.building} · ${n.floor}）`), r.id);
     }
     if (!r.scenes.length) assert(note.includes('跨幕共用（無單一場景）'), r.id);
     if (r.layout) assert(text.indexOf(`<!-- access-layout:${r.scenes[0].id}:end -->`) < text.indexOf(`<!-- illustration-info:${r.id}:begin -->`), r.id);

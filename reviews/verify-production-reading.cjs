@@ -25,6 +25,17 @@ mkdirSync(out, { recursive: true });
       await page.waitForFunction(({ doc, heading }) => state.selected?.path === doc && document.getElementById(heading), { doc, heading });
       await page.waitForFunction(id => document.activeElement?.id === id, heading);
     };
+    const screenshot = async name => {
+      await page.evaluate(async () => {
+        await document.fonts.ready;
+        await Promise.all([...document.querySelectorAll('#readerContent img')].map(async img => {
+          img.loading = 'eager';
+          await img.decode();
+        }));
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      });
+      await page.screenshot({ path: path.join(out, name) });
+    };
     for (const width of [1440, 390]) {
       await page.setViewportSize({ width, height: 1000 });
       for (const act of ACTS) {
@@ -71,16 +82,26 @@ mkdirSync(out, { recursive: true });
           document.querySelector('.reader-panel').scrollWidth <= document.querySelector('.reader-panel').clientWidth + 1));
       }
       await navigate(ACTS[4].specPath, 'node-r18-level');
-      const nested = page.locator('#readerContent details').filter({ has: page.locator('summary', { hasText: 'R18–R20 跨房操作圖解' }) });
-      assert.equal(await nested.count(), 1);
       await navigate(ACTS[4].specPath, 'h-0605-67');
-      assert(await nested.evaluate(el => el.open));
+      assert(await page.evaluate(() => Boolean(document.getElementById('node-r22-spec')
+        .compareDocumentPosition(document.getElementById('h-0605-67')) & Node.DOCUMENT_POSITION_FOLLOWING)), 'cross-room operation reference follows the final room');
       await navigate(ACTS[4].specPath, 'node-r18-pack');
-      await page.screenshot({ path: path.join(out, `technical-${width}.png`) });
+      await screenshot(`technical-${width}.png`);
       await page.locator('#node-r18-pack').evaluate(el => { el.closest('details').open = false; });
-      await nested.evaluate(el => { el.open = false; });
       await navigate(ACTS[4].specPath, 'node-r18-spec');
-      await page.screenshot({ path: path.join(out, `flow-${width}.png`) });
+      await screenshot(`flow-${width}.png`);
+      await navigate(ACTS[0].specPath, 'fig-l01');
+      assert(await page.evaluate(() => Boolean(document.getElementById('h-0601-313')
+        .compareDocumentPosition(document.getElementById('fig-l01')) & Node.DOCUMENT_POSITION_FOLLOWING)));
+      await screenshot(`inline-diagram-${width}.png`);
+      await navigate(ACTS[9].specPath, 'fig-v13');
+      assert(await page.evaluate(() => {
+        const follows = (first, second) => Boolean(document.getElementById(first)
+          .compareDocumentPosition(document.getElementById(second)) & Node.DOCUMENT_POSITION_FOLLOWING);
+        return follows('h-0608-114', 'fig-v13') && follows('h-0608-152', 'r32-ceasefire-pressure') &&
+          follows('r32-ceasefire-pressure', 'h-0608-163');
+      }), 'complete manifestation and ceasefire rules follow their actual gameplay beats');
+      await screenshot(`finale-diagram-${width}.png`);
       checks.push(`${width}px: all production links open separately; 48 deep targets and 48 popups preserve source position, expand destination and isolate opener`);
       console.log(`PASS ${checks.at(-1)}`);
     }

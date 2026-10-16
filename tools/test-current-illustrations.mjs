@@ -31,7 +31,7 @@ test('3D references do not silently keep retired illustration pixels', () => {
     assert(!retired.has(node.reference.url), node.id);
     assert(existsSync(path.join(ROOT, node.reference.url)), node.id);
   }
-  for (const [id, suffix] of [['R1', 'L02_current.png'], ['R16', 'V34_current.png'], ['R22', 'V29.svg'], ['R32', 'V13_current.png']]) {
+  for (const [id, suffix] of [['R1', 'L02_current.png'], ['R16', 'V34_current.png'], ['R22', 'REF-UPPER-END.svg'], ['R32', 'V13_current.png']]) {
     assert(flow.nodes.find(n => n.id === id).reference.url.endsWith(suffix), id);
   }
 });

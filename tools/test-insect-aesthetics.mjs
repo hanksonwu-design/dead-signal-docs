@@ -85,7 +85,7 @@ test('aesthetic changes preserve attack timing, safe reading and staged Xiaohua 
   attacks.forEach((line, index) => includes(line, [`${timings[index]} 秒`, '6 秒']));
   includes(appendix, ['完整文件、必要配音與結局選擇期間不攻擊', 'SOURCE_READ', '停戰不等於解封或原諒']);
   includes(appendix, ['一般恐慌值不提前觸發完整翼膜']);
-  includes(spec(9), ['顯形期間不判攻擊', '完成封鎖三源後']);
+  includes(spec(9), ['不於顯形中判定攻擊', '完成封鎖三源後']);
   includes(spec(2), ['兩路一律停新增擬音', '17 秒原底噪']);
   includes(appendix, ['黑白剪影分辨角色', '低動態、無聲與效果關閉版本']);
 });

@@ -54,7 +54,7 @@ test('R30 groups reading without reducing five source placements or committing o
 test('R31 recap does not auto-complete new evidence, compromise fallback or remount', () => {
   includes(block(story(8), 's-0909-53'), ['R29 已核筆勢與 R25 已排妥', '玩家沿五列親自接起新舊來源']);
   includes(block(story(8), 's-0909-54'), ['尚未讀齊時', '補查並確認']);
-  includes(spec(8), ['五列跨來源關聯仍由玩家完成', '已有單件不等於已完成本房核驗', '不憑縮頁補發未得來源', '缺旗標必須由原附件補查', '必要掛載與五列核驗可互換先後，但須全部完成']);
+  includes(spec(8), ['五列跨來源關聯仍由玩家完成', '已有單件不等於已完成本房核驗', '不憑縮頁補發未得來源', '缺旗標必須由原附件補查', '冷備份重新掛載', '與五列核驗可互換先後，但須全部完成']);
 });
 
 test('R31 and R32 document separate player-controlled revelation boundaries', () => {

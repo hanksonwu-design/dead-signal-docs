@@ -686,10 +686,9 @@ test('V33 per-room instructions select the correct panel and retain encounter li
     ['r15', 4, '電房殘響', '限全面供電']
   ]) {
     const start = master.text.indexOf(`<a id="node-${room}-visual">`);
-    const story = canonicalFile(master, `node-${room}-script`);
-    const end = master.text.indexOf(`[返回本房正式劇本](../${story}#node-${room}-script)`, start);
+    const end = master.text.indexOf(`<a id="node-${room}-pack">`, start);
     assert(start >= 0 && end > start, room);
-    const note = master.text.slice(start, end).split('\n').find(line => line.startsWith('- **V33：**'));
+    const note = master.text.slice(start, end).split('\n').find(line => line.startsWith('**V33 本房面板：**'));
     assert(note?.includes(`本房只取第 ${panel} 格「${character}」`), room);
     assert(note.includes(limit), room);
   }

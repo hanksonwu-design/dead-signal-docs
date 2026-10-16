@@ -6,8 +6,9 @@ import { runInNewContext } from 'node:vm';
 import { ROOT, parseMaster } from './sync-canonical.mjs';
 import { ACTS, APPENDIX } from './screenplay-files.mjs';
 import { compactProduction } from './compact-production-specs.mjs';
-import { validateProductionOrder } from './reorder-production-specs.mjs';
+import { validateProductionOrder, orderImages } from './reorder-production-specs.mjs';
 import { buildSceneImageOutputs } from './build-scene-images.mjs';
+import { sequenceProduction, validateProductionSequence, FIGURE_BEATS, SEQUENCE_MARKER } from './sequence-production-specs.mjs';
 
 const master = parseMaster();
 const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
@@ -23,7 +24,7 @@ test('all ten acts follow gameplay-first order with one technical disclosure per
   let technical = 0;
   for (const act of ACTS) {
     const text = master.documents.get(act.specPath);
-    assert(text.includes('<!-- production:ordered:v2 -->'));
+    assert(text.includes(SEQUENCE_MARKER));
     assert(text.includes('#production-reading-contract'));
     assert(!text.includes('以下每列均為待製作圖像項目'));
     const html = render(text);
@@ -93,10 +94,55 @@ test('deep navigation reveals every ancestor before focus and scrolling', () => 
   assert.deepEqual(events, ['focus', 'scroll']);
 });
 
-test('R18 summaries require physically reaching N4, including the duplicated incoming route', () => {
+test('R18 keeps the physical N4 arrival gate after redundant summaries are removed', () => {
   const spec = master.documents.get(ACTS[4].specPath);
   assert(!/到(?:達)?布簾後安全點(?:後)?手動開門/.test(spec));
-  assert.equal((spec.match(/親自抵達門前 N4，再手動開門/g) || []).length, 4);
+  assert(spec.includes('親自抵達門前 N4，再手動開門'));
+  assert(spec.includes('N4'));
   const edge = graph.edges.find(e => e.fromId === 'R18' && e.toId === 'R19');
   assert(edge.gate.includes('親自抵達門前 N4，再手動開門'));
+});
+
+test('screenplay beats and inline illustrations follow the authored sequence and stay idempotent', () => {
+  const audit = validateProductionSequence(master.documents, graph);
+  assert.equal(audit.acts, 10);
+  assert(audit.inlineFigures > 30 && audit.referenceBoards > 20);
+  assert.equal(sequenceProduction(master, graph).documents, master.documents);
+  for (const [, , anchor] of FIGURE_BEATS) assert(master.anchors.has(anchor), anchor);
+  for (const act of ACTS) {
+    const spec = master.documents.get(act.specPath);
+    assert(!spec.includes('| 前置與操作順序 |'));
+    assert(!spec.includes('| 階段 | 製作規格 |'));
+    assert(!/^置\s*$/m.test(spec));
+    assert(spec.includes('### 本幕概覽與前置\n'));
+  }
+});
+
+test('swapping an actual gameplay beat or placing its figure before the step fails validation', () => {
+  const file = ACTS[0].specPath, original = master.documents.get(file);
+  const swap = (a, b) => original.replace(`<a id="${a}"></a>`, '<sequence-swap>')
+    .replace(`<a id="${b}"></a>`, `<a id="${a}"></a>`).replace('<sequence-swap>', `<a id="${b}"></a>`);
+  for (const [a, b, message] of [
+    ['h-0601-188', 'h-0601-162', /Screenplay beat order/],
+    ['h-0601-385', 'fig-l01', /illustration before its gameplay beat/],
+  ]) {
+    const invalid = new Map(master.documents); invalid.set(file, swap(a, b));
+    assert.throws(() => validateProductionSequence(invalid, graph), message);
+  }
+});
+
+test('work orders sharing one source heading follow the individual screenplay operation positions', () => {
+  const story = '<a id="same-source"></a>\n<!-- reading-inline:R1-C02:tight -->\nB\n\n<!-- reading-inline:R1-C01:tight -->\nA';
+  const table = '<!-- scene-images:R1:begin -->\n| ID | Source |\n| --- | --- |\n| R1-V01 | [base](#same-source) |\n| R1-C01 | [A](#same-source) |\n| R1-C02 | [B](#same-source) |\n<!-- scene-images:R1:end -->';
+  const sorted = orderImages(table, story);
+  assert(sorted.indexOf('| R1-V01') < sorted.indexOf('| R1-C02'));
+  assert(sorted.indexOf('| R1-C02') < sorted.indexOf('| R1-C01'));
+  assert.equal(orderImages(sorted, story), sorted);
+});
+
+test('an authored diagram cannot be placed inside a generated section that would erase it', () => {
+  const invalid = new Map(master.documents), file = ACTS[0].specPath;
+  invalid.set(file, invalid.get(file).replace('<a id="fig-l01"></a>', '')
+    .replace('<!-- scene-image-routes-0:begin -->', '<!-- scene-image-routes-0:begin -->\n<a id="fig-l01"></a>'));
+  assert.throws(() => validateProductionSequence(invalid, graph), /authored figure inside a generated section/);
 });

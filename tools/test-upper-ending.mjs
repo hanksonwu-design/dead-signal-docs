@@ -30,7 +30,7 @@ test('Act III separates reading beats without auto-solving either source chain',
 
 test('R8 to R22 emotional recall requires the actual memory, not an optional dossier', () => {
   includes(block(story(2), 's-0905-26'), ['小花把剛打好的短尾雙結托在她掌心', '針線和兩人的手都停著', '自己的修理桌']);
-  const source = block(spec(2), 's-0603-29');
+  const source = spec(2).split('<a id="h-0603-1173"></a>')[1].split(/<a id="h-/)[0];
   includes(source, ['scene_detail.r8.read_pages', 'knot_memory', '舊存檔缺該頁鍵時採未看',
     '不由讀卡、E2-02、小帳或 moth.released 推定', '不作出口或結局條件']);
   const finale = block(spec(4), 's-0605-23');

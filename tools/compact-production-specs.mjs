@@ -59,9 +59,10 @@ const contract = `<a id="production-reading-contract"></a>
 `;
 
 export function compactProduction(original, graph) {
-  if (ACTS.every(a => original.documents.get(a.specPath).includes(marker))) {
+  if (ACTS.every(a => /<!-- production:ordered:v[23] -->/.test(original.documents.get(a.specPath)))) {
     const documents = new Map(original.documents);
-    for (const act of ACTS) documents.set(act.specPath, relocateLooseFigures(documents.get(act.specPath)));
+    for (const act of ACTS) documents.set(act.specPath, relocateLooseFigures(documents.get(act.specPath))
+      .replace('### 本幕概覽與前\n', '### 本幕概覽與前置\n').replace(/^置\s*\n/gm, ''));
     const unchanged = [...documents].every(([file, text]) => text === original.documents.get(file));
     const after = parseMaster([...documents.values()].join('\n\n'), documents);
     for (const [id, file] of original.anchorFiles) assert.equal(after.anchorFiles.get(id), file, id);
@@ -96,7 +97,8 @@ export function compactProduction(original, graph) {
     }).trim();
     if (primary[act.act]) assert(main, `Missing primary overview: ${act.name}`);
     if (main) {
-      const headingEnd = front.indexOf('\n', front.indexOf('### '));
+      const newline = front.indexOf('\n', front.indexOf('### '));
+      const headingEnd = newline < 0 ? front.length : newline;
       front = front.slice(0, headingEnd) + '\n\n' + main + '\n\n' + front.slice(headingEnd).trim();
     }
     text = text.slice(0, overviewStart) + front + '\n\n' + (extra.length ? fold('前置設定與跨場景規則', extra.join('\n\n')) + '\n\n' : '') + text.slice(routesStart);

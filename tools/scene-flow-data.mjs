@@ -45,14 +45,23 @@ export function buildSceneFlowData(graph, collection, routes, subscenes, access,
     const slug = node.id.toLowerCase();
     for (const [id, floor] of readChildFloors(spec, node.id, subscenes.filter(s => s.node === node.id))) childFloors.set(id, floor);
     for (const [id, location] of readChildLocations(spec, node.id)) childLocations.set(id, location);
-    const visual = spec.split(`<a id="node-${slug}-visual"></a>`)[1]?.split(`<a id="node-${slug}-exit"></a>`)[0] || '';
-    const image = visual.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+    const visual = spec.split(`<a id="node-${slug}-level"></a>`)[1]?.split(`<a id="node-${slug}-exit"></a>`)[0] || '';
+    let image = visual.match(/!\[([^\]]*)\]\(([^)]+)\)/), imageFile = node.pack;
+    // A room may use one panel of a composite stored once at the act's end or in another act.
+    if (!image) {
+      const ref = visual.match(/\[[^\]]+\]\(([^)]*)#((?:fig-|illustration-(?!note-))[^)]+)\)/);
+      if (ref) {
+        imageFile = ref[1] ? path.posix.normalize(path.posix.join(path.posix.dirname(node.pack), ref[1])) : node.pack;
+        const owner = documents?.get(imageFile) ?? readFileSync(path.join(ROOT, 'docs', imageFile), 'utf8');
+        image = owner.split(`<a id="${ref[2]}"></a>`)[1]?.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+      }
+    }
     const layout = `assets/scene_access/${slug}.svg`;
     let reference = null;
     if (spec.includes(`<a id="node-${slug}-access-layout"></a>`)) {
       reference = { url: layout, label: `${node.id} 出入口配置草圖`, kind: '配置提案，非遊戲背景' };
     } else if (image) {
-      const url = path.posix.normalize(path.posix.join('docs', path.posix.dirname(node.pack), image[2]));
+      const url = path.posix.normalize(path.posix.join('docs', path.posix.dirname(imageFile), image[2]));
       assert(url.startsWith('assets/') && !url.includes('..'), `Unsafe scene reference: ${node.id}`);
       reference = { url, label: image[1], kind: '概念參考，非正式素材' };
     }

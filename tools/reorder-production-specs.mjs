@@ -9,6 +9,7 @@ import { ROOT, parseMaster, deriveGraph } from './sync-canonical.mjs';
 
 const marker = '<!-- production:ordered:v1 -->';
 const compactMarker = '<!-- production:ordered:v2 -->';
+const sequenceMarker = '<!-- production:ordered:v3 -->';
 const anchor = id => `<a id="${id}"></a>`;
 const imported = /<a id="(s-[^"]+)"><\/a>\s*<!-- import:\1:begin -->([\s\S]*?)<!-- import:\1:end -->/g;
 const bundled = /(?:<a id="[^"]+"><\/a>\s*)+<!-- import:([^:]+):begin -->([\s\S]*?)<!-- import:\1:end -->/g;
@@ -43,9 +44,15 @@ function storyPosition(row, story) {
 }
 
 export function orderImages(text, story) {
+  // Reading links locate individual operations even when several share one source heading.
+  const positions = new Map();
+  for (const m of story.matchAll(/<!-- reading-inline:([^:]+):(?:pad|tight) -->/g)) {
+    for (const id of m[1].split('_')) positions.set(id, m.index);
+  }
+  const rank = row => positions.get(row.match(/^\| ([^ |]+) /)?.[1]) ?? storyPosition(row, story);
   return text.replace(/(<!-- scene-images:[^:]+:begin -->\n)([\s\S]*?)(\n<!-- scene-images:[^:]+:end -->)/g, (_, begin, body, end) => {
     const [heading, rule, base, ...rows] = body.split('\n');
-    rows.sort((a, b) => storyPosition(a, story) - storyPosition(b, story));
+    rows.sort((a, b) => rank(a) - rank(b));
     return begin + [heading, rule, base, ...rows].join('\n') + end;
   });
 }
@@ -54,7 +61,7 @@ export function validateProductionOrder(documents, graph) {
   let children = 0, passages = 0;
   for (const act of ACTS) {
     const text = documents.get(act.specPath), story = documents.get(act.path);
-    assert(text.includes(marker) || text.includes(compactMarker), `Unordered specification: ${act.name}`);
+    assert([marker, compactMarker, sequenceMarker].some(m => text.includes(m)), `Unordered specification: ${act.name}`);
     assert(!text.includes('### 本幕共通規格與交付'), act.name);
     const boundaries = ['overview', 'rooms', 'shared', 'references', 'delivery'].map(s => text.indexOf(anchor(`spec-act-${act.act}-${s}`)));
     assert(boundaries.every((n, i) => n >= 0 && (!i || n > boundaries[i - 1])), act.name);
@@ -65,7 +72,7 @@ export function validateProductionOrder(documents, graph) {
     assert(index > boundaries[0] && index < boundaries[1]);
     for (const [i, match] of rooms.entries()) {
       const id = match[1], body = text.slice(match.index, rooms[i + 1]?.index ?? boundaries[2]);
-      const order = text.includes(compactMarker) ? ['nav', 'level', 'visual', 'pack', 'images', 'exit'] : ['nav', 'level', 'pack', 'images', 'visual', 'exit'];
+      const order = /production:ordered:v[23]/.test(text) ? ['nav', 'level', 'visual', 'pack', 'images', 'exit'] : ['nav', 'level', 'pack', 'images', 'visual', 'exit'];
       const positions = order.map(s => body.indexOf(anchor(`node-${id}-${s}`)));
       assert(positions.every((n, i) => n >= 0 && (!i || n > positions[i - 1])), `Room section order: ${id}`);
       for (const child of body.matchAll(/<a id="subscene-([^"]+)-spec"><\/a>/g)) {
@@ -92,7 +99,7 @@ export function validateProductionOrder(documents, graph) {
 }
 
 export function reorderProduction(original, graph) {
-  if (ACTS.every(a => [marker, compactMarker].some(m => original.documents.get(a.specPath).includes(m)))) {
+  if (ACTS.every(a => [marker, compactMarker, sequenceMarker].some(m => original.documents.get(a.specPath).includes(m)))) {
     return { documents: original.documents, audit: validateProductionOrder(original.documents, graph) };
   }
   assert(ACTS.every(a => !original.documents.get(a.specPath).includes(marker)), 'Partially migrated specifications');
