@@ -1,0 +1,34 @@
+{
+  "updated": "2026-10-13",
+  "generator": "Built-in image_gen; one generation followed by one targeted edit",
+  "scope": "V07 only; screenshot-like production mockup, not captured gameplay or completed game art",
+  "selectedOutput": {
+    "id": "V07",
+    "asset": "assets/illustrations/gameplay/V07_gameplay_current.png",
+    "sha256": "025aadb2d5255c75cbb66efdc699c3d26d27a030fd3fd869fdb7026361b5e48a"
+  },
+  "sourceReferences": [
+    {
+      "role": "layout and four original operation stages",
+      "source": "User-provided screenshot of V07; editable counterpart: assets/illustrations/current/V07.svg"
+    },
+    {
+      "role": "canonical apparition and material reference",
+      "asset": "assets/07_視聽與介面/assets/current_design/silencer_poses_current.png"
+    }
+  ],
+  "initialGenerationSummary": "Photorealistic four-frame first-person 2D horror game mockup of R18 at B building 37F: normal patrol, current sound waveform behind trolley cover, beginning to retreat from the partial doorframe, and manual door opening after physically reaching N4. Preserve one empty-collar apparition, acoustic cladding and the original connected corridor. Do not show third-person player bodies, node IDs, floor arrows, sonar, danger percentages, countdowns, weapons, extra faces or new rooms. Only frame 02 has a small current-sound strip labelled 現場 and 前方・呼吸; outer captions are production annotations.",
+  "finalEditPrompt": "Edit this four-frame V07 gameplay mockup. Keep the exact four-frame layout, all existing Traditional Chinese titles and the accurate readable sound HUD, the photorealistic game rendering, camera framings, character count, empty-collar apparition design, and the manual door-handle action. Make ONLY the following material/geometry corrections consistently in all four frames:\n1. The metal trolley at the near left is the original OVERTURNED utility trolley used as full cover, not an upright open cage. Make it clearly tipped onto its side with a broad continuous opaque battered steel side panel facing the player. Wheels and handle lie sideways near the floor. It is substantial waist-height cover, not a low basket or a hollow railing. Preserve its left-side position; in frame 02 the player's hand rests on its solid upper edge. In frame 03 the same overturned trolley is visible toward the already-visited safe position.\n2. This is the sound-suppressed R18 corridor: clad large sections of the old upper walls and sealed residential doorways in worn gray-white rectangular acoustic panels, with clearly visible seams, cracked edges and exposed aged green tiles only along the lower wall and damaged patches. Keep the existing wired-glass partition, curtain, hanging doorplate, round loudspeaker membrane, ceiling pipes and final door identifiable. Do not cover up those navigation cues.\n3. Keep the puddles still: no splashes or concentric walking ripples around the apparition. Frame 03 depicts the beginning of physically retreating from the partial doorframe cover, not an already-achieved safe checkpoint. Keep that view's hand retracting, with the same trolley visible along the return route.\nDo not add arrows, node IDs, new UI controls, extra people, faces, severed flesh, weapons, danger meters, timers, or new text. Final door remains only cracked open by the player's hand. Do not redesign the established room beyond the specified trolley and acoustic cladding corrections.",
+  "adoptedFeatures": [
+    "第一人稱遮擋、粗糙材質與灰白吸音板",
+    "原空衣領怨靈，沒有完整頭部或新攻擊",
+    "現場波形與前方呼吸字幕分開於場景，不作歷史播放器或距離尺",
+    "第三格只表示開始退避，第四格仍由玩家手動開門"
+  ],
+  "productionLimits": [
+    "僅本輪 V07 改為點陣畫面模擬，其餘圖稿未宣稱已全部生成。",
+    "推車翻倒角度、門框／布簾幾何及 N0–N4 實際距離仍按精確 SVG 與 R18-V01／V02 工單。",
+    "圖中沒有實作任何聲音、輸入、警戒、2.2 秒補救時鐘、存讀或無聲輔助功能。",
+    "正式圖像工單 557 列仍全部待製；目錄新增一張補充對照後共 111 張。"
+  ]
+}

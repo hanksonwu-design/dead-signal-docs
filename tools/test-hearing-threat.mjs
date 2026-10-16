@@ -165,7 +165,7 @@ test('current diagrams distinguish silent patrol, alert recovery and recording l
   has(sequence, '輪廓沿原巡行方向檢查，尚未發現玩家', '部分掩體須屏息', '只有失誤後的警戒');
   assert(!sequence.includes('威脅停留朝向掩體'));
   assert(!illustration.includes('拖拽聲'));
-  has(illustration, 'V07 已改為現行規則圖解', 'R18 實際為 B 棟 37F', '已到安全位復原');
+  has(illustration, 'V07 已新增第一人稱遊戲畫面模擬', '原 SVG 保留為 V07-RULES', 'R18 實際為 B 棟 37F', '已到安全位復原');
   has(spec(4), 'assets/illustrations/current/V07.svg', '歷史來源播放器與現場聽覺帶分框', '現場波形與方向字幕依 R18-V02');
 });
 

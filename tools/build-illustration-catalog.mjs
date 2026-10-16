@@ -22,7 +22,7 @@ export function collectIllustrations(documents, graph, flow, manifest) {
   const places = new Map(flow.nodes.map(n => [n.id, n]));
   const bindings = new Map();
   for (const f of manifest.figures) {
-    bindings.set(f.asset, { id: f.id, supplement: false });
+    bindings.set(f.asset, { id: f.id, supplement: false, kind: f.kind });
     for (const asset of f.supplement || []) bindings.set(asset, { id: f.id, supplement: true });
   }
   for (const [source, content] of documents) {
@@ -61,7 +61,8 @@ export function collectIllustrations(documents, graph, flow, manifest) {
       records.push({ id, base, title: m[1], asset, source, originalHeading: heading,
         heading: layout ? heading : `illustration-note-${slug(id)}`, layout: Boolean(layout),
         group: details.shared || !act ? 'common' : String(act.act),
-        kind: layout ? '出入口草圖' : asset.endsWith('.svg') ? '規則圖解' : '概念／構圖參考',
+        kind: layout ? '出入口草圖' : binding?.kind === 'current-gameplay-mockup' ? '遊戲畫面模擬'
+          : asset.endsWith('.svg') ? '規則圖解' : '概念／構圖參考',
         types, scenes, subscenes, purpose: details.purpose, effect: details.effect, image: m[0] });
     }
   }

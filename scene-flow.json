@@ -1408,8 +1408,8 @@
       "id": "R18",
       "image": "R18-V01",
       "reference": {
-        "url": "assets/illustrations/current/V07.svg",
-        "label": "潛行與屏息",
+        "url": "assets/illustrations/gameplay/V07_gameplay_current.png",
+        "label": "R18 第一人稱聽覺潛行畫面模擬",
         "kind": "概念參考，非正式素材"
       },
       "floor": {
@@ -10775,8 +10775,8 @@
       "id": "R13-D04",
       "node": "R13",
       "kind": "文件",
-      "content": "健康評估與覆核資料",
-      "requirements": "原件分頁，姓名與因果依原資料，不由未見內容補齊。",
+      "content": "健康評估、覆核資料與 E-04 原文引用",
+      "requirements": "原件分頁、同號／日期並讀及可選原文局部；交查證介面的引文已選／待核草稿／可提交／另存完成差分，歷史欄與現時註記並列。姓名與因果依原資料，不由未見內容補齊；點選／鍵盤／手把與拖曳等價。原圖號內交付，見[原件查證](#r13-e04-source-challenge)。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r13-images"

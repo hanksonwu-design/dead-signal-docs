@@ -26,6 +26,8 @@
 
 情感節奏再補 R8 共同回敲習慣、U3 讓出燈光的短日常，以及 R31 解凍後交還控制、R32 停戰對話的手與門框承接；總表、小說及聲音交付同步，見[相處與高潮承接](docs/09_劇本/09-15_正式劇本_共用附錄.md#emotional-continuity-contract)及[修改紀錄](reviews/2026-10-16-情感鋪陳與高潮承接補強.md)。新增聲音、局部差分與呈現保存仍待遊戲製作及試玩。
 
+原件查證再補 R13 診所的主張／引用、R26 任用與追加限制的選欄對照，以及 R28 保存頁在終幕的所在地／待調取回收；R18–R20 另強化現場前兆與成功差分。沿原操作完成，不新增收集數量或結局門檻，見[原件舉證與資料處置](docs/09_劇本/09-15_正式劇本_共用附錄.md#evidence-response-contract)及[修改與驗證紀錄](reviews/2026-10-16-原件舉證與知情處置補強.md)。這是劇本與製作規格的對質段落樣本，互動實作、局部圖像差分及遊玩手感仍待製作驗收。
+
 ## 修改文件
 
 劇情只修改[總目錄](docs/09_劇本/09-14_全劇本與關卡整合稿.md#book-toc)所列的對應幕別正文（含 `09-16` 第七幕、`09-17` 第八幕）；逐房技術規格只修改 `docs/10_製作規格/` 的同幕文件；跨幕共用規格只修改 `09-15_正式劇本_共用附錄.md`。`09-14_全劇本與關卡整合稿.md` 沿用舊檔名，但現在只是總目錄，不存放重複正文。50 份分類文件是可重建的查閱副本；舊 06 文件與其餘退役 09 文件只保留轉介入口。不要在副本維護第二套正文，也不要手動改 `docs.json`、`scene_graph.json`、`scene-flow.json` 或 `building/data.js` 的衍生欄位。
@@ -57,7 +59,9 @@ npm --prefix building run build
 
 最新補圖與逐項適用性檢查見[示意圖第二輪檢查](reviews/2026-10-12-illustration-supplement.md)。電梯、鬼打牆、燈架／水箱、修復權限與現場聽覺的參考隨共用附錄或本房製作規格維護。
 
-第三輪[缺圖補充與驗證](reviews/2026-10-13-illustration-gaps.md)新增 11 張點陣概念及 17 張精確圖解，目錄共 110 張。逐層路線、機關剖面、玻璃格位、文件比對與演出時序維護於 `tools/illustration-supplement-layouts.mjs`，由既有圖解建置命令一起重建；點陣提示詞與採用紀錄見 `assets/illustrations/2026-10-13-gap-prompts.json`。概念生成不更改正式工單的待製狀態。
+第三輪[缺圖補充與驗證](reviews/2026-10-13-illustration-gaps.md)新增 11 張點陣概念及 17 張精確圖解，當時目錄共 110 張。逐層路線、機關剖面、玻璃格位、文件比對與演出時序維護於 `tools/illustration-supplement-layouts.mjs`，由既有圖解建置命令一起重建；點陣提示詞與採用紀錄見 `assets/illustrations/2026-10-13-gap-prompts.json`。概念生成不更改正式工單的待製狀態。
+
+V07 另提供第一人稱遊戲畫面模擬，點陣圖維護於 `assets/illustrations/gameplay/`，原 SVG 保留為 V07-RULES，現行目錄共 111 張。此圖只定材質、遮擋及 HUD 合成方向，正式站位、計時、低動態與無聲模式仍依精確圖及 R18 工單；生成與檢查紀錄見 `assets/illustrations/2026-10-13-gameplay-mockups.json`。
 
 [示意圖目錄](docs/10_製作規格/10-11_製作規格_示意圖目錄.md)依幕別直接顯示全部現行圖像，以圖號、圖名、類型及場景簡標；用途、功能與位置收在可展開的製作註記，並保留場景規格與原圖連結。用途與功能作用維護於 `tools/illustration-details.mjs`，操作／解謎等內容類型維護於 `tools/illustration-types.mjs`；`build-illustration-catalog.mjs` 統一重建目錄與圖下註記，場景編號、樓棟及樓層由正式資料讀取。新增圖像時須補對應說明；出入口草圖註記自動建立，既有圖像與正式工單不重複計數。`node tools/build-illustration-catalog.mjs --check` 與 `node --test tools/test-illustration-catalog.mjs` 檢查完整覆蓋、來源連結及重建穩定性。
 

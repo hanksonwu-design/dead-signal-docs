@@ -15,7 +15,7 @@ const has = (text, ...phrases) => phrases.forEach(phrase => assert(text.includes
 const block = id => master.blocks.get(id);
 
 test('all remaining acts annotate completion at the authored interaction', () => {
-  const counts = new Map([[0, 4], [2, 19], [3, 27], [4, 12], [5, 8], [6, 8], [7, 11], [8, 10], [9, 13]]);
+  const counts = new Map([[0, 4], [2, 19], [3, 28], [4, 12], [5, 8], [6, 8], [7, 11], [8, 10], [9, 13]]);
   for (const act of acts) {
     const story = master.documents.get(act.path);
     const localNotes = notes(story);

@@ -25,7 +25,7 @@ const catalogAsset = href => path.posix.normalize(path.posix.join('docs', path.p
 test('catalog covers every canonical illustration once, including supplements and access layouts', () => {
   const embedded = [...documents].flatMap(([file, text]) => [...text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)]
     .map(m => path.posix.normalize(path.posix.join('docs', path.posix.dirname(file), m[1]))));
-  assert.equal(records.length, 110);
+  assert.equal(records.length, 111);
   assert(catalog.includes(`更新: ${manifest.updated}`));
   assert.equal(records.filter(r => r.layout).length, 13);
   assert.deepEqual(records.map(r => r.asset).sort(), embedded.sort());

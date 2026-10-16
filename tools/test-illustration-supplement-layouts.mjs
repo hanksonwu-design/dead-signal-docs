@@ -69,7 +69,7 @@ test('mirror and cinematic diagrams preserve reveal timing without new enemies o
 test('all new images have navigable catalog captions without changing gameplay work orders', () => {
   const { records } = buildIllustrationCatalog();
   for (const id of [...diagrams.keys(), ...provenance.selectedAssets.map(f => f.id)]) assert(records.some(r => r.base === id), id);
-  assert.equal(records.length, 110);
+  assert.equal(records.length, 111);
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.subscenes.length, 72);
   assert.equal(flow.routes.length, 56);
