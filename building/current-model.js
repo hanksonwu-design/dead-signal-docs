@@ -427,7 +427,7 @@ try {
  readHash();bind();
 } catch(error){$('loading')?.remove();$('error').hidden=false;$('error').textContent=`場景資料無法載入：${error.message}`;throw error;}
 try {
- scene=new THREE.Scene();scene.background=new THREE.Color(0x111a1c);camera=new THREE.OrthographicCamera(-40,40,40,-40,.1,1500);
+ scene=new THREE.Scene();scene.background=new THREE.Color(0x111210);camera=new THREE.OrthographicCamera(-40,40,40,-40,.1,1500);
  renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setSize(host.clientWidth,host.clientHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;host.append(renderer.domElement);
  scene.add(new THREE.HemisphereLight(0xe7f3ea,0x334543,2.3));const light=new THREE.DirectionalLight(0xfff1d5,2.3);light.position.set(40,150,80);scene.add(light);
  controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.12;controls.maxPolarAngle=Math.PI*.495;controls.minZoom=.2;controls.maxZoom=12;

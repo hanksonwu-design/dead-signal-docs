@@ -35,7 +35,7 @@ test('website chapter order is narrative order despite stable historical filenam
   assert.deepEqual(documents.filter(d => d.folder === '09_劇本' && !d.archived).map(d => d.path),
     [...ACTS.map(a => a.path), MASTER, APPENDIX]);
   assert.deepEqual(documents.filter(d => d.folder === '10_製作規格' && !d.archived).map(d => d.path),
-    [ILLUSTRATION_CATALOG, ...ACTS.map(a => a.specPath), '10_製作規格/10-12_製作規格_收集物與筆記本總表.md', '10_製作規格/10-13_製作規格_解謎與操作遊戲列表.md']);
+    [ILLUSTRATION_CATALOG, ...ACTS.map(a => a.specPath), '10_製作規格/10-12_製作規格_收集物與筆記本總表.md', '10_製作規格/10-13_製作規格_解謎與操作遊戲列表.md', '10_製作規格/10-14_製作規格_UI美術設計圖集.md']);
 });
 
 test('legacy lower-act and finale bookmarks resolve without hijacking the new seventh act', () => {

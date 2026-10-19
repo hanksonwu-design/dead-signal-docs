@@ -1,0 +1,16 @@
+.music-panel { display: inline-flex; flex-direction: column; gap: 10px; margin-top: 24px; padding: 12px 0 0; border-top: 1px solid var(--line); max-width: 100%; }
+.music-caption { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; color: #c7c1ac; font-size: 11px; line-height: 1.7; letter-spacing: .06em; }
+#musicStatus { color: #a4af9c; font-size: 10px; letter-spacing: .02em; }
+.music-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.music-toggle { gap: 8px; min-width: 100px; color: #d5cbb2; border-color: #646c55; }
+.music-toggle [data-music-icon] { font-size: 11px; }
+.music-toggle[aria-pressed="true"], .reader-music-button[aria-pressed="true"] { color: #eee5ce; border-color: #a3b29a; background: #2b3324; }
+.music-volume { display: flex; align-items: center; gap: 9px; color: #b4b39f; font-size: 11px; }
+.music-volume input { width: 86px; min-width: 0; margin: 0; accent-color: #b8c3aa; cursor: pointer; }
+.music-volume input:focus-visible { outline: 2px solid #e9e1cd; outline-offset: 4px; }
+.reader-music-button { flex: none; }
+.reader-music-button [data-music-icon] { font-size: 12px; }
+@media (max-width: 760px) {
+  .music-panel { margin-top: 21px; }
+  .music-controls { gap: 12px; }
+}

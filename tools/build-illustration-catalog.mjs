@@ -120,7 +120,8 @@ export function renderCatalog(records, updated) {
     `更新: ${updated}`, '摘要: 依幕別直接看圖；簡標圖號、類型與場景，製作註記可展開查閱。', '---', '',
     '# 製作規格：示意圖目錄', '', '<a id="illustration-catalog"></a>', '',
     `共 **${records.length} 張**。依幕別及劇本順序看圖，點圖可開原圖；詳細說明收在「製作註記」。`, '',
-    groups.map(g => `[${g.label}](#catalog-group-${g.id})`).join(' · '), ''];
+    groups.map(g => `[${g.label}](#catalog-group-${g.id})`).join(' · '), '',
+    '[UI 美術設計圖集：游標與主要版面](10-14_製作規格_UI美術設計圖集.md#ui-art-gallery)', ''];
   for (const group of groups) {
     const rows = records.filter(r => r.group === group.id);
     if (!rows.length) continue;

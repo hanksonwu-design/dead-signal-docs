@@ -11,7 +11,7 @@ const PORT = Number(process.argv[2]) || 8765;
 const TYPES = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".md": "text/markdown; charset=utf-8",
-  ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".gif": "image/gif", ".svg": "image/svg+xml",
+  ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".gif": "image/gif", ".svg": "image/svg+xml", ".mp3": "audio/mpeg",
 };
 
 createServer(async (req, res) => {
@@ -26,8 +26,29 @@ createServer(async (req, res) => {
     const file = normalize(join(ROOT, rel));
     if (!file.startsWith(normalize(ROOT))) throw Object.assign(new Error("forbidden"), { code: "ENOENT" });
     if (!(await stat(file)).isFile()) throw Object.assign(new Error("not a file"), { code: "ENOENT" });
-    res.writeHead(200, { "Content-Type": TYPES[extname(file).toLowerCase()] || "application/octet-stream", "Cache-Control": "no-store" });
-    res.end(await readFile(file));
+    const bytes = await readFile(file);
+    const headers = {
+      "Content-Type": TYPES[extname(file).toLowerCase()] || "application/octet-stream",
+      "Cache-Control": "no-store", "Accept-Ranges": "bytes",
+    };
+    let start = 0, end = bytes.length - 1;
+    const range = req.headers.range;
+    if (range) {
+      const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+      if (match && (match[1] || match[2])) {
+        start = match[1] ? Number(match[1]) : Math.max(0, bytes.length - Number(match[2]));
+        end = match[1] && match[2] ? Math.min(Number(match[2]), end) : end;
+      }
+      if (!match || (!match[1] && !match[2]) || !Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start > end || start >= bytes.length) {
+        res.writeHead(416, { ...headers, "Content-Range": `bytes */${bytes.length}` });
+        res.end();
+        return;
+      }
+      headers["Content-Range"] = `bytes ${start}-${end}/${bytes.length}`;
+    }
+    headers["Content-Length"] = Math.max(0, end - start + 1);
+    res.writeHead(range ? 206 : 200, headers);
+    res.end(req.method === "HEAD" ? undefined : bytes.subarray(start, end + 1));
   } catch (error) {
     const missing = error.code === "ENOENT";
     res.writeHead(missing ? 404 : 500, { "Content-Type": "text/plain; charset=utf-8" });

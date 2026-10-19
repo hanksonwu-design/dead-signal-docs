@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0c1119" />
+    <meta name="theme-color" content="#111210" />
     <title>灰燈寨 · 企劃文件瀏覽器</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="marker-colors.css" />
+    <link rel="stylesheet" href="background-music.css" />
     <script src="scene-redirect.js?v=20261006"></script>
   </head>
   <body>
@@ -30,13 +31,14 @@
         </div>
         <div class="sidebar-footer">
           <span class="live-dot"></span>
-          <span>正式稿同步 · 2026 年 9 月 30 日</span>
+          <span>正式文件 · 分類查閱</span>
         </div>
       </aside>
+      <button class="sidebar-scrim" id="sidebarScrim" type="button" aria-label="收起文件分類" hidden></button>
 
       <main class="main-content">
         <header class="topbar">
-          <button class="icon-button menu-button" id="menuButton" type="button" aria-label="開啟選單">☰</button>
+          <button class="icon-button menu-button" id="menuButton" type="button" aria-label="開啟文件分類" aria-controls="sidebar" aria-expanded="false">☰</button>
           <div class="crumbs" id="breadcrumbs">企劃庫 <span>/</span> 總覽</div>
           <div class="topbar-actions">
             <button class="quiet-button" id="refreshButton" type="button">↻ 重新載入</button>
@@ -47,9 +49,19 @@
 
         <section class="hero" id="hero">
           <div class="hero-copy">
-            <div class="eyebrow">DEAD SIGNAL · DESIGN ARCHIVE</div>
+            <div class="eyebrow">灰燈寨 / 製作檔案</div>
             <h1>一層一層，<em>認出你自己。</em></h1>
-            <p>集中閱讀《灰燈寨》的世界觀、角色、玩法、敘事與關卡流程。此處提供已發布的企劃內容，適合線上閱讀、製作討論與快速查找。</p>
+            <p>世界觀、劇本、玩法與製作規格。沿來源閱讀，留下可回查的紀錄。</p>
+            <div class="music-panel" aria-label="首頁背景音樂">
+              <div class="music-caption"><span>登入音樂</span><span id="musicStatus" role="status">循環播放</span></div>
+              <div class="music-controls">
+                <button class="quiet-button music-toggle" type="button" data-music-toggle aria-label="播放背景音樂" aria-pressed="false"><span data-music-icon aria-hidden="true">▶</span><span data-music-label>播放音樂</span></button>
+                <label class="music-volume">音量<input id="musicVolume" type="range" min="0" max="100" step="1" value="25" aria-label="背景音樂音量" aria-valuetext="25%" /></label>
+              </div>
+            </div>
+          </div>
+          <div class="archive-window" aria-hidden="true">
+            <div class="window-frame"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
           </div>
           <div class="hero-stats" id="heroStats"></div>
         </section>
@@ -57,7 +69,7 @@
         <section class="toolbar">
           <label class="search-box">
             <span>⌕</span>
-            <input id="searchInput" type="search" placeholder="搜尋文件名稱、內容、角色或系統…" autocomplete="off" />
+            <input id="searchInput" type="search" aria-label="搜尋企劃文件" placeholder="搜尋文件名稱、內容、角色或系統…" autocomplete="off" />
             <kbd>Ctrl K</kbd>
           </label>
           <div class="view-toggle" role="group" aria-label="檢視模式">
@@ -84,7 +96,7 @@
       </main>
     </div>
 
-    <div class="reader-overlay hidden" id="readerOverlay" aria-hidden="true">
+    <div class="reader-overlay hidden" id="readerOverlay" role="dialog" aria-label="企劃文件閱讀" aria-modal="true" aria-hidden="true">
       <div class="reader-backdrop" id="readerBackdrop"></div>
       <article class="reader-panel">
         <div class="reader-topbar">
@@ -92,13 +104,16 @@
           <div class="reader-actions">
             <span class="reader-path" id="readerPath"></span>
             <label class="screenplay-toggle" id="reading-marker-control" hidden><input type="checkbox" id="reading-markers" aria-label="顯示關鍵標示" checked />關鍵標示</label>
-            <button class="icon-button" id="copyPath" type="button" title="複製檔案路徑">⧉</button>
+            <button class="icon-button reader-music-button" type="button" data-music-toggle aria-label="播放背景音樂" aria-pressed="false" title="播放背景音樂"><span data-music-icon aria-hidden="true">▶</span></button>
+            <button class="icon-button" id="copyPath" type="button" aria-label="複製檔案路徑" title="複製檔案路徑">⧉</button>
           </div>
         </div>
         <div class="reader-content" id="readerContent"></div>
       </article>
     </div>
 
+    <audio id="backgroundMusic" src="assets/audio/login-theme.mp3" loop preload="metadata" hidden></audio>
+    <script src="background-music.js"></script>
     <script src="screenplay-markers.js?v=20261006"></script>
     <script src="app.js?v=20261006-reading-markers"></script>
   </body>

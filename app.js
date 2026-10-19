@@ -17,6 +17,7 @@ const state = {
   selected: null,
   category: "all",
 };
+let readerReturnFocus = null;
 
 const $ = (id) => document.getElementById(id);
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
@@ -131,7 +132,7 @@ function renderCards() {
     </article>`).join("");
   grid.querySelectorAll("[data-core-category]").forEach(b=>b.onclick=()=>{state.category=b.dataset.coreCategory;refreshState();});
   grid.querySelectorAll(".doc-card").forEach((card) => {
-    card.addEventListener("click", () => openReader(card.dataset.path));
+    card.addEventListener("click", () => { card.focus({ preventScroll: true }); openReader(card.dataset.path); });
     card.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openReader(card.dataset.path); } });
   });
 }
@@ -300,6 +301,9 @@ function openReader(path, updateHash = true, headingText = "") {
     }
   }
   if (!doc) return;
+  if ($("readerOverlay").classList.contains("hidden")) {
+    readerReturnFocus = document.activeElement === document.body ? $("searchInput") : document.activeElement;
+  }
   closeSidebar();
   if (state.selected === doc && headingText && !$("readerOverlay").classList.contains("hidden")) {
     scrollReaderTo(headingText);
@@ -322,20 +326,27 @@ function openReader(path, updateHash = true, headingText = "") {
     const nav = document.createElement("nav");
     nav.className = "reader-toc";
     nav.setAttribute("aria-label", "章節跳轉");
+    const outline = document.createElement("details");
+    outline.className = "reader-outline";
+    const summary = document.createElement("summary");
+    summary.textContent = `章節導覽 · ${headings.length} 節`;
     headings.forEach((heading, index) => {
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = heading.textContent;
-      button.addEventListener("click", () => revealReaderTarget(heading));
+      button.addEventListener("click", () => { outline.open = false; revealReaderTarget(heading); });
       nav.appendChild(button);
     });
-    $("readerContent").prepend(nav);
+    outline.append(summary, nav);
+    $("readerContent").prepend(outline);
   }
 
   $("readerOverlay").classList.remove("hidden");
   $("readerOverlay").setAttribute("aria-hidden", "false");
+  document.querySelector(".app-shell").inert = true;
   document.querySelector(".reader-panel").scrollTop = 0;
   document.body.style.overflow = "hidden";
+  $("closeReader").focus({ preventScroll: true });
   if (headingText) {
     scrollReaderTo(headingText);
   }
@@ -371,8 +382,13 @@ function closeReader() {
   state.selected = null;
   $("readerOverlay").classList.add("hidden");
   $("readerOverlay").setAttribute("aria-hidden", "true");
+  document.querySelector(".app-shell").inert = false;
   document.body.style.overflow = "";
   history.replaceState(null, "", location.pathname + location.search);
+  const returnTarget = readerReturnFocus?.isConnected && !readerReturnFocus.closest("[inert]") && readerReturnFocus.getClientRects().length
+    ? readerReturnFocus : $("searchInput");
+  readerReturnFocus = null;
+  returnTarget?.focus({ preventScroll: true });
 }
 
 function syncHash() {
@@ -404,17 +420,51 @@ async function loadDocuments() {
   }
 }
 
-function closeSidebar() { $("sidebar").classList.remove("open"); }
+const mobileSidebarQuery = window.matchMedia("(max-width: 760px)");
+
+function setSidebarOpen(open) {
+  const sidebar = $("sidebar");
+  const scrim = $("sidebarScrim");
+  const focusWasInSidebar = sidebar.contains(document.activeElement);
+  const focusWasOnScrim = document.activeElement === scrim;
+  const expanded = Boolean(open && mobileSidebarQuery.matches && !state.selected);
+  sidebar.classList.toggle("open", expanded);
+  sidebar.inert = mobileSidebarQuery.matches && !expanded;
+  document.querySelector(".main-content").inert = expanded;
+  scrim.hidden = !expanded;
+  $("menuButton").setAttribute("aria-expanded", String(expanded));
+  $("menuButton").setAttribute("aria-label", expanded ? "收起文件分類" : "開啟文件分類");
+  if (expanded) $("allDocs").focus({ preventScroll: true });
+  else if (!state.selected && ((mobileSidebarQuery.matches && focusWasInSidebar) || focusWasOnScrim)) {
+    (mobileSidebarQuery.matches ? $("menuButton") : $("allDocs")).focus({ preventScroll: true });
+  }
+}
+
+function closeSidebar() { setSidebarOpen(false); }
 
 $("allDocs").addEventListener("click", () => { state.category = "all"; state.folder = "all"; state.status = "all"; closeSidebar(); refreshState(); });
 $("searchInput").addEventListener("input", (event) => { state.query = event.target.value; refreshState(); });
 $("refreshButton").addEventListener("click", loadDocuments);
 $("closeReader").addEventListener("click", closeReader);
 $("readerBackdrop").addEventListener("click", closeReader);
-$("menuButton").addEventListener("click", () => $("sidebar").classList.toggle("open"));
+$("menuButton").addEventListener("click", () => setSidebarOpen(!$("sidebar").classList.contains("open")));
+$("sidebarScrim").addEventListener("click", () => { closeSidebar(); $("menuButton").focus(); });
 $("copyPath").addEventListener("click", async () => { if (!state.selected) return; try { await navigator.clipboard.writeText(state.selected.path); $("copyPath").textContent = "✓"; setTimeout(() => { $("copyPath").textContent = "⧉"; }, 1000); } catch (_) {} });
 document.querySelectorAll(".view-button").forEach((button) => button.addEventListener("click", () => { state.view = button.dataset.view; document.querySelectorAll(".view-button").forEach((item) => item.classList.toggle("active", item === button)); renderCards(); renderHeading(); }));
-document.addEventListener("keydown", (event) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") { event.preventDefault(); $("searchInput").focus(); } if (event.key === "Escape" && state.selected) closeReader(); });
+document.addEventListener("keydown", (event) => {
+  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+    event.preventDefault();
+    if (state.selected) closeReader();
+    closeSidebar();
+    $("searchInput").focus();
+  }
+  if (event.key === "Escape") {
+    if (state.selected) closeReader();
+    else if ($("sidebar").classList.contains("open")) { closeSidebar(); $("menuButton").focus(); }
+  }
+});
+mobileSidebarQuery.addEventListener("change", closeSidebar);
+closeSidebar();
 window.addEventListener("hashchange", syncHash);
 window.ScreenplayMarkers?.setup();
 loadDocuments();
