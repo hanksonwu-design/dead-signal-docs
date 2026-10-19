@@ -374,7 +374,7 @@ device_commit 必填 device_id、power_source、credential_requirement、real_ef
 
 | R22 雙路釋放 | 快速路 device_commit；拒絕路 physical_interaction，A 防火扣及 B 機械釋放桿不需電力或穩定度 |
 
-| R29 最後一筆 | device_commit；原有簽核終端，保留當下時戳 |
+| R29 最後一筆 | device_commit；原有簽核終端，保留當下時戳及可核驗的本輪回執；本地提交不等於外側已接收移交 |
 
 | R30 制動與沉降 | physical_interaction；手拉低負荷制動桿，由既有棘爪固定維修籠；不推重車，不徒手承受維修籠重量 |
 
