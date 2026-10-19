@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "upper descent, release boundary and lower distribution display their exact floors",
+    "all four C-02 descending platforms can be selected in order",
+    "all three multi-platform routes show each intervening floor in both directions",
+    "HP-03 stays on 31F while route cues remain available on every landing",
+    "route-only floors select their own platform context in the map, detail panel and URL",
+    "leaving a floor slice restores HP-03 in both the map and detail list for all scopes",
+    "a floor without content in the selected part clears the floor filter without crossing parts",
+    "release and archive entrance render without overflow on mobile"
+  ],
+  "errors": []
+}

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1036" viewBox="0 0 1200 1036" role="img" aria-labelledby="title desc" data-layout="visual-v1">
-<title id="title">V07｜R18 · B 棟 37F 聽覺潛行</title><desc id="desc">正常巡行與發現後警戒分開；巡行不補腳步或拖曳聲。 正常巡行：先看位置，再判斷移動：看門牌、水痕、布簾及振膜。
+<title id="title">V07｜R18 · B 棟 28F 聽覺潛行</title><desc id="desc">正常巡行與發現後警戒分開；巡行不補腳步或拖曳聲。 正常巡行：先看位置，再判斷移動：看門牌、水痕、布簾及振膜。
 輪廓沿原方向檢查，尚未發現玩家。
 只有原階段已有的呼吸才入現場帶。；現場聽覺帶：現在 · 隨已發生聲音更新：方向文字、音量包絡與波形同步。
 音量不是距離尺；配合視線與遮擋。
@@ -11,7 +11,7 @@ N2 不是失敗復位點；N4 是通過終態。
 <defs><marker id="vis-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#79d8dc"/></marker><marker id="vis-arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#e6bc68"/></marker><marker id="vis-arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#ffa18b"/></marker><clipPath id="visual-v07-0"><rect width="510" height="244"/></clipPath><clipPath id="visual-v07-1"><rect width="510" height="244"/></clipPath><clipPath id="visual-v07-2"><rect width="510" height="244"/></clipPath><clipPath id="visual-v07-3"><rect width="510" height="244"/></clipPath></defs>
 <style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:22px;font-weight:700;fill:#edf1ef}.footer{font-size:19px;fill:#aebec2}</style>
 <rect width="1200" height="1036" fill="#0b1418"/>
-<text class="title" x="32" y="52">V07｜R18 · B 棟 37F 聽覺潛行</text>
+<text class="title" x="32" y="52">V07｜R18 · B 棟 28F 聽覺潛行</text>
 <text class="subtitle" x="32" y="91">正常巡行與發現後警戒分開；巡行不補腳步或拖曳聲。</text>
 <g data-panel="1"><rect x="32" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="156" width="5" height="385" fill="#dcb3e4"/>

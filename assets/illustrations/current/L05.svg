@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1441" viewBox="0 0 1200 1441" role="img" aria-labelledby="title desc" data-layout="visual-v1">
-<title id="title">L05｜校正區 · 三房各自承接</title><desc id="desc">R18、R19、R20 均在 B 棟 37F；不是一段不停歇的追逐。 R18：01 · 觀察巡行：先辨正常巡行肩影、門牌與水痕。
+<title id="title">L05｜校正區 · 三房各自承接</title><desc id="desc">R18、R19、R20 均在 B 棟 28F；不是一段不停歇的追逐。 R18：01 · 觀察巡行：先辨正常巡行肩影、門牌與水痕。
 現場帶只顯示已發生的原聲源。；R18：02 · 移動與退避：依掩體和原屏息要求前進。
 失誤退回已到達安全位，成功才進門。；R19：03 · 慢關厚門：2.4 秒累積收合，放手可暫停，連點不加速。
 當前椅位是空椅；厚門提供原遮蔽。；R19：04 · 屏息與凝固分層：至少 3.2 秒前兆後，確認才進 5.2 秒停留。
@@ -10,7 +10,7 @@
 <style>text{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;letter-spacing:0}.title{font-size:32px;font-weight:700;fill:#edf1ef}.subtitle{font-size:21px;fill:#b3c1c5}.phase{font-size:21px;font-weight:700}.panel-title{font-size:22px;font-weight:700;fill:#edf1ef}.footer{font-size:19px;fill:#aebec2}</style>
 <rect width="1200" height="1441" fill="#0b1418"/>
 <text class="title" x="32" y="52">L05｜校正區 · 三房各自承接</text>
-<text class="subtitle" x="32" y="91">R18、R19、R20 均在 B 棟 37F；不是一段不停歇的追逐。</text>
+<text class="subtitle" x="32" y="91">R18、R19、R20 均在 B 棟 28F；不是一段不停歇的追逐。</text>
 <g data-panel="1"><rect x="32" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="156" width="5" height="385" fill="#79d8dc"/>
 <text class="phase" x="58" y="193" fill="#79d8dc">01 · R18</text>

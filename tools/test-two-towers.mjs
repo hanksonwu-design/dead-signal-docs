@@ -93,7 +93,7 @@ test('L1 requires the 30F landing and L2 has only its two real stops', () => {
 test('power, source identity, optional approval, return locks and old-save rules remain explicit', () => {
   for (const phrase of ['R15 三條供電路線均先保留', '不切斷乘梯保留支路', '未開或拒絕核可佇列仍可通行',
     '無上部存檔依原合法下部起始契約', '均非 R14', '不是 R30 固定維修籠', 'R30 不可逆提交當下',
-    '車廂唯一', '無直達 29→31', 'version: 4', '不按同名、序號或 open 直接繼承',
+    '車廂唯一', '無直達 29→31', 'version: 5', '不按同名、序號或 open 直接繼承',
     '不是新的動態歷史凝固', '回訪、讀檔不重播嚇點', '不提供人名', '沒有可鑽電梯頂']) assert(policy.includes(phrase), phrase);
   assert.equal(flow.nodes.length, 48); assert.equal(flow.routes.length, 56);
   assert(graph.edges.every(e => !/lifts\.|anomaly_seen|culture_/.test(e.gate)));

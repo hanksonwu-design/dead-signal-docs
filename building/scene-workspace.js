@@ -2,6 +2,17 @@ export function sceneMatches(n, {part='all', act='all'}={}) {
  return (part==='all'||String(n.part)===String(part))&&(act==='all'||String(n.act)===String(act));
 }
 
+export function floorSceneSelection(model, floor, filters={}) {
+ const room=model.nodes.find(n=>n.spatial&&sceneMatches(n,filters)&&n.floor.levels.includes(floor));
+ if(room)return {node:room.id,shot:'',route:model.routes.find(r=>r.from===room.id)?.id||model.routes.find(r=>r.to===room.id)?.id||''};
+ const shots=model.shots.filter(s=>{
+  const owner=model.nodes.find(n=>n.id===s.node);
+  return owner?.spatial&&sceneMatches(owner,filters)&&s.floor.levels.includes(floor);
+ });
+ const shot=shots.find(s=>s.floor.levels.length===1)||shots[0];
+ return shot?{node:shot.node,shot:shot.id,route:shot.route}:null;
+}
+
 export function searchScenes(graph, flow, filters={}) {
  const query=(filters.query||'').trim().toLocaleLowerCase();
  const matches=(item,extra=[])=>{

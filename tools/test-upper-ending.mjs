@@ -48,7 +48,7 @@ test('both finale routes retain their inputs, windows, erased states and volunta
     '較晚走到踏台不重播六秒', '保存失敗留在安全門前可重試']);
   const script = story(4);
   assert(script.indexOf('[R22-05]') < script.indexOf('[ACT4-02]'));
-  includes(block(script, 's-0907-48'), ['玩家自行跨門', '保存成功後進入上部片尾', '下部從 R23']);
+  includes(block(script, 's-0907-48'), ['玩家自行跨門', '保存成功後進入上部片尾', '下部從另一側 31F 新檔案翼的 R23']);
 });
 
 for (const [route, actions, reaction] of [

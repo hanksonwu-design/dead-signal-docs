@@ -1,30 +1,30 @@
-import {layout as upper, offsets as upperOffsets, routePoints} from './spatial.js';
+import {currentLayout as upper, currentZones, offsets as upperOffsets, currentRoutePoints as routePoints} from './spatial.js';
 import {orthogonalize} from './sandbox-routes.js';
-import {transitionPath} from './transition-spaces.js';
+import {transitionPath,explorationPath} from './transition-spaces.js';
 import {towerShift,connectTowers,liftPath,anchoredShots,TOWERS} from './tower-routes.js';
 import {SCALE,metricStairPath} from './human-scale.js';
 export {TOWERS} from './tower-routes.js';
 
 // Lower-room dimensions are greybox proposals. Floors and topology come from the published flow.
 const lower = {
- R23:[12,12,12,12], R24:[-10,12,12,12], R25:[-10,12,12,10], R26:[12,12,12,10],
+ R23:[12,-8,12,12], R24:[-10,-8,12,12], R25:[-10,12,12,10], R26:[12,12,12,10],
  M1:[-24,20,3,3], R27:[-18,19,8,8], U1:[-18,7,8,10], U2:[-18,-6,8,10],
  U2b:[-11,-6,4,5], U3:[-18,-18,8,8], R28:[-6,-18,8,8], R29:[6,-18,8,8],
  U4:[18,-18,8,8], U4b:[18,-11,4,4], U5:[18,-3,8,8], U6:[18,10,8,8],
  U6b:[18,18,4,5], R30:[7,19,8,8], R31:[-5,19,8,8], R32:[-3,4,12,12]
 };
 const lowerPaths = {
- 'R22-R23':[[19,16,0],[24,16,0],[24,19,-.08],[24,22,1],[12,22,1],[12,18,1]],
- 'R23-R24':[[6,12,0],[-4,12,1]],
- 'R24-R25':[[-16,12,0],[-23,12,0],[-23,19,1],[-10,19,1],[-10,17,1]],
+ 'R22-R23':[[17,12,0],[22,12,0],[22,15,-.08],[22,-18,1],[12,-18,1],[12,-14,1]],
+ 'R23-R24':[[6,-8,0],[-4,-8,1]],
+ 'R24-R25':[[-16,-8,0],[-24,-8,0],[-20,12,1],[-16,12,1]],
  'R25-R26':[[-4,12,0],[6,12,1]],
  'R25-M1':[[-10,17,0],[-10,20,0],[-24,20,1]],
  'M1-R27':[[-24,20,0],[-22,20,1]],
- 'R27-U1':[[-18,15,0],[-18,12,1]],
+ 'R27-U1':[[-18,15,0],[-24,12,1],[-18,12,1]],
  'U1-U2':[[-18,2,0],[-18,-1,1]],
  'U2-U2b':[[-14,-6,0],[-13,-6,1]],
  'U2b-U3':[[-11,-8.5,0],[-11,-18,1],[-14,-18,1]],
- 'U3-R28':[[-14,-18,0],[-10,-18,1]],
+ 'U3-R28':[[-14,-18,0],[-12,-18,1],[-10,-18,1]],
  'R28-R29':[[-2,-18,0],[2,-18,1]],
  'R29-U4':[[10,-18,0],[14,-18,1]],
  'U4-U4b':[[18,-14,0],[18,-13,1]],
@@ -39,7 +39,7 @@ const lowerPaths = {
 export const FLOORS = [-3,-2,-1,...Array.from({length:50},(_,i)=>i+1)];
 export const floorName = f => f < 0 ? `B${-f}` : `${f}F`;
 export function heights(actual=false,activeFloors=[]) {
- const occupied = new Set([...Object.values(upper).map(v=>v[2]),...activeFloors,24,36,43,44,50]);
+ const occupied = new Set([...Object.values(upper).map(v=>v[2]),...activeFloors]);
  const map = new Map(); let y=0;
  FLOORS.forEach((f,i)=>{if(i)y+=actual||occupied.has(FLOORS[i-1])?SCALE.floorHeight:.8;map.set(f,y);});
  return map;
@@ -64,7 +64,7 @@ export function locateShot(points, floor, floorY, fraction, tolerance=0) {
   if(Math.abs(dy)<1e-8){if(a[1]<lo-.01||a[1]>hi+tolerance+.01)continue;}
   else {start=Math.max(0,Math.min((lo-a[1])/dy,(hi-a[1])/dy));end=Math.min(1,Math.max((lo-a[1])/dy,(hi-a[1])/dy));if(start>end)continue;}
   const t=Math.max(start,Math.min(end,(wanted-lengths[i-1])/len));
-  candidates.push({position:mix(a,b,t),along:lengths[i-1]+len*t,score:Math.abs(lengths[i-1]+len*t-wanted)});
+  candidates.push({position:mix(a,b,t),along:lengths[i-1]+len*t,score:Math.abs(lengths[i-1]+len*t-wanted)+(Math.abs(dy)<1e-8?0:total*2)});
  }
  if(!candidates.length&&!tolerance)return locateShot(points,floor,floorY,fraction,1.1);
  if(!candidates.length)throw new Error(`No path at authored floor: ${floor.label}`);
@@ -81,21 +81,25 @@ export function buildCurrentModel(graph,flow,actual=false) {
   const offset=upperOffsets[n.id]||(['U2b','U4b','U6b'].includes(n.id)?-1.8:0);
   const y=floorY.get(floor)+offset;
   const shiftX=towerShift(canonical.building.entry);
-  return {...n,...canonical,spatial:true,x:x+shiftX,z,w,d,level:floor,y,shiftX,position:[x+shiftX,y+.3,z]};
+  const zone=currentZones[n.id]||(['R23','R24'].includes(n.id)?'檔案新翼':'');
+  return {...n,...canonical,spatial:true,x:x+shiftX,z,w,d,level:floor,y,shiftX,zone,position:[x+shiftX,y+.3,z]};
  });
  const map=new Map(nodes.map(n=>[n.id,n]));
  const routes=graph.edges.map(edge=>{
   const a=map.get(edge.fromId),b=map.get(edge.toId),flowRoute=flow.routes.find(r=>r.id===edge.id);
   if(!flowRoute)throw new Error(`Missing flow route: ${edge.id}`);
   if(!a.spatial||!b.spatial||a.id===b.id)return {...edge,...flowRoute,spatial:false,points:[]};
-  const key=`${a.id}-${b.id}`;let points;
+  const key=`${a.id}-${b.id}`,children=flow.subscenes.filter(s=>s.route===edge.id);let points;
   if(upper[a.id]&&upper[b.id])points=transitionPath(edge,orthogonalize(routePoints(edge,id=>map.get(id).y),1.6),floorY);
   else {
    const raw=lowerPaths[key];if(!raw)throw new Error(`Missing route geometry: ${key}`);
    const ay=a.id==='M1'?floorY.get(a.floor.levels.at(-1)):a.y,by=b.y;
    points=raw.map(([x,z,t])=>[x,ay+.3+(by-ay)*t,z]);
   }
-  const children=flow.subscenes.filter(s=>s.route===edge.id);
+  if(children.some(s=>s.floor.levels.length>2)){
+   const platforms=children.flatMap(s=>s.floor.label.split(' → ').map((floorLabel,i)=>({floor:s.floor.levels[i],floorLabel})));
+   points=explorationPath(points,platforms,floorY,key);
+  }
   let special=null;
   if(flowRoute.travel.includes('電梯車廂'))special=liftPath(edge,points,floorY,a.shiftX);
   else if(flowRoute.travel.includes('跨棟橋'))special=connectTowers(edge,points,children,floorY,a,b);
@@ -103,9 +107,19 @@ export function buildCurrentModel(graph,flow,actual=false) {
   else points=points.map(p=>p.map((v,i)=>v+(i===0?a.shiftX:0)));
   points=metricStairPath(points,TOWERS.map(t=>[t.x-27,t.x+27]));
   const anchors=special?.anchors.map(a=>({...a,index:points.findIndex(p=>distance(p,a.position)<1e-6)}));
-  const shots=special?anchoredShots(children,points,anchors):children.map((s,i)=>({...s,...locateShot(points,s.floor,floorY,(i+.5)/children.length)}));
+  const shots=special?anchoredShots(children,points,anchors):children.map((s,i)=>{
+   if(s.floor.levels.length>2){
+    // One authored subscene contains several platforms. Keep its single image/
+    // ID, but locate every platform on the continuous route in walking order.
+    const landings=s.floor.label.split(' → ').map((label,j,all)=>({label,floor:s.floor.levels[j],...locateShot(points,{entry:label,exit:label,label},floorY,j/(all.length-1))}));
+    if(landings.some((p,j)=>j&&p.along<landings[j-1].along-1e-6))throw new Error(`Reversed platform order: ${s.id}`);
+    const {position,along}=landings[Math.floor(landings.length/2)];
+    return {...s,position,along,landings};
+   }
+   return {...s,...locateShot(points,s.floor,floorY,(i+.5)/children.length)};
+  });
   if(shots.some((s,i)=>i&&s.along<shots[i-1].along-1e-6))throw new Error(`Reversed shot order: ${edge.id}`);
-  return {...edge,...flowRoute,spatial:true,points,shots,shafts:special?.shafts||[]};
+  return {...edge,...flowRoute,spatial:true,points,shots,landings:shots.flatMap(s=>(s.landings||[]).map(p=>({...p,shot:s.id}))),shafts:special?.shafts||[]};
  });
  const m=map.get('M1'),spine=[];
  const start=m.floor.levels[0],end=m.floor.levels.at(-1);

@@ -4,7 +4,7 @@ import data from './data.js';
 import {layout,offsets,routePoints} from './spatial.js';
 import {orthogonalize} from './sandbox-routes.js';
 import {clipRouteToHeight} from './floor-route-view.js';
-import {transitions,transitionPath,transitionViews} from './transition-spaces.js';
+import {archivedTransitions as transitions,archivedTransitionPath as transitionPath,transitionViews,explorationPath,landingHeight} from './transition-spaces.js';
 
 function heights(actual){
  const used=new Set(Object.values(layout).map(v=>v[2])),map=new Map(),floors=[-3,-2,-1,...Array.from({length:43},(_,i)=>i+1)];let y=0;
@@ -50,4 +50,14 @@ test('unrelated or reconnected edges receive no authored middle landing',()=>{
  const map=heights(true),points=[[0,0,0],[0,50,20]];
  assert.deepEqual(transitionPath({fromId:'R11',toId:'R13'},points,map),points);
  assert.deepEqual(transitionViews(transitions[0],[],map),[]);
+});
+test('authored half landings and mixed-direction stairs preserve their walking order',()=>{
+ const floorY=new Map([[28,0],[29,3.2],[30,6.4]]),views=[
+  {floor:29,floorLabel:'29F',at:.2},{floor:28,floorLabel:'28F 上半層平台',at:.5},{floor:29,floorLabel:'29F 上半層平台',at:.8}
+ ];
+ const points=explorationPath([[0,6.7,0],[8,6.7,8]],views,floorY,'mixed');
+ const landings=views.map(v=>landingHeight(v,floorY));
+ let cursor=0;
+ for(const y of landings){const i=points.findIndex((p,i)=>i>cursor&&Math.abs(p[1]-y)<1e-6&&Math.abs(points[i-1][1]-y)<1e-6);assert(i>cursor);cursor=i;}
+ assert.deepEqual(points[0],[0,6.7,0]);assert.deepEqual(points.at(-1),[8,6.7,8]);
 });

@@ -1,0 +1,22 @@
+{
+  "checks": [
+    "formal model navigation contains no archived sandbox entry",
+    "full B3-50F model renders 48 beats, 46 physical nodes and 72 secondary markers",
+    "floor guides toggle independently, respond to keyboard and remain off through filters and model rebuilds",
+    "every main scene has its canonical floor and story link",
+    "every secondary view is selectable with its own image and floor",
+    "return direction and deep links preserve every 31F-34F dining stair platform",
+    "exact 16F and 28F landings retain exploration clues, floor filtering and one-way rules",
+    "ending and repeated-view routes are explicitly nonphysical",
+    "50F core and the 47F trade rooms render in both height modes",
+    "all relocated floors and intervening landings render with the exact room list; M1 stops at 35F",
+    "search, chapter, floor, scope and secondary marker controls work",
+    "desktop and mobile canvas are nonblank, interactive and overflow-free, including long ascent labels",
+    "mobile floor-guide control fits and hides only reference geometry",
+    "legacy editor preserves custom R23 and modified upper-room coordinates without migration",
+    "legacy lower-scene URLs open the unified workspace and return to the document library",
+    "browser Back restores an interactive model",
+    "no browser JavaScript errors"
+  ],
+  "errors": []
+}

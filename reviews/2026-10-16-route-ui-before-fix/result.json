@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "upper descent, release boundary and lower distribution display their exact floors",
+    "all four C-02 descending platforms can be selected in order",
+    "all three multi-platform routes show each intervening floor in both directions",
+    "HP-03 stays on 31F while route cues remain available on every landing"
+  ],
+  "errors": []
+}

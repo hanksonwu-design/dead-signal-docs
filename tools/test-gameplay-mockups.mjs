@@ -33,7 +33,7 @@ test('catalog distinguishes simulated gameplay from precise rules with stable or
   assert.equal(rules.heading, 'illustration-note-v07-rules');
   assert.deepEqual(main.scenes.map(n => n.id), ['R18']);
   assert.deepEqual(rules.scenes, main.scenes);
-  assert.equal(records.length, 111);
+  assert.equal(records.length, 110);
 });
 
 test('mockup notes preserve manual progression and disclose the scope and unimplemented behavior', () => {

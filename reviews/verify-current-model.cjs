@@ -51,7 +51,7 @@ async function floorGuides(page,name){
  assert(await toggle.isChecked());assert(await page.locator('.floor-label:visible').count()>0);
 }
 (async()=>{
- const {layout,offsets}=await import(pathToFileURL(path.join(root,'building/spatial.js')));
+ const {layout,offsets,currentZones}=await import(pathToFileURL(path.join(root,'building/spatial.js')));
  const model=JSON.parse(readFileSync(path.join(root,'building/scene-data.json'),'utf8'));
  const {createEditorStore}=await import(pathToFileURL(path.join(root,'building/editor-state.js')));
  const saved=createEditorStore(model.nodes,layout,{...offsets},model.edges,{allowCustomRooms:true,platformLinks:[]}).snapshot();
@@ -79,20 +79,20 @@ async function floorGuides(page,name){
   }
   await choose(page,'R6');await page.locator('#floor-guides').check();
   pass('floor guides toggle independently, respond to keyboard and remain off through filters and model rebuilds');
-  for(const n of flow.nodes){await choose(page,n.id);assert.equal(await page.locator('#node-floor').innerText(),`${n.building.label} · ${n.floor.label}`);const source=new URL(await page.locator('#node-links a').first().getAttribute('href'),page.url());assert.equal(new URLSearchParams(source.hash.slice(1)).get('heading'),'node-'+n.id.toLowerCase()+'-script');}
+  for(const n of flow.nodes){await choose(page,n.id);const zone=currentZones[n.id]||(['R23','R24'].includes(n.id)?'檔案新翼':'');assert.equal(await page.locator('#node-floor').innerText(),`${n.building.label} · ${n.floor.label}${zone?' · '+zone:''}`);const source=new URL(await page.locator('#node-links a').first().getAttribute('href'),page.url());assert.equal(new URLSearchParams(source.hash.slice(1)).get('heading'),'node-'+n.id.toLowerCase()+'-script');}
   pass('every main scene has its canonical floor and story link');
   for(const s of flow.subscenes){await choose(page,s.node,s.route,s.id);assert.equal(await page.locator('#node-floor').innerText(),`${s.building.label} · ${s.floor.label}`);assert.match(await page.locator('#node-links').innerText(),new RegExp(s.id));}
   pass('every secondary view is selectable with its own image and floor');
-  await choose(page,'R24','R24-R25-33','T-R24-R25-01');await page.locator('#reverse').click();assert.equal(await page.locator('#node-floor').innerText(),'B 棟 · 44F → 43F');assert.equal(await page.locator('#steps [data-step]').first().getAttribute('data-step'),'R25');
+  await choose(page,'R24','R24-R25-33','T-R24-R25-01');await page.locator('#reverse').click();assert.equal(await page.locator('#node-floor').innerText(),'B 棟 · 34F → 33F → 32F → 31F');assert.equal(await page.locator('#steps [data-step]').first().getAttribute('data-step'),'R25');
   await page.reload();await page.waitForSelector('#loading',{state:'detached'});assert.equal(await page.locator('#reverse').getAttribute('aria-pressed'),'true');
   await page.screenshot({path:path.join(out,'dining-stair-1440.png'),fullPage:true});
-  pass('return direction and deep links preserve the 43F-44F dining stair');
+  pass('return direction and deep links preserve every 31F-34F dining stair platform');
   await choose(page,'R11','R11-R12-16','T-R11-R12-01');assert.equal(await page.locator('#node-floor').innerText(),'B 棟 · 16F');assert(await page.locator('#reverse').isDisabled());
-  await choose(page,'R17','R17-R18-26','T-R17-R18-04');assert.equal(await page.locator('#node-floor').innerText(),'B 棟 · 36F');await page.screenshot({path:path.join(out,'landing-36.png'),fullPage:true});
+  await choose(page,'R17','R17-R18-26','T-R17-R18-04');assert.equal(await page.locator('#node-floor').innerText(),'B 棟 · 28F');await page.screenshot({path:path.join(out,'landing-28.png'),fullPage:true});
   assert((await page.locator('#exploration').innerText()).includes(flow.subscenes.find(s=>s.id==='T-R17-R18-04').play.clue));
-  await page.locator('#floor').selectOption('36');await page.locator('[data-step="T-R17-R18-04"]').click();assert.equal(await page.locator('#floor').inputValue(),'36');
+  await page.locator('#floor').selectOption('28');await page.locator('#scene-list [data-select-shot="T-R17-R18-04"]').click();assert.equal(await page.locator('#floor').inputValue(),'28');
   await page.locator('#floor').selectOption('all');
-  pass('exact 16F and 36F landings retain exploration clues, floor filtering and one-way rules');
+  pass('exact 16F and 28F landings retain exploration clues, floor filtering and one-way rules');
   await choose(page,'R33','R33-P1-43');assert.match(await page.locator('#presentation-note').innerText(),/不配置實體房間/);assert.match(await page.locator('#route-floor').innerText(),/肉身回返/);
   await choose(page,'U4','U4-U4-lower');assert.match(await page.locator('#presentation-note').innerText(),/原場景回返/);
   pass('ending and repeated-view routes are explicitly nonphysical');
@@ -100,14 +100,14 @@ async function floorGuides(page,name){
   await page.locator('#height').selectOption('actual');await canvas(page,'floor-50-equal-height');
   await page.locator('#floor').selectOption('47');await canvas(page,'spine-47');
   pass('50F core and the 47F trade rooms render in both height modes');
-  for(const f of [23,27,31,32,37,40,41,42,44,45,46,47,48,49,50]){
+  for(const f of [23,...Array.from({length:24},(_,i)=>27+i)]){
    await page.locator('#floor').selectOption(String(f));
    const shown=await page.locator('#scene-list [data-select-shot=""]').evaluateAll(es=>es.map(e=>e.dataset.select).sort());
    const expected=flow.nodes.filter(n=>n.floor.levels?.includes(f)).map(n=>n.id).sort();
    assert.deepEqual(shown,expected,`${f}F scene filter`);
    await bounds(page);await canvas(page,`redistributed-${f}`);
   }
-  pass('all relocated floors and intervening landings render with the exact room list; M1 stops at 45F');
+  pass('all relocated floors and intervening landings render with the exact room list; M1 stops at 35F');
   await page.locator('#floor').selectOption('all');await page.locator('#search').fill('not-found-scene');assert(await page.locator('#empty').isVisible());await page.locator('#search').fill('R25');assert.equal(await page.locator('#scene-list [data-select="R25"][data-select-shot=""]').count(),1);await page.locator('#search').fill('');
   await page.locator('#act').selectOption('5');assert.equal(await page.locator('#scope').inputValue(),'act');await page.locator('#act').selectOption('all');
   await page.locator('#shots').uncheck();assert.equal(await page.locator('.model-label.shot:visible').count(),0);await page.locator('#shots').check();
@@ -128,6 +128,7 @@ async function floorGuides(page,name){
   await page.setViewportSize({width:1440,height:1000});await page.goto(base+'/building/editor.html#scene=R2');await page.locator('#loading').waitFor({state:'detached'});
   assert.match(await page.title(),/舊配置沙盒（封存）/);
   assert.match(await page.locator('.header-meta').innerText(),/封存 · 舊單棟配置/);
+  assert.match(await page.locator('header .eyebrow').innerText(),/封存舊配置／非現行樓層/);
   assert(await page.locator('#scene-export').isVisible());assert(await page.locator('#scene-import').isVisible());
   assert.equal(await page.locator('.room-tag').count(),27);assert.match(await page.locator('#room-floor').innerText(),/自訂配置/);await page.locator('#room-picker').selectOption('R23');assert.equal(await page.locator('#room-name').innerText(),'舊存檔自訂房間');
   assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),savedText);

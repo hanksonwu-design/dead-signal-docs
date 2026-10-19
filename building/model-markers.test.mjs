@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {MAIN_MARKERS,MARKER_CATEGORIES,MARKER_TIMINGS,TRANSITION_HORROR} from './marker-definitions.js';
 import {FRAGMENT_IMAGE_FORMS,FRAGMENT_SOURCE_OPTIONS,FRAGMENT_RECORD_IMAGES,NON_FRAGMENT_RECORDS} from './fragment-sources.js';
 import {FRAGMENT_FORMS,fragmentLabel,readingCueGroups} from './fragment-forms.js';
-import {markerPosition,markerInContext,showContentMarkers} from './model-markers.js';
+import {markerPosition,markerInContext,markerOnFloor,showContentMarkers} from './model-markers.js';
 import {buildCurrentModel} from './current-spatial.js';
 import {buildModelMarkers,writeModelMarkers} from '../tools/build-model-markers.mjs';
 import {collectSceneImages} from '../tools/build-scene-images.mjs';
@@ -161,6 +161,31 @@ test('schematic anchors rebuild with floor spacing, stay within rooms and exclud
    if(!m.shot&&n.id!=='M1'){assert(Math.abs(p[0]-n.x)<=n.w/2);assert(Math.abs(p[2]-n.z)<=n.d/2);assert.equal(p[1],n.y+1.2);}
   }
  }
+});
+
+test('HP-03 stays at the 31F service corner while the route cue follows each selected platform',()=>{
+ const horror=data.find(m=>m.id==='T-R24-R25-01-horror');
+ const puzzle=data.find(m=>m.id==='T-R24-R25-01-puzzle');
+ assert.equal(horror.authoredFloor,31);
+ assert.equal(puzzle.authoredFloor,undefined);
+ for(const actual of [false,true]){
+  const model=buildCurrentModel(graph,flow,actual),shot=model.shots.find(s=>s.id===horror.shot);
+  const corner=shot.landings.find(p=>p.floor===31).position;
+  const expected=[corner[0]+horror.offset[0],corner[1]+1.2,corner[2]+horror.offset[1]];
+  assert.deepEqual(markerPosition(horror,model),expected,'overview anchors the event to its own floor');
+  assert(markerOnFloor(horror));
+  for(const landing of shot.landings){
+   assert.deepEqual(markerPosition(horror,model,landing.floor),expected,'slicing cannot relocate the event');
+   assert.equal(markerOnFloor(horror,landing.floor),landing.floor===31,'other floor slices hide HP-03');
+   assert(markerOnFloor(puzzle,landing.floor));
+   assert.deepEqual(markerPosition(puzzle,model,landing.floor),[landing.position[0]+puzzle.offset[0],landing.position[1]+1.2,landing.position[2]+puzzle.offset[1]],'route cue follows the selected platform');
+  }
+ }
+ const original=TRANSITION_HORROR.find(m=>m[0]===horror.shot),floor=original[2];
+ try{
+  original[2]=50;
+  assert.throws(()=>build(),/Marker floor outside its subscene/,'out-of-route floor metadata fails regeneration');
+ }finally{original[2]=floor;}
 });
 
 test('marker scale uses hysteresis and selection context excludes adjacent rooms and transitions',()=>{

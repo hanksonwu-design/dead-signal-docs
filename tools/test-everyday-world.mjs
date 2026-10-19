@@ -64,7 +64,7 @@ test('existing transitional frames retain cultural details and their original ac
 });
 
 test('delivery history is not a shortcut or proof of unrelated harm', () => {
-  includes(common, ['11F 食堂、43F 封存舊飯廳及48F 原食肆冷藏後場', '不同用途', '僅11F 配膳與2F 分送', '食品冷藏不證明器官用途']);
+  includes(common, ['11F 食堂、31F 封存舊飯廳及48F 原食肆冷藏後場', '不同用途', '僅11F 配膳與2F 分送', '食品冷藏不證明器官用途']);
   includes(story(1), ['8F 返修', '9F 洗衣', '10F 吊籃', '籃內已空']);
   includes(spec(1), ['現時仍須完成 9F 排水', '空籃狀態不變']);
   includes(story(7), ['原食肆', '菜盆', '入口側食品架']);

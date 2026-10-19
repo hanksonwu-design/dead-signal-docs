@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {searchScenes,sceneArtwork,connectedRoutes} from './scene-workspace.js';
+import {searchScenes,floorSceneSelection,sceneArtwork,connectedRoutes} from './scene-workspace.js';
+import {buildCurrentModel} from './current-spatial.js';
 import redirect from '../scene-redirect.js';
 import overview from '../scene-overview.js';
 const graph=JSON.parse(readFileSync(new URL('../scene_graph.json',import.meta.url)));
@@ -15,6 +16,34 @@ test('scene search covers parts, chapters, secondary scenes, goals and collectio
  assert(searchScenes(graph,flow,{query:'老周 17 秒留言'}).some(n=>n.id==='R7'));
  assert.equal(searchScenes(graph,flow,{query:'no-such-scene'}).length,0);
  for(const entry of searchScenes(graph,flow,{floor:36}))assert(entry.floor.levels.includes(36));
+});
+
+test('floor selection reaches every multi-platform passage without retaining a room on another floor',()=>{
+ const model=buildCurrentModel(graph,flow);
+ for(const [floors,id] of [[[33],'T-R24-R25-01'],[[36,37,38,39,40],'T-R27-U1-01'],[[42,43,44,45,46],'T-U3-R28-01']])for(const floor of floors){
+  const target=floorSceneSelection(model,floor),shot=model.shots.find(s=>s.id===id);
+  assert.deepEqual(target,{node:shot.node,shot:id,route:shot.route},`${floor}F`);
+  assert(shot.floor.levels.includes(floor));
+ }
+ assert.equal(floorSceneSelection(model,-2).shot,'P2-V02','basement platforms also select their spanning passage');
+});
+
+test('floor selection prefers a room, then a single-floor shot before a spanning passage',()=>{
+ const model=buildCurrentModel(graph,flow);
+ assert.deepEqual(floorSceneSelection(model,31),{node:'R16',shot:'',route:'R16-R17-23'});
+ const multi=model.shots.find(s=>s.id==='T-R24-R25-01');
+ const local={...multi,id:'single-floor-33',floor:{levels:[33]}};
+ const mixed={...model,shots:[multi,local]};
+ assert.deepEqual(floorSceneSelection(mixed,33),{node:local.node,shot:local.id,route:local.route});
+});
+
+test('floor selection stays within the chosen part and returns no target for an empty floor',()=>{
+ const model=buildCurrentModel(graph,flow);
+ assert.equal(floorSceneSelection(model,33,{part:1}),null);
+ assert.equal(floorSceneSelection(model,11,{part:2}),null);
+ assert.equal(floorSceneSelection(model,31,{part:2}).node,'R23');
+ assert.equal(floorSceneSelection(model,33,{part:2}).shot,'T-R24-R25-01');
+ assert.equal(floorSceneSelection(model,60),null);
 });
 test('all artwork records are available, including non-marker assets and secondary details',()=>{
  const actual=new Set(flow.nodes.flatMap(n=>sceneArtwork(flow,n).map(i=>i.id)));

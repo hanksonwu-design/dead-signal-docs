@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-13",
+  "updated": "2026-10-16",
   "scope": "現行概念與規則圖解；正式圖像、動畫、音效與實機仍待製作驗收。",
   "figures": [
     {
@@ -17,7 +17,7 @@
       "kind": "current-diagram",
       "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
       "heading": "fig-ref-calibration",
-      "scope": "俯視關係示意只校核 N0–N4、完整掩體復位及 R19 側門繞至 R20。房間比例與開門方向依原主圖、正文和工單；三房都在 B 棟 37F。"
+      "scope": "俯視關係示意只校核 N0–N4、完整掩體復位及 R19 側門繞至 R20。房間比例與開門方向依原主圖、正文和工單；三房都在 B 棟 28F。"
     },
     {
       "id": "REF-AHSUN",
@@ -70,14 +70,12 @@
     },
     {
       "id": "REF-ASCENT-HIGH",
-      "asset": "assets/07_視聽與介面/assets/current_design/ascent_b_33_36_current.png",
-      "kind": "current-concept",
+      "asset": "assets/illustrations/current/REF-ASCENT-HIGH.svg",
+      "kind": "current-diagram",
       "source": "docs/10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "fig-ref-ascent-high",
-      "supplement": [
-        "assets/illustrations/current/REF-ASCENT-HIGH.svg"
-      ],
-      "scope": "四格依序為 C-02 外臺、貨箱隔間、同層橫移貨臺與包覆門楣。外側施工架只定材質；正式去路必須接原固定梯與檢修片，舊公共梯、封住宅門仍不可通行。"
+      "scope": "正式下行動線以四站31F→30F→29F→28F圖解為準；C-02與L1、L-04隔開。原33–36F點陣圖退役保留追溯，不作現行樓層及方向依據。貨臺只同層橫移，門端、承重梯與檢修片按正式圖單。",
+      "retiredAsset": "assets/07_視聽與介面/assets/current_design/ascent_b_33_36_current.png"
     },
     {
       "id": "REF-SUITES",
@@ -283,7 +281,7 @@
       "source": "docs/10_製作規格/10-05_製作規格_第四幕.md",
       "heading": "fig-l05",
       "retiredAsset": "assets/06_關卡規格/assets/level_flow/L05.png",
-      "scope": "01–02 R18、03–04 R19、05–06 R20，三房均在 B 棟 37F。R19 當前空椅、走廊反射與歷史凝固分層；R20 歷史來源播放器與現場聽覺帶分框。"
+      "scope": "01–02 R18、03–04 R19、05–06 R20，三房均在 B 棟 28F。R19 當前空椅、走廊反射與歷史凝固分層；R20 歷史來源播放器與現場聽覺帶分框。"
     },
     {
       "id": "V07",
@@ -489,7 +487,7 @@
       "source": "docs/10_製作規格/10-07_製作規格_第六幕.md",
       "heading": "fig-v39",
       "retiredAsset": "assets/07_視聽與介面/assets/current_design/V39.png",
-      "scope": "01 管理門後窄道、02 七窗視線、03 指定窗位遠景、04 展示廊門口。B 棟 44F→45F 全程在樓體包覆內；3／5／7 窗有靜止人影，1／2／4／6 為空。人物與遮蔽依 M1-C01 工單；七窗近看可略過，概念不代替逐窗正式圖。"
+      "scope": "01 管理門後窄道、02 七窗視線、03 指定窗位遠景、04 展示廊門口。B 棟 34F→35F 全程在樓體包覆內；3／5／7 窗有靜止人影，1／2／4／6 為空。人物與遮蔽依 M1-C01 工單；七窗近看可略過，概念不代替逐窗正式圖。"
     },
     {
       "id": "REF-LIFT",

@@ -13,7 +13,7 @@ import {makeLandingLinkPoints,resolveLinkEndpoint} from './landing-links.js';
 import {createStairDrag3D} from './stair-drag-3d.js';
 import {createObjectEdit3D} from './object-edit-3d.js';
 import {createRoomCreate3D} from './room-create-3d.js';
-import {transitions,transitionPath,dressTransition} from './transition-spaces.js';
+import {archivedTransitions as transitions,archivedTransitionPath as transitionPath,archivedTransitionFor,dressTransition} from './transition-spaces.js';
 
 const $=id=>document.getElementById(id);
 const groups=[
@@ -31,7 +31,7 @@ const colors={0:0x7facc5,1:0x98bca6,2:0x80bac4,3:0x93a9c9,4:0xc0a29f};
 const edgeColor=e=>e.kind==='捷徑'?0x91c789:e.kind==='誤導'?0xbd90df:['分岔','子節點'].includes(e.kind)?0x78b9c8:0xeab275;
 const floorName=f=>f<0?`B${Math.abs(f)}`:`${f}F`;
 const sourceUrl=id=>data.spatial[id]?'../#'+new URLSearchParams({doc:data.spatial[id].source,heading:data.spatial[id].heading}):'';
-const roomCaption=n=>n.custom?floorName(n.floor)+' · 自訂房間':editor.isChanged(n.id)?floorName(n.floor)+' 自訂配置 · 正式樓層 '+data.spatial[n.id].floorLabel:data.spatial[n.id].floorLabel+' · 正式樓層';
+const roomCaption=n=>n.custom?floorName(n.floor)+' · 自訂房間':floorName(n.floor)+(editor.isChanged(n.id)?' 自訂配置':' 封存配置')+' · 現行參考 '+data.spatial[n.id].floorLabel;
 data.nodes.forEach(n=>{[n.x,n.z,n.floor,n.w,n.d]=layout[n.id];n.group=groups.find(g=>g.id!=='all'&&n.floor>=g.floors[0]&&n.floor<=g.floors[1]).id;});
 const nodeMap=new Map(data.nodes.map(n=>[n.id,n]));
 // Existing upper/lower boundary is an editable route endpoint, not another room.
@@ -148,7 +148,7 @@ function rebuild(refit=true){
  });
  data.edges.forEach(e=>{const g=new THREE.Group();building.add(g);const points=paths.get(e.id).points;drawRoute(e,points,g);if(e.toId===exitAnchor.id){const p=points.at(-1);box(3,.22,3,p[0],p[1]-.1,p[2],material(0xeab275,.6),g);}g.traverse(o=>{o.userData.edge=e.id;});edgeObjects.push({g,e,points,viewG:null,viewPaths:[],viewKey:null});});
  data.platformLinks.forEach(link=>{const points=linkPaths.get(link.id);if(!points)return;const g=new THREE.Group(),e={id:link.id,kind:'分岔',back:true,route:{mode:'auto',width:link.width}};building.add(g);drawRoute(e,points,g);g.traverse(o=>{o.userData.platformLink=link.id;});platformLinkObjects.push({g,e,link,points,viewG:null,viewPaths:[],viewKey:null});});
- data.edges.forEach(e=>transitionStations.push(...dressTransition(e,paths.get(e.id).points,building,{THREE,box,material,line,segment,floorY})));
+ data.edges.forEach(e=>transitionStations.push(...dressTransition(e,paths.get(e.id).points,building,{THREE,box,material,line,segment,floorY,definition:archivedTransitionFor(e)})));
  dressBuilding(building,{THREE,box,material,line,segment,floorY,roomY,nodeMap,isEdited:id=>editor.isChanged(id)||(['R7','R8'].includes(id)&&editor.edgeChanged('R7-R8-11'))});
  refreshTransitionUI();refreshFloorOptions();applyVisibility();updateRouteOverlay();mouseEditor?.refresh();stairDrag3D?.refresh();objectEdit3D?.refresh();sync3DEditor();if(refit)fitCamera();
 }

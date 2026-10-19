@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="866" viewBox="0 0 1100 866" role="img" aria-labelledby="title desc">
   <title id="title">U6b 出入口配置草圖</title>
-  <desc id="desc">配重踏板維修艙。到艙與離艙是兩種結構；回 U6 重開閥後，須重新平衡才能再下來。。來路／返回：保養梯腳：維修艙來向的固定梯與同一組配重管，向上接 U6。 可回水箱夾層；若未固定踏板就重開調節閥，須重新平衡關閥才能再下來。 出口：配重踏面：水平泡與止回栓旁的活動踏面，另一端接運送通道。 完成水平確認並扣上止回栓後才可到 R30；沉降前可沿已固定踏面返回。</desc>
+  <desc id="desc">配重踏板維修艙。到艙與離艙是兩種結構；回 U6 重開閥後，須重新平衡才能再下來。。來路／返回：保養梯腳：維修艙來向的固定梯與同一組配重管，向上接 U6。 可回水箱夾層；若未固定踏板就重開調節閥，須重新平衡關閥才能再下來。 出口：配重踏面：水平泡與止回栓旁的活動踏面，另一端接運送通道。 完成水平確認並扣上止回栓後才可到 R30；R30 不可逆前進提交前可沿已固定踏面返回。</desc>
   <rect width="1100" height="866" fill="#fbfcfc"/>
   <g font-family="Microsoft JhengHei, Noto Sans TC, sans-serif" fill="#233536" letter-spacing="0">
     <text x="40" y="52" font-size="30" font-weight="700">U6b · 配重踏板維修艙 / 出入口配置</text>

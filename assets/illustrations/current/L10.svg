@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1441" viewBox="0 0 1200 1441" role="img" aria-labelledby="title desc" data-layout="visual-v1">
-<title id="title">L10｜生活夾層 · 六個操作面板</title><desc id="desc">各房操作摘要；必要原件與現物核對依本房時點接入機械提交，逐字內容依規格。六房串接依正式動線。 U1 · B 棟 46F：先讀覆核籤 → 核形刻 → 退栓：移收件架後實讀圖框背側分租改管覆核籤，再旋轉三片管圖。
+<title id="title">L10｜生活夾層 · 六個操作面板</title><desc id="desc">各房操作摘要；必要原件與現物核對依本房時點接入機械提交，逐字內容依規格。六房串接依正式動線。 U1 · B 棟 41F：先讀覆核籤 → 核形刻 → 退栓：移收件架後實讀圖框背側分租改管覆核籤，再旋轉三片管圖。
 核上支封止、住戶支單橫刻與井側雙凹口短節，對回現場端點；門號改動不代表管路改動。
-排除死路、確認路線後，仍須手動退服務門插栓。；U3 · B 棟 46F：讀牌核雙記 → 手動落橋：固定座正面檢修校驗牌可在配罩／調燈前後安全實讀，牌文不給正確燈角。
+排除死路、確認路線後，仍須手動退服務門插栓。；U3 · B 棟 41F：讀牌核雙記 → 手動落橋：固定座正面檢修校驗牌可在配罩／調燈前後安全實讀，牌文不給正確燈角。
 斷電裝窄口罩，遮眩光、閉遮光葉、燈框置中，照清兩條刻線。
 完整拉桿前須已實讀、將牌示固定座／動栓肩對回現物；一記固定、一記隨栓移，當前對齊後親手拉足行程落橋。；U4 · B 棟 48F：三地標核回返 → 讀片核外扣：核對門框缺角、扶手焊疤、單結斷邊布，確認一次同址回返，領域仍在。
 沿冷凝管找檢修蓋，實讀檢修蓋解扣銘片，核外扣滑槽與支撐止點；蓋下內銷先留待查。
@@ -17,7 +17,7 @@
 <text class="subtitle" x="32" y="91">各房操作摘要；必要原件與現物核對依本房時點接入機械提交，逐字內容依規格。六房串接依正式動線。</text>
 <g data-panel="1"><rect x="32" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="156" width="5" height="385" fill="#79d8dc"/>
-<text class="phase" x="58" y="193" fill="#79d8dc">01 · U1 · B 棟 46F</text>
+<text class="phase" x="58" y="193" fill="#79d8dc">01 · U1 · B 棟 41F</text>
 <text class="panel-title" x="58" y="229">先讀覆核籤 → 核形刻 → 退栓</text>
 <desc>移收件架後實讀圖框背側分租改管覆核籤，再旋轉三片管圖。
 核上支封止、住戶支單橫刻與井側雙凹口短節，對回現場端點；門號改動不代表管路改動。
@@ -25,7 +25,7 @@
 <g transform="translate(56 272)" clip-path="url(#visual-l10-0)"><g data-visual="L10" data-step="1"><rect x="22" y="21" width="466" height="202" rx="2" fill="#23363c" stroke="#607a80" stroke-width="2"/><rect x="48" y="53" width="83" height="100" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M48 108h42V153" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M67 38q23 -20 43 0" fill="none" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><rect x="148" y="53" width="83" height="100" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M148 108h42V153" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M167 38q23 -20 43 0" fill="none" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><rect x="248" y="53" width="83" height="100" rx="2" fill="#111c21" stroke="#e6bc68" stroke-width="2"/><path d="M248 108h42V153" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M267 38q23 -20 43 0" fill="none" stroke="#e6bc68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><path d="M332 108h61v-52h47M393 108h47M393 108v73h47" fill="none" stroke="#79d8dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /><path d="M434 45v22M434 101v16" fill="none" stroke="#ffa18b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /><path d="M394 178H456" fill="none" stroke="#79d8dc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-teal)"/></g></g></g>
 <g data-panel="2"><rect x="610" y="156" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="610" y="156" width="5" height="385" fill="#79d8dc"/>
-<text class="phase" x="636" y="193" fill="#79d8dc">02 · U3 · B 棟 46F</text>
+<text class="phase" x="636" y="193" fill="#79d8dc">02 · U3 · B 棟 41F</text>
 <text class="panel-title" x="636" y="229">讀牌核雙記 → 手動落橋</text>
 <desc>固定座正面檢修校驗牌可在配罩／調燈前後安全實讀，牌文不給正確燈角。
 斷電裝窄口罩，遮眩光、閉遮光葉、燈框置中，照清兩條刻線。

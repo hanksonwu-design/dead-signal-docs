@@ -441,11 +441,15 @@ function buildings() {
   return g + txt('A 棟 · 26F', 63, 37, C.teal, 20) + txt('B 棟 · 50F', 324, 17, C.teal, 20);
 }
 function ascent() {
-  let g = path('M60 219H461M60 169H461M60 119H461M60 69H461', C.edge, 'none', 4);
-  g += path('M185 69l30 17 -14 12 43 15M321 119l-23 20 18 17 -35 13M183 169l26 18 -17 10 42 20', C.red, 'none', 3);
-  g += arrow('M94 210H143V181H284V136H385V87H440V41');
-  for (const [x, y] of [[143, 181], [284, 136], [385, 87]]) g += path(`M${x - 12} ${y + 16}h24m-24 -8h24`, C.teal, 'none', 3);
-  return g;
+  let g = rect(18, 18, 110, 172, C.wall, C.edge) + rect(151, 122, 177, 68, C.wall, C.edge) + rect(354, 42, 138, 148, C.wall, C.edge);
+  g += arrow('M73 65V166H189V151H236V126H285V100H405V75');
+  g += path('M137 27V185M340 27V185', C.red, 'none', 4);
+  g += path('M28 113H111M28 139H111M28 165H111', C.edge);
+  g += path('M175 168H206V143H253V118H300', C.edge);
+  g += txt('32F R17', 28, 42, C.gold, 18) + txt('C-02 ↓', 31, 94, C.teal, 18);
+  g += txt('28F 校正', 159, 180, C.gold, 17) + txt('29F', 213, 119, C.gold, 17) + txt('30F', 272, 91, C.gold, 17);
+  g += txt('31F R23', 367, 65, C.gold, 18) + txt('檔案新翼', 367, 113, C.teal, 18);
+  return g + txt('隔牆分翼；跨門後才展開下部 → 50F', 36, 224, C.light, 18);
 }
 function core(index) {
   if (index === 0) return bed(0);

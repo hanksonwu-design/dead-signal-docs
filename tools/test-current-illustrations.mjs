@@ -50,7 +50,7 @@ test('refreshed diagrams preserve three captives, distinct defenses and fixed-la
   const body = id => JSON.stringify(BOARDS[id]);
   assert.match(body('L02'), /三張空椅/);
   assert.match(body('L02'), /玩家自行走到鎖舌損壞的內門/);
-  assert.match(body('V07'), /B 棟 37F/);
+  assert.match(body('V07'), /B 棟 28F/);
   assert.match(body('V07'), /N2 不是失敗復位點/);
   assert.match(body('V10'), /關閉本地操作介面/);
   assert.match(body('V10'), /退到來向的另一側/);

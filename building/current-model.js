@@ -12,8 +12,8 @@ import {showSceneNames,placeModelLabel} from './model-label-layout.js';
 import markerData from './scene-markers.json';
 import {MARKER_CATEGORIES,markerIcon} from './marker-presentation.js';
 import {fragmentLabel} from './fragment-forms.js';
-import {showContentMarkers,markerPosition,markerInContext} from './model-markers.js';
-import {searchScenes,sceneMatches,sceneArtwork,connectedRoutes} from './scene-workspace.js';
+import {showContentMarkers,markerPosition,markerInContext,markerOnFloor,shotPosition} from './model-markers.js';
+import {searchScenes,sceneMatches,floorSceneSelection,sceneArtwork,connectedRoutes} from './scene-workspace.js';
 import {createFlowPanel} from './flow-panel.js';
 import {SCALE,stairFlight,addScaleReference,referenceSpot} from './human-scale.js';
 
@@ -21,7 +21,7 @@ const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const source=(doc,heading)=>'../#'+new URLSearchParams({doc,heading});
 const link=(label,doc,heading)=>`<a href="${esc(source(doc,heading))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`;
-const locationLabel=(item,back=false)=>`${back?item.building.reverseLabel:item.building.label} · ${back?item.floor.reverseLabel:item.floor.label}`;
+const locationLabel=(item,back=false)=>`${back?item.building.reverseLabel:item.building.label} · ${back?item.floor.reverseLabel:item.floor.label}${item.zone?' · '+item.zone:''}`;
 let model=buildCurrentModel(graph,flow),selected='R6',routeId='',shotId='',reverse=false,scope='all',floor=null,view='iso';
 const node=id=>model.nodes.find(n=>n.id===id),shot=id=>model.shots.find(s=>s.id===id),route=()=>model.routes.find(r=>r.id===routeId);
 const host=$('canvas-host'),colors=[0x719eae,0x8bab8e,0x6fae9c,0x93a8bd,0xbd969c,0xc2aa7e,0x8dabbe,0xb69aa6,0x87b5ad,0xbdc5ae];
@@ -65,7 +65,7 @@ function buildMarkerPins(){
 function renderMarkers(){
  const alternate=route()?.steps.some(s=>s.id===(shotId||selected)&&s.image!==(shotId?shot(shotId):node(selected)).image);
  $('marker-section').hidden=!!alternate;
- const items=markerData.markers.filter(m=>markerInContext(m,selected,shotId)&&categoryEnabled(m.category));
+ const items=markerData.markers.filter(m=>markerInContext(m,selected,shotId)&&markerOnFloor(m,floor)&&categoryEnabled(m.category));
  if(markerId&&!items.some(m=>m.id===markerId))markerId='';
  $('marker-count').textContent=`${items.length}`;$('marker-empty').hidden=!!items.length;
   $('marker-list').innerHTML=items.map(m=>`<li><button data-marker-select="${m.id}" data-category="${m.category}" aria-pressed="${markerId===m.id}"><span>${esc(fragmentLabel(m.title,m.fragmentForms))}</span><small>${MARKER_CATEGORIES[m.category]}${m.timing?' · '+esc(m.timing):''} · ${m.image}</small></button></li>`).join('');
@@ -239,20 +239,22 @@ function applyVisibility(){
   if(bounds&&inPart){const pieces=clipRouteToHeight(o.r.points,...bounds);if(pieces.length){o.sliced=new THREE.Group();root.add(o.sliced);for(const p of pieces){pathMesh(p,o.color,o.sliced);visiblePoints.push(...p);}o.sliced.traverse(obj=>{obj.userData.route=o.r.id;});}}
  }
  for(const {s,g} of shotObjects){
+  const p=shotPosition(s,floor);g.position.set(...p.map((v,i)=>v-s.position[i]));
   g.visible=$('shots').checked&&sceneMatches(node(s.node),{part:$('part').value})&&(floor!==null?s.floor.levels.includes(floor):scope==='route'?s.route===routeId:scope==='act'?node(s.node).act===contextNode().act:true);
   // Cabin views depict different moments of one car, never simultaneous cars.
   if(g.userData.cabin)g.userData.cabin.visible=s.id===shotId;
  }
- for(const l of labels){const room=l.isShot?null:roomObjects.find(o=>o.n.id===l.id);l.enabled=$('labels').checked&&(l.isShot?shotObjects.find(o=>o.s.id===l.id).g.visible:room.g.visible||!!room.sliced);if(!l.enabled)l.el.hidden=true;if(l.id==='M1')l.position.set(...(floor===null?node('M1').position:[node('M1').x,model.floorY.get(floor)+2,20]));l.el.classList.toggle('selected',l.id===(shotId||selected));}
+ for(const l of labels){const room=l.isShot?null:roomObjects.find(o=>o.n.id===l.id);l.enabled=$('labels').checked&&(l.isShot?shotObjects.find(o=>o.s.id===l.id).g.visible:room.g.visible||!!room.sliced);if(!l.enabled)l.el.hidden=true;if(l.isShot){const p=shotPosition(shot(l.id),floor);l.position.set(p[0],p[1]+3,p[2]);}if(l.id==='M1')l.position.set(...(floor===null?node('M1').position:[node('M1').x,model.floorY.get(floor)+2,20]));l.el.classList.toggle('selected',l.id===(shotId||selected));}
  for(const l of markerPins){
   const owner=l.m.shot?shotObjects.find(o=>o.s.id===l.m.shot):roomObjects.find(o=>o.n.id===l.m.node);
-  l.enabled=$('content-markers').checked&&categoryEnabled(l.m.category)&&!!owner?.g.visible;
+  if(l.m.shot)l.position.set(...markerPosition(l.m,model,floor));
+  l.enabled=$('content-markers').checked&&categoryEnabled(l.m.category)&&markerOnFloor(l.m,floor)&&!!owner?.g.visible;
   // M1 spans floors; its overview annotations do not imply a precise window on a floor slice.
   if(l.m.node==='M1'&&floor!==null)l.enabled=false;
   if(l.m.shot&&owner?.g.userData.cabin&&!owner.g.userData.cabin.visible)l.enabled=false;
   if(!l.enabled)l.el.hidden=true;
  }
- for(const l of floorLabels){l.g.visible=$('floor-guides').checked&&scope==='all'&&(floor===null||floor===l.floor);l.enabled=l.g.visible&&(floor!==null||[...new Set(model.nodes.filter(n=>n.spatial).map(n=>n.level)),24,36].includes(l.floor));}
+ for(const l of floorLabels){l.g.visible=$('floor-guides').checked&&scope==='all'&&(floor===null||floor===l.floor);l.enabled=l.g.visible&&(floor!==null||[...new Set([...model.nodes.filter(n=>n.spatial).map(n=>n.level),...model.routes.flatMap(r=>(r.landings||[]).map(p=>p.floor))]),24].includes(l.floor));}
  updateScaleReference();
  $('view-title').textContent=floor!==null?`${floorName(floor)} 空間`:scope==='route'?(route()?reverse?`${route().to} → ${route().from}`:`${route().from} → ${route().to}`:'場景定位'):scope==='act'?graph.acts[contextNode().act]:'雙棟概覽';
  $('view-floor').textContent=floor!==null?floorName(floor):scope==='route'?(route()?locationLabel(route(),reverse):''):scope==='act'?locationLabel(contextNode()):'A 棟 1–26F · B 棟 1–50F · 共用地基';
@@ -270,13 +272,13 @@ function fit(points=visiblePoints){
  camera.position.copy(center).add(direction.multiplyScalar(250));camera.near=.1;camera.far=1500;camera.updateProjectionMatrix();controls.target.copy(center);controls.update();
  for(const id of ['iso','front','top'])$(id).setAttribute('aria-pressed',String(id===view));
 }
-function focus(){const n=shotId?shot(shotId):contextNode(),m=markerById.get(markerId),p=m?markerPosition(m,model)||n.position:n.position;fit([[p[0]-8,p[1]-5,p[2]-8],[p[0]+8,p[1]+7,p[2]+8]]);}
+function focus(){const n=shotId?shot(shotId):contextNode(),m=markerById.get(markerId),p=m?markerPosition(m,model,floor)||shotPosition(n,floor):shotPosition(n,floor);fit([[p[0]-8,p[1]-5,p[2]-8],[p[0]+8,p[1]+7,p[2]+8]]);}
 function updateScaleReference(){
  if(!scaleReference)return;
  const n=node(selected),s=shotId?shot(shotId):null,owner=s?shotObjects.find(o=>o.s.id===s.id):roomObjects.find(o=>o.n.id===n.id);
  const playback=route()?.steps.some(step=>step.id===selected&&step.image!==n.image);
  scaleReference.visible=$('human-scale').checked&&!playback&&!!owner?.g.visible;
- if(s)scaleReference.position.set(...s.position);
+ if(s)scaleReference.position.set(...shotPosition(s,floor));
  else if(n.id==='M1')scaleReference.position.set(...n.position);
  else if(n.spatial){const spot=owner?.g.userData.referenceSpot;scaleReference.visible=scaleReference.visible&&!!spot;if(spot)scaleReference.position.set(spot[0],n.y+SCALE.floorSurface,spot[1]);}
 }
@@ -370,8 +372,16 @@ function bind(){
  $('search').oninput=()=>{if($('search').value.trim())$('flow-range').value='filtered';renderList();};
  $('part').onchange=()=>{$('act').value='all';floor=null;$('floor').value='all';$('flow-range').value='filtered';scope='all';$('scope').value=scope;const first=model.nodes.find(n=>sceneMatches(n,filters()));choose(sceneMatches(node(selected),filters())?selected:first.id);};
  $('act').onchange=()=>{if($('act').value!=='all'){const n=model.nodes.find(n=>String(n.act)===$('act').value);scope='act';$('scope').value=scope;$('flow-range').value='act';choose(n.id);}else{scope='all';$('scope').value=scope;$('flow-range').value='filtered';renderList();applyVisibility();fit();}};
- $('floor').onchange=()=>{floor=$('floor').value==='all'?null:Number($('floor').value);$('act').value='all';$('flow-range').value='filtered';if(floor!==null){const n=model.nodes.find(n=>n.spatial&&sceneMatches(n,{part:$('part').value})&&(n.level===floor||n.id==='M1'&&n.floor.levels.includes(floor)));const s=model.shots.find(s=>sceneMatches(node(s.node),{part:$('part').value})&&s.floor.levels.length===1&&s.floor.levels[0]===floor);if(n){selected=n.id;shotId='';routeId=model.routes.find(r=>r.from===n.id)?.id||'';}else if(s){selected=s.node;shotId=s.id;routeId=s.route;}reverse=false;}renderList();renderDetails();applyVisibility();saveHash();fit();};
- $('scope').onchange=()=>{scope=$('scope').value;floor=null;$('floor').value='all';renderList();applyVisibility();fit();};
+ $('floor').onchange=()=>{
+  floor=$('floor').value==='all'?null:Number($('floor').value);$('act').value='all';$('flow-range').value='filtered';
+  if(floor!==null){
+   const target=floorSceneSelection(model,floor,{part:$('part').value}),previousRoute=routeId;
+   if(target){selected=target.node;shotId=target.shot;routeId=target.route;reverse=reverse&&routeId===previousRoute&&!!route()?.back;}
+   else {floor=null;$('floor').value='all';}
+  }
+  renderList();renderDetails();applyVisibility();saveHash();fit();
+ };
+ $('scope').onchange=()=>{scope=$('scope').value;floor=null;$('floor').value='all';renderList();renderDetails();applyVisibility();saveHash();fit();};
  $('height').onchange=()=>{model=buildCurrentModel(graph,flow,$('height').value==='actual');build();renderDetails();fit();};
  $('human-scale').onchange=updateScaleReference;
  $('full-walls').onchange=()=>{build();};

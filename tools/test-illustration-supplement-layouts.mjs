@@ -17,7 +17,7 @@ test('the gap supplement contains eleven saved concepts and seventeen precise di
   for (const f of provenance.selectedAssets) {
     assert(existsSync(new URL('../' + f.asset, import.meta.url)), f.id);
     assert(provenance.prompts[f.id]?.length > 100, f.id);
-    assert(manifest.figures.some(r => r.id === f.id && r.asset === f.asset), f.id);
+    assert(manifest.figures.some(r => r.id === f.id && (r.asset === f.asset || r.retiredAsset === f.asset)), f.id);
   }
   for (const [id, svg] of diagrams) {
     assert.equal(read(`assets/illustrations/current/${id}.svg`), svg, id);
@@ -26,7 +26,7 @@ test('the gap supplement contains eleven saved concepts and seventeen precise di
   }
 });
 
-test('ascent diagrams include every existing platform with original location and order', () => {
+test('route diagrams include every current platform in physical travel order', () => {
   for (const [id, group] of Object.entries(ASCENT_GROUPS)) {
     const children = group.prefix.flatMap(prefix => flow.subscenes.filter(s => s.id.startsWith(prefix)));
     assert.equal(children.length, group.beats.length);
@@ -42,6 +42,13 @@ test('ascent diagrams include every existing platform with original location and
   }
   assert(diagrams.get('REF-ASCENT-A-UPPER').includes('先進 R6（11F）完成本房'));
   assert(diagrams.get('REF-ASCENT-B').includes('B22F 橋 → A22F'));
+  const descent = flow.subscenes.filter(s => s.id.startsWith('T-R17-R18-'));
+  assert.deepEqual(descent.map(s => s.floor.levels[0]), [31, 30, 29, 28]);
+  const current = manifest.figures.find(f => f.id === 'REF-ASCENT-HIGH');
+  assert.equal(current.kind, 'current-diagram');
+  assert.equal(current.asset, 'assets/illustrations/current/REF-ASCENT-HIGH.svg');
+  assert(current.retiredAsset.endsWith('ascent_b_33_36_current.png'));
+  assert(diagrams.get('REF-ASCENT-HIGH').includes('下行至 28F'));
 });
 
 test('mechanism and clue illustrations preserve exact values and separate operations', () => {
@@ -69,7 +76,7 @@ test('mirror and cinematic diagrams preserve reveal timing without new enemies o
 test('all new images have navigable catalog captions without changing gameplay work orders', () => {
   const { records } = buildIllustrationCatalog();
   for (const id of [...diagrams.keys(), ...provenance.selectedAssets.map(f => f.id)]) assert(records.some(r => r.base === id), id);
-  assert.equal(records.length, 111);
+  assert.equal(records.length, 110);
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.subscenes.length, 72);
   assert.equal(flow.routes.length, 56);

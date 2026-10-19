@@ -58,6 +58,27 @@ test('historical descent does not borrow the damaged present-day route or a new 
   }
 });
 
+test('R25 cannot assign the undated R22 footprint to the timed 50F descent', () => {
+  const footprint = block('s-0907-44');
+  const opening = block('s-0908-31');
+  const payoff = block('s-0606-6');
+  const mechanics = block('s-0807-12');
+  includes(footprint, ['主人與確切時間均未確認', '方向：向下']);
+  for (const source of [opening, payoff, block('s-0302-5')]) {
+    includes(source, ['尚不能確認同一次事件', '僅持 B／D 時沒有預對齊']);
+  }
+  includes(opening, ['最多兩段預對齊', '只移除已沒有內容的空列', 'D 留未定位列', '不因收齊四片或完成本房時間線而轉成已定位足跡']);
+  includes(payoff, ['最多 **兩段預先對齊**', 'R22 的 30F 三階足跡', 'R25 的 50F 下行原件不能替它定位', '保留 A／C 的有效對位', '已合法取得的 E4-04']);
+  const hotspot = row(mechanics, '`R25_H10`');
+  includes(hotspot[3], ['最多兩段', 'D 留未定位方向', '不代寫時間線完成']);
+  includes(hotspot[4], ['不代表 D 已定位']);
+  includes(mechanics, ['只移除無內容的空列', '舊 D 預填只還原該參照']);
+  for (const source of master.documents.values()) {
+    assert.doesNotMatch(source, /D 落在 02:20:22|向下足跡落在 02:20:22|三段預先對齊|最多三段預對齊|最多三段[）)]|一到三段預先對齊/);
+  }
+  includes(block('s-0908-32'), ['未持有碎片也能用本地原件完成', '仍須查看必要來源與確認整體']);
+});
+
 test('historical rescue remains unconfirmed while actual ending rescue is preserved', () => {
   for (const source of master.documents.values()) {
     assert.doesNotMatch(source, /警察第六至七日失敗|救援曾到達、卻未完成/);

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { parseMaster } from './sync-canonical.mjs';
+import { parseMaster, deriveGraph } from './sync-canonical.mjs';
 import { ACTS, APPENDIX } from './screenplay-files.mjs';
 import { stripReadingInline } from './reading-scene-flow.mjs';
 import { buildSceneImageOutputs } from './build-scene-images.mjs';
@@ -82,11 +82,37 @@ test('later one-way doors show restrictions before crossing and keep cancellatio
 test('R30 blocks departure on commitment but seals the stairs only after manual braking', () => {
   has(story(7), '留在沉降中的通道完成制動', '制動完成後才實際封閉');
   has(block('s-0909-47'), '繼續後須留在通道完成制動');
+  const warning = block('s-0909-47').match(/〔系統／確認警示〕[^\n]*「([^」]+)」/)?.[1];
+  assert(warning, 'The authored R30 confirmation must exist');
+  ordered(warning, '繼續後', '留在通道', '制動後', '原路將封閉');
+  const specWarning = spec(8).match(/提交入口先清楚顯示「([^」]+)」/)?.[1];
+  const sidequestWarning = master.documents.get(APPENDIX).match(/R30 的五點剖面排妥、尚未提交時，先提示「([^」]+)」/)?.[1];
+  assert.equal(specWarning, warning, 'Production must use the same commitment warning as the playable scene');
+  assert.equal(sidequestWarning, warning, 'Sidequest return advice must use that same commitment warning');
   ordered(block('s-0909-48'), '親手拉制動桿', '後方階梯隨後沉降封閉');
   has(spec(8), '此時 return_route_state 為 warning', '未制動不得提前 sealed',
     '已制動不得重新開啟回程', '保留暫停、失焦停表與存檔退出');
   has(master.documents.get(APPENDIX), '手動制動完成後的沉降才設 sealed');
   assert(!master.text.includes('R30 不可逆提交即封回程，不等到制動後'));
+});
+
+test('every lower return route closes on R30 commitment rather than later physical sealing', () => {
+  const lowerNodes = new Set(['R27', 'U1', 'U2', 'U2b', 'U3', 'R28', 'R29', 'U4', 'U4b', 'U5', 'U6', 'U6b', 'R30']);
+  const canonicalGraph = deriveGraph(master, structuredClone(graph));
+  const lowerReturns = canonicalGraph.edges.filter(edge => edge.back && lowerNodes.has(edge.fromId) && lowerNodes.has(edge.toId));
+  assert.equal(lowerReturns.length, 13, 'Cover twelve main connections and the U3–U1 shortcut');
+  for (const edge of lowerReturns) {
+    assert.match(edge.returnRule, /R30.*提交/, `${edge.id}: return boundary must include commitment`);
+    assert.doesNotMatch(edge.returnRule, /沉降前/, `${edge.id}: physical sealing is a later phase`);
+  }
+  for (const act of [5, 6, 7, 8]) {
+    assert.doesNotMatch(spec(act), /未沉降封路/, `Act ${act}: reverse exit tables must check commitment`);
+  }
+  for (const act of [6, 7, 8]) {
+    assert.doesNotMatch(spec(act), /沉降前可(?:循|沿|依|原路)/, `Act ${act}: access and return tables must agree`);
+  }
+  has(spec(8), '不可逆前進提交前可回 U6b；提交後立即停用離房及下部回訪，制動完成後才實體封路。');
+  assert.doesNotMatch(story(8), /R30 沉降前可回/);
 });
 
 test('the seven ascent scenes match budgeting without adding routes, evidence or art IDs', () => {

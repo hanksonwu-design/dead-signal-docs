@@ -3,8 +3,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT, parseMaster } from './sync-canonical.mjs';
 import { buildSceneImageOutputs } from './build-scene-images.mjs';
-import { buildSceneFlowData, readSceneFloor, preciseFloor } from './scene-flow-data.mjs';
-import { layout } from '../building/spatial.js';
+import { buildSceneFlowData, readSceneFloor, preciseFloor, routeFloor } from './scene-flow-data.mjs';
+import { currentLayout as layout } from '../building/spatial.js';
 import { readRouteExploration } from './route-exploration.mjs';
 
 const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
@@ -47,12 +47,12 @@ test('every floor label comes from its own canonical spatial table', () => {
   assert.equal(label('R2'), '1F');
   assert.equal(label('R3'), '2F');
   assert.equal(label('R17'), '32F');
-  assert.equal(label('R23'), '43F');
-  assert.equal(label('R25'), '44F');
+  assert.equal(label('R23'), '31F');
+  assert.equal(label('R25'), '34F');
   assert.equal(label('R6'), '11F');
   assert.equal(label('R11'), '15F 上半層平台');
   assert.equal(label('R12'), '23F');
-  for (const [id, floor, location] of [['U2b', 46, '橋下'], ['U4b', 48, '檢修蓋下'], ['U6b', 49, '水箱下']]) assert.equal(label(id), `${floor}F ${location}夾層`);
+  for (const [id, floor, location] of [['U2b', 41, '橋下'], ['U4b', 48, '檢修蓋下'], ['U6b', 49, '水箱下']]) assert.equal(label(id), `${floor}F ${location}夾層`);
 });
 
 test('transition floors locate each picture while routes include intermediate landings', () => {
@@ -63,21 +63,21 @@ test('transition floors locate each picture while routes include intermediate la
   assert.equal(child('T-R2-R3-01').label, '1F');
   assert.equal(child('T-R2-R3-02').label, '2F');
   assert.equal(child('T-R12-R14-01').label, '24F');
-  assert.equal(child('T-R17-R18-04').label, '36F');
+  assert.equal(child('T-R17-R18-04').label, '28F');
   assert.equal(route('R11', 'R12').floor.label, ['15F 上半層平台', ...Array.from({length:8}, (_, i) => `${i + 16}F`)].join(' → '));
-  assert.equal(route('R17', 'R18').floor.label, Array.from({length:6}, (_, i) => `${i + 32}F`).join(' → '));
+  assert.equal(route('R17', 'R18').floor.label, '32F → 31F → 30F → 29F → 28F');
   assert.equal(route('R17', 'R14').floor.label, '32F → 31F → 30F → 29F → 28F → 27F');
-  assert.equal(route('R24', 'R25').floor.label, '43F → 44F');
-  assert.equal(child('T-R24-R25-01').reverseLabel, '44F → 43F');
+  assert.equal(route('R24', 'R25').floor.label, '31F → 32F → 33F → 34F');
+  assert.equal(child('T-R24-R25-01').reverseLabel, '34F → 33F → 32F → 31F');
   assert.equal(route('R3', 'R4').floor.label, '2F');
   assert.equal(route('U6', 'U6b').floor.label, '49F → 49F 水箱下夾層');
   assert.equal(route('U6', 'U6b').floor.reverseLabel, '49F 水箱下夾層 → 49F');
 });
 
 test('M1 uses distinct entrance and exit heights, not a new explorable floor', () => {
-  assert.equal(flow.nodes.find(n => n.id === 'M1').floor.label, '44F → 45F');
-  assert.equal(route('R25', 'M1').floor.label, '44F');
-  assert.equal(route('M1', 'R27').floor.label, '45F');
+  assert.equal(flow.nodes.find(n => n.id === 'M1').floor.label, '34F → 35F');
+  assert.equal(route('R25', 'M1').floor.label, '34F');
+  assert.equal(route('M1', 'R27').floor.label, '35F');
 });
 
 test('ending floors never imply a walk down from 50F to B3', () => {
@@ -94,6 +94,20 @@ test('missing, duplicated or unrecognized floor sources fail rather than guessin
   assert.throws(() => readSceneFloor(spec.replace(row, `${row}\n${row}`), node), /Floor row/);
   assert.throws(() => readSceneFloor(spec.replace(row, '| 樓層定位 | 未定 |'), node), /Floor must be precise/);
   for (const label of ['15F–20F', '15F 區段', '0F', '51F', 'B4']) assert.throws(() => preciseFloor(label, 'invalid'), /Floor must be precise/);
+});
+
+test('floor continuity allows authored descent and turns while rejecting omitted platforms', () => {
+  assert.deepEqual(preciseFloor('32F → 31F → 30F → 29F → 28F', 'descent').levels, [32,31,30,29,28]);
+  assert.equal(preciseFloor('28F → 28F 上半層平台 → 29F → 28F 上半層平台 → 28F', 'turn').reverseLabel,
+    '28F → 28F 上半層平台 → 29F → 28F 上半層平台 → 28F');
+  assert.deepEqual(preciseFloor('B3 → B2 → B1 → 1F', 'basement').levels, [-3,-2,-1,1]);
+  for(const label of ['31F → 34F','35F → 41F','41F → 47F','32F → 30F → 28F','B2 → 1F'])
+    assert.throws(()=>preciseFloor(label,'skip'),/Non-contiguous floor order/);
+  const edge={id:'turn',fromId:'a',toId:'b'},nodes=[{id:'a',floor:preciseFloor('28F','a')},{id:'b',floor:preciseFloor('28F','b')}];
+  const children=[{route:'turn',floor:preciseFloor('28F → 29F → 28F','child')}];
+  assert.equal(routeFloor(edge,nodes,children).label,'28F → 29F → 28F');
+  children[0].floor=preciseFloor('30F','bad');
+  assert.throws(()=>routeFloor(edge,nodes,children),/Non-contiguous floor order/);
 });
 
 test('every rendered floor is precise and upper model defaults agree', () => {
@@ -123,8 +137,8 @@ test('R2 to R3 shows both existing transitions in playable order', () => {
 });
 
 test('every transition has ordered adjacent pictures and a single route', () => {
-  assert.equal(flow.subscenes.filter(s => s.type === '探路次場景').length, 35);
-  assert.equal(flow.subscenes.filter(s => s.type === '可查看過渡').length, 24);
+  assert.equal(flow.subscenes.filter(s => s.type === '探路次場景').length, 38);
+  assert.equal(flow.subscenes.filter(s => s.type === '可查看過渡').length, 21);
   assert.equal(flow.subscenes.filter(s => s.type === '轉場接景').length, 13);
   const expanded = flow.routes.flatMap(r => r.steps.filter(s => s.type === 'subscene').map(s => s.id));
   assert.deepEqual(expanded.sort(), flow.subscenes.map(s => s.id).sort());
@@ -137,11 +151,11 @@ test('every transition has ordered adjacent pictures and a single route', () => 
 });
 
 test('all three former floor skips now have one playable node on every intermediate floor', () => {
-  const expected = [['R3','R5',2,8],['R5','R6',8,11],['R6','R7',11,15],['R11','R12',15,23],['R12','R14',23,27],['R17','R18',32,37]];
-  for (const [from,to,start,end] of expected) {
+  const expected = [['R3','R5',[3,4,5,6,7]],['R5','R6',[9,10]],['R6','R7',[12,13,14]],['R11','R12',[16,17,18,19,20,21,22]],['R12','R14',[24,25,26]],['R17','R18',[31,30,29,28]]];
+  for (const [from,to,platforms] of expected) {
     const r = route(from,to), children = flow.subscenes.filter(s => s.route === r.id);
     assert.equal(r.mode, '逐層探索');
-    assert.deepEqual(children.map(s => s.floor.levels[0]), Array.from({length:end-start-1}, (_,i)=>start+i+1));
+    assert.deepEqual(children.map(s => s.floor.levels[0]), platforms);
     for (const child of children) {
       assert.equal(child.type, '探路次場景');
       assert(child.play.clue && child.play.action && child.play.recovery, child.id);
@@ -162,7 +176,7 @@ test('all three former floor skips now have one playable node on every intermedi
   const access = id => flow.nodes.find(n=>n.id===id).access.map(a=>a.location+a.state).join('\n');
   assert.match(access('R3'), /3F 晒衣排水台/);
   assert.match(access('R11'), /16F–22F 每層探路/);
-  assert.match(access('R17'), /33F–36F 每層探路/);
+  assert.match(access('R17'), /31F.*30F.*29F.*28F.*(?:探路|下行)/);
   for(const id of ['R3','R11'])assert(!/可直接進 R5|三段服務梯/.test(access(id)));
 });
 

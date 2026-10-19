@@ -15,7 +15,7 @@ const has = (text, ...phrases) => phrases.forEach(phrase => assert(text.includes
 const block = id => master.blocks.get(id);
 
 test('all remaining acts annotate completion at the authored interaction', () => {
-  const counts = new Map([[0, 4], [2, 19], [3, 28], [4, 12], [5, 8], [6, 8], [7, 11], [8, 10], [9, 13]]);
+  const counts = new Map([[0, 4], [2, 19], [3, 28], [4, 12], [5, 9], [6, 10], [7, 11], [8, 10], [9, 13]]);
   for (const act of acts) {
     const story = master.documents.get(act.path);
     const localNotes = notes(story);
@@ -49,9 +49,12 @@ test('every puzzle marker and annotated image carries the same condition in stor
   }
 });
 
-test('all 28 later route interactions retain local completion notes and unchanged routes', () => {
+test('all 31 later route interactions retain local completion notes and unchanged routes', () => {
   const children = flow.subscenes.filter(child => child.play && !/^T-R[35]-/.test(child.id));
-  assert.equal(children.length, 28);
+  assert.equal(children.length, 31);
+  for (const id of ['T-R24-R25-01', 'T-R27-U1-01', 'T-U3-R28-01']) {
+    assert(children.some(child => child.id === id), `Missing continuous platform route: ${id}`);
+  }
   for (const child of children) {
     const anchor = `<a id="ascent-${child.id.toLowerCase()}-script"></a>`;
     const story = acts.map(act => master.documents.get(act.path)).find(story => story.includes(anchor));

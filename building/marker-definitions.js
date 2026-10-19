@@ -64,6 +64,6 @@ export const HORROR_TIMING={
 export const TRANSITION_HORROR=[
  ['T-R2-R3-01','封門下的遮光'],
  ['T-R15-R16-03','金屬倒影中的開閘'],
- ['T-R24-R25-01','封板內的壓力'],
+ ['T-R24-R25-01','封板內的壓力',31],
  ['T-R29-U4-02','假到站燈與袋內刮擦'],
 ];

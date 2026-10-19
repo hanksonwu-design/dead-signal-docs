@@ -74,7 +74,22 @@ export const routes={
  'R20-R21':[[2,1,0],[7,1,1]],
  'R21-R22':[[13,7,0],[13,9,0],[24,9,0],[24,16,0],[24,16,1],[19,16,1]]
 };
-export function routePoints(e,height){const ya=height(e.fromId)+.3,yb=height(e.toId)+.3;const key=e.fromId+'-'+e.toId;const raw=routes[key];if(!raw)throw new Error('Missing story route '+key);let points=[];
+// The archived editor above keeps its original coordinates and saved route IDs.
+// Only the canonical viewer uses the revised isolation wing and release floor.
+export const currentLayout={...layout,
+ R18:[-18,-4,28,5,30],R19:[-6,-13,28,14,12],R20:[-6,-4,28,14,6],
+ R21:[11,-3,29,12,12],R22:[12,12,30,10,8]
+};
+export const currentZones={R18:'隔離校正內翼',R19:'隔離校正內翼',R20:'隔離校正內翼',R21:'隔離校正內翼',R22:'隔離校正內翼'};
+export const currentRoutes={...routes,
+ 'R17-R18':[[-10,10,0],[-24,10,0],[-24,8,1],[-20.5,8,1]],
+ 'R18-R19':[[-15.5,-13,0],[-13,-13,1]],
+ 'R19-R20':[[1,-13,0],[3,-13,0],[3,-5,1],[1,-5,1]],
+ 'R20-R21':[[1,-3,0],[3,-3,0],[5,-3,1]],
+ 'R21-R22':[[11,3,0],[21,3,0],[21,8,1],[12,8,1]]
+};
+export const currentRoutePoints=(edge,height)=>routePoints(edge,height,currentRoutes);
+export function routePoints(e,height,definitions=routes){const ya=height(e.fromId)+.3,yb=height(e.toId)+.3;const key=e.fromId+'-'+e.toId;const raw=definitions[key];if(!raw)throw new Error('Missing story route '+key);let points=[];
  for(let i=0;i<raw.length;i++){const [x,z,t]=raw[i],p=[x,ya+(yb-ya)*t,z];if(i){const a=points.at(-1);if(x===a[0]&&z===a[2]&&Math.abs(p[1]-a[1])>1){const count=Math.max(2,Math.ceil(Math.abs(p[1]-a[1])/1.5));for(let s=1;s<=count;s++)points.push([x,a[1]+(p[1]-a[1])*s/count,z+(s%2?(z>=0?-3:3):0)]);if(count%2)points.push(p);continue;}}points.push(p);}
  return points;
 }

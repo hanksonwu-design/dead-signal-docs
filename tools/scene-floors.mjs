@@ -7,6 +7,11 @@ export function preciseFloor(label, id) {
     assert(match, `Floor must be precise: ${id}: ${label}`);
     return match[1].startsWith('B') ? -Number(match[1].slice(1)) : Number(match[1].slice(0, -1));
   });
+  // A route may turn back or visit a half landing. It may not omit a floor.
+  // B1 and 1F are adjacent; there is no 0F in the building.
+  const positions = levels.map((level, i) => (level > 0 ? level - 1 : level) + (stops[i].includes('上半層') ? .5 : 0));
+  assert(positions.every((position, i) => !i || Math.abs(position - positions[i - 1]) <= 1),
+    `Non-contiguous floor order: ${id}: ${label}`);
   return { label, reverseLabel: [...stops].reverse().join(' → '), entry: stops[0], exit: stops.at(-1), levels,
     kind: stops.length > 1 ? 'passage' : label.includes('夾層') ? 'low' : 'floor' };
 }

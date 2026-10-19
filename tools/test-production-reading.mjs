@@ -63,6 +63,22 @@ test('compaction and image regeneration are idempotent and preserve the reading 
   }
 });
 
+test('fourth-act entry prose follows the calibration wing and its half-floor platforms', () => {
+  const { outputs } = buildSceneImageOutputs(graph, master.documents);
+  const story = outputs.get(ACTS.find(act => act.act === 4).path);
+  for (const [room, expected] of [
+    ['R20', [/28F 來路/, /28F 上半層平台、29F 辦公門下工作梯/, /接入 29F 紀律辦公室/]],
+    ['R21', [/29F 來路接回同層/, /29F 上半層候放平台，上接 30F 釋放接點/]],
+    ['R22', [/30F 身後門端/, /接回 29F 上半層候放平台/]],
+  ]) {
+    const entry = story.split(`<!-- reading-flow:${room}-V01:begin -->`)[1]
+      ?.split(`<!-- reading-flow:${room}-V01:end -->`)[0];
+    assert(entry, `${room}: generated entry is present`);
+    for (const pattern of expected) assert.match(entry, pattern, room);
+    assert.doesNotMatch(entry, /\b(?:3[7-9]|4[0-2])F\b/, `${room}: retired calibration floors`);
+  }
+});
+
 test('plain and nested disclosures render tables, anchors and accurate source lines', () => {
   const html = render('<details>\n<summary>State & QA</summary>\n\n<a id="inside"></a>\n## State\n\n<details>\n<summary>Nested</summary>\n\n| A | B |\n| --- | --- |\n| 1 | 2 |\n\n</details>\n</details>', 20);
   assert(html.includes('<summary>State &amp; QA</summary>'));

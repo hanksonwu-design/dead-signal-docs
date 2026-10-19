@@ -18,26 +18,35 @@ const legacyTransitions = [
 const explorations = flow.routes.filter(r=>layout[r.from]&&layout[r.to]&&flow.subscenes.some(s=>s.route===r.id&&s.id.startsWith('T-'))&&!['R2-R3','R3-R4','R7-R8'].includes(`${r.from}-${r.to}`)).map(r=>({
  id:`${r.from}-${r.to}`,title:r.mode==='逐層探索'?'逐層探路':'樓層銜接',source:flow.subscenes.find(s=>s.route===r.id).source.split('/').at(-1),
  seconds:'依玩家移動，非定時轉場',views:flow.subscenes.filter(s=>s.route===r.id).map((s,i,all)=>({
-  label:`${s.floor.label} · ${s.name}`,at:(i+.5)/all.length,floor:s.floor.levels[0],play:!!s.play,
-  kind:r.from==='R3'?'residence':r.from==='R5'?'laundry':r.from==='R6'?'residence':r.from==='R17'?(s.floor.levels[0]<37?'warehouse':'acoustic'):'service',
+  label:`${s.floor.label} · ${s.name}`,at:(i+.5)/all.length,floor:s.floor.levels[0],floorLabel:s.floor.entry,play:!!s.play,
+  kind:r.from==='R3'?'residence':r.from==='R5'?'laundry':r.from==='R6'?'residence':r.from==='R17'?(r.to==='R18'?'acoustic':'warehouse'):'service',
   text:s.play?.action||flow.images[s.id].requirements
  }))
 }));
 export const transitions = [...legacyTransitions.filter(t=>!explorations.some(e=>e.id===t.id)),...explorations];
+// The archived editor is a saved layout sandbox, not the revised canonical map.
+// Preserve its old landings and terminal so existing layouts/platform links load.
+const archivedFloors={'R17-R18':[33,34,35,36],'R20-R21':[38,39],'R21-R22':[41]};
+const archivedBays={'R17-R18':[[-19,20],[-10,20],[-10,10],[-19,10]],'R20-R21':[[5,-4],[14,-4]],'R21-R22':[[23,16]]};
+export const archivedTransitions=transitions.map(t=>!archivedFloors[t.id]?t:{...t,bays:archivedBays[t.id],views:t.views.map((v,i)=>{
+ const floor=archivedFloors[t.id][i];return {...v,floor,floorLabel:`${floor}F`,label:`${floor}F · 封存舊配置`,kind:t.id==='R17-R18'?'warehouse':v.kind};
+})});
 const mix=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t);
 const length=(a,b)=>Math.hypot(...a.map((v,i)=>v-b[i]));
 export const transitionFor=e=>transitions.find(t=>t.id===e.fromId+'-'+e.toId);
+export const archivedTransitionFor=e=>archivedTransitions.find(t=>t.id===e.fromId+'-'+e.toId);
+export const landingHeight=(view,floorY)=>floorY.get(view.floor)+.3+((view.floorLabel||'').includes('上半層')?1.6:0);
+export const archivedTransitionPath=(edge,points,floorY)=>transitionPath(edge,points,floorY,archivedTransitionFor(edge));
 
 // Insert authored landings into default routes, using every floor for exploration.
 // Saved/custom routes keep their geometry; their scenery uses their own landings.
-export function transitionPath(edge,points,floorY){
- const definition=transitionFor(edge);
+export function transitionPath(edge,points,floorY,definition=transitionFor(edge)){
  let result=points.map(p=>[...p]);
  if(!definition||edge.route)return result;
- if(definition.views.every(v=>v.floor))return explorationPath(points,definition.views,floorY,definition.id);
+ if(definition.views.every(v=>v.floor))return explorationPath(points,definition.views,floorY,definition.id,definition.bays);
  for(const view of definition.views.filter(v=>v.floor)){
-  const y=floorY.get(view.floor)+.3;
-  const i=result.findIndex((b,i)=>i>0&&result[i-1][1]<y-1e-6&&b[1]>y+1e-6);
+  const y=landingHeight(view,floorY);
+  const i=result.findIndex((b,i)=>i>0&&Math.min(result[i-1][1],b[1])<y-1e-6&&Math.max(result[i-1][1],b[1])>y+1e-6);
   if(i<1)continue;
   const a=result[i-1],b=result[i],t=(y-a[1])/(b[1]-a[1]);
   const run=Math.hypot(b[0]-a[0],b[2]-a[2]);if(run<.1)continue;
@@ -48,16 +57,21 @@ export function transitionPath(edge,points,floorY){
 }
 
 // Every floor has a level landing. Successive stairs change sides around blocked cores.
-export function explorationPath(points,views,floorY,id){
+export function explorationPath(points,views,floorY,id,bayOverride){
  const routeBays={
+  'P2-R1':[[24,18],[24,18],[24,18],[24,22]],
   'R12-R14':[[-23,-18],[-23,-8],[-23,2]],
   'R12-R15':[[-5,18],[4,18],[13,18]],
   'R13-R14':[[-7,-19],[2,-19],[11,-19]],
   'R13-R15':[[23,-12],[23,0],[23,12]],
   'R17-R14':[[23,19],[23,9],[23,-1],[23,-11]],
-  'R20-R21':[[5,-4],[14,-4]],'R21-R22':[[23,16]]
+  'R17-R18':[[-24,-20],[-24,-12],[-24,-4],[-24,4]],
+  'R20-R21':[[-1,7],[1,7]],'R21-R22':[[21,5]],
+  'R24-R25':[[-24,-8],[-24,-8],[-24,2],[-24,12]],
+  'R27-U1':[[-24,12],[-24,18],[-24,22],[-24,18],[-24,22],[-24,18],[-24,18]],
+  'U3-R28':[[-10,-24],[-14,-24],[-10,-24],[-14,-24],[-10,-24],[-14,-24],[-14,-24]]
  };
- const result=[points[0]],bays=routeBays[id]||[[-19,20],[-10,20],[-10,10],[-19,10]];
+ const result=[points[0]],bays=bayOverride||routeBays[id]||[[-19,20],[-10,20],[-10,10],[-19,10]];
  const connect=target=>{
   const a=result.at(-1),mid=(a[1]+target[1])/2;
   const turn=a[2]+(target[2]>=a[2]?3:-3);
@@ -65,7 +79,7 @@ export function explorationPath(points,views,floorY,id){
    [target[0]-2,mid,target[2]-3],[target[0]-2,target[1],target[2]],target);
  };
  for(const [i,view] of views.entries()){
-  const [x,z]=bays[i%bays.length],y=floorY.get(view.floor)+.3;
+  const [x,z]=bays[i%bays.length],y=landingHeight(view,floorY);
   connect([x,y,z]);result.push([x+3,y,z]);
  }
  // The last half-flight approaches the existing destination doorway from outside.
@@ -79,7 +93,7 @@ export function transitionViews(definition,points,floorY){
  const distances=[0];for(let i=1;i<points.length;i++)distances.push(distances.at(-1)+length(points[i-1],points[i]));
  const total=distances.at(-1);if(total<1e-6)return [];
  return definition.views.map((view,index)=>{
-  const wanted=total*view.at,targetY=view.floor?floorY.get(view.floor)+.3:null;
+  const wanted=total*view.at,targetY=view.floor?landingHeight(view,floorY):null;
   const candidates=[];
   for(let i=1;i<points.length;i++){
    const a=points[i-1],b=points[i],distance=distances[i]-distances[i-1];if(distance<.05)continue;

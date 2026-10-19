@@ -25,7 +25,7 @@ const catalogAsset = href => path.posix.normalize(path.posix.join('docs', path.p
 test('catalog covers every canonical illustration once, including supplements and access layouts', () => {
   const embedded = [...documents].flatMap(([file, text]) => [...text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)]
     .map(m => path.posix.normalize(path.posix.join('docs', path.posix.dirname(file), m[1]))));
-  assert.equal(records.length, 111);
+  assert.equal(records.length, 110);
   assert(catalog.includes(`更新: ${manifest.updated}`));
   assert.equal(records.filter(r => r.layout).length, 13);
   assert.deepEqual(records.map(r => r.asset).sort(), embedded.sort());
@@ -109,8 +109,8 @@ test('each illustration has scene, current location, purpose, function and retur
     if (!r.scenes.length) assert(note.includes('跨幕共用（無單一場景）'), r.id);
     if (r.layout) assert(text.indexOf(`<!-- access-layout:${r.scenes[0].id}:end -->`) < text.indexOf(`<!-- illustration-info:${r.id}:begin -->`), r.id);
   }
-  assert.match(JSON.stringify(BOARDS.V24), /R21 · 40F/);
-  assert.doesNotMatch(JSON.stringify(BOARDS.V24), /R21 · 41F/);
+  assert.match(JSON.stringify(BOARDS.V24), /R21 · 29F/);
+  assert.doesNotMatch(JSON.stringify(BOARDS.V24), /R21 · (40|41)F/);
 });
 
 test('catalog and all metadata links resolve to real files and exact anchors', () => {

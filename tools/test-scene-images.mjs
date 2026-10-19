@@ -282,7 +282,7 @@ test('secondary scene headings preserve entry gates and do not redefine transiti
   assert(act3.indexOf('確認後沿原流程存檔') < act3.indexOf('###### 次場景 T-R17-R18-01'));
   assert(act3.indexOf('不覆蓋上段十二秒餘波') < act3.indexOf('###### 次場景 T-R13-R14-01'));
   const policy = master.documents.get(APPENDIX).split('<a id="scene-image-contract"></a>')[1].split('各場景原文')[0];
-  for (const phrase of ['主場景 → 次場景 → 物件近看', '操作與演出 V 圖不一律', '實際觸發仍依正文分支', '14 個出口接景不套用探路進度']) assert(policy.includes(phrase), phrase);
+  for (const phrase of ['主場景 → 次場景 → 物件近看', '操作與演出 V 圖不一律', '實際觸發仍依正文分支', 'R28-V02 後廊另沿自身探路狀態保存', '其餘 13 個轉場接景不套用探路進度']) assert(policy.includes(phrase), phrase);
 });
 
 test('exit work orders stay assigned to their actual routes rather than falling back silently', () => {

@@ -9,7 +9,7 @@ import { readSceneBuilding, readChildLocations, routeBuilding } from './scene-bu
 import { preciseFloor, readSceneFloor, readChildFloors } from './scene-floors.mjs';
 export { preciseFloor, readSceneFloor } from './scene-floors.mjs';
 
-function routeFloor(edge, nodes, children) {
+export function routeFloor(edge, nodes, children) {
   const from = nodes.find(n => n.id === edge.fromId).floor;
   const to = nodes.find(n => n.id === edge.toId).floor;
   if (from.kind === 'ending' || to.kind === 'ending') {
@@ -19,8 +19,8 @@ function routeFloor(edge, nodes, children) {
   const stops = [from.exit, ...children.filter(s => s.route === edge.id).flatMap(s => s.floor.label.split(' → ')), to.entry]
     .filter((stop, i, all) => !i || stop !== all[i - 1]);
   const floor = preciseFloor(stops.join(' → '), edge.id);
-  const direction = Math.sign(to.levels[0] - from.levels.at(-1));
-  assert(floor.levels.every((level, i, all) => !i || Math.sign(level - all[i - 1]) === 0 || Math.sign(level - all[i - 1]) === direction), `Non-contiguous floor order: ${edge.id}`);
+  // preciseFloor checks every adjacent authored stop, including descending and
+  // mixed-direction walks. Overall start/end direction cannot validate a detour.
   return { label: floor.label, reverseLabel: floor.reverseLabel, kind: 'route' };
 }
 

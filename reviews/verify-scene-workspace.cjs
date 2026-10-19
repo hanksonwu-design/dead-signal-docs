@@ -36,7 +36,7 @@ async function pixels(p){
   await p.goto(base+'/#scene=R24&route=R24-R25-33&shot=T-R24-R25-01&direction=return');await ready(p);
   assert(new URL(p.url()).pathname.endsWith('/building/'));
   assert.equal(await p.locator('#reverse').getAttribute('aria-pressed'),'true');
-  assert.equal(await p.locator('#node-floor').innerText(),'B 棟 · 44F → 43F');
+  assert.equal(await p.locator('#node-floor').innerText(),'B 棟 · 34F → 33F → 32F → 31F');
   await p.reload();await ready(p);assert.equal(await p.locator('#reverse').getAttribute('aria-pressed'),'true');
   pass('legacy bookmarks redirect with scene, route, secondary scene and return direction preserved');
   await choose(p,'R2','R2-R3-5');
@@ -58,11 +58,12 @@ async function pixels(p){
   await p.locator('#artwork-section>summary').click();
   const covered=new Set();
   for(const n of flow.nodes){await choose(p,n.id);for(const id of await p.locator('#images [data-image]').evaluateAll(es=>es.map(e=>e.dataset.image)))covered.add(id);}
-  assert.equal(covered.size,523);
+  assert.equal(covered.size,562);
+  assert.deepEqual([...covered].sort(),Object.keys(flow.images).sort());
   await choose(p,'R33','R33-P1-43');await p.locator('[data-step="P1"]').click();
   assert.deepEqual(await p.locator('#images [data-image]').evaluateAll(es=>es.map(e=>e.dataset.image)),['R33-V02']);
   assert.match(await p.locator('#presentation-note').innerText(),/非可步行路線/);
-  pass('all 523 artwork work orders, authored phases, quests and nonphysical ending context remain available');
+  pass('all 562 artwork work orders, authored phases, quests and nonphysical ending context remain available');
   await p.locator('#part').selectOption('2');
   assert.equal(await p.locator('#scene-list [data-select]').count(),graph.nodes.filter(n=>n.part===2).length);
   await p.locator('#part').selectOption('all');await p.locator('#search').fill('SQ-S');

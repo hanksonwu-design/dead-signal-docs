@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "legacy bookmarks redirect with scene, route, secondary scene and return direction preserved",
+    "flow diagram and model share ordered transitions, selection and a nonblank interactive canvas",
+    "all 562 artwork work orders, authored phases, quests and nonphysical ending context remain available",
+    "part, goal and quest search, secondary-scene lookup, empty results and whole-game flow work",
+    "desktop and 390/320px mobile layouts fit and retain interactive model/flow access",
+    "source documents open separately and context loss preserves a working flow interface",
+    "single navigation entry replaces the old page; browser Back restores the model",
+    "no-WebGL startup retains keyboard selection, filtering and full details on mobile",
+    "no JavaScript errors"
+  ],
+  "errors": []
+}

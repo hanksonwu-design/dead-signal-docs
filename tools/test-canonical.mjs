@@ -181,9 +181,10 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     系統: new Set(['操作提示', '選項介面', '確認警示', '取得提示', '筆記更新', '狀態顯示', '狀態更新',
       '完成回饋', '錯誤回饋', '送出回饋', '規則註記']),
   };
-  // Act 3 spells out branch selection and return; U2b/U5 separate follow-up inputs.
+  // Act 3 spells out branch selection/return; Acts 5/6 add the finite actions
+  // on the existing 31–34F, 35–41F and 41–47F passage platforms.
   const counts = [[21, 17, 8], [75, 29, 19], [107, 35, 11], [144, 24, 10],
-    [59, 18, 13], [56, 15, 13], [30, 4, 2], [59, 7, 5], [29, 3, 4], [27, 12, 3]];
+    [59, 18, 13], [58, 15, 13], [32, 4, 2], [59, 7, 5], [29, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
@@ -422,7 +423,7 @@ test('ten expanded routes preserve original departure gates and ordered scene co
 
 test('versioned route saves cannot skip exploration, destination operations or chapter gates', () => {
   const common = block('s-0403-3');
-  for (const phrase of ['version: 4', '連續前綴', '不直接送到目的房', '版本 1／2／3 的舊通路圖號改義',
+  for (const phrase of ['version: 5', '連續前綴', '不直接送到目的房', '版本 1／2／3／4 的舊通路圖號或實際樓層已改義',
     '不把「看過」當通行權限', '起行不寫入目的房到訪', '不得只憑 to、committed', 'L-04 只走 R17→R14',
     'R13 ↔ R14 的安息門檻雙向有效', 'R3 ↔ R5、R6 ↔ R7']) assert(common.includes(phrase), phrase);
   assert(graph.edges.every(e => !/transition_(?:seen|progress)/.test(e.gate)));
@@ -699,7 +700,7 @@ test('all Markdown document and image links resolve; master anchors are unique',
   const explicit = [...master.text.matchAll(/<a id="([^"]+)"><\/a>/g)].map(m => m[1]);
   assert.equal(explicit.length, new Set(explicit).size);
   const imageRefs = [...master.text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)];
-  assert.equal(imageRefs.length, 111);
+  assert.equal(imageRefs.length, 110);
   const files = readdirSync(path.join(ROOT, 'docs'), {recursive:true}).filter(f => f.endsWith('.md'));
   const errors = [];
   for (const relative of files) {

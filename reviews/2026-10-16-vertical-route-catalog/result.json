@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "1440px: 110 direct pictures, collapsed notes, 11 groups and preserved catalog anchors",
+    "1440px: all 110 pictures decode directly; notes expand and collapse; source and original links retain exact targets and return anchors",
+    "390px: 110 direct pictures, collapsed notes, 11 groups and preserved catalog anchors",
+    "390px: all 110 pictures decode directly; notes expand and collapse; source and original links retain exact targets and return anchors"
+  ],
+  "errors": [],
+  "scope": "Direct illustration catalog, collapsed production notes, image links and responsive reader only."
+}
