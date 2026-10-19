@@ -116,7 +116,7 @@ test('all animation layers reuse current work orders and reader markers stay on 
 test('R5 and R7 local animation preserves readable evidence, frozen history and playback completion', () => {
   has(block('s-0904-40'), '第一人稱互動', '近看繡字時，針線停在字外', '玩家查清後收錄');
   has(row(1, 'R5-C02'), '歷史層保持靜止', '不能靠看完一輪取得 E1-05');
-  ordered(block('s-0905-17'), '感知歷史只給撥號前的固定姿勢', '第一人稱互動）回到現時',
+  ordered(block('s-0905-17'), '感知歷史只給面對女兒舊留言、想回話卻未連線的撥號前固定姿勢', '第一人稱互動）回到現時',
     '頸殼停在原輪廓', '最後一段播放結束後', '紙條停在桌上');
   has(block('s-0905-17'), '拖到結尾不算完成', '同樣收起頸殼細動', '紙條不移入玩家手中');
   has(row(2, 'R7-V01'), '播放來源時停新增動態與擬音', '安息後不重啟循環');

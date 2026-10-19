@@ -19,7 +19,7 @@ const includes = (text, phrases) => phrases.forEach(phrase => assert(text.includ
 
 test('three manager residences retain separate motives, private bathrooms and controlled departure', () => {
   includes(common, ['47-01', '輪班督導', '設備值班主管', '入園及受訓時共同安置', '升任後才搬到 47-01', '不因一間套房判定自願入園']);
-  includes(story, ['額外瓶裝水與洗衣份額', '該班人員的扣配給覆核', '這裡寄不出去', '私人設備扣存聯', '內部分機表', '夜間待命']);
+  includes(story, ['額外瓶裝水與洗衣份額', '該班人員的扣配給覆核', '這裡不准聯絡家裡', '私人設備扣存聯', '內部分機表', '夜間待命']);
   includes(spec, ['B 棟 47F', '沒有穿過別人的房間才到下一房', '現時儲熱與供水停用']);
 });
 
@@ -47,7 +47,7 @@ test('revised confinement documents preserve side-source IDs and late identity r
     '轉任管理職後證件仍集中扣存', '主管只在內部核定份額中選用']);
   includes(image('R17-D08').content, ['衣物領用回條', '管制紀錄']);
   includes(image('R24-D03').content, ['證件扣存續管聯', '衣物領用']);
-  includes(image('R29-C07').content, ['未寄草稿']);
+  includes(image('R29-C07').content, ['秘密草稿']);
   includes(image('R29-C09').content, ['私人設備扣存聯', '內部分機表']);
 });
 

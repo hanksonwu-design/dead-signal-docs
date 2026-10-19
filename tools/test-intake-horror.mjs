@@ -110,15 +110,15 @@ test('new voice lines and existing stage dialogue agree with the production tabl
   const voiceTable = block('s-0904-47');
   const rows = voiceTable.split('\n').filter(line => /^\| \d+ \|/.test(line))
     .map(line => line.split('|').slice(1, -1).map(cell => cell.trim()));
-  assert.deepEqual(rows.map(row => Number(row[0])), Array.from({ length: 26 }, (_, i) => i + 1));
+  assert.deepEqual(rows.map(row => Number(row[0])), Array.from({ length: 29 }, (_, i) => i + 1));
   assert.equal(rows.filter(row => row[1].includes('設備')).length, 11);
-  assert.equal(rows.filter(row => row[1] === '主角 OS').length, 14);
+  assert.equal(rows.filter(row => row[1] === '主角 OS').length, 17);
   for (const row of rows) assert(story(1).includes(`「${row[2]}」`), row[2]);
   for (const line of voices) {
     assert.equal(rows.filter(row => row[2] === line).length, 1, line);
     has(block('s-0904-5'), line);
   }
-  has(voiceTable, '**26 行文本**', '| 設備人聲落點 | 11 |', '本輪新增設備人聲 | 5');
+  has(voiceTable, '**29 行候選文本**', '| 設備人聲落點 | 11 |', '本輪新增設備人聲 | 5');
 });
 
 test('new visual layers reuse existing image orders and the novel reflects the same encounter', () => {
