@@ -36,6 +36,13 @@ a { color: #c7cfbd; }
 .scene-header nav { flex: none; }
 .scene-header nav a { display: inline-flex; align-items: center; min-height: 36px; padding: 8px 12px; border: 1px solid var(--archive-line); color: #c5c0ad; text-decoration: none; font-size: 12px; }
 .scene-header nav a:hover { background: #25291f; border-color: #a5a18b; }
+.scene-header nav { align-items: center; gap: 12px; }
+.scene-music { display: flex; align-items: center; gap: 9px; color: #b5b09f; font-size: 10px; }
+.scene-music button { min-width: 36px; }
+.scene-music label { display: flex; align-items: center; gap: 6px; }
+.scene-music input[type="range"] { width: 64px; min-height: 24px; padding: 0; border: 0; accent-color: #b8c3aa; }
+@media (max-width: 1100px) { #sceneMusicStatus { display: none; } }
+@media (max-width: 500px) { .scene-header nav { width: 100%; justify-content: space-between; } }
 
 .layout { flex: 1; height: auto; grid-template-columns: 240px minmax(0, 1fr) 330px; }
 .left, .right { scrollbar-width: thin; }

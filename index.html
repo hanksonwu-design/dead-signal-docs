@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="marker-colors.css" />
     <link rel="stylesheet" href="background-music.css" />
-    <script src="scene-redirect.js?v=20261006"></script>
+    <link rel="stylesheet" href="archive-navigation.css" />
+    <script src="scene-redirect.js?v=20261020"></script>
   </head>
   <body>
     <div class="app-shell">
@@ -52,7 +53,7 @@
             <div class="eyebrow">灰燈寨 / 製作檔案</div>
             <h1>一層一層，<em>認出你自己。</em></h1>
             <p>世界觀、劇本、玩法與製作規格。沿來源閱讀，留下可回查的紀錄。</p>
-            <div class="music-panel" aria-label="首頁背景音樂">
+            <div class="music-panel" aria-label="背景音樂">
               <div class="music-caption"><span>登入音樂</span><span id="musicStatus" role="status">循環播放</span></div>
               <div class="music-controls">
                 <button class="quiet-button music-toggle" type="button" data-music-toggle aria-label="播放背景音樂" aria-pressed="false"><span data-music-icon aria-hidden="true">▶</span><span data-music-label>播放音樂</span></button>
@@ -112,9 +113,16 @@
       </article>
     </div>
 
+    <section id="sceneWorkspace" class="scene-workspace" aria-label="場景與流程" hidden>
+      <div id="sceneLoading" class="scene-loading" role="status">
+        <p>正在載入場景與流程…</p>
+        <button id="sceneReturn" class="quiet-button" type="button">← 返回企劃文件</button>
+      </div>
+    </section>
     <audio id="backgroundMusic" src="assets/audio/login-theme.mp3" loop preload="metadata" hidden></audio>
-    <script src="background-music.js"></script>
+    <script src="background-music.js?v=20261020"></script>
     <script src="screenplay-markers.js?v=20261006"></script>
-    <script src="app.js?v=20261006-reading-markers"></script>
+    <script src="app.js?v=20261020-continuous-music"></script>
+    <script src="archive-navigation.js"></script>
   </body>
 </html>

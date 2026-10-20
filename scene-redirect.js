@@ -8,7 +8,9 @@ const SceneRedirect = {
   return target.href;
  },
  follow() {
+  if(new URLSearchParams(location.search).get('view')==='building')return false;
   const target=this.target(location.href);
+  if(target&&window.ArchiveNavigation){window.ArchiveNavigation.openScene(target);return true;}
   if(target)location.replace(target);
   return !!target;
  }

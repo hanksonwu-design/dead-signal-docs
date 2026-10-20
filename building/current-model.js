@@ -321,7 +321,7 @@ function renderDetails(){
  $('reference').hidden=!n.reference;if(n.reference){$('reference-image').src='../'+n.reference.url;$('reference-caption').textContent=n.reference.kind;}
  renderMarkers();renderFlow();
 }
-function saveHash(){history.replaceState(null,'','#'+new URLSearchParams({scene:selected,...(routeId?{route:routeId}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{}),...(markerId?{marker:markerId}:{})}));}
+function saveHash(){history.replaceState(null,'','#'+new URLSearchParams({scene:selected,...(routeId?{route:routeId}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{}),...(markerId?{marker:markerId}:{})}));window.dispatchEvent(new Event('archive:scene-change'));}
 function choose(id,preferred=null,shot='',refit=true,keepDirection=false){
  if(!node(id))return;selected=id;markerId='';
  if(!sceneMatches(node(id),{part:$('part').value}))$('part').value='all';

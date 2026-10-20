@@ -392,6 +392,7 @@ function closeReader() {
 }
 
 function syncHash() {
+  if (new URLSearchParams(location.search).get("view") === "building") return;
   if (window.SceneRedirect.follow()) return;
   const value = new URLSearchParams(location.hash.slice(1));
   const path = documentAliases[value.get("doc")] || value.get("doc");
@@ -452,6 +453,7 @@ $("sidebarScrim").addEventListener("click", () => { closeSidebar(); $("menuButto
 $("copyPath").addEventListener("click", async () => { if (!state.selected) return; try { await navigator.clipboard.writeText(state.selected.path); $("copyPath").textContent = "✓"; setTimeout(() => { $("copyPath").textContent = "⧉"; }, 1000); } catch (_) {} });
 document.querySelectorAll(".view-button").forEach((button) => button.addEventListener("click", () => { state.view = button.dataset.view; document.querySelectorAll(".view-button").forEach((item) => item.classList.toggle("active", item === button)); renderCards(); renderHeading(); }));
 document.addEventListener("keydown", (event) => {
+  if (window.ArchiveNavigation?.isSceneOpen()) return;
   if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
     event.preventDefault();
     if (state.selected) closeReader();
