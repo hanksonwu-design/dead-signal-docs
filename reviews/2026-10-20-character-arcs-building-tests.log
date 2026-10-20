@@ -1,0 +1,39 @@
+✔ all current scenes, routes and secondary images are represented without altering canonical data (8.7911ms)
+✔ all secondary markers lie on their own route and preserve picture order (4.4352ms)
+✔ lower floors, dining stair and maintenance spine use continuous real endpoints (1.891ms)
+✔ upper mainline reaches 32F, descends to the isolated 28F wing and releases into the 31F archive wing (2.2326ms)
+✔ single-image long passages have a flat landing and aligned markers at every named floor in either walking direction (3.7345ms)
+✔ loop and ending beats do not become physical rooms or roads (1.6953ms)
+✔ unknown physical nodes and unbound routes fail instead of inventing geometry (1.6204ms)
+✔ formal navigation excludes the archived editor while its original URL and recovery controls remain (11.5637ms)
+✔ fragment forms follow the canonical four forms and explicit source index, not image prefixes (7.4019ms)
+✔ fragment labels have deterministic parentheses, merge duplicate forms and preserve ordinary labels (0.189ms)
+✔ R8 workroom observations stay optional ordinary items at their canonical inspection source (0.131ms)
+✔ fragment mapping fails for invalid, duplicate or unknown source classifications (1.5741ms)
+✔ evidence inventory coverage is complete without reclassifying action records as media (1.9134ms)
+✔ source markers are independent of curated scare markers, comparison boards and alternate transcripts (2.2278ms)
+✔ same-paragraph badges keep different fragment forms and ordinary actions separate (0.1865ms)
+✔ all scene markers resolve to current canonical assets and sources without changing topology (49.7998ms)
+✔ canonical exploration operations and recovery remain intact, including elevator horror (0.2933ms)
+✔ horror timing distinguishes optional, conditional and mainline beats without inventing bosses (1.0629ms)
+✔ invalid image, category, ownership, boss classification, coverage and duplicates fail the build (5.5895ms)
+✔ schematic anchors rebuild with floor spacing, stay within rooms and exclude nonphysical endings (5.6912ms)
+✔ HP-03 stays at the 31F service corner while the route cue follows each selected platform (2.9572ms)
+✔ marker scale uses hysteresis and selection context excludes adjacent rooms and transitions (0.1033ms)
+✔ scene search covers parts, chapters, secondary scenes, goals and collection hooks (192.6752ms)
+✔ floor selection reaches every multi-platform passage without retaining a room on another floor (1.4536ms)
+✔ floor selection prefers a room, then a single-floor shot before a spanning passage (1.1016ms)
+✔ floor selection stays within the chosen part and returns no target for an empty floor (0.8955ms)
+✔ all artwork records are available, including non-marker assets and secondary details (2.8409ms)
+✔ ending P1 uses the R33-V02 playback picture without ordinary P1 exploration requirements (0.1478ms)
+✔ all route comparisons preserve authored incoming, outgoing and conditional return semantics (0.2945ms)
+✔ legacy scene links redirect under local and Pages bases without losing selection or opening external URLs (0.1794ms)
+✔ shared overview retains 48 rooms, 72 secondary scenes and every authored route (1.1998ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 431.8218
