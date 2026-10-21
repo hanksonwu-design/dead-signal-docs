@@ -183,8 +183,9 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   };
   // Act 3 spells out branch selection/return; Acts 5/6 add the finite actions
   // on the existing 31–34F, 35–41F and 41–47F passage platforms.
+  // Act 5 also allows voluntary comparison of the two verified R26 recordings.
   const counts = [[21, 17, 8], [75, 29, 19], [107, 35, 11], [144, 24, 10],
-    [59, 18, 13], [58, 15, 13], [32, 4, 2], [59, 7, 5], [29, 3, 4], [27, 12, 3]];
+    [59, 18, 13], [59, 15, 13], [32, 4, 2], [59, 7, 5], [29, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
