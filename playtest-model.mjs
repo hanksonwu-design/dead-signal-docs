@@ -1,13 +1,35 @@
 export const names={r12:'R12｜回收接頭',r22:'R22｜雙路釋放',u4:'U4｜門檻領域',ud1:'UD-01｜何時操作',ud2:'UD-02｜擋住哪側'};
-export function start(id){return {id,step:0,seen:false,done:false,reset:false,latched:false,centered:true,phase:'安全',side:'左',closed:[],route:'',msg:'先觀察現場，再選擇行動。',events:[]};}
+export function start(id){return {id,step:0,seen:false,done:false,reset:false,latched:false,centered:true,phase:'安全',side:'左',closed:[],route:'',wiring:{door:'',equipment:''},partTrial:'none',tested:false,msg:'先觀察現場，再選擇行動。',events:[]};}
 export function act(old,a){let s=structuredClone(old);s.events.push({action:a,at:Date.now()});if(s.done)return s;
  const say=x=>{s.msg=x;return s;};
- if(a==='觀察'){s.seen=true;return say(({r12:'接口標「低壓」且為方形凹槽。圓形不合，另一個方形已裂。',r22:'門框四格操作牌：敲兩下、左掌向下壓兩次。磨痕只標接觸位置。另一側 A 扣承壓、B 桿釋放。兩路都可通過。',u4:'門號重複，但門框缺角與扶手焊疤是固定地標。地上有可用廢布。',ud1:'搖輪在掃擊區，乾燥凹位安全。只在成功躲避後的窗口轉輪。',ud2:'左右霜線指出來向。轉向隔板擋一側，固定冷櫃可躲。封口不會封住後方維修路。'})[s.id]);}
+ if(a==='觀察'){s.seen=true;return say(({r12:'插口、托盤與兩條露出的線槽都可查看。核對端型、卡榫、低壓標記，再沿門端與櫃側設備的線槽找套環刻記。觀察不會代接線。',r22:'門框四格操作牌：敲兩下、左掌向下壓兩次。磨痕只標接觸位置。另一側 A 扣承壓、B 桿釋放。兩路都可通過。',u4:'門號重複，但門框缺角與扶手焊疤是固定地標。地上有可用廢布。',ud1:'搖輪在掃擊區，乾燥凹位安全。只在成功躲避後的窗口轉輪。',ud2:'左右霜線指出來向。轉向隔板擋一側，固定冷櫃可躲。封口不會封住後方維修路。'})[s.id]);}
  if(!s.seen)return say('尚未核對現場；可先按「觀察」。');
  if(s.id==='r12'){
-  if(a==='完整方形接頭'){s.step=1;return say('接頭入座，仍須親手接妥兩個原回路。');}
-  if(a==='接上回路'&&s.step===1){s.done=true;return say('局部配電恢復。帳號權限與全樓供電仍需原後續流程。');}
-  return say('接頭不入座，或尚未裝妥；可重選，不扣資源。');
+  if(a==='圓形接頭'){s.partTrial='round';return say('圓口抵住方槽邊，壓不入；接頭回托盤，原配線保留。');}
+  if(a==='裂開方形接頭'){s.partTrial='cracked';return say('方口能靠近，裂開的卡榫扣不住；接頭回托盤，原配線保留。');}
+  if(a==='完整方形接頭'){s.partTrial='intact';s.step=1;return say('接頭入座。護蓋保持打開、電源斷開；兩個回路仍須親手配接。');}
+  const connection=a.match(/^(門禁線|設備線)接(左|右)座$/);
+  if(connection){
+   if(!s.step)return say('插接座尚未裝妥；線端留在固定掛位。');
+   const line=connection[1]==='門禁線'?'door':'equipment';
+   const other=line==='door'?'equipment':'door';
+   const target=connection[2]==='左'?'left':'right';
+   if(s.wiring[other]===target)return say('這個接座已有另一條線；先拆回占用線，再選接座。');
+   s.wiring[line]=target;s.tested=false;
+   return say(connection[1]+'已接'+connection[2]+'座。沿線可回查套環及座旁刻記；仍未合閘測試。');
+  }
+  if(a==='拆回門禁線'||a==='拆回設備線'){
+   s.wiring[a==='拆回門禁線'?'door':'equipment']='';s.tested=false;
+   return say('所選線端回固定掛位；接頭與另一條線保留。');
+  }
+  if(a==='合閘測試'||a==='接上回路'){
+   s.tested=true;
+   if(!s.step)return say('插接座仍空著，護蓋無法扣妥；保持斷電。');
+   if(!s.wiring.door||!s.wiring.equipment)return say('收手扣蓋後，空座對應的測試片落回。重新斷電開蓋，保留已接線；可補接再測。');
+   if(s.wiring.door!=='right'||s.wiring.equipment!=='left')return say('兩片測試片落回。重新斷電開蓋，錯接線仍在；請比對線端與座旁的刻記，自行拆回重接。');
+   s.done=true;s.step=2;return say('收手扣妥透明護蓋，合閘後兩片測試片立住。局部供電恢復；面板顯示「供電正常／待權限核驗」，門仍未開。');
+  }
+  return say('可在同一近看查看線路、選線接座，或合閘測試；試接不扣資源。');
  }
  if(s.id==='r22'){
   if(a==='手勢路'||a==='手動路'){if(s.route)return say('已確認'+s.route+'；本段沿此路操作，另一條路可重新試玩。');s.route=a;return say('已確認'+a+'，門仍關著。');}
