@@ -145,7 +145,8 @@ test('every static screenplay cue names its shot size without changing protected
   // Relationship beats reuse R7's paper crop, R17's personnel pages and R26's exit view.
   // The upper ending adds the photo frame before its title card; the lower entry adds
   // the cold-open fragment and photo frames.
-  const counts = [23, 61, 85, 99, 47, 33, 18, 25, 10, 20];
+  // Acts 1, 3 and 7 each add one optional still memory of Xiao Hua (R3, R13, 47-01).
+  const counts = [23, 62, 85, 100, 47, 33, 18, 26, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -187,8 +188,9 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // on the existing 31–34F, 35–41F and 41–47F passage platforms.
   // Act 5 also allows voluntary comparison of the two verified R26 recordings.
   // The prologue adds one local sound: the protagonist's own two knocks in the P0-01 blackout.
-  const counts = [[21, 18, 8], [75, 29, 19], [107, 35, 11], [144, 24, 10],
-    [59, 18, 13], [59, 15, 13], [32, 4, 2], [59, 7, 5], [29, 3, 4], [27, 12, 3]];
+  // Acts 1, 3 and 7 each add one memory sound for the optional Xiao Hua memories.
+  const counts = [[21, 18, 8], [75, 30, 19], [107, 35, 11], [144, 25, 10],
+    [59, 18, 13], [59, 15, 13], [32, 4, 2], [59, 8, 5], [29, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
