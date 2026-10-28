@@ -36,8 +36,8 @@ export function act(old,a){let s=structuredClone(old);s.events.push({action:a,at
   let seq=s.route==='手勢路'?['敲門框','敲門框','掌心下壓','掌心下壓']:['解 A 扣','拉 B 桿'];
   if(s.step<seq.length){if(!s.route)return say('先選路線。');if(a===seq[s.step]){s.step++;const feedback=s.route==='手勢路'?['指節落進舊凹痕，再收回。門仍關著。','第二次敲擊完成，等玩家抬起左掌。門仍關著。','左掌對到第一道掌痕，尚未驗證門控。','第四次接觸完成，本地門控驗證，主管鎖退入。原噤聲者低頭，踏面開放。請自行走到安全踏台。']:['A 扣已鬆，B 端仍牽住踏面；退回後成果保留。','B 桿拉下，連桿落位，踏面開放。原噤聲者仍站直。請自行走到安全踏台。'];return say(feedback[s.step-1]);}if(s.route==='手勢路')s.step=0;return say('順序不合；手勢重新開始，手動已完成段保留。此頁不模擬巡行安全窗。');}
   if(a==='走到安全踏台'&&s.step===seq.length){s.step=10;return say('已親手突破封鎖。同一根扶手在前景，原扣件留在身後。可以停下整理，再主動點深層出口。');}
-  if(a==='深層出口'&&s.step===10){s.step=11;return say('扶手布結。聲音：「這次，等我一起走。」主角：「……這次？」手微鬆，掌心留空；門仍開著。');}
-  if(a==='跨門'&&s.step===11){s.done=true;return say('上部完成事件成立。原型不寫正式遊戲存檔。');}
+  if(a==='深層出口'&&s.step===10){s.step=11;return say('扶手布結；局部感知照出台階上唯一朝下的一組足跡，第三階後斷掉。聲音：「這次，等我一起走。」主角：「……這次？」手微鬆，掌心留空；門仍開著。');}
+  if(a==='跨門'&&s.step===11){s.done=true;return say('上部完成事件成立；片尾字卡前，筆記翻到那張照片，停在目前的清晰度。原型不寫正式遊戲存檔。');}
   return say('依序走到安全踏台、查看深層出口，再自行跨門。');
  }
  if(s.id==='u4'){

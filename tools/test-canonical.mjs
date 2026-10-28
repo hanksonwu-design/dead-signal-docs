@@ -143,7 +143,9 @@ test('every static screenplay cue names its shot size without changing protected
   // R7's duplicate printed-process close-up is now part of its first manual shot.
   // Act 4 adds the optional physical wiring-label close-up.
   // Relationship beats reuse R7's paper crop, R17's personnel pages and R26's exit view.
-  const counts = [23, 61, 85, 99, 46, 31, 18, 25, 10, 20];
+  // The upper ending adds the photo frame before its title card; the lower entry adds
+  // the cold-open fragment and photo frames.
+  const counts = [23, 61, 85, 99, 47, 33, 18, 25, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -184,7 +186,8 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Act 3 spells out branch selection/return; Acts 5/6 add the finite actions
   // on the existing 31–34F, 35–41F and 41–47F passage platforms.
   // Act 5 also allows voluntary comparison of the two verified R26 recordings.
-  const counts = [[21, 17, 8], [75, 29, 19], [107, 35, 11], [144, 24, 10],
+  // The prologue adds one local sound: the protagonist's own two knocks in the P0-01 blackout.
+  const counts = [[21, 18, 8], [75, 29, 19], [107, 35, 11], [144, 24, 10],
     [59, 18, 13], [59, 15, 13], [32, 4, 2], [59, 7, 5], [29, 3, 4], [27, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);

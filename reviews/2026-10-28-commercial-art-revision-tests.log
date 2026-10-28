@@ -1,0 +1,488 @@
+PASS 13 composition proposals cover every local exit, including shared and closed doorways
+PASS invalid or overlapping port assignments fail generation
+PASS R8 keeps four single-user workrooms and every external doorway on shared circulation
+PASS shared 32-S doorway and fixed ladder stay distinct from branches and movable platform
+PASS U3-U1 is the sole added route and does not replace the mandatory first-pass chain
+PASS unlock, cancellation, open-door return, save migration and pre-brake lock are explicit
+PASS two details and one return subscene are budgeted; diagrams are not shipped game art
+7 access-layout and shortcut specification checks passed; no engine gameplay tests executed.
+PASS source manifest accounts for every retained block without empty placeholders
+PASS ten reading acts and ten production files keep unique blocks and paired navigation
+PASS production specifications follow overview, room flow, shared reference and delivery order
+PASS production order validation rejects a return to front-loaded children or misplaced passages
+PASS reading scripts omit pause notes without removing production timing
+PASS reading scripts describe playable events without editorial prohibitions
+PASS screenplay presentation cues distinguish motion, stills, transitions and interfaces
+PASS every static screenplay cue names its shot size without changing protected framing
+PASS operation, environment and system cues distinguish inputs, sources and automatic responses
+PASS frozen history and H-08 remain still while present action and the unique thaw are explicit
+PASS current document text uses reviewed Taiwan terminology without changing clue wording
+PASS derived files exactly match the current master; no legacy-heading fallback
+PASS 48 nodes, 56 routes; every source and destination anchor is canonical
+PASS 26 model nodes and 30 routes keep canonical references without adding lower rooms
+PASS R1 coerced intake; no voluntary work or freedom result
+PASS worker origins are abduction or coerced friend referrals, without voluntary employment
+PASS intake film, ledger and anonymous wall accounts share the coerced origin evidence
+PASS forged consent remains a source claim and does not erase coercion or later responsibility
+PASS ten expanded routes preserve original departure gates and ordered scene coverage
+PASS versioned route saves cannot skip exploration, destination operations or chapter gates
+PASS cultural close-ups stay optional, local and outside main evidence gates
+PASS P0 footprint contract requires a witnessed baseline and a later occluded change
+PASS R2 sightline and R14 arrivals respect the physical route
+PASS R13 date observation does not invent lock-date knowledge or a cause of death
+PASS operations-assistant background separates prior work, deceptive offer and coerced training
+PASS occupational habits use visible clues without early identity disclosure or extra puzzle gates
+PASS R24 production and sensitive-sequence summary retain actual evidence requirements
+PASS F1 and moth actions do not gate exits; R11 uses actual sources
+PASS text-only index, playback count and identity-source distinction
+PASS R32 reveal/defense/choice order and R33 ending sequence remain separate
+PASS novel corrects early reveal, floors, recording voice, timing and informed ending E
+PASS unplaced timeline: 16 inventories x 4 comparison states follow source evidence
+PASS Ah Xun starts sending on day 0; the historical header arrives on day 5
+PASS novel F3 reads the fixed glass strip from the other side without author knowledge
+PASS act III outline respects local power routes and does not add police playback at R15
+PASS V33 per-room instructions select the correct panel and retain encounter limits
+PASS all Markdown document and image links resolve; master anchors are unique
+PASS website separates reading and production categories and preserves old act bookmarks
+PASS abridged novel category and titles agree without changing its document path
+PASS act V varies investigation controls without removing evidence or adding per-page gates
+PASS act VI adjacent views retain actions and safety while removing repeated setup
+PASS orientation and visible cultural use do not depend on reading optional notes
+PASS play roles and unexecuted greybox checks distinguish design from validation
+PASS reading chapters omit editorial notes while production contracts remain available
+PASS Kang post-credit date counts from escape, not either later seal
+PASS evidence summaries keep reachable sources, date rules and exact marginal writing
+PASS inventory summaries do not invent a prologue lock, clue solution or occupation
+PASS E2-14 is mandatory inherited evidence but R29 comparison is optional
+PASS R21 panic reset follows deduction and never shakes the interaction reticle
+PASS insufficient positive stability keeps existing fallback paths usable
+PASS ending overview separates transaction commit, uncertain receipts and presentation result
+PASS two boss domains retain local geometry, original sources and no extra progression gates
+PASS Abiao domain connects command-space feedback to the original investigation and resolutions
+PASS Xiaohua domain preserves reveal order, fixed landmarks and ending-specific release
+PASS domain inventory and novel agree while added art and playtests remain pending
+PASS character-specific audiovisual motifs keep the original encounter scope and source priority
+PASS local uncanny spaces retain optional playback, safe source access and silenced-room boundaries
+PASS boss material and sound additions retain protected evidence, fixed cues and ending timing
+PASS uncanny audiovisual inventory, novel and pending asset estimates agree
+PASS gameplay progression maps every original node once and links all ten production acts
+PASS photo use cannot farm clarity or override the story lock and saved boss outcome
+PASS R1 signal tests have local useful effects without completing or resetting the encounter
+PASS light markers have four authored choices and cannot strand a zero-slot player
+PASS panic misplacements reuse seen objects without replacing evidence or reviving people
+PASS gameplay inventory and novel share the source contracts while production stays pending
+PASS reading scripts keep implementation states in production documents
+PASS plain-language signal repair still requires the actual card and expanded roster
+PASS reading layers retain evidence distinctions without solving or revealing identity early
+PASS player-facing feedback and ending choices agree with production wording
+PASS horror rewrite removes raid exposition but retains confiscation and dated sources
+PASS red mist and silk have scoped artwork layers without changing clues or routes
+PASS common-rule referrals are not duplicated within a source block
+PASS malformed masters and unmapped routes fail before any output is written
+73 checks passed. Text/data validation only; not a Godot playtest or art/audio sign-off.
+PASS approved room groups occupy exact floors and the final floor is sparse
+PASS every multi-floor route names each intervening platform, including conditional branches
+PASS long single-image stairs retain every platform and the brake exit binds its real endpoint
+PASS shared glass, same-column shortcut and local mechanisms remain on one floor
+PASS M1 ends at the display floor, not at the final core
+PASS original gates still prevent branch bypasses and premature core access
+PASS new revision saves cannot convert old route ordinals into unexplored room progress
+PASS retired exits are not duplicated in current artwork or reading order
+PASS abridged novel and the transition inventory share the new distribution
+9 floor-distribution checks passed; room rules and artwork remain production specifications.
+PASS published flow is generated from canonical specs without changing story documents
+PASS all original directions and only original routes survive expansion
+PASS every floor label comes from its own canonical spatial table
+PASS transition floors locate each picture while routes include intermediate landings
+PASS M1 uses distinct entrance and exit heights, not a new explorable floor
+PASS ending floors never imply a walk down from 50F to B3
+PASS missing, duplicated or unrecognized floor sources fail rather than guessing
+PASS floor continuity allows authored descent and turns while rejecting omitted platforms
+PASS every rendered floor is precise and upper model defaults agree
+PASS missing or off-route secondary floors fail publication
+PASS R2 to R3 shows both existing transitions in playable order
+PASS every transition has ordered adjacent pictures and a single route
+PASS all three former floor skips now have one playable node on every intermediate floor
+PASS exploration rule omissions, duplicate IDs and evidence-state substitutions fail publication
+PASS close-ups are attached to their actual scene, never traversable steps
+PASS two R8 exits keep distinct picture nodes and optional clues remain optional
+PASS return shortcut retains both endpoints and original entry restrictions
+PASS ending rescue, one-shot loop and part boundary are not extra free-roaming rooms
+PASS directions, local door locations and closed exits are copied without added gates
+PASS all picture and subscene links point to existing canonical anchors
+PASS existing reference assets are local, and no formal game art is marked delivered
+PASS a missing base picture fails generation instead of yielding a broken flow
+22 scene-flow checks passed. Art remains pending; original departure gates are preserved alongside new local exploration conditions.
+PASS all 48 nodes name both endpoints of every original route without adding routes
+PASS missing, repeated, reversed, foreign and incomplete access rows are rejected
+PASS reading introductions follow actual main shots without front-loaded inventories or ending spoilers
+PASS all reading picture placements follow actual paragraphs and survive repeat generation
+PASS every former picture-list link is inline with its cue or table header, without duplicate standalone lines
+PASS missing and ambiguous paragraph targets fail before publishing a reading file
+PASS required events read in play order while optional branches remain optional
+PASS branch, return-only, one-way and ending access remain distinct
+PASS art sheets link access locations and require visible, separately gated doorways
+PASS U2b clears the existing bridge by raising racks and uses side stairs, while U6 uses the fixed ladder
+PASS all 48 flow nodes have an owned base picture and named detail work orders
+PASS every work order cites an existing canonical source
+PASS all original H and B hotspots bind images, including non-table and retired definitions
+PASS omitted, duplicated, foreign or unresolved hotspot mappings fail before generation
+PASS new original hotspots cannot silently bypass image coverage
+PASS twenty-one routes have fifty-eight individually identified views and close-ups with a return parent
+PASS all 56 routes bind valid static views without conflating ending rescue with prologue exploration
+PASS 72 secondary scene nodes retain their parent, ordered connections and distinct reading/spec anchors
+PASS invalid child order, adjacency, orphan close-ups and wrong return parents fail before generation
+PASS secondary scene headings preserve entry gates and do not redefine transition saves
+PASS exit work orders stay assigned to their actual routes rather than falling back silently
+PASS reading summaries and inventory are generated from the specification, with stable canonical links
+PASS regenerating a missing secondary-scene list keeps it at the departure end
+PASS interactive close-ups preserve frozen reflections, original clue text and source-reading boundaries
+PASS new detail images preserve observed objects, layer prerequisites and hiding controls
+PASS R29 compares existing signatures and keeps a single informed approval action
+PASS R27 prose, hotspot and artwork keep the same unknown-read indicator location
+PASS asset policy separates crops, pages, masks, saved states, optional culture and undelivered work
+PASS missing, duplicated, malformed or incorrectly owned work orders fail validation
+29 scene-image checks passed. Production inventory only; not delivered game art or an engine playtest.
+PASS overview has 48 main rooms and all 72 transition nodes, each drawn once
+PASS every original route is subdivided in picture order without bypass edges
+PASS R2 transition chain is visibly inline and R8 exits are separate branches
+PASS full overview keeps every arrow outside every scene rectangle
+PASS chapter filters preserve transition order and explicit external destination stubs
+PASS part filters, single-scene searches and empty results remain bounded
+PASS ending and loops remain original routes, not added transition rooms
+7 scene-overview checks passed.
+✔ tools\test-access-layouts.mjs (1.3736ms)
+✔ balance edits retain the ten acts, routes, secondary scenes and image work orders (7.0115ms)
+✔ Act III return contract cannot bypass first traversal, power or optional shortcut gates (2.1414ms)
+✔ Act V restores physical views without replacing either investigation or adding a gate (3.5022ms)
+✔ R30 groups reading without reducing five source placements or committing on close (1.8157ms)
+✔ R31 recap does not auto-complete new evidence, compromise fallback or remount (2.1037ms)
+✔ R31 and R32 document separate player-controlled revelation boundaries (2.8933ms)
+✔ each act has its own pacing and encounter row, with unmeasured durations identified (0.6348ms)
+✔ modified images reuse existing work orders and reading does not require new collectibles (3.6992ms)
+✔ R1 early backroom clicks reveal an existing obstruction without granting observations (0.3909ms)
+✔ P2 entry explains the one-way door before the original crossing input (0.2461ms)
+✔ Act 1 reading order returns to the actual branch before the ascent and workshop (0.0834ms)
+✔ R4 remains necessary, R4b optional, and the fork does not reveal unread evidence (0.2154ms)
+✔ R5 departure separates local unlock, cancellation, commitment and later arrival (0.3455ms)
+✔ published routes preserve every floor and original one-way boundary (0.1296ms)
+✔ shared rules and novel use the same door causes and return path (0.7633ms)
+✔ Act 1 completion notes distinguish required actions, optional checks and deferred F1 decoding (0.1057ms)
+✔ all seven Act 1 ascent scenes name the local condition without gating optional close-ups (0.2263ms)
+✔ Act 1 annotations preserve separate acquisition, deduction and physical door confirmation (2.0714ms)
+✔ entering scenes keeps the audio owner and creates one child with one parent history push (1.097ms)
+✔ scene selection replaces the parent URL only for its active child and preserves every share parameter (0.5138ms)
+✔ return and browser history reuse the same scene frame and restore the original trigger (0.5157ms)
+✔ ordinary scene links are intercepted while outside URLs, modifiers and new tabs keep native behavior (0.5164ms)
+✔ legacy scene hashes return to documents instead of leaving a redirecting scene URL (0.4275ms)
+✔ a directly opened scene enters the shell under its Pages project prefix with query and hash intact (0.4166ms)
+✔ the embedded bridge delegates return, selection and music controls to the single parent player (0.6293ms)
+✔ tools\test-canonical.mjs (0.0277ms)
+✔ Xiaohua disclosure keeps a written source, adult chronology and unchanged death (2.918ms)
+✔ anonymous testimony remains separate from Xiaohua and material-gap evidence (2.4049ms)
+✔ updated pages cannot be unlocked by old read flags or a different paper side (3.4746ms)
+✔ optional non-graphic disclosure has art coverage and matching content notices (5.7441ms)
+✔ all 27 scene observations have one act-owned register row and a saved source in its production spec (0.9188ms)
+✔ the inventory keeps original evidence separate from the new observation namespace (0.2435ms)
+✔ each added required clue has one physical source in story, spec and inventory and is visibly required (0.195ms)
+✔ optional investigations stay separate while required checks use original mechanical completion states (8.0088ms)
+✔ physical source identifiers and dates agree between the reading script, spec and inventory (0.3031ms)
+✔ shared rules retain source provenance, local objects, optionality and old-save compatibility (0.3083ms)
+✔ the novel, detailed act outline and pacing summaries retain all four local sources (1.0381ms)
+✔ route and reasoning summaries keep necessary machine checks separate from optional investigations (0.4149ms)
+✔ the teaching tables include the source before the relevant local mechanical submission (0.8085ms)
+✔ shared level and Godot sources preserve immediate reads, atomic verification and staged old saves (0.2357ms)
+✔ UI source states and required or functional document colours have usable styles (1.5145ms)
+✔ art workloads and the physical-object register keep the four originals local and budget their subitems (1.2749ms)
+✔ inventory tables remain rectangular after act grouping and balance updates (0.1655ms)
+✔ communal rooms have independent work orders and reversible local entrances without mainline edges (0.3844ms)
+✔ water and meal comparisons require their actual pages and do not invent victims or stolen portions (0.2048ms)
+✔ historical delivery is not a cross-floor shortcut and communal facilities are not recovery stations (0.8849ms)
+✔ empty dining sound occurs only on the optional return and respects reading and save boundaries (21.5169ms)
+✔ generation remains repeatable and new interior views stay out of the 72 transition nodes (143.7851ms)
+✔ all remaining acts annotate completion at the authored interaction (0.5185ms)
+✔ every puzzle marker and annotated image carries the same condition in story, spec and model (2.459ms)
+✔ all 31 later route interactions retain local completion notes and unchanged routes (1.3058ms)
+✔ conditions preserve deferred evidence, alternative sources and optional activities (0.081ms)
+✔ later gates still require physical actions after investigation and arrival (0.0549ms)
+✔ finale notes preserve evidence, defensive stages and mutually exclusive ending commitments (0.0359ms)
+✔ R27 physical comparison keeps the original chains and a local-only fallback (1.375ms)
+✔ U3 close inspection and the photo remain optional and do not multiply rewards (1.2906ms)
+✔ R29 checks real price notes without inventing R19 history or deciding identity (1.226ms)
+✔ U4 compares original landmarks only after the single return and never requires light (1.2426ms)
+✔ R31 equipment inspection preserves both investigation orders and explicit remount (1.0062ms)
+✔ shared review state cannot grant sources, costs, transitions or a second thaw (1.1518ms)
+✔ new reading interactions stay on existing source beats and image work orders (8.5581ms)
+✔ each current figure exists, is embedded and retains its canonical anchor (104.1097ms)
+✔ 3D references do not silently keep retired illustration pixels (1.6688ms)
+✔ diagram files are reproducible and include accessible text and a pending-assets boundary (20.7725ms)
+✔ refreshed diagrams preserve three captives, distinct defenses and fixed-lamp operations (0.1686ms)
+✔ work-order totals remain current and concept art never marks game assets complete (6.2554ms)
+✔ supplemental routes keep stops, floors and manual actions distinct (0.1468ms)
+✔ mechanism and ending guides preserve independent prerequisites (0.1064ms)
+✔ new concepts retain provenance and explicit geometric limits (7.2481ms)
+✔ three optional interior views have art, local return paths and no new mainline routes (0.6811ms)
+✔ life observations require actual focus reads and do not grant evidence or identity (0.29ms)
+✔ existing transitional frames retain cultural details and their original access mechanics (0.1649ms)
+✔ delivery history is not a shortcut or proof of unrelated harm (0.1961ms)
+✔ life details preserve pursuit windows, water conservation and quiet breaks (0.2451ms)
+✔ reader and model place optional life markers at their actual inspection paragraphs (25.2037ms)
+✔ canonical generation is repeatable with the new views included in inventory only (142.2636ms)
+✔ first-person cues distinguish cutscenes, live interaction and input feedback (0.4335ms)
+✔ P0, R1, R8 and R12 feedback retains separate player actions and present-day perspective (0.3286ms)
+✔ L1 viewpoint switching and R18 threat windows cannot become noninteractive movies (0.1989ms)
+✔ upper-ending and wing cutscenes keep their budgets and return before traversal or combat (0.1121ms)
+✔ M1 and R29 preserve optional inspection and previously acquired evidence (0.1117ms)
+✔ U4 return and R30 brake animations do not solve their mechanisms or repeat completed events (0.131ms)
+✔ R33 body return leaves D excluded and historical observation cameras unchanged (0.1301ms)
+✔ all animation layers reuse current work orders and reader markers stay on the actual event (2.9419ms)
+✔ R5 and R7 local animation preserves readable evidence, frozen history and playback completion (0.2334ms)
+✔ R14 cocoon moves only in the present and cannot turn the freight shaft into a ride (0.1508ms)
+✔ R11 first-person defense differentiates closing the interface from changing position (0.0999ms)
+✔ R26 shoulder and hook animation retains two distinct defenses and safe reading (0.0733ms)
+✔ U2b moving rack uses original danger and work windows without automatically clearing the bridge (0.1175ms)
+✔ U5 blocking and sealing stay separate with no copied U2b timer (0.114ms)
+✔ bridge parallax and L2 anomaly connect existing stops without automatic room entry (0.2112ms)
+✔ five ending animations preserve branch commits and three separate paper actions (0.1344ms)
+✔ second-batch art coverage, reader anchors and offscreen still anomalies remain consistent (0.8284ms)
+✔ all screenplay animation cues name a documented presentation method (0.7375ms)
+✔ P2 to R1 shares one first-person door action after reaching the upper landing (0.135ms)
+✔ device playback, live feeds and status panels keep distinct sources (0.2535ms)
+✔ history thaw and observer epilogue labels cannot spread to present-day scenes (0.3616ms)
+✔ newly classified threat and feedback cues preserve player input and static reflections (0.1372ms)
+✔ tools\test-floor-distribution.mjs (0.0215ms)
+✔ 第一層揭露: all three slots link to their annotated sources (0.2524ms)
+✔ 產線關聯: all three slots link to their annotated sources (0.0574ms)
+✔ 第二層揭露: all three slots link to their annotated sources (0.0456ms)
+✔ 服務門路由: all three slots link to their annotated sources (0.0459ms)
+✔ 第三層揭露: all three slots link to their annotated sources (0.0432ms)
+✔ 第四層揭露: all three slots link to their annotated sources (0.0449ms)
+✔ 阿彪對峙: all three slots link to their annotated sources (0.1276ms)
+✔ 第五層揭露: all three slots link to their annotated sources (0.0546ms)
+✔ every screenplay fragment annotation resolves, including alternatives and composed sources (0.4721ms)
+✔ reused rankings keep their act-specific completion gates and two slot letters (0.0439ms)
+✔ alternative C preserves decoding, while stale C still takes the authored false route (0.0583ms)
+✔ document versions and four boss source points do not become extra collectible cards (0.1156ms)
+✔ final identity preserves one last insertion and independent verification gates (0.0522ms)
+✔ opening or filling a board cannot skip the authored submission action (0.0434ms)
+✔ route and identity fragments are recorded after their essential original fields (0.1821ms)
+✔ Act II production distinguishes source ownership, completion and alternative decoding (0.5512ms)
+✔ manual reading uses existing chapters and does not duplicate the printed process shot (0.085ms)
+✔ R16 keeps identification, execution and customer comparison distinct before the reveal (0.0404ms)
+✔ R23 crops retain field identity and preserve all three versions with one confirmation (1.1117ms)
+✔ R24 reuses verified fields without inheriting its newly encountered removal source (0.9678ms)
+✔ R32 continuous reading preserves source boundaries and the original final confirmations (3.3442ms)
+✔ R29 overlays preserve months, approval content and the original aftermath (0.0553ms)
+✔ R30 visual comparison does not replace chronology, five-source placement or commitment (0.0326ms)
+✔ R31 groups are navigation rather than new identity or remount gates (0.0281ms)
+✔ fragment reading stays media-neutral, resumable and subject to original safety exceptions (0.0616ms)
+✔ V07 uses the selected generated raster without discarding its exact SVG counterpart (2.266ms)
+✔ catalog distinguishes simulated gameplay from precise rules with stable original targets (42.4602ms)
+✔ mockup notes preserve manual progression and disclose the scope and unimplemented behavior (32.7259ms)
+✔ ten hearing scenes have canonical script beats, production layers and unchanged art IDs (20.0761ms)
+✔ hearing represents audible cues, not proximity, detection, microphone input or active electronics (0.7621ms)
+✔ retreat and authority cannot bypass travel, breath exhaustion or the remedy deadline (1.6501ms)
+✔ R20 distinguishes recorded sources, live sounds, protected reading and compact operation (1.6676ms)
+✔ UD audio reuses voluntary, room-local controllers and ends before repair or water puzzles (1.6513ms)
+✔ borrowed hearing cues preserve encounter-specific defenses and safe conclusions (3.2239ms)
+✔ model and screenplay expose the same existing encounters without reclassifying speaker timing as horror (1.8634ms)
+✔ save, audio and presentation share encounter time while delivery remains an unimplemented game contract (1.2088ms)
+✔ safe arrival saves coexist with patrol and do not save partial cover or mid-retreat (0.8711ms)
+✔ focus recovery re-arms held inputs without granting time, progress or accidental submission (0.3522ms)
+✔ override and caught side effects are committed once and are never replayed by loading (0.4046ms)
+✔ routine listening and actual suspicion have distinct readable poses (2.8912ms)
+✔ narrative, production summary and work orders all retain the later R18 safe cover (3.5411ms)
+✔ current diagrams distinguish silent patrol, alert recovery and recording layers (1.5614ms)
+✔ signal 15 only pauses existing local targets in an allowed playback window (1.9113ms)
+✔ R18 partial cover never overwrites a safe respawn checkpoint (1.5223ms)
+✔ breath data covers every authored partial cover without requiring whole-cycle breath holding (0.4141ms)
+✔ remedy resumes the interrupted phase and freezes forward movement rather than skipping cues (0.4193ms)
+✔ R18 arrival commits before the exit gate and R19 recovery uses its actual entry point (2.6164ms)
+✔ R19 separates closing, voluntary breathing and retries without an impossible fast-close penalty (2.5667ms)
+✔ R20 success and override settle the threat gate without completing unrelated puzzles (1.7086ms)
+✔ safe controller positions and partial covers are specified in the same existing images (3.4527ms)
+✔ silence suppresses playback without cutting power or queuing a surprise attack (2.557ms)
+✔ reading, retreat and assistance do not reset progress or extend forced breathing beyond its budget (0.4833ms)
+✔ catalog covers every canonical illustration once, including supplements and access layouts (4.5449ms)
+✔ each catalog entry shows a short label and its picture before collapsed production notes (1.9957ms)
+✔ illustration types cover all content and distinguish gameplay from art references (5.4792ms)
+✔ each illustration has scene, current location, purpose, function and return navigation (8.6656ms)
+✔ catalog and all metadata links resolve to real files and exact anchors (1055.0607ms)
+✔ regeneration is idempotent and keeps original pictures, anchors and narrative untouched (57.5097ms)
+✔ unmapped pictures, unknown scenes and duplicate image IDs fail before writing (11.0999ms)
+✔ reader supports safe inline row anchors without allowing arbitrary HTML (1.4244ms)
+✔ production specifications and the catalog open document and section links separately (1.2056ms)
+✔ all production acts retain complete URLs, isolated openers and exact collapsed targets (1.9429ms)
+✔ the gap supplement contains eleven saved concepts and seventeen precise diagrams (5.2097ms)
+✔ route diagrams include every current platform in physical travel order (0.2152ms)
+✔ mechanism and clue illustrations preserve exact values and separate operations (0.0919ms)
+✔ mirror and cinematic diagrams preserve reveal timing without new enemies or automatic travel (0.0839ms)
+✔ all new images have navigable catalog captions without changing gameplay work orders (39.5811ms)
+✔ all 29 former text boards have real drawings, short visible captions and complete accessible rules (9.4908ms)
+✔ V09 shows eleven identity windows, protected reading, same-terminal sources and a released completion state (0.1577ms)
+✔ captives, Xiaohua tendrils, distinct defenses and historical/current views keep their original scope (0.2532ms)
+✔ physical operations keep cable destinations, water conservation and separate living-space floors (0.2055ms)
+✔ insect silhouettes differ while reading acts retain recognizable human gestures (3.827ms)
+✔ concept studies do not create apparitions, animate history or resolve missing people (2.804ms)
+✔ refreshed concepts reuse pending image IDs without claiming delivered animation (7.1086ms)
+✔ aesthetic changes preserve attack timing, safe reading and staged Xiaohua reveal (3.4569ms)
+✔ intake shows forced referral in the existing TV before the waiting ghosts appear (0.2024ms)
+✔ three callers progress from silencing to a forced smile and resistance in one batch (0.1066ms)
+✔ film viewing and witnessed resistance are separate from legacy completion and passage (0.0913ms)
+✔ three callers, chairs and roster rows agree without reducing the five investigation fragments (0.5231ms)
+✔ three-person production preserves accessible cues, source identity and legacy progress (0.0867ms)
+✔ published flow and model markers use the same three-person batch and three-row allocation (3.8863ms)
+✔ R2 makes the fraud legible without replacing evidence or adding a second puzzle (0.101ms)
+✔ new voice lines and existing stage dialogue agree with the production table (0.3753ms)
+✔ new visual layers reuse existing image orders and the novel reflects the same encounter (3.4402ms)
+✔ Act 3 finishes clinic investigation before departure and distinguishes alternate arrivals (0.1627ms)
+✔ SQ-T reads R15 to R12 while graph and production keep the original bidirectional route (50.0254ms)
+✔ clinic and logistics gates expose both independent causes without adding a task or bypass (0.318ms)
+✔ later one-way doors show restrictions before crossing and keep cancellation and saves distinct (0.3119ms)
+✔ R30 blocks departure on commitment but seals the stairs only after manual braking (0.8047ms)
+✔ every lower return route closes on R30 commitment rather than later physical sealing (8.0694ms)
+✔ the seven ascent scenes match budgeting without adding routes, evidence or art IDs (0.265ms)
+✔ three lower acts have 6, 5 and 4 nodes with stable order, identities and production ownership (8.1464ms)
+✔ website chapter order is narrative order despite stable historical filenames (0.1118ms)
+✔ legacy lower-act and finale bookmarks resolve without hijacking the new seventh act (0.3335ms)
+✔ chapter boundaries retain original route gates, save keys and optional choices (0.3092ms)
+✔ both enriched passages publish playable steps on their existing routes and real image sources (0.206ms)
+✔ a passage cannot silently publish as exploration after its authored play contract is removed (9.6195ms)
+✔ passage departure gates retain the remote-session alternative and the completed U5 defense (8.1221ms)
+✔ all three autonomous object states stay outside graph, route and published access gates (7.9321ms)
+✔ the five interactions add neither evidence nor observation entries or macro routes (1.6767ms)
+✔ optional objects preserve real positions, cancellation and old-save defaults without granting sources (0.361ms)
+✔ previously traversed passages migrate without replaying sources, attacks or destination puzzles (0.1806ms)
+✔ six progress cues have inline screenplay images, production contracts and canonical asset layers (10.3391ms)
+✔ HP presentation shares suppression, persistence and migration rules without adding progression gates (0.9691ms)
+✔ material changes respect off-camera rules and preserve trustworthy mechanical outcomes (3.0912ms)
+✔ seventh mirror precedes player-owned F5 while H-08 remains optional after it (1.959ms)
+✔ R7 reuses its existing HA at first arrival before optional reading and keeps Lao Zhou priority (2.0469ms)
+✔ U2 entry atmosphere preserves honest mechanics, safe reading and the later voluntary encounter (1.8329ms)
+✔ three manager residences retain separate motives, private bathrooms and controlled departure (0.2705ms)
+✔ only Kang holds external contact authority; controlled work and escape attempts remain distinct (0.8124ms)
+✔ revised confinement documents preserve side-source IDs and late identity reveal (0.3793ms)
+✔ seven optional interior nodes each have a unique view and close-up without adding a mainline route (0.3081ms)
+✔ optional exploration preserves existing waits, gates, source states and irreversible return lock (0.1662ms)
+✔ room ownership requires three matching assignment fields after the original reveal and thaw (0.1451ms)
+✔ corridor anomaly is optional and once-only while sources stay on their actual reading beat (19.8771ms)
+✔ interior inventory is distinct from transition routes and generation is repeatable (143.3281ms)
+✔ R22 a confirmed route survives gesture mistakes without switching sides (0.3819ms)
+✔ R22 手勢路 cannot replay the threshold by returning to the safe landing (0.1261ms)
+✔ R22 手動路 cannot replay the threshold by returning to the safe landing (0.0891ms)
+✔ UD-01 still requires a successful dodge before each wheel operation (0.1008ms)
+✔ UD-02 左-first uses a persistent latch, then an explicit new round (0.5501ms)
+✔ UD-02 右-first uses a persistent latch, then an explicit new round (0.5007ms)
+✔ UD-02 cover alone and releasing a latch cannot earn progress (0.0897ms)
+✔ UD-02 a second-side hit preserves the first side and requires reset (0.1249ms)
+✔ UD-02 changing to cover does not silently recenter a rotated divider (0.0817ms)
+✔ every reachable r12 state preserves committed progress and has a completion path (2.8492ms)
+✔ every reachable r22 state preserves committed progress and has a completion path (0.7992ms)
+✔ every reachable u4 state preserves committed progress and has a completion path (0.3412ms)
+✔ every reachable ud1 state preserves committed progress and has a completion path (0.541ms)
+✔ every reachable ud2 state preserves committed progress and has a completion path (1.4601ms)
+✔ Act 1 retains all five floors, optional closeups and a guarded return route (1.6385ms)
+✔ fast returns validate the traveled path and retain arrival events (0.4864ms)
+✔ R1 preserves an ordinary inspected reflection and binds its image to the TV (3.5596ms)
+✔ the seven-floor ascent retains traversal but gives 20F a quiet crossing (1.9123ms)
+✔ pacing estimates and route QA use the current revision scope (0.6258ms)
+✔ R32 replaces the repeated sentence quiz without skipping evidence or revelations (2.0014ms)
+✔ Abiao conclusion retains coercion, his added restrictions and the protagonist order (1.2443ms)
+✔ past observation and present domains remain distinct within the existing three layers (0.2256ms)
+✔ comparison retains existing costs, accessibility, encounter and save boundaries (0.0401ms)
+✔ R3 teaches spatial comparison without a second photo award or a new window exit (0.2467ms)
+✔ R7 to R10 preserves the observed shortcut page, explicit decode and alternate source path (0.0974ms)
+✔ R19 comparison follows input recovery and gives the summary equal spatial information (0.1505ms)
+✔ R26 comparison remains one existing B04 verification inside its safe reading window (0.2039ms)
+✔ existing image orders carry the comparison work without extra maps or fragments (11.4558ms)
+✔ the condensed novel preserves the same past to present progression (0.5374ms)
+✔ source names reduce code load without leaking identity or completed board slots (0.099ms)
+✔ R12 readable account fields retain original values and manual access verification (0.0954ms)
+✔ R16 plain login status does not identify the operator or execute a targetless action (0.0911ms)
+✔ R17 named sources retain both route chains and neutral completion feedback (0.3762ms)
+✔ R28 single-page warning and outcomes match the selected page rather than imply total loss (0.0791ms)
+✔ R31 named prerequisites keep the source requirements and historical time separate (0.1478ms)
+✔ all ten acts follow gameplay-first order with one technical disclosure per room (19.2203ms)
+✔ empty placeholders are removed but their published anchors survive (1.1557ms)
+✔ compaction and image regeneration are idempotent and preserve the reading scripts (69.1408ms)
+✔ fourth-act entry prose follows the calibration wing and its half-floor platforms (47.6229ms)
+✔ plain and nested disclosures render tables, anchors and accurate source lines (0.2119ms)
+✔ disclosures cannot inject attributes or HTML, and fenced markers stay code (0.0773ms)
+✔ deep navigation reveals every ancestor before focus and scrolling (0.5005ms)
+✔ R18 keeps the physical N4 arrival gate after redundant summaries are removed (0.0997ms)
+✔ screenplay beats and inline illustrations follow the authored sequence and stay idempotent (30.9576ms)
+✔ swapping an actual gameplay beat or placing its figure before the step fails validation (27.4408ms)
+✔ work orders sharing one source heading follow the individual screenplay operation positions (0.1833ms)
+✔ an authored diagram cannot be placed inside a generated section that would erase it (11.727ms)
+✔ R12 needs both authored circuits and a manual test; observation or a connector cannot complete it (0.3163ms)
+✔ R12 occupied sockets do not overwrite wires and wrong trials remain repairable without discarding the connector (0.117ms)
+✔ R12 reading again and rejected parts cannot alter a correctly connected circuit (0.0787ms)
+✔ tools\test-scene-flow.mjs (0.0173ms)
+✔ tools\test-scene-images.mjs (0.0178ms)
+✔ tools\test-scene-overview.mjs (0.0136ms)
+✔ R12 connector and terminal tables provide one locally observable solution (5.1488ms)
+✔ R12 testing, cancellation and restored power cannot grant permission or awaken E11 (3.3328ms)
+✔ U3 light table covers all six positions and exposes both marks only at one angle (1.3053ms)
+✔ U3 mechanical alignment, not lighting or memory collection, controls the bridge (1.6447ms)
+✔ U4 landmarks are distinct and compare current observations, not historical access (2.3726ms)
+✔ minigames preserve accessible input, tiered hints, safe trials and existing pacing budgets (5.5382ms)
+✔ existing artwork work orders and 3D markers carry the same puzzle details (8.0013ms)
+✔ canonical room phases introduce lighting before mechanical alignment (2.4317ms)
+✔ R12 exit truth table requires both repaired power and verified local access (6.7788ms)
+✔ U4 matching contract allows releasing occupied targets without discarding other pairs (2.2808ms)
+✔ U4 hatch table separates release, lifting and supported opening across cancellation (2.0551ms)
+✔ U4 prototype cannot enter the lower platform after releasing only the clasp (0.4006ms)
+✔ published routes and 3D data retain the same R12 and U4 passage gates (5.325ms)
+✔ U3 present-day memory closeup supports both lamp states without changing bridge or recall completion (3.2455ms)
+✔ all canonical markers appear once across ten reading acts with the same categories and image IDs (163.4838ms)
+✔ source reading overrides follow acquisition beats and retain sparse, distinct forms (4.9361ms)
+✔ fragment types use one formatter in the reader and every model label surface (0.9703ms)
+✔ late horror and bosses stay on their occurrence rather than reused establishing shots (15.1488ms)
+✔ missing and ambiguous placements fail closed and never annotate comments or fenced examples (0.1946ms)
+✔ reader and model use the same palette and icon factory without copying categories into scripts (5.0042ms)
+✔ five story discoveries have consistent source ownership, required labels and physical delivery (1.5648ms)
+✔ the three necessary discoveries extend original checks without a new global collection gate (7.8128ms)
+✔ optional personal stories cannot supply mandatory evidence, resources or extra remote pages (0.1732ms)
+✔ partial reads and legacy completion remain distinct from new verified sources (0.3564ms)
+✔ escape timestamps keep the seven-minute bypass and separate same-floor pickup from basement arrival (0.3317ms)
+✔ historical descent does not borrow the damaged present-day route or a new required clue (1.4851ms)
+✔ R25 cannot assign the undated R22 footprint to the timed 50F descent (1.0407ms)
+✔ historical rescue remains unconfirmed while actual ending rescue is preserved (1.4247ms)
+✔ R19 distinguishes declining before entry, pausing or saving, and completing before exploration (0.114ms)
+✔ R19 record duration and supervisor confirmation cannot certify an unseen full procedure (1.4615ms)
+✔ ending B releases the door by choice after upload, with matching VO and art coverage (0.3743ms)
+✔ controlled contact and rations remain distinct from private freedom and old resident commerce (0.4219ms)
+✔ R24 concludes identity-record rewriting without deleting evidence or changing the required chain (0.5169ms)
+✔ Kang recording remains a coercive promise rather than an author-certified guarantee (0.8193ms)
+✔ R16 proves common grading and approved actions, not accurate mind prediction (0.609ms)
+✔ evacuation distinguishes departing personnel, abandoned captives and unknown resident fates (1.5609ms)
+✔ the real return is a bounded Xiaohua domain, not a new ghost or a rewritten building (0.1273ms)
+✔ the reading order establishes landmarks before returning and a physical bypass afterward (0.1246ms)
+✔ the domain preserves safe comparison, the old save contract and accessible variants (0.262ms)
+✔ the optional U4 recollection follows S6 confirmation without adding a fourth source (0.5941ms)
+✔ existing image orders and navigation counts cover the domain without new rooms (2.5934ms)
+✔ the model derives room phases from canonical navigation instead of preserving stale labels (38.6494ms)
+✔ U4 prototype guards every step and cannot replay the return after comparison or reload (0.7034ms)
+✔ two physical towers and shared foundations locate every node within its own height (0.1805ms)
+✔ only three bridge levels cross towers, with four separate routes at 26F (0.0785ms)
+✔ bridge decks stay level and stairs stay inside the proper tower in both height modes (2.1074ms)
+✔ L1 requires the 30F landing and L2 has only its two real stops (3.0093ms)
+✔ power, source identity, optional approval, return locks and old-save rules remain explicit (0.3777ms)
+✔ in-transit anomalies appear before arrival actions in reading order (0.2312ms)
+✔ invalid tower sources, disconnected children and unlabeled bridges fail publication (26.2583ms)
+✔ Act III separates reading beats without auto-solving either source chain (3.8131ms)
+✔ R8 to R22 emotional recall requires the actual memory, not an optional dossier (2.9248ms)
+✔ both finale routes retain their inputs, windows, erased states and voluntary crossing (2.0599ms)
+✔ abstract R22 手勢路 feedback cannot complete or cross the finale automatically (0.163ms)
+✔ abstract R22 手動路 feedback cannot complete or cross the finale automatically (0.0615ms)
+✔ work orders and split contract preserve a complete upper part without invented conversion claims (9.3817ms)
+✔ the upper part announces a bounded goal and preserves the two original ways to achieve it (9.6459ms)
+✔ R23 carries a present relationship question without inventing hearing, evidence or a new gate (7.9786ms)
+ℹ tests 327
+ℹ suites 0
+ℹ pass 327
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5240.9651
