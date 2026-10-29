@@ -10,7 +10,9 @@ const tableHref=anchor=>'../#'+new URLSearchParams({doc:'10_製作規格/10-12_�
 const GAP=8,HUB_RADIUS=20,EVIDENCE_RADIUS=29,RESULT_RADIUS=12,CHAIN_RADIUS=40,ACT_RING=46;
 const SOLID=new Set(['slot','reuse','result','opens']);
 const SUPPORT_KINDS=new Set(['support','pair']);
-const DECOY_COLOR=new THREE.Color(0xd9774f);
+const DECOY_COLOR=new THREE.Color(0xd9774f),PAYOFF_COLOR=new THREE.Color(0xe2c77d);
+// Decoys and look-back comparisons are not causes: they light up only one step from the selection.
+const ONE_STEP=new Set(['decoy','payoff']);
 const CHAIN_KINDS=new Set(['chain','later','compare','prereq','alternative']);
 const CHAIN_COLORS=[0xc2a58c,0xa9bb8d,0xa3a9cc,0x9aa3a5];
 
@@ -112,7 +114,7 @@ function buildScene(){
     const from=nodes.get(link.from),to=nodes.get(link.to);
     if(!from||!to) continue;
     const owner=to.type==='group'?to:from;
-    const color=link.kind==='result'?new THREE.Color(0xe8eeec):link.kind==='decoy'?DECOY_COLOR:owner.color;
+    const color=link.kind==='result'?new THREE.Color(0xe8eeec):link.kind==='decoy'?DECOY_COLOR:link.kind==='payoff'?PAYOFF_COLOR:owner.color;
     const start=from.position,end=to.position;
     const mid=start.clone().lerp(end,.5);mid.y+=Math.max(1.5,start.distanceTo(end)*.12);
     const curve=new THREE.QuadraticBezierCurve3(start.clone(),mid,end.clone());
@@ -152,7 +154,7 @@ function neighbours(start,direction){
   while(queue.length){
     const id=queue.shift();
     for(const {link} of edges){
-      if(link.kind==='decoy') continue;
+      if(ONE_STEP.has(link.kind)) continue;
       const [a,b]=direction==='down'?[link.from,link.to]:[link.to,link.from];
       if(a===id&&!seen.has(b)&&visibleNode(b)){seen.add(b);queue.push(b);}
     }
@@ -171,8 +173,10 @@ function visibleEdge({link}){
 
 function refresh(){
   const lit=selected?new Set([...neighbours(selected,'up'),...neighbours(selected,'down')]):null;
-  // Decoys are not causes; show only those touching the selection, one step away.
-  if(lit&&$('show-decoys').checked) for(const {link} of edges) if(link.kind==='decoy'&&(link.from===selected||link.to===selected)){lit.add(link.from);lit.add(link.to);}
+  if(lit) for(const edge of edges){
+    const {link}=edge;
+    if(ONE_STEP.has(link.kind)&&visibleEdge(edge)&&(link.from===selected||link.to===selected)){lit.add(link.from);lit.add(link.to);}
+  }
   for(const [id,node] of nodes){
     const shown=visibleNode(id),on=!lit||lit.has(id);
     node.mesh.visible=shown;
@@ -186,7 +190,7 @@ function refresh(){
   }
   for(const edge of edges){
     const touches=edge.link.from===selected||edge.link.to===selected;
-    const shown=visibleEdge(edge),on=!lit||(lit.has(edge.link.from)&&lit.has(edge.link.to)&&(edge.link.kind!=='decoy'||touches));
+    const shown=visibleEdge(edge),on=!lit||(lit.has(edge.link.from)&&lit.has(edge.link.to)&&(!ONE_STEP.has(edge.link.kind)||touches));
     edge.group.visible=shown;
     edge.materials.forEach(m=>m.opacity=on?.85:.06);
     if(edge.codeLabel){edge.codeLabel.visible=shown&&$('show-codes').checked;edge.codeLabel.element.classList.toggle('dim',!on);}
@@ -202,7 +206,7 @@ function linkList(title,list){
   return `<dt>${title}</dt><dd><ul class="links">${list.map(({id,text})=>`<li><button data-select="${esc(id)}">${esc(text)}</button></li>`).join('')}</ul></dd>`;
 }
 const nameOf=id=>{const n=nodes.get(id);if(!n) return id;return n.type==='group'?groupTitle(n.item):`${id} ${n.item.label}`;};
-const KIND_TEXT={slot:'放入格位',support:'前置／旁證',reuse:'跨組沿用',result:'成立後取得',opens:'開通',chain:'延伸線',later:'之後歸屬',compare:'對照',prereq:'須先讀',alternative:'擇一觸發',pair:'前片配對',confirms:'補證',decoy:'誘答，原文不支持此格'};
+const KIND_TEXT={slot:'放入格位',support:'前置／旁證',reuse:'跨組沿用',result:'成立後取得',opens:'開通',chain:'延伸線',later:'之後歸屬',compare:'對照',prereq:'須先讀',alternative:'擇一觸發',pair:'前片配對',confirms:'補證',decoy:'誘答，原文不支持此格',payoff:'選填回頭比對'};
 const choiceList=c=>c?`<dt>結論選擇</dt><dd><ul class="links"><li>✓ ${esc(c.answer)}</li>${c.decoys.map(d=>`<li>✗ ${esc(d)}</li>`).join('')}</ul></dd>`:'';
 
 function showDetail(id){

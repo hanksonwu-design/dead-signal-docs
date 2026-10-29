@@ -113,7 +113,10 @@ export function buildCollectionRelations(markdown, graph) {
       const confirms = segment.match(new RegExp(`補證\\s*${EVIDENCE_ID}`));
       if (confirms) link(item.id, known(confirms[1]), 'confirms');
       for (const [, room, letter] of segment.matchAll(/(R\d+) ([A-E]) 格誘答/g)) link(item.id, findGroup(room).id, 'decoy', letter);
-      if (/對照|比對/.test(segment)) {
+      // A later look-back comparison inside the same part (or a marked cross-part teaser).
+      const payoff = segment.match(new RegExp(`回頭比對\\s*${EVIDENCE_ID}`));
+      if (payoff) link(item.id, known(payoff[1]), 'payoff', '回頭比對');
+      else if (/對照|比對/.test(segment)) {
         for (const [, other] of segment.matchAll(new RegExp(EVIDENCE_ID, 'g'))) if (other !== item.id) link(item.id, known(other), 'compare');
       }
     }
