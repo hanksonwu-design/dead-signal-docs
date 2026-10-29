@@ -21,6 +21,7 @@ const colorFor=(group,index)=>group.kind==='chain'
   ?new THREE.Color(CHAIN_COLORS[index%CHAIN_COLORS.length])
   :new THREE.Color().setHSL(((group.order-1)*0.067+0.47)%1,0.42,0.62);
 const actName=act=>data.acts[act]?.name??'';
+const partName=part=>data.parts.find(p=>p.part===part)?.name??'';
 const groupOf=id=>data.groups.find(g=>g.id===id);
 const groupTitle=g=>g.kind==='board'?`${g.order}｜${g.title}（${g.room}）`:g.title;
 
@@ -71,6 +72,21 @@ function buildScene(){
   });
   scene.add(acts);
 
+  // The two parts ship separately; draw the split between the last 上部 act and the first 下部 act.
+  const boundary=new THREE.Group();boundary.name='parts';
+  const [upper,lower]=data.parts,splitY=(Math.max(...upper.acts)+.5)*GAP,splitRadius=ACT_RING+3;
+  const disk=new THREE.Mesh(new THREE.CircleGeometry(splitRadius,96),new THREE.MeshBasicMaterial({color:0x8ccab1,transparent:true,opacity:.06,side:THREE.DoubleSide,depthWrite:false}));
+  disk.rotation.x=-Math.PI/2;disk.position.y=splitY;boundary.add(disk);
+  boundary.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(Array.from({length:96},(_,i)=>{
+    const t=i/96*Math.PI*2;return new THREE.Vector3(splitRadius*Math.cos(t),splitY,splitRadius*Math.sin(t));
+  })),new THREE.LineBasicMaterial({color:0x8ccab1,transparent:true,opacity:.6})));
+  const span=part=>`${part.name}（${actName(part.acts[0])}～${actName(part.acts.at(-1))}）`;
+  for(const [text,dy] of [[`↑ ${span(lower)}`,1.8],[`↓ ${span(upper)}`,-1.8]]){
+    const anchor=new THREE.Object3D();anchor.position.set(splitRadius*Math.cos(1.25),splitY+dy,splitRadius*Math.sin(1.25));
+    addLabel(anchor,text,'part-name',0);boundary.add(anchor);
+  }
+  scene.add(boundary);
+
   for(const [id,node] of nodes){
     let mesh;
     if(node.type==='group'){
@@ -120,8 +136,13 @@ function buildScene(){
       codeLabel=addLabel(holder,link.code,'edge-label',0);
       codeLabel.element.style.background=`#${color.getHexString()}`;
     }
+    let partLabel=null;
+    if(link.crossPart){
+      const holder=new THREE.Object3D();holder.position.copy(curve.getPointAt(.38));group.add(holder);
+      partLabel=addLabel(holder,link.crossPart==='carried'?'前情帶入':'跨部伏筆',`part-label ${link.crossPart}`,0);
+    }
     scene.add(group);
-    edges.push({link,group,codeLabel,materials:[line.material,cone.material]});
+    edges.push({link,group,codeLabel,partLabel,materials:[line.material,cone.material]});
   }
 }
 
@@ -163,8 +184,10 @@ function refresh(){
     edge.group.visible=shown;
     edge.materials.forEach(m=>m.opacity=on?.85:.06);
     if(edge.codeLabel){edge.codeLabel.visible=shown&&$('show-codes').checked;edge.codeLabel.element.classList.toggle('dim',!on);}
+    if(edge.partLabel){edge.partLabel.visible=shown&&$('show-parts').checked;edge.partLabel.element.classList.toggle('dim',!on);}
   }
   scene.getObjectByName('acts').visible=$('show-acts').checked;
+  scene.getObjectByName('parts').visible=$('show-parts').checked;
   document.querySelectorAll('#groups button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.id===selected)));
 }
 
@@ -184,12 +207,13 @@ function showDetail(id){
   if(node.type==='group'){
     const g=node.item;
     box.innerHTML=`<div class="eyebrow">${esc(actName(g.act))} · ${esc(g.room)}</div><h3>${esc(groupTitle(g))}</h3><dl>
-<dt>板面</dt><dd>${esc(g.board)}</dd><dt>放入來源</dt><dd>${esc(g.sources)}</dd><dt>成立後</dt><dd>${esc(g.outcome)}</dd>
+<dt>部別</dt><dd>${esc(g.release)}</dd><dt>板面</dt><dd>${esc(g.board)}</dd><dt>放入來源</dt><dd>${esc(g.sources)}</dd><dt>成立後</dt><dd>${esc(g.outcome)}</dd>
 ${linkList('來自',incoming)}${linkList('通往',outgoing)}</dl>
 <p>${esc(g.note)}</p><p><a href="${esc(tableHref(g.anchor))}" target="_blank" rel="noopener noreferrer">在收集物總表查看 ↗</a></p>`;
   }else{
     const e=node.item,g=groupOf(e.group);
     box.innerHTML=`<div class="eyebrow">${esc(actName(e.act))} · ${esc(e.room)}</div><h3>${esc(e.id)} ${esc(e.label)}<span class="badge${e.required?' required':''}">${e.required?'必要':'選填'}</span></h3><dl>
+<dt>部別</dt><dd>${esc(partName(e.part))}${e.carried?'；下部由有效前情帶入':''}${e.teaser?'；跨部伏筆（選填）':''}</dd>
 <dt>所屬</dt><dd>${esc(groupTitle(g))}</dd><dt>代號</dt><dd>${esc(e.code)}</dd><dt>格位／關聯</dt><dd>${esc(e.slot)}</dd>
 <dt>循環路徑</dt><dd class="${e.witnessed?'witness':''}">${esc(e.loop)}</dd><dt>來源</dt><dd>${esc(e.source)}</dd>
 <dt>用途</dt><dd>${esc(e.use)}</dd><dt>性質</dt><dd>${esc(e.nature)}</dd>${linkList('來自',incoming)}${linkList('通往',outgoing)}</dl>
@@ -282,7 +306,7 @@ async function main(){
     Object.assign($('error'),{hidden:false,textContent:'3D 無法顯示，仍可從左側清單查看各組關聯。'});
   }
   $('loading').hidden=true;
-  for(const id of ['show-support','show-chains','show-codes','show-ids','show-acts']) $(id).addEventListener('change',()=>{if(selected&&!visibleNode(selected)) select('');else refresh();});
+  for(const id of ['show-support','show-chains','show-codes','show-ids','show-acts','show-parts']) $(id).addEventListener('change',()=>{if(selected&&!visibleNode(selected)) select('');else refresh();});
   $('detail').addEventListener('click',event=>{const button=event.target.closest('[data-select]');if(button) select(button.dataset.select);});
   $('view-iso').onclick=()=>setView('iso');$('view-front').onclick=()=>setView('front');$('view-top').onclick=()=>setView('top');
   $('clear').onclick=()=>select('');

@@ -1,6 +1,30 @@
 {
   "version": 1,
   "source": "10_製作規格/10-12_製作規格_收集物與筆記本總表.md",
+  "parts": [
+    {
+      "part": 1,
+      "name": "上部",
+      "acts": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "part": 2,
+      "name": "下部",
+      "acts": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  ],
   "acts": [
     {
       "act": 0,
@@ -61,7 +85,9 @@
       "title": "第零層 · 序幕灰槽",
       "room": "P2",
       "act": 0,
+      "part": 1,
       "anchor": "collection-board-p2",
+      "release": "上部",
       "board": "教學灰槽；不能鎖定、不提交",
       "sources": "A 封死上行口（E0-01）／B 編號牌與殘留聲證（E0-02）",
       "outcome": "通往地面的豎井中斷，只能沿維修通道找其他出口；上行路線索引（K0-01）另由房號牌核對",
@@ -74,7 +100,9 @@
       "title": "人物鏈＋第一層揭露",
       "room": "R5",
       "act": 1,
+      "part": 1,
       "anchor": "collection-board-r5",
+      "release": "上部",
       "board": "人物鏈；三格 A／B／C",
       "sources": "人物鏈：鏈1 衣架刺繡 #05（E1-05）→ 鏈2 接收名冊 #01（E1-01）→ 鏈3 枕下家庭照 #02（E1-02）→ 鏈4 血字 #03（E1-03），多語刻名 #04（E1-04）留作人物資料；三格：A 接收名冊（E1-01）／B 血字（E1-03）／C 半頁績效板與同工位覆核聯（E1-06 的 R2 摘要）",
       "outcome": "「這是一座詐騙園區。受困者被囚禁、逼迫去騙別人。」人物鏈與三格都完成，才到現場核對門端",
@@ -87,7 +115,9 @@
       "title": "產線關聯",
       "room": "R11",
       "act": 2,
+      "part": 1,
       "anchor": "collection-board-r11",
+      "release": "上部",
       "board": "三格 A／B／C；C 擇一",
       "sources": "A 操作手冊（E1-15）／B 完整分配／留存資料（E1-06 的 R7 補全）／C 小花手改劇本（E2-01）或已解讀的祈願卡轉運章（E2-09）",
       "outcome": "本地服務操作索引（K1-01）；S-03 門端另驗",
@@ -100,7 +130,9 @@
       "title": "第二層揭露",
       "room": "R16",
       "act": 3,
+      "part": 1,
       "anchor": "collection-board-r16",
+      "release": "上部",
       "board": "起因／過程／對照",
       "sources": "A 起因 採樣資料（E2-04）／B 過程 服從度輸出（E2-05）／C 對照 客戶分級（E2-14）",
       "outcome": "第二層結論與本地憑據；電力分配結果（E2-06）是進房前置，不能代第三格",
@@ -113,7 +145,9 @@
       "title": "服務門路由",
       "room": "R17",
       "act": 3,
+      "part": 1,
       "anchor": "collection-board-r17",
+      "release": "上部",
       "board": "路由三格 A／B／C",
       "sources": "A 同日 A／B 車流（E3-03）／B 康備忘（E3-06）／C 外部中繼表頭與較晚自檢（E3-07）；C 改放物流路線表（E2-08，C′）只接成 L-04",
       "outcome": "服務門通路紀錄（K2-01）：32-S → N-2 → RT-3 → C-02",
@@ -126,7 +160,9 @@
       "title": "第三層揭露",
       "room": "R21",
       "act": 4,
+      "part": 1,
       "anchor": "collection-board-r21",
+      "release": "上部",
       "board": "組織／個案／來源",
       "sources": "A 組織 人事橋接欄（E3-01）／B 個案 小花簽核班表與處置單（E3-02）／C 來源 同日車流（E3-03）",
       "outcome": "第三層鎖定；另取 F4 才往 R22",
@@ -139,11 +175,13 @@
       "title": "第四層揭露",
       "room": "R24",
       "act": 5,
+      "part": 2,
       "anchor": "collection-board-r24",
+      "release": "下部；C 由前情帶入",
       "board": "表面／系統／後果",
       "sources": "A 表面 同人三版本（E4-01）／B 系統 管理者版本比對（E4-02）／C 後果 小花簽核班表與處置單（E3-02）",
       "outcome": "第四層鎖定，開通 R25",
-      "note": "依 A 表面／B 系統／C 後果放入；C 再次使用 R21 已取得的 E3-02（第 6 組 B），與本房版本文件核對，不重新發放同件證據。成立後開通 R25，見[第四層三格](../09_劇本/09-08_正式劇本_第五幕.md#h-0908-194)。"
+      "note": "依 A 表面／B 系統／C 後果放入；C 再次使用 R21 已取得的 E3-02（第 6 組 B）；直接從下部開始時，由有效前情帶入 R21 三單與比對基準，與本房版本文件核對，不重新發放同件證據。成立後開通 R25，見[第四層三格](../09_劇本/09-08_正式劇本_第五幕.md#h-0908-194)。"
     },
     {
       "id": "board-r25",
@@ -152,11 +190,13 @@
       "title": "逃跑夜時序",
       "room": "R25",
       "act": 5,
+      "part": 2,
       "anchor": "collection-board-r25",
+      "release": "下部；四片前片為上部伏筆",
       "board": "時序軌三條時間帶；另開 48 小時對帳頁",
       "sources": "門禁、電力與足跡／門端三帶本地紀錄放上同一時間尺；選填四片中，殘缺時間欄（E4-00-A）與七分鐘電壓區間（E4-00-C）可預對齊，驗證迴圈中斷（E4-00-B）留原文參照，向下足跡（E4-00-D）留未定位列。對帳頁並列康備忘日期、快取失聯對帳與 L-48 啟動紀錄",
       "outcome": "三帶對時成立，取得七分鐘時間表（E4-04）；對帳成立，取得 L-48 兩日紀錄（E4-05）；零片仍可完成",
-      "note": "玩家把門禁、電力與足跡／門端三條本地時間帶放上同一時間尺，對齊七分鐘旁路與十一秒，成立後取得 E4-04。四片 E4-00 於第一至四幕取得後落入時序軌未定位列，不能放上日期或主軌；A～D 是原件命名，不是格位字母；B 由凝神查看截圖、D 由感知足跡殘留取得，都不進入凝固。進 R25 前，A、B 核對殘缺格式後可標「同一夜？」，C、D 完成時序對齊後可合併為「約七分鐘 · 方向：向下」。四片均選填，A／C 可預對齊，B 留原文參照，D 留未定位列，零片仍可完整完成。E4-05 另在 48 小時對帳頁並列康備忘日期、快取失聯對帳與 L-48 啟動紀錄，成立後取得，不塞進七分鐘尺，見[三帶時間線](10-06_製作規格_第五幕.md#h-0606-313)及[時序軌的漸進標籤](../09_劇本/09-15_正式劇本_共用附錄.md#h-0302-113)。"
+      "note": "玩家把門禁、電力與足跡／門端三條本地時間帶放上同一時間尺，對齊七分鐘旁路與十一秒，成立後取得 E4-04。四片 E4-00 於第一至四幕取得後落入時序軌未定位列，不能放上日期或主軌；A～D 是原件命名，不是格位字母；B 由凝神查看截圖、D 由感知足跡殘留取得，都不進入凝固。進 R25 前，A、B 核對殘缺格式後可標「同一夜？」，C、D 完成時序對齊後可合併為「約七分鐘 · 方向：向下」。四片都是上部取得、下部才完整對時的跨部伏筆，均選填；A／C 可預對齊，B 留原文參照，D 留未定位列，零片仍可完整完成。E4-05 另在 48 小時對帳頁並列康備忘日期、快取失聯對帳與 L-48 啟動紀錄，成立後取得，不塞進七分鐘尺，見[三帶時間線](10-06_製作規格_第五幕.md#h-0606-313)及[時序軌的漸進標籤](../09_劇本/09-15_正式劇本_共用附錄.md#h-0302-113)。"
     },
     {
       "id": "board-r26",
@@ -165,7 +205,9 @@
       "title": "阿彪對峙",
       "room": "R26",
       "act": 5,
+      "part": 2,
       "anchor": "collection-board-r26",
+      "release": "下部",
       "board": "任用／命令／完成確認三卡",
       "sources": "A 倉務誘入與受控任用（E4-03，B02）／B 主管命令（B03）／C 原椅編號＋未送出表（B01＋B04）",
       "outcome": "責任結論；開放兩種處置",
@@ -178,7 +220,9 @@
       "title": "第五層碎片 A · 別名鏈",
       "room": "R27",
       "act": 6,
+      "part": 2,
       "anchor": "collection-board-r27",
+      "release": "下部",
       "board": "三條別名鏈合併",
       "sources": "第一鏈生活、第二鏈工作／帳號、第三鏈物流／展示",
       "outcome": "三組別名鏈（E5-01）；R31 時預置於第一格",
@@ -191,7 +235,9 @@
       "title": "第五層碎片 B · 簽勢疊合",
       "room": "R29",
       "act": 7,
+      "part": 2,
       "anchor": "collection-board-r29",
+      "release": "下部",
       "board": "三個月份簽勢疊合",
       "sources": "三個月份簽核與提價欄",
       "outcome": "三個月份簽核與價差（E5-02）及 R29 本地索引；R31 時預置於第二格",
@@ -204,11 +250,13 @@
       "title": "剖面五點",
       "room": "R30",
       "act": 8,
+      "part": 2,
       "anchor": "collection-board-r30",
+      "release": "下部；D 由前情帶入",
       "board": "專用板；五點空間與時序",
       "sources": "A 震前／震後快照與舊刻度／B 門外施工位置與撤離單施工附圖／C 斷層圖／D 震損巡檢清單與較晚自檢（E3-07）／E 管理維修圖",
       "outcome": "五點成立並另做不可逆確認，才取得五來源建築剖面（E5-06）",
-      "note": "五組本地來源依日期、方向與位置親手安置：A 震前／震後快照與舊刻度、B 門外施工位置與撤離單施工附圖、C 斷層圖、D 震損巡檢清單與較晚自檢（沿用 R17 的 E3-07）、E 管理維修圖。五點成立後另做不可逆確認，才取得剖面成果 E5-06。選填水路註記不增加第六格，見[剖面五點](10-10_製作規格_第八幕.md#h-0808-493)。"
+      "note": "五組本地來源依日期、方向與位置親手安置：A 震前／震後快照與舊刻度、B 門外施工位置與撤離單施工附圖、C 斷層圖、D 震損巡檢清單與較晚自檢（沿用 R17 的 E3-07，下部由有效前情帶入）、E 管理維修圖。五點成立後另做不可逆確認，才取得剖面成果 E5-06。選填水路註記不增加第六格，見[剖面五點](10-10_製作規格_第八幕.md#h-0808-493)。"
     },
     {
       "id": "board-r31",
@@ -217,7 +265,9 @@
       "title": "第五層揭露",
       "room": "R31",
       "act": 8,
+      "part": 2,
       "anchor": "collection-board-r31",
+      "release": "下部；兩份註記為上部伏筆",
       "board": "終軌；A／B 預置，只放 C",
       "sources": "A 商品 三組別名鏈（E5-01）與 B 簽核 三個月份簽核與價差（E5-02）已在前兩格；玩家放入 C 身分 帳號及簽名核驗（E5-03）；前置 內門十一秒（E5-04）、清索引資料（E5-08）",
       "outcome": "第五層鎖定，接唯一十二秒解凍（E5-05）",
@@ -230,7 +280,9 @@
       "title": "肉身查證",
       "room": "R32",
       "act": 9,
+      "part": 2,
       "anchor": "collection-board-r32",
+      "release": "下部",
       "board": "原比較視圖三來源；不開三格",
       "sources": "A 現時維修畫面（E6-01）／B 連續性核對（E6-02）／C 最後的主觀姿勢記憶（M6-01）",
       "outcome": "確認肉身仍在 P1，移動的是意識",
@@ -243,7 +295,9 @@
       "title": "封鎖查證",
       "room": "R32",
       "act": 9,
+      "part": 2,
       "anchor": "collection-board-r32-lock",
+      "release": "下部",
       "board": "出口與來源板三源",
       "sources": "A 現時門禁紀錄（S6-01）／B 同一門框回返（S6-02）／C 請求與反應對照（S6-03）",
       "outcome": "揭露核心與完整顯形；減弱不解封",
@@ -256,7 +310,9 @@
       "title": "受困者人物線",
       "room": null,
       "act": null,
+      "part": null,
       "anchor": "collection-chain-victims",
+      "release": "上部起；E-05、E-09 到下部收尾",
       "board": "不上調查板；依遭遇對讀",
       "sources": "E-02 斷裂床單（E1-13）；E-04 A 低績效 → B 健康與工作表（E1-14 → E2-07）；E-05 A 外聯草稿 → B 醫療風險資料（E2-11 → E5-07）；E-06 貨運識別片（E2-12，可比對 E2-15 素材索引）；E-07 停藥清單（E2-13）；E-09 A 領餐痕跡、B L-48 通風資料（E1-08、E3-08）；E-10 洗衣領取條（E1-09）",
       "outcome": "補足受困者個人故事；不判唯一死因，也不鎖主線",
@@ -269,7 +325,9 @@
       "title": "祈願與照護網",
       "room": null,
       "act": null,
+      "part": null,
       "anchor": "collection-chain-wishes",
+      "release": "上部；D 在下部",
       "board": "不上調查板",
       "sources": "A 香油簿／祈願（E1-10）與 B 祈願卡背面轉運章（E2-09，產線 C 格候選）在 R11 擇一觸發同句 OS；B 已讀才可查 C 香火簿資料列（E2-10）；D 祈願分類（E4-06）另行建立關聯",
       "outcome": "看出互助名單與私密願望如何被併列、挪用",
@@ -282,7 +340,9 @@
       "title": "主角身分伏筆",
       "room": null,
       "act": null,
+      "part": null,
       "anchor": "collection-chain-identity",
+      "release": "上部讀，下部 R31 歸屬",
       "board": "不上調查板；R31 才歸屬",
       "sources": "A 座位／手的姿勢（E2-03）、B 阿尋管理端註記（E3-04）、C 老周留用註記（E3-05）",
       "outcome": "R31 身分成立後實核，才歸屬主角",
@@ -295,7 +355,9 @@
       "title": "制度與個人痕跡",
       "room": null,
       "act": null,
+      "part": null,
       "anchor": "collection-chain-traces",
+      "release": "上部",
       "board": "不上調查板",
       "sources": "電子燈同步（E1-11）、白板背面（E1-16）、拒絕／素材索引（E2-15）",
       "outcome": "保留管理痕跡與人物自己的字；不代替任何推理來源",
@@ -315,8 +377,11 @@
       "source": "P0 封死上行口",
       "room": "P0",
       "act": 0,
+      "part": 1,
       "use": "觀察外逃路失效，形成向內走的理由；略夢不自動給",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E0-02",
@@ -330,8 +395,11 @@
       "source": "P2 第一次凝固中的編號牌與殘留聲證",
       "room": "P2",
       "act": 0,
+      "part": 1,
       "use": "實際查看編號牌並記下聲證後取得；提早退出可免費重看。序幕的推理槽只顯示不可鎖定灰槽，不做三格提交",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-05",
@@ -345,8 +413,11 @@
       "source": "R5 衣架刺繡",
       "room": "R5",
       "act": 1,
+      "part": 1,
       "use": "#05 接回已見人物來源後，才能理解制度",
-      "nature": "必要人物來源；#05"
+      "nature": "必要人物來源；#05",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-01",
@@ -360,8 +431,11 @@
       "source": "R2 接收名冊",
       "room": "R2",
       "act": 1,
+      "part": 1,
       "use": "被改寫的收容／分配欄；同頁押入／受控轉介、轉介者不予放行及聯絡監看，第一幕必要推理來源之一",
-      "nature": "主線紀錄；人物 #01"
+      "nature": "主線紀錄；人物 #01",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-02",
@@ -375,8 +449,11 @@
       "source": "R3 枕下家庭照",
       "room": "R3",
       "act": 1,
+      "part": 1,
       "use": "與床位、姓名及 R4／R5 人物鏈互相辨認",
-      "nature": "必要人物來源；#02"
+      "nature": "必要人物來源；#02",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-03",
@@ -390,8 +467,11 @@
       "source": "R4 血字",
       "room": "R4",
       "act": 1,
+      "part": 1,
       "use": "有來源的求救／約束痕跡，第一幕必要推理來源之一",
-      "nature": "主線紀錄；#03"
+      "nature": "主線紀錄；#03",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-04",
@@ -405,8 +485,11 @@
       "source": "R4 多語刻名",
       "room": "R4",
       "act": 1,
+      "part": 1,
       "use": "與必要血字一同記錄；兩段朋友受脅迫邀約／直接被擄刻字只按實讀附記，不替具名角色指定來歷",
-      "nature": "隨主線記錄；#04，附記選填"
+      "nature": "隨主線記錄；#04，附記選填",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-06",
@@ -420,8 +503,11 @@
       "source": "R2 半頁績效板；R7 完整分配／留存資料",
       "room": "R2",
       "act": 1,
+      "part": 1,
       "use": "R2 核對同工位覆核聯後保存摘要，供第一幕推理；R7 再補全供 K1。只看績效三欄或重讀摘要都不算完整",
-      "nature": "主線分階段紀錄"
+      "nature": "主線分階段紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-07",
@@ -435,8 +521,11 @@
       "source": "R2 舊錄音摘要；R7 K-114 教材完整版",
       "room": "R2",
       "act": 1,
+      "part": 1,
       "use": "強迫自白的制度佐證；不能替代 K1 必需的三項",
-      "nature": "補充紀錄"
+      "nature": "補充紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-15",
@@ -450,8 +539,11 @@
       "source": "R7 操作手冊",
       "room": "R7",
       "act": 2,
+      "part": 1,
       "use": "詐騙產線的工作規則，K1 必需",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-01",
@@ -465,8 +557,11 @@
       "source": "R8 小花手改劇本",
       "room": "R8",
       "act": 2,
+      "part": 1,
       "use": "劃去的承諾；與 E2-09 擇一充當 K1 第三項",
-      "nature": "擇一來源"
+      "nature": "擇一來源",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-09",
@@ -480,8 +575,11 @@
       "source": "R10 祈願卡背面已轉運章",
       "room": "R10",
       "act": 2,
+      "part": 1,
       "use": "與 R7 快捷鍵表「轉接校正」方章及 S-03 邊碼實際比對後才可替代 E2-01；水痕／排班不代解章義",
       "nature": "擇一來源；原件與解讀狀態分開",
+      "carried": false,
+      "teaser": false,
       "chains": [
         {
           "group": "chain-wishes",
@@ -501,8 +599,11 @@
       "source": "R8 鞋盒、照片與卡片；R9 刪除片段補充",
       "room": "R8",
       "act": 2,
+      "part": 1,
       "use": "私人脈絡；照片可不看，不能因此跳過 R8 實際讀卡校驗",
-      "nature": "選填內容；卡片另有主線用途"
+      "nature": "選填內容；卡片另有主線用途",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-06",
@@ -516,8 +617,11 @@
       "source": "R15 電力分配結果",
       "room": "R15",
       "act": 3,
+      "part": 1,
       "use": "完成任一路並確認後才成立，決定供電與保留暫存",
-      "nature": "主線狀態紀錄"
+      "nature": "主線狀態紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-04",
@@ -531,8 +635,11 @@
       "source": "R16 採樣資料",
       "room": "R16",
       "act": 3,
+      "part": 1,
       "use": "第三幕必要推理來源，與服從輸出及客戶分級一起鎖定",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-05",
@@ -546,8 +653,11 @@
       "source": "R16 服從度輸出",
       "room": "R16",
       "act": 3,
+      "part": 1,
       "use": "不能把人當輸出數值；第三幕必要推理來源",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-14",
@@ -561,8 +671,11 @@
       "source": "R16 客戶分級；R29 可再比對",
       "room": "R16",
       "act": 3,
+      "part": 1,
       "use": "第三幕推理必需；後續與價格簽核比對為選填",
-      "nature": "主線紀錄＋後續延伸"
+      "nature": "主線紀錄＋後續延伸",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E3-03",
@@ -576,8 +689,11 @@
       "source": "R17 同日 A／B 車流原件",
       "room": "R17",
       "act": 3,
+      "part": 1,
       "use": "先供 K2 日期鏈，再供第四幕 R21 的人事核對；A／B 是同項來源的兩份原件",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E3-06",
@@ -591,23 +707,29 @@
       "source": "R17 康備忘",
       "room": "R17",
       "act": 3,
+      "part": 1,
       "use": "正確日期鏈與 K2 必需；同頁把「人員／資料／協定」三句按既有來源分欄，完整閱讀後觸發一次主角 OS",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E3-07",
       "required": true,
       "group": "board-r17",
       "code": "C",
-      "slot": "服務門路由；之後為 R30 剖面 D",
+      "slot": "服務門路由；之後為 R30 剖面 D；下部由前情帶入",
       "loop": "查看 → 比對 → 記錄",
       "witnessed": false,
       "label": "外部中繼表頭／警務回報",
       "source": "R17 外部中繼表頭／警務回報",
       "room": "R17",
       "act": 3,
+      "part": 1,
       "use": "與 E3-03／06 確認外部曾收到及正路日期；以 R17 正文為所在地",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": true,
+      "teaser": false
     },
     {
       "id": "E2-08",
@@ -621,8 +743,11 @@
       "source": "R14 物流路線表",
       "room": "R14",
       "act": 3,
+      "part": 1,
       "use": "讀原路線；無正確日期的 RT-3→L-04 是 R17 假路，不能當 C-02 正證",
-      "nature": "選填／假路候選來源"
+      "nature": "選填／假路候選來源",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-12",
@@ -636,8 +761,11 @@
       "source": "R1 舊出口震損門框、焊珠與裂口",
       "room": "R1",
       "act": 1,
+      "part": 1,
       "use": "記下向內受力與兩次破壞的位置，時間仍待後續來源核對",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E3-01",
@@ -651,23 +779,29 @@
       "source": "R21 組織／人事橋接欄",
       "room": "R21",
       "act": 4,
+      "part": 1,
       "use": "IN-06-B 等人事來源連到管理位置，第四幕必要推理來源",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E3-02",
       "required": true,
       "group": "board-r21",
       "code": "B",
-      "slot": "第三層揭露（個案）；之後為第四層揭露 C",
+      "slot": "第三層揭露（個案）；之後為第四層揭露 C；下部由前情帶入",
       "loop": "查看 → 比對 → 記錄",
       "witnessed": false,
       "label": "小花簽核班表與處置單",
       "source": "R21 小花簽核班表與處置單",
       "room": "R21",
       "act": 4,
+      "part": 1,
       "use": "同名和管理處置對照；也供第五幕 R24 的檔案核對使用",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": true,
+      "teaser": false
     },
     {
       "id": "E4-01",
@@ -681,8 +815,11 @@
       "source": "R23 同人三版本",
       "room": "R23",
       "act": 5,
+      "part": 2,
       "use": "核對誘入接收聯／後補自願書／二次列印後保存；自願是文件主張，第五幕必要推理來源",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E4-02",
@@ -696,8 +833,11 @@
       "source": "R24 管理者版本比對",
       "room": "R24",
       "act": 5,
+      "part": 2,
       "use": "逐人核對原職務、未安排管理職面試、補發批次、入境前三個曆月的倒填方式及同人轉任／撤號；不同人不必同日",
-      "nature": "主線紀錄；第五幕必要推理來源"
+      "nature": "主線紀錄；第五幕必要推理來源",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E4-07",
@@ -711,68 +851,83 @@
       "source": "R24 康受控轉任標準版 v4",
       "room": "R24",
       "act": 5,
+      "part": 2,
       "use": "本地 USB／播放資料；147 是播放量，不換算受害人數；完整播放後可把錄音「可以」與自願書的管制條件並列，不是自由應徵",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E4-00-A",
       "required": false,
       "group": "board-r25",
       "code": "前片",
-      "slot": "R25 預對齊時戳前綴",
+      "slot": "R25 預對齊時戳前綴；跨部伏筆",
       "loop": "查看 → 記錄",
       "witnessed": false,
       "label": "02:1_ 殘缺時間欄",
       "source": "R2 02:1_ 殘缺時間欄",
       "room": "R2",
       "act": 1,
+      "part": 1,
       "use": "早期碎片，不足以重建七分鐘",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": true
     },
     {
       "id": "E4-00-B",
       "required": false,
       "group": "board-r25",
       "code": "前片",
-      "slot": "R25 留原文參照；與 E4-00-A 核對殘缺格式（同一夜？）",
+      "slot": "R25 留原文參照；與 E4-00-A 核對殘缺格式（同一夜？）；跨部伏筆",
       "loop": "校驗完成 → 凝神查看 99% 截圖下緣 → 記錄",
       "witnessed": false,
       "label": "AUTH_LOOP: CUT",
       "source": "R11 AUTH_LOOP: CUT",
       "room": "R11",
       "act": 2,
+      "part": 1,
       "use": "驗證迴圈中斷片段，不能直接推知誰做的",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": true
     },
     {
       "id": "E4-00-C",
       "required": false,
       "group": "board-r25",
       "code": "前片",
-      "slot": "R25 預對齊電力七分鐘",
+      "slot": "R25 預對齊電力七分鐘；跨部伏筆",
       "loop": "查看 → 記錄",
       "witnessed": false,
       "label": "歷史電壓紀錄與驗證異常區間",
       "source": "R15 歷史電壓紀錄與驗證異常區間",
       "room": "R15",
       "act": 3,
+      "part": 1,
       "use": "前後電壓正常，中斷的是驗證，時長約七分鐘；不能當全時間線",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": true
     },
     {
       "id": "E4-00-D",
       "required": false,
       "group": "board-r25",
       "code": "前片",
-      "slot": "R25 仍留未定位列；與 E4-00-C 時序對齊（約七分鐘）",
+      "slot": "R25 仍留未定位列；與 E4-00-C 時序對齊（約七分鐘）；跨部伏筆",
       "loop": "感知平台足跡殘留 → 記錄",
       "witnessed": false,
       "label": "平台向下足跡殘留",
       "source": "R22 平台向下足跡殘留",
       "room": "R22",
       "act": 4,
+      "part": 1,
       "use": "感知靜格預埋逃生方向；第三階後截斷，主人／日期未確認，不判受傷前後或肉身當前位置。R25 仍留未定位列，與 50F 下行紀錄並列不等於同一次事件",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": true
     },
     {
       "id": "E4-04",
@@ -786,8 +941,11 @@
       "source": "R25 七分鐘時間表",
       "room": "R25",
       "act": 5,
+      "part": 2,
       "use": "02:13 是準備；實際中斷 02:15–02:22；內門 02:20:11–02:20:22 為 11 秒",
-      "nature": "主線紀錄；A–F 是子欄，不另算六件收藏"
+      "nature": "主線紀錄；A–F 是子欄，不另算六件收藏",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E4-05",
@@ -801,8 +959,11 @@
       "source": "R25 L-48 兩日紀錄",
       "room": "R25",
       "act": 5,
+      "part": 2,
       "use": "48 小時是另一事件尺度，不能塞入七分鐘；對帳後可展開「失聯→索引缺口→L-48」與「人員留置→設備撤離→出口封鎖」兩條來源因果鏈",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E4-03",
@@ -816,8 +977,11 @@
       "source": "R26 阿彪倉務誘入記錄／受控任用與後加限制",
       "room": "R26",
       "act": 5,
+      "part": 2,
       "use": "B02 原核對內選共同原單引用、工號／日期、原例行隔離及較晚自行追加延後釋放；並列 Michelle 任用與受控轉介，引用接原三卡",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E5-01",
@@ -831,8 +995,11 @@
       "source": "R27 三組別名鏈",
       "room": "R27",
       "act": 6,
+      "part": 2,
       "use": "合併編號才取得；跨幕最終身分推理來源之一",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E5-02",
@@ -846,8 +1013,11 @@
       "source": "R29 三個月份簽核與價差",
       "room": "R29",
       "act": 7,
+      "part": 2,
       "use": "先保全原來源／本地索引，再完成責任停頓；跨幕最終身分推理來源之一",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E5-06",
@@ -861,8 +1031,11 @@
       "source": "R30 五來源建築剖面",
       "room": "R30",
       "act": 8,
+      "part": 2,
       "use": "核對震損快照、門外位置與原撤離單施工附圖、斷層圖、E3-07／較晚自檢、管理維修圖；五點親手安置後，另確認不可逆前進才提交",
-      "nature": "主線紀錄；選填 OBS 註記不代替五點或提交"
+      "nature": "主線紀錄；選填 OBS 註記不代替五點或提交",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E5-03",
@@ -876,8 +1049,11 @@
       "source": "R31 帳號及簽名核驗",
       "room": "R31",
       "act": 8,
+      "part": 2,
       "use": "與第六幕 E5-01、第七幕 E5-02 完成最終身分推理；此時才正式完成主角身分鏈",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E5-04",
@@ -891,8 +1067,11 @@
       "source": "R31 內門十一秒與向下逃生",
       "room": "R31",
       "act": 8,
+      "part": 2,
       "use": "依門禁時刻而非腳印深淺核實，避免把當前投影當歷史肉身",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E5-08",
@@ -906,8 +1085,11 @@
       "source": "R31 清索引／覆寫未完資料",
       "room": "R31",
       "act": 8,
+      "part": 2,
       "use": "用既有 F 碼、R29 索引及現場供電重新掛載；不是恢復已犧牲的 R15 暫存",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E5-05",
@@ -921,8 +1103,11 @@
       "source": "R31 唯一十二秒解凍",
       "room": "R31",
       "act": 8,
+      "part": 2,
       "use": "歷史畫面或同等文字摘要；不反覆創造新的自由歷史探索",
-      "nature": "主線紀錄；筆記摘記固定停在「操作者：」，只留墨點，不是待填欄、不新增旗標"
+      "nature": "主線紀錄；筆記摘記固定停在「操作者：」，只留墨點，不是待填欄、不新增旗標",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E6-01",
@@ -936,8 +1121,11 @@
       "source": "R32 連回 P1 的現時維修畫面",
       "room": "R32",
       "act": 9,
+      "part": 2,
       "use": "肉身仍呼吸；現時來源，不是僅靠往事猜到",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E6-02",
@@ -951,8 +1139,11 @@
       "source": "R32 連續性核對",
       "room": "R32",
       "act": 9,
+      "part": 2,
       "use": "與現時畫面、主觀姿勢一起完成離體揭露",
-      "nature": "主線紀錄"
+      "nature": "主線紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "M6-01",
@@ -966,8 +1157,11 @@
       "source": "R32 最後的主觀姿勢記憶",
       "room": "R32",
       "act": 9,
+      "part": 2,
       "use": "配合外部可核對來源；本身不能充當可匯出監控",
-      "nature": "主線主觀紀錄"
+      "nature": "主線主觀紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "S6-01",
@@ -981,8 +1175,11 @@
       "source": "R32 現時門禁紀錄",
       "room": "R32",
       "act": 9,
+      "part": 2,
       "use": "鎖已開卻不能離開，區分機械門與封鎖",
-      "nature": "主線封鎖來源"
+      "nature": "主線封鎖來源",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "S6-02",
@@ -996,8 +1193,11 @@
       "source": "R32 同一門框的現時回返",
       "room": "R32",
       "act": 9,
+      "part": 2,
       "use": "完成一次回返核對，不能只用 U4 舊循環替代",
-      "nature": "主線封鎖來源"
+      "nature": "主線封鎖來源",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "S6-03",
@@ -1011,8 +1211,11 @@
       "source": "R32 請求與反應對照",
       "room": "R32",
       "act": 9,
+      "part": 2,
       "use": "提出離開請求、手指向出口並觀察增強，主動收回同一隻手後觀察減弱；核對不是提前承諾留下，減弱不解封",
-      "nature": "主線封鎖來源"
+      "nature": "主線封鎖來源",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-13",
@@ -1026,8 +1229,11 @@
       "source": "R3 斷裂床單；R17 高度標記與缺梯舊報修附件",
       "room": "R3",
       "act": 1,
+      "part": 1,
       "use": "核對 E-02 墜落者的逃生路線；不代判最後一步或死因，不補同住關係",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-14",
@@ -1041,8 +1247,11 @@
       "source": "R7 低績效資料；R13 健康／工作對照",
       "room": "R7",
       "act": 2,
+      "part": 1,
       "use": "分清表面績效與脫水、身體損耗",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-07",
@@ -1056,23 +1265,29 @@
       "source": "R13 健康與工作表",
       "room": "R13",
       "act": 3,
+      "part": 1,
       "use": "與 E1-14 核同人／日期，指出「自然衰竭」省略的缺水、校正及拒絕休息，沿原一次另存 E-04 註記；不判唯一死因，整份表不是 E-07 額外門票",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-11",
       "required": false,
       "group": "chain-victims",
       "code": "E-05・A",
-      "slot": "通報者；R28 接 B；須先讀 E2-09",
+      "slot": "通報者；R28 接 B；須先讀 E2-09；跨部伏筆",
       "loop": "關聯（供桌卡槽＋已轉運紀錄）→ 殘留浮現 → 凝神 → 見證過去：未遞出的求救草稿",
       "witnessed": true,
       "label": "通報者外聯草稿",
       "source": "R10 通報者外聯草稿；R14 轉運補充；R28 對照",
       "room": "R10",
       "act": 2,
+      "part": 1,
       "use": "支持未送出通報及醫療／轉運缺口，不據此指定職業或補成未證明死因",
-      "nature": "選填長線"
+      "nature": "選填長線",
+      "carried": false,
+      "teaser": true
     },
     {
       "id": "E5-07",
@@ -1086,8 +1301,11 @@
       "source": "R28 醫療風險資料",
       "room": "R28",
       "act": 7,
+      "part": 2,
       "use": "支持風險與空白欄，不擅自認定器官去向或死因",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-12",
@@ -1101,8 +1319,11 @@
       "source": "R14 貨運／識別片",
       "room": "R14",
       "act": 3,
+      "part": 1,
       "use": "身分被轉成素材索引的佐證",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-13",
@@ -1116,8 +1337,11 @@
       "source": "R12 停藥清單；R13 對照",
       "room": "R12",
       "act": 3,
+      "part": 1,
       "use": "揭露不是普通缺貨；不提供藥品或額外治療操作",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-08",
@@ -1131,23 +1355,29 @@
       "source": "R4b 領餐痕跡；R6 匯款／配給",
       "room": "R4b",
       "act": 1,
+      "part": 1,
       "use": "日常供給也受控制；各現場讀到才記",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E3-08",
       "required": false,
       "group": "chain-victims",
       "code": "E-09・B",
-      "slot": "封鎖後者；與 E5-06 對照",
+      "slot": "封鎖後者；與 E5-06 對照；跨部伏筆",
       "loop": "查看 → 記錄",
       "witnessed": false,
       "label": "L-48 通風／房間資料",
       "source": "R16 L-48 通風／房間資料；R17 延伸",
       "room": "R16",
       "act": 3,
+      "part": 1,
       "use": "兩日事故長線伏筆，不能直接替代 R25 完整時間表",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": true
     },
     {
       "id": "E1-09",
@@ -1161,8 +1391,11 @@
       "source": "R3 洗衣領取條",
       "room": "R3",
       "act": 1,
+      "part": 1,
       "use": "未領衣物與日常中斷，不能自行推定死因",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-10",
@@ -1176,8 +1409,11 @@
       "source": "R4b 香油簿／祈願",
       "room": "R4b",
       "act": 1,
+      "part": 1,
       "use": "互助名單及後續被改寫的對照基底",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-10",
@@ -1191,8 +1427,11 @@
       "source": "R16 香火簿資料列；R10 已讀祈願卡背章為前置",
       "room": "R16",
       "act": 3,
+      "part": 1,
       "use": "核對祈願卡、房號與供藥紀錄如何被併列，依實際查閱記錄",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E4-06",
@@ -1206,8 +1445,11 @@
       "source": "R24 祈願分類",
       "room": "R24",
       "act": 5,
+      "part": 2,
       "use": "控制如何挪用私密願望；不是第二次取得 #15",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-03",
@@ -1221,38 +1463,47 @@
       "source": "R11 座位／手的姿勢",
       "room": "R11",
       "act": 2,
+      "part": 1,
       "use": "可觸發阿尋；未讀仍由第三通未接進主線",
-      "nature": "選填觸發"
+      "nature": "選填觸發",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E3-04",
       "required": false,
       "group": "chain-identity",
       "code": "B",
-      "slot": "記憶錯置；R31 實核才歸屬主角",
+      "slot": "記憶錯置；R31 實核才歸屬主角；跨部伏筆",
       "loop": "查看 → 記錄",
       "witnessed": false,
       "label": "阿尋管理端註記",
       "source": "R17 阿尋管理端註記",
       "room": "R17",
       "act": 3,
+      "part": 1,
       "use": "查明外聯限制；人事號、評級日期與覆核端可在 R31 身分及解凍完成後對本地簽核索引，實核才歸屬主角",
-      "nature": "選填紀錄；未讀不補發"
+      "nature": "選填紀錄；未讀不補發",
+      "carried": false,
+      "teaser": true
     },
     {
       "id": "E3-05",
       "required": false,
       "group": "chain-identity",
       "code": "C",
-      "slot": "記憶錯置；R31 實核才歸屬主角",
+      "slot": "記憶錯置；R31 實核才歸屬主角；跨部伏筆",
       "loop": "查看 → 記錄",
       "witnessed": false,
       "label": "老周留用註記",
       "source": "R17 老周留用註記",
       "room": "R17",
       "act": 3,
+      "part": 1,
       "use": "查明留用評級，R31 實核帳號索引才歸屬主角；紙條與 R23 收件方向分別依來源保存，不等於可自由離園",
-      "nature": "選填紀錄；未讀不補發"
+      "nature": "選填紀錄；未讀不補發",
+      "carried": false,
+      "teaser": true
     },
     {
       "id": "E1-11",
@@ -1266,8 +1517,11 @@
       "source": "R4b 電子燈同步；R1 回訪呼應",
       "room": "R4b",
       "act": 1,
+      "part": 1,
       "use": "辨認燈材與設備節拍，不把它當主線通行碼",
-      "nature": "選填觀察"
+      "nature": "選填觀察",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E1-16",
@@ -1281,8 +1535,11 @@
       "source": "R7 白板背面",
       "room": "R7",
       "act": 2,
+      "part": 1,
       "use": "保留人物自己的字，不取代教學／分配原件",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     },
     {
       "id": "E2-15",
@@ -1296,8 +1553,11 @@
       "source": "R9 拒絕／素材索引",
       "room": "R9",
       "act": 2,
+      "part": 1,
       "use": "214 筆索引、17 筆刪除狀態、197 張卡分屬不同欄；只證明同案可核對的拒絕，不推全體",
-      "nature": "選填紀錄"
+      "nature": "選填紀錄",
+      "carried": false,
+      "teaser": false
     }
   ],
   "links": [
@@ -1431,7 +1691,8 @@
       "from": "E3-07",
       "to": "board-r30",
       "kind": "reuse",
-      "code": "D"
+      "code": "D",
+      "crossPart": "carried"
     },
     {
       "from": "E2-08",
@@ -1467,7 +1728,8 @@
       "from": "E3-02",
       "to": "board-r24",
       "kind": "reuse",
-      "code": "C"
+      "code": "C",
+      "crossPart": "carried"
     },
     {
       "from": "E4-01",
@@ -1491,13 +1753,15 @@
       "from": "E4-00-A",
       "to": "board-r25",
       "kind": "support",
-      "code": "前片"
+      "code": "前片",
+      "crossPart": "teaser"
     },
     {
       "from": "E4-00-B",
       "to": "board-r25",
       "kind": "support",
-      "code": "前片"
+      "code": "前片",
+      "crossPart": "teaser"
     },
     {
       "from": "E4-00-A",
@@ -1509,13 +1773,15 @@
       "from": "E4-00-C",
       "to": "board-r25",
       "kind": "support",
-      "code": "前片"
+      "code": "前片",
+      "crossPart": "teaser"
     },
     {
       "from": "E4-00-D",
       "to": "board-r25",
       "kind": "support",
-      "code": "前片"
+      "code": "前片",
+      "crossPart": "teaser"
     },
     {
       "from": "E4-00-C",
@@ -1653,7 +1919,8 @@
       "from": "E3-08",
       "to": "E5-06",
       "kind": "compare",
-      "code": ""
+      "code": "",
+      "crossPart": "teaser"
     },
     {
       "from": "E1-10",
@@ -1671,13 +1938,15 @@
       "from": "E3-04",
       "to": "board-r31",
       "kind": "later",
-      "code": ""
+      "code": "",
+      "crossPart": "teaser"
     },
     {
       "from": "E3-05",
       "to": "board-r31",
       "kind": "later",
-      "code": ""
+      "code": "",
+      "crossPart": "teaser"
     },
     {
       "from": "board-r24",
@@ -1695,7 +1964,8 @@
       "from": "E2-11",
       "to": "E5-07",
       "kind": "chain",
-      "code": "B"
+      "code": "B",
+      "crossPart": "teaser"
     },
     {
       "from": "E1-08",

@@ -18,7 +18,12 @@ const plain = cell => cell.replace(/<[^>]+>/g, '').trim();
 export function buildCollectionRelations(markdown, graph) {
   const text = markdown.replaceAll('\r\n', '\n');
   const actOf = new Map(graph.nodes.map(node => [node.id, node.act]));
+  const partOf = new Map(graph.nodes.map(node => [node.id, node.part]));
   const acts = graph.acts.map((name, act) => ({ act, name: name.split('／')[0].replace(/^[上下]部・/, ''), title: name }));
+  const parts = graph.parts.map((name, index) => ({
+    part: index + 1, name,
+    acts: [...new Set(graph.nodes.filter(node => node.part === index + 1).map(node => node.act))].sort((a, b) => a - b),
+  }));
   const register = text.split('\n## 三、')[1]?.split('\n## 四、')[0];
   assert(register, 'Missing evidence register');
 
@@ -26,8 +31,8 @@ export function buildCollectionRelations(markdown, graph) {
   const overview = new Map();
   for (const line of register.split('### 關聯總覽')[1].split('\n### ')[0].split('\n')) {
     if (!line.startsWith('| [')) continue;
-    const [first, board, sources, outcome] = cellsOf(line);
-    overview.set(first.match(/\(#([^)]+)\)/)[1], { board, sources, outcome });
+    const [first, release, board, sources, outcome] = cellsOf(line);
+    overview.set(first.match(/\(#([^)]+)\)/)[1], { release, board, sources, outcome });
   }
 
   const groups = [], evidence = [];
@@ -44,8 +49,8 @@ export function buildCollectionRelations(markdown, graph) {
       const meta = overview.get(anchor);
       assert(meta, `Overview row missing for ${anchor}`);
       group = board
-        ? { id: anchor.replace('collection-', ''), kind: 'board', order: Number(board[1]), title: board[2], room: board[3], act: actOf.get(board[3]) }
-        : { id: anchor.replace('collection-', ''), kind: 'chain', order: null, title: heading.replace(/（.+）$/, ''), room: null, act: null };
+        ? { id: anchor.replace('collection-', ''), kind: 'board', order: Number(board[1]), title: board[2], room: board[3], act: actOf.get(board[3]), part: partOf.get(board[3]) }
+        : { id: anchor.replace('collection-', ''), kind: 'chain', order: null, title: heading.replace(/（.+）$/, ''), room: null, act: null, part: null };
       Object.assign(group, { anchor, ...meta, note: '' });
       assert(group.kind === 'chain' || Number.isInteger(group.act), `Unknown board room: ${heading}`);
       groups.push(group);
@@ -67,7 +72,8 @@ export function buildCollectionRelations(markdown, graph) {
     evidence.push({
       id, required: cells[0].includes('collectible-required'), group: group.id, code, slot, loop,
       witnessed: loop.includes('見證過去'), label: source.split('；')[0].replace(/^[A-Z]\d+b?\s/, ''),
-      source, room, act: actOf.get(room), use, nature,
+      source, room, act: actOf.get(room), part: partOf.get(room), use, nature,
+      carried: slot.includes('前情帶入'), teaser: slot.includes('跨部伏筆'),
     });
   }
 
@@ -134,9 +140,26 @@ export function buildCollectionRelations(markdown, graph) {
     }
   }
   for (const { from, to } of links) assert((byId.has(from) || byGroup.has(from)) && (byId.has(to) || byGroup.has(to)), `Dangling link ${from} → ${to}`);
+
+  // The parts ship separately: a relation may cross from 上部 into 下部 only when the prequel
+  // snapshot carries the required source, or when an optional source is marked as a cross-part teaser.
+  const partOfNode = id => byId.get(id)?.part ?? byGroup.get(id)?.part;
+  for (const relation of links) {
+    const [from, to] = [partOfNode(relation.from), partOfNode(relation.to)];
+    if (!from || !to || from === to) continue;
+    assert(from < to, `Relation runs backwards across the release split: ${relation.from} → ${relation.to}`);
+    const source = byId.get(relation.from);
+    assert(source, `Cross-part relation must start from a collected source: ${relation.from}`);
+    assert(source.required ? source.carried : source.teaser,
+      `${source.id} reaches 下部 without being carried by the prequel (required) or marked 跨部伏筆 (optional)`);
+    relation.crossPart = source.required ? 'carried' : 'teaser';
+  }
+  for (const item of evidence.filter(item => item.carried || item.teaser)) {
+    assert(links.some(l => l.from === item.id && l.crossPart), `${item.id} is marked as crossing parts but no relation crosses`);
+  }
   assert(links.some(l => l.kind === 'reuse' && l.from === 'E5-01' && l.to === findGroup('R31').id), 'R27 result feeds the final board');
 
-  return { version: 1, source: TABLE, acts, groups, evidence, links };
+  return { version: 1, source: TABLE, parts, acts, groups, evidence, links };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
