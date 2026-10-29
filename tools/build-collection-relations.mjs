@@ -170,7 +170,75 @@ export function buildCollectionRelations(markdown, graph) {
   }
   assert(links.some(l => l.kind === 'reuse' && l.from === 'E5-01' && l.to === findGroup('R31').id), 'R27 result feeds the final board');
 
-  return { version: 1, source: TABLE, parts, acts, groups, evidence, links };
+  // Four-system view: rooms (定點場景), signals (筆記本與訊號), route records (動線與鑰匙)
+  // and the links that close the play loop: room → source → board → key → next room.
+  const actByName = new Map(acts.map(a => [a.name, a.act]));
+  const sceneIndex = new Map(graph.nodes.map((node, index) => [node.id, index]));
+  const roomIds = new Set();
+  const roomRef = id => { assert(sceneIndex.has(id), `Unknown room: ${id}`); roomIds.add(id); return `room:${id}`; };
+  const systemLinks = [];
+  // Both ends of a route record may name the same step (F1 → 覆寫碼 and 覆寫碼 ← F1～F5); keep one.
+  const system = (from, to, kind) => {
+    if (!systemLinks.some(l => l.from === from && l.to === to && l.kind === kind)) systemLinks.push({ from, to, kind });
+  };
+  for (const item of evidence) system(roomRef(item.room), item.id, item.witnessed ? 'found-freeze' : 'found');
+  for (const group of groups.filter(g => g.kind === 'board')) roomRef(group.room);
+
+  const signalTable = text.split('\n## 四、')[1].split('\n## 五、')[0];
+  const signals = [];
+  for (const line of signalTable.split('\n')) {
+    if (!line.startsWith('| ') || line.startsWith('| 幕別') || line.startsWith('| ---')) continue;
+    const [, index, source, use, usedIn] = cellsOf(line);
+    const id = plain(index).match(/#\d+′?/)[0];
+    const fromRooms = source.match(/^([A-Z]\d+b?(?:／[A-Z]\d+b?)*)\s/)[1].split('／');
+    const uses = usedIn === '—' ? [] : usedIn.split('、');
+    const signal = { id: `signal:${id}`, index: id, label: source.split('；')[0].replace(/^[A-Z]\d+b?(?:／[A-Z]\d+b?)*\s/, ''),
+      required: index.includes('collectible-required'), source, use, act: actOf.get(fromRooms[0]), part: partOf.get(fromRooms[0]) };
+    signals.push(signal);
+    for (const room of fromRooms) system(roomRef(room), signal.id, 'signal-found');
+    for (const room of uses) {
+      assert(actOf.get(room) >= signal.act, `Signal ${id} is used before it is found: ${room}`);
+      system(signal.id, roomRef(room), 'signal-use');
+    }
+  }
+  assert.equal(new Set(signals.map(s => s.index.replace('′', ''))).size, 15, 'Fifteen signal slots');
+
+  const keyTable = text.split('\n## 五、')[1].split('<a id="collection-lower-interactions"></a>')[0];
+  const keys = [];
+  for (const line of keyTable.split('\n')) {
+    if (!line.startsWith('| ') || line.startsWith('| 幕別') || line.startsWith('| ---')) continue;
+    const [actName, item, where, use, from, opens] = cellsOf(line);
+    const label = plain(item).replace(/〔[^〕]*〕$/, '');
+    const code = label.match(/K\d-\d\d|^F\d$/)?.[0];
+    keys.push({ id: `key:${code ?? label}`, label, code: code ?? '', act: actByName.get(actName), where, use, from, opens });
+  }
+  for (const key of keys) key.part = parts.find(p => p.acts.includes(key.act)).part;
+  const keyByName = name => keys.find(k => k.code === name || k.label === name);
+  const resolve = token => {
+    let match;
+    if ((match = token.match(/^推理 (R\d+)$/))) return [findGroup(match[1]).id];
+    if ((match = token.match(/^現場 ([A-Z]\d+b?)$/))) return [roomRef(match[1])];
+    if ((match = token.match(/^(E\d-\d\d(?:-[A-D])?)$/))) return [known(match[1])];
+    if ((match = token.match(/^F(\d)～F(\d)$/))) return Array.from({ length: match[2] - match[1] + 1 }, (_, i) => keyByName(`F${Number(match[1]) + i}`).id);
+    if (/^[A-Z]\d+b?$/.test(token)) return [roomRef(token)];
+    const key = keyByName(token);
+    assert(key, `Unknown route token: ${token}`);
+    return [key.id];
+  };
+  for (const key of keys) {
+    for (const token of key.from.split('、')) for (const id of resolve(token)) system(id, key.id, 'produces');
+    for (const token of key.opens.split('、')) for (const id of resolve(token)) {
+      if (id.startsWith('room:')) assert(actOf.get(id.slice(5)) >= key.act, `${key.label} opens an earlier room: ${id}`);
+      system(key.id, id, id.startsWith('room:') ? 'unlocks' : 'produces');
+    }
+  }
+  assert.equal(keys.length, 12, 'Twelve route, credential and override records');
+  const rooms = [...roomIds].sort((a, b) => sceneIndex.get(a) - sceneIndex.get(b)).map(id => {
+    const node = graph.nodes.find(n => n.id === id);
+    return { id: `room:${id}`, room: id, name: node.name, act: node.act, part: node.part, order: sceneIndex.get(id) };
+  });
+
+  return { version: 1, source: TABLE, parts, acts, groups, evidence, links, rooms, signals, keys, systemLinks };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

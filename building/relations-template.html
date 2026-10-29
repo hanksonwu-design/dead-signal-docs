@@ -35,6 +35,12 @@ h2{font-size:15px;margin:16px 0 8px;font-weight:600}h2:first-child{margin-top:0}
 .node-label.hub{font-size:12px;font-weight:600;padding:1px 6px;border-radius:3px;background:#101619cc;border:1px solid #4b5d5f}
 .edge-label{font-size:10px;color:#101619;font-weight:700;padding:0 4px;border-radius:2px;pointer-events:none}
 .act-label{font-size:12px;color:#7f9491;pointer-events:none;white-space:nowrap}
+.lane-name{font-size:13px;font-weight:600;color:#dfe6e5;padding:2px 8px;border-radius:3px;background:#101619cc;border:1px solid #4b5d5f;pointer-events:none;white-space:nowrap}
+.node-label.room{font-size:11px;color:#bcd0da}.node-label.key{font-size:11px;font-weight:700;color:#f0dca4}
+.modes{display:flex;gap:6px;margin-bottom:6px}.modes a{flex:1;text-align:center;padding:6px 8px;border:1px solid #455355;border-radius:4px;color:#dfe6e5;text-decoration:none;font-size:13px}
+.modes a[aria-current="true"]{border-color:#e2c77d;background:#2a3532}
+.swatch.box{border-radius:2px;background:#6f8ea0}.swatch.tri{border-radius:0;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:13px solid #8ccab1;background:none}
+.swatch.coin{background:#e2c77d;border-radius:50%;height:8px}[hidden]{display:none!important}
 .part-name{font-size:13px;font-weight:600;color:#8ccab1;text-shadow:0 0 3px #000;pointer-events:none;white-space:nowrap}
 .part-label{font-size:10px;font-weight:700;color:#101619;padding:0 4px;border-radius:2px;pointer-events:none;white-space:nowrap}
 .part-label.carried,.swatch.tag.carried{background:#e2c77d}.part-label.teaser,.swatch.tag.teaser{background:#aab3b5}
@@ -49,6 +55,9 @@ h2{font-size:15px;margin:16px 0 8px;font-weight:600}h2:first-child{margin-top:0}
 <nav><a id="table-link" href="../" target="_blank" rel="noopener noreferrer">收集物總表 ↗</a><a href="./">場景與流程</a></nav></header>
 <main class="layout">
 <aside class="left" aria-label="圖例與篩選">
+<h2>檢視方式</h2>
+<div class="modes"><a data-mode="groups" href="./relations.html">依推理組</a><a data-mode="systems" href="./relations.html?mode=systems">四系統分道</a></div>
+<p class="hint" data-only="systems">由左到右是〈探索與調查〉的四個系統：定點場景與三圖層 → 筆記本與訊號系統 → 調查板與推理系統 → 動線與訊號鑰匙。高度依房間的遊玩順序上升；綠色「開通」線把鑰匙接回下一個房間，看得出推理如何推動進度。</p>
 <h2>怎麼讀</h2>
 <div class="legend">
 <span><i class="swatch hub" style="background:#8ccab1"></i>調查板推理組（高度＝推理所在幕）</span>
@@ -59,6 +68,10 @@ h2{font-size:15px;margin:16px 0 8px;font-weight:600}h2:first-child{margin-top:0}
 <span><i class="swatch dash"></i>前置、旁證、須先讀、擇一、對照、前片配對、補證與延伸線</span>
 <span><i class="swatch dash" style="border-top-color:#d9774f"></i>誘答：已持有、看似相關，原文卻不支持該格</span>
 <span><i class="swatch dash" style="border-top-color:#e2c77d"></i>回頭比對：前幾幕的來源在稍後並排查證（選填）</span>
+<span data-only="systems"><i class="swatch box"></i>場景房間（定點場景）</span>
+<span data-only="systems"><i class="swatch tri"></i>訊號索引（筆記本與訊號）</span>
+<span data-only="systems"><i class="swatch coin"></i>鑰匙、憑證與覆寫碼（動線）</span>
+<span data-only="systems"><i class="swatch line" style="background:#9fd3a4;height:4px"></i>開通：鑰匙讓玩家進入下一個房間</span>
 <span><i class="swatch split"></i>上下部分界（第四幕與第五幕之間）</span>
 <span><i class="swatch tag carried"></i>前情帶入：下部由前情快照帶入的上部必要來源</span>
 <span><i class="swatch tag teaser"></i>跨部伏筆：上部選填、到下部才收尾</span>
@@ -68,6 +81,8 @@ h2{font-size:15px;margin:16px 0 8px;font-weight:600}h2:first-child{margin-top:0}
 <div class="toggles">
 <label><input type="checkbox" id="show-support" checked>前置、旁證與前片配對</label>
 <label><input type="checkbox" id="show-decoys" checked>誘答卡</label>
+<label data-only="systems"><input type="checkbox" id="show-found" checked>場景到證據的取得線</label>
+<label data-only="systems"><input type="checkbox" id="show-signals" checked>訊號索引</label>
 <label><input type="checkbox" id="show-chains" checked>延伸關聯線</label>
 <label><input type="checkbox" id="show-codes" checked>格位代號</label>
 <label><input type="checkbox" id="show-ids">全部證據編號</label>

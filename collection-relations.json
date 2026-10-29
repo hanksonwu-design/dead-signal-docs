@@ -2078,5 +2078,1215 @@
       "kind": "chain",
       "code": "B"
     }
+  ],
+  "rooms": [
+    {
+      "id": "room:P0",
+      "room": "P0",
+      "name": "深層下水道（廢棄暗渠）",
+      "act": 0,
+      "part": 1,
+      "order": 0
+    },
+    {
+      "id": "room:P2",
+      "room": "P2",
+      "name": "地基處理室",
+      "act": 0,
+      "part": 1,
+      "order": 2
+    },
+    {
+      "id": "room:R1",
+      "room": "R1",
+      "name": "入口大廳",
+      "act": 1,
+      "part": 1,
+      "order": 3
+    },
+    {
+      "id": "room:R2",
+      "room": "R2",
+      "name": "接待櫃檯後室",
+      "act": 1,
+      "part": 1,
+      "order": 4
+    },
+    {
+      "id": "room:R3",
+      "room": "R3",
+      "name": "宿舍主間",
+      "act": 1,
+      "part": 1,
+      "order": 5
+    },
+    {
+      "id": "room:R4",
+      "room": "R4",
+      "name": "刻痕牆廁所",
+      "act": 1,
+      "part": 1,
+      "order": 6
+    },
+    {
+      "id": "room:R4b",
+      "room": "R4b",
+      "name": "樓梯轉角無主神壇",
+      "act": 1,
+      "part": 1,
+      "order": 7
+    },
+    {
+      "id": "room:R5",
+      "room": "R5",
+      "name": "工坊角",
+      "act": 1,
+      "part": 1,
+      "order": 8
+    },
+    {
+      "id": "room:R6",
+      "room": "R6",
+      "name": "員工網咖／生活中繼",
+      "act": 2,
+      "part": 1,
+      "order": 9
+    },
+    {
+      "id": "room:R7",
+      "room": "R7",
+      "name": "產線主廊／聊天組隔間",
+      "act": 2,
+      "part": 1,
+      "order": 10
+    },
+    {
+      "id": "room:R8",
+      "room": "R8",
+      "name": "視訊組",
+      "act": 2,
+      "part": 1,
+      "order": 11
+    },
+    {
+      "id": "room:R9",
+      "room": "R9",
+      "name": "卡拉 OK／短租房",
+      "act": 2,
+      "part": 1,
+      "order": 12
+    },
+    {
+      "id": "room:R10",
+      "room": "R10",
+      "name": "產線旁臨時祈禱室",
+      "act": 2,
+      "part": 1,
+      "order": 13
+    },
+    {
+      "id": "room:R11",
+      "room": "R11",
+      "name": "「你的」座位（第三排靠牆）",
+      "act": 2,
+      "part": 1,
+      "order": 14
+    },
+    {
+      "id": "room:R12",
+      "room": "R12",
+      "name": "設備修理與藥品櫃",
+      "act": 3,
+      "part": 1,
+      "order": 15
+    },
+    {
+      "id": "room:R13",
+      "room": "R13",
+      "name": "非法診所",
+      "act": 3,
+      "part": 1,
+      "order": 16
+    },
+    {
+      "id": "room:R14",
+      "room": "R14",
+      "name": "貨梯轉接間",
+      "act": 3,
+      "part": 1,
+      "order": 17
+    },
+    {
+      "id": "room:R15",
+      "room": "R15",
+      "name": "發電機房",
+      "act": 3,
+      "part": 1,
+      "order": 18
+    },
+    {
+      "id": "room:R16",
+      "room": "R16",
+      "name": "技術核心／伺服器室",
+      "act": 3,
+      "part": 1,
+      "order": 19
+    },
+    {
+      "id": "room:R17",
+      "room": "R17",
+      "name": "檔案區／康辦公室／外部中繼",
+      "act": 3,
+      "part": 1,
+      "order": 20
+    },
+    {
+      "id": "room:R18",
+      "room": "R18",
+      "name": "校正走廊",
+      "act": 4,
+      "part": 1,
+      "order": 21
+    },
+    {
+      "id": "room:R19",
+      "room": "R19",
+      "name": "隔音收容室",
+      "act": 4,
+      "part": 1,
+      "order": 22
+    },
+    {
+      "id": "room:R20",
+      "room": "R20",
+      "name": "單向玻璃觀察室",
+      "act": 4,
+      "part": 1,
+      "order": 23
+    },
+    {
+      "id": "room:R21",
+      "room": "R21",
+      "name": "紀律辦公室",
+      "act": 4,
+      "part": 1,
+      "order": 24
+    },
+    {
+      "id": "room:R22",
+      "room": "R22",
+      "name": "釋放接點／破損樓梯",
+      "act": 4,
+      "part": 1,
+      "order": 25
+    },
+    {
+      "id": "room:R23",
+      "room": "R23",
+      "name": "深層檔案",
+      "act": 5,
+      "part": 2,
+      "order": 26
+    },
+    {
+      "id": "room:R24",
+      "room": "R24",
+      "name": "鏡像檔案",
+      "act": 5,
+      "part": 2,
+      "order": 27
+    },
+    {
+      "id": "room:R25",
+      "room": "R25",
+      "name": "七分鐘控制室",
+      "act": 5,
+      "part": 2,
+      "order": 28
+    },
+    {
+      "id": "room:R26",
+      "room": "R26",
+      "name": "C-07 校正室",
+      "act": 5,
+      "part": 2,
+      "order": 29
+    },
+    {
+      "id": "room:R27",
+      "room": "R27",
+      "name": "展示廊",
+      "act": 6,
+      "part": 2,
+      "order": 31
+    },
+    {
+      "id": "room:R28",
+      "room": "R28",
+      "name": "交易接洽室",
+      "act": 7,
+      "part": 2,
+      "order": 36
+    },
+    {
+      "id": "room:R29",
+      "room": "R29",
+      "name": "簽核檔案室",
+      "act": 7,
+      "part": 2,
+      "order": 37
+    },
+    {
+      "id": "room:R30",
+      "room": "R30",
+      "name": "運送通道",
+      "act": 8,
+      "part": 2,
+      "order": 43
+    },
+    {
+      "id": "room:R31",
+      "room": "R31",
+      "name": "備份內室",
+      "act": 8,
+      "part": 2,
+      "order": 44
+    },
+    {
+      "id": "room:R32",
+      "room": "R32",
+      "name": "頂層的地板",
+      "act": 9,
+      "part": 2,
+      "order": 45
+    }
+  ],
+  "signals": [
+    {
+      "id": "signal:#2",
+      "index": "#2",
+      "label": "重置脈衝聲證",
+      "required": true,
+      "source": "P2 重置脈衝聲證；R1 內建測試",
+      "use": "P2 隨必要觀察記下索引；R1 本機測試可略過。播放可使等號者回座，但不清來源、不通關，P2 索引不能播放",
+      "act": 0,
+      "part": 1
+    },
+    {
+      "id": "signal:#1",
+      "index": "#1",
+      "label": "模擬鈴聲",
+      "required": false,
+      "source": "R1 模擬鈴聲",
+      "use": "由機上喇叭引導注意，供近看椅側號牌；不讓路、不激怒，不能遠端施放",
+      "act": 1,
+      "part": 1
+    },
+    {
+      "id": "signal:#3",
+      "index": "#3",
+      "label": "收容叫號",
+      "required": true,
+      "source": "R1 收容叫號",
+      "use": "完成被管理的入園程序，不表示自願報到",
+      "act": 1,
+      "part": 1
+    },
+    {
+      "id": "signal:#4",
+      "index": "#4",
+      "label": "多語牆面殘響",
+      "required": false,
+      "source": "R4 多語牆面殘響",
+      "use": "選填主觀記憶，不能匯出真實錄音；與 #4′ 擇一",
+      "act": 1,
+      "part": 1
+    },
+    {
+      "id": "signal:#4′",
+      "index": "#4′",
+      "label": "單一聲音／名字",
+      "required": false,
+      "source": "R4 單一聲音／名字",
+      "use": "同槽替代觀察，不額外增加戰鬥能力",
+      "act": 1,
+      "part": 1
+    },
+    {
+      "id": "signal:#5",
+      "index": "#5",
+      "label": "換班鈴",
+      "required": false,
+      "source": "R6／R10 換班鈴",
+      "use": "跨空間辨認同一作息系統，不代替 F 碼",
+      "act": 2,
+      "part": 1
+    },
+    {
+      "id": "signal:#6",
+      "index": "#6",
+      "label": "老周舊手機女兒語音，17 秒",
+      "required": false,
+      "source": "R7 老周舊手機女兒語音，17 秒",
+      "use": "選填人物回應，依本地手機播放",
+      "act": 2,
+      "part": 1
+    },
+    {
+      "id": "signal:#10",
+      "index": "#10",
+      "label": "一句稱呼／四個不同人的聲線",
+      "required": false,
+      "source": "R7 一句稱呼／四個不同人的聲線",
+      "use": "老周除 #6 外的另一有效回應；不能替代真名證據鏈",
+      "act": 2,
+      "part": 1
+    },
+    {
+      "id": "signal:#7",
+      "index": "#7",
+      "label": "AX-17／v02 校驗資料",
+      "required": true,
+      "source": "R8 AX-17／v02 校驗資料",
+      "use": "讀到封包 100／6C2A，R11 真正校驗；資料而非音檔",
+      "act": 2,
+      "part": 1
+    },
+    {
+      "id": "signal:#11",
+      "index": "#11",
+      "label": "laugh_03_warm，1.4 秒",
+      "required": false,
+      "source": "R8 laugh_03_warm，1.4 秒",
+      "use": "可記錄的既有剪接素材；不新增 R14 的第三種安息解，實際使用依本地來源及遭遇規格",
+      "act": 2,
+      "part": 1
+    },
+    {
+      "id": "signal:#12",
+      "index": "#12",
+      "label": "標準問候語",
+      "required": false,
+      "source": "R7／R8 標準問候語",
+      "use": "語言版本可核對；R12 E-11、R14 E-06 回應來源之一",
+      "act": 2,
+      "part": 1
+    },
+    {
+      "id": "signal:#13",
+      "index": "#13",
+      "label": "離幕前回訪的家用鈴聲",
+      "required": false,
+      "source": "R6 離幕前回訪的家用鈴聲",
+      "use": "選填；R12 E-11 的替代來源，過了 R11 單向門不能回頭取",
+      "act": 2,
+      "part": 1
+    },
+    {
+      "id": "signal:#8",
+      "index": "#8",
+      "label": "斷電設備殘響",
+      "required": false,
+      "source": "R12／R15 斷電設備殘響",
+      "use": "E-08 脈絡；觀察訊號不等於已修機器",
+      "act": 3,
+      "part": 1
+    },
+    {
+      "id": "signal:#9",
+      "index": "#9",
+      "label": "貨梯到站聲",
+      "required": false,
+      "source": "R14 貨梯到站聲",
+      "use": "E-06 選填回應來源之一",
+      "act": 3,
+      "part": 1
+    },
+    {
+      "id": "signal:#14",
+      "index": "#14",
+      "label": "鍵盤打出的「我在」",
+      "required": false,
+      "source": "R13 鍵盤打出的「我在」",
+      "use": "字而非人聲；支援 E-04，不自動讓 E-07 安息",
+      "act": 3,
+      "part": 1
+    },
+    {
+      "id": "signal:#15",
+      "index": "#15",
+      "label": "三秒承諾",
+      "required": true,
+      "source": "R20 三秒承諾",
+      "use": "主線本地播放／記錄；R26 需現場來源及緩衝核實，R32 拒絕時不強迫再播放",
+      "act": 4,
+      "part": 1
+    }
+  ],
+  "keys": [
+    {
+      "id": "key:K0-01",
+      "label": "K0-01",
+      "code": "K0-01",
+      "act": 0,
+      "where": "P2 取得 E0-02 後核對房號牌／上行口維修標牌",
+      "use": "已辨認路線索引，不以序幕灰槽鎖定為條件；厚門與大廳門均未上鎖，仍須親手爬梯推門",
+      "from": "E0-02",
+      "opens": "R1",
+      "part": 1
+    },
+    {
+      "id": "key:F1",
+      "label": "F1",
+      "code": "F1",
+      "act": 1,
+      "where": "R4 五格描框第一格，47",
+      "use": "必需記錄；血字附近的實物來源，不取走牆",
+      "from": "現場 R4",
+      "opens": "完整覆寫碼",
+      "part": 1
+    },
+    {
+      "id": "key:K1-01",
+      "label": "本地服務操作索引（K1-01）",
+      "code": "K1-01",
+      "act": 2,
+      "where": "R11 阿尋校驗、範圍確認及三項幕尾證據",
+      "use": "服務通路索引；另做 S-03 本地門端驗證才進 T-R11-R12",
+      "from": "推理 R11",
+      "opens": "R12",
+      "part": 1
+    },
+    {
+      "id": "key:K2-01",
+      "label": "服務門通路紀錄（K2-01）",
+      "code": "K2-01",
+      "act": 3,
+      "where": "R17 同日車流＋康備忘＋外部表頭為正路組合",
+      "use": "正路 32-S→N-2→RT-3→C-02；若第三件選無日期 E2-08，也生成同名索引，但指向 L-04，不算已通往 R18；兩路另驗既有憑證",
+      "from": "推理 R17",
+      "opens": "R18",
+      "part": 1
+    },
+    {
+      "id": "key:管理端憑證",
+      "label": "管理端憑證",
+      "code": "",
+      "act": 3,
+      "where": "R16 必要來源；R17、R20 現場驗證",
+      "use": "設備存取資格；R21 熟悉手勢不等於肉身／真名已證實",
+      "from": "推理 R16",
+      "opens": "R17、R20",
+      "part": 1
+    },
+    {
+      "id": "key:F2",
+      "label": "F2",
+      "code": "F2",
+      "act": 4,
+      "where": "R19 椅腳內側第二格，26",
+      "use": "必需記錄；不是牆上隨機密碼，也不搬走束帶椅",
+      "from": "現場 R19",
+      "opens": "完整覆寫碼",
+      "part": 1
+    },
+    {
+      "id": "key:F3",
+      "label": "F3",
+      "code": "F3",
+      "act": 4,
+      "where": "R19 先觀察固定玻璃定位片，R20 用缺口方向與格位表解成 81",
+      "use": "必需記錄；定位片留玻璃內，不新增碎玻璃背包物品",
+      "from": "現場 R19、R20",
+      "opens": "完整覆寫碼",
+      "part": 1
+    },
+    {
+      "id": "key:F4",
+      "label": "F4",
+      "code": "F4",
+      "act": 4,
+      "where": "R21 抽屜內歸檔校正排程單，折痕內序列 35",
+      "use": "必需記錄；與按捺簽收欄同紙，現場展開，不代稱門卡",
+      "from": "現場 R21",
+      "opens": "R22、完整覆寫碼",
+      "part": 1
+    },
+    {
+      "id": "key:F5",
+      "label": "F5",
+      "code": "F5",
+      "act": 5,
+      "where": "R25 C12／VERIFY_ONLY 回傳，09",
+      "use": "必需記錄；只是驗證回傳，不先開管理門",
+      "from": "現場 R25",
+      "opens": "完整覆寫碼",
+      "part": 2
+    },
+    {
+      "id": "key:完整覆寫碼",
+      "label": "完整覆寫碼",
+      "code": "",
+      "act": 5,
+      "where": "F1–F5 組成 47-26-81-35-09",
+      "use": "R25／R26 及 R31 等既定端點使用；不從單一手印推全碼",
+      "from": "F1～F5",
+      "opens": "R25、R26、R31",
+      "part": 2
+    },
+    {
+      "id": "key:R29 本地索引",
+      "label": "R29 本地索引",
+      "code": "",
+      "act": 7,
+      "where": "E5-02 保存原件與 local_index_available",
+      "use": "R31 重新掛載必要；不是可在別房憑空重建的資料",
+      "from": "E5-02",
+      "opens": "R31",
+      "part": 2
+    },
+    {
+      "id": "key:R31 維修索引",
+      "label": "R31 維修索引",
+      "code": "",
+      "act": 8,
+      "where": "備份／逃生核驗後明確查看",
+      "use": "連到 P1 現時位置與 R32 肉身證據；不能用外部握手選填取代",
+      "from": "推理 R31",
+      "opens": "R32",
+      "part": 2
+    }
+  ],
+  "systemLinks": [
+    {
+      "from": "room:P0",
+      "to": "E0-01",
+      "kind": "found"
+    },
+    {
+      "from": "room:P2",
+      "to": "E0-02",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R5",
+      "to": "E1-05",
+      "kind": "found"
+    },
+    {
+      "from": "room:R2",
+      "to": "E1-01",
+      "kind": "found"
+    },
+    {
+      "from": "room:R3",
+      "to": "E1-02",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R4",
+      "to": "E1-03",
+      "kind": "found"
+    },
+    {
+      "from": "room:R4",
+      "to": "E1-04",
+      "kind": "found"
+    },
+    {
+      "from": "room:R2",
+      "to": "E1-06",
+      "kind": "found"
+    },
+    {
+      "from": "room:R2",
+      "to": "E1-07",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R7",
+      "to": "E1-15",
+      "kind": "found"
+    },
+    {
+      "from": "room:R8",
+      "to": "E2-01",
+      "kind": "found"
+    },
+    {
+      "from": "room:R10",
+      "to": "E2-09",
+      "kind": "found"
+    },
+    {
+      "from": "room:R8",
+      "to": "E2-02",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R15",
+      "to": "E2-06",
+      "kind": "found"
+    },
+    {
+      "from": "room:R16",
+      "to": "E2-04",
+      "kind": "found"
+    },
+    {
+      "from": "room:R16",
+      "to": "E2-05",
+      "kind": "found"
+    },
+    {
+      "from": "room:R16",
+      "to": "E2-14",
+      "kind": "found"
+    },
+    {
+      "from": "room:R17",
+      "to": "E3-03",
+      "kind": "found"
+    },
+    {
+      "from": "room:R17",
+      "to": "E3-06",
+      "kind": "found"
+    },
+    {
+      "from": "room:R17",
+      "to": "E3-07",
+      "kind": "found"
+    },
+    {
+      "from": "room:R14",
+      "to": "E2-08",
+      "kind": "found"
+    },
+    {
+      "from": "room:R1",
+      "to": "E1-12",
+      "kind": "found"
+    },
+    {
+      "from": "room:R21",
+      "to": "E3-01",
+      "kind": "found"
+    },
+    {
+      "from": "room:R21",
+      "to": "E3-02",
+      "kind": "found"
+    },
+    {
+      "from": "room:R23",
+      "to": "E4-01",
+      "kind": "found"
+    },
+    {
+      "from": "room:R24",
+      "to": "E4-02",
+      "kind": "found"
+    },
+    {
+      "from": "room:R24",
+      "to": "E4-07",
+      "kind": "found"
+    },
+    {
+      "from": "room:R2",
+      "to": "E4-00-A",
+      "kind": "found"
+    },
+    {
+      "from": "room:R11",
+      "to": "E4-00-B",
+      "kind": "found"
+    },
+    {
+      "from": "room:R15",
+      "to": "E4-00-C",
+      "kind": "found"
+    },
+    {
+      "from": "room:R22",
+      "to": "E4-00-D",
+      "kind": "found"
+    },
+    {
+      "from": "room:R25",
+      "to": "E4-04",
+      "kind": "found"
+    },
+    {
+      "from": "room:R25",
+      "to": "E4-05",
+      "kind": "found"
+    },
+    {
+      "from": "room:R26",
+      "to": "E4-03",
+      "kind": "found"
+    },
+    {
+      "from": "room:R27",
+      "to": "E5-01",
+      "kind": "found"
+    },
+    {
+      "from": "room:R29",
+      "to": "E5-02",
+      "kind": "found"
+    },
+    {
+      "from": "room:R30",
+      "to": "E5-06",
+      "kind": "found"
+    },
+    {
+      "from": "room:R31",
+      "to": "E5-03",
+      "kind": "found"
+    },
+    {
+      "from": "room:R31",
+      "to": "E5-04",
+      "kind": "found"
+    },
+    {
+      "from": "room:R31",
+      "to": "E5-08",
+      "kind": "found"
+    },
+    {
+      "from": "room:R31",
+      "to": "E5-05",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R32",
+      "to": "E6-01",
+      "kind": "found"
+    },
+    {
+      "from": "room:R32",
+      "to": "E6-02",
+      "kind": "found"
+    },
+    {
+      "from": "room:R32",
+      "to": "M6-01",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R32",
+      "to": "S6-01",
+      "kind": "found"
+    },
+    {
+      "from": "room:R32",
+      "to": "S6-02",
+      "kind": "found"
+    },
+    {
+      "from": "room:R32",
+      "to": "S6-03",
+      "kind": "found"
+    },
+    {
+      "from": "room:R3",
+      "to": "E1-13",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R7",
+      "to": "E1-14",
+      "kind": "found"
+    },
+    {
+      "from": "room:R13",
+      "to": "E2-07",
+      "kind": "found"
+    },
+    {
+      "from": "room:R10",
+      "to": "E2-11",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R28",
+      "to": "E5-07",
+      "kind": "found"
+    },
+    {
+      "from": "room:R14",
+      "to": "E2-12",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R12",
+      "to": "E2-13",
+      "kind": "found"
+    },
+    {
+      "from": "room:R4b",
+      "to": "E1-08",
+      "kind": "found"
+    },
+    {
+      "from": "room:R16",
+      "to": "E3-08",
+      "kind": "found"
+    },
+    {
+      "from": "room:R3",
+      "to": "E1-09",
+      "kind": "found"
+    },
+    {
+      "from": "room:R4b",
+      "to": "E1-10",
+      "kind": "found"
+    },
+    {
+      "from": "room:R16",
+      "to": "E2-10",
+      "kind": "found"
+    },
+    {
+      "from": "room:R24",
+      "to": "E4-06",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R11",
+      "to": "E2-03",
+      "kind": "found-freeze"
+    },
+    {
+      "from": "room:R17",
+      "to": "E3-04",
+      "kind": "found"
+    },
+    {
+      "from": "room:R17",
+      "to": "E3-05",
+      "kind": "found"
+    },
+    {
+      "from": "room:R4b",
+      "to": "E1-11",
+      "kind": "found"
+    },
+    {
+      "from": "room:R7",
+      "to": "E1-16",
+      "kind": "found"
+    },
+    {
+      "from": "room:R9",
+      "to": "E2-15",
+      "kind": "found"
+    },
+    {
+      "from": "room:P2",
+      "to": "signal:#2",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#2",
+      "to": "room:R1",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R1",
+      "to": "signal:#1",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#1",
+      "to": "room:R1",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R1",
+      "to": "signal:#3",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#3",
+      "to": "room:R1",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R4",
+      "to": "signal:#4",
+      "kind": "signal-found"
+    },
+    {
+      "from": "room:R4",
+      "to": "signal:#4′",
+      "kind": "signal-found"
+    },
+    {
+      "from": "room:R6",
+      "to": "signal:#5",
+      "kind": "signal-found"
+    },
+    {
+      "from": "room:R10",
+      "to": "signal:#5",
+      "kind": "signal-found"
+    },
+    {
+      "from": "room:R7",
+      "to": "signal:#6",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#6",
+      "to": "room:R7",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R7",
+      "to": "signal:#10",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#10",
+      "to": "room:R7",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R8",
+      "to": "signal:#7",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#7",
+      "to": "room:R11",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R8",
+      "to": "signal:#11",
+      "kind": "signal-found"
+    },
+    {
+      "from": "room:R7",
+      "to": "signal:#12",
+      "kind": "signal-found"
+    },
+    {
+      "from": "room:R8",
+      "to": "signal:#12",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#12",
+      "to": "room:R12",
+      "kind": "signal-use"
+    },
+    {
+      "from": "signal:#12",
+      "to": "room:R14",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R6",
+      "to": "signal:#13",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#13",
+      "to": "room:R12",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R12",
+      "to": "signal:#8",
+      "kind": "signal-found"
+    },
+    {
+      "from": "room:R15",
+      "to": "signal:#8",
+      "kind": "signal-found"
+    },
+    {
+      "from": "room:R14",
+      "to": "signal:#9",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#9",
+      "to": "room:R14",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R13",
+      "to": "signal:#14",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#14",
+      "to": "room:R13",
+      "kind": "signal-use"
+    },
+    {
+      "from": "room:R20",
+      "to": "signal:#15",
+      "kind": "signal-found"
+    },
+    {
+      "from": "signal:#15",
+      "to": "room:R26",
+      "kind": "signal-use"
+    },
+    {
+      "from": "signal:#15",
+      "to": "room:R32",
+      "kind": "signal-use"
+    },
+    {
+      "from": "E0-02",
+      "to": "key:K0-01",
+      "kind": "produces"
+    },
+    {
+      "from": "key:K0-01",
+      "to": "room:R1",
+      "kind": "unlocks"
+    },
+    {
+      "from": "room:R4",
+      "to": "key:F1",
+      "kind": "produces"
+    },
+    {
+      "from": "key:F1",
+      "to": "key:完整覆寫碼",
+      "kind": "produces"
+    },
+    {
+      "from": "board-r11",
+      "to": "key:K1-01",
+      "kind": "produces"
+    },
+    {
+      "from": "key:K1-01",
+      "to": "room:R12",
+      "kind": "unlocks"
+    },
+    {
+      "from": "board-r17",
+      "to": "key:K2-01",
+      "kind": "produces"
+    },
+    {
+      "from": "key:K2-01",
+      "to": "room:R18",
+      "kind": "unlocks"
+    },
+    {
+      "from": "board-r16",
+      "to": "key:管理端憑證",
+      "kind": "produces"
+    },
+    {
+      "from": "key:管理端憑證",
+      "to": "room:R17",
+      "kind": "unlocks"
+    },
+    {
+      "from": "key:管理端憑證",
+      "to": "room:R20",
+      "kind": "unlocks"
+    },
+    {
+      "from": "room:R19",
+      "to": "key:F2",
+      "kind": "produces"
+    },
+    {
+      "from": "key:F2",
+      "to": "key:完整覆寫碼",
+      "kind": "produces"
+    },
+    {
+      "from": "room:R19",
+      "to": "key:F3",
+      "kind": "produces"
+    },
+    {
+      "from": "room:R20",
+      "to": "key:F3",
+      "kind": "produces"
+    },
+    {
+      "from": "key:F3",
+      "to": "key:完整覆寫碼",
+      "kind": "produces"
+    },
+    {
+      "from": "room:R21",
+      "to": "key:F4",
+      "kind": "produces"
+    },
+    {
+      "from": "key:F4",
+      "to": "room:R22",
+      "kind": "unlocks"
+    },
+    {
+      "from": "key:F4",
+      "to": "key:完整覆寫碼",
+      "kind": "produces"
+    },
+    {
+      "from": "room:R25",
+      "to": "key:F5",
+      "kind": "produces"
+    },
+    {
+      "from": "key:F5",
+      "to": "key:完整覆寫碼",
+      "kind": "produces"
+    },
+    {
+      "from": "key:完整覆寫碼",
+      "to": "room:R25",
+      "kind": "unlocks"
+    },
+    {
+      "from": "key:完整覆寫碼",
+      "to": "room:R26",
+      "kind": "unlocks"
+    },
+    {
+      "from": "key:完整覆寫碼",
+      "to": "room:R31",
+      "kind": "unlocks"
+    },
+    {
+      "from": "E5-02",
+      "to": "key:R29 本地索引",
+      "kind": "produces"
+    },
+    {
+      "from": "key:R29 本地索引",
+      "to": "room:R31",
+      "kind": "unlocks"
+    },
+    {
+      "from": "board-r31",
+      "to": "key:R31 維修索引",
+      "kind": "produces"
+    },
+    {
+      "from": "key:R31 維修索引",
+      "to": "room:R32",
+      "kind": "unlocks"
+    }
   ]
 }
