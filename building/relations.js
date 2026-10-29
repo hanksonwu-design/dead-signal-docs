@@ -9,8 +9,8 @@ const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;
 const tableHref=anchor=>'../#'+new URLSearchParams({doc:'10_製作規格/10-12_製作規格_收集物與筆記本總表.md',heading:anchor});
 const GAP=8,HUB_RADIUS=20,EVIDENCE_RADIUS=29,RESULT_RADIUS=12,CHAIN_RADIUS=40,ACT_RING=46;
 const SOLID=new Set(['slot','reuse','result','opens']);
-const SUPPORT_KINDS=new Set(['support']);
-const CHAIN_KINDS=new Set(['chain','later','compare']);
+const SUPPORT_KINDS=new Set(['support','pair']);
+const CHAIN_KINDS=new Set(['chain','later','compare','prereq','alternative']);
 const CHAIN_COLORS=[0xc2a58c,0xa9bb8d,0xa3a9cc,0x9aa3a5];
 
 let data,nodes=new Map(),edges=[],selected='';
@@ -173,7 +173,7 @@ function linkList(title,list){
   return `<dt>${title}</dt><dd><ul class="links">${list.map(({id,text})=>`<li><button data-select="${esc(id)}">${esc(text)}</button></li>`).join('')}</ul></dd>`;
 }
 const nameOf=id=>{const n=nodes.get(id);if(!n) return id;return n.type==='group'?groupTitle(n.item):`${id} ${n.item.label}`;};
-const KIND_TEXT={slot:'放入格位',support:'前置／旁證',reuse:'跨組沿用',result:'成立後取得',opens:'開通',chain:'延伸線',later:'之後歸屬',compare:'對照'};
+const KIND_TEXT={slot:'放入格位',support:'前置／旁證',reuse:'跨組沿用',result:'成立後取得',opens:'開通',chain:'延伸線',later:'之後歸屬',compare:'對照',prereq:'須先讀',alternative:'擇一觸發',pair:'前片配對',confirms:'補證'};
 
 function showDetail(id){
   const box=$('detail');

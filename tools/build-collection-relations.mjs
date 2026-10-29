@@ -85,9 +85,11 @@ export function buildCollectionRelations(markdown, graph) {
 
   const links = [];
   const link = (from, to, kind, code = '') => links.push({ from, to, kind, code });
+  const EVIDENCE_ID = '(E\\d-\\d\\d(?:-[A-D])?)';
+  const known = other => { assert(byId.has(other), `Unknown evidence in relation: ${other}`); return other; };
   for (const item of evidence) {
     const owner = byGroup.get(item.group);
-    if (owner.kind === 'board') {
+    if (owner.kind === 'board' && item.code !== '—') {
       if (item.code === '成果') link(owner.id, item.id, 'result');
       else link(item.id, owner.id, SUPPORT.has(item.code) ? 'support' : 'slot', item.code);
     }
@@ -95,8 +97,17 @@ export function buildCollectionRelations(markdown, graph) {
       const reuse = segment.match(/(?:之後|補全後)為\s*(.+?)\s*([A-E])$/);
       if (reuse) link(item.id, findGroup(reuse[1]).id, 'reuse', reuse[2]);
       if (/R31 實核/.test(segment)) link(item.id, findGroup('R31').id, 'later');
-      for (const [, other] of segment.matchAll(/(E\d-\d\d)/g)) {
-        if (/對照/.test(segment) && other !== item.id) { assert(byId.has(other), `Unknown comparison: ${other}`); link(item.id, other, 'compare'); }
+      // Script-stated relations between two evidence items, written into the 格位／關聯 cell.
+      const prereq = segment.match(new RegExp(`須先(?:讀|解讀)\\s*${EVIDENCE_ID}`));
+      if (prereq) link(known(prereq[1]), item.id, 'prereq');
+      const alternative = segment.match(new RegExp(`與\\s*${EVIDENCE_ID}\\s*擇一`));
+      if (alternative) link(item.id, known(alternative[1]), 'alternative');
+      const pair = segment.match(new RegExp(`與\\s*${EVIDENCE_ID}\\s*(?:核對|時序對齊)`));
+      if (pair) link(known(pair[1]), item.id, 'pair');
+      const confirms = segment.match(new RegExp(`補證\\s*${EVIDENCE_ID}`));
+      if (confirms) link(item.id, known(confirms[1]), 'confirms');
+      if (/對照|比對/.test(segment)) {
+        for (const [, other] of segment.matchAll(new RegExp(EVIDENCE_ID, 'g'))) if (other !== item.id) link(item.id, known(other), 'compare');
       }
     }
   }
@@ -105,7 +116,11 @@ export function buildCollectionRelations(markdown, graph) {
     if (opens) link(owner.id, findGroup(opens[1]).id, 'opens');
     if (owner.kind !== 'chain') continue;
     const members = evidence.filter(item => item.group === owner.id).map(item => ({ id: item.id, code: item.code }));
-    for (const [, letter, id] of owner.note.matchAll(/([A-E])（(E\d-\d\d)）列於/g)) members.push({ id, code: letter });
+    for (const [, letter, id] of owner.note.matchAll(/([A-E])（(E\d-\d\d)）列於/g)) {
+      members.push({ id, code: letter });
+      // A chain may borrow a member listed under a board group; record that second role on the item.
+      (byId.get(id).chains ??= []).push({ group: owner.id, code: letter });
+    }
     const lanes = new Map();
     for (const member of members) {
       const [prefix, letter] = member.code.includes('・') ? member.code.split('・') : ['', member.code];
@@ -116,11 +131,6 @@ export function buildCollectionRelations(markdown, graph) {
     for (const lane of lanes.values()) {
       lane.sort((a, b) => a.letter.localeCompare(b.letter));
       for (let i = 1; i < lane.length; i++) link(lane[i - 1].id, lane[i].id, 'chain', lane[i].letter);
-      // A chain may borrow a member listed under a board group; record that second role on the item.
-      for (const member of lane) {
-        const item = byId.get(member.id);
-        if (item.group !== owner.id) (item.chains ??= []).push({ group: owner.id, code: member.letter });
-      }
     }
   }
   for (const { from, to } of links) assert((byId.has(from) || byGroup.has(from)) && (byId.has(to) || byGroup.has(to)), `Dangling link ${from} → ${to}`);
