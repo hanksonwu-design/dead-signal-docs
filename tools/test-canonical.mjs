@@ -742,7 +742,7 @@ test('website separates reading and production categories and preserves old act 
   }
   assert.deepEqual(screenplays.map(doc => doc.path).sort(), [...READING_FILES].sort());
   const specs = documents.filter(doc => doc.folder === '10_製作規格' && !doc.archived);
-  assert.deepEqual(specs.map(doc => doc.path).sort(), [...ACTS.map(act => act.specPath), ILLUSTRATION_CATALOG, '10_製作規格/10-12_製作規格_收集物與筆記本總表.md', '10_製作規格/10-13_製作規格_解謎與操作遊戲列表.md', '10_製作規格/10-14_製作規格_UI美術設計圖集.md'].sort());
+  assert.deepEqual(specs.map(doc => doc.path).sort(), [...ACTS.map(act => act.specPath), ILLUSTRATION_CATALOG, '10_製作規格/10-12_製作規格_收集物與筆記本總表.md', '10_製作規格/10-13_製作規格_解謎與操作遊戲列表.md', '10_製作規格/10-14_製作規格_UI美術設計圖集.md', '10_製作規格/10-15_製作規格_連接靜態圖場景列表.md'].sort());
   assert.equal(specs[0].path, ILLUSTRATION_CATALOG);
   for (const spec of specs) {
     assert(spec.title.startsWith('製作規格'), spec.path);

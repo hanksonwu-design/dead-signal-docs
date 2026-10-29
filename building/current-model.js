@@ -16,6 +16,7 @@ import {showContentMarkers,markerPosition,markerInContext,markerOnFloor,shotPosi
 import {searchScenes,sceneMatches,floorSceneSelection,sceneArtwork,connectedRoutes} from './scene-workspace.js';
 import {createFlowPanel} from './flow-panel.js';
 import {SCALE,stairFlight,addScaleReference,referenceSpot} from './human-scale.js';
+import {initRelationsView} from './relations-link.js';
 
 const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -28,6 +29,8 @@ const host=$('canvas-host'),colors=[0x719eae,0x8bab8e,0x6fae9c,0x93a8bd,0xbd969c
 let renderer,camera,controls,scene,root,resizeObserver;
 let roomObjects=[],routeObjects=[],shotObjects=[],labels=[],floorLabels=[],visiblePoints=[];
 let namesAtScale=false;
+// Rooms traced from the collection relations view; outlined in green until cleared.
+let chainRooms=new Set(),relationsView=null;
 let flowPanel,webglReady=false;
 let scaleReference;
 const filters=()=>({part:$('part').value,act:$('act').value,query:$('search').value,floor});
@@ -172,7 +175,7 @@ function build(){
  for(const n of model.nodes.filter(n=>n.spatial)){
   const g=new THREE.Group();root.add(g);g.userData.node=n.id;
   if(n.id==='M1')pathMesh(n.points,0xdbb575,g);
-  else {const base=box(n.w,SCALE.slab,n.d,n.x,n.y+SCALE.floorSurface-SCALE.slab/2,n.z,material(colors[n.act]||0x94b4a3,.65),g);walls(n,g);dressCurrentRoom(n,g,{THREE,box,material,line,segment,y:n.y+SCALE.floorSurface});const outline=new THREE.BoxHelper(base,0xf0c878);g.add(outline);g.userData.outline=outline;}
+  else {const base=box(n.w,SCALE.slab,n.d,n.x,n.y+SCALE.floorSurface-SCALE.slab/2,n.z,material(colors[n.act]||0x94b4a3,.65),g);walls(n,g);dressCurrentRoom(n,g,{THREE,box,material,line,segment,y:n.y+SCALE.floorSurface});const outline=new THREE.BoxHelper(base,0xf0c878);g.add(outline);g.userData.outline=outline;const chain=new THREE.BoxHelper(base,0x6fe3ff);chain.material.depthTest=false;chain.renderOrder=2;chain.visible=false;g.add(chain);g.userData.chain=chain;}
   if(n.id==='R19'&&glass)box(glass.x2-glass.x1,2,.08,(glass.x1+glass.x2)/2,n.y+SCALE.floorSurface+1.25,glass.z,material(0x82ccc7,.3),g);
   if(n.id!=='M1'){
    const fixtures=g.children.filter(o=>o.userData.fixture&&o.userData.fixture!=='door-header'&&o.userData.fixture!=='pipe');
@@ -226,7 +229,7 @@ function roomVisible(n){
 }
 function applyVisibility(){
  visiblePoints=[];
- for(const o of roomObjects){const {n,g}=o;if(o.sliced){root.remove(o.sliced);dispose(o.sliced);o.sliced=null;}g.visible=roomVisible(n);if(g.userData.outline)g.userData.outline.visible=n.id===selected&&!shotId;if(g.visible){if(n.id==='M1'){
+ for(const o of roomObjects){const {n,g}=o;if(o.sliced){root.remove(o.sliced);dispose(o.sliced);o.sliced=null;}g.visible=roomVisible(n);if(g.userData.outline)g.userData.outline.visible=n.id===selected&&!shotId;if(g.userData.chain)g.userData.chain.visible=chainRooms.has(n.id);if(g.visible){if(n.id==='M1'){
    if(floor===null)visiblePoints.push(...n.points);
    else {g.visible=false;o.sliced=new THREE.Group();root.add(o.sliced);for(const p of clipRouteToHeight(n.points,model.floorY.get(floor)-.01,model.floorY.get(floor)+SCALE.floorHeight-.05)){pathMesh(p,0xdbb575,o.sliced);visiblePoints.push(...p);}o.sliced.traverse(obj=>{obj.userData.node='M1';});}
   }else visiblePoints.push([n.x-n.w/2,n.y-2,n.z-n.d/2],[n.x+n.w/2,n.y+3,n.z+n.d/2]);}}
@@ -319,9 +322,10 @@ function renderDetails(){
  $('image-count').textContent=`(${artwork.length})`;
  $('images').innerHTML=artwork.map(i=>`<li data-image="${i.id}">${link(i.id,i.spec,i.heading)} <small>${esc(i.kind)}${i.status==='pending'?' · 待製作':''}</small><p>${esc(i.content)}</p><p>${esc(i.requirements)}</p></li>`).join('');
  $('reference').hidden=!n.reference;if(n.reference){$('reference-image').src='../'+n.reference.url;$('reference-caption').textContent=n.reference.kind;}
+ relationsView?.renderSummary(n.id);
  renderMarkers();renderFlow();
 }
-function saveHash(){history.replaceState(null,'','#'+new URLSearchParams({scene:selected,...(routeId?{route:routeId}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{}),...(markerId?{marker:markerId}:{})}));window.dispatchEvent(new Event('archive:scene-change'));}
+function saveHash(){const view=new URLSearchParams(location.hash.slice(1)),keep=Object.fromEntries(['panel','mode'].filter(k=>view.has(k)).map(k=>[k,view.get(k)]));history.replaceState(null,'','#'+new URLSearchParams({...keep,scene:selected,...(routeId?{route:routeId}:{}),...(shotId?{shot:shotId}:{}),...(reverse?{direction:'return'}:{}),...(markerId?{marker:markerId}:{})}));window.dispatchEvent(new Event('archive:scene-change'));}
 function choose(id,preferred=null,shot='',refit=true,keepDirection=false){
  if(!node(id))return;selected=id;markerId='';
  if(!sceneMatches(node(id),{part:$('part').value}))$('part').value='all';
@@ -423,6 +427,8 @@ try {
  $('act').insertAdjacentHTML('beforeend',graph.acts.map((a,i)=>`<option value="${i}">${esc(a)}</option>`).join(''));
  $('floor').insertAdjacentHTML('beforeend',FLOORS.map(f=>`<option value="${f}">${floorName(f)}</option>`).join(''));
  initMarkers();
+ relationsView=initRelationsView({selected:()=>selected,isScene:id=>!!node(id),choose:id=>choose(id),
+  setChain:rooms=>{chainRooms=new Set(rooms);if(rooms.length){/* A chain spans several acts, so show both towers unfiltered. */scope='all';$('scope').value=scope;floor=null;$('floor').value='all';if(rooms.some(id=>!sceneMatches(node(id),{part:$('part').value})))$('part').value='all';renderList();}applyVisibility();},refit:()=>{if(webglReady)fit();}});
  flowPanel=createFlowPanel(graph,flow,(id,preferred,shot)=>{const current=route(),next=preferred||(current&&[current.from,current.to].includes(id)?current.id:null);scope='route';$('scope').value=scope;choose(id,next,shot,true,next===routeId);flowPanel.locate();});
  readHash();bind();
 } catch(error){$('loading')?.remove();$('error').hidden=false;$('error').textContent=`場景資料無法載入：${error.message}`;throw error;}

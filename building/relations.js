@@ -7,7 +7,9 @@ import {CSS2DRenderer,CSS2DObject} from 'three/addons/renderers/CSS2DRenderer.js
 const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const tableHref=anchor=>'../#'+new URLSearchParams({doc:'10_製作規格/10-12_製作規格_收集物與筆記本總表.md',heading:anchor});
-const SYSTEMS_VIEW=new URLSearchParams(location.search).get('mode')==='systems';
+// The graph lives inside 場景與流程 (index.html#panel=relations); opened directly it forwards there.
+const PARAMS=new URLSearchParams(location.search),EMBED=PARAMS.get('embed')==='1';
+const SYSTEMS_VIEW=PARAMS.get('mode')==='systems';
 // The lane view spreads acts further apart so four columns do not read as one flat band.
 const GAP=SYSTEMS_VIEW?13:8,HUB_RADIUS=20,EVIDENCE_RADIUS=29,RESULT_RADIUS=12,CHAIN_RADIUS=40,ACT_RING=46;
 const SOLID=new Set(['slot','reuse','result','opens']);
@@ -312,7 +314,26 @@ const KIND_TEXT={found:'在此取得','found-freeze':'在此凝固中取得','si
   slot:'放入格位',support:'前置／旁證',reuse:'跨組沿用',result:'成立後取得',opens:'開通',chain:'延伸線',later:'之後歸屬',compare:'對照',prereq:'須先讀',alternative:'擇一觸發',pair:'前片配對',confirms:'補證',decoy:'誘答，原文不支持此格',payoff:'選填回頭比對'};
 const choiceList=c=>c?`<dt>結論選擇</dt><dd><ul class="links"><li>✓ ${esc(c.answer)}</li>${c.decoys.map(d=>`<li>✗ ${esc(d)}</li>`).join('')}</ul></dd>`:'';
 
+const roomOf=id=>{
+  const n=nodes.get(id);if(!n) return '';
+  if(n.item.room) return n.item.room;
+  const l=(data.systemLinks||[]).find(l=>(l.to===id&&l.from.startsWith('room:'))||(l.from===id&&l.to.startsWith('room:')));
+  return l?(l.from.startsWith('room:')?l.from:l.to).slice(5):'';
+};
+// Every scene room touched by the traced chain, for outlining in the scene model.
+function chainRoomList(){
+  const lit=new Set([...neighbours(selected,'up'),...neighbours(selected,'down')]),rooms=new Set();
+  // Only rooms the trace actually reached: in the lane view rooms are nodes themselves.
+  for(const id of lit){const n=nodes.get(id);if(n?.item.room) rooms.add(n.item.room);}
+  return [...rooms];
+}
+
 function showDetail(id){
+  renderDetail(id);
+  if(id&&EMBED) $('detail').insertAdjacentHTML('beforeend','<p><button id="show-in-model" type="button">在大樓上查看這條鏈</button></p>');
+}
+
+function renderDetail(id){
   const box=$('detail');
   if(!id){box.innerHTML='<p class="hint">在圖上或左側清單選一個推理組或證據，這裡會列出它的格位、循環路徑與因果連線。拖曳旋轉、右鍵平移、滾輪縮放。</p>';return;}
   const node=nodes.get(id);
@@ -426,6 +447,13 @@ function start(){
 }
 
 async function main(){
+  if(!EMBED){
+    location.replace(`./#${new URLSearchParams({panel:'relations',...(SYSTEMS_VIEW?{mode:'systems'}:{})})}`);
+    return;
+  }
+  document.querySelector('body>header').hidden=true;
+  for(const link of document.querySelectorAll('[data-mode]')) link.href=`relations.html?embed=1${link.dataset.mode==='systems'?'&mode=systems':''}`;
+  parent.postMessage({type:'relations:mode',mode:MODE},location.origin);
   try{
     const response=await fetch('../collection-relations.json',{cache:'no-cache'});
     if(!response.ok) throw new Error(`讀取關聯資料失敗（${response.status}）`);
@@ -445,10 +473,15 @@ async function main(){
   }
   $('loading').hidden=true;
   for(const id of ['show-support','show-decoys','show-chains','show-codes','show-ids','show-acts','show-parts','show-found','show-signals']) $(id).addEventListener('change',()=>{if(selected&&!visibleNode(selected)) select('');else refresh();});
-  $('detail').addEventListener('click',event=>{const button=event.target.closest('[data-select]');if(button) select(button.dataset.select);});
+  $('detail').addEventListener('click',event=>{
+    if(event.target.closest('#show-in-model')){parent.postMessage({type:'relations:show-rooms',rooms:chainRoomList(),focus:roomOf(selected)},location.origin);return;}
+    const button=event.target.closest('[data-select]');if(button) select(button.dataset.select);
+  });
   $('view-iso').onclick=()=>setView('iso');$('view-front').onclick=()=>setView('front');$('view-top').onclick=()=>setView('top');
   $('clear').onclick=()=>select('');
   addEventListener('keydown',event=>{if(event.key==='Escape') select('');});
   if(scene) refresh();
+  const requested=PARAMS.get('select');
+  if(requested&&nodes.has(requested)) select(requested);
 }
 main();
