@@ -10,6 +10,7 @@ const tableHref=anchor=>'../#'+new URLSearchParams({doc:'10_製作規格/10-12_�
 const GAP=8,HUB_RADIUS=20,EVIDENCE_RADIUS=29,RESULT_RADIUS=12,CHAIN_RADIUS=40,ACT_RING=46;
 const SOLID=new Set(['slot','reuse','result','opens']);
 const SUPPORT_KINDS=new Set(['support','pair']);
+const DECOY_COLOR=new THREE.Color(0xd9774f);
 const CHAIN_KINDS=new Set(['chain','later','compare','prereq','alternative']);
 const CHAIN_COLORS=[0xc2a58c,0xa9bb8d,0xa3a9cc,0x9aa3a5];
 
@@ -111,7 +112,7 @@ function buildScene(){
     const from=nodes.get(link.from),to=nodes.get(link.to);
     if(!from||!to) continue;
     const owner=to.type==='group'?to:from;
-    const color=link.kind==='result'?new THREE.Color(0xe8eeec):owner.color;
+    const color=link.kind==='result'?new THREE.Color(0xe8eeec):link.kind==='decoy'?DECOY_COLOR:owner.color;
     const start=from.position,end=to.position;
     const mid=start.clone().lerp(end,.5);mid.y+=Math.max(1.5,start.distanceTo(end)*.12);
     const curve=new THREE.QuadraticBezierCurve3(start.clone(),mid,end.clone());
@@ -133,7 +134,7 @@ function buildScene(){
     let codeLabel=null;
     if(link.code){
       const holder=new THREE.Object3D();holder.position.copy(curve.getPointAt(.62));group.add(holder);
-      codeLabel=addLabel(holder,link.code,'edge-label',0);
+      codeLabel=addLabel(holder,link.kind==='decoy'?`誘答 ${link.code}`:link.code,'edge-label',0);
       codeLabel.element.style.background=`#${color.getHexString()}`;
     }
     let partLabel=null;
@@ -151,6 +152,7 @@ function neighbours(start,direction){
   while(queue.length){
     const id=queue.shift();
     for(const {link} of edges){
+      if(link.kind==='decoy') continue;
       const [a,b]=direction==='down'?[link.from,link.to]:[link.to,link.from];
       if(a===id&&!seen.has(b)&&visibleNode(b)){seen.add(b);queue.push(b);}
     }
@@ -161,6 +163,7 @@ function neighbours(start,direction){
 const isChainNode=id=>{const n=nodes.get(id);return n?.type==='evidence'&&groupOf(n.item.group)?.kind==='chain';};
 const visibleNode=id=>$('show-chains').checked||!isChainNode(id);
 function visibleEdge({link}){
+  if(link.kind==='decoy'&&!$('show-decoys').checked) return false;
   if(SUPPORT_KINDS.has(link.kind)&&!$('show-support').checked) return false;
   if(CHAIN_KINDS.has(link.kind)&&!$('show-chains').checked) return false;
   return visibleNode(link.from)&&visibleNode(link.to);
@@ -168,6 +171,8 @@ function visibleEdge({link}){
 
 function refresh(){
   const lit=selected?new Set([...neighbours(selected,'up'),...neighbours(selected,'down')]):null;
+  // Decoys are not causes; show only those touching the selection, one step away.
+  if(lit&&$('show-decoys').checked) for(const {link} of edges) if(link.kind==='decoy'&&(link.from===selected||link.to===selected)){lit.add(link.from);lit.add(link.to);}
   for(const [id,node] of nodes){
     const shown=visibleNode(id),on=!lit||lit.has(id);
     node.mesh.visible=shown;
@@ -180,7 +185,8 @@ function refresh(){
     if(node.type==='group') node.label.element.textContent=lit&&lit.has(id)?`${node.item.room}｜${node.item.title}`:`${node.item.order}｜${node.item.room}`;
   }
   for(const edge of edges){
-    const shown=visibleEdge(edge),on=!lit||(lit.has(edge.link.from)&&lit.has(edge.link.to));
+    const touches=edge.link.from===selected||edge.link.to===selected;
+    const shown=visibleEdge(edge),on=!lit||(lit.has(edge.link.from)&&lit.has(edge.link.to)&&(edge.link.kind!=='decoy'||touches));
     edge.group.visible=shown;
     edge.materials.forEach(m=>m.opacity=on?.85:.06);
     if(edge.codeLabel){edge.codeLabel.visible=shown&&$('show-codes').checked;edge.codeLabel.element.classList.toggle('dim',!on);}
@@ -196,7 +202,8 @@ function linkList(title,list){
   return `<dt>${title}</dt><dd><ul class="links">${list.map(({id,text})=>`<li><button data-select="${esc(id)}">${esc(text)}</button></li>`).join('')}</ul></dd>`;
 }
 const nameOf=id=>{const n=nodes.get(id);if(!n) return id;return n.type==='group'?groupTitle(n.item):`${id} ${n.item.label}`;};
-const KIND_TEXT={slot:'放入格位',support:'前置／旁證',reuse:'跨組沿用',result:'成立後取得',opens:'開通',chain:'延伸線',later:'之後歸屬',compare:'對照',prereq:'須先讀',alternative:'擇一觸發',pair:'前片配對',confirms:'補證'};
+const KIND_TEXT={slot:'放入格位',support:'前置／旁證',reuse:'跨組沿用',result:'成立後取得',opens:'開通',chain:'延伸線',later:'之後歸屬',compare:'對照',prereq:'須先讀',alternative:'擇一觸發',pair:'前片配對',confirms:'補證',decoy:'誘答，原文不支持此格'};
+const choiceList=c=>c?`<dt>結論選擇</dt><dd><ul class="links"><li>✓ ${esc(c.answer)}</li>${c.decoys.map(d=>`<li>✗ ${esc(d)}</li>`).join('')}</ul></dd>`:'';
 
 function showDetail(id){
   const box=$('detail');
@@ -207,9 +214,9 @@ function showDetail(id){
   if(node.type==='group'){
     const g=node.item;
     box.innerHTML=`<div class="eyebrow">${esc(actName(g.act))} · ${esc(g.room)}</div><h3>${esc(groupTitle(g))}</h3><dl>
-<dt>部別</dt><dd>${esc(g.release)}</dd><dt>板面</dt><dd>${esc(g.board)}</dd><dt>放入來源</dt><dd>${esc(g.sources)}</dd><dt>成立後</dt><dd>${esc(g.outcome)}</dd>
+<dt>部別</dt><dd>${esc(g.release)}</dd><dt>板面</dt><dd>${esc(g.board)}</dd><dt>放入來源</dt><dd>${esc(g.sources)}</dd><dt>成立後</dt><dd>${esc(g.outcome)}</dd>${choiceList(g.conclusion)}
 ${linkList('來自',incoming)}${linkList('通往',outgoing)}</dl>
-<p>${esc(g.note)}</p><p><a href="${esc(tableHref(g.anchor))}" target="_blank" rel="noopener noreferrer">在收集物總表查看 ↗</a></p>`;
+<p>${esc(g.note.replace(/\[([^\]]+)\]\([^)]+\)/g,'$1'))}</p><p><a href="${esc(tableHref(g.anchor))}" target="_blank" rel="noopener noreferrer">在收集物總表查看 ↗</a></p>`;
   }else{
     const e=node.item,g=groupOf(e.group);
     box.innerHTML=`<div class="eyebrow">${esc(actName(e.act))} · ${esc(e.room)}</div><h3>${esc(e.id)} ${esc(e.label)}<span class="badge${e.required?' required':''}">${e.required?'必要':'選填'}</span></h3><dl>
@@ -306,7 +313,7 @@ async function main(){
     Object.assign($('error'),{hidden:false,textContent:'3D 無法顯示，仍可從左側清單查看各組關聯。'});
   }
   $('loading').hidden=true;
-  for(const id of ['show-support','show-chains','show-codes','show-ids','show-acts','show-parts']) $(id).addEventListener('change',()=>{if(selected&&!visibleNode(selected)) select('');else refresh();});
+  for(const id of ['show-support','show-decoys','show-chains','show-codes','show-ids','show-acts','show-parts']) $(id).addEventListener('change',()=>{if(selected&&!visibleNode(selected)) select('');else refresh();});
   $('detail').addEventListener('click',event=>{const button=event.target.closest('[data-select]');if(button) select(button.dataset.select);});
   $('view-iso').onclick=()=>setView('iso');$('view-front').onclick=()=>setView('front');$('view-top').onclick=()=>setView('top');
   $('clear').onclick=()=>select('');

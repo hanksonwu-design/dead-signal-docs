@@ -112,12 +112,15 @@ export function buildCollectionRelations(markdown, graph) {
       if (pair) link(known(pair[1]), item.id, 'pair');
       const confirms = segment.match(new RegExp(`補證\\s*${EVIDENCE_ID}`));
       if (confirms) link(item.id, known(confirms[1]), 'confirms');
+      for (const [, room, letter] of segment.matchAll(/(R\d+) ([A-E]) 格誘答/g)) link(item.id, findGroup(room).id, 'decoy', letter);
       if (/對照|比對/.test(segment)) {
         for (const [, other] of segment.matchAll(new RegExp(EVIDENCE_ID, 'g'))) if (other !== item.id) link(item.id, known(other), 'compare');
       }
     }
   }
   for (const owner of groups) {
+    const choice = owner.note.match(/結論選擇（提交前三選一）：正解「(.+?)」；誘答「(.+?)」「(.+?)」。/);
+    if (choice) owner.conclusion = { answer: choice[1], decoys: [choice[2], choice[3]] };
     const opens = owner.outcome.match(/開通 (R\d+)/);
     if (opens) link(owner.id, findGroup(opens[1]).id, 'opens');
     if (owner.kind !== 'chain') continue;
@@ -144,6 +147,11 @@ export function buildCollectionRelations(markdown, graph) {
   // The parts ship separately: a relation may cross from 上部 into 下部 only when the prequel
   // snapshot carries the required source, or when an optional source is marked as a cross-part teaser.
   const partOfNode = id => byId.get(id)?.part ?? byGroup.get(id)?.part;
+  // Decoys come from what the player already holds in that part, and the final one-slot board stays pure.
+  for (const decoy of links.filter(l => l.kind === 'decoy')) {
+    assert.equal(partOfNode(decoy.from), partOfNode(decoy.to), `Decoy crosses the release split: ${decoy.from} → ${decoy.to}`);
+    assert.notEqual(decoy.to, findGroup('R31').id, 'R31 keeps a single slot without decoys');
+  }
   for (const relation of links) {
     const [from, to] = [partOfNode(relation.from), partOfNode(relation.to)];
     if (!from || !to || from === to) continue;
@@ -165,6 +173,13 @@ export function buildCollectionRelations(markdown, graph) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const graph = JSON.parse(readFileSync(path.join(ROOT, 'scene_graph.json'), 'utf8'));
   const data = buildCollectionRelations(readFileSync(path.join(ROOT, 'docs', TABLE), 'utf8'), graph);
+  // Each listed conclusion must match the choice line authored in that room's screenplay.
+  for (const group of data.groups.filter(g => g.conclusion)) {
+    const script = readFileSync(path.join(ROOT, 'docs', graph.nodes.find(n => n.id === group.room).source), 'utf8');
+    const line = script.split(/\r?\n/).find(l => l.includes('（結論選擇）') && l.includes(`「${group.conclusion.answer}」`));
+    assert(line, `${group.room}: screenplay has no conclusion choice for 「${group.conclusion.answer}」`);
+    for (const decoy of group.conclusion.decoys) assert(line.includes(`「${decoy}」`), `${group.room}: screenplay choice lacks 「${decoy}」`);
+  }
   const json = `${JSON.stringify(data, null, 2)}\n`;
   const summary = `${data.groups.length} groups, ${data.evidence.length} evidence items, ${data.links.length} links`;
   if (process.argv.includes('--check')) {
