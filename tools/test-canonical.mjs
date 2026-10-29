@@ -146,7 +146,8 @@ test('every static screenplay cue names its shot size without changing protected
   // The upper ending adds the photo frame before its title card; the lower entry adds
   // the cold-open fragment and photo frames.
   // Acts 1, 3 and 7 each add one optional still memory of Xiao Hua (R3, R13, 47-01).
-  const counts = [23, 62, 85, 100, 47, 33, 18, 26, 10, 20];
+  // Act 3 adds close-ups of the two official fields the optional R17 proofs contradict.
+  const counts = [23, 62, 85, 102, 47, 33, 18, 26, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -192,8 +193,8 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Each board with a pre-submission conclusion choice adds one interface action:
   // R5, R16, R21, R24/R25/R26, R30 and the R32 lock check.
   // R21 and R30 each add one optional look-back comparison.
-  // R14 (E-06) and R28 (E-05) each add one optional original-field proof.
-  const counts = [[21, 18, 8], [76, 30, 19], [107, 35, 11], [146, 25, 10],
+  // R14 (E-06) and R28 (E-05) each add one optional original-field proof; R17 adds two (E-02, E-09).
+  const counts = [[21, 18, 8], [76, 30, 19], [107, 35, 11], [148, 25, 10],
     [61, 18, 13], [62, 15, 13], [32, 4, 2], [60, 8, 5], [31, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
