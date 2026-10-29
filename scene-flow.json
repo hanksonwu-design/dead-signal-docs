@@ -11029,7 +11029,7 @@
       "node": "R14",
       "kind": "近看",
       "content": "內壁刮痕與識別牌碎片",
-      "requirements": "兩個可比焦點；凝固層單獨輸出，人物靜止。",
+      "requirements": "兩個可比焦點；凝固層單獨輸出，人物靜止。 已讀 E2-15 並排過破損標籤時，可選填原欄舉證：選「設備」分類欄、引同一編號，預覽後另存註記，保存 `scene_detail.r14.proof_device_label`；不改變 E-06 處置。",
       "status": "pending",
       "spec": "10_製作規格/10-04_製作規格_第三幕.md",
       "heading": "node-r14-images"
@@ -13039,7 +13039,7 @@
       "node": "R28",
       "kind": "文件",
       "content": "醫療評估、目的地缺失移交單與外聯來源",
-      "requirements": "各頁原件、同意欄與拒絕註記分開；不補死因或目的地。",
+      "requirements": "各頁原件、同意欄與拒絕註記分開；不補死因或目的地。 可選填原欄舉證：選「轉特殊買方」欄，引移交單目的地與同意欄，持有 E2-11 時再引轉錄，預覽後另存註記，保存 `scene_detail.r28.proof_buyer_transfer`；不補死因。",
       "status": "pending",
       "spec": "10_製作規格/10-09_製作規格_第七幕.md",
       "heading": "node-r28-images"
