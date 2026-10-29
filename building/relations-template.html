@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111210">
+<title>灰燈寨 · 收集物關聯圖</title>
+<style>
+:root{color-scheme:dark;font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;color:#dfe6e5;background:#101619;font-size:14px}
+*{box-sizing:border-box;letter-spacing:0}body{margin:0;height:100vh;display:flex;flex-direction:column}
+button,input,a{font:inherit}button{border:1px solid #455355;background:#202c2f;color:inherit;border-radius:4px;min-height:34px;padding:5px 10px;cursor:pointer}
+button:hover,button:focus-visible{border-color:#8ccab1;outline:none}a{color:#9fd3c0}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-bottom:1px solid #354246;background:#111a1d}
+.brand{display:flex;align-items:center;gap:12px}.mark{display:grid;place-items:center;width:34px;height:34px;border:1px solid #6f8582;color:#cfd8d6;font-weight:700}
+h1{margin:0;font-size:20px;font-weight:600}header small{color:#9aaaa8}header nav{display:flex;gap:16px;flex-wrap:wrap}
+.layout{flex:1 1 0;display:grid;grid-template-columns:270px minmax(0,1fr) 340px;grid-template-rows:minmax(0,1fr);min-height:0}
+.left,.right{overflow:auto;padding:14px 16px;min-height:0}.left{border-right:1px solid #354246}.right{border-left:1px solid #354246}
+.center{position:relative;min-width:0;min-height:420px}#canvas-host{position:absolute;inset:0}
+.toolbar{position:absolute;right:12px;top:12px;display:flex;gap:6px;z-index:3}
+#loading,#error{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:12px 16px;background:#162125;border:1px solid #354246;border-radius:4px;z-index:4}
+#error{color:#f0b9a8}
+#tooltip{position:absolute;pointer-events:none;z-index:5;max-width:260px;padding:6px 9px;background:#0d1416ee;border:1px solid #4b5d5f;border-radius:4px;font-size:12px;line-height:1.5}
+h2{font-size:15px;margin:16px 0 8px;font-weight:600}h2:first-child{margin-top:0}
+.legend{display:grid;gap:6px;font-size:12px;color:#c6d0ce}.legend span{display:flex;align-items:center;gap:8px}
+.swatch{display:inline-block;width:14px;height:14px;flex:none;border-radius:50%}.swatch.hub{border-radius:2px;transform:rotate(45deg) scale(.8)}
+.swatch.ring{background:none;border:2px solid #e2c77d}.swatch.line{height:2px;border-radius:0;width:18px}.swatch.dash{height:0;border-top:2px dashed #9aa3a5;border-radius:0;width:18px;background:none}
+.toggles{display:grid;gap:6px;font-size:13px}.toggles label{display:flex;gap:8px;align-items:center;cursor:pointer}.toggles input{accent-color:#8ccab1;width:15px;height:15px}
+#groups{display:grid;gap:4px;margin:0;padding:0;list-style:none}#groups button{width:100%;display:flex;gap:8px;align-items:center;text-align:left;min-height:32px;font-size:13px}
+#groups button[aria-pressed="true"]{border-color:#e2c77d;background:#2a3532}
+.detail{font-size:13px;line-height:1.65}.detail .eyebrow{color:#9aaaa8;font-size:12px}.detail h3{margin:2px 0 10px;font-size:17px;font-weight:600}
+.detail dl{display:grid;grid-template-columns:72px minmax(0,1fr);gap:6px 10px;margin:0}.detail dt{color:#9aaaa8}.detail dd{margin:0;overflow-wrap:anywhere}
+.badge{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;border:1px solid #6b7a78;margin-left:6px;vertical-align:2px}.badge.required{color:#f2a07c;border-color:#c96b47}
+.witness{color:#e8cf8d}.links{margin:0;padding:0;list-style:none}.links li{margin:0 0 4px}.links button{display:block;width:100%;text-align:left;min-height:0;padding:0;border:0;background:none;color:#9fd3c0;text-decoration:underline;cursor:pointer;line-height:1.55}
+.hint{color:#aab6b4;font-size:13px;line-height:1.7}
+.node-label{font-size:11px;color:#dfe6e5;text-shadow:0 0 3px #000,0 0 3px #000;white-space:nowrap;pointer-events:none}
+.node-label.hub{font-size:12px;font-weight:600;padding:1px 6px;border-radius:3px;background:#101619cc;border:1px solid #4b5d5f}
+.edge-label{font-size:10px;color:#101619;font-weight:700;padding:0 4px;border-radius:2px;pointer-events:none}
+.act-label{font-size:12px;color:#7f9491;pointer-events:none;white-space:nowrap}
+.dim{opacity:.12}
+@media(max-width:1100px){.layout{grid-template-columns:220px minmax(0,1fr) 280px}}
+@media(max-width:800px){body{height:auto}header{flex-wrap:wrap}.layout{display:flex;flex-direction:column;flex:none}.left,.right{border:0;border-bottom:1px solid #354246}.center{height:70vh}#groups{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="brand"><span class="mark" aria-hidden="true">灰</span><div><h1>灰燈寨 · 收集物關聯圖</h1><small id="counts">讀取收集物總表…</small></div></div>
+<nav><a id="table-link" href="../" target="_blank" rel="noopener noreferrer">收集物總表 ↗</a><a href="./">場景與流程</a></nav></header>
+<main class="layout">
+<aside class="left" aria-label="圖例與篩選">
+<h2>怎麼讀</h2>
+<div class="legend">
+<span><i class="swatch hub" style="background:#8ccab1"></i>調查板推理組（高度＝推理所在幕）</span>
+<span><i class="swatch" style="background:#c96b47"></i>必要證據（較大）</span>
+<span><i class="swatch" style="background:#6f8582"></i>選填證據（較小）</span>
+<span><i class="swatch ring"></i>經凝固「見證過去」取得</span>
+<span><i class="swatch line" style="background:#dfe6e5"></i>放入格位、成果、跨組沿用</span>
+<span><i class="swatch dash"></i>前置、旁證、對照與延伸線</span>
+</div>
+<p class="hint">證據的高度是取得的幕，推理組的高度是它在哪一幕成立；線段由下往上就是「先收集、後推理」。點任一節點，會只亮出它的上游來源與下游結果。</p>
+<h2>顯示</h2>
+<div class="toggles">
+<label><input type="checkbox" id="show-support" checked>前置、旁證與前片</label>
+<label><input type="checkbox" id="show-chains" checked>延伸關聯線</label>
+<label><input type="checkbox" id="show-codes" checked>格位代號</label>
+<label><input type="checkbox" id="show-ids">全部證據編號</label>
+<label><input type="checkbox" id="show-acts" checked>幕別層</label>
+</div>
+<h2>關聯組</h2>
+<ul id="groups"></ul>
+</aside>
+<div class="center">
+<div id="canvas-host" aria-label="收集物關聯 3D 圖"></div>
+<div class="toolbar" role="toolbar" aria-label="視角"><button id="view-iso">斜視</button><button id="view-front">正面</button><button id="view-top">俯視</button><button id="clear">清除選取</button></div>
+<div id="loading">正在建立關聯圖…</div><div id="error" role="alert" hidden></div><div id="tooltip" hidden></div>
+</div>
+<aside class="right" aria-label="所選節點"><div id="detail" class="detail"><p class="hint">在圖上或左側清單選一個推理組或證據，這裡會列出它的格位、循環路徑與因果連線。拖曳旋轉、右鍵平移、滾輪縮放。</p></div></aside>
+</main>
+<script>/* APP_BUNDLE */</script>
+</body></html>

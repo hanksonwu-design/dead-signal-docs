@@ -9,7 +9,7 @@ buildCurrentModel(graph,flow);
 writeModelMarkers();
 await build({entryPoints:['screenplay-reader.js'],bundle:true,minify:true,format:'iife',globalName:'ScreenplayMarkers',outfile:'../screenplay-markers.js',legalComments:'inline',define:{__READING_MARKERS__:JSON.stringify(readingMarkerData())}});
 console.log('Built shared screenplay reading markers.');
-for(const [entry,template,output] of [['current-model.js','current-template.html','index.html'],['model-source.js','template.html','editor.html']]) {
+for(const [entry,template,output] of [['current-model.js','current-template.html','index.html'],['model-source.js','template.html','editor.html'],['relations.js','relations-template.html','relations.html']]) {
  const result=await build({entryPoints:[entry],bundle:true,minify:true,format:'iife',write:false,legalComments:'inline'});
  const html=fs.readFileSync(template,'utf8').replace('/* APP_BUNDLE */',()=>result.outputFiles[0].text.replaceAll('</script','<\\/script'));
  fs.writeFileSync(output,html);

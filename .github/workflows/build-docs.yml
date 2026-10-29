@@ -26,6 +26,7 @@ jobs:
       - name: Build
         run: |
           node tools/sync-canonical.mjs --check
+          node tools/build-collection-relations.mjs --check
           node tools/build-scene-images.mjs --check
           node tools/build-story-inventory.mjs --check
           node tools/test-scene-images.mjs
