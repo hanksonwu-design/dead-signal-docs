@@ -315,7 +315,7 @@ test('regenerating a missing secondary-scene list keeps it at the departure end'
 test('interactive close-ups preserve frozen reflections, original clue text and source-reading boundaries', () => {
   assert(row('P2-C03').requirements.includes('無法深度查看'));
   assert(row('P2-C04').content.includes('第四人反射'));
-  assert(row('R8-D02').requirements.includes('AX-17／版本 02／段號 100／100／尾段校驗值 6C2A'));
+  assert(row('R8-D02').requirements.includes('AX-17／版次 02／段號 100／100／尾段校驗值 6C2A'));
   assert(row('R24-D01').requirements.includes('記綠'));
   assert(row('R25-C01').requirements.includes('47-26-81-35-09'));
   assert(row('R31-F01').requirements.includes('八張低動態定格'));
