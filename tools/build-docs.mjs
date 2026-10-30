@@ -22,8 +22,11 @@ const FOLDER_LABELS = {
   "09_劇本": "遊戲劇本",
   "09_故事劇情": "精簡版小說",
   "10_製作規格": "製作規格",
+  "11_電影劇本": "電影劇本",
 };
 const ROOT_FOLDER = "根目錄";
+// The abridged novel stays in the repository for consistency tests but is no longer published.
+const UNPUBLISHED_FOLDERS = new Set(["09_故事劇情"]);
 
 function listMarkdown(dir) {
   const out = [];
@@ -56,7 +59,7 @@ function firstQuote(content) {
 }
 
 export function buildDocuments() {
-  const files = listMarkdown(DOCS_DIR);
+  const files = listMarkdown(DOCS_DIR).filter(file => !UNPUBLISHED_FOLDERS.has(relative(DOCS_DIR, file).split(sep)[0]));
   const documents = files.map(file => {
     const path = relative(DOCS_DIR, file).split(sep).join("/");
     // Normalise line endings so editors that save CRLF do not change the payload.

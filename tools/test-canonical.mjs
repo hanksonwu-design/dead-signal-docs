@@ -775,13 +775,13 @@ test('website separates reading and production categories and preserves old act 
   assert.equal(documents.filter(doc => doc.weeklyDetail).length,13);
 });
 
-test('abridged novel category and titles agree without changing its document path', () => {
-  const novels = buildDocuments().filter(doc => doc.folder === '09_故事劇情');
-  assert.equal(novels.length, 1);
-  assert.equal(novels[0].path, '09_故事劇情/17_縮寫短文.md');
-  assert.equal(novels[0].folderLabel, '精簡版小說');
-  assert.equal(novels[0].title, '精簡版小說');
-  assert(novels[0].content.includes('# 灰燈寨（精簡版小說）'));
+test('abridged novel stays in the repository unpublished while the film outlines are published', () => {
+  const documents = buildDocuments();
+  assert(!documents.some(doc => doc.folder === '09_故事劇情'));
+  assert(read('docs/09_故事劇情/17_縮寫短文.md').includes('# 灰燈寨（精簡版小說）'));
+  const films = documents.filter(doc => doc.folder === '11_電影劇本');
+  assert.deepEqual(films.map(doc => doc.path), ['11_電影劇本/11-01_電影劇本_上部細綱.md', '11_電影劇本/11-02_電影劇本_下部細綱.md']);
+  assert(films.every(doc => doc.folderLabel === '電影劇本'));
 });
 
 test('act V varies investigation controls without removing evidence or adding per-page gates', () => {
