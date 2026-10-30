@@ -104,6 +104,19 @@
     try { return localStorage.getItem(STORAGE_KEY) === "hans"; } catch (_) { return false; }
   }
 
+  function parentSimplified() {
+    try { return window.parent !== window && Boolean(window.parent.ZhScript?.simplified); } catch (_) { return false; }
+  }
+
+  // Same-origin parent and child frames follow directly, so frames stay in step even where storage is blocked.
+  function syncFrames() {
+    const targets = [...document.querySelectorAll("iframe")].map((frame) => frame.contentWindow);
+    if (window.parent !== window) targets.push(window.parent);
+    for (const target of targets) {
+      try { target?.ZhScript?.follow(simplified); } catch (_) {}
+    }
+  }
+
   function renderButton() {
     if (!button) return;
     button.disabled = false;
@@ -138,6 +151,7 @@
     }
     renderButton();
     if (save) remember();
+    syncFrames();
     window.dispatchEvent(new CustomEvent("zh-script-change", { detail: { simplified } }));
   }
 
@@ -145,6 +159,7 @@
     get simplified() { return simplified; },
     // Brings Traditional and Simplified text to one form so searches and heading lookups match either.
     normalize: (text) => (simplified && toSimplified ? toSimplified(text) : text),
+    follow: (on) => setSimplified(on, false),
   };
 
   renderButton();
@@ -152,5 +167,5 @@
   window.addEventListener("storage", (event) => {
     if (event.key === STORAGE_KEY) setSimplified(event.newValue === "hans", false);
   });
-  if (preferred()) setSimplified(true, false);
+  if (preferred() || parentSimplified()) setSimplified(true, false);
 })();
