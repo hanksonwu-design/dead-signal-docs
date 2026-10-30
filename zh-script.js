@@ -1,5 +1,7 @@
 // Traditional / Simplified display toggle. Documents stay Traditional in the repository;
 // Simplified is only a view, converted in the browser and reversible without reloading.
+// Every page that loads this script follows the saved choice, including pages open in other
+// tabs or frames; pages with a #scriptToggle button can also change it.
 (() => {
   const STORAGE_KEY = "dead-signal:script";
   const CONVERTER_URL = "https://cdn.jsdelivr.net/npm/opencc-js@1.4.2/dist/umd/t2cn.js";
@@ -12,6 +14,7 @@
   const texts = new Map();
   const attributes = new Map();
   let toSimplified = null;
+  let loading = null;
   let simplified = false;
 
   const observer = new MutationObserver((records) => {
@@ -24,17 +27,21 @@
   });
 
   function loadConverter() {
-    if (toSimplified) return Promise.resolve();
-    return new Promise((resolve, reject) => {
+    loading ??= new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = CONVERTER_URL;
       script.onload = () => {
         toSimplified = window.OpenCC.Converter({ from: "tw", to: "cn" });
         resolve();
       };
-      script.onerror = () => reject(new Error("簡體轉換元件載入失敗，請稍後再試"));
+      script.onerror = () => {
+        loading = null;
+        script.remove();
+        reject(new Error("簡體轉換元件載入失敗，請稍後再試"));
+      };
       document.head.append(script);
     });
+    return loading;
   }
 
   function skipped(node) {
@@ -98,23 +105,27 @@
   }
 
   function renderButton() {
+    if (!button) return;
+    button.disabled = false;
     button.textContent = simplified ? "繁體" : "简体";
     button.setAttribute("aria-pressed", String(simplified));
     button.setAttribute("aria-label", simplified ? "改用繁体中文显示" : "改用簡體中文顯示");
     button.title = simplified ? "改用繁体中文显示" : "改用簡體中文顯示";
   }
 
-  async function setSimplified(on) {
+  // `save` is false when following a change made in another tab or frame.
+  async function setSimplified(on, save = true) {
     if (on === simplified) return;
     if (on) {
-      button.disabled = true;
+      if (button) button.disabled = true;
       try {
         await loadConverter();
       } catch (error) {
-        button.disabled = false;
-        button.title = error.message;
+        renderButton();
+        if (button) button.title = error.message;
         return;
       }
+      if (simplified) return;
       simplified = true;
       convertTree(document.body);
       observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ATTRIBUTES });
@@ -125,9 +136,8 @@
       restore();
       document.documentElement.lang = originalLang;
     }
-    button.disabled = false;
     renderButton();
-    remember();
+    if (save) remember();
     window.dispatchEvent(new CustomEvent("zh-script-change", { detail: { simplified } }));
   }
 
@@ -137,8 +147,10 @@
     normalize: (text) => (simplified && toSimplified ? toSimplified(text) : text),
   };
 
-  if (!button) return;
   renderButton();
-  button.addEventListener("click", () => setSimplified(!simplified));
-  if (preferred()) setSimplified(true);
+  button?.addEventListener("click", () => setSimplified(!simplified));
+  window.addEventListener("storage", (event) => {
+    if (event.key === STORAGE_KEY) setSimplified(event.newValue === "hans", false);
+  });
+  if (preferred()) setSimplified(true, false);
 })();

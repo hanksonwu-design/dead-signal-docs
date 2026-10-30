@@ -36,6 +36,9 @@ a { color: #c7cfbd; }
 .scene-header nav { flex: none; }
 .scene-header nav a { display: inline-flex; align-items: center; min-height: 36px; padding: 8px 12px; border: 1px solid var(--archive-line); color: #c5c0ad; text-decoration: none; font-size: 12px; }
 .scene-header nav a:hover { background: #25291f; border-color: #a5a18b; }
+/* The script toggle reads like the nav links in both states; its label already says which script it switches to. */
+#scriptToggle, #scriptToggle[aria-pressed="true"] { min-height: 36px; padding: 8px 12px; border: 1px solid var(--archive-line); background: transparent; color: #c5c0ad; font-size: 12px; }
+#scriptToggle:hover { background: #25291f; border-color: #a5a18b; }
 .scene-header nav { align-items: center; gap: 12px; }
 .scene-music { display: flex; align-items: center; gap: 9px; color: #b5b09f; font-size: 10px; }
 .scene-music button { min-width: 36px; }
