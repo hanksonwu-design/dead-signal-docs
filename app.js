@@ -35,18 +35,24 @@ function classifyStatus(status) {
   return "未標記";
 }
 
+// In the Simplified view both sides are compared in Simplified, so a query in either script finds the Traditional source.
+function searchText(doc) {
+  const text = () => [doc.title, doc.path, doc.folderLabel, doc.status, doc.summary, doc.content].join(" ").toLowerCase();
+  if (!window.ZhScript?.simplified) return text();
+  return doc.searchSimplified ??= window.ZhScript.normalize(text());
+}
+
 function refreshState() {
   state.documents.forEach(doc => { if (doc.folder === "08_製作管理") doc.folderLabel = "製作時程提交表"; });
   if (state.folder === "08_製作管理" && !productionCategories.includes(state.category)) state.category = "上部";
   if (state.folder === "04_核心玩法" && !coreCategories.includes(state.category)) state.category = coreCategories[0];
-  const q = state.query.trim().toLowerCase();
+  const q = (window.ZhScript?.normalize(state.query) ?? state.query).trim().toLowerCase();
   state.filtered = state.documents.filter((doc) => {
     const inFolder = state.folder === "all" || doc.folder === state.folder;
     const inStatus = state.status === "all" || classifyStatus(doc.status) === state.status;
-    const haystack = [doc.title, doc.path, doc.folderLabel, doc.status, doc.summary, doc.content].join(" ").toLowerCase();
     const inCategory = state.category === "all" || doc.category === state.category;
     const visible = !doc.archived && (!doc.weeklyDetail || Boolean(q));
-    return inFolder && inStatus && inCategory && visible && (!q || haystack.includes(q));
+    return inFolder && inStatus && inCategory && visible && (!q || searchText(doc).includes(q));
   });
   state.filtered.sort((a, b) => (a.folder === b.folder && a.folder === "07_視聽與介面") ? avRank(a) - avRank(b) : 0);
   if(state.folder === "04_核心玩法") state.filtered.sort((a,b)=>coreCategories.indexOf(a.category)-coreCategories.indexOf(b.category)||a.path.localeCompare(b.path));
@@ -366,8 +372,9 @@ function openReader(path, updateHash = true, headingText = "") {
 function scrollReaderTo(headingText) {
   const content = $("readerContent");
   const anchor = document.getElementById(headingText);
-  const title = documentDisplayTitle(headingText);
-  const target = anchor && content.contains(anchor) ? anchor : [...content.querySelectorAll("h1,h2,h3,h4,h5,h6")].find(h => h.textContent === title || h.textContent.startsWith(title + " ") || h.textContent.startsWith(title + "：") || h.textContent.toLowerCase().replace(/[*`]/g, "").replace(/[^\p{L}\p{N}_\- ]/gu, "").replace(/ /g, "-") === title);
+  const normalize = window.ZhScript?.normalize ?? ((text) => text);
+  const title = normalize(documentDisplayTitle(headingText));
+  const target = anchor && content.contains(anchor) ? anchor : [...content.querySelectorAll("h1,h2,h3,h4,h5,h6")].find(h => { const text = normalize(h.textContent); return text === title || text.startsWith(title + " ") || text.startsWith(title + "：") || text.toLowerCase().replace(/[*`]/g, "").replace(/[^\p{L}\p{N}_\- ]/gu, "").replace(/ /g, "-") === title; });
   if (target) revealReaderTarget(target);
 }
 
@@ -445,6 +452,7 @@ function closeSidebar() { setSidebarOpen(false); }
 
 $("allDocs").addEventListener("click", () => { state.category = "all"; state.folder = "all"; state.status = "all"; closeSidebar(); refreshState(); });
 $("searchInput").addEventListener("input", (event) => { state.query = event.target.value; refreshState(); });
+window.addEventListener("zh-script-change", () => { if (state.query.trim()) refreshState(); });
 $("refreshButton").addEventListener("click", loadDocuments);
 $("closeReader").addEventListener("click", closeReader);
 $("readerBackdrop").addEventListener("click", closeReader);
