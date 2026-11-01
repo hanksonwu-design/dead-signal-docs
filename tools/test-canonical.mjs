@@ -781,7 +781,7 @@ test('abridged novel and film drafts stay in the repository unpublished while th
   assert(read('docs/09_故事劇情/17_縮寫短文.md').includes('# 灰燈寨（精簡版小說）'));
   assert(!documents.some(doc => doc.folder === '11_電影劇本'));
   const novel = documents.filter(doc => doc.folder === '11_小說');
-  assert.deepEqual(novel.map(doc => doc.path), ['11_小說/11-00_小說寫作規範.md', '11_小說/11-01_小說大綱_卷一至卷五.md', '11_小說/11-02_小說大綱_卷六至卷十.md', '11_小說/11-卷01-01_深層下水道.md', '11_小說/11-卷01-02_地底管線層.md', '11_小說/11-卷01-03_地基處理室.md', '11_小說/11-卷05-01_校正走廊.md']);
+  assert.deepEqual(novel.map(doc => doc.path), ['11_小說/11-00_小說寫作規範.md', '11_小說/11-01_小說大綱_序幕至第四幕.md', '11_小說/11-02_小說大綱_第五幕至終幕.md', '11_小說/11-10_小說_序幕.md', '11_小說/11-14_小說_第四幕.md']);
   assert(novel.every(doc => doc.folderLabel === '小說'));
 });
 
