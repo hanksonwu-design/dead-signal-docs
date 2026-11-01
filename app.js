@@ -92,7 +92,7 @@ function renderNav() {
   $("allCount").textContent = currentDocs().length;
   $("allDocs").classList.toggle("active", state.folder === "all" && state.status === "all");
   const folders = [...folderCounts.entries()].sort((a, b) =>
-    Number(a[0] === "11_電影劇本") - Number(b[0] === "11_電影劇本") ||
+    Number(a[0] === "11_小說") - Number(b[0] === "11_小說") ||
     a[0].localeCompare(b[0], "zh-Hant")
   );
   $("folderNav").innerHTML = folders.map(([key, count]) => key === "06_關卡規格" ? `<a class="folder-link" href="building/" style="text-decoration:none"><span class="folder-icon">▱</span><span>場景與流程</span></a>` : `

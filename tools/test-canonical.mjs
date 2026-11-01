@@ -775,13 +775,14 @@ test('website separates reading and production categories and preserves old act 
   assert.equal(documents.filter(doc => doc.weeklyDetail).length,13);
 });
 
-test('abridged novel stays in the repository unpublished while the film outlines are published', () => {
+test('abridged novel and film drafts stay in the repository unpublished while the novel is published', () => {
   const documents = buildDocuments();
   assert(!documents.some(doc => doc.folder === '09_故事劇情'));
   assert(read('docs/09_故事劇情/17_縮寫短文.md').includes('# 灰燈寨（精簡版小說）'));
-  const films = documents.filter(doc => doc.folder === '11_電影劇本');
-  assert.deepEqual(films.map(doc => doc.path), ['11_電影劇本/11-01_電影劇本_上部細綱.md', '11_電影劇本/11-02_電影劇本_下部細綱.md']);
-  assert(films.every(doc => doc.folderLabel === '電影劇本'));
+  assert(!documents.some(doc => doc.folder === '11_電影劇本'));
+  const novel = documents.filter(doc => doc.folder === '11_小說');
+  assert.deepEqual(novel.map(doc => doc.path), ['11_小說/11-00_小說寫作規範.md', '11_小說/11-01_小說大綱_卷一至卷五.md', '11_小說/11-02_小說大綱_卷六至卷十.md', '11_小說/11-卷01-01_深層下水道.md', '11_小說/11-卷01-02_地底管線層.md', '11_小說/11-卷01-03_地基處理室.md', '11_小說/11-卷05-01_校正走廊.md']);
+  assert(novel.every(doc => doc.folderLabel === '小說'));
 });
 
 test('act V varies investigation controls without removing evidence or adding per-page gates', () => {
