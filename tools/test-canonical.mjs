@@ -194,10 +194,11 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // R5, R16, R21, R24/R25/R26, R30 and the R32 lock check.
   // R21 and R30 each add one optional look-back comparison.
   // R14 (E-06) and R28 (E-05) each add one optional original-field proof; R17 adds two (E-02, E-09).
-  // The prologue adds the P1 mesh pull during the pump pause and the stair-top slipper steps.
+  // The prologue adds the P1 mesh pull during the pump pause and the stair-top slipper steps,
+  // plus the dream's 02:13 typing/beeps and the help box noise carrying down the channel.
   // Act 2 adds four environment cues for the R6–R7 heavy backspace and Lao Zhou's room duck;
   // Act 3 adds the R13 chair-leg scrape.
-  const counts = [[22, 19, 8], [76, 30, 19], [107, 39, 11], [148, 26, 10],
+  const counts = [[22, 21, 8], [76, 30, 19], [107, 39, 11], [148, 26, 10],
     [61, 18, 13], [62, 15, 13], [32, 4, 2], [60, 8, 5], [31, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
