@@ -604,29 +604,30 @@ test('novel corrects early reveal, floors, recording voice, timing and informed 
   assert.equal([...novel.matchAll(/^## [ABCDE]：/gm)].length, 5);
 });
 
-test('unplaced timeline: 16 inventories x 4 comparison states follow source evidence', () => {
+test('unplaced timeline: 16 inventories x 2 comparison states follow source evidence', () => {
   const evidence = block('s-0302-5');
   const source = evidence.match(/<!-- unplaced-timeline-rules:begin -->\s*```json\s*([\s\S]*?)```\s*<!-- unplaced-timeline-rules:end -->/);
   assert(source, 'Missing canonical timeline contract');
   const contract = JSON.parse(source[1]);
   assert.deepEqual(Object.keys(contract).sort(), ['facts', 'titleRules']);
-  assert.equal(contract.titleRules.length, 9);
+  assert.equal(contract.titleRules.length, 8);
   assert.equal(contract.facts.length, 3);
   for (const rule of [...contract.titleRules, ...contract.facts]) {
     assert(Array.isArray(rule.requires));
     assert(rule.requires.every(id => ['A', 'B', 'C', 'D'].includes(id)));
     assert.equal(new Set(rule.requires).size, rule.requires.length);
-    assert(rule.comparison === undefined || ['ab_compared', 'cd_aligned'].includes(rule.comparison));
+    assert(rule.comparison === undefined || rule.comparison === 'ab_compared');
   }
 
   // Evaluate the master-owned contract against independent expected outcomes, not a game runtime.
+  // C and D never merge: D carries no time, so there is no shared moment to align them on.
   let cases = 0;
-  for (const ab_compared of [false, true]) for (const cd_aligned of [false, true]) {
-    const comparisons = { ab_compared, cd_aligned };
+  for (const ab_compared of [false, true]) {
+    const comparisons = { ab_compared };
     const single = '未定位 · 1';
     const duration = '未定位 · 約七分鐘';
     const direction = '未定位 · 方向：向下';
-    const pair = cd_aligned ? '未定位 · 約七分鐘 · 方向：向下' : '未定位';
+    const pair = '未定位';
     const titles = [null, single, single, ab_compared ? '未定位 · 同一夜？' : '未定位',
       duration, duration, duration, duration, direction, direction, direction, direction,
       pair, pair, pair, pair];
@@ -647,12 +648,13 @@ test('unplaced timeline: 16 inventories x 4 comparison states follow source evid
       cases++;
     }
   }
-  assert.equal(cases, 64);
+  assert.equal(cases, 32);
   assert(evidence.includes('四片全部為**選填**'));
-  assert(evidence.includes('播放不代替 A／B 比對或 C／D 對齊'));
+  assert(evidence.includes('播放不代替 A／B 比對，也不合併 C／D'));
+  assert(!master.text.includes('cd_aligned'));
   assert(block('s-0905-49').includes('且實際核對殘缺格式'));
   assert(block('s-0906-32').includes('未定位 · 約七分鐘'));
-  assert(block('s-0907-44').includes('C、D 都持有但未對齊'));
+  assert(block('s-0907-44').includes('C、D 都持有時，列標題維持「未定位」'));
   for (const stale of ['隨持有數量改寫', '已持 A 才標', '| 3 片 | `未定位 · 約七分鐘`']) {
     assert(!master.text.includes(stale), stale);
   }
