@@ -62,7 +62,9 @@ test('R12 testing, cancellation and restored power cannot grant permission or aw
     '成功後保留只讀完成近看', '占用中的接座先拆回該線', '完整件已入座且兩線均接到表列接座',
     '未成功的測試不送出門控、E-11 喚醒或恐慌事件', '保留完整件與其他正確配線',
     '零件回托盤、線端回固定掛位', '已完成舊檔直接還原通電態', '供電正常／待權限核驗');
-  assert.match(spec(3), /\| 出現 \|[^\n]*接妥配電盤線路[^\n]*通電介面選定供電路由後[^\n]*舊手機自行亮起/);
+  assert.match(spec(3), /\| 出現 \|[^\n]*接妥配電盤線路[^\n]*合閘[^\n]*確認「啟用本層門禁」並收起終端後[^\n]*舊手機自行亮起/);
+  assert.match(story(3), /〔前置〕配電接妥、合閘[^\n]*確認「啟用本層門禁」並收起終端/);
+  assert.doesNotMatch(spec(3) + story(3), /選定供電路由後|確認本地供電路由/);
   assert.doesNotMatch(spec(3), /開啟 R13[^\n]*同時喚醒 E-?11/);
 });
 
