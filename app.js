@@ -226,7 +226,7 @@ function renderMarkdown(raw, lineOffset = 0) {
   let table = null;
   let code = null;
 
-  const flushParagraph = () => { if (paragraph.length) { out.push(`<p data-source-line="${lineOffset + paragraphLine}">${inlineMarkdown(paragraph.join(" "))}</p>`); paragraph = []; } };
+  const flushParagraph = () => { if (paragraph.length) { out.push(`<p data-source-line="${lineOffset + paragraphLine}">${withCueTags(paragraph, inlineMarkdown)}</p>`); paragraph = []; } };
   const closeList = () => { if (listType) { out.push(`</${listType}>`); listType = null; } };
   const closeTable = () => { if (table) { out.push(`</tbody></table></div>`); table = null; } };
   const closeCode = () => { if (code !== null) { out.push(`<pre><code>${esc(code.join("\n"))}</code></pre>`); code = null; } };
@@ -274,13 +274,55 @@ function renderMarkdown(raw, lineOffset = 0) {
       flushParagraph(); if (!listType) { listType = /^\d/.test(list[1]) ? "ol" : "ul"; out.push(`<${listType}>`); }
       const checked = list[2].match(/^\[([ xX])\]\s*(.*)$/); const text = checked ? checked[2] : list[2];
       const cls = checked ? (checked[1].toLowerCase() === "x" ? "task-done" : "task-open") : "";
-      out.push(`<li class="${cls}" data-source-line="${lineOffset + i}">${inlineMarkdown(text)}</li>`); i += 1; continue;
+      out.push(`<li class="${cls}" data-source-line="${lineOffset + i}">${withCueTags([text], inlineMarkdown)}</li>`); i += 1; continue;
     }
     if (!line.trim()) { flushParagraph(); closeList(); closeTable(); i += 1; continue; }
     closeList(); if (!paragraph.length) paragraphLine = i; paragraph.push(line.trim()); i += 1;
   }
   flushParagraph(); closeList(); closeTable(); closeCode();
   return out.join("\n");
+}
+
+// Screenplay cue labels at the start of a line are colored by category; the label text is unchanged.
+const CUE_KINDS = {
+  "（": { 靜態畫面: "shot", 靜態差分: "shot", 鏡位切換: "shot", 動畫演出: "anim", 畫面特效: "anim", 介面呈現: "ui", 筆記呈現: "ui", 配音演出: "sound" },
+  "〔": {
+    操作: "op", 生活近看: "op", 筆記: "ui", 環境: "sound", 人聲: "sound", 字幕: "text", 原件文字: "text", 文件: "text", 系統: "system", 玩家: "player",
+    前置: "logic", 條件: "logic", 條件回查: "logic", 觸發: "logic", 成功: "logic", 失敗: "logic", 分支: "logic", 例外: "logic", 替代: "logic", 前兆: "logic",
+    安全反應: "logic", 安全目標承接: "logic", 保存: "logic", 形式: "logic", 讀演: "logic", 選填: "logic", 銜接: "logic", 來路: "logic", 感知: "logic",
+    主角現時回想: "logic", 選填現場操作提案: "logic",
+  },
+};
+const CUE_LEGEND = [["shot", "畫面與鏡位"], ["anim", "動畫"], ["ui", "介面呈現"], ["op", "現場操作"], ["ui-op", "介面操作"], ["sound", "環境與聲音"], ["text", "字幕與原文"], ["system", "系統訊息"], ["player", "玩家說明"], ["logic", "條件與流程"]];
+
+function cueKind(label) {
+  const [main, sub = ""] = label.slice(1, -1).split("／");
+  const kind = CUE_KINDS[label[0]]?.[main];
+  return kind === "op" && main === "操作" && sub.startsWith("介面") ? "ui-op" : kind;
+}
+
+function withCueTags(lines, render) {
+  const tags = [];
+  const marked = lines.map((line) => line.replace(/^(?:（[^（）]{1,24}）|〔[^〔〕]{1,24}〕)/, (label) => {
+    const kind = cueKind(label);
+    if (!kind) return label;
+    tags.push(`<span class="cue-tag cue-${kind}">${esc(label)}</span>`);
+    return `\u0001${tags.length - 1}\u0001`;
+  }));
+  const html = render(marked.join(" "));
+  return tags.length ? html.replace(/\u0001(\d+)\u0001/g, (match, index) => tags[Number(index)]) : html;
+}
+
+function addCueLegend(root) {
+  const tags = root.querySelectorAll(".cue-tag");
+  if (tags.length < 8) return;
+  const present = new Set([...tags].map((tag) => tag.className.replace(/^cue-tag cue-/, "")));
+  const legend = document.createElement("div");
+  legend.className = "cue-legend";
+  legend.setAttribute("aria-label", "類別標示顏色");
+  legend.innerHTML = `<span class="cue-legend-title">類別顏色</span>${CUE_LEGEND.filter(([kind]) => present.has(kind)).map(([kind, label]) => `<span class="cue-tag cue-${kind}">${label}</span>`).join("")}`;
+  const title = root.querySelector("h1");
+  if (title) title.after(legend); else root.prepend(legend);
 }
 
 function openReader(path, updateHash = true, headingText = "") {
@@ -327,6 +369,7 @@ function openReader(path, updateHash = true, headingText = "") {
     : doc.content;
   $("readerContent").innerHTML = renderMarkdown(body);
   window.ScreenplayMarkers?.decorate($("readerContent"), body, doc.path);
+  addCueLegend($("readerContent"));
   const headings = [...$("readerContent").querySelectorAll("h2")];
   if (headings.length > 3 && !illustrationCatalog) {
     const nav = document.createElement("nav");

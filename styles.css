@@ -243,6 +243,20 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
 .hide-screenplay-cues .screenplay-cues { display: none; }
 .reader-content .collectible-required { color: #ffb4a8; background: #452f29; padding: 2px 5px; font-weight: 700; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .reader-content .collectible-functional { color: #8fd7cf; background: #263e35; padding: 2px 5px; font-weight: 700; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+/* Screenplay cue labels: one hue per category, tinted backing at 9% keeps contrast above 5:1 on paper. */
+.reader-content .cue-tag { --cue: #50534c; color: var(--cue); background: color-mix(in srgb, var(--cue) 9%, transparent); padding: 1px 4px; font-weight: 600; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.reader-content .cue-shot { --cue: #1d4f91; }
+.reader-content .cue-anim { --cue: #6b3a94; }
+.reader-content .cue-ui { --cue: #07585f; }
+.reader-content .cue-op { --cue: #843e00; }
+.reader-content .cue-ui-op { --cue: #931f55; }
+.reader-content .cue-sound { --cue: #285c18; }
+.reader-content .cue-text { --cue: #9e221b; }
+.reader-content .cue-system { --cue: #55530f; }
+.reader-content .cue-player { --cue: #50534c; }
+.reader-content .cue-logic { --cue: #6e4423; }
+.reader-content .cue-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 22px; padding: 9px 12px; border: 1px solid var(--paper-line); font-size: 13px; line-height: 1.7; }
+.reader-content .cue-legend-title { color: #4e5a41; font-weight: 600; margin-right: 4px; }
 
 @keyframes reader-fade-in { from { opacity: .5; } to { opacity: 1; } }
 @media (max-width: 1360px) {
@@ -319,4 +333,5 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
 @media print {
   .reader-content .collectible-required { color: #a33220; background: transparent; }
   .reader-content .collectible-functional { color: #086b63; background: transparent; }
+  .reader-content .cue-tag { background: transparent; }
 }
