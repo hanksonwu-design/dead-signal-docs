@@ -200,8 +200,10 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Act 3 adds the R13 chair-leg scrape.
   // The upper wandering-wraith (UA) zones add their trigger, telegraph and evasion cues:
   // prologue UA-P1/P2, act 1 UA-A1/A1b/A1c, act 2 UA-A2a–c, act 3 UA-A3a–c, act 4 UA-A4a/A4b.
-  const counts = [[23, 23, 10], [79, 32, 20], [110, 42, 11], [151, 29, 10],
-    [63, 20, 13], [62, 15, 13], [32, 4, 2], [60, 8, 5], [31, 3, 4], [28, 12, 3]];
+  // Act 2 adds the 16F handset-less phone box (ring, optional palm muffle) and its 18F ring two floors down;
+  // Act 4 adds the moth dust behind her while one foot hangs over the upper-part threshold.
+  const counts = [[23, 23, 10], [79, 32, 20], [111, 44, 11], [151, 29, 10],
+    [63, 21, 13], [62, 15, 13], [32, 4, 2], [60, 8, 5], [31, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
