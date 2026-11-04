@@ -749,8 +749,12 @@ act3.r14.e212_seen
 act3.r14.e06_state                 # none / looping / rested / bypassed
 act3.r14.h05_sequence_recorded
 
+signal.r14_arrival_chime           # #9 來源索引；舊檔缺鍵視為未收錄，第三幕內可回 R14 補收
+
 act3.r15.power_route               # none / partial / full / directed
 act3.r15.route_confirmed
+
+act3.r15.saved_record              # e07 / e06 / e08；只作紀錄，後續房間與名冊不讀取
 act3.r15.e206_seen
 act3.r15.e08_warning_followed
 act3.r15.full_echo_cleared

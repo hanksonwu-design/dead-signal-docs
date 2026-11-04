@@ -27,7 +27,7 @@ test('R12 readable account fields retain original values and manual access verif
     '帳號：MAINT-A3／身分：主管', 'MAINT-A3 / SUPERVISOR', '啟用本層門禁');
   has(story, '兩欄核對完，再按下確認', '來源留在輸入欄旁', '日期各自保留');
   has(spec(3), '手輸與選取走同一核驗', '不自動填滿', '不標操作人姓名',
-    '已修復供電、兩欄一致及原本地憑據有效', '不增加按第二次確認');
+    '已修復供電、兩欄一致及維修工作階段權限有效', '不增加按第二次確認');
 });
 
 test('R16 plain login status does not identify the operator or execute a targetless action', () => {

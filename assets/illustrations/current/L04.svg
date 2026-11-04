@@ -3,7 +3,7 @@
 完成所選機構並確認，才保存供電。
 必要主線來源不因方案消失。；部分供電：先接醫療與核心：接妥兩組斷路器後繼續原調查。
 完成技術核心調查才回 R12 切辦公室繼電器。
-仍需持本地憑據驗證門端。；全面供電：備援後三次穩壓：依表針與刻度調校，首輪 30 秒。
+仍需持本地憑證驗證門端。；全面供電：備援後三次穩壓：依表針與刻度調校，首輪 30 秒。
 錯誤只重做當次，調校期間無遭遇。
 完成恢復設備，不代替後續門端驗證。；定向供電：冷卻 → 核心 → 索引 → 中繼：按原可重看操作記憶，親手依序輸入。
 確認本地路由回饋後保存。
@@ -27,7 +27,7 @@
 <text class="panel-title" x="636" y="229">先接醫療與核心</text>
 <desc>接妥兩組斷路器後繼續原調查。
 完成技術核心調查才回 R12 切辦公室繼電器。
-仍需持本地憑據驗證門端。</desc>
+仍需持本地憑證驗證門端。</desc>
 <g transform="translate(634 272)" clip-path="url(#visual-l04-1)"><g data-visual="L04" data-step="2"><rect x="44" y="19" width="420" height="204" rx="2" fill="#243238" stroke="#607a80" stroke-width="2"/><rect x="88" y="58" width="75" height="106" rx="2" fill="#111c21" stroke="#607a80" stroke-width="2"/><path d="M125 80v61" fill="none" stroke="#a6cfa7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" /><rect x="204" y="58" width="75" height="106" rx="2" fill="#111c21" stroke="#607a80" stroke-width="2"/><path d="M241 80v61" fill="none" stroke="#a6cfa7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" /><rect x="320" y="58" width="75" height="106" rx="2" fill="#111c21" stroke="#607a80" stroke-width="2"/><path d="M357 80v61" fill="none" stroke="#607a80" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" /><path d="M255 185H422" fill="none" stroke="#e6bc68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#vis-arrow-gold)"/><text x="310" y="214" fill="#e6bc68" font-size="16" font-weight="500">R12 回訪</text></g></g></g>
 <g data-panel="3"><rect x="32" y="561" width="558" height="385" rx="4" fill="#152025" stroke="#425155"/>
 <rect x="32" y="561" width="5" height="385" fill="#79d8dc"/>
