@@ -147,7 +147,8 @@ test('every static screenplay cue names its shot size without changing protected
   // the cold-open fragment and photo frames.
   // Acts 1, 3 and 7 each add one optional still memory of Xiao Hua (R3, R13, 47-01).
   // Act 3 adds close-ups of the two official fields the optional R17 proofs contradict.
-  const counts = [23, 62, 85, 102, 47, 33, 18, 26, 10, 20];
+  // Act 2 adds the pencil line and unnamed signature on the optional K-207 handoff slip.
+  const counts = [23, 62, 86, 102, 47, 33, 18, 26, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -202,7 +203,8 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // prologue UA-P1/P2, act 1 UA-A1/A1b/A1c, act 2 UA-A2a–c, act 3 UA-A3a–c, act 4 UA-A4a/A4b.
   // Act 2 adds the 16F handset-less phone box (ring, optional palm muffle) and its 18F ring two floors down;
   // Act 4 adds the moth dust behind her while one foot hangs over the upper-part threshold.
-  const counts = [[23, 23, 10], [79, 32, 20], [111, 44, 11], [151, 29, 10],
+  // Act 2 adds the optional K-207 handoff slip on Lao Zhou's partition (close look, flip).
+  const counts = [[23, 23, 10], [79, 32, 20], [113, 44, 11], [151, 29, 10],
     [63, 21, 13], [62, 15, 13], [32, 4, 2], [60, 8, 5], [31, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
