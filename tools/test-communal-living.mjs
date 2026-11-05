@@ -32,7 +32,7 @@ test('communal rooms have independent work orders and reversible local entrances
 });
 
 test('water and meal comparisons require their actual pages and do not invent victims or stolen portions', () => {
-  includes(story(1), ['到場記錄不等於用到水', '未看完整頁時，先保留各自摘記']);
+  includes(story(1), ['有到場，不一定有用到水', '未看完整頁時，先保留各自摘記']);
   includes(spec(1), ['wash_roll', 'water_log', '日期及班次吻合', '玩家主動確認', '不代發新的 D02 來源']);
   includes(story(2), ['應領 24／簽領 24', '實配 21／扣留 3', '主管餐盒列在另一批', '對不上的頁可以收回重排']);
   includes(spec(2), ['D04 簽領頁與 D05 底聯都實讀', '不計主線錯配', '不解鎖 CARE 或管理身分',

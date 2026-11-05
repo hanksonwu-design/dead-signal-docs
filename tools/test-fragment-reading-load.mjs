@@ -40,7 +40,7 @@ test('R24 reuses verified fields without inheriting its newly encountered remova
 
 test('R32 continuous reading preserves source boundaries and the original final confirmations', () => {
   includes(block('s-0910-6'), ['同一比較視圖', '未看的欄位保持待查']);
-  includes(block('s-0910-7'), ['再完成原一次確認', '不重輸入', '錯配免費退回']);
+  includes(block('s-0910-7'), ['再完成原一次確認', '不重輸入', '配錯就退回同一視圖']);
   includes(block('s-0910-8'), ['四個原件仍各自實讀', '讀完一處不會代讀另一處']);
   includes(block('s-0910-12'), ['完成原一次關聯確認', '本次實際提出與收手', '不再追加完成彈窗']);
   includes(read('docs/10_製作規格/10-08_製作規格_終幕.md'), ['取消、跳過演出及讀檔均不補未讀來源', '不提前寫入 projection_reveal_complete', '不會代做 S6-03 現時試探']);

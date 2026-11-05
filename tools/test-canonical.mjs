@@ -1013,7 +1013,7 @@ test('Xiaohua domain preserves reveal order, fixed landmarks and ending-specific
   assert(block('s-0910-14').includes('扶手仍連著側牆凹位'));
   assert(block('s-0910-16').includes('剛才容身的桌下低縫被薄膜包住'));
   assert(block('s-0910-17').includes('假門的輪廓比側牆亮，扶手卻沒有接過去'));
-  assert(block('s-0910-18').includes('仍不等於她已經讓路'));
+  assert(block('s-0910-18').includes('兩人終於看得見彼此，她還沒有讓路'));
   const spec = block('s-0608-7').split('<a id="xiaohua-domain"></a>')[1];
   for (const phrase of ['三來源完成前不顯完整形態', '不再接一次領域動畫',
     '不新增找地標清單或計時門檻', '不以新遮罩擴大命中', 'D 不先撤再重封',

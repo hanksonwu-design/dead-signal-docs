@@ -178,7 +178,7 @@ test('Act 1 retains all five floors, optional closeups and a guarded return rout
   assert(spec.includes('缺任何一項就保留逐圖行走'));
   assert(story.includes('`E1-03` 血字遺言'));
   assert(spec.includes('不補 E1-03 或 F1'));
-  assert(story.includes('可免費拆線、重排或回看來源'));
+  assert(story.includes('拆線、重排或回看來源都不扣穩定度'));
   assert(!story.includes('正式三格錯配代價'));
 });
 

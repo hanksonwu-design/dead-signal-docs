@@ -333,7 +333,7 @@ test('new detail images preserve observed objects, layer prerequisites and hidin
   assert.equal(row('R20-V03').kind, '操作鏡位');
   assert(row('R20-V03').requirements.includes('速查不暫停'));
   assert(row('R30-D05').requirements.includes('失蹤未確認'));
-  assert(master.blocks.get('s-0909-45').includes('目的地空著，不等於已經死亡'));
+  assert(master.blocks.get('s-0909-45').includes('目的地欄空著，生死都沒有寫'));
 });
 
 test('R29 compares existing signatures and keeps a single informed approval action', () => {

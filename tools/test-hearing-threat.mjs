@@ -70,7 +70,7 @@ test('retreat and authority cannot bypass travel, breath exhaustion or the remed
 
 test('R20 distinguishes recorded sources, live sounds, protected reading and compact operation', () => {
   has(contract, 'R25 操作段', '設備時序而非錄音內事件正在發生', '現場帶與播放器分框分標題');
-  has(block(story(4), 's-0907-19'), '標著「現場」', '來源播放器外', '錄音暫停不等於世界暫停');
+  has(block(story(4), 's-0907-19'), '標著「現場」', '來源播放器外', '只暫停錄音時，房裡的事照樣在走');
   has(block(story(4), 's-0907-20'), '歷史聲軌', '來源日期', '完整閱讀開啟後，現場聽覺帶收起', '前兆從頭開始');
   has(spec(4), '不將播放器音量當成敵人距離', '完整聲軌閱讀／必要承諾台詞凍結巡行');
 });
