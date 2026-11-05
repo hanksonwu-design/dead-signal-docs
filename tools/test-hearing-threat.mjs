@@ -14,7 +14,7 @@ const block = (text, id) => {
   return text.slice(text.indexOf(begin), text.indexOf(end));
 };
 const has = (text, ...terms) => terms.forEach(term => assert(text.includes(term), `Missing: ${term}`));
-const contract = block(appendix, 's-0409-3');
+const contract = block(appendix, 's-0409-3') + block(appendix, 's-0814-2');
 const bindings = [
   [2, 'R11', 'R11-V02', 's-0905-45'],
   [3, 'R13', 'R13-V01', 's-0906-12'],

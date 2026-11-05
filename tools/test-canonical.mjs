@@ -17,7 +17,7 @@ function test(name, fn) { fn(); passed++; console.log(`PASS ${name}`); }
 function block(id) { assert(master.blocks.has(id), id); return stripReadingInline(master.blocks.get(id)); }
 
 test('source manifest accounts for every retained block without empty placeholders', () => {
-  assert.equal(master.sources.length, 72);
+  assert.equal(master.sources.length, 73);
   assert.equal([...master.text.matchAll(/<!-- import:[^:]+:begin -->/g)].length, master.blocks.size);
   assert.equal([...master.text.matchAll(/<!-- import:[^:]+:end -->/g)].length, master.blocks.size);
   assert.equal(master.sources.reduce((sum, item) => sum + item.count, 0), master.blocks.size);
@@ -1033,7 +1033,7 @@ test('domain inventory and novel agree while added art and playtests remain pend
 });
 
 test('character-specific audiovisual motifs keep the original encounter scope and source priority', () => {
-  const av = block('s-0412-8');
+  const av = block('s-0701-32');
   for (const phrase of ['阿彪、小花仍是兩場正式 Boss', '阿尋是原 R11 訊號遭遇的局部領域',
     '老周是可暫離的低壓迴聲', '現時感知擬音，不是新錄音或可收集訊號',
     '必要來源原音／字幕及安全閱讀 > 招式方向、地標和操作提示 > 額外角色質感',
@@ -1088,7 +1088,7 @@ test('uncanny audiovisual inventory, novel and pending asset estimates agree', (
 });
 
 test('gameplay progression maps every original node once and links all ten production acts', () => {
-  const flow = block('s-0412-4');
+  const flow = block('s-0412-4') + block('s-0814-4');
   const table = flow.split('<a id="core-gameplay-nodes"></a>')[1]
     .split('<a id="core-gameplay-audit"></a>')[0];
   const rows = [...table.matchAll(/^\| `([A-Z][A-Za-z0-9]*)` \| (.+) \| (.+) \| (.+) \|$/gm)];

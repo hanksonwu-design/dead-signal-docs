@@ -11,7 +11,7 @@ const includes = (source, phrases) => {
   for (const phrase of phrases) assert(source.includes(phrase), `Missing contract: ${phrase}`);
 };
 const row = label => {
-  const design = appendix.split('<a id="insect-dark-design"></a>')[1]?.split('<!-- import:s-0412-9:end -->')[0];
+  const design = appendix.split('<a id="insect-dark-design"></a>')[1]?.split('<!-- import:s-0701-33:end -->')[0];
   assert(design, 'Missing canonical design section');
   const found = design.split('\n').find(line => line.startsWith(`| ${label} |`));
   assert(found, `Missing design row: ${label}`);

@@ -37,7 +37,7 @@ export function parseMaster(text, documents) {
   assert.equal([...text.matchAll(/<!-- import:[^:]+:begin -->/g)].length, blocks.size, 'Unpaired imported blocks');
   assert.equal([...text.matchAll(/<!-- import:[^:]+:end -->/g)].length, blocks.size, 'Unpaired imported blocks');
   const anchors = new Set([...text.matchAll(/<a id="([^"]+)"><\/a>/g)].map(m => m[1]));
-  assert.equal(sources.length, 72, 'source manifest');
+  assert.equal(sources.length, 73, 'source manifest');
   assert.equal(new Set(sources.map(source => source.id)).size, sources.length, 'Duplicate source IDs');
   assert.equal(new Set(sources.map(source => source.path)).size, sources.length, 'Duplicate source paths');
   assert.equal(blocks.size, sources.reduce((sum, source) => sum + source.count, 0), 'imported blocks');

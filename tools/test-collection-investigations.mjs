@@ -138,7 +138,8 @@ test('route and reasoning summaries keep necessary machine checks separate from 
 });
 
 test('the teaching tables include the source before the relevant local mechanical submission', () => {
-  const teaching = topicSource('0412');
+  // The teaching tables moved out of 04-12: return checks to 04-03, node rows to 08-14.
+  const teaching = [topicSource('0403'), topicSource('0814')].join('\n\n');
   for (const clue of requiredFieldClues) {
     const rows = roomRows(teaching, clue.node);
     assert(rows.length, `${clue.node}: teaching row missing`);
