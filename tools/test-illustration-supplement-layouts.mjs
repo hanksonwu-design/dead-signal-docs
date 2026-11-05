@@ -80,6 +80,6 @@ test('all new images have navigable catalog captions without changing gameplay w
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.subscenes.length, 72);
   assert.equal(flow.routes.length, 56);
-  assert.equal(Object.keys(flow.images).length, 562);
+  assert.equal(Object.keys(flow.images).length, 565);
   assert(Object.values(flow.images).every(i => i.status === 'pending'));
 });
