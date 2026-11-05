@@ -44,3 +44,17 @@ test('core gameplay pages explain upper wanderers and agree on catch panic', () 
   assert(!appendix.includes('被噤聲者發現 | +2 階'));
   assert(!appendix.includes('R16 起權限反擊'), 'UA-R zones end before R16 unlocks erasure');
 });
+
+test('wanderer timing stays fair: masked steps judge by start and telegraphs always lead somewhere', () => {
+  const contract = appendix.split('#### 上部遊蕩怨靈（UA）契約')[1]?.split('<a id="wanderer-interference"></a>')[0] || '';
+  assert(contract.includes('**遮蔽聲以起步判定：**'));
+  assert(contract.includes('遮蔽聲在時起步的那一步整步算被蓋過'));
+  assert(contract.includes('每段嗡不短於 4.5 秒，容得下兩整步'));
+  assert(contract.includes('間隔未滿時本區延後啟動：維持 `not_started`'));
+  assert(contract.includes('凡出現前兆，後面都接得上真的追擊'));
+  assert(!appendix.includes('只留 `ROAM` 與前兆'));
+  const spec = name => readFileSync(path.join(ROOT, 'docs/10_製作規格', name), 'utf8');
+  assert(spec('10-03_製作規格_第二幕.md').includes('初值嗡約 4.5–5 秒'));
+  assert(spec('10-01_製作規格_序幕.md').includes('嗡聲最後約 1 秒泵聲降調、凝結水細顫放慢'));
+  assert(!spec('10-05_製作規格_第四幕.md').includes('只留 ROAM 與前兆'));
+});
