@@ -13,7 +13,8 @@ const documents = buildDocuments();
 test('three lower acts have 6, 5 and 4 nodes with stable order, identities and production ownership', () => {
   assert.equal(ACTS.length, 10);
   assert.equal(master.sources.length, 73);
-  assert.equal(master.blocks.size, 1555);
+  // 04-07..04-12 figure notes now live in the act specs as plain text (-8 blocks), duplicate stubs dropped (-2).
+  assert.equal(master.blocks.size, 1545);
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
   for (const [i, ids] of LOWER_ACT_NODES.entries()) {

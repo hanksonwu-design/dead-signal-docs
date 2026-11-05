@@ -160,8 +160,9 @@ test('narrative, production summary and work orders all retain the later R18 saf
 });
 
 test('current diagrams distinguish silent patrol, alert recovery and recording layers', () => {
-  const sequence = block(appendix, 's-0409-8');
-  const illustration = block(appendix, 's-0409-11');
+  // V07 notes moved from 04-09 into the act-4 spec's 圖解與操作對照 section.
+  const sequence = block(spec(4), 's-0605-26');
+  const illustration = sequence;
   has(sequence, '輪廓沿原巡行方向檢查，尚未發現玩家', '部分掩體須屏息', '只有失誤後的警戒');
   assert(!sequence.includes('威脅停留朝向掩體'));
   assert(!illustration.includes('拖拽聲'));
