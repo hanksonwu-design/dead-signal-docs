@@ -30,3 +30,17 @@ test('interference is safe, optional and adds no save keys', () => {
   assert(appendix.includes('| `wander_interference` |'));
   assert(appendix.includes('| 接近干擾（13 區共用） |'));
 });
+
+test('core gameplay pages explain upper wanderers and agree on catch panic', () => {
+  const block = id => appendix.split(`<!-- import:${id}:begin -->`)[1]?.split(`<!-- import:${id}:end -->`)[0] || '';
+  const hub = block('s-0407-5');
+  assert(hub.includes('#### 環境應對：上部遊蕩怨靈'));
+  for (const type of ['UA-S「拖鞋聲」', 'UA-R「點名的」', 'UA-Q「離區噤聲者」']) assert(hub.includes(type), type);
+  assert(block('s-0407-11').includes('UA 區不是 HA，也不是 HP'));
+  assert(block('s-0408-5').includes('**上部遊蕩區的喇叭**'));
+  assert(block('s-0411-2').includes('**上部遊蕩區**'));
+  assert(block('s-0406-19').includes('#### 上部遊蕩怨靈'));
+  assert(appendix.includes('| 被噤聲者抓到 | +1 階（上部遊蕩怨靈同此，每區最多 +3） |'));
+  assert(!appendix.includes('被噤聲者發現 | +2 階'));
+  assert(!appendix.includes('R16 起權限反擊'), 'UA-R zones end before R16 unlocks erasure');
+});
