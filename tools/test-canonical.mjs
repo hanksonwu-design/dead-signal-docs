@@ -150,7 +150,8 @@ test('every static screenplay cue names its shot size without changing protected
   // Act 2 adds the pencil line and unnamed signature on the optional K-207 handoff slip.
   // Optional inhumane-treatment traces: R2 family-contact page (act 1), R6 locked tenant door and
   // R10 wall prayer (act 2), R18 resident door and R20 sleep log (act 4), U5 surrender note (act 7).
-  const counts = [23, 63, 88, 102, 49, 33, 18, 27, 10, 20];
+  // Acts 1 and 2 each add one full shot for the early silencer (T-R5-R6-02 shaft, R7 desk row).
+  const counts = [23, 64, 89, 102, 49, 33, 18, 27, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -202,12 +203,12 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Act 2 adds four environment cues for the R6–R7 heavy backspace and Lao Zhou's room duck;
   // Act 3 adds the R13 chair-leg scrape.
   // The upper wandering-wraith (UA) zones add their trigger, telegraph and evasion cues:
-  // prologue UA-P1/P2, act 1 UA-A1/A1b/A1c, act 2 UA-A2a–c, act 3 UA-A3a–c, act 4 UA-A4a/A4b.
+  // prologue UA-P1/P2, act 1 UA-A1/A1b/A1c/A1d, act 2 UA-A2a–d, act 3 UA-A3a–c, act 4 UA-A4a/A4b.
   // Act 2 adds the 16F handset-less phone box (ring, optional palm muffle) and its 18F ring two floors down;
   // Act 4 adds the moth dust behind her while one foot hangs over the upper-part threshold.
   // Act 2 adds the optional K-207 handoff slip on Lao Zhou's partition (close look, flip).
   // Acts 6–8 each add one optional trace close look: U1 eviction notice, U5 surrender note, U6 valve tag.
-  const counts = [[23, 23, 10], [79, 32, 20], [113, 44, 11], [151, 29, 10],
+  const counts = [[23, 23, 10], [79, 34, 20], [113, 46, 11], [151, 29, 10],
     [63, 21, 13], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);

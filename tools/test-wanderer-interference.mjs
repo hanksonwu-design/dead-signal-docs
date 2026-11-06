@@ -28,7 +28,7 @@ test('interference is safe, optional and adds no save keys', () => {
   assert(appendix.includes('| 接近干擾強度 | 0／40／70／100%'));
   assert(appendix.includes('接近干擾 0／40／70／100%；已發現互動可見度'));
   assert(appendix.includes('| `wander_interference` |'));
-  assert(appendix.includes('| 接近干擾（13 區共用） |'));
+  assert(appendix.includes('| 接近干擾（15 區共用） |'));
 });
 
 test('core gameplay pages explain upper wanderers and agree on catch panic', () => {
@@ -57,4 +57,29 @@ test('wanderer timing stays fair: masked steps judge by start and telegraphs alw
   assert(spec('10-03_製作規格_第二幕.md').includes('初值嗡約 4.5–5 秒'));
   assert(spec('10-01_製作規格_序幕.md').includes('嗡聲最後約 1 秒泵聲降調、凝結水細顫放慢'));
   assert(!spec('10-05_製作規格_第四幕.md').includes('只留 ROAM 與前兆'));
+});
+
+test('silencers are seeded in acts 1 and 2 with lighter omens, and only act 4 removes everything', () => {
+  const contract = appendix.split('#### 上部遊蕩怨靈（UA）契約')[1]?.split('<a id="wanderer-interference"></a>')[0] || '';
+  assert(contract.includes('| UA-A1d | 第一幕 | T-R5-R6-02 10F 送衣吊籃井 |'));
+  assert(contract.includes('| UA-A2d | 第二幕 | R7 產線桌列 |'));
+  assert(contract.includes('| 噤聲者早期版（UA-A1d、UA-A2d） |'));
+  assert(contract.includes('感知照常可用，不算工具被剝奪'));
+  assert(contract.includes('第一幕 UA-A1d 也不抓人，沒有失焦，也不加恐慌'));
+  assert(contract.includes('與前一段 UA-A2a 共用同一次高強度事件'));
+  const ladder = contract.split('<a id="silencer-ladder"></a>')[1] || '';
+  assert(ladder.includes('##### 噤聲者的五幕強度'));
+  assert(ladder.includes('全作唯一完整的絕對靜默'));
+  assert(ladder.includes('電子聲匯流排'));
+  assert(ladder.includes('靜音模式沿用既有的視覺前兆與方向字幕'));
+  assert(!appendix.includes('13 個遊蕩區') && !appendix.includes('13 區各'), 'zone counts updated to 15');
+  const spec = name => readFileSync(path.join(ROOT, 'docs/10_製作規格', name), 'utf8');
+  const act1 = spec('10-02_製作規格_第一幕.md');
+  assert(act1.includes('**上部遊蕩怨靈 UA-A1d／吊籃井的遠影**'));
+  assert(act1.includes('不抓人、不加恐慌、不失焦'));
+  const act2 = spec('10-03_製作規格_第二幕.md');
+  assert(act2.includes('**上部遊蕩怨靈 UA-A2d（噤聲者早期版，產線桌列的短追）：**'));
+  assert(act2.includes('被抓一次本區即結束：恐慌 +1、本區上限 +1'));
+  assert(act2.includes('不對應排行榜上的任何一列，也不是 E-04'));
+  assert(act2.includes('不做噤聲者全域靜默'), 'R6 cursor freeze stays a partial false alarm');
 });
