@@ -65,8 +65,9 @@ test('silencers are seeded in acts 1 and 2 with lighter omens, and only act 4 re
   assert(contract.includes('| UA-A2d | 第二幕 | R7 產線桌列 |'));
   assert(contract.includes('| 噤聲者早期版（UA-A1d、UA-A2d） |'));
   assert(contract.includes('感知照常可用，不算工具被剝奪'));
-  assert(contract.includes('第一幕 UA-A1d 也不抓人，沒有失焦，也不加恐慌'));
-  assert(contract.includes('與前一段 UA-A2a 共用同一次高強度事件'));
+  assert(contract.includes('她在它經過時動了，它轉向她，恐慌 +1，本區只加這一次'));
+  assert(contract.includes('照一般規則計一次高強度事件，與 UA-A2a 之間也要隔滿 10 分鐘'));
+  assert(!contract.includes('共用同一次高強度事件，不另佔 10 分鐘配額、不適用延後；但要在 UA-A2a'), 'UA-A2d no longer shares UA-A2a');
   const ladder = contract.split('<a id="silencer-ladder"></a>')[1] || '';
   assert(ladder.includes('##### 噤聲者的五幕強度'));
   assert(ladder.includes('全作唯一完整的絕對靜默'));
@@ -76,10 +77,12 @@ test('silencers are seeded in acts 1 and 2 with lighter omens, and only act 4 re
   const spec = name => readFileSync(path.join(ROOT, 'docs/10_製作規格', name), 'utf8');
   const act1 = spec('10-02_製作規格_第一幕.md');
   assert(act1.includes('**上部遊蕩怨靈 UA-A1d／吊籃井的遠影**'));
-  assert(act1.includes('不抓人、不加恐慌、不失焦'));
+  assert(act1.includes('恐慌 +1，本區只加這一次'));
+  assert(act1.includes('`wander.ua_a1d.panic_added`'));
   const act2 = spec('10-03_製作規格_第二幕.md');
   assert(act2.includes('**上部遊蕩怨靈 UA-A2d（噤聲者早期版，產線桌列的短追）：**'));
   assert(act2.includes('被抓一次本區即結束：恐慌 +1、本區上限 +1'));
+  assert(act2.includes('踏上 T-R11-R12 離開第二幕時仍未開始，才記 `ended`'));
   assert(act2.includes('不對應排行榜上的任何一列，也不是 E-04'));
   assert(act2.includes('不做噤聲者全域靜默'), 'R6 cursor freeze stays a partial false alarm');
 });
