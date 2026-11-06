@@ -92,13 +92,14 @@ test('aesthetic changes preserve attack timing, safe reading and staged Xiaohua 
 
 test('Laozhou and Ahsun gain presentation-only horror without changing timings, faces or lunges', () => {
   includes(story(2), ['頸殼後側沿一道直線裂開一指寬', '照出殼裡是空的', '朝玩家站的方向偏過約 15 度',
-    '整排空座位的有線耳機在同一拍一起清喉嚨', '最後一聲停在玩家旁邊那一格', '同一次遭遇只出現一次',
+    '整排空座位的有線耳機在同一拍一起清喉嚨', '只有玩家旁邊那一格的耳機再清一次喉嚨', '同一次遭遇只出現一次',
     '節指就比上一次多折一節', '指尖不越過邊線，凹位裡仍然安全', '最外層笑膜從他的輪廓滑開', '拼不成臉',
     '照同樣的次數和間隔敲一遍', '前兆一開始就截斷']);
-  includes(spec(2), ['不計 HA／HP，HA-R7-01 已略過時照樣出現', '傳回期間 UA-A2d 不開始', '離房或讀檔回到第一次的長度',
+  includes(spec(2), ['不計 HA／HP，HA-R7-01 已略過時照樣出現', '這段期間 UA-A2d 不開始', 'R7 的遠中近掃動只留給 HA-R7-01 與 UA-A2d', '離房或讀檔回到第一次的長度',
     '不從畫面中央撲向鏡頭', '這段音景只新增這一個聲源', '三項都不改 3 秒前兆、0.6 秒表現與 6 秒空檔']);
   includes(row('阿尋'), ['只加演出，不改前兆、判定與空檔']);
-  includes(row('老周'), ['不增加主動撲擊', '刻痕仍為 347 道', '傳回玩家旁邊一次']);
+  includes(row('老周'), ['不增加主動撲擊', '刻痕仍為 347 道', '旁邊那一格再清一次']);
   includes(appendix, ['`SFX_R07_LINE_THROAT`', '`SFX_R11_KEY_ECHO`']);
   assert(!spec(2).includes('不能用同一清喉嚨再環繞房間'));
+  for (const sweep of ['一格一格往回傳', '由遠到近停在玩家旁邊']) assert(!story(2).includes(sweep) && !spec(2).includes(sweep), sweep);
 });

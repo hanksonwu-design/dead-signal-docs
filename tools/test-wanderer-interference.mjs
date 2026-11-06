@@ -67,6 +67,8 @@ test('silencers are seeded in acts 1 and 2 with lighter omens, and only act 4 re
   assert(contract.includes('感知照常可用，不算工具被剝奪'));
   assert(contract.includes('她在它經過時動了，它轉向她，恐慌 +1，本區只加這一次'));
   assert(contract.includes('照一般規則計一次高強度事件，與 UA-A2a 之間也要隔滿 10 分鐘'));
+  for (const phrase of ['兩區不因 10 分鐘間隔被取消，只會延後', '間隔下限改為 5 分鐘', '阿尋遭遇計一次高強度事件', 'UA-A2c 不適用 10 分鐘間隔'])
+    assert(contract.includes(phrase), phrase);
   assert(!contract.includes('共用同一次高強度事件，不另佔 10 分鐘配額、不適用延後；但要在 UA-A2a'), 'UA-A2d no longer shares UA-A2a');
   const ladder = contract.split('<a id="silencer-ladder"></a>')[1] || '';
   assert(ladder.includes('##### 噤聲者的五幕強度'));
