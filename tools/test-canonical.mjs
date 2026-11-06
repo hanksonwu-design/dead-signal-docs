@@ -1131,6 +1131,23 @@ test('photo changes only at story moments and keeps the story lock and saved bos
   assert(block('s-0909-10').includes('主管調閱・未歸還') && block('s-0909-10').includes('IC2'));
 });
 
+test('self-evidence panic fires once per placement, caps at stage 3 and never points at the line', () => {
+  const rule = block('s-0406-7');
+  for (const phrase of ['<a id="self-evidence-panic"></a>', '每處只算一次', '不另設去重鍵', '最多推到階段 3', '破例三鎖定期間由鎖定吸收',
+    '首次取得 `E1-01`', '`act2.r07.e107_seen`', '`act2.r11.e203_seen`', '首次取得 `E2-14`', '`act3.r17.e303_aligned`',
+    '`act4.r20.palm_accepted`', '`act6.r29.e502_seen`', '不標出是哪一行或哪一欄']) assert(rule.includes(phrase), phrase);
+  assert(!rule.includes('排班表'));
+  assert(block('s-0904-12').includes('〔玩家〕首次取得 `E1-01` 時，恐慌增加一階'));
+  assert(block('s-0905-44').includes('〔玩家〕首次取得 `E2-03` 時，恐慌增加一階'));
+  assert(block('s-0906-38').includes('〔玩家〕首次取得 `E2-14` 時，恐慌增加一階'));
+  const r7 = block('s-0905-15'), r17 = block('s-0906-46');
+  assert(r7.includes('〔玩家〕第一次在這段凝固取得 `E1-07` 時，恐慌增加一階'));
+  assert(r7.indexOf('恐慌增加一階') < r7.indexOf('……再等我一下。'));
+  assert(r17.includes('〔玩家〕首次取得 E3-03 時，恐慌增加一階'));
+  assert(r17.indexOf('恐慌增加一階') < r17.indexOf('筆記翻到封底那張照片'));
+  assert(block('s-0907-23').includes('已鎖在階段 3 者維持不變'));
+});
+
 test('R1 signal tests have local useful effects without completing or resetting the encounter', () => {
   const signal = block('s-0602-4').split('<a id="signal-tests"></a>')[1];
   for (const phrase of ['選填播放 5 點，少於 5 點停用', '不由播放代讀',
