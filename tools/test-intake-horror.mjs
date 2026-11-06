@@ -121,7 +121,7 @@ test('new voice lines and existing stage dialogue agree with the production tabl
   has(voiceTable, '**29 行候選文本**', '| 設備人聲落點 | 11 |', '本輪新增設備人聲 | 5');
 });
 
-test('new visual layers reuse existing image orders and the novel reflects the same encounter', () => {
+test('new visual layers reuse existing image orders', () => {
   for (const [act, image, phrase] of [[1, 'R1-V01', '抓椅／膝先轉／手滑脫'],
     [1, 'R1-C02', '五句舊檔字幕'], [1, 'R1-C03', '第三個待叫編號'],
     [1, 'R2-D02', '交友頁縮圖'], [2, 'R7-D02', '交友帳號代聊／依稿回覆']]) {
@@ -129,8 +129,6 @@ test('new visual layers reuse existing image orders and the novel reflects the s
     assert(row, image);
     has(row, phrase);
   }
-  const novel = readFileSync(new URL('../docs/09_故事劇情/17_縮寫短文.md', import.meta.url), 'utf8');
-  has(novel, ...voices, '手指逐節滑脫', '第三個待叫編號接到眼前桌沿的工位', '沒有告訴我他後來去了哪裡');
   const flow = JSON.parse(readFileSync(new URL('../scene-flow.json', import.meta.url), 'utf8'));
   assert.equal(flow.nodes.length, 48);
   assert.equal(flow.routes.length, 56);

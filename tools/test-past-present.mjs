@@ -101,10 +101,3 @@ test('existing image orders carry the comparison work without extra maps or frag
   assert.equal(flow.routes.length, 56);
   assert.equal(flow.subscenes.length, 72);
 });
-
-test('the condensed novel preserves the same past to present progression', () => {
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  ordered(novel, '床架和壁紙的接縫都在原處', '停在過去的手',
-    '等手能動了，我又看向空椅', '凝固裡的筆尖停在同一條欄線上方');
-  has(novel, '我想起四十八樓的布結');
-});

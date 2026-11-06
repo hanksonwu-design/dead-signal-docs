@@ -20,12 +20,12 @@ const FOLDER_LABELS = {
   "07_視聽與介面": "視聽與介面",
   "08_製作管理": "製作管理",
   "09_劇本": "遊戲劇本",
-  "09_故事劇情": "精簡版小說",
+  "09_故事劇情": "改編存檔",
   "10_製作規格": "製作規格",
   "11_小說": "小說",
 };
 const ROOT_FOLDER = "根目錄";
-// The abridged novel stays in the repository for consistency tests but is no longer published.
+// Earlier adaptation drafts stay in the repository for traceability but are not published.
 const UNPUBLISHED_FOLDERS = new Set(["09_故事劇情"]);
 
 function listMarkdown(dir) {

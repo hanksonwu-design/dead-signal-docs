@@ -8,7 +8,6 @@ const master = parseMaster();
 const story = act => master.documents.get(ACTS[act].path);
 const spec = act => master.documents.get(ACTS[act].specPath);
 const appendix = master.documents.get(APPENDIX);
-const novel = readFileSync(new URL('../docs/09_故事劇情/17_縮寫短文.md', import.meta.url), 'utf8');
 const block = id => {
   assert(master.blocks.has(id), `Missing source block: ${id}`);
   return master.blocks.get(id);
@@ -46,7 +45,6 @@ test('escape timestamps keep the seven-minute bypass and separate same-floor pic
   includes(spec(5), ['約 02:40 抵達 B3', '不加作 R25 的精確時戳', '不是補給架所在樓層', '驗證恢復不會將側梯內部各層同步鎖死']);
   includes(spec(0), ['02:20:31 從 B 棟 50F', '約 02:40 才抵達 B3']);
   includes(spec(8), ['02:20:22 在 B 棟 50F 轉向往 B3']);
-  includes(novel, ['02:20:31，補給庫存少了一包', '架位寫著五十樓', '我已在管理側梯裡']);
 });
 
 test('historical descent does not borrow the damaged present-day route or a new required clue', () => {
@@ -86,7 +84,6 @@ test('historical rescue remains unconfirmed while actual ending rescue is preser
   includes(appendix, ['人為封鎖先發生，第六至七日的結構震損在後', '現有歷史原件不證明救援抵達', '求援留下紀錄，裂口仍不是出口']);
   includes(spec(8), ['門先由集團', '較晚衝擊又使公共通路斷裂', '裂口與求救回執都不等於出口或救援已到']);
   includes(row(appendix, 'B《沒有我的故事》').join(' '), ['主角回返獲救後', '本地原件未刪']);
-  includes(novel, ['清障的工具聲從維修入口接近', '照護仍在泵房裡']);
 });
 
 test('R19 distinguishes declining before entry, pausing or saving, and completing before exploration', () => {
@@ -99,7 +96,7 @@ test('R19 distinguishes declining before entry, pausing or saving, and completin
 test('R19 record duration and supervisor confirmation cannot certify an unseen full procedure', () => {
   includes(block('s-0907-14'), ['紀錄總長 11:40', '約 90 秒靜止片段', '不能由此斷言未呈現的時間']);
   includes(appendix, ['約 90 秒的靜止片段', '命令本身不證明那次親自到場', '仍持續在同類處置欄位簽字']);
-  for (const source of [...master.documents.values(), novel]) {
+  for (const source of master.documents.values()) {
     assert.doesNotMatch(source, /11 分 40 秒，姿勢一次都沒有改變|十一分四十秒，姿勢一次都沒有改變|在房間裡站滿十一分四十秒|十一分四十秒，一次都沒有離開|因為她看完過|「等我確認」的意思是她會來/);
   }
 });
@@ -115,7 +112,6 @@ test('ending B releases the door by choice after upload, with matching VO and ar
   assert.match(spec(9), /^\| \d+ \| 小花／現時 \| 這次，別再說會回來。 \| R32-B2 \| 新增；待審 \|/m);
   includes(row(spec(9), 'R32-V01').join(' '), ['B 另交', '低動態版同樣可辨']);
   includes(appendix, ['是決定停止等待', '她不讀心、不知道終端上的遮蔽內容', '沒有原諒主角的責任']);
-  includes(novel, ['這次，別再說會回來。', '本地的簽核沒有因為這個答案消失']);
 });
 
 test('controlled contact and rations remain distinct from private freedom and old resident commerce', () => {
@@ -140,10 +136,9 @@ test('R24 concludes identity-record rewriting without deleting evidence or chang
 
 test('Kang recording remains a coercive promise rather than an author-certified guarantee', () => {
   const promise = '你可以待在那邊，也可以到這邊來。到這邊來的人，不會被送去校正區。';
-  for (const source of [story(5), spec(5), appendix, novel]) includes(source, [promise]);
+  for (const source of [story(5), spec(5), appendix]) includes(source, [promise]);
   includes(appendix, ['用局部真話包裝脅迫', '是康的承諾，不是永久保障', '職位與待遇仍可被撤回', '錄音證明他說過什麼，不替承諾背書']);
   includes(spec(5), ['康的原始承諾，而非系統保證', '本人仍受離園與私人通聯限制']);
-  includes(novel, ['住宿和配給確實換過', '證件卻仍被扣著']);
   for (const source of master.documents.values()) {
     assert.doesNotMatch(source, /他從不說謊|康從不說謊|錄音裡沒有一個字是假的|他說的每一句都是真的/);
   }

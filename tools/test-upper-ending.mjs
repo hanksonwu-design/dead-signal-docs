@@ -87,9 +87,6 @@ test('work orders and split contract preserve a complete upper part without inve
   for (const id of ['R8-C02', 'R16-D01', 'R16-D02', 'R16-D06', 'R22-V01', 'R22-C02', 'R22-C03', 'R22-C06']) {
     assert(flow.images[id], `Missing work order ${id}`);
   }
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  const chapter = novel.slice(novel.indexOf('## 第四幕'), novel.indexOf('## 第五幕'));
-  includes(chapter, ['緊急鎖', '輪廓沒有低頭', '路是我打開的', '這次，等我一起走。', '我跨過門檻']);
 });
 
 test('the upper part announces a bounded goal and preserves the two original ways to achieve it', () => {

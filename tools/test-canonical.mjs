@@ -356,7 +356,6 @@ test('worker origins are abduction or coerced friend referrals, without voluntar
   for (const stale of ['招工燈箱', '招工大廳', '招工門面', '招募廣告', '入職名冊',
     '她面試時自己給的', '可能自願加入', '宿舍、福利、休閒設施，都會在報到後統一安排。']) {
     assert(!master.text.includes(stale), stale);
-    assert(!read('docs/09_故事劇情/17_縮寫短文.md').includes(stale), stale);
     assert(!inventory.includes(stale), stale);
   }
   assert(!/招募|招工/.test(inventory));
@@ -559,9 +558,6 @@ test('occupational habits use visible clues without early identity disclosure or
   assert(master.documents.get(ACTS[3].specPath).includes('查看不記完成'));
   assert(master.documents.get(ACTS[7].specPath).includes('不是新增排序謎題'));
   assert(block('s-0909-26').includes('先比字，再看每頁批准了什麼'));
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  assert(novel.indexOf('跨境電商營運助理') > novel.indexOf('## 第五幕'));
-  assert(novel.includes('轉介來自受控員工，沒有安排管理職面試'));
 });
 
 test('R24 production and sensitive-sequence summary retain actual evidence requirements', () => {
@@ -600,19 +596,6 @@ test('R32 reveal/defense/choice order and R33 ending sequence remain separate', 
   assert(block('s-0910-36').includes('本人回想／原件待調取'));
   assert(graph.phases.R33.some(step => step.includes('二十秒黑畫面')));
   assert(block('s-0910-39').includes('可明確略過'));
-});
-
-test('novel corrects early reveal, floors, recording voice, timing and informed ending E', () => {
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  assert(novel.includes('是康的聲音。'));
-  assert(novel.includes('02:13 是準備。02:15 旁路才生效，到 02:22 結束。'));
-  assert(novel.includes('我知道按完會失去什麼。'));
-  assert(novel.includes('仍可以取消。我沒有取消。'));
-  assert(novel.includes('第三段是 81'));
-  assert(novel.includes('C 開或關都不影響這次比對'));
-  assert(novel.indexOf('梁樂瑤') > novel.indexOf('## 第五幕'));
-  for (const stale of ['十二樓是網咖','二十六樓的配電盤','四十二樓的檔案室','四十九樓的展示廊','樓內生命訊號：1','手指自己動了起來','按下去會怎麼樣，我不知道','病床','醫院的']) assert(!novel.includes(stale), stale);
-  assert.equal([...novel.matchAll(/^## [ABCDE]：/gm)].length, 5);
 });
 
 test('unplaced timeline: 16 inventories x 2 comparison states follow source evidence', () => {
@@ -684,12 +667,7 @@ test('Ah Xun starts sending on day 0; the historical header arrives on day 5', (
   assert(master.text.includes('| **T−2 週 +5 日** | **阿尋傳輸的殘缺標頭抵達外部中繼端**'));
 });
 
-test('novel F3 reads the fixed glass strip from the other side without author knowledge', () => {
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  assert(novel.includes('從觀察側望回去，我又看見收容室玻璃壓條裡的那片定位片'));
-  assert(novel.includes('視訊組共用型／由缺口起算'));
-  assert(novel.includes('逐格對上操作序位。第三段是 81'));
-  for (const stale of ['貨梯帶來的同一張透光定位片', '小花見過視訊組的同型設備']) assert(!novel.includes(stale), stale);
+test('F3 reads the fixed glass strip from the observation side without author knowledge', () => {
   assert(master.text.includes('同一高度的玻璃壓條內嵌一小片透光定位片'));
   assert(master.text.includes('從觀察側對準同一片玻璃壓條定位片'));
 });
@@ -792,10 +770,11 @@ test('website separates reading and production categories and preserves old act 
   assert.equal(documents.filter(doc => doc.weeklyDetail).length,13);
 });
 
-test('abridged novel and film drafts stay in the repository unpublished while the novel is published', () => {
+test('film drafts stay in the repository unpublished, the abridged novel is retired and the novel is published', () => {
   const documents = buildDocuments();
   assert(!documents.some(doc => doc.folder === '09_故事劇情'));
-  assert(read('docs/09_故事劇情/17_縮寫短文.md').includes('# 灰燈寨（精簡版小說）'));
+  assert(!existsSync(path.join(ROOT, 'docs/09_故事劇情/17_縮寫短文.md')));
+  assert(existsSync(path.join(ROOT, 'docs/09_故事劇情/電影改編存檔')));
   assert(!documents.some(doc => doc.folder === '11_電影劇本'));
   const novel = documents.filter(doc => doc.folder === '11_小說');
   assert.deepEqual(novel.map(doc => doc.path), ['11_小說/11-00_小說寫作規範.md', '11_小說/11-01_小說大綱_序幕至第四幕.md', '11_小說/11-02_小說大綱_第五幕至終幕.md', '11_小說/11-10_小說_序幕.md', '11_小說/11-11_小說_第一幕.md', '11_小說/11-12_小說_第二幕.md', '11_小說/11-13_小說_第三幕.md', '11_小說/11-14_小說_第四幕.md']);
@@ -887,7 +866,6 @@ test('Kang post-credit date counts from escape, not either later seal', () => {
   assert.equal((Date.parse('2025-11-14') - Date.parse('2025-11-04')) / day, 10);
   assert(block('s-0910-42').includes('逃亡後第十日（2025-11-14）'));
   assert(block('s-0102-26').includes('逃亡後第 10 日（2025-11-14）'));
-  assert(read('docs/09_故事劇情/17_縮寫短文.md').includes('逃亡後第十日'));
   assert(!master.text.includes('封鎖形成後的第十日'));
 });
 
@@ -1023,13 +1001,10 @@ test('Xiaohua domain preserves reveal order, fixed landmarks and ending-specific
   assert(block('s-0809-9').includes('defense_complete 只清除動態攻擊，不清除封窗與回返'));
 });
 
-test('domain inventory and novel agree while added art and playtests remain pending', () => {
+test('domain inventory agrees while added art and playtests remain pending', () => {
   const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
   assert(inventory.includes('退位、鬆柄與最終拒絕分開'));
   assert(inventory.includes('停戰仍未解封'));
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  assert(novel.includes('柱跨和封窗沉進暗處'));
-  assert(novel.includes('停止攻擊和讓我離開，是兩件不同的事'));
   const assets = block('s-0810-21');
   assert(assets.includes('以下六組交付'));
   assert(assets.includes('遮罩、音訊混音與差分需另估工時'));
@@ -1083,15 +1058,12 @@ test('boss material and sound additions retain protected evidence, fixed cues an
   assert(block('s-0910-17').includes('真正扶手的磨損與斷鉚釘保持清楚'));
 });
 
-test('uncanny audiovisual inventory, novel and pending asset estimates agree', () => {
+test('uncanny audiovisual inventory and pending asset estimates agree', () => {
   const assets = block('s-0810-21');
   for (const phrase of ['R7／R11／校正區須新增估工', '17 秒留言原檔保持不變',
     '不新增音檔', '素材命名與引擎匯入待製作時配置', '主觀不安程度']) assert(assets.includes(phrase), phrase);
   const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
   assert(inventory.includes('不新增收集物、訊號、房間或 Boss'));
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  for (const phrase of ['留言照原來的樣子播完', '反光與膜擦退下', '沒有腳步濺水的聲音',
-    '矩形反光卡住胸殼', '近處的纖維像原來的衣料']) assert(novel.includes(phrase), phrase);
 });
 
 test('gameplay progression maps every original node once and links all ten production acts', () => {
@@ -1196,15 +1168,12 @@ test('panic misplacements reuse seen objects without replacing evidence or reviv
   assert(panic.includes('不要求跨幕回到原房'));
 });
 
-test('gameplay inventory and novel share the source contracts while production stays pending', () => {
+test('gameplay inventory shares the source contracts while production stays pending', () => {
   const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
   for (const anchor of ['core-gameplay-progression', 'photo-flow', 'signal-tests',
     'light-marker-route', 'misplaced-residue-cases', 'core-gameplay-assets', 'core-gameplay-audit']) {
     assert(inventory.includes(`#${anchor}`), anchor);
   }
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  assert(novel.includes('重置之後，他們坐回原位'));
-  assert(novel.includes('那張照片已經清楚了'));
   const assets = block('s-0810-21').split('<a id="core-gameplay-assets"></a>')[1];
   assert(assets.includes('未宣稱圖稿或引擎已完成'));
   assert(assets.includes('維持 48 個宏觀流程節點、343 場次與 15 個訊號槽'));
@@ -1274,15 +1243,11 @@ test('player-facing feedback and ending choices agree with production wording', 
   const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
   assert(inventory.includes('#player-language'));
   assert(inventory.includes('#reading-load'));
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  assert(novel.includes('名單已補齊。已保存可供外部讀取的副本。'));
-  assert(!novel.includes('校驗完成。外部可讀副本已保存。'));
 });
 
 test('horror rewrite removes raid exposition but retains confiscation and dated sources', () => {
   const stories = ACTS.map(act => master.documents.get(act.path)).join('\n');
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  for (const text of [stories, novel]) {
+  for (const text of [stories]) {
     for (const stale of ['攻堅', '警方', '警用', '採證袋', '軍方', '空襲']) assert(!text.includes(stale), stale);
     assert(text.includes('封存袋'));
     assert(text.includes('紅霧'));

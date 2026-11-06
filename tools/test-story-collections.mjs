@@ -7,7 +7,6 @@ import { parseMaster, deriveGraph } from './sync-canonical.mjs';
 const read = file => readFileSync(new URL(`../${file}`, import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 const master = parseMaster();
 const inventory = read('docs/10_製作規格/10-12_製作規格_收集物與筆記本總表.md');
-const novel = read('docs/09_故事劇情/17_縮寫短文.md');
 const common = master.documents.get(APPENDIX);
 const specs = act => master.documents.get(ACTS[act].specPath);
 const stories = act => master.documents.get(ACTS[act].path);
@@ -28,7 +27,7 @@ test('five story discoveries have consistent source ownership, required labels a
     assert(rows[0].includes(name) && rows[0].includes(focus), `${id}: inventory provenance`);
     assert(stories(act).includes(name), `${id}: no story discovery`);
     assert(specs(act).includes(name) && specs(act).includes(focus), `${id}: no local production source`);
-    assert(common.includes(name) && props.includes(name) && novel.includes(name), `${id}: related sources omit discovery`);
+    assert(common.includes(name) && props.includes(name), `${id}: related sources omit discovery`);
     for (const state of ['seen', 'draft', 'verified']) {
       assert(specs(act).includes(`observations.${id.toLowerCase().replace('-', '_')}.${state}`), `${id}: missing ${state}`);
     }

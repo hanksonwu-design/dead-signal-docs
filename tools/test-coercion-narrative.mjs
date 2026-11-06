@@ -38,8 +38,6 @@ test('optional non-graphic disclosure has art coverage and matching content noti
   includes(spec(4), ['| R21-D02 |', '只製文件與無聲轉錄，不製受害影像']);
   includes(spec(7), ['| R29-D08 |', '復用原圖']);
   includes(appendix, ['性侵與性羞辱的非露骨文字敘述', '略過不影響原主線、通行或結局', '也不會在 R29 自動補播或補字']);
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  includes(novel, ['內容提醒', '我遭到性侵。我要求就醫、停止出鏡，並聯絡家人。', '收件日期早於入區核可']);
   assert.equal(ACTS.length, 10);
   const graph = JSON.parse(read('scene_graph.json'));
   const flow = JSON.parse(read('scene-flow.json'));

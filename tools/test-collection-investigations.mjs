@@ -101,20 +101,14 @@ test('shared rules retain source provenance, local objects, optionality and old-
   }
 });
 
-test('the novel, detailed act outline and pacing summaries retain all four local sources', () => {
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
+test('the detailed act outline and pacing summaries retain all four local sources', () => {
   const detailedOutline = master.blocks.get('s-0301-17');
   assert(detailedOutline, 'Missing detailed lower-act outline');
   for (const clue of requiredFieldClues) {
-    const actName = ACTS[clue.act].name;
-    const nextAct = ACTS[clue.act + 1].name;
-    const chapter = novel.split(`## ${actName}`)[1]?.split(`## ${nextAct}`)[0];
-    assert(chapter?.includes(clue.name), `${clue.id}: novel source missing from its act`);
     for (const [label, text] of [['detailed outline', detailedOutline], ['03-01 summary', topicSource('0301')], ['03-04 pacing', topicSource('0304')]]) {
       assert(text.includes(clue.alias), `${clue.id}: ${label} omits its source`);
     }
   }
-  assert.doesNotMatch(novel, /OBS[67]-\d\d|observations\.obs[67]_/, 'Internal source keys must stay out of the novel');
 });
 
 test('route and reasoning summaries keep necessary machine checks separate from optional investigations', () => {

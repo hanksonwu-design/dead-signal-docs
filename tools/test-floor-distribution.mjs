@@ -64,10 +64,7 @@ test('retired exits are not duplicated in current artwork or reading order',()=>
  assert.equal(Object.values(flow.images).filter(i=>i.kind==='過渡場景').length,58);
  assert.equal(flow.subscenes.filter(s=>s.play).length,38);
 });
-test('abridged novel and the transition inventory share the new distribution',()=>{
- const novel=readFileSync(new URL('../docs/09_故事劇情/17_縮寫短文.md',import.meta.url),'utf8');
- for(const stale of ['八樓到十四樓沒有可以進去的門','四十一樓前段','五十樓展示廊'])assert(!novel.includes(stale),stale);
- for(const current of ['二十三樓修理區','二十七樓的貨梯','三十一樓伺服器室','二十九樓辦公室','三十五樓展示廊','四十一樓分租廊','四十七樓交易門前','四十八樓','四十九樓水箱'])assert(novel.includes(current),current);
+test('the transition inventory keeps the new distribution',()=>{
  const inventory=readFileSync(new URL('../docs/08_製作管理/08-13_劇情節點與場景道具總表.md',import.meta.url),'utf8');
  const table=inventory.split('<!-- inventory:transitions:begin -->')[1].split('<!-- inventory:transitions:end -->')[0];
  const rows=[...table.matchAll(/^\| \[T-[^\]]+\]\([^\n]+?\) \| (\d+) \|/gm)];

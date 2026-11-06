@@ -91,11 +91,8 @@ test('published routes preserve every floor and original one-way boundary', () =
   assert.equal(Object.keys(flow.images).length, 565);
 });
 
-test('shared rules and novel use the same door causes and return path', () => {
+test('shared rules keep the same door causes and return path', () => {
   has(master.documents.get(APPENDIX), '具體機構只套用這兩扇門', '大廳側無把手', '核對端只在工坊側');
-  const novel = readFileSync(new URL('../docs/09_故事劇情/17_縮寫短文.md', import.meta.url), 'utf8');
-  has(novel, '我沿洗衣窄巷回到二樓宿舍', '四樓早餐攤', '斜舌在身後扣回', '僅工坊側放行');
-  assert(!novel.includes('四樓共用水槽'));
 });
 
 test('Act 1 completion notes distinguish required actions, optional checks and deferred F1 decoding', () => {

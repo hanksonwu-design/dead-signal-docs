@@ -147,10 +147,6 @@ test('canonical room phases introduce lighting before mechanical alignment', () 
   ordered(graph.phases.U3.join(' → '), '查看燈座', '配罩並隔離眩光', '照出本地雙刻線', '對齊');
   const inventory = read('docs/08_製作管理/08-13_劇情節點與場景道具總表.md');
   has(inventory, '雙路正接', '固定座線／栓肩線', '三組配對後親手確認');
-  const novel = read('docs/09_故事劇情/17_縮寫短文.md');
-  has(novel, '透明護蓋下的小片', '三處全在原位');
-  const act6Novel = novel.slice(novel.indexOf('## 第六幕：'), novel.indexOf('## 第七幕：'));
-  assert.match(act6Novel, /移動橋栓時[^。]*栓肩[^。]*跟著走[^。]*固定座[^。]*沒有動。/);
 });
 
 test('R12 exit truth table requires both repaired power and verified local access', () => {
