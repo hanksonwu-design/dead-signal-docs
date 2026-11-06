@@ -151,7 +151,8 @@ test('every static screenplay cue names its shot size without changing protected
   // Optional inhumane-treatment traces: R2 family-contact page (act 1), R6 locked tenant door and
   // R10 wall prayer (act 2), R18 resident door and R20 sleep log (act 4), U5 surrender note (act 7).
   // Acts 1 and 2 each add one full shot for the early silencer (T-R5-R6-02 shaft, R7 desk row).
-  const counts = [23, 64, 89, 102, 49, 33, 18, 27, 10, 20];
+  // The photo story moments add close-ups at R7 and R11 (act 2), R17 (act 3) and the R27 slot (act 6).
+  const counts = [23, 64, 91, 103, 49, 33, 19, 27, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -1109,24 +1110,25 @@ test('gameplay progression maps every original node once and links all ten produ
   }
   assert.equal(master.anchorFiles.get('signal-tests'), ACTS[1].specPath);
   assert(flow.includes('R25 喇叭靜默窗，不另加追兵'));
-  assert(flow.includes('不使用照片、不留光、略過 R1 兩測試'));
+  assert(flow.includes('略過照片時刻、不留光、略過 R1 兩測試'));
 });
 
-test('photo use cannot farm clarity or override the story lock and saved boss outcome', () => {
+test('photo changes only at story moments and keeps the story lock and saved boss outcome', () => {
   const photo = [block('s-0406-9'), block('s-0814-18')].join('\n\n');
-  for (const phrase of ['| 0–5 |', '| 6–15 |', '| 16–30 |', '| 31+ |',
-    '不是每次翻頁就增加', '成功次數加 1', '恐慌至少 1、穩定度大於 0',
-    '恐慌 0、穩定度 0、冷卻中或鎖定時只看照片', '不把看照片當作離幕條件',
-    '由原處置結果推導完整清晰', '180 秒一次', '不延長正在跑的冷卻',
-    '不倍增', '不能靠快捷鍵在招式中新增停攻窗口', '兩種阿彪處置']) assert(photo.includes(phrase), phrase);
-  assert(block('s-0903-14').includes('頁內有一張過曝的照片記憶'));
-  assert(block('s-0904-6').includes('不看照片也能接著調查'));
-  assert(block('s-0908-58').includes('即使從未用過它，也是一樣'));
+  for (const phrase of ['不降恐慌', '不計使用次數', '沒有冷卻', '略過照樣', '自行翻看',
+    'R7 第一次解結', 'T-R7-R8-01', 'R11 輪廓可辨', 'R17 五官逐漸清楚', '對不上焦',
+    '不把看照片當作離幕條件', '由破例三狀態推導', '原成功次數、冷卻與話術待用標記一律忽略',
+    'R26 已完成時直接為 `clear`', '兩種阿彪處置', 'R29 對過筆勢才知道是她']) assert(photo.includes(phrase), phrase);
+  for (const gone of ['90 秒冷卻', '180 秒', '成功次數加 1', '| 31+ |']) assert(!photo.includes(gone), gone);
+  assert(block('s-0903-14').includes('封底有一個夾層，被一條洗得發白的舊布條綁住'));
+  assert(!block('s-0903-14').includes('再等我一下'));
+  assert(block('s-0905-15').includes('主角（OS，只有氣聲）「……再等我一下。」'));
+  assert(!block('s-0904-6').includes('照片'));
+  assert(block('s-0908-58').includes('略過時照片同樣已完整清晰'));
   assert(block('s-0606-8').includes('不要求查看才開管理門'));
   assert(block('s-0605-8').includes('不能把所有玩家強制鎖 3'));
-  assert(block('s-0202-8').includes('單純開關頁面不計次'));
-  assert(photo.includes('每次由關閉到主動開啟照片時只判斷一次'));
-  assert(photo.includes('讀檔恢復已開啟頁面也不算新開啟'));
+  assert(block('s-0202-8').includes('自行翻看不改變清晰度'));
+  assert(block('s-0909-10').includes('主管調閱・未歸還') && block('s-0909-10').includes('IC2'));
 });
 
 test('R1 signal tests have local useful effects without completing or resetting the encounter', () => {

@@ -18,7 +18,7 @@ test('R27 physical comparison keeps the original chains and a local-only fallbac
 
 test('U3 close inspection and the photo remain optional and do not multiply rewards', () => {
   includes(story(6), ['玩家自行切換兩個局部', '自行翻到那張已清晰的照片', '收起照片，再回到剛才的布料近看']);
-  includes(spec(6), ['同一張靜圖', '不新建可探索凝固房', '不是限時答題或最低觀看時間', '局部切換本身不結案', '不重扣首次成本', '恐慌 0、零穩定度或冷卻中仍可看', '不由本次查看變清晰']);
+  includes(spec(6), ['同一張靜圖', '不新建可探索凝固房', '不是限時答題或最低觀看時間', '局部切換本身不結案', '不重扣首次成本', '只供查看，不降恐慌、不改階段', '完整人像沿 R26 已完成狀態']);
 });
 
 test('R29 checks real price notes without inventing R19 history or deciding identity', () => {
@@ -37,7 +37,7 @@ test('R31 equipment inspection preserves both investigation orders and explicit 
 });
 
 test('shared review state cannot grant sources, costs, transitions or a second thaw', () => {
-  includes(appendix, ['id="core-gameplay-return-contract"', 'U1–U6 既有 F0', 'R29 不新建凝固層', 'ui.investigation_return', 'version 1', '損壞或未知焦點回本房原安全畫面', '不補證據、不回溯加關卡', '照片載入不算重新開啟', '留光差分不重扣槽', '文件測試不能證明節奏已達標']);
+  includes(appendix, ['id="core-gameplay-return-contract"', 'U1–U6 既有 F0', 'R29 不新建凝固層', 'ui.investigation_return', 'version 1', '損壞或未知焦點回本房原安全畫面', '不補證據、不回溯加關卡', '留光差分不重扣槽', '文件測試不能證明節奏已達標']);
 });
 
 test('new reading interactions stay on existing source beats and image work orders', () => {
