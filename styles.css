@@ -256,6 +256,9 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
 .reader-content .cue-player { --cue: #50534c; }
 .reader-content .cue-logic { --cue: #6e4423; }
 .reader-content .cue-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 22px; padding: 9px 12px; border: 1px solid var(--paper-line); font-size: 13px; line-height: 1.7; }
+/* Core gameplay pages: keycaps for controls, bold ink for costs and timings (shape and weight, not color alone). */
+.reader-content kbd.game-key { display: inline-block; min-width: 1.6em; margin: 0 1px; padding: 0 5px; color: #273122; background: #f5f2ea; border: 1px solid #8d917d; border-bottom-width: 2px; border-radius: 4px; font: 600 12.5px/1.55 Consolas, "SFMono-Regular", Menlo, monospace; text-align: center; white-space: nowrap; vertical-align: 1px; }
+.reader-content .game-num { color: #2c4a6b; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .reader-content .cue-legend-title { color: #4e5a41; font-weight: 600; margin-right: 4px; }
 
 @keyframes reader-fade-in { from { opacity: .5; } to { opacity: 1; } }

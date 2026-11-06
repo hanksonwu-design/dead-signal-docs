@@ -325,6 +325,41 @@ function addCueLegend(root) {
   if (title) title.after(legend); else root.prepend(legend);
 }
 
+// Core gameplay pages: key names render as keycaps and costs/timings stand out; the text itself is unchanged.
+// Single letters are only treated as keys in explicit control phrases (E／左鍵, 按住 E, Q 感應, B 直達…),
+// so evidence IDs and branch letters such as E-04, 結局 E or A／B／C stay plain.
+const GAMEPLAY_SKIP = "a, code, pre, kbd, h1, h2, h3, h4, h5, h6, .cue-tag, .cue-legend, .reader-toc";
+const gameKey = (key) => `<kbd class="game-key">${key}</kbd>`;
+const GAMEPLAY_RULES = [
+  [/([EQ])／(左鍵|右鍵)/g, (match, key, button) => `${gameKey(key)}／${gameKey(button)}`],
+  [/(按住|長按|先按|按)(\s?)([EQ])(?![A-Za-z0-9_／-])/g, (match, verb, space, key) => `${verb}${space}${gameKey(key)}`],
+  [/(?<![A-Za-z0-9_-])Q(?=\s?(?:異常感應|感應|協助))/g, gameKey],
+  [/(?<![A-Za-z0-9_-])B(?=\s?(?:直接開啟|直達))/g, gameKey],
+  [/(?<![A-Za-z0-9_-])M(?=\s?開啟路線)/g, gameKey],
+  [/(?<![A-Za-z])(Tab|Esc)(?![A-Za-z])/g, gameKey],
+  [/(?<![A-Za-z0-9._+＋-])([+＋]?\d+(?:\.\d+)?)(\s?)(點|秒|分鐘|ms|倍)(?![A-Za-z])/g, (match) => `<span class="game-num">${match}</span>`],
+  [/(?<![A-Za-z0-9])[+＋]\d+(?![\d.]|\s?(?:點|秒|分鐘|ms|倍))/g, (match) => `<span class="game-num">${match}</span>`],
+];
+
+function decorateGameplay(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: (node) => /[\dEQBMT+＋]/.test(node.data) && !node.parentElement.closest(GAMEPLAY_SKIP) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT,
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  for (const node of nodes) {
+    const plain = esc(node.data);
+    let html = plain;
+    for (const [pattern, replace] of GAMEPLAY_RULES) {
+      html = html.split(/(<[^>]+>)/g).map((part) => part.startsWith("<") ? part : part.replace(pattern, replace)).join("");
+    }
+    if (html === plain) continue;
+    const template = document.createElement("template");
+    template.innerHTML = html;
+    node.replaceWith(template.content);
+  }
+}
+
 function openReader(path, updateHash = true, headingText = "") {
   path = documentAliases[path] || path;
   let doc = state.documents.find((item) => item.path === path);
@@ -370,6 +405,7 @@ function openReader(path, updateHash = true, headingText = "") {
   $("readerContent").innerHTML = renderMarkdown(body);
   window.ScreenplayMarkers?.decorate($("readerContent"), body, doc.path);
   addCueLegend($("readerContent"));
+  if (doc.folder === "04_核心玩法") decorateGameplay($("readerContent"));
   const headings = [...$("readerContent").querySelectorAll("h2")];
   if (headings.length > 3 && !illustrationCatalog) {
     const nav = document.createElement("nav");
