@@ -14,7 +14,8 @@ test('three lower acts have 6, 5 and 4 nodes with stable order, identities and p
   assert.equal(ACTS.length, 10);
   assert.equal(master.sources.length, 73);
   // 04-07..04-12 figure notes now live in the act specs as plain text (-8 blocks), duplicate stubs dropped (-2).
-  assert.equal(master.blocks.size, 1545);
+  // 04-01..04-06 figure notes moved to the act specs (-9 blocks), contracts split into 08-14 (+7).
+  assert.equal(master.blocks.size, 1543);
   assert.equal(graph.nodes.length, 48);
   assert.equal(graph.edges.length, 56);
   for (const [i, ids] of LOWER_ACT_NODES.entries()) {

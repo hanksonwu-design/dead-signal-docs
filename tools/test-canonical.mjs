@@ -446,7 +446,7 @@ test('ten expanded routes preserve original departure gates and ordered scene co
 });
 
 test('versioned route saves cannot skip exploration, destination operations or chapter gates', () => {
-  const common = block('s-0403-3');
+  const common = [block('s-0403-3'), block('s-0814-14')].join('\n\n');
   for (const phrase of ['version: 5', '連續前綴', '不直接送到目的房', '版本 1／2／3／4 的舊通路圖號或實際樓層已改義',
     '不把「看過」當通行權限', '起行不寫入目的房到訪', '不得只憑 to、committed', 'L-04 只走 R17→R14',
     'R13 ↔ R14 的安息門檻雙向有效', 'R3 ↔ R5、R6 ↔ R7']) assert(common.includes(phrase), phrase);
@@ -580,7 +580,7 @@ test('F1 and moth actions do not gate exits; R11 uses actual sources', () => {
 });
 
 test('text-only index, playback count and identity-source distinction', () => {
-  const signal = read('docs/04_核心玩法/04-04_手機與訊號系統.md');
+  const signal = read('docs/08_製作管理/08-14_核心玩法製作契約.md');
   const sound = read('docs/07_視聽與介面/07-02_聲音設計.md');
   const villain = read('docs/02_角色/02-05_反派體系.md');
   assert(signal.includes('無錄音、不合成人聲'));
@@ -836,7 +836,7 @@ test('act VI adjacent views retain actions and safety while removing repeated se
 });
 
 test('orientation and visible cultural use do not depend on reading optional notes', () => {
-  const common = block('s-0403-3');
+  const common = [block('s-0403-3'), block('s-0814-14')].join('\n\n');
   for (const text of ['來路輪廓、去路熱區', '不能直接把底圖水平翻轉', '不提前啟動下一房聲音事件']) assert(common.includes(text), text);
   assert(block('s-0905-55').includes('身後跨幕門已關'));
   assert(block('s-0906-62').includes('靜音模式仍可只靠接縫與投影判斷'));
@@ -1112,7 +1112,7 @@ test('gameplay progression maps every original node once and links all ten produ
 });
 
 test('photo use cannot farm clarity or override the story lock and saved boss outcome', () => {
-  const photo = block('s-0406-9');
+  const photo = [block('s-0406-9'), block('s-0814-18')].join('\n\n');
   for (const phrase of ['| 0–5 |', '| 6–15 |', '| 16–30 |', '| 31+ |',
     '不是每次翻頁就增加', '成功次數加 1', '恐慌至少 1、穩定度大於 0',
     '恐慌 0、穩定度 0、冷卻中或鎖定時只看照片', '不把看照片當作離幕條件',
@@ -1138,7 +1138,7 @@ test('R1 signal tests have local useful effects without completing or resetting 
   assert(block('s-0904-6').includes('叫號完成後，三張椅子保持空著'));
   assert(!block('s-0602-4').includes('播放其他訊號 → 激怒'));
   assert(!block('s-0904-6').includes('依原教學錯誤回饋'));
-  assert(block('s-0404-11').includes('其他房不自動繼承有效性'));
+  assert(block('s-0814-16').includes('其他房不自動繼承有效性'));
   assert(block('s-uppertech-29').includes('不把回座寫成完成，也不把完成寫成安息'));
   assert(!block('s-uppertech-29').includes('安息後回訪不復活'));
   assert(block('s-0803-6').includes('前兩者不激怒、不安息、不開通路'));

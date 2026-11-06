@@ -23,7 +23,7 @@ const ordered = (text, ...terms) => {
     cursor = next;
   }
 };
-const contract = block(appendix, 's-0401-4');
+const contract = [block(appendix, 's-0401-4'), block(appendix, 's-0814-13')].join('\n\n');
 
 // These checks cover authored contracts and generated data, not engine behavior.
 test('past observation and present domains remain distinct within the existing three layers', () => {
@@ -49,9 +49,10 @@ test('R3 teaches spatial comparison without a second photo award or a new window
   has(specs[1], '照片仍沿凝固內實際查看的原條件記為 E1-02', '現時重看不重發',
     '不能據此判死、打開外牆梯或取代 R17 舊檢修副本');
   has(block(scripts[1], 's-0904-21'), '第一部分', '舊維修梯的缺段與封毀處');
-  for (const id of ['s-0401-9', 's-0402-11']) {
-    has(block(appendix, id), '床位牌姓名與床邊信件');
-    assert(!block(appendix, id).includes('先查看枕頭壓痕'));
+  const v01 = specs[1].slice(specs[1].indexOf('<a id="s-0401-9"></a>'), specs[1].indexOf('<a id="r3-past-present"></a>'));
+  for (const text of [v01, block(appendix, 's-0402-11')]) {
+    has(text, '床位牌姓名與床邊信件');
+    assert(!text.includes('先查看枕頭壓痕'));
   }
 });
 

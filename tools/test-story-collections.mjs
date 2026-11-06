@@ -76,7 +76,7 @@ test('optional personal stories cannot supply mandatory evidence, resources or e
 });
 
 test('partial reads and legacy completion remain distinct from new verified sources', () => {
-  const contract = common.split('<a id="collection-investigation-contract"></a>')[1].split('<!-- import:s-0401-2:end -->')[0];
+  const contract = common.split('<a id="collection-investigation-contract"></a>')[1].split('<!-- import:s-0814-12:end -->')[0];
   assert.match(contract, /多物件未齊只保留部分摘記/);
   assert.match(contract, /合法完成 E3-02.*鏈 C.*E5-02.*不倒扣/);
   assert.match(contract, /不由完成鍵補造新原文.*verified/);

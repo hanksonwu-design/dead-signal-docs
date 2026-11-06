@@ -95,7 +95,7 @@ test('physical source identifiers and dates agree between the reading script, sp
 });
 
 test('shared rules retain source provenance, local objects, optionality and old-save compatibility', () => {
-  const common = master.documents.get(APPENDIX).split('<a id="collection-investigation-contract"></a>')[1].split('<!-- import:s-0401-2:end -->')[0];
+  const common = master.documents.get(APPENDIX).split('<a id="collection-investigation-contract"></a>')[1].split('<!-- import:s-0814-12:end -->')[0];
   for (const phrase of ['14 組含新增可讀原件', '紙、鉗、布袋、標籤及設備留現場', '舊檔缺這批觀察', '不能撤銷既有主線', '不補發來源', 'R32 既有安全觀察／防禦已完成的舊檔不新增前置', '不能把尚不可見的內銷已讀當成開蓋前置', '後續房與結局仍讀原合法完成態']) {
     assert(common.includes(phrase), phrase);
   }

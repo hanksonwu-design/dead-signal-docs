@@ -52,7 +52,7 @@ test('original gates still prevent branch bypasses and premature core access',()
  for(const [a,b] of [['R11','R12'],['R17','R14'],['R17','R18'],['R30','R31']])assert.equal(r(a,b).back,false);
 });
 test('new revision saves cannot convert old route ordinals into unexplored room progress',()=>{
- const policy=master.blocks.get('s-0403-3');
+ const policy=[master.blocks.get('s-0403-3'),master.blocks.get('s-0814-14')].join('\n\n');
  for(const text of ['version: 5','版本 1／2／3／4','每條新路獨立驗證','供電未完成','不能初始化 R15→R16','M1 保留原七窗各自觀察旗標'])assert(policy.includes(text),text);
  const act4=master.documents.get(n('R21').floor.source);
  for(const text of ['平行工作梯','不因入房或讀檔重生','下返 28F 不重播段 C'])assert(act4.includes(text),text);
