@@ -111,7 +111,7 @@ test('U4 landmarks are distinct and compare current observations, not historical
 
 test('minigames preserve accessible input, tiered hints, safe trials and existing pacing budgets', () => {
   has(appendix, 'id="scene-puzzle-contract"', '鍵盤選取／確認與拖曳等效', '靜音、灰階及低動態都可判題',
-    '沿既有三級', '不檢查是否點遍提示或帶齊選填記憶');
+    '沿既有三級', '不檢查是否點遍提示或帶齊非必要記憶');
   for (const act of [3, 6, 7]) has(spec(act), '#scene-puzzle-contract', '第三級', '不代表');
   has(spec(3), '30～90 秒', '不因試錯多一場嚇點');
   has(spec(6), '2～4 分鐘', '原 10～15 分鐘預算');

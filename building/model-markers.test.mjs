@@ -45,7 +45,7 @@ test('R8 workroom observations stay optional ordinary items at their canonical i
   assert.equal(markers.length,1,image);
   const marker=markers[0];
   assert.equal(marker.category,'item',image);
-  assert.equal(marker.timing,'選填查看',image);
+  assert.equal(marker.timing,'非必要查看',image);
   assert.deepEqual(marker.fragmentForms,[],image);
   assert.equal(marker.reading,'',image);
   assert.equal(FRAGMENT_IMAGE_FORMS[image],undefined,image);
@@ -131,7 +131,7 @@ test('horror timing distinguishes optional, conditional and mainline beats witho
  for(const m of data.filter(m=>['horror','boss'].includes(m.category)))assert(MARKER_TIMINGS.includes(m.timing),m.id);
  assert.equal(data.find(m=>m.image==='R11-V01').category,'horror');
  assert.equal(data.find(m=>m.id==='R25-C03-horror').timing,'主線時機');
- assert.equal(data.find(m=>m.id==='R24-C02-horror').timing,'選填查看');
+ assert.equal(data.find(m=>m.id==='R24-C02-horror').timing,'非必要查看');
  assert.equal(data.find(m=>m.id==='P1-V01-horror').timing,'條件出現');
  for(const image of ['T-R2-R3-01','R23-V01','T-R24-R25-01','U6-V01','U6b-V01','R7-V01','U2-V01']){
   assert.equal(data.find(m=>m.id===`${image}-horror`).timing,'主線時機');

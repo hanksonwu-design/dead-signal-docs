@@ -128,7 +128,7 @@ test('route and reasoning summaries keep necessary machine checks separate from 
   assert.match(reasoning, /不增加.*三格.*E.*全局/);
   for (const state of ['已讀摘記', '待核對', '已核對']) assert(reasoning.includes(state), state);
   assert.match(reasoning, /機械操作.*完成.*核對結果/);
-  assert.match(reasoning, /共用工具.*冷藏服務史.*(?:略過|選填)/);
+  assert.match(reasoning, /共用工具.*冷藏服務史.*(?:略過|非必要)/);
 });
 
 test('the teaching tables include the source before the relevant local mechanical submission', () => {
@@ -213,7 +213,7 @@ test('art workloads and the physical-object register keep the four originals loc
   assert.match(art, /待排工.*實機驗收/);
   const observationSummary = physicalInventory.split(/\r?\n\r?\n/).find(paragraph => /^第四幕至終幕另有.*OBS/.test(paragraph));
   assert(observationSummary, 'Missing observation register boundary rules');
-  assert.match(observationSummary, /零選填可通關/);
+  assert.match(observationSummary, /純主線可通關/);
   assert.match(observationSummary, /舊檔.*保留原成果.*不補造.*已讀/);
 });
 

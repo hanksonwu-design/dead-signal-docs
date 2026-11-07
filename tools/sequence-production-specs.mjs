@@ -219,7 +219,7 @@ export function sequenceProduction(original, graph) {
   }
   documents.set(APPENDIX, documents.get(APPENDIX).replace(
     '各幕依「進場與動線 → 操作與解謎 → 圖像示意 → 製作細節 → 離場及次場景」排列。',
-    '各幕依正式劇本順序閱讀：進場與動線 → 逐步操作及對應示意 → 製作細節 → 離場及次場景。各房保留一套詳細操作；圖像隨適用步驟呈現，跨房整板集中於幕末並由當房連結。互斥選擇、選填及回訪以所在操作條款區分。'));
+    '各幕依正式劇本順序閱讀：進場與動線 → 逐步操作及對應示意 → 製作細節 → 離場及次場景。各房保留一套詳細操作；圖像隨適用步驟呈現，跨房整板集中於幕末並由當房連結。互斥選擇、非必要及回訪以所在操作條款區分。'));
   let after = parseMaster([...documents.values()].join('\n\n'), documents);
   for (const [file, text] of documents) documents.set(file, rewriteLinks(text, file, after));
   after = parseMaster([...documents.values()].join('\n\n'), documents);

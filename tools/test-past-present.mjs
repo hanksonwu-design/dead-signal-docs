@@ -40,7 +40,7 @@ test('comparison retains existing costs, accessibility, encounter and save bound
     '仍在現場設備播放', '未知的歷史日期不補造',
     '只有已允許調查的空檔可開啟', '不能用來躲過追逐', '不增加通關旗標或存檔版本',
     '不補發未看的碎片', '不重扣首次凝神', '不重播已完成嚇點', '不重設遭遇階段',
-    '零選填記憶仍可依原條件通關', '靜音與灰階', '不取代可玩版本');
+    '不看非必要記憶仍可依原條件通關', '靜音與灰階', '不取代可玩版本');
 });
 
 test('R3 teaches spatial comparison without a second photo award or a new window exit', () => {
@@ -70,7 +70,7 @@ test('R19 comparison follows input recovery and gives the summary equal spatial 
   has(summary, '椅腳螺栓、排水孔及玻璃下緣', '束帶固定在同一組扣環上');
   has(block(scripts[4], 's-0907-16'), '只讀摘要者回查同段文字', '沿現時可見的側門');
   has(specs[4], '對照入口僅在 R19-07 恢復操作後開放', '八秒 → OS → 四秒',
-    '未看此選填內容者仍可沿現場 F2／F3 完成原主線',
+    '未看此非必要內容者仍可沿現場 F2／F3 完成原主線',
     '不由今昔翻頁觸發或重播', '不增加等待時間或離房條件');
 });
 

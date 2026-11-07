@@ -64,7 +64,7 @@ test('optional personal stories cannot supply mandatory evidence, resources or e
   const slipper = specs(6).split('<a id="mended-slipper-u2-spec"></a>')[1].split('<a id="h-0610-125"></a>')[0];
   for (const phrase of ['2025-08-03', '2025-08-05', 'slipper_repairs', 'laundry_note', 'UD-01', '不給穿鞋']) assert(slipper.includes(phrase), phrase);
   assert.match(slipper, /正式鎖場不開 U2 入口/);
-  assert.match(slipper, /零選填.*全部機關與主線/);
+  assert.match(slipper, /純主線.*全部機關與主線/);
   const card = specs(7).split('<a id="translation-return-card-spec"></a>')[1].split('<a id="h-0808-336"></a>')[0];
   assert.match(card, /不啟動遠端三選一.*不占或增加快取名額.*不補.*E5-07/);
   assert.match(card, /批次.*列號/);

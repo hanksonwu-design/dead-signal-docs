@@ -122,7 +122,7 @@ test('required events read in play order while optional branches remain optional
   assert(act2.includes('舊住宅門下兩級通往 R9；內井旁側道通往 R10。兩路均可自由通行'));
   assert(act2.includes('也可先走另一側道，兩路都可自由通行'));
   assert(master.documents.get(ACTS[4].path).includes('保存成功後進入上部片尾'));
-  assert(master.documents.get(ACTS[8].path).includes('選填 H-07 未播放也能前進'));
+  assert(master.documents.get(ACTS[8].path).includes('非必要 H-07 未播放也能前進'));
 });
 
 test('branch, return-only, one-way and ending access remain distinct', () => {

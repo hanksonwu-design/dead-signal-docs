@@ -67,7 +67,7 @@ test('seven optional interior nodes each have a unique view and close-up without
 });
 
 test('optional exploration preserves existing waits, gates, source states and irreversible return lock', () => {
-  includes(spec, ['R29 原至少二十秒責任餘波結束後', '三房任選、任意順序、零選填可離房', 'R28 的十五秒收束',
+  includes(spec, ['R29 原至少二十秒責任餘波結束後', '三房任選、任意順序、純主線可離房', 'R28 的十五秒收束',
     'R30 原不可逆提交後不再返回 47F', 'views_seen', 'read_pages', '不回填收藏', '取消保留來源與草稿', '不新增主線 E 證據']);
   const route = graph.edges.find(edge => edge.fromId === 'R29' && edge.toId === 'U4');
   assert(!/suite|47-0[123]/i.test(route.gate));
@@ -77,7 +77,7 @@ test('room ownership requires three matching assignment fields after the origina
   const start = finale.indexOf('<a id="manager-suite-identity-script">');
   assert(start > finale.indexOf('讀完並確認後，保存 E5-05'));
   includes(finale.slice(start), ['第五層鎖定與十二秒解凍或等效摘要皆完成', '已讀 47-01 配房副聯', '原終端', 'IC-47-01', '三欄一致']);
-  includes(finalSpec, ['thaw_state=complete', '不加入任何三格、出口或結局前置', '不把選填插入五秒靜默', '不補造到訪']);
+  includes(finalSpec, ['thaw_state=complete', '不加入任何三格、出口或結局前置', '不把非必要插入五秒靜默', '不補造到訪']);
   const wing = story.slice(story.indexOf('<a id="manager-suites-script">'), story.indexOf('<a id="transition-r29-u4-script">'));
   assert(!/梁樂瑤|Michelle|自己的住處|主角的房/.test(wing));
   assert.equal(image('R31-D08').kind, '介面');
@@ -89,7 +89,7 @@ test('corridor anomaly is optional and once-only while sources stay on their act
   const horror = markers[ACTS[7].path].find(row => row.id === 'R29-V02-horror');
   assert(horror);
   const model = JSON.parse(readFileSync(new URL('../building/scene-markers.json', import.meta.url)));
-  assert.equal(model.markers.find(row => row.id === horror.id).timing, '選填查看');
+  assert.equal(model.markers.find(row => row.id === horror.id).timing, '非必要查看');
   const source = markers[ACTS[8].path].find(row => row.id === 'R31-D08-item');
   assert(source);
   assert.equal((finale.match(/三欄一致，她才確認/g) || []).length, 1);

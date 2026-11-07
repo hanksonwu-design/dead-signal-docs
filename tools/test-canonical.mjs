@@ -282,7 +282,7 @@ test('frozen history and H-08 remain still while present action and the unique t
 });
 
 test('current document text uses reviewed Taiwan terminology without changing clue wording', () => {
-  const stale = /證据|狀态|观察|辨认|设备|自动|選项|半翼与|開门|不从|未送出处置|历史|內井墙|實际打开|預览|条件|进入|關联|结果|结局|艺術|脚本|补記|結论|對话|来源|来自|属于|改变|緩存|隊列|交互文字|幀|接口|身份|主觀視像|實時等待|保存進度|保存離開|默認|全屏|同屏|黑屏|熄屏|整屏閃光|高亮|像素|Godot 導入/;
+  const stale = /證据|狀态|观察|辨认|设备|自动|選项|半翼与|開门|不从|未送出处置|历史|內井墙|實际打开|預览|条件|进入|關联|结果|结局|艺術|脚本|补記|結论|對话|来源|来自|属于|改变|緩存|隊列|交互文字|幀|接口|身份|主觀視像|實時等待|保存進度|保存離開|默認|全屏|同屏|黑屏|熄屏|整屏閃光|高亮|像素|Godot 導入|選填/;
   for (const doc of buildDocuments()) {
     for (const [index, line] of doc.content.split('\n').entries()) {
       assert(!stale.test(line), `${doc.path}:${index + 1}: ${line}`);
@@ -290,6 +290,8 @@ test('current document text uses reviewed Taiwan terminology without changing cl
   }
   const format = block('s-0900-4');
   assert(format.includes('台灣用語與校訂原則'));
+  assert(format.includes('**主線必要、非必要與支線：**'));
+  assert(format.includes('完全不看非必要內容的走法稱為「純主線」'));
   assert(format.includes('量測或統計結果可稱「數據」'));
   assert(block('s-0908-21').includes('共同錯字「記綠」、VF-0818'));
   assert(block('s-0904-3').includes('「接收登記」燈箱'));
@@ -644,7 +646,7 @@ test('unplaced timeline: 16 inventories x 2 comparison states follow source evid
     }
   }
   assert.equal(cases, 32);
-  assert(evidence.includes('四片全部為**選填**'));
+  assert(evidence.includes('四片全部為**非必要**'));
   assert(evidence.includes('播放不代替 A／B 比對，也不合併 C／D'));
   assert(!master.text.includes('cd_aligned'));
   assert(block('s-0905-49').includes('且實際核對殘缺格式'));
@@ -918,7 +920,7 @@ test('inventory summaries do not invent a prologue lock, clue solution or occupa
 test('E2-14 is mandatory inherited evidence but R29 comparison is optional', () => {
   assert(block('s-0906-40').includes('E2-14'));
   assert(block('s-0307-5').includes('E2-14 客戶分級表與第二層鎖定'));
-  assert(block('s-0607-8').includes('選填的是本房再次比對，不是先前證據'));
+  assert(block('s-0607-8').includes('非必要的是本房再次比對，不是先前證據'));
   assert(block('s-0808-11').includes('有效檔略過 `R29_H12`／`R29_H13` 仍能完成'));
   assert(!master.text.includes('未在第三幕取得 `E2-14` 的玩家'));
   assert(!master.text.includes('取得後，一直沒有回收'));
@@ -939,7 +941,7 @@ test('R21 panic reset follows deduction and never shakes the interaction reticle
 test('insufficient positive stability keeps existing fallback paths usable', () => {
   const rules = block('s-0404-8');
   for (const phrase of ['大於 0 但不足原成本時也可完成', 'max(0, 原值 - 原成本)',
-    '不要求先耗到恰好 0', '未配置備援的選填耗費操作', '不啟動、不扣費',
+    '不要求先耗到恰好 0', '未配置備援的非必要耗費操作', '不啟動、不扣費',
     'R26 與 R31–R33 原停止消耗規則優先']) assert(rules.includes(phrase), phrase);
   assert(rules.includes('來源、關聯、供電與權限仍須成立'));
 });
@@ -1123,7 +1125,7 @@ test('self-evidence panic fires once per placement, caps at stage 3 and never po
 
 test('R1 signal tests have local useful effects without completing or resetting the encounter', () => {
   const signal = block('s-0602-4').split('<a id="signal-tests"></a>')[1];
-  for (const phrase of ['選填播放 5 點，少於 5 點停用', '不由播放代讀',
+  for (const phrase of ['非必要播放 5 點，少於 5 點停用', '不由播放代讀',
     '已候坐時不重送、不扣款', '不清主線進度、不補穩定度',
     '不需要先做 #1 或 #2', '批次中停用另外兩項', '不重付費、不重算三人',
     '測試效果不跨房持續', '必要叫號完成旗標不回退']) assert(signal.includes(phrase), phrase);

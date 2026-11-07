@@ -61,9 +61,9 @@ test('material changes respect off-camera rules and preserve trustworthy mechani
 test('seventh mirror precedes player-owned F5 while H-08 remains optional after it',()=>{
  const mirror=block(story(5),'s-0908-36');
  has(mirror,'鏡像者第七次','金屬邊','原欄位由玩家親手展開');
- assert(!mirror.includes('選填'));
+ assert(!mirror.includes('非必要'));
  has(block(story(5),'s-0908-37'),'親自展開回傳欄','取得 F5');
- has(spec(5),'以原第七次鏡像旗標去重','不要求先得 F5','F5 保存後、三喇叭前，玩家選填重看',
+ has(spec(5),'以原第七次鏡像旗標去重','不要求先得 F5','F5 保存後、三喇叭前，玩家非必要重看',
   '略過輪廓不影響已取得的 F5','不同層、不同時機');
  has(appendix,'| 8 | 八 | R30','| 9 | 八 | **R31 解凍**');
 });

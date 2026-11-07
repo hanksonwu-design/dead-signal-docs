@@ -97,14 +97,14 @@ test('shared rules keep the same door causes and return path', () => {
 
 test('Act 1 completion notes distinguish required actions, optional checks and deferred F1 decoding', () => {
   has(block('s-0904-6'), '**成功條件（主線必要）：**', '既存的三人待叫序列',
-    '**完成條件（選填測試）：**', '鈴聲與重置測試可略過');
-  has(block('s-0904-16'), '同工位覆核聯的必要查閱後', '解開煞扣', '餐車推至牆邊凹位', '訓練檔、最後一頁與配給附頁為選填');
+    '**完成條件（非必要測試）：**', '鈴聲與重置測試可略過');
+  has(block('s-0904-16'), '同工位覆核聯的必要查閱後', '解開煞扣', '餐車推至牆邊凹位', '訓練檔、最後一頁與配給附頁為非必要');
   has(block('s-0904-19'), '**成功條件（主線必要，離幕前補齊）：**',
     '實際近看全家福', '只進入片段尚未取得照片');
-  has(block('s-0904-22'), '**完成條件（選填調查）：**', '略過仍可完成第一幕');
+  has(block('s-0904-22'), '**完成條件（非必要調查）：**', '略過仍可完成第一幕');
   has(block('s-0904-26'), 'F1 隨同幅近看記錄');
-  has(block('s-0904-27'), '**完成條件（選填取捨）：**', '兩種選擇皆成立');
-  has(block('s-0904-28'), '**完成條件（選填重看）：**', '本幕保留未解',
+  has(block('s-0904-27'), '**完成條件（非必要取捨）：**', '兩種選擇皆成立');
+  has(block('s-0904-28'), '**完成條件（非必要重看）：**', '本幕保留未解',
     '不必在此解出答案才能離幕');
 });
 
@@ -131,7 +131,7 @@ test('Act 1 annotations preserve separate acquisition, deduction and physical do
   has(block('s-0904-44'), '親自到低壓門端核對', '直到插銷退開', 'F1 維持未解也可通行');
   const images = [
     ['R1-C03', '成功條件（主線必要）'], ['R2-C01', '成功條件（主線必要）'],
-    ['R3-D01', '完成條件（選填調查）'], ['R4-C04', '完成條件（選填重看）'],
+    ['R3-D01', '完成條件（非必要調查）'], ['R4-C04', '完成條件（非必要重看）'],
     ['R5-D02', '成功條件（主線必要）'], ['R5-C04', '成功條件（主線必要）']
   ];
   const markers = JSON.parse(readFileSync(new URL('../building/scene-markers.json', import.meta.url), 'utf8')).markers;

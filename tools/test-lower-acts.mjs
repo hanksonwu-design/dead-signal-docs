@@ -90,5 +90,5 @@ test('chapter boundaries retain original route gates, save keys and optional cho
   const specs = ACTS.slice(6, 9).map(a => master.documents.get(a.specPath)).join('\n');
   for (const key of ['act6.r29.queue_approved', 'lower.u3.return_latch_open', 'lower.u6.walkway_locked']) assert(specs.includes(key), key);
   assert(master.documents.get(ACTS[7].specPath).includes('核可與未核可均可前進'));
-  assert(master.documents.get(ACTS[8].path).includes('選填 H-07 未播放也能前進'));
+  assert(master.documents.get(ACTS[8].path).includes('非必要 H-07 未播放也能前進'));
 });

@@ -202,7 +202,7 @@ test('close-ups are attached to their actual scene, never traversable steps', ()
 test('two R8 exits keep distinct picture nodes and optional clues remain optional', () => {
   assert.deepEqual(route('R8', 'R9').steps.map(s => s.image), ['R8-V01', 'R8-V02', 'R9-V01']);
   assert.deepEqual(route('R8', 'R10').steps.map(s => s.image), ['R8-V01', 'R8-V03', 'R10-V01']);
-  for (const to of ['R9', 'R10']) assert.match(graph.edges.find(e => e.toId === to && e.fromId === 'R8').gate, /不作出口門檻.*均選填/);
+  for (const to of ['R9', 'R10']) assert.match(graph.edges.find(e => e.toId === to && e.fromId === 'R8').gate, /不作出口門檻.*均非必要/);
 });
 
 test('return shortcut retains both endpoints and original entry restrictions', () => {

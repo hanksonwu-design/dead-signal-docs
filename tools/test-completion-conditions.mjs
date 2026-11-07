@@ -73,8 +73,8 @@ test('conditions preserve deferred evidence, alternative sources and optional ac
   has(block('s-0905-14'), '成功條件（主線必要，離幕前補齊）', '未完成排行仍可先往 R8');
   has(block('s-0905-53'), '第三格擇一', '缺段校驗仍各自必要');
   has(block('s-0906-43'), '成功條件（部分供電分支必要）', '未開仍走原路');
-  has(block('s-0906-33'), '成功條件（選填捷徑）', '略過仍能走主線');
-  has(block('s-0909-24'), '完成條件（選填快取）', '至多保留一頁', '兩種結果都不鎖主線');
+  has(block('s-0906-33'), '成功條件（非必要捷徑）', '略過仍能走主線');
+  has(block('s-0909-24'), '完成條件（非必要快取）', '至多保留一頁', '兩種結果都不鎖主線');
 });
 
 test('later gates still require physical actions after investigation and arrival', () => {
@@ -88,7 +88,7 @@ test('later gates still require physical actions after investigation and arrival
   has(block('s-0909-42'), '配平不會代替本地止回操作');
   has(block('s-0909-47'), '樓梯此時還未因機構動作封住');
   has(block('s-0909-48'), '零光能與零凝神也能完成');
-  has(block('s-0909-62'), '對外握手屬選填');
+  has(block('s-0909-62'), '對外握手屬非必要');
 });
 
 test('finale notes preserve evidence, defensive stages and mutually exclusive ending commitments', () => {
@@ -98,5 +98,5 @@ test('finale notes preserve evidence, defensive stages and mutually exclusive en
   has(block('s-0910-26'), '第三拍放手確認', '原件留在本地而非完整公開');
   has(block('s-0910-27'), '完成 4 秒長按或等價輔助操作', '不以定位送出或封鎖解除為條件');
   has(block('s-0910-29'), '長按 4 秒完成緊急接管');
-  has(block('s-0910-32'), '選擇留下則維持封鎖', '康的選填條件不影響正常結束');
+  has(block('s-0910-32'), '選擇留下則維持封鎖', '康的非必要條件不影響正常結束');
 });

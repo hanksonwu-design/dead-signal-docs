@@ -289,8 +289,8 @@ const CUE_KINDS = {
   "〔": {
     操作: "op", 生活近看: "op", 筆記: "ui", 環境: "sound", 人聲: "sound", 字幕: "text", 原件文字: "text", 文件: "text", 系統: "system", 玩家: "player",
     前置: "logic", 條件: "logic", 條件回查: "logic", 觸發: "logic", 成功: "logic", 失敗: "logic", 分支: "logic", 例外: "logic", 替代: "logic", 前兆: "logic",
-    安全反應: "logic", 安全目標承接: "logic", 保存: "logic", 形式: "logic", 讀演: "logic", 選填: "logic", 銜接: "logic", 來路: "logic", 感知: "logic",
-    主角現時回想: "logic", 選填現場操作提案: "logic",
+    安全反應: "logic", 安全目標承接: "logic", 保存: "logic", 形式: "logic", 讀演: "logic", 非必要: "logic", 銜接: "logic", 來路: "logic", 感知: "logic",
+    主角現時回想: "logic", 非必要現場操作提案: "logic",
   },
 };
 const CUE_LEGEND = [["shot", "畫面與鏡位"], ["anim", "動畫"], ["ui", "介面呈現"], ["op", "現場操作"], ["ui-op", "介面操作"], ["sound", "環境與聲音"], ["text", "字幕與原文"], ["system", "系統訊息"], ["player", "玩家說明"], ["logic", "條件與流程"]];

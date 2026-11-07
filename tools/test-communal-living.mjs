@@ -18,7 +18,7 @@ const ids = ['R4-V02', 'R4-C06', 'R4-D02', 'R6-V02', 'R6-C05', 'R6-D04', 'R6-V03
 
 test('communal rooms have independent work orders and reversible local entrances without mainline edges', () => {
   includes(spec(1), ['A 棟 2F', 'R4-V01 ↔ R4-V02', '不接 R4b、R5 或其他樓層', '不要求先收 F1']);
-  includes(spec(2), ['A 棟 11F', 'R6-V01 ↔ R6-V02 ↔ R6-V03', 'V03 只從原門退回 V02', '零選填同樣能去 R7']);
+  includes(spec(2), ['A 棟 11F', 'R6-V01 ↔ R6-V02 ↔ R6-V03', 'V03 只從原門退回 V02', '純主線同樣能去 R7']);
   for (const id of ids) {
     const row = collection.rows.find(row => row.id === id);
     assert(row, id);
@@ -59,7 +59,7 @@ test('empty dining sound occurs only on the optional return and respects reading
   assert.deepEqual(issues, []);
   assert(body.split('\n')[found[0].line].includes('第一次從回收間退回食堂'));
   const model = JSON.parse(readFileSync(new URL('../building/scene-markers.json', import.meta.url)));
-  assert.equal(model.markers.find(row => row.id === horror.id).timing, '選填查看');
+  assert.equal(model.markers.find(row => row.id === horror.id).timing, '非必要查看');
 });
 
 test('generation remains repeatable and new interior views stay out of the 72 transition nodes', () => {

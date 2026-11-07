@@ -44,13 +44,13 @@ assert(splitAt > 0);
 let before = card.slice(0, splitAt).trim();
 before = before.replace('玩家取卡，走向讀卡桌；沿 [R8-05] 原倒影事件，在坐下以前看見姿勢差異，無聲、不切近景追認。', '玩家取卡，走向讀卡桌，準備坐下。');
 before = before.replace(/\n\n（動畫演出）舊紙墊覆住讀卡托盤[^\n]*/u, '');
-const after = '##### 插卡後：讀取名單與選填照片記憶\n\n' + card.slice(splitAt);
+const after = '##### 插卡後：讀取名單與非必要照片記憶\n\n' + card.slice(splitAt);
 const reflection = content(28), knockAt = reflection.indexOf('〔前置〕兩下輕敲');
 assert(knockAt > 0);
 const early = reflection.slice(0, knockAt).trim()
   .replace('[R8-05] 倒影與兩下輕敲', '[R8-05] 坐下以前的倒影')
   .replace('玩家取卡後走向剪輯桌，準備坐下；與 [R8-02] 是同一事件，只播一次。', '接續剛才走到桌前的動作；此時尚未坐下，也未移開紙墊。');
-const late = '##### 兩下輕敲（選填）\n\n' + reflection.slice(knockAt);
+const late = '##### 兩下輕敲（非必要）\n\n' + reflection.slice(knockAt);
 const paper = content(26).replace('玩家沿 [R8-02] 進原', '玩家接著進原');
 const replacement = [wrap('s-0905-24', before), wrap('s-0905-28', early), wrap('s-0905-26', paper),
   wrap('s-0905-59', after), old[25], wrap('s-0905-60', late), old[27]].join('\n\n');

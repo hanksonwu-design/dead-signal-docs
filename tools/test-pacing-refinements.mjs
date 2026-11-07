@@ -210,7 +210,7 @@ test('the seven-floor ascent retains traversal but gives 20F a quiet crossing', 
     assert(!text.includes('展開原地折梯，扣緊兩側固定扣'));
   }
   assert(spec.includes('該層 open 只在玩家親自通過出口時保存'));
-  assert(spec.includes('近看選填'));
+  assert(spec.includes('近看非必要'));
   const closeup = spec.split('\n').find(line => line.startsWith('| T-R11-R12-05-C01 |'));
   assert(closeup.includes('工位牌'));
   assert(closeup.includes('只交已固定初態與通行視角'));

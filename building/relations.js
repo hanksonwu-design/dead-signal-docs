@@ -311,7 +311,7 @@ const nameOf=id=>{
   return `${id} ${n.item.label}`;
 };
 const KIND_TEXT={found:'在此取得','found-freeze':'在此凝固中取得','signal-found':'在此記錄訊號','signal-use':'用於',produces:'產生',unlocks:'開通',
-  slot:'放入格位',support:'前置／旁證',reuse:'跨組沿用',result:'成立後取得',opens:'開通',chain:'延伸線',later:'之後歸屬',compare:'對照',prereq:'須先讀',alternative:'擇一觸發',pair:'前片配對',confirms:'補證',decoy:'誘答，原文不支持此格',payoff:'選填回頭比對'};
+  slot:'放入格位',support:'前置／旁證',reuse:'跨組沿用',result:'成立後取得',opens:'開通',chain:'延伸線',later:'之後歸屬',compare:'對照',prereq:'須先讀',alternative:'擇一觸發',pair:'前片配對',confirms:'補證',decoy:'誘答，原文不支持此格',payoff:'非必要回頭比對'};
 const choiceList=c=>c?`<dt>結論選擇</dt><dd><ul class="links"><li>✓ ${esc(c.answer)}</li>${c.decoys.map(d=>`<li>✗ ${esc(d)}</li>`).join('')}</ul></dd>`:'';
 
 const roomOf=id=>{
@@ -354,7 +354,7 @@ function renderDetail(id){
   }
   if(node.type==='signal'){
     const s=node.item;
-    box.innerHTML=`<div class="eyebrow">${esc(actName(s.act))} · 訊號索引</div><h3>${esc(s.index)} ${esc(s.label)}<span class="badge${s.required?' required':''}">${s.required?'必要':'選填或功能'}</span></h3><dl>
+    box.innerHTML=`<div class="eyebrow">${esc(actName(s.act))} · 訊號索引</div><h3>${esc(s.index)} ${esc(s.label)}<span class="badge${s.required?' required':''}">${s.required?'必要':'非必要或功能'}</span></h3><dl>
 <dt>來源</dt><dd>${esc(s.source)}</dd><dt>功能</dt><dd>${esc(s.use)}</dd>${lanes}</dl>`;
     return;
   }
@@ -366,8 +366,8 @@ ${linkList('來自',incoming)}${linkList('通往',outgoing)}</dl>
 <p>${esc(g.note.replace(/\[([^\]]+)\]\([^)]+\)/g,'$1'))}</p><p><a href="${esc(tableHref(g.anchor))}" target="_blank" rel="noopener noreferrer">在收集物總表查看 ↗</a></p>`;
   }else{
     const e=node.item,g=groupOf(e.group);
-    box.innerHTML=`<div class="eyebrow">${esc(actName(e.act))} · ${esc(e.room)}</div><h3>${esc(e.id)} ${esc(e.label)}<span class="badge${e.required?' required':''}">${e.required?'必要':'選填'}</span></h3><dl>
-<dt>部別</dt><dd>${esc(partName(e.part))}${e.carried?'；下部由有效前情帶入':''}${e.teaser?'；跨部伏筆（選填）':''}</dd>
+    box.innerHTML=`<div class="eyebrow">${esc(actName(e.act))} · ${esc(e.room)}</div><h3>${esc(e.id)} ${esc(e.label)}<span class="badge${e.required?' required':''}">${e.required?'必要':'非必要'}</span></h3><dl>
+<dt>部別</dt><dd>${esc(partName(e.part))}${e.carried?'；下部由有效前情帶入':''}${e.teaser?'；跨部伏筆（非必要）':''}</dd>
 <dt>所屬</dt><dd>${esc(groupTitle(g))}</dd><dt>代號</dt><dd>${esc(e.code)}</dd><dt>格位／關聯</dt><dd>${esc(e.slot)}</dd>
 <dt>循環路徑</dt><dd class="${e.witnessed?'witness':''}">${esc(e.loop)}</dd><dt>來源</dt><dd>${esc(e.source)}</dd>
 <dt>用途</dt><dd>${esc(e.use)}</dd><dt>性質</dt><dd>${esc(e.nature)}</dd>${linkList('來自',incoming)}${linkList('通往',outgoing)}</dl>

@@ -166,6 +166,6 @@ test('previously traversed passages migrate without replaying sources, attacks o
     if (passage.from === 'R28') assert.match(contract, /不重開遠端倒數.*不重選快取.*不補讀件/);
     else assert.match(contract, /不重開襲擊.*3／0／3.*不新增敵人、倒數/s);
   }
-  assert.match(common, /不要求重走或補選填.*不補造新近看已讀/);
+  assert.match(common, /不要求重走或補非必要.*不補造新近看已讀/);
   assert.match(common, /不補造原件文字、已讀或歷史用途/);
 });

@@ -84,7 +84,7 @@ test('reader and model place optional life markers at their actual inspection pa
     const row = collection.rows.find(row => row.id === id);
     const marker = model.markers.find(marker => marker.id === `${id}-item`);
     assert(marker, id);
-    assert.equal(marker.timing, '選填查看');
+    assert.equal(marker.timing, '非必要查看');
     assert.deepEqual(marker.fragmentForms, []);
     const reading = data[row.act.path].find(marker => marker.id === `${id}-item`);
     assert(reading, id);
