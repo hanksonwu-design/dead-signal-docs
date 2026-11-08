@@ -23,6 +23,7 @@ const FOLDER_LABELS = {
   "09_故事劇情": "改編存檔",
   "10_製作規格": "製作規格",
   "11_小說": "小說",
+  "12_遊戲改版": "遊戲改版",
 };
 const ROOT_FOLDER = "根目錄";
 // Earlier adaptation drafts stay in the repository for traceability but are not published.
