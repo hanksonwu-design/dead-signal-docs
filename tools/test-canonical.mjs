@@ -210,8 +210,10 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Act 2 adds the optional K-207 handoff slip on Lao Zhou's partition (close look, flip).
   // Acts 6–8 each add one optional trace close look: U1 eviction notice, U5 surrender note, U6 valve tag.
   // Act 2 adds Lao Zhou's first invalid-response row of throat-clears and Ahsun's keyboard echo of the player's rhythm.
-  const counts = [[23, 23, 10], [79, 34, 20], [113, 48, 11], [151, 29, 10],
-    [63, 21, 13], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
+  // Instruction prompts become sound or notebook lines: the prologue P1-04 hint turns into a sound cue,
+  // R6's route hint moves into her notebook, R16 drops the recalled-operation notice, R19 drops the return hint.
+  const counts = [[23, 24, 9], [79, 34, 20], [113, 48, 10], [151, 29, 9],
+    [63, 21, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
