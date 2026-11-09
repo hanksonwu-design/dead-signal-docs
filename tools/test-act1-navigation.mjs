@@ -98,7 +98,8 @@ test('shared rules keep the same door causes and return path', () => {
 test('Act 1 completion notes distinguish required actions, optional checks and deferred F1 decoding', () => {
   has(block('s-0904-6'), '**成功條件（主線必要）：**', '既存的三人待叫序列',
     '**完成條件（非必要測試）：**', '鈴聲與重置測試可略過');
-  has(block('s-0904-16'), '同工位覆核聯的必要查閱後', '解開煞扣', '餐車推至牆邊凹位', '訓練檔、最後一頁與配給附頁為非必要');
+  has(block('s-0904-16'), '推車和本房查閱不分先後', '解開煞扣', '餐車推至牆邊凹位', '離幕前補齊即可', '訓練檔、最後一頁與配給附頁為非必要');
+  assert.ok(!block('s-0904-16').includes('不出現推車操作'), 'R2 推車不再等本房查閱');
   has(block('s-0904-19'), '**成功條件（主線必要，離幕前補齊）：**',
     '實際近看全家福', '只進入片段尚未取得照片');
   has(block('s-0904-22'), '**完成條件（非必要調查）：**', '略過仍可完成第一幕');
