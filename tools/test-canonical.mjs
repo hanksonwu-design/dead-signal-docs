@@ -152,7 +152,8 @@ test('every static screenplay cue names its shot size without changing protected
   // R10 wall prayer (act 2), R18 resident door and R20 sleep log (act 4), U5 surrender note (act 7).
   // Acts 1 and 2 each add one full shot for the early silencer (T-R5-R6-02 shaft, R7 desk row).
   // The photo story moments add close-ups at R7 and R11 (act 2), R17 (act 3) and the R27 slot (act 6).
-  const counts = [23, 64, 91, 103, 49, 33, 19, 27, 10, 20];
+  // Act 2 adds the close-up of the pencil line on the photo's back.
+  const counts = [23, 64, 92, 103, 49, 33, 19, 27, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -212,8 +213,10 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Act 2 adds Lao Zhou's first invalid-response row of throat-clears and Ahsun's keyboard echo of the player's rhythm.
   // Instruction prompts become sound or notebook lines: the prologue P1-04 hint turns into a sound cue,
   // R6's route hint moves into her notebook, R16 drops the recalled-operation notice, R19 drops the return hint.
-  const counts = [[23, 24, 9], [79, 34, 20], [113, 48, 10], [151, 29, 9],
-    [63, 21, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
+  // Each upper-part one-way door (R5 exit, S-03, C-02, upper ending) adds one distant sound under its escape-night time;
+  // act 2 adds the optional flip to the photo's back.
+  const counts = [[23, 24, 9], [79, 35, 20], [114, 49, 10], [151, 30, 9],
+    [63, 22, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
