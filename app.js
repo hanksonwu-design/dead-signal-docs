@@ -169,7 +169,7 @@ function inlineMarkdown(value) {
   const fromProductionSpec = state.selected?.folder === '10_製作規格';
   let html = esc(value);
   // Only these semantic text classes are allowed (collection labels and video-list animation types); arbitrary HTML stays escaped.
-  html = html.replace(/&lt;span class=&quot;(collectible-(?:required|functional)|video-(?:cutscene|interact|feedback|scene|device|live))&quot;&gt;([^]*?)&lt;\/span&gt;/g, '<span class="$1">$2</span>');
+  html = html.replace(/&lt;span class=&quot;(collectible-(?:required|functional)|video-(?:cutscene|interact|feedback|memory|scene|device|live))&quot;&gt;([^]*?)&lt;\/span&gt;/g, '<span class="$1">$2</span>');
   html = html.replace(/&lt;a id=&quot;([A-Za-z0-9_-]+)&quot;&gt;&lt;\/a&gt;/g, '<span id="$1" class="md-anchor"></span>');
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, href) => {
     const url = imageAssetUrl(href);

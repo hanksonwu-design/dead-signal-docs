@@ -13,7 +13,7 @@ const UPPER = ACTS.slice(0, 5);
 // Each type has its own text color in the reader (styles.css .video-*); app.js allows only these classes.
 const TYPE_CLASSES = {
   第一人稱過場: 'video-cutscene', 第一人稱互動: 'video-interact', 第一人稱動作回饋: 'video-feedback',
-  場景局部動畫: 'video-scene', 設備內影片: 'video-device', 設備即時影像: 'video-live',
+  主觀記憶動畫: 'video-memory', 場景局部動畫: 'video-scene', 設備內影片: 'video-device', 設備即時影像: 'video-live',
 };
 const TYPES = Object.keys(TYPE_CLASSES);
 const typeTag = (type, label = type) => `<span class="${TYPE_CLASSES[type]}">${label}</span>`;
@@ -117,7 +117,7 @@ function keyBridges(cues) {
     if (!act) continue;
     // Narrow a source block to the cue types and scenes the contract row names, when that leaves any.
     let matched = cues.filter(c => c.act === act && c.anchors.has(anchor));
-    const kinds = Object.entries({ 過場: '第一人稱過場', 互動: '第一人稱互動', 動作回饋: '第一人稱動作回饋' })
+    const kinds = Object.entries({ 過場: '第一人稱過場', 互動: '第一人稱互動', 動作回饋: '第一人稱動作回饋', 記憶: '主觀記憶動畫' })
       .filter(([word]) => method.split('；')[0].includes(word)).map(([, type]) => type);
     const byKind = matched.filter(c => kinds.includes(c.type));
     if (byKind.length) matched = byKind;

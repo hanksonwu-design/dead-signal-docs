@@ -54,7 +54,7 @@ test('video-list animation types each render in their own reader color', () => {
   });
   const builder = readFileSync(path.join(ROOT, 'tools/build-video-list.mjs'), 'utf8');
   const classes = [...builder.matchAll(/: '(video-[a-z]+)'/g)].map(match => match[1]);
-  assert.equal(classes.length, 6);
+  assert.equal(classes.length, 7);
   const colors = classes.map(name => css.match(new RegExp(`\.reader-content \.${name} \{ --video: (#[0-9a-f]{6}); \}`))?.[1]);
   assert(colors.every(Boolean), 'every animation type has a color');
   assert.equal(new Set(colors).size, classes.length, 'animation type colors are distinct');

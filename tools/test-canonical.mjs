@@ -121,7 +121,7 @@ test('reading scripts describe playable events without editorial prohibitions', 
 test('screenplay presentation cues distinguish motion, stills, transitions and interfaces', () => {
   const labels = ['動畫演出／第一人稱過場', '動畫演出／第一人稱互動',
     '動畫演出／第一人稱動作回饋', '動畫演出／場景局部動畫', '動畫演出／設備內影片',
-    '動畫演出／設備即時影像', '動畫演出／歷史解凍過場', '動畫演出／片尾旁觀過場',
+    '動畫演出／設備即時影像', '動畫演出／主觀記憶動畫', '動畫演出／歷史解凍過場', '動畫演出／片尾旁觀過場',
     '靜態畫面／景別', '靜態差分', '鏡位切換', '畫面特效', '介面呈現', '配音演出'];
   assert(!master.text.includes('〔演出〕'));
   for (const label of labels) assert(block('s-0900-4').includes(`（${label}）`), label);
@@ -154,7 +154,8 @@ test('every static screenplay cue names its shot size without changing protected
   // The photo story moments add close-ups at R7 and R11 (act 2), R17 (act 3) and the R27 slot (act 6).
   // Act 2 adds the close-up of the pencil line on the photo's back.
   // Act 4 splits the upper ending into the notebook's escape page, then the photo.
-  const counts = [23, 64, 92, 103, 50, 33, 19, 27, 10, 20];
+  // The R3 paper-flower and R13 medicine-bag memories become subjective memory animations (acts 1 and 3).
+  const counts = [23, 63, 92, 102, 50, 33, 19, 27, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -217,7 +218,9 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Each upper-part one-way door (R5 exit, S-03, C-02, upper ending) adds one distant sound under its escape-night time;
   // act 2 adds the optional flip to the photo's back; act 4 adds the R21 work-request memory echo
   // and the two knocks behind the R18 entry door.
-  const counts = [[23, 24, 9], [79, 35, 20], [114, 49, 10], [151, 30, 9],
+  // Subjective memory animations add the P1 knot tap and memory sound, the R1 intake-form truck sound
+  // and the R12 parts-box screw sound.
+  const counts = [[24, 25, 9], [79, 36, 20], [114, 49, 10], [151, 31, 9],
     [63, 24, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);

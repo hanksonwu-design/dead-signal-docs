@@ -204,7 +204,7 @@ test('second-batch art coverage, reader anchors and offscreen still anomalies re
 });
 
 test('all screenplay animation cues name a documented presentation method', () => {
-  const kinds = ['第一人稱過場', '第一人稱互動', '第一人稱動作回饋', '場景局部動畫',
+  const kinds = ['第一人稱過場', '第一人稱互動', '第一人稱動作回饋', '主觀記憶動畫', '場景局部動畫',
     '設備內影片', '設備即時影像', '歷史解凍過場', '片尾旁觀過場'];
   const seen = new Set();
   for (const act of ACTS) {
@@ -219,6 +219,21 @@ test('all screenplay animation cues name a documented presentation method', () =
   for (const kind of kinds) has(common, `（動畫演出／${kind}）`);
   assert(!common.includes('（動畫演出）'));
   has(common, '一次性異常不改成持續循環', '分類本身不新增輸入、鎖定時間或改變既有判定');
+});
+
+test('subjective memory animations move only her own memories, faceless and skippable', () => {
+  has(common, '凝固的過去是靜止的', '不算破例', 'R31 解凍仍是凝固層唯一一次動起來');
+  has(common, '##### 主觀記憶動畫', '不給臉、不給名字', '任何輸入立即結束', '不放受虐、處置或簽核的過程');
+  // Each memory starts from her present hand on a shared object, then the memory, then a faceless frame.
+  for (const id of ['s-0903-14', 's-0904-3', 's-0904-18', 's-0906-3', 's-0906-14']) {
+    ordered(block(id), '（動畫演出／第一人稱動作回饋）', '（動畫演出／主觀記憶動畫）', '看不見');
+  }
+  // The R12 box keeps its line for R21: screws only, no subtitle or voice.
+  const box = block('s-0906-3');
+  const memory = box.slice(box.indexOf('（動畫演出／主觀記憶動畫）'), box.indexOf('鐵盒仍打不開'));
+  assert(!memory.includes('〔字幕〕') && !memory.includes('聲線'));
+  // The upper part has no frozen memory stills left; lower-part memories may stay still.
+  for (const act of ACTS.slice(0, 5)) assert(!/（靜態畫面[^）]*）主觀記憶停在/.test(story(act.act)), act.name);
 });
 
 test('P2 to R1 shares one first-person door action after reaching the upper landing', () => {
