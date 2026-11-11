@@ -29,6 +29,7 @@ jobs:
           node tools/build-collection-relations.mjs --check
           node tools/build-scene-images.mjs --check
           node tools/build-story-inventory.mjs --check
+          node tools/build-video-list.mjs --check
           node tools/test-scene-images.mjs
           node tools/test-scene-flow.mjs
           node tools/test-scene-overview.mjs
