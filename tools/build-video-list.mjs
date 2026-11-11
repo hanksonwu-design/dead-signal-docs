@@ -224,9 +224,13 @@ const DELIVERY = {
 };
 const PROTAGONIST_HAND = /(?:她|自己|主角)(?:的)?(?:雙手|右手|左手|手|指|拇指|指甲|指尖|指節|掌)|前景的(?:右|左)?手|撐地的手|手從視野下緣|她彎身|她用指/;
 const FIGURE = /輪廓|殘留|人影|縫紉者|老周|阿尋|噤聲者|鏡像者|接待員|成年人|那人|三人|影邊|衣領|肩線|倒影/;
+// Every clip is shot-on-camera realism: no game CG look and no stiff motion.
+const STYLE = '寫實、極致逼真的真人實景拍攝質感：真實攝影機與自然光學，輕微景深、自然底片顆粒與真實曝光；皮膚、布料、金屬、水漬與灰塵都有真實細節。動作自然流暢，有重量與慣性，符合真實人體動作。不是遊戲 CG、不是 3D 算圖、不是插畫。';
+const STYLE_DEVICE = '寫實、極致逼真的真人實拍錄影畫面，再疊上舊螢幕的質感；人物動作自然、不僵硬。不是遊戲 CG、不是 3D 算圖、不是動畫。';
 const NEGATIVE = [
   '清楚可辨識的人臉五官', '任何可讀的文字、號碼、標誌、國旗或國名（畫面上的字留白或模糊，後製再合成）', '配樂',
-  '血腥特寫、裸露', '手指數量或手部結構錯誤', '分鏡沒寫的人物、物件突然出現、消失或變形', '3D 寫實質感、動漫卡通畫風',
+  '血腥特寫、裸露', '手指數量或手部結構錯誤', '分鏡沒寫的人物、物件突然出現、消失或變形',
+  '遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質', '動作僵硬、機械、卡頓、漂浮感或不自然的慢動作',
 ];
 
 const fmt = n => String(Math.round(n * 10) / 10);
@@ -357,17 +361,17 @@ function prompt(cue, previous, pictures) {
   const lines = [];
   lines.push(`【影片】${cue.id}｜${cue.type}｜${cue.act.name} ${cue.code} ${cue.title}`);
   if (memory) {
-    lines.push(`【生成方式】先依分鏡第一格生成一張記憶首格圖${image ? `（併入 ${image} 素材項的記憶分層）` : ''}，再用圖生影片。`);
+    lines.push(`【生成方式】先依分鏡第一格生成一張寫實實拍的記憶首格${image ? `（併入 ${image} 素材項的記憶分層）` : ''}，再用圖生影片。`);
   } else if (device) {
-    lines.push(`【生成方式】圖生影片：首格是${image ? ` ${image} ` : '設備'}螢幕裡播放的畫面定稿，不含設備外框。`);
+    lines.push(`【生成方式】圖生影片：首格是${image ? ` ${image} ` : '設備'}螢幕裡播放的畫面，做成真人實拍的錄影畫面，不含設備外框。`);
   } else if (moving) {
-    lines.push(`【生成方式】首尾格生影片：終點停在 ${frame || `${cue.code} 本場次主圖`} 的視點與構圖；起點依分鏡第一格補畫一張首格。光線、色調與造型照定稿。`);
+    lines.push(`【生成方式】首尾格生影片：終點停在 ${frame || `${cue.code} 本場次主圖`} 的視點與構圖；起點依分鏡第一格另做一張寫實實拍的首格。構圖、光源與物件位置照定稿。`);
   } else if (continued) {
     lines.push(`【生成方式】圖生影片：首格用上一段 ${previous.id} 的最後一格，保持構圖、光線、色調、人物與物件造型不變，只加入下列動作。`);
   } else if (frame) {
-    lines.push(`【生成方式】圖生影片：首格用 ${frame} 的定稿，保持構圖、光線、色調、人物與物件造型不變，只加入下列動作。`);
+    lines.push(`【生成方式】圖生影片：首格依 ${frame} 定稿的構圖、物件位置與光源，做成一張寫實實拍的畫面；構圖、光線、人物與物件造型保持不變，只加入下列動作。`);
   } else {
-    lines.push(`【生成方式】圖生影片：首格用 ${cue.code} 本場次主圖的定稿（劇本未點名圖號，見同幕製作規格圖像表），保持構圖、光線與造型不變，只加入下列動作。`);
+    lines.push(`【生成方式】圖生影片：首格依 ${cue.code} 本場次主圖定稿的構圖、物件位置與光源（劇本未點名圖號，見同幕製作規格圖像表），做成一張寫實實拍的畫面；構圖、光線與造型保持不變，只加入下列動作。`);
   }
   const cut = memory ? '約 5 秒（可在 3–6 秒間）' : `約 ${fmt(length.value)} 秒${length.stated ? '（劇本指定）' : ''}`;
   lines.push(`【長度】剪用${cut}；${length.value > 10 ? '分兩段各生成 5–10 秒，接剪後裁切' : `生成 ${length.value > 5 ? 10 : 5} 秒後裁切`}。`);
@@ -388,14 +392,14 @@ function prompt(cue, previous, pictures) {
   } else {
     const hands = [];
     if (!device && PROTAGONIST_HAND.test(cue.description)) hands.push('她的手只露出手與白襯衫袖口，手背乾裂、有擦傷，從畫面下緣入鏡；五指比例正確。');
-    if (FIGURE.test(cue.description)) hands.push(device ? '片中人物的臉要被裁切、壓縮或模糊，只看得清嘴形、肩膀與手；不做清晰肖像。' : '人物與異變者照首格的造型與位置，臉不給清楚五官（無臉、背光或被遮住），動作緩慢。');
+    if (FIGURE.test(cue.description)) hands.push(device ? '片中人物的臉要被裁切、壓縮或模糊，只看得清嘴形、肩膀與手；不做清晰肖像。' : '人物與異變者照首格的造型與位置，臉不給清楚五官（無臉、背光或被遮住），動作緩慢但連貫自然。');
     if (hands.length) lines.push(`【人物】${hands.join('')}`);
     if (device) lines.push('【光線色調】舊螢幕畫質：略低解析、輕微掃描線與色偏，亮度只在螢幕範圍內。');
     else if (cue.type === '第一人稱過場') lines.push('【光線色調】照首格與分鏡：深黑為主，只有分鏡點名的光源發亮，低飽和。');
     else if (/^R1-/.test(cue.code)) lines.push('【光線色調】R1 大廳：廉價、均勻的暖白日光燈，乾淨得不自然；不加恐怖暗角，也不偏冷青。');
     else lines.push('【光線色調】現在的暖黑：低飽和、潮濕、廢棄，深黑陰影佔大半，只有設備燈、消防燈或漏光照亮局部；光向與首格一致。');
   }
-  lines.push(`【畫風】${device ? '與遊戲手繪畫風一致的螢幕影像，再疊上舊顯示器的質感。' : '精緻的 2D 手繪插畫質感，像會動的手繪背景；筆觸、材質與首格一致。'}`);
+  lines.push(`【畫風】${device ? STYLE_DEVICE : STYLE}`);
   const texts = [...new Set(beats.join('').match(/「[^」]+」/g) || [])];
   // Sound notes keep what is heard; remarks on what the player can work out stay in the script.
   const audio = [...cue.sound.map(line => sentences(line).filter(s => !s.includes('玩家')).join('')).filter(Boolean), ...captions];
