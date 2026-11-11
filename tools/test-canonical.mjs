@@ -785,7 +785,7 @@ test('film drafts stay in the repository unpublished, the abridged novel is reti
   assert(existsSync(path.join(ROOT, 'docs/09_故事劇情/電影改編存檔')));
   assert(!documents.some(doc => doc.folder === '11_電影劇本'));
   const novel = documents.filter(doc => doc.folder === '11_小說');
-  assert.deepEqual(novel.map(doc => doc.path), ['11_小說/11-00_小說寫作規範.md', '11_小說/11-01_小說大綱_序幕至第四幕.md', '11_小說/11-02_小說大綱_第五幕至終幕.md', '11_小說/11-03_小說大綱_雙線三部.md', '11_小說/11-21_小說_第一部.md', '11_小說/11-22_小說_第二部.md', '11_小說/11-23_小說_第三部.md']);
+  assert.deepEqual(novel.map(doc => doc.path), ['11_小說/11-00_小說寫作規範.md', '11_小說/11-03_小說大綱_雙線三部.md', '11_小說/11-21_小說_第一部.md', '11_小說/11-22_小說_第二部.md', '11_小說/11-23_小說_第三部.md']);
   assert(novel.every(doc => doc.folderLabel === '小說'));
 });
 
