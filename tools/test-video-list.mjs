@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 import { ROOT } from './sync-canonical.mjs';
-import { ACTS, VIDEO_LIST, VIDEO_ACT_LISTS } from './screenplay-files.mjs';
+import { ACTS, VIDEO_LIST, VIDEO_ACT_LISTS, VIDEO_DIRECTION } from './screenplay-files.mjs';
 
 const docs = rel => readFileSync(path.join(ROOT, 'docs', rel), 'utf8').replaceAll('\r\n', '\n');
 const overview = docs(VIDEO_LIST);
@@ -104,14 +104,43 @@ test('every segment carries an importance level, and the counts add up in every 
   rows.slice(0, 5).forEach((row, i) => {
     const cells = row.split(' | ').slice(1).map(cell => Number(cell.replace(/[ |*]/g, '')));
     const own = segments.filter(s => s.rel === VIDEO_ACT_LISTS[i]);
-    assert.deepEqual(cells, [...['高', '中', '低'].map(level => own.filter(s => s.level === level).length), own.length], VIDEO_ACT_LISTS[i]);
+    assert.deepEqual(cells.slice(0, 4), [...['高', '中', '低'].map(level => own.filter(s => s.level === level).length), own.length], VIDEO_ACT_LISTS[i]);
     const actRow = lists[i].text.match(/^\| 段數 \| (.+) \|$/m)[1].split(' | ').map(Number);
-    assert.deepEqual(actRow, cells, `${VIDEO_ACT_LISTS[i]}: act table matches the overview`);
+    assert.deepEqual(actRow, cells.slice(0, 4), `${VIDEO_ACT_LISTS[i]}: act table matches the overview`);
     const high = lists[i].text.match(/^本幕重要級別 <span class="importance-high">高<\/span> 的段落：(.+)。分級方式見\[[^\]]+\]\(10-16_[^)]+#video-importance\)。$/m);
     assert(high, `${VIDEO_ACT_LISTS[i]}: high list`);
     assert.deepEqual([...high[1].matchAll(/`([^`]+)`/g)].map(m => m[1]), own.filter(s => s.level === '高').map(s => s.id));
   });
   const total = rows[5].split(' | ').slice(1).map(cell => Number(cell.replace(/[ |*]/g, '')));
-  assert.deepEqual(total, [...['高', '中', '低'].map(level => segments.filter(s => s.level === level).length), segments.length]);
+  assert.deepEqual(total.slice(0, 4), [...['高', '中', '低'].map(level => segments.filter(s => s.level === level).length), segments.length]);
   assert(overview.includes('<a id="video-importance"></a>\n\n## 重要級別怎麼分'), 'the importance guide anchor exists');
+});
+
+test('direction notes replace the rule-built storyboard of their segment and are linked both ways', () => {
+  const direction = docs(VIDEO_DIRECTION);
+  const notes = [...direction.matchAll(/<a id="(vd-[a-z0-9-]+)"><\/a>\n\n### (\S+)　(.+)\n\n([\s\S]*?)(?=\n<a id="vd-|\n## |$)/g)]
+    .map(([, anchor, id, name, body]) => ({ anchor, id, name, rows: [...body.matchAll(/^\| (\d+(?:\.\d+)?)–(\d+(?:\.\d+)?) \| (.+?) \| (.+?) \|$/gm)] }));
+  assert(notes.length >= 7, 'the prologue pilot is written');
+  const file = VIDEO_DIRECTION.split('/').at(-1);
+  for (const { anchor, id, name, rows } of notes) {
+    const segment = segments.find(s => s.id === id);
+    assert(segment, `${id}: note belongs to a segment`);
+    assert(segment.facts.includes(`- **導演註記：**[${id} ${name}](${file}#${anchor})`), `${id}: the act list links its note`);
+    const mood = segment.prompt.indexOf('【情緒節奏】');
+    assert(mood > segment.prompt.indexOf('【長度】') && mood < segment.prompt.indexOf('【分鏡】'), `${id}: mood sits between length and storyboard`);
+    const beats = [...segment.prompt.matchAll(/^(\d+(?:\.\d+)?)–(\d+(?:\.\d+)?) 秒｜(.+)$/gm)];
+    assert.deepEqual(beats.map(b => b[3]), rows.map(r => r[3]), `${id}: storyboard is the note's picture column`);
+    if (rows.some(r => r[4] !== '—')) assert(segment.prompt.includes('聲音與後製對點：\n・'), `${id}: sound cues are timed`);
+  }
+  for (const segment of segments) {
+    if (!notes.some(n => n.id === segment.id)) assert(!segment.prompt.includes('【情緒節奏】'), `${segment.id}: only directed segments carry a mood line`);
+  }
+  const prologueHigh = segments.filter(s => s.rel === VIDEO_ACT_LISTS[0] && s.level === '高');
+  assert(prologueHigh.every(s => notes.some(n => n.id === s.id)), 'every high prologue segment has a note');
+  const total = overview.match(/^\| \*\*上部合計\*\* \| \d+ \| \d+ \| \d+ \| \*\*\d+\*\* \| \*\*(\d+)\*\* \|$/m);
+  assert.equal(Number(total[1]), notes.length, 'the overview counts the notes');
+  VIDEO_ACT_LISTS.forEach((rel, i) => {
+    const count = notes.filter(n => segments.find(s => s.id === n.id).rel === rel).length;
+    assert.match(lists[i].text, new RegExp(`^導演註記：已寫 ${count} 段`, 'm'), rel);
+  });
 });
