@@ -225,13 +225,15 @@ test('subjective memory animations move only her own memories, faceless and skip
   has(common, '凝固的過去是靜止的', '不算破例', 'R31 解凍仍是凝固層唯一一次動起來');
   has(common, '##### 主觀記憶動畫', '不給臉、不給名字', '任何輸入立即結束', '不放受虐、處置或簽核的過程');
   // Each memory starts from her present hand on a shared object, then the memory, then a faceless frame.
-  for (const id of ['s-0903-14', 's-0904-3', 's-0904-18', 's-0906-3', 's-0906-14']) {
+  for (const id of ['s-0903-14', 's-0904-3', 's-0904-15', 's-0904-18', 's-0904-29', 's-0906-3', 's-0906-14', 's-0907-30']) {
     ordered(block(id), '（動畫演出／第一人稱動作回饋）', '（動畫演出／主觀記憶動畫）', '看不見');
   }
   // The R12 box keeps its line for R21: screws only, no subtitle or voice.
   const box = block('s-0906-3');
   const memory = box.slice(box.indexOf('（動畫演出／主觀記憶動畫）'), box.indexOf('鐵盒仍打不開'));
   assert(!memory.includes('〔字幕〕') && !memory.includes('聲線'));
+  // R21 closes the R12 memory: the missing screw fills the empty slot before the existing echo voices.
+  ordered(block('s-0907-30'), '（動畫演出／主觀記憶動畫）', '推進那一格', '小花聲線（主觀記憶回聲）', '主角聲線（主觀記憶回聲）');
   // The upper part has no frozen memory stills left; lower-part memories may stay still.
   for (const act of ACTS.slice(0, 5)) assert(!/（靜態畫面[^）]*）主觀記憶停在/.test(story(act.act)), act.name);
 });

@@ -218,9 +218,9 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Each upper-part one-way door (R5 exit, S-03, C-02, upper ending) adds one distant sound under its escape-night time;
   // act 2 adds the optional flip to the photo's back; act 4 adds the R21 work-request memory echo
   // and the two knocks behind the R18 entry door.
-  // Subjective memory animations add the P1 knot tap and memory sound, the R1 intake-form truck sound
-  // and the R12 parts-box screw sound.
-  const counts = [[24, 25, 9], [79, 36, 20], [114, 49, 10], [151, 31, 9],
+  // Subjective memory animations add the P1 knot tap and memory sound, the R1 intake-form truck sound,
+  // the R2 tracing and R4 muffled-laugh sounds, and the R12 parts-box screw sound.
+  const counts = [[24, 25, 9], [79, 38, 20], [114, 49, 10], [151, 31, 9],
     [63, 24, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
