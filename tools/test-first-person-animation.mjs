@@ -38,7 +38,7 @@ test('first-person cues distinguish cutscenes, live interaction and input feedba
       assert(kinds.includes(kind), `${act.name}: ${kind}`);
     }
   }
-  has(common, 'first-person-animation-contract', '現有 2D 主圖', '不新增場景、碎片或謎題',
+  has(common, 'first-person-animation-contract', '現有寫實主圖', '不新增場景、碎片或謎題',
     '略過僅在原本支援處啟用', '動畫完成只提交該原事件一次', '仍待引擎實作及真人試玩');
 });
 

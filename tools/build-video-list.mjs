@@ -399,13 +399,13 @@ function prompt(cue, previous, pictures, note) {
   } else if (continued) {
     lines.push(`【生成方式】圖生影片：首格用上一段 ${previous.id} 的最後一格，保持構圖、光線、色調、人物與物件造型不變，只加入下列動作。`);
   } else if (frame) {
-    lines.push(`【生成方式】圖生影片：首格依 ${frame} 定稿的構圖、物件位置與光源，做成一張寫實實拍的畫面；構圖、光線、人物與物件造型保持不變，只加入下列動作。`);
+    lines.push(`【生成方式】圖生影片：首格直接用 ${frame} 的寫實定稿圖；構圖、光線、人物與物件造型保持不變，只加入下列動作。`);
   } else {
-    lines.push(`【生成方式】圖生影片：首格依 ${cue.code} 本場次主圖定稿的構圖、物件位置與光源（劇本未點名圖號，見同幕製作規格圖像表），做成一張寫實實拍的畫面；構圖、光線與造型保持不變，只加入下列動作。`);
+    lines.push(`【生成方式】圖生影片：首格直接用 ${cue.code} 本場次主圖的寫實定稿圖（劇本未點名圖號，見同幕製作規格圖像表）；構圖、光線與造型保持不變，只加入下列動作。`);
   }
   if (note?.end) {
     const end = pictures.get(note.end);
-    const start = continued ? `用上一段 ${previous.id} 的最後一格` : frame ? `依 ${frame} 定稿的構圖做成寫實實拍的畫面` : '依分鏡第一格另做一張寫實實拍的畫面';
+    const start = continued ? `用上一段 ${previous.id} 的最後一格` : frame ? `直接用 ${frame} 的寫實定稿圖` : '依分鏡第一格另做一張寫實實拍的畫面';
     lines[lines.length - 1] = `【生成方式】首尾格生影片：首格${start}；尾格停在 ${note.end}（${end.use}）的視點與構圖。中間照分鏡過渡，光線與物件位置以尾格定稿為準。`;
   }
   const cut = memory ? '約 5 秒（可在 3–6 秒間）' : `約 ${fmt(length.value)} 秒${length.stated ? '（劇本指定）' : ''}`;
