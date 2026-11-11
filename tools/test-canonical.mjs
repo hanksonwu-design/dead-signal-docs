@@ -215,9 +215,10 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Instruction prompts become sound or notebook lines: the prologue P1-04 hint turns into a sound cue,
   // R6's route hint moves into her notebook, R16 drops the recalled-operation notice, R19 drops the return hint.
   // Each upper-part one-way door (R5 exit, S-03, C-02, upper ending) adds one distant sound under its escape-night time;
-  // act 2 adds the optional flip to the photo's back; act 4 adds the R21 work-request memory echo.
+  // act 2 adds the optional flip to the photo's back; act 4 adds the R21 work-request memory echo
+  // and the two knocks behind the R18 entry door.
   const counts = [[23, 24, 9], [79, 35, 20], [114, 49, 10], [151, 30, 9],
-    [63, 23, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
+    [63, 24, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
