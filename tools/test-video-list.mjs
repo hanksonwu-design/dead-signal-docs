@@ -10,7 +10,7 @@ const overview = docs(VIDEO_LIST);
 const lists = VIDEO_ACT_LISTS.map(rel => ({ rel, text: docs(rel) }));
 const segments = lists.flatMap(({ rel, text }) => [...text.matchAll(/<a id="(v-[a-z0-9-]+)"><\/a>\n\n### (\S+)　(\S+)\n\n([\s\S]*?)```prompt\n([\s\S]*?)\n```/g)]
   .map(([, anchor, id, type, facts, prompt]) => ({ rel, anchor, id, type, facts, prompt })));
-const SECTIONS = ['【影片】', '【生成方式】', '【長度】', '【分鏡】', '【鏡頭】', '【畫風】', '【不要出現】'];
+const SECTIONS = ['【影片】', '【生成方式】', '【長度】', '【分鏡】', '【鏡頭】', '【影片風格】', '【不要出現】'];
 
 test('the overview counts every segment that the five act lists carry', () => {
   const rows = overview.match(/^\| \[[^\]]+\]\(10-\d\d_[^)]+\) \|.*$/gm);
@@ -58,7 +58,7 @@ test('prompts describe what is seen, not player rules, and keep the faceless art
     for (const word of banned) assert(!prompt.includes(word), `${id}: ${word}`);
     assert(prompt.includes('清楚可辨識的人臉五官'), `${id}: faces stay unreadable`);
     assert(prompt.includes('配樂'), `${id}: no music`);
-    assert(/【畫風】寫實、極致逼真的真人實/.test(prompt) && !prompt.includes('手繪'), `${id}: shot-on-camera realism, not a painted look`);
+    assert(/【影片風格】寫實、極致逼真的真人實/.test(prompt) && !prompt.includes('手繪'), `${id}: shot-on-camera realism, not a painted look`);
     assert(prompt.includes('遊戲 CG 感') && prompt.includes('動作僵硬'), `${id}: no game CG look or stiff motion`);
     if (type === '主觀記憶動畫') {
       assert(prompt.includes('不用凝固層的單色冷青'), `${id}: memory palette differs from the frozen layer`);

@@ -399,7 +399,7 @@ function prompt(cue, previous, pictures) {
     else if (/^R1-/.test(cue.code)) lines.push('【光線色調】R1 大廳：廉價、均勻的暖白日光燈，乾淨得不自然；不加恐怖暗角，也不偏冷青。');
     else lines.push('【光線色調】現在的暖黑：低飽和、潮濕、廢棄，深黑陰影佔大半，只有設備燈、消防燈或漏光照亮局部；光向與首格一致。');
   }
-  lines.push(`【畫風】${device ? STYLE_DEVICE : STYLE}`);
+  lines.push(`【影片風格】${device ? STYLE_DEVICE : STYLE}`);
   const texts = [...new Set(beats.join('').match(/「[^」]+」/g) || [])];
   // Sound notes keep what is heard; remarks on what the player can work out stay in the script.
   const audio = [...cue.sound.map(line => sentences(line).filter(s => !s.includes('玩家')).join('')).filter(Boolean), ...captions];
@@ -433,7 +433,7 @@ function actList(act) {
   out.push('---', `文件: 製作規格｜影片製作列表・${act.name}`, `狀態: ${status}`, `更新: ${updated}`,
     `摘要: ${act.name}〈${act.subtitle}〉${own.length} 段動畫演出的製作列表；每段附劇本描述、首格圖號與 AI 生成影片用的中文分鏡提示詞。`, '---', '');
   out.push(`<a id="video-act-${act.act}"></a>`, '', `# 影片製作列表・${act.name} · ${act.subtitle}（${own.length} 段）`, '');
-  out.push(`> 本頁由 \`node tools/build-video-list.mjs\` 依[${act.name}劇本](../${act.path})與[${act.name}製作規格](${fileName(act.specPath)})產生，請勿手改；要改動畫，請改劇本或同幕圖像表後重新執行。提示詞的用法、共用畫風與禁止事項見[總表的提示詞說明](${fileName(VIDEO_LIST)}#video-prompt-guide)。`, '');
+  out.push(`> 本頁由 \`node tools/build-video-list.mjs\` 依[${act.name}劇本](../${act.path})與[${act.name}製作規格](${fileName(act.specPath)})產生，請勿手改；要改動畫，請改劇本或同幕圖像表後重新執行。提示詞的用法、共用影片風格與禁止事項見[總表的提示詞說明](${fileName(VIDEO_LIST)}#video-prompt-guide)。`, '');
   const nav = [`[影片製作總表](${fileName(VIDEO_LIST)}#video-catalog)`];
   if (index > 0) nav.push(`[上一幕：${UPPER[index - 1].name}](${fileName(listFile(UPPER[index - 1]))})`);
   if (index < UPPER.length - 1) nav.push(`[下一幕：${UPPER[index + 1].name}](${fileName(listFile(UPPER[index + 1]))})`);
