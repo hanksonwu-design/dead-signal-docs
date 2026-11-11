@@ -225,16 +225,23 @@ function renderMarkdown(raw, lineOffset = 0) {
   let listType = null;
   let table = null;
   let code = null;
+  let codeLang = "";
 
   const flushParagraph = () => { if (paragraph.length) { out.push(`<p data-source-line="${lineOffset + paragraphLine}">${withCueTags(paragraph, inlineMarkdown)}</p>`); paragraph = []; } };
   const closeList = () => { if (listType) { out.push(`</${listType}>`); listType = null; } };
   const closeTable = () => { if (table) { out.push(`</tbody></table></div>`); table = null; } };
-  const closeCode = () => { if (code !== null) { out.push(`<pre><code>${esc(code.join("\n"))}</code></pre>`); code = null; } };
+  // A ```prompt fence is an AI storyboard prompt: it wraps and gets a copy button (wired in openReader).
+  const closeCode = () => {
+    if (code === null) return;
+    const block = `<pre><code>${esc(code.join("\n"))}</code></pre>`;
+    out.push(codeLang === "prompt" ? `<div class="prompt-block"><button type="button" class="prompt-copy">複製提示詞</button>${block}</div>` : block);
+    code = null;
+  };
 
   while (i < lines.length) {
     const line = lines[i];
     if (code !== null) { if (/^\s*(?:```|~~~)/.test(line)) closeCode(); else code.push(line); i += 1; continue; }
-    if (/^\s*(?:```|~~~)/.test(line)) { flushParagraph(); closeList(); closeTable(); code = []; i += 1; continue; }
+    if (/^\s*(?:```|~~~)/.test(line)) { flushParagraph(); closeList(); closeTable(); code = []; codeLang = line.trim().slice(3).trim(); i += 1; continue; }
     // Only the plain disclosure syntax is supported, never arbitrary HTML attributes.
     if (line === '<details>' && /^<summary>[^<>]+<\/summary>$/.test(lines[i + 1] || '')) {
       let depth = 1, end = i + 2, fence = null;
@@ -478,6 +485,25 @@ function openReader(path, updateHash = true, headingText = "") {
     if (link.target === "_blank" || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
     event.preventDefault();
     openReader(link.dataset.docLink, true, link.dataset.docHeading || "");
+  }));
+  $("readerContent").querySelectorAll(".prompt-copy").forEach((button) => button.addEventListener("click", async () => {
+    const code = button.nextElementSibling.querySelector("code");
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(code.textContent);
+      copied = true;
+    } catch (_) {
+      // Embedded or older browsers may block the async clipboard; fall back to a selection copy.
+      const range = document.createRange();
+      range.selectNodeContents(code);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      try { copied = document.execCommand("copy"); } catch (_) { copied = false; }
+      if (copied) selection.removeAllRanges();
+    }
+    button.textContent = copied ? "已複製" : "已選取，請按 Ctrl+C";
+    setTimeout(() => { button.textContent = "複製提示詞"; }, copied ? 1600 : 3000);
   }));
 }
 

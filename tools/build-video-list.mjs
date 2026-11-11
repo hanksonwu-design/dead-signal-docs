@@ -1,15 +1,16 @@
-// Builds the upper-part video production list from every （動畫演出／…） cue in the act scripts.
-// Only the marked region of 10-16 is generated; its introduction and delivery rules stay hand-written.
+// Builds the upper-part video production lists from every （動畫演出／…） cue in the act scripts.
+// 10-16 keeps its hand-written introduction and gets a generated overview; each upper act gets a
+// fully generated list (10-17 to 10-21) whose segments carry a Chinese storyboard prompt for AI video tools.
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ACTS, APPENDIX } from './screenplay-files.mjs';
+import { ACTS, APPENDIX, VIDEO_LIST, VIDEO_ACT_LISTS } from './screenplay-files.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'docs');
-const TARGET = '10_製作規格/10-16_製作規格_影片製作列表.md';
 const UPPER = ACTS.slice(0, 5);
+const CHECK = process.argv.includes('--check');
 // Each type has its own text color in the reader (styles.css .video-*); app.js allows only these classes.
 const TYPE_CLASSES = {
   第一人稱過場: 'video-cutscene', 第一人稱互動: 'video-interact', 第一人稱動作回饋: 'video-feedback',
@@ -17,19 +18,26 @@ const TYPE_CLASSES = {
 };
 const TYPES = Object.keys(TYPE_CLASSES);
 const typeTag = (type, label = type) => `<span class="${TYPE_CLASSES[type]}">${label}</span>`;
+const shortType = type => type.replace('第一人稱', '');
 const BEGIN = '<!-- video-list:begin -->';
 const END = '<!-- video-list:end -->';
+const MEMORY_CONTRACT = '../09_劇本/09-15_正式劇本_共用附錄.md#memory-animation-contract';
+const ANIMATION_CONTRACT = '../09_劇本/09-15_正式劇本_共用附錄.md#first-person-animation-contract';
 
 const read = rel => readFileSync(path.join(DOCS, rel), 'utf8').replaceAll('\r\n', '\n');
 const cell = value => String(value).replaceAll('|', '／').replaceAll('\n', ' ').trim();
 const table = (headers, rows) => [headers, headers.map(() => '---'), ...rows]
   .map(row => `| ${row.map(cell).join(' | ')} |`).join('\n');
 const IMAGE = /\b(?:T-[A-Z]\d+b?-[A-Z]\d+b?-\d{2}(?:-C\d{2})?|[PRU]\d+b?-[VCD]\d{2}(?:-C\d{2})?)\b/g;
+const IMAGE_ID = new RegExp(`^${IMAGE.source}$`);
 const plain = text => text
   .replace(/<!--[\s\S]*?-->/g, '')
   .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
   .replace(/\s+/g, ' ')
   .trim();
+const fileName = rel => rel.split('/').at(-1);
+const listFile = act => VIDEO_ACT_LISTS[UPPER.indexOf(act)];
+const anchorOf = id => `v-${id.toLowerCase().replace('·', '-')}`;
 
 function parseHeading(line) {
   const m = line.match(/^(#{2,6}) (.+)$/);
@@ -43,6 +51,19 @@ function parseHeading(line) {
   else if ((beat = text.match(/^次場景 (\S+) · (.+)$/))) [, code, title] = beat;
   else if (level === 3 && (beat = text.match(/^(\S+) · (.+)$/))) [, code, title] = beat;
   return { level, text, code, title };
+}
+
+// Sound and subtitle lines that follow a cue belong to it until the next picture, player or operation line.
+const SOUND = /^(?:〔(?:環境|字幕|人聲)[^〕]*〕|（配音演出）|[\p{Script=Han}A-Za-z0-9·]{1,12}（[^）]+）「|主角「)/u;
+function soundAfter(lines, i) {
+  const found = [];
+  for (let j = i + 1; j < lines.length && found.length < 4; j++) {
+    const line = lines[j].trim();
+    if (!line || /^<a id=/.test(line)) continue;
+    if (!SOUND.test(line)) break;
+    found.push(plain(line));
+  }
+  return found;
 }
 
 function collect(act) {
@@ -85,7 +106,7 @@ function collect(act) {
       for (let j = i + 1; j < lines.length && !images.length && !parseHeading(lines[j]); j++) images = [...new Set(lines[j].match(IMAGE) || [])];
     }
     cues.push({
-      act, type, description, images, block,
+      act, type, description, images, block, sound: soundAfter(lines, i),
       code: coded.code, title: coded.title, sub, anchor,
       anchors: new Set([block, ...stack.flatMap(h => h.anchors), ...floating].filter(Boolean)),
     });
@@ -97,6 +118,23 @@ function collect(act) {
     cue.id = `${cue.code}·${n}`;
   }
   return cues;
+}
+
+// Picture rows of the act specs (| 畫面節點／圖號 | 用途 | 必畫內容 | …) give each prompt its first frame.
+function pictureRows() {
+  const rows = new Map();
+  for (const act of UPPER) {
+    let header = null;
+    for (const line of read(act.specPath).split('\n')) {
+      if (!line.startsWith('| ')) { header = null; continue; }
+      const cells = line.slice(2, -2).split(' | ');
+      if (!header) { header = cells; continue; }
+      if (/^-+$/.test(cells[0]) || header[0] !== '畫面節點／圖號' || header[2] !== '必畫內容') continue;
+      const id = cells[0].replaceAll('`', '').trim();
+      if (IMAGE_ID.test(id) && !rows.has(id)) rows.set(id, { use: plain(cells[1]), draw: plain(cells[2]) });
+    }
+  }
+  return rows;
 }
 
 function keyBridges(cues) {
@@ -127,54 +165,344 @@ function keyBridges(cues) {
     const scenes = new Set(byImage.map(c => c.code));
     if (byImage.length) matched = matched.filter(c => scenes.has(c.code));
     assert(matched.length, `Animation contract row matches no cue: ${name}`);
-    for (const cue of matched) cue.key = name;
-    rows.push([`[${name}](../${act.path}#${anchor})`, method, control,
-      matched.map(c => c.id).join('、')]);
+    for (const cue of matched) cue.key = { name, control: plain(control) };
+    rows.push({ act, name, anchor, method, control, matched });
   }
   return rows;
 }
 
+// ---------- storyboard prompts ----------
+
+// Where the script says "the player" for the first-person viewpoint, the prompt says the camera or her.
+const VIEWPOINT = [
+  [/玩家操作叫號機的位置/g, '鏡頭前的叫號機'], [/朝玩家站的方向/g, '朝鏡頭方向'], [/(朝向|對著)玩家/g, '$1鏡頭'],
+  [/留在玩家眼前/g, '留在眼前'], [/玩家(?:躲著|所在)的/g, '鏡頭這側的'], [/玩家這側/g, '鏡頭這側'], [/玩家終端/g, '眼前終端'],
+  [/玩家(?:把|的手)/g, m => m.replace('玩家', '她')], [/玩家動/g, '她一動'], [/玩家(切入凹位後|退回掩體時|走近)/g, '$1'],
+  [/照玩家排好的/g, '照排好的'], [/沒有等玩家輸入，?/g, ''],
+];
+// Clauses that only state rules for input, saving, length or puzzle state are left out of the shot list.
+const MECHANICS = new RegExp([
+  '玩家', '任何(?:輸入|操作)', '一有輸入', '鎖輸入', '提交', '點選', '點回', '交還', '判定', '補救窗', '低動態', '讀檔', '略過', '不算', '回訪',
+  '熱點', '條件', '筆記(?:不|只|更新|寫入|補)', '示範', '驗證', '憑證', '路由', '供電', '狀態', '不能', '可重試', '生效', '取消', '覆寫',
+  '已讀', '索引', '證據', '不改', '仍需', '仍待', '可近看', '可查看', '等待', '標出', '方向字幕', '可見標記', '保持可用', '不只靠',
+  '必要', '倒數', '抹除', '未處理', '演出', '本來就', '可橫穿', '不超過', '總長', '^(?:最長|前後|共)?約?\\s*\\d+(?:\\.\\d+)?\\s*秒$',
+].join('|'));
+// A clause that opens with these words only finishes a dropped rule clause ("……，再對回待叫序列").
+const DANGLING = clause => /^(?:再|才|便|就)/.test(clause) || (clause.length <= 8 && /就|便/.test(clause));
+// A sentence led by a state condition ("已安息時，……") describes another variant of the same shot.
+const VARIANT = /^(?:已|若|如果|曾)[^，]{0,20}(?:時|者|的話)$/;
+// Framing limits ("only below the ankles") become a composition line instead of a timed beat.
+const FRAMING = /^(?:畫面(?:始終)?只到|看不(?:到|見)(?:任何人的)?(?:臉|腳踝)|看得見的只有|眼前的紙和現在的手)/;
+const CAPTION = /字幕「/;
+const SECONDS = [
+  /不超過(?:原\s*)?(\d+(?:\.\d+)?)\s*秒/, /(?:前後|最長|共)約\s*(\d+(?:\.\d+)?)\s*秒/, /固定\s*(\d+(?:\.\d+)?)\s*秒/,
+  /同一段\s*(\d+(?:\.\d+)?)\s*秒/, /(\d+(?:\.\d+)?)\s*秒內/, /這\s*(\d+(?:\.\d+)?)\s*秒/,
+];
+// [shortest, longest, seconds per beat] used when the script gives no length.
+const PACE = {
+  第一人稱過場: [4, 10, 2.5], 第一人稱互動: [3, 8, 2], 第一人稱動作回饋: [1.5, 6, 1.2],
+  主觀記憶動畫: [3, 6, 1.2], 場景局部動畫: [2, 8, 2], 設備內影片: [3, 10, 2.5], 設備即時影像: [3, 10, 2.5],
+};
+const CAMERA = {
+  第一人稱過場: '第一人稱主觀鏡頭。只照分鏡緩慢推近或停住，不晃動、不旋轉、不快速轉向；結尾停在與首格相同的視點與地標。',
+  第一人稱互動: '第一人稱固定鏡位，鏡頭完全不動。只動分鏡點名的手、人物或物件，其餘背景保持靜止。',
+  第一人稱動作回饋: '第一人稱固定鏡位，鏡頭不動。動作做完就停住，不加分鏡以外的動作。',
+  主觀記憶動畫: '從她當時的眼睛看出去的主觀鏡頭，幾乎不動，只有極輕微的呼吸感；不換成旁觀角度拍她。',
+  場景局部動畫: '固定鏡頭，整個畫面靜止，只有分鏡點名的局部在動；不新增人物或物件。',
+  設備內影片: '只生成設備螢幕裡播放的畫面本身（全幅，不含設備外框），後製再合成進螢幕遮罩；片內可以照分鏡切換畫面。',
+  設備即時影像: '只生成設備螢幕裡的即時畫面本身（全幅，不含設備外框），後製再合成進螢幕遮罩。',
+};
+const MOVING = /視點|鏡頭極慢|視野兩側退去|從腳邊退去|車廂上行/;
+const DELIVERY = {
+  第一人稱過場: '成片可直接使用；頭尾各留一格與首格主圖對位，供程式切換。',
+  第一人稱互動: 'AI 生成稿只作動態參考或底稿；正式交付拆成手部、前景遮擋與物件動態圖層，疊回原主圖，不以整支影片取代可點的場景。',
+  第一人稱動作回饋: 'AI 生成稿只作動態參考或底稿；正式交付為疊在原主圖或近看上的短手部／物件動態圖層。',
+  主觀記憶動畫: '併入觸碰物件的原近看或主圖素材項，另交記憶動畫分層與二至三張低動態記憶靜格。',
+  場景局部動畫: '只取會動的局部，做成疊在原主圖或近看上的獨立動態圖層，其餘畫面沿用原圖。',
+  設備內影片: '成片合成進設備螢幕遮罩；近看保留設備邊框，字幕與畫面文字後製加上。',
+  設備即時影像: '成片合成進設備螢幕遮罩；近看保留設備邊框。',
+};
+const PROTAGONIST_HAND = /(?:她|自己|主角)(?:的)?(?:雙手|右手|左手|手|指|拇指|指甲|指尖|指節|掌)|前景的(?:右|左)?手|撐地的手|手從視野下緣|她彎身|她用指/;
+const FIGURE = /輪廓|殘留|人影|縫紉者|老周|阿尋|噤聲者|鏡像者|接待員|成年人|那人|三人|影邊|衣領|肩線|倒影/;
+const NEGATIVE = [
+  '清楚可辨識的人臉五官', '任何可讀的文字、號碼、標誌、國旗或國名（畫面上的字留白或模糊，後製再合成）', '配樂',
+  '血腥特寫、裸露', '手指數量或手部結構錯誤', '分鏡沒寫的人物、物件突然出現、消失或變形', '3D 寫實質感、動漫卡通畫風',
+];
+
+const fmt = n => String(Math.round(n * 10) / 10);
+function sentences(text) {
+  const out = [];
+  let buf = '';
+  let depth = 0;
+  for (const ch of text) {
+    buf += ch;
+    if ('「（'.includes(ch)) depth++;
+    else if ('」）'.includes(ch)) depth = Math.max(0, depth - 1);
+    else if (!depth && '。；！？'.includes(ch)) { out.push(buf.trim()); buf = ''; }
+  }
+  if (buf.trim()) out.push(buf.trim());
+  return out;
+}
+const tidy = text => text
+  .replaceAll('**', '')
+  .replace(/（[^）]*`[^）]*）/g, '')
+  .replace(/沿\s*`[^`]+`\s*/g, '')
+  .replaceAll('`', '')
+  .replace(new RegExp(`(?:${IMAGE.source})\\s*`, 'g'), '')
+  .replace(/^[，、\s]+/, '')
+  .replace(/[；]$/, '。')
+  .trim();
+
+function shots(cue) {
+  const beats = [];
+  const captions = [];
+  const framing = [];
+  let carry = '';
+  let total = 0;
+  let visual = 0;
+  for (const raw of sentences(VIEWPOINT.reduce((text, [from, to]) => text.replace(from, to), cue.description))) {
+    if (CAPTION.test(raw)) { captions.push(tidy(raw)); continue; }
+    const end = /[。；！？]$/.test(raw) ? '。' : '';
+    const clauses = raw.replace(/[。；！？]$/, '').split('，');
+    if (beats.length && VARIANT.test(clauses[0])) continue;
+    total += raw.length;
+    const kept = [];
+    let dropped = false;
+    for (const clause of clauses) {
+      dropped = MECHANICS.test(clause) || (dropped && DANGLING(clause));
+      if (!dropped) kept.push(clause);
+    }
+    const text = tidy(kept.join('，'));
+    if (text.length < 6 && kept.length < clauses.length) continue;
+    if (!text) continue;
+    visual += text.length;
+    if (FRAMING.test(text)) { framing.push(text + end); continue; }
+    // Very short sentences ride with a neighbouring beat so each beat is one readable action.
+    if (text.length < 12) {
+      if (beats.length) beats[beats.length - 1] += text + end;
+      else carry += text + end;
+      continue;
+    }
+    beats.push(carry + text + end);
+    carry = '';
+  }
+  if (carry) beats.push(carry);
+  while (beats.length > 5) {
+    let best = 0;
+    for (let i = 1; i < beats.length - 1; i++) if (beats[i].length + beats[i + 1].length < beats[best].length + beats[best + 1].length) best = i;
+    beats.splice(best, 2, beats[best] + beats[best + 1]);
+  }
+  // Mostly rules and state: better made as layer differences than generated as video.
+  if (visual < total * 0.3 && !cue.key) beats.length = 0;
+  return { beats, captions, framing };
+}
+
+function seconds(cue, beats) {
+  // A beat heading such as 「拍點二｜趨光（4–10 秒）」 times the segment it holds.
+  const span = cue.sub.match(/（(\d+(?:\.\d+)?)–(\d+(?:\.\d+)?) 秒）/);
+  if (span) return { value: Number(span[2]) - Number(span[1]), stated: true };
+  const about = cue.sub.match(/約 (\d+(?:\.\d+)?) 秒/);
+  if (about) return { value: Number(about[1]), stated: true };
+  for (const pattern of SECONDS) {
+    const m = cue.description.match(pattern);
+    if (m) return { value: Number(m[1]), stated: true };
+  }
+  const [low, high, each] = PACE[cue.type];
+  if (cue.type === '主觀記憶動畫') return { value: 5, stated: false };
+  return { value: Math.min(high, Math.max(low, Math.round(beats.length * each * 2) / 2)), stated: false };
+}
+
+function timeline(beats, total) {
+  const marks = [0];
+  for (let i = 1; i <= beats.length; i++) marks.push(i === beats.length ? total : Math.max(marks[i - 1] + 0.5, Math.round(total * i / beats.length * 2) / 2));
+  if (marks.at(-1) < marks.at(-2)) marks[marks.length - 1] = marks.at(-2) + 0.5;
+  return beats.map((beat, i) => `${fmt(marks[i])}–${fmt(marks[i + 1])} 秒｜${beat}`);
+}
+
+// A long single action is split at its commas so a clip of three seconds or more gets two or three timed beats.
+function spread(beats, total) {
+  const out = [...beats];
+  const want = Math.min(3, Math.floor(total / 1.5));
+  while (out.length && out.length < want) {
+    const i = out.reduce((best, beat, j) => beat.length > out[best].length ? j : best, 0);
+    const parts = out[i].replace(/。$/, '').split('，');
+    if (out[i].length < 24 || parts.length < 2 || out[i].includes('「')) break;
+    let size = 0;
+    let cut = 1;
+    for (let k = 0; k < parts.length - 1; k++) {
+      size += parts[k].length + 1;
+      cut = k + 1;
+      if (size >= out[i].length / 2) break;
+    }
+    const [head, tail] = [parts.slice(0, cut).join('，'), parts.slice(cut).join('，')];
+    if (head.length < 8 || tail.length < 8) break;
+    out.splice(i, 1, `${head}。`, `${tail}。`);
+  }
+  return out;
+}
+
+function prompt(cue, previous, pictures) {
+  const shot = shots(cue);
+  const { captions, framing } = shot;
+  const length = seconds(cue, shot.beats);
+  const beats = spread(shot.beats, cue.type === '主觀記憶動畫' ? 5 : length.value);
+  const memory = cue.type === '主觀記憶動畫';
+  const device = cue.type.startsWith('設備');
+  const image = cue.images[0];
+  const picture = image && pictures.get(image);
+  const draw = picture && picture.draw.split(/[。；]/)[0].trim();
+  const frame = picture ? `${image}（${picture.use}：${draw.length > 60 ? draw.slice(0, 60).replace(/[，、；\s]*$/, '') + '…' : draw}）` : '';
+  const moving = !device && !memory && cue.type !== '第一人稱過場' && MOVING.test(cue.description);
+  const continued = previous && previous.code === cue.code && previous.images[0] === image && !memory && previous.type !== '主觀記憶動畫';
+  const lines = [];
+  lines.push(`【影片】${cue.id}｜${cue.type}｜${cue.act.name} ${cue.code} ${cue.title}`);
+  if (memory) {
+    lines.push(`【生成方式】先依分鏡第一格生成一張記憶首格圖${image ? `（併入 ${image} 素材項的記憶分層）` : ''}，再用圖生影片。`);
+  } else if (device) {
+    lines.push(`【生成方式】圖生影片：首格是${image ? ` ${image} ` : '設備'}螢幕裡播放的畫面定稿，不含設備外框。`);
+  } else if (moving) {
+    lines.push(`【生成方式】首尾格生影片：終點停在 ${frame || `${cue.code} 本場次主圖`} 的視點與構圖；起點依分鏡第一格補畫一張首格。光線、色調與造型照定稿。`);
+  } else if (continued) {
+    lines.push(`【生成方式】圖生影片：首格用上一段 ${previous.id} 的最後一格，保持構圖、光線、色調、人物與物件造型不變，只加入下列動作。`);
+  } else if (frame) {
+    lines.push(`【生成方式】圖生影片：首格用 ${frame} 的定稿，保持構圖、光線、色調、人物與物件造型不變，只加入下列動作。`);
+  } else {
+    lines.push(`【生成方式】圖生影片：首格用 ${cue.code} 本場次主圖的定稿（劇本未點名圖號，見同幕製作規格圖像表），保持構圖、光線與造型不變，只加入下列動作。`);
+  }
+  const cut = memory ? '約 5 秒（可在 3–6 秒間）' : `約 ${fmt(length.value)} 秒${length.stated ? '（劇本指定）' : ''}`;
+  lines.push(`【長度】剪用${cut}；${length.value > 10 ? '分兩段各生成 5–10 秒，接剪後裁切' : `生成 ${length.value > 5 ? 10 : 5} 秒後裁切`}。`);
+  if (beats.length) {
+    lines.push('【分鏡】', ...timeline(beats, memory ? 5 : length.value));
+  } else {
+    lines.push('【分鏡】本段主要是介面、燈號或狀態變化，建議直接以圖層差分製作，不需要 AI 生成影片；細節見上方劇本描述。');
+  }
+  const camera = moving
+    ? '第一人稱主觀鏡頭。視點只照分鏡緩慢移動，不晃動、不旋轉，地平線保持水平；最後在分鏡寫的位置停穩。'
+    : CAMERA[cue.type];
+  lines.push(`【鏡頭】${camera}`);
+  if (framing.length && !memory) lines.push(`【構圖限制】${framing.join('')}`);
+  if (memory) {
+    const crop = cue.description.match(/畫面只到([^，。；]+)/)?.[1] || '肩膀以下';
+    lines.push(`【人物】她的手與前臂可入鏡，衣袖素色、無圖案。另一個人只以米色、過長、蓋到指節的袖口辨認；構圖只到${crop}，看不見任何人的臉。`);
+    lines.push('【光線色調】記憶色調：柔和低對比的暖褐微光，帶輕微顆粒與四周微暈，像隔著一層舊塑膠片看；不用凝固層的單色冷青，也不加訊號雜訊。光源只用分鏡裡原有的。');
+  } else {
+    const hands = [];
+    if (!device && PROTAGONIST_HAND.test(cue.description)) hands.push('她的手只露出手與白襯衫袖口，手背乾裂、有擦傷，從畫面下緣入鏡；五指比例正確。');
+    if (FIGURE.test(cue.description)) hands.push(device ? '片中人物的臉要被裁切、壓縮或模糊，只看得清嘴形、肩膀與手；不做清晰肖像。' : '人物與異變者照首格的造型與位置，臉不給清楚五官（無臉、背光或被遮住），動作緩慢。');
+    if (hands.length) lines.push(`【人物】${hands.join('')}`);
+    if (device) lines.push('【光線色調】舊螢幕畫質：略低解析、輕微掃描線與色偏，亮度只在螢幕範圍內。');
+    else if (cue.type === '第一人稱過場') lines.push('【光線色調】照首格與分鏡：深黑為主，只有分鏡點名的光源發亮，低飽和。');
+    else if (/^R1-/.test(cue.code)) lines.push('【光線色調】R1 大廳：廉價、均勻的暖白日光燈，乾淨得不自然；不加恐怖暗角，也不偏冷青。');
+    else lines.push('【光線色調】現在的暖黑：低飽和、潮濕、廢棄，深黑陰影佔大半，只有設備燈、消防燈或漏光照亮局部；光向與首格一致。');
+  }
+  lines.push(`【畫風】${device ? '與遊戲手繪畫風一致的螢幕影像，再疊上舊顯示器的質感。' : '精緻的 2D 手繪插畫質感，像會動的手繪背景；筆觸、材質與首格一致。'}`);
+  const texts = [...new Set(beats.join('').match(/「[^」]+」/g) || [])];
+  // Sound notes keep what is heard; remarks on what the player can work out stay in the script.
+  const audio = [...cue.sound.map(line => sentences(line).filter(s => !s.includes('玩家')).join('')).filter(Boolean), ...captions];
+  if (audio.length || texts.length) {
+    lines.push('【後製（不進 AI 生成）】');
+    if (texts.length) lines.push(`畫面文字：${texts.join('、')}`);
+    for (const line of audio) lines.push(line);
+  }
+  const negative = [...NEGATIVE];
+  if (!device) negative.splice(3, 0, '第三人稱或看見主角全身', cue.type === '第一人稱過場' || camera.includes('視點只照') ? '鏡頭晃動或突然換景' : '鏡頭晃動、推移或換景');
+  if (memory) negative.push('冷青色調或訊號雜訊', '對方的臉、名牌或可讀的名字');
+  lines.push(`【不要出現】${negative.join('；')}。`);
+  return { text: lines.join('\n'), length, empty: !beats.length };
+}
+
+// ---------- output ----------
+
 const cues = UPPER.flatMap(collect);
 const bridges = keyBridges(cues);
+const pictures = pictureRows();
+for (const cue of cues) for (const id of cue.images) assert(pictures.has(id), `${cue.id}: picture ${id} has no row in the act spec`);
 const usedTypes = TYPES.filter(t => cues.some(c => c.type === t));
-const out = [];
-out.push('## 統計', '');
-out.push(table(['幕', ...usedTypes.map(t => typeTag(t)), '合計'], [
+const overview = read(VIDEO_LIST);
+const updated = overview.match(/^更新: (\d{4}-\d{2}-\d{2})$/m)[1];
+const status = overview.match(/^狀態: (.+)$/m)[1];
+
+function actList(act) {
+  const own = cues.filter(c => c.act === act);
+  const index = UPPER.indexOf(act);
+  const out = [];
+  out.push('---', `文件: 製作規格｜影片製作列表・${act.name}`, `狀態: ${status}`, `更新: ${updated}`,
+    `摘要: ${act.name}〈${act.subtitle}〉${own.length} 段動畫演出的製作列表；每段附劇本描述、首格圖號與 AI 生成影片用的中文分鏡提示詞。`, '---', '');
+  out.push(`<a id="video-act-${act.act}"></a>`, '', `# 影片製作列表・${act.name} · ${act.subtitle}（${own.length} 段）`, '');
+  out.push(`> 本頁由 \`node tools/build-video-list.mjs\` 依[${act.name}劇本](../${act.path})與[${act.name}製作規格](${fileName(act.specPath)})產生，請勿手改；要改動畫，請改劇本或同幕圖像表後重新執行。提示詞的用法、共用畫風與禁止事項見[總表的提示詞說明](${fileName(VIDEO_LIST)}#video-prompt-guide)。`, '');
+  const nav = [`[影片製作總表](${fileName(VIDEO_LIST)}#video-catalog)`];
+  if (index > 0) nav.push(`[上一幕：${UPPER[index - 1].name}](${fileName(listFile(UPPER[index - 1]))})`);
+  if (index < UPPER.length - 1) nav.push(`[下一幕：${UPPER[index + 1].name}](${fileName(listFile(UPPER[index + 1]))})`);
+  nav.push(`[第一人稱動畫製作與交接](${ANIMATION_CONTRACT})`);
+  out.push(nav.join(' · '), '');
+  out.push('## 本幕統計', '');
+  const types = usedTypes.filter(t => own.some(c => c.type === t));
+  out.push(table([...types.map(t => typeTag(t)), '合計'], [[...types.map(t => own.filter(c => c.type === t).length), own.length]]), '');
+  const keys = bridges.filter(b => b.act === act);
+  if (keys.length) {
+    out.push(`本幕重點橋段 ★：${keys.map(b => `${b.name}（${b.matched.map(c => c.id).join('、')}）`).join('；')}。控制交接見[總表重點橋段](${fileName(VIDEO_LIST)}#video-key-bridges)。`, '');
+  }
+  let scene = null;
+  let previous = null;
+  for (const cue of own) {
+    if (cue.code !== scene) {
+      scene = cue.code;
+      const count = own.filter(c => c.code === scene).length;
+      out.push(`## ${cue.code} ${cue.title}（${count} 段）`, '');
+    }
+    const built = prompt(cue, previous, pictures);
+    cue.prompt = built;
+    out.push(`<a id="${anchorOf(cue.id)}"></a>`, '', `### ${cue.id}　${shortType(cue.type)}`, '');
+    const facts = [`**類型：**${typeTag(cue.type)}`];
+    facts.push(`**畫面：**${cue.images.length ? cue.images.map(id => `\`${id}\``).join('、') : '本場次主圖'}`);
+    facts.push(`**剪用：**${cue.type === '主觀記憶動畫' ? '約 3–6 秒' : `約 ${fmt(built.length.value)} 秒`}`);
+    out.push(`- ${facts.join('　')}`);
+    out.push(`- **劇本：**[${cue.code} ${cue.title}](../${act.path}#${cue.anchor})${cue.sub ? `｜${cue.sub}` : ''}`);
+    out.push(`- **交付：**${DELIVERY[cue.type]}`);
+    if (cue.type === '主觀記憶動畫') out.push(`- **規則：**[主觀記憶動畫](${MEMORY_CONTRACT})：只到肩膀以下、不給臉與名字，任何輸入立即結束。`);
+    if (cue.key) out.push(`- **重點 ★ ${cue.key.name}：**${cue.key.control}`);
+    out.push('', `**劇本描述**　${cue.description}`, '');
+    out.push('```prompt', built.text, '```', '');
+    previous = cue;
+  }
+  return out.join('\n').trim() + '\n';
+}
+
+const outputs = new Map(UPPER.map(act => [listFile(act), actList(act)]));
+
+const region = [];
+region.push('## 統計', '');
+region.push(table(['幕', ...usedTypes.map(t => typeTag(t)), '合計'], [
   ...UPPER.map(act => {
     const own = cues.filter(c => c.act === act);
-    return [`[${act.name}](#video-act-${act.act})`, ...usedTypes.map(t => own.filter(c => c.type === t).length), own.length];
+    return [`[${act.name} · ${act.subtitle}](${fileName(listFile(act))})`, ...usedTypes.map(t => own.filter(c => c.type === t).length), own.length];
   }),
   ['**上部合計**', ...usedTypes.map(t => cues.filter(c => c.type === t).length), `**${cues.length}**`],
 ]), '');
-out.push('<a id="video-key-bridges"></a>', '', '## 重點橋段（★）', '');
-out.push('下列橋段另有控制交接規格，取自[第一人稱動畫製作與交接](../09_劇本/09-15_正式劇本_共用附錄.md#first-person-animation-contract)；製作時先讀這一列，再看對應的影片描述。', '');
-out.push(table(['橋段', '方式／既有素材', '控制交接與時序', '對應列表'], bridges), '');
-for (const act of UPPER) {
-  const own = cues.filter(c => c.act === act);
-  out.push(`<a id="video-act-${act.act}"></a>`, '', `## ${act.name} · ${act.subtitle}（${own.length} 段）`, '');
-  out.push(table(['編號', '場次', '類型', '影片描述', '畫面', '重點'], own.map(c => [
-    `\`${c.id}\``,
-    `[${c.code} ${c.title}](../${act.path}#${c.anchor})${c.sub ? `<br>${c.sub}` : ''}`,
-    typeTag(c.type, c.type.replace('第一人稱', '')),
-    c.description,
-    c.images.length ? c.images.map(id => `\`${id}\``).join('、') : '—',
-    c.key ? `★ ${c.key}` : '',
-  ])), '');
-}
-
-const file = path.join(DOCS, TARGET);
-const original = readFileSync(file, 'utf8');
+region.push('<a id="video-key-bridges"></a>', '', '## 重點橋段（★）', '');
+region.push(`下列橋段另有控制交接規格，取自[第一人稱動畫製作與交接](${ANIMATION_CONTRACT})；製作時先讀這一列，再到各幕列表看對應的影片描述與提示詞。`, '');
+region.push(table(['橋段', '方式／既有素材', '控制交接與時序', '對應列表'], bridges.map(b => [
+  `[${b.name}](../${b.act.path}#${b.anchor})`, b.method, b.control,
+  b.matched.map(c => `[${c.id}](${fileName(listFile(c.act))}#${anchorOf(c.id)})`).join('、'),
+])), '');
+const original = readFileSync(path.join(DOCS, VIDEO_LIST), 'utf8');
 const nl = original.includes('\r\n') ? '\r\n' : '\n';
-const text = original.replaceAll('\r\n', '\n');
-assert.equal(text.split(BEGIN).length, 2, 'video-list begin marker');
-assert.equal(text.split(END).length, 2, 'video-list end marker');
-const from = text.indexOf(BEGIN) + BEGIN.length;
-const to = text.indexOf(END);
-const output = (text.slice(0, from) + '\n\n' + out.join('\n').trim() + '\n\n' + text.slice(to)).replaceAll('\n', nl);
-const changed = output !== original;
-if (process.argv.includes('--check')) {
-  assert(!changed, 'Video list is stale; run node tools/build-video-list.mjs');
-} else if (changed) {
-  writeFileSync(file, output);
+assert.equal(overview.split(BEGIN).length, 2, 'video-list begin marker');
+assert.equal(overview.split(END).length, 2, 'video-list end marker');
+const from = overview.indexOf(BEGIN) + BEGIN.length;
+const to = overview.indexOf(END);
+outputs.set(VIDEO_LIST, overview.slice(0, from) + '\n\n' + region.join('\n').trim() + '\n\n' + overview.slice(to));
+
+const stale = [];
+for (const [rel, text] of outputs) {
+  const file = path.join(DOCS, rel);
+  const before = existsSync(file) ? readFileSync(file, 'utf8') : null;
+  const eol = before?.includes('\r\n') || (!before && nl === '\r\n') ? '\r\n' : '\n';
+  const after = text.replaceAll('\n', eol);
+  if (after === before) continue;
+  stale.push(rel);
+  if (!CHECK) writeFileSync(file, after);
 }
-console.log(`Video list ${changed && !process.argv.includes('--check') ? 'updated' : 'verified'}: ${cues.length} animation cues, ${bridges.length} key bridges`);
+if (CHECK) assert.deepEqual(stale, [], 'Video lists are stale; run node tools/build-video-list.mjs');
+const empty = cues.filter(c => c.prompt.empty).length;
+console.log(`Video lists ${stale.length && !CHECK ? 'updated' : 'verified'}: ${cues.length} animation cues in ${UPPER.length} act lists, ${bridges.length} key bridges, ${empty} layer-only prompts`);

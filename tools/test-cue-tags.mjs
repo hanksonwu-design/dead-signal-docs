@@ -4,6 +4,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { runInNewContext } from 'node:vm';
 import { ROOT } from './sync-canonical.mjs';
+import { VIDEO_LIST, VIDEO_ACT_LISTS } from './screenplay-files.mjs';
 
 const app = readFileSync(path.join(ROOT, 'app.js'), 'utf8');
 const esc = app.split('\n').find(line => line.startsWith('const esc ='));
@@ -62,9 +63,18 @@ test('video-list animation types each render in their own reader color', () => {
     assert.equal(inlineMarkdown(`<span class="${name}">互動</span>`), `<span class="${name}">互動</span>`, name);
   }
   assert(!inlineMarkdown('<span class="video-other">互動</span>').includes('<span'), 'unknown classes stay escaped');
-  const list = readFileSync(path.join(ROOT, 'docs/10_製作規格/10-16_製作規格_影片製作列表.md'), 'utf8').replaceAll('\r\n', '\n');
-  const typeCells = list.split('\n').filter(line => line.startsWith('| `')).map(line => line.split(' | ')[2]);
-  const total = list.match(/^\| \*\*上部合計\*\* \|.*\| \*\*(\d+)\*\* \|$/m);
+  const docs = rel => readFileSync(path.join(ROOT, 'docs', rel), 'utf8').replaceAll('\r\n', '\n');
+  const total = docs(VIDEO_LIST).match(/^\| \*\*上部合計\*\* \|.*\| \*\*(\d+)\*\* \|$/m);
+  const typeCells = VIDEO_ACT_LISTS.flatMap(rel => docs(rel).split('\n').filter(line => line.startsWith('- **類型：**'))
+    .map(line => line.slice('- **類型：**'.length).split('　')[0]));
   assert.equal(typeCells.length, Number(total[1]));
   assert(typeCells.every(cell => /^<span class="video-[a-z]+">[^<]+<\/span>$/.test(cell)), 'every type cell is colored');
+});
+
+test('storyboard prompt fences wrap and carry a copy button; other code blocks stay plain', () => {
+  const html = render('```prompt\n【影片】A·1\n【分鏡】<b>\n```\n\n```\nplain\n```');
+  assert.match(html, /^<div class="prompt-block"><button type="button" class="prompt-copy">複製提示詞<\/button><pre><code>【影片】A·1\n【分鏡】&lt;b&gt;<\/code><\/pre><\/div>/);
+  assert((html.match(/class="prompt-block"/g) || []).length === 1, 'plain fences get no copy button');
+  assert(app.includes('querySelectorAll(".prompt-copy")') && app.includes('navigator.clipboard.writeText'), 'copy buttons are wired');
+  assert.match(css, /\.reader-content \.prompt-block pre code \{ white-space: pre-wrap;/);
 });

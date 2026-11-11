@@ -206,6 +206,11 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
 .reader-content code { color: #5b5037; background: #d3d0bc; padding: 2px 5px; font-size: .9em; }
 .reader-content pre { overflow-x: auto; padding: 18px; border: 1px solid #424b37; background: #20271c; scrollbar-width: thin; }
 .reader-content pre code { color: #d3ddc7; background: transparent; padding: 0; white-space: pre; }
+.reader-content .prompt-block { position: relative; }
+.reader-content .prompt-block pre { padding-top: 48px; }
+.reader-content .prompt-block pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.reader-content .prompt-copy { position: absolute; top: 10px; right: 10px; padding: 5px 12px; border: 1px solid #6b7a58; border-radius: 4px; background: #2c3526; color: #e6eedb; font: inherit; font-size: 0.85em; cursor: pointer; }
+.reader-content .prompt-copy:hover, .reader-content .prompt-copy:focus-visible { background: #3a4632; }
 .reader-content hr { border: 0; border-top: 1px solid #aab29a; margin: 32px 0; }
 .md-table-wrap { overflow-x: auto; margin: 22px 0; border: 1px solid var(--line); scrollbar-width: thin; scrollbar-color: #7b876a transparent; }
 .reader-content table { border-collapse: collapse; min-width: 100%; font-size: 13px; }
@@ -352,4 +357,6 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
   .reader-content .collectible-functional { color: #086b63; background: transparent; }
   .reader-content .cue-tag { background: transparent; }
   .reader-content :is(.video-cutscene, .video-interact, .video-feedback, .video-memory, .video-scene, .video-device, .video-live) { background: transparent; }
+  .reader-content .prompt-copy { display: none; }
+  .reader-content .prompt-block pre { padding-top: 18px; }
 }

@@ -25,6 +25,9 @@ export const ACTS = [
   { ...LEGACY_ACTS[7], act: 9 },
 ];
 export const FINALE = ACTS.at(-1);
+// The upper-part video overview keeps its path; each upper act has its own list with storyboard prompts.
+export const VIDEO_LIST = '10_製作規格/10-16_製作規格_影片製作列表.md';
+export const VIDEO_ACT_LISTS = ACTS.slice(0, 5).map((act, i) => `10_製作規格/10-${17 + i}_製作規格_影片製作列表_${act.name}.md`);
 export const LOWER_ACT_NODES = [
   ['M1', 'R27', 'U1', 'U2', 'U2b', 'U3'],
   ['R28', 'R29', 'U4', 'U4b', 'U5'],
