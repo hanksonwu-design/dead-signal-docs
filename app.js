@@ -407,7 +407,40 @@ function openReader(path, updateHash = true, headingText = "") {
   addCueLegend($("readerContent"));
   if (doc.folder === "04_核心玩法") decorateGameplay($("readerContent"));
   const headings = [...$("readerContent").querySelectorAll("h2")];
-  if (headings.length > 3 && !illustrationCatalog) {
+  const chapterHeading = /^(第[一二三四五六七八九十]+章)\s*(.*)$/;
+  const novelPart = doc.folder === "11_小說" && headings.length > 3 && headings.every(h => chapterHeading.test(h.textContent.trim()));
+  if (novelPart) {
+    // A novel part reads like a book: show every chapter up front as a real
+    // link (shareable, opens in a new tab) instead of a collapsed outline.
+    const toc = document.createElement("nav");
+    toc.className = "novel-toc";
+    toc.setAttribute("aria-label", "章節目錄");
+    const list = document.createElement("ol");
+    headings.forEach((heading) => {
+      const text = heading.textContent.trim();
+      const [, number, name] = text.match(chapterHeading);
+      const link = document.createElement("a");
+      link.href = `#doc=${encodeURIComponent(doc.path)}&heading=${encodeURIComponent(text)}`;
+      const numberLabel = document.createElement("span");
+      numberLabel.className = "novel-toc-number";
+      numberLabel.textContent = number;
+      const nameLabel = document.createElement("span");
+      nameLabel.textContent = name;
+      link.append(numberLabel, nameLabel);
+      link.addEventListener("click", (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+        event.preventDefault();
+        revealReaderTarget(heading);
+        history.replaceState(null, "", link.getAttribute("href"));
+      });
+      const item = document.createElement("li");
+      item.appendChild(link);
+      list.appendChild(item);
+    });
+    toc.appendChild(list);
+    const title = $("readerContent").querySelector("h1");
+    if (title) title.after(toc); else $("readerContent").prepend(toc);
+  } else if (headings.length > 3 && !illustrationCatalog) {
     const nav = document.createElement("nav");
     nav.className = "reader-toc";
     nav.setAttribute("aria-label", "章節跳轉");

@@ -227,6 +227,11 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
 .reader-toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 14px; }
 .reader-toc button { min-height: 36px; padding: 8px 11px; border: 1px solid #9fa48e; color: #3d5142; background: #d6d5c6; cursor: pointer; text-align: left; font-size: 13px; line-height: 1.6; }
 .reader-toc button:focus-visible { outline: 2px solid #3b614c; }
+.novel-toc { margin: -8px 0 36px; padding-bottom: 22px; border-bottom: 1px solid #a7a995; }
+.novel-toc ol { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0 28px; margin: 0; padding: 0; list-style: none; }
+.reader-content .novel-toc a { display: flex; gap: 12px; padding: 7px 2px; border-bottom: 1px dotted #b9bba8; color: #3d5142; font-size: 15px; line-height: 1.6; }
+.reader-content .novel-toc a:hover { color: #1e423c; border-bottom-color: #1e423c; }
+.novel-toc-number { flex: none; min-width: 5.2em; color: #737a68; font-size: 13px; line-height: 1.85; }
 .md-anchor { display: block; scroll-margin-top: 90px; }
 .reader-content .md-image-link { display: block; border: 0; margin: 27px 0; }
 .reader-content img { display: block; max-width: 100%; height: auto; border: 1px solid #a9b198; background: #161c13; }
