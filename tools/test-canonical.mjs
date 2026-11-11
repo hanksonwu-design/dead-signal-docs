@@ -153,7 +153,8 @@ test('every static screenplay cue names its shot size without changing protected
   // Acts 1 and 2 each add one full shot for the early silencer (T-R5-R6-02 shaft, R7 desk row).
   // The photo story moments add close-ups at R7 and R11 (act 2), R17 (act 3) and the R27 slot (act 6).
   // Act 2 adds the close-up of the pencil line on the photo's back.
-  const counts = [23, 64, 92, 103, 49, 33, 19, 27, 10, 20];
+  // Act 4 splits the upper ending into the notebook's escape page, then the photo.
+  const counts = [23, 64, 92, 103, 50, 33, 19, 27, 10, 20];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -214,9 +215,9 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Instruction prompts become sound or notebook lines: the prologue P1-04 hint turns into a sound cue,
   // R6's route hint moves into her notebook, R16 drops the recalled-operation notice, R19 drops the return hint.
   // Each upper-part one-way door (R5 exit, S-03, C-02, upper ending) adds one distant sound under its escape-night time;
-  // act 2 adds the optional flip to the photo's back.
+  // act 2 adds the optional flip to the photo's back; act 4 adds the R21 work-request memory echo.
   const counts = [[23, 24, 9], [79, 35, 20], [114, 49, 10], [151, 30, 9],
-    [63, 22, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
+    [63, 23, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
