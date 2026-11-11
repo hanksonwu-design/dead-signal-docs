@@ -274,6 +274,11 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
 .reader-content .video-scene { --video: #245216; }
 .reader-content .video-device { --video: #613587; }
 .reader-content .video-live { --video: #065056; }
+/* Video importance badges: high is filled dark red (9.9:1), mid filled amber (7.4:1), low a quiet outline (5.0:1 even on table headers). */
+.reader-content :is(.importance-high, .importance-mid, .importance-low) { display: inline-block; min-width: 1.6em; padding: 0 6px; border: 1px solid; border-radius: 3px; font-weight: 700; line-height: 1.5; text-align: center; white-space: nowrap; }
+.reader-content .importance-high { color: #fff8f0; background: #7a1d16; border-color: #7a1d16; }
+.reader-content .importance-mid { color: #2a1c05; background: #d9a43a; border-color: #9a6a12; }
+.reader-content .importance-low { color: #4f534a; background: transparent; border-color: #8a8d82; font-weight: 600; }
 .reader-content .cue-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 22px; padding: 9px 12px; border: 1px solid var(--paper-line); font-size: 13px; line-height: 1.7; }
 /* Core gameplay pages: keycaps for controls, bold ink for costs and timings (shape and weight, not color alone). */
 .reader-content kbd.game-key { display: inline-block; min-width: 1.6em; margin: 0 1px; padding: 0 5px; color: #273122; background: #f5f2ea; border: 1px solid #8d917d; border-bottom-width: 2px; border-radius: 4px; font: 600 12.5px/1.55 Consolas, "SFMono-Regular", Menlo, monospace; text-align: center; white-space: nowrap; vertical-align: 1px; }
@@ -358,5 +363,7 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
   .reader-content .cue-tag { background: transparent; }
   .reader-content :is(.video-cutscene, .video-interact, .video-feedback, .video-memory, .video-scene, .video-device, .video-live) { background: transparent; }
   .reader-content .prompt-copy { display: none; }
+  .reader-content :is(.importance-high, .importance-mid, .importance-low) { background: transparent; color: #000; border-color: #000; }
+  .reader-content .importance-high { border-width: 2px; }
   .reader-content .prompt-block pre { padding-top: 18px; }
 }

@@ -78,3 +78,15 @@ test('storyboard prompt fences wrap and carry a copy button; other code blocks s
   assert(app.includes('querySelectorAll(".prompt-copy")') && app.includes('navigator.clipboard.writeText'), 'copy buttons are wired');
   assert.match(css, /\.reader-content \.prompt-block pre code \{ white-space: pre-wrap;/);
 });
+
+test('video importance badges render in the reader and keep readable contrast', () => {
+  const inline = app.slice(app.indexOf('function inlineMarkdown(value)'), app.indexOf('function renderMarkdown(raw'));
+  const inlineMarkdown = runInNewContext(`${esc}\n${inline}\ninlineMarkdown;`, {
+    state: { selected: null, documents: [] }, imageAssetUrl: () => null, documentDisplayTitle: value => value,
+  });
+  for (const name of ['importance-high', 'importance-mid', 'importance-low']) {
+    assert.equal(inlineMarkdown(`<span class="${name}">高</span>`), `<span class="${name}">高</span>`, name);
+    assert.match(css, new RegExp(`\\.reader-content \\.${name} \\{ color: #[0-9a-f]{6}; background: `), name);
+  }
+  assert(!inlineMarkdown('<span class="importance-top">高</span>').includes('<span'), 'unknown levels stay escaped');
+});

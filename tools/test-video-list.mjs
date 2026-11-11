@@ -8,12 +8,14 @@ import { ACTS, VIDEO_LIST, VIDEO_ACT_LISTS } from './screenplay-files.mjs';
 const docs = rel => readFileSync(path.join(ROOT, 'docs', rel), 'utf8').replaceAll('\r\n', '\n');
 const overview = docs(VIDEO_LIST);
 const lists = VIDEO_ACT_LISTS.map(rel => ({ rel, text: docs(rel) }));
-const segments = lists.flatMap(({ rel, text }) => [...text.matchAll(/<a id="(v-[a-z0-9-]+)"><\/a>\n\n### (\S+)　(\S+)\n\n([\s\S]*?)```prompt\n([\s\S]*?)\n```/g)]
-  .map(([, anchor, id, type, facts, prompt]) => ({ rel, anchor, id, type, facts, prompt })));
+const segments = lists.flatMap(({ rel, text }) => [...text.matchAll(/<a id="(v-[a-z0-9-]+)"><\/a>\n\n### (\S+)　(\S+?)（([高中低])）\n\n([\s\S]*?)```prompt\n([\s\S]*?)\n```/g)]
+  .map(([, anchor, id, type, level, facts, prompt]) => ({ rel, anchor, id, type, level, facts, prompt })));
+const LEVEL_CLASSES = { 高: 'importance-high', 中: 'importance-mid', 低: 'importance-low' };
 const SECTIONS = ['【影片】', '【生成方式】', '【長度】', '【分鏡】', '【鏡頭】', '【影片風格】', '【不要出現】'];
 
 test('the overview counts every segment that the five act lists carry', () => {
-  const rows = overview.match(/^\| \[[^\]]+\]\(10-\d\d_[^)]+\) \|.*$/gm);
+  const typeTable = overview.slice(overview.indexOf('## 統計'), overview.indexOf('## 重要級別統計'));
+  const rows = typeTable.match(/^\| \[[^\]]+\]\(10-\d\d_[^)]+\) \|.*$/gm);
   assert.equal(rows.length, 5);
   rows.forEach((row, i) => {
     assert(row.includes(`](${VIDEO_ACT_LISTS[i].split('/').at(-1)})`), row);
@@ -83,4 +85,33 @@ test('key bridges link to the prompt section of their segment', () => {
   assert(segments.filter(s => s.prompt.includes('建議直接以圖層差分製作')).length <= 6, 'only a few layer-only segments');
   // A key bridge with any visible action keeps its prompt even when rules dominate its description.
   assert.match(segments.find(s => s.id === 'R12-02·1').prompt, /^0–1\.5 秒｜主角的手先輸入前三碼/m);
+});
+
+test('every segment carries an importance level, and the counts add up in every table', () => {
+  for (const { id, level, type, facts, prompt } of segments) {
+    const line = facts.match(/^- \*\*重要級別：\*\*<span class="(importance-[a-z]+)">([高中低])<\/span>　(.+)$/m);
+    assert(line, `${id}: level line`);
+    assert.equal(line[1], LEVEL_CLASSES[line[2]], `${id}: level class`);
+    assert.equal(line[2], level, `${id}: heading and badge agree`);
+    assert(line[3].trim().length >= 4, `${id}: level has a reason`);
+    if (facts.includes('**重點 ★ ') || type === '過場' || type === '主觀記憶動畫') assert.equal(level, '高', `${id}: key bridges, cutscenes and memories are high`);
+    else if (prompt.includes('建議直接以圖層差分製作')) assert.equal(level, '低', `${id}: layer-only segments are low`);
+  }
+  for (const level of ['高', '中', '低']) assert(segments.some(s => s.level === level), `some segments are ${level}`);
+  const start = overview.indexOf('## 重要級別統計');
+  const rows = overview.slice(start, overview.indexOf('## 重點橋段（★）')).match(/^\| (?:\[|\*\*上部合計).*$/gm);
+  assert.equal(rows.length, 6);
+  rows.slice(0, 5).forEach((row, i) => {
+    const cells = row.split(' | ').slice(1).map(cell => Number(cell.replace(/[ |*]/g, '')));
+    const own = segments.filter(s => s.rel === VIDEO_ACT_LISTS[i]);
+    assert.deepEqual(cells, [...['高', '中', '低'].map(level => own.filter(s => s.level === level).length), own.length], VIDEO_ACT_LISTS[i]);
+    const actRow = lists[i].text.match(/^\| 段數 \| (.+) \|$/m)[1].split(' | ').map(Number);
+    assert.deepEqual(actRow, cells, `${VIDEO_ACT_LISTS[i]}: act table matches the overview`);
+    const high = lists[i].text.match(/^本幕重要級別 <span class="importance-high">高<\/span> 的段落：(.+)。分級方式見\[[^\]]+\]\(10-16_[^)]+#video-importance\)。$/m);
+    assert(high, `${VIDEO_ACT_LISTS[i]}: high list`);
+    assert.deepEqual([...high[1].matchAll(/`([^`]+)`/g)].map(m => m[1]), own.filter(s => s.level === '高').map(s => s.id));
+  });
+  const total = rows[5].split(' | ').slice(1).map(cell => Number(cell.replace(/[ |*]/g, '')));
+  assert.deepEqual(total, [...['高', '中', '低'].map(level => segments.filter(s => s.level === level).length), segments.length]);
+  assert(overview.includes('<a id="video-importance"></a>\n\n## 重要級別怎麼分'), 'the importance guide anchor exists');
 });

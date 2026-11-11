@@ -415,6 +415,32 @@ function prompt(cue, previous, pictures) {
   return { text: lines.join('\n'), length, empty: !beats.length };
 }
 
+// ---------- importance ----------
+
+// Production priority: 高 is made first and to final quality, 中 next, 低 last (it may ship as its low-motion stills first).
+// Each badge has its own reader style (styles.css .importance-*); app.js allows only these classes.
+const LEVEL_CLASSES = { 高: 'importance-high', 中: 'importance-mid', 低: 'importance-low' };
+const LEVELS = Object.keys(LEVEL_CLASSES);
+const levelTag = level => `<span class="${LEVEL_CLASSES[level]}">${level}</span>`;
+// Something approaching, following or watching her: the player has to read it.
+const THREAT = /過來|逼|朝她|跟著她|並排|朝這側|這邊推|門縫下|腳印|拖鞋|腳跟|一步|每一聲落下|輪廓|殘留|指影|肩線|影邊|一扇接一扇|一格接一格|一支接一支/;
+// Her own body remembering, or the objects the two of them shared.
+const BODY = /手(?:會)?自己|沒有等玩家/;
+const SHARED = /照片|布結|紙花|雙結/;
+function importance(cue, next) {
+  if (cue.key) return ['高', `重點橋段：${cue.key.name}`];
+  if (cue.type === '第一人稱過場') return ['高', '劇情過場'];
+  if (cue.type === '主觀記憶動畫') return ['高', '主觀記憶'];
+  if (cue.prompt.empty) return ['低', '介面或狀態變化，做圖層差分'];
+  if (cue.type === '第一人稱互動') return ['中', '操作中的現場動態'];
+  if (cue.type === '設備內影片') return ['中', '設備裡的劇情影片'];
+  if (cue.type === '場景局部動畫') return THREAT.test(cue.description) ? ['中', '逼近或異常的前兆'] : ['低', '環境氣氛'];
+  if (next?.code === cue.code && next.type === '主觀記憶動畫') return ['中', '接主觀記憶的觸碰'];
+  if (BODY.test(cue.description)) return ['中', '手自己動起來的身體記憶'];
+  if (SHARED.test(cue.description)) return ['中', '兩人共有的物件'];
+  return cue.prompt.length.value >= 3 ? ['中', '較長的動作回饋'] : ['低', '短動作回饋'];
+}
+
 // ---------- output ----------
 
 const cues = UPPER.flatMap(collect);
@@ -422,6 +448,11 @@ const bridges = keyBridges(cues);
 const pictures = pictureRows();
 for (const cue of cues) for (const id of cue.images) assert(pictures.has(id), `${cue.id}: picture ${id} has no row in the act spec`);
 const usedTypes = TYPES.filter(t => cues.some(c => c.type === t));
+cues.forEach((cue, i) => {
+  const previous = cues[i - 1]?.act === cue.act ? cues[i - 1] : null;
+  cue.prompt = prompt(cue, previous, pictures);
+});
+cues.forEach((cue, i) => { [cue.level, cue.reason] = importance(cue, cues[i + 1]); });
 const overview = read(VIDEO_LIST);
 const updated = overview.match(/^更新: (\d{4}-\d{2}-\d{2})$/m)[1];
 const status = overview.match(/^狀態: (.+)$/m)[1];
@@ -442,21 +473,22 @@ function actList(act) {
   out.push('## 本幕統計', '');
   const types = usedTypes.filter(t => own.some(c => c.type === t));
   out.push(table([...types.map(t => typeTag(t)), '合計'], [[...types.map(t => own.filter(c => c.type === t).length), own.length]]), '');
+  out.push(table(['重要級別', ...LEVELS.map(levelTag), '合計'], [['段數', ...LEVELS.map(level => own.filter(c => c.level === level).length), own.length]]), '');
+  out.push(`本幕重要級別 ${levelTag('高')} 的段落：${own.filter(c => c.level === '高').map(c => `\`${c.id}\``).join('、')}。分級方式見[總表的重要級別](${fileName(VIDEO_LIST)}#video-importance)。`, '');
   const keys = bridges.filter(b => b.act === act);
   if (keys.length) {
     out.push(`本幕重點橋段 ★：${keys.map(b => `${b.name}（${b.matched.map(c => c.id).join('、')}）`).join('；')}。控制交接見[總表重點橋段](${fileName(VIDEO_LIST)}#video-key-bridges)。`, '');
   }
   let scene = null;
-  let previous = null;
   for (const cue of own) {
     if (cue.code !== scene) {
       scene = cue.code;
       const count = own.filter(c => c.code === scene).length;
       out.push(`## ${cue.code} ${cue.title}（${count} 段）`, '');
     }
-    const built = prompt(cue, previous, pictures);
-    cue.prompt = built;
-    out.push(`<a id="${anchorOf(cue.id)}"></a>`, '', `### ${cue.id}　${shortType(cue.type)}`, '');
+    const built = cue.prompt;
+    out.push(`<a id="${anchorOf(cue.id)}"></a>`, '', `### ${cue.id}　${shortType(cue.type)}（${cue.level}）`, '');
+    out.push(`- **重要級別：**${levelTag(cue.level)}　${cue.reason}`);
     const facts = [`**類型：**${typeTag(cue.type)}`];
     facts.push(`**畫面：**${cue.images.length ? cue.images.map(id => `\`${id}\``).join('、') : '本場次主圖'}`);
     facts.push(`**剪用：**${cue.type === '主觀記憶動畫' ? '約 3–6 秒' : `約 ${fmt(built.length.value)} 秒`}`);
@@ -467,7 +499,6 @@ function actList(act) {
     if (cue.key) out.push(`- **重點 ★ ${cue.key.name}：**${cue.key.control}`);
     out.push('', `**劇本描述**　${cue.description}`, '');
     out.push('```prompt', built.text, '```', '');
-    previous = cue;
   }
   return out.join('\n').trim() + '\n';
 }
@@ -482,6 +513,14 @@ region.push(table(['幕', ...usedTypes.map(t => typeTag(t)), '合計'], [
     return [`[${act.name} · ${act.subtitle}](${fileName(listFile(act))})`, ...usedTypes.map(t => own.filter(c => c.type === t).length), own.length];
   }),
   ['**上部合計**', ...usedTypes.map(t => cues.filter(c => c.type === t).length), `**${cues.length}**`],
+]), '');
+region.push('<a id="video-importance-count"></a>', '', '## 重要級別統計', '');
+region.push(table(['幕', ...LEVELS.map(levelTag), '合計'], [
+  ...UPPER.map(act => {
+    const own = cues.filter(c => c.act === act);
+    return [`[${act.name} · ${act.subtitle}](${fileName(listFile(act))})`, ...LEVELS.map(level => own.filter(c => c.level === level).length), own.length];
+  }),
+  ['**上部合計**', ...LEVELS.map(level => cues.filter(c => c.level === level).length), `**${cues.length}**`],
 ]), '');
 region.push('<a id="video-key-bridges"></a>', '', '## 重點橋段（★）', '');
 region.push(`下列橋段另有控制交接規格，取自[第一人稱動畫製作與交接](${ANIMATION_CONTRACT})；製作時先讀這一列，再到各幕列表看對應的影片描述與提示詞。`, '');
@@ -509,4 +548,5 @@ for (const [rel, text] of outputs) {
 }
 if (CHECK) assert.deepEqual(stale, [], 'Video lists are stale; run node tools/build-video-list.mjs');
 const empty = cues.filter(c => c.prompt.empty).length;
-console.log(`Video lists ${stale.length && !CHECK ? 'updated' : 'verified'}: ${cues.length} animation cues in ${UPPER.length} act lists, ${bridges.length} key bridges, ${empty} layer-only prompts`);
+const levels = LEVELS.map(level => `${level} ${cues.filter(c => c.level === level).length}`).join('／');
+console.log(`Video lists ${stale.length && !CHECK ? 'updated' : 'verified'}: ${cues.length} animation cues in ${UPPER.length} act lists (${levels}), ${bridges.length} key bridges, ${empty} layer-only prompts`);
