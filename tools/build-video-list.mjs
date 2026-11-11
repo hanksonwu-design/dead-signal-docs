@@ -10,7 +10,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'docs');
 const TARGET = '10_製作規格/10-16_製作規格_影片製作列表.md';
 const UPPER = ACTS.slice(0, 5);
-const TYPES = ['第一人稱過場', '第一人稱互動', '第一人稱動作回饋', '場景局部動畫', '設備內影片', '設備即時影像'];
+// Each type has its own text color in the reader (styles.css .video-*); app.js allows only these classes.
+const TYPE_CLASSES = {
+  第一人稱過場: 'video-cutscene', 第一人稱互動: 'video-interact', 第一人稱動作回饋: 'video-feedback',
+  場景局部動畫: 'video-scene', 設備內影片: 'video-device', 設備即時影像: 'video-live',
+};
+const TYPES = Object.keys(TYPE_CLASSES);
+const typeTag = (type, label = type) => `<span class="${TYPE_CLASSES[type]}">${label}</span>`;
 const BEGIN = '<!-- video-list:begin -->';
 const END = '<!-- video-list:end -->';
 
@@ -133,7 +139,7 @@ const bridges = keyBridges(cues);
 const usedTypes = TYPES.filter(t => cues.some(c => c.type === t));
 const out = [];
 out.push('## 統計', '');
-out.push(table(['幕', ...usedTypes, '合計'], [
+out.push(table(['幕', ...usedTypes.map(t => typeTag(t)), '合計'], [
   ...UPPER.map(act => {
     const own = cues.filter(c => c.act === act);
     return [`[${act.name}](#video-act-${act.act})`, ...usedTypes.map(t => own.filter(c => c.type === t).length), own.length];
@@ -149,7 +155,7 @@ for (const act of UPPER) {
   out.push(table(['編號', '場次', '類型', '影片描述', '畫面', '重點'], own.map(c => [
     `\`${c.id}\``,
     `[${c.code} ${c.title}](../${act.path}#${c.anchor})${c.sub ? `<br>${c.sub}` : ''}`,
-    c.type.replace('第一人稱', ''),
+    typeTag(c.type, c.type.replace('第一人稱', '')),
     c.description,
     c.images.length ? c.images.map(id => `\`${id}\``).join('、') : '—',
     c.key ? `★ ${c.key}` : '',

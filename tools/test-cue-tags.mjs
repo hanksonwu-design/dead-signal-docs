@@ -46,3 +46,25 @@ test('every cue category has a color in the reader styles', () => {
     assert.match(css, new RegExp(`\\.reader-content \\.cue-${kind} \\{ --cue: #[0-9a-f]{6}; \\}`), kind);
   }
 });
+
+test('video-list animation types each render in their own reader color', () => {
+  const inline = app.slice(app.indexOf('function inlineMarkdown(value)'), app.indexOf('function renderMarkdown(raw'));
+  const inlineMarkdown = runInNewContext(`${esc}\n${inline}\ninlineMarkdown;`, {
+    state: { selected: null, documents: [] }, imageAssetUrl: () => null, documentDisplayTitle: value => value,
+  });
+  const builder = readFileSync(path.join(ROOT, 'tools/build-video-list.mjs'), 'utf8');
+  const classes = [...builder.matchAll(/: '(video-[a-z]+)'/g)].map(match => match[1]);
+  assert.equal(classes.length, 6);
+  const colors = classes.map(name => css.match(new RegExp(`\.reader-content \.${name} \{ --video: (#[0-9a-f]{6}); \}`))?.[1]);
+  assert(colors.every(Boolean), 'every animation type has a color');
+  assert.equal(new Set(colors).size, classes.length, 'animation type colors are distinct');
+  for (const name of classes) {
+    assert.equal(inlineMarkdown(`<span class="${name}">互動</span>`), `<span class="${name}">互動</span>`, name);
+  }
+  assert(!inlineMarkdown('<span class="video-other">互動</span>').includes('<span'), 'unknown classes stay escaped');
+  const list = readFileSync(path.join(ROOT, 'docs/10_製作規格/10-16_製作規格_影片製作列表.md'), 'utf8').replaceAll('\r\n', '\n');
+  const typeCells = list.split('\n').filter(line => line.startsWith('| `')).map(line => line.split(' | ')[2]);
+  const total = list.match(/^\| \*\*上部合計\*\* \|.*\| \*\*(\d+)\*\* \|$/m);
+  assert.equal(typeCells.length, Number(total[1]));
+  assert(typeCells.every(cell => /^<span class="video-[a-z]+">[^<]+<\/span>$/.test(cell)), 'every type cell is colored');
+});

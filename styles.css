@@ -260,6 +260,14 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
 .reader-content .cue-system { --cue: #55530f; }
 .reader-content .cue-player { --cue: #50534c; }
 .reader-content .cue-logic { --cue: #6e4423; }
+/* Video list (10-16) animation types: one hue each; with the 9% tint the text stays above 4.5:1 on paper and on table headers. */
+.reader-content :is(.video-cutscene, .video-interact, .video-feedback, .video-scene, .video-device, .video-live) { color: var(--video); background: color-mix(in srgb, var(--video) 9%, transparent); padding: 1px 4px; font-weight: 600; white-space: nowrap; }
+.reader-content .video-cutscene { --video: #8f1f18; }
+.reader-content .video-interact { --video: #1b4886; }
+.reader-content .video-feedback { --video: #773800; }
+.reader-content .video-scene { --video: #245216; }
+.reader-content .video-device { --video: #613587; }
+.reader-content .video-live { --video: #065056; }
 .reader-content .cue-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 22px; padding: 9px 12px; border: 1px solid var(--paper-line); font-size: 13px; line-height: 1.7; }
 /* Core gameplay pages: keycaps for controls, bold ink for costs and timings (shape and weight, not color alone). */
 .reader-content kbd.game-key { display: inline-block; min-width: 1.6em; margin: 0 1px; padding: 0 5px; color: #273122; background: #f5f2ea; border: 1px solid #8d917d; border-bottom-width: 2px; border-radius: 4px; font: 600 12.5px/1.55 Consolas, "SFMono-Regular", Menlo, monospace; text-align: center; white-space: nowrap; vertical-align: 1px; }
@@ -342,4 +350,5 @@ kbd { flex: none; color: #adb099; border: 1px solid #4b523f; padding: 2px 5px; f
   .reader-content .collectible-required { color: #a33220; background: transparent; }
   .reader-content .collectible-functional { color: #086b63; background: transparent; }
   .reader-content .cue-tag { background: transparent; }
+  .reader-content :is(.video-cutscene, .video-interact, .video-feedback, .video-scene, .video-device, .video-live) { background: transparent; }
 }
