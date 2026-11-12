@@ -71,6 +71,29 @@ test('prompts describe what is seen, not player rules, and keep the faceless art
   }
 });
 
+test('rule-built storyboards hold each beat a second, keep sound and absence out of the picture, and set lens, focus and light', () => {
+  const ruled = segments.filter(s => !s.prompt.includes('【情緒節奏】'));
+  assert(ruled.length >= 60, 'most mid and low segments are rule-built');
+  for (const { id, type, prompt } of ruled) {
+    const camera = prompt.match(/^【鏡頭】(.+)$/m)[1];
+    assert(/約 (?:28|35)mm/.test(camera) && camera.includes('焦點'), `${id}: default camera names a focal length and a focus`);
+    if (type !== '設備內影片') assert(/^【光線色調】.*(?:整段光源與明暗都不變|照分鏡的時間點亮暗|明暗變化只發生在點名的局部)/m.test(prompt), `${id}: light says what changes`);
+    for (const [, from, to, text] of prompt.matchAll(/^(\d+(?:\.\d+)?)–(\d+(?:\.\d+)?) 秒｜(.+)$/gm)) {
+      assert(Number(to) - Number(from) >= 1, `${id}: ${from}–${to} holds at least a second`);
+      assert(!/聲音|聲響|雜音/.test(text), `${id}: ${text} — what is heard goes to 後製`);
+      assert(!/不是|不再|沒有/.test(text.replace(/(?:剩|是|成)沒有/g, '')), `${id}: ${text} — an absence is not filmed`);
+    }
+    if (!prompt.includes('【後製')) continue;
+    const post = prompt.slice(prompt.indexOf('【後製'), prompt.indexOf('【不要出現】')).trim().split('\n').slice(1);
+    for (const line of post) {
+      assert(/^(?:畫面文字：.+|聲音與後製對點：|・(?:\d+(?:\.\d+)?–\d+(?:\.\d+)? 秒|整段)：.+)$/.test(line), `${id}: ${line} — every sound is a timed cue`);
+    }
+  }
+  // A sound the description places in the picture lands on its beat.
+  assert.match(segments.find(s => s.id === 'P0-04·1').prompt, /^・0–1 秒：鏽卡榫的金屬聲很短，在管子裡撞來撞去。$/m);
+  assert.match(segments.find(s => s.id === 'ACT2-01·1').prompt, /紙面始終平整/);
+});
+
 test('key bridges link to the prompt section of their segment', () => {
   const start = overview.indexOf('## 重點橋段（★）');
   const links = [...overview.slice(start).matchAll(/\[([^\]]+)\]\((10-\d\d_[^)#]+)#(v-[a-z0-9-]+)\)/g)];

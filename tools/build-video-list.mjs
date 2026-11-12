@@ -184,17 +184,39 @@ const VIEWPOINT = [
   [/玩家(?:把|的手)/g, m => m.replace('玩家', '她')], [/玩家動/g, '她一動'], [/玩家(切入凹位後|退回掩體時|走近)/g, '$1'],
   [/照玩家排好的/g, '照排好的'], [/沒有等玩家輸入，?/g, ''],
 ];
+// A camera films what is there, so a stated absence that still matters to the shot is turned into the state it leaves.
+const VISIBLE = [
+  [/這\s*\d+(?:\.\d+)?\s*秒是/g, ''], [/飾板邊緣沒有封齊/g, '飾板邊緣封得參差'], [/結沒有鬆/g, '結仍扣緊'],
+  [/紙沒有凹下去/g, '紙面始終平整'], [/掌中始終沒有藥/g, '掌心始終是空的'], [/沒有跟著淡/g, '仍留在原處'],
+  [/它也沒有滾回去/g, '它仍停在那裡'], [/沒有退開/g, '仍停在原處'], [/的鏽屑沒有分開/g, '的鏽屑仍堆在原處'],
+  [/的門扣沒有動/g, '的門扣始終靜止'], [/也不再擺/g, '也停止擺動'], [/沒有退回地漏，/g, ''],
+  [/它們不往前一步，也不離開原位/g, '它們始終停在原位'], [/主動查看時恢復同步/g, '倒影恢復與她同步'],
+  [/，那格門框上的綠點就亮/g, '，門框上的綠點一格接一格亮起'],
+];
 // Clauses that only state rules for input, saving, length or puzzle state are left out of the shot list.
 const MECHANICS = new RegExp([
   '玩家', '任何(?:輸入|操作)', '一有輸入', '鎖輸入', '提交', '點選', '點回', '交還', '判定', '補救窗', '低動態', '讀檔', '略過', '不算', '回訪',
   '熱點', '條件', '筆記(?:不|只|更新|寫入|補)', '示範', '驗證', '憑證', '路由', '供電', '狀態', '不能', '可重試', '生效', '取消', '覆寫',
   '已讀', '索引', '證據', '不改', '仍需', '仍待', '可近看', '可查看', '等待', '標出', '方向字幕', '可見標記', '保持可用', '不只靠',
   '必要', '倒數', '抹除', '未處理', '演出', '本來就', '可橫穿', '不超過', '總長', '^(?:最長|前後|共)?約?\\s*\\d+(?:\\.\\d+)?\\s*秒$',
+  '近看', '收起', '打開完整', '首次進', '至少\\s*\\d', '同一段\\s*\\d', '這\\s*\\d+(?:\\.\\d+)?\\s*秒', '^到\\s*\\d', '開始計', '共同顯示',
+  '^那只是', '指定觀察', '^確認\\S{0,2}後$', '^記下', '退格', '^退出後$', '不要求', '保持連續',
 ].join('|'));
+// What is only heard goes to the post-production cues, timed to the beat it lands on.
+const HEARD = /(?<!噤)聲(?!源)|響|嗡|嘶|嗶|雜音|聽/;
+// A clause that only carries a sound on ("……的金屬聲很短，在管子裡撞來撞去").
+const ECHO = /^(?:在|又|再|慢慢|一直|最後|撞)/;
+// A visible action with a sound tacked on ("鍵才悶悶地一聲落到底") keeps the action in the picture.
+const TAGGED = /才?悶悶地一聲(?=落)|(?<=上)一聲$/;
+// Absence and denial ("沒有被動過", "不是鏡像者") is nothing a camera can film.
+const ABSENT = /沒有|沒人|不是|不再|不會|並非|不一齊|不先|也不|並不|卻不|^不(?!動|齊)/;
+const NAMED_ABSENT = /(?:剩|是|成)沒有/;
+// A sentence left with only its time clause ("安靜下來以後") goes whole to the sound cues.
+const ORPHAN = text => text.length < 4 || /(?:以後|之後|後|時)$|^每[^，]{0,4}$/.test(text);
 // A clause that opens with these words only finishes a dropped rule clause ("……，再對回待叫序列").
 const DANGLING = clause => /^(?:再|才|便|就)/.test(clause) || (clause.length <= 8 && /就|便/.test(clause));
-// A sentence led by a state condition ("已安息時，……") describes another variant of the same shot.
-const VARIANT = /^(?:已|若|如果|曾)[^，]{0,20}(?:時|者|的話)$/;
+// A sentence led by a state condition ("已安息時，……", "提早放開，……") describes another variant of the same shot.
+const VARIANT = /^(?:(?:已|若|如果|曾|全|部分)[^，]{0,20}(?:時|者|的話)|提早.*)$/;
 // Framing limits ("only below the ankles") become a composition line instead of a timed beat.
 const FRAMING = /^(?:畫面(?:始終)?只到|看不(?:到|見)(?:任何人的)?(?:臉|腳踝)|看得見的只有|眼前的紙和現在的手)/;
 const CAPTION = /字幕「/;
@@ -207,16 +229,22 @@ const PACE = {
   第一人稱過場: [4, 10, 2.5], 第一人稱互動: [3, 8, 2], 第一人稱動作回饋: [1.5, 6, 1.2],
   主觀記憶動畫: [3, 6, 1.2], 場景局部動畫: [2, 8, 2], 設備內影片: [3, 10, 2.5], 設備即時影像: [3, 10, 2.5],
 };
+// Default camera of a segment without a direction note: the focal length of 10-22's shared camera language,
+// a locked or body-led camera, and where the focus sits (see focusOf).
 const CAMERA = {
-  第一人稱過場: '第一人稱主觀鏡頭。只照分鏡緩慢推近或停住，不晃動、不旋轉、不快速轉向；結尾停在與首格相同的視點與地標。',
-  第一人稱互動: '第一人稱固定鏡位，鏡頭完全不動。只動分鏡點名的手、人物或物件，其餘背景保持靜止。',
-  第一人稱動作回饋: '第一人稱固定鏡位，鏡頭不動。動作做完就停住，不加分鏡以外的動作。',
-  主觀記憶動畫: '從她當時的眼睛看出去的主觀鏡頭，幾乎不動，只有極輕微的呼吸感；不換成旁觀角度拍她。',
-  場景局部動畫: '固定鏡頭，整個畫面靜止，只有分鏡點名的局部在動；不新增人物或物件。',
-  設備內影片: '只生成設備螢幕裡播放的畫面本身（全幅，不含設備外框），後製再合成進螢幕遮罩；片內可以照分鏡切換畫面。',
-  設備即時影像: '只生成設備螢幕裡的即時畫面本身（全幅，不含設備外框），後製再合成進螢幕遮罩。',
+  第一人稱過場: focus => `約 28mm 第一人稱主觀視線，接近人眼視角。只照分鏡緩慢推近或停住，不晃動、不旋轉、不快速轉向，地平線保持水平；${focus}；結尾停在與首格相同的視點與地標。`,
+  第一人稱互動: focus => `約 28mm 第一人稱主觀視線，鏡位鎖定不動，要疊回原主圖，景深照首格。${focus}；只動分鏡點名的手、人物或物件，其餘背景保持靜止。`,
+  第一人稱動作回饋: focus => `約 28mm 第一人稱主觀視線，鏡位鎖定不動，要疊回原主圖，景深照首格。${focus}；動作有重量，做完就停住，不加分鏡以外的動作。`,
+  主觀記憶動畫: () => '約 35mm，從她當時的眼睛看出去，幾乎不動，只有極輕微的呼吸起伏；用焦點轉移代替運鏡，不推、不搖，不換成旁觀角度拍她。',
+  場景局部動畫: focus => `約 28mm，鏡頭鎖定不動，要疊回原主圖，景深照首格。${focus}，其餘畫面保持靜止；不新增人物或物件。`,
+  設備內影片: focus => `只生成設備螢幕裡播放的畫面本身（全幅，不含設備外框），後製再合成進螢幕遮罩。片內像固定機位的舊錄影，約 35mm、鏡頭不動，可以照分鏡切換畫面；${focus}。`,
+  設備即時影像: focus => `只生成設備螢幕裡的即時畫面本身（全幅，不含設備外框），後製再合成進螢幕遮罩。像固定的監視鏡頭，鏡頭不動；${focus}。`,
 };
+const MOVING_CAMERA = focus => `約 28mm 第一人稱主觀視線。視點只照分鏡緩慢移動，由身體帶動、有重量與停頓，不晃動、不旋轉，地平線保持水平；${focus}；最後在分鏡寫的位置停穩。`;
 const MOVING = /視點|鏡頭極慢|視野兩側退去|從腳邊退去|車廂上行/;
+// The light sources a beat can name; only these change, and only when the storyboard says so.
+const LIGHTS = /日光燈|消防燈|指示燈|電子燈|回路燈|紀錄燈|燈箱|反光條|反光標|綠點|綠光|窄光|亮縫|暖白光|暖光|螢幕|電視|手電筒|燈/g;
+const LIGHT_CHANGE = /亮起|亮一下|亮回|亮綠|亮了|就亮|才亮|暗下|暗一|暗了|暗回|轉暗|熄|閃|明滅|掃過|照到|照出|淡白/;
 const DELIVERY = {
   第一人稱過場: '成片可直接使用；頭尾各留一格與首格主圖對位，供程式切換。',
   第一人稱互動: 'AI 生成稿只作動態參考或底稿；正式交付拆成手部、前景遮擋與物件動態圖層，疊回原主圖，不以整支影片取代可點的場景。',
@@ -268,51 +296,82 @@ const tidy = text => text
   .replace(/[；]$/, '。')
   .trim();
 
+// One beat of a rule-built storyboard: what is seen, the sounds that land on it (at = where in the text they
+// fall) and holds, the pauses that a sentence heard but not seen adds to it.
+const beatOf = (text = '', sound = [], hold = 0) => ({ text, sound, hold });
+const join = (a, b) => beatOf(a.text + b.text, [...a.sound, ...b.sound.map(s => ({ ...s, at: s.at + a.text.length }))], a.hold + b.hold);
+
 function shots(cue) {
   const beats = [];
-  const captions = [];
   const framing = [];
-  let carry = '';
+  let carry = beatOf();
   let total = 0;
   let visual = 0;
-  for (const raw of sentences(VIEWPOINT.reduce((text, [from, to]) => text.replace(from, to), cue.description))) {
-    if (CAPTION.test(raw)) { captions.push(tidy(raw)); continue; }
+  let holds = 0;
+  let captions = 0;
+  const last = () => beats.at(-1) || carry;
+  const hear = (beat, text, at, hold = 0) => { beat.sound.push({ text, at }); beat.hold += hold; holds += hold; };
+  const described = [...VIEWPOINT, ...VISIBLE].reduce((text, [from, to]) => text.replace(from, to), cue.description);
+  for (const raw of sentences(described)) {
+    if (CAPTION.test(raw)) { captions++; hear(last(), tidy(raw), last().text.length); continue; }
     const end = /[。；！？]$/.test(raw) ? '。' : '';
     const clauses = raw.replace(/[。；！？]$/, '').split('，');
-    if (beats.length && VARIANT.test(clauses[0])) continue;
+    if ((beats.length || carry.text) && VARIANT.test(clauses[0])) continue;
     total += raw.length;
     const kept = [];
+    const heard = [];
+    const order = [];
+    const ruled = [];
     let dropped = false;
-    for (const clause of clauses) {
-      dropped = MECHANICS.test(clause) || (dropped && DANGLING(clause));
-      if (!dropped) kept.push(clause);
+    let echo = false;
+    let gone = false;
+    for (const raw of clauses) {
+      dropped = MECHANICS.test(raw) || (dropped && DANGLING(raw));
+      if (dropped) { ruled.push(raw); echo = false; gone = true; continue; }
+      // Once the rule or sound before it is gone, a clause reads without the "then" that tied it on.
+      const clause = gone ? raw.replace(/^([^，]{2,14}?)[就便才](?=[^，])/, '$1') : raw;
+      gone = false;
+      if (TAGGED.test(clause) && !HEARD.test(clause.replace(TAGGED, ''))) {
+        kept.push(clause.replace(TAGGED, '')); heard.push(clause); order.push(clause); echo = false; continue;
+      }
+      if (HEARD.test(clause) || (echo && ECHO.test(clause))) { heard.push(clause); order.push(clause); echo = true; gone = true; continue; }
+      echo = false;
+      if (ABSENT.test(clause) && !NAMED_ABSENT.test(clause)) continue;
+      kept.push(clause);
+      order.push(clause);
     }
-    const text = tidy(kept.join('，'));
-    if (text.length < 6 && kept.length < clauses.length) continue;
-    if (!text) continue;
-    visual += text.length;
-    if (FRAMING.test(text)) { framing.push(text + end); continue; }
+    // What the sentence says apart from its rules; it sizes the beat as the script wrote it, and
+    // framing limits keep their whole wording ("看得見的只有水紋，沒有腳踝以上").
+    const framed = tidy(clauses.filter(clause => !ruled.includes(clause)).join('，'));
+    if (FRAMING.test(framed)) { visual += framed.length; framing.push(framed + end); continue; }
+    if (!framed || (framed.length < 6 && ruled.length)) continue;
+    let text = tidy(kept.join('，'));
+    const alone = heard.length && ORPHAN(text);
+    const sound = heard.length ? tidy((alone ? order : heard).join('，')).replace(/^[卻也]/, '') + end : '';
+    if (alone) text = '';
+    visual += text.length + sound.length;
+    if (!text) { if (sound) hear(last(), sound, last().text.length, framed.length >= 12 ? 1 : 0); continue; }
     // Very short sentences ride with a neighbouring beat so each beat is one readable action.
-    if (text.length < 12) {
-      if (beats.length) beats[beats.length - 1] += text + end;
-      else carry += text + end;
-      continue;
-    }
-    beats.push(carry + text + end);
-    carry = '';
+    const own = framed.length >= 12 && text.length >= 4;
+    const beat = own ? join(carry, beatOf()) : last();
+    const start = beat.text.length;
+    beat.text += text + end;
+    if (sound) hear(beat, sound, order[0] === heard[0] ? start : beat.text.length);
+    if (own) { beats.push(beat); carry = beatOf(); }
   }
-  if (carry) beats.push(carry);
+  if (carry.text) beats.push(carry);
   while (beats.length > 5) {
     let best = 0;
-    for (let i = 1; i < beats.length - 1; i++) if (beats[i].length + beats[i + 1].length < beats[best].length + beats[best + 1].length) best = i;
-    beats.splice(best, 2, beats[best] + beats[best + 1]);
+    for (let i = 1; i < beats.length - 1; i++) if (beats[i].text.length + beats[i + 1].text.length < beats[best].text.length + beats[best + 1].text.length) best = i;
+    beats.splice(best, 2, join(beats[best], beats[best + 1]));
   }
+  const loose = carry.text ? [] : carry.sound;
   // Mostly rules and state: better made as layer differences than generated as video.
-  if (visual < total * 0.3 && !cue.key) beats.length = 0;
-  return { beats, captions, framing };
+  if (visual < total * 0.3 && !cue.key) loose.push(...beats.splice(0).flatMap(beat => beat.sound));
+  return { beats, framing, loose, captions, slots: Math.min(5, beats.length + holds) };
 }
 
-function seconds(cue, beats) {
+function seconds(cue, slots) {
   // A beat heading such as 「拍點二｜趨光（4–10 秒）」 times the segment it holds.
   const span = cue.sub.match(/（(\d+(?:\.\d+)?)–(\d+(?:\.\d+)?) 秒）/);
   if (span) return { value: Number(span[2]) - Number(span[1]), stated: true };
@@ -324,14 +383,36 @@ function seconds(cue, beats) {
   }
   const [low, high, each] = PACE[cue.type];
   if (cue.type === '主觀記憶動畫') return { value: 5, stated: false };
-  return { value: Math.min(high, Math.max(low, Math.round(beats.length * each * 2) / 2)), stated: false };
+  return { value: Math.min(high, Math.max(low, Math.round(slots * each * 2) / 2)), stated: false };
 }
 
-function timeline(beats, total) {
-  const marks = [0];
-  for (let i = 1; i <= beats.length; i++) marks.push(i === beats.length ? total : Math.max(marks[i - 1] + 0.5, Math.round(total * i / beats.length * 2) / 2));
-  if (marks.at(-1) < marks.at(-2)) marks[marks.length - 1] = marks.at(-2) + 0.5;
-  return beats.map((beat, i) => `${fmt(marks[i])}–${fmt(marks[i + 1])} 秒｜${beat}`);
+// A beat's share of the cut: one unit, more for a held sound and for a beat crowded with clauses.
+const weight = beat => 1 + beat.hold + Math.min(1, Math.max(0, (beat.text.match(/[，。；：]/g) || []).length - 2) * 0.25);
+function marks(beats, total) {
+  const sum = beats.reduce((s, beat) => s + weight(beat), 0);
+  const out = [0];
+  let acc = 0;
+  beats.forEach((beat, i) => {
+    acc += weight(beat);
+    out.push(i === beats.length - 1 ? total : Math.max(out[i] + 0.5, Math.round(total * acc / sum * 2) / 2));
+  });
+  if (out.at(-1) < out.at(-2)) out[out.length - 1] = out.at(-2) + 0.5;
+  return out;
+}
+
+// Every beat holds at least a second on screen; a shorter one joins its shorter neighbour.
+function fit(beats, total) {
+  const out = [...beats];
+  while (out.length > 1) {
+    const sum = out.reduce((s, beat) => s + weight(beat), 0);
+    const share = out.map(beat => total * weight(beat) / sum);
+    const i = share.indexOf(Math.min(...share));
+    if (share[i] >= 1) break;
+    const j = i === 0 ? 1 : i === out.length - 1 ? i - 1 : share[i - 1] <= share[i + 1] ? i - 1 : i + 1;
+    const a = Math.min(i, j);
+    out.splice(a, 2, join(out[a], out[a + 1]));
+  }
+  return out;
 }
 
 // A long single action is split at its commas so a clip of three seconds or more gets two or three timed beats.
@@ -339,19 +420,22 @@ function spread(beats, total) {
   const out = [...beats];
   const want = Math.min(3, Math.floor(total / 1.5));
   while (out.length && out.length < want) {
-    const i = out.reduce((best, beat, j) => beat.length > out[best].length ? j : best, 0);
-    const parts = out[i].replace(/。$/, '').split('，');
-    if (out[i].length < 24 || parts.length < 2 || out[i].includes('「')) break;
+    const i = out.reduce((best, beat, j) => beat.text.length > out[best].text.length ? j : best, 0);
+    const { text, sound, hold } = out[i];
+    const parts = text.replace(/。$/, '').split('，');
+    if (text.length < 24 || parts.length < 2 || text.includes('「')) break;
     let size = 0;
     let cut = 1;
     for (let k = 0; k < parts.length - 1; k++) {
       size += parts[k].length + 1;
       cut = k + 1;
-      if (size >= out[i].length / 2) break;
+      if (size >= text.length / 2) break;
     }
     const [head, tail] = [parts.slice(0, cut).join('，'), parts.slice(cut).join('，')];
     if (head.length < 8 || tail.length < 8) break;
-    out.splice(i, 1, `${head}。`, `${tail}。`);
+    const early = sound.filter(s => s.at <= head.length);
+    const late = sound.filter(s => s.at > head.length).map(s => ({ ...s, at: s.at - head.length - 1 }));
+    out.splice(i, 1, beatOf(`${head}。`, early), beatOf(`${tail}。`, late, hold));
   }
   return out;
 }
@@ -386,13 +470,39 @@ function directionNotes(cues, pictures) {
   return notes;
 }
 
+// Where the default camera holds focus: her hand and what it touches, a figure, or the part that changes.
+// A registered prop is named only when the script names it too.
+function focusOf(cue, device) {
+  const prop = cue.assets?.props.map(p => p.name.replace(/（[^）]*）$/, '')).find(name => cue.description.includes(name));
+  if (device) return FIGURE.test(cue.description) || /嘴|肩膀|手/.test(cue.description) ? '焦點在片中人物的嘴、肩膀與手' : '焦點在分鏡點名的物件與畫面變化';
+  const hand = PROTAGONIST_HAND.test(cue.description) && `焦點先在她的手，手碰到的${prop || '物件'}跟著收清`;
+  const figure = FIGURE.test(cue.description) && '焦點在分鏡點名的人物、倒影或異變者，前景與背景略微失焦';
+  // In her own action the hand leads; elsewhere what moves against her does.
+  if (hand || figure) return cue.type === '第一人稱動作回饋' ? hand || figure : figure || hand;
+  return prop ? `焦點落在${prop}與分鏡點名會變化的局部` : '焦點落在分鏡點名會變化的局部';
+}
+// The light of a rule-built segment: which of the first frame's sources change, if any.
+function lightOf(beats) {
+  const seen = beats.map(beat => beat.text).join('');
+  if (!LIGHT_CHANGE.test(seen)) return '整段光源與明暗都不變。';
+  const found = [...new Set(seen.match(LIGHTS) || [])];
+  const names = found.filter(name => !found.some(other => other !== name && other.includes(name)));
+  return names.length
+    ? `光的變化只來自首格既有的${names.join('、')}，照分鏡的時間點亮暗，其餘的光不動。`
+    : '分鏡寫的明暗變化只發生在點名的局部，其餘的光不動。';
+}
+
 function prompt(cue, previous, pictures, note) {
   const shot = shots(cue);
-  const { captions, framing } = shot;
-  const length = seconds(cue, shot.beats);
-  const beats = spread(shot.beats, cue.type === '主觀記憶動畫' ? 5 : length.value);
+  const { framing } = shot;
   const memory = cue.type === '主觀記憶動畫';
+  // A script-stated length binds the note too; otherwise the note's own timing sets the cut.
+  const counted = seconds(cue, shot.slots);
+  const length = note && !counted.stated && !memory ? { value: note.rows.at(-1).to, stated: false } : counted;
   const device = cue.type.startsWith('設備');
+  const total = memory ? 5 : length.value;
+  const beats = fit(spread(shot.beats, total), total);
+  const at = marks(beats, total);
   const image = cue.images[0];
   const picture = image && pictures.get(image);
   const draw = picture && picture.draw.split(/[。；]/)[0].trim();
@@ -421,19 +531,17 @@ function prompt(cue, previous, pictures, note) {
   }
   const cut = memory ? '約 5 秒（可在 3–6 秒間）' : `約 ${fmt(length.value)} 秒${length.stated ? '（劇本指定）' : ''}`;
   lines.push(`【長度】剪用${cut}；${length.value > 10 ? '分兩段各生成 5–10 秒，接剪後裁切' : `生成 ${length.value > 5 ? 10 : 5} 秒後裁切`}。`);
-  const total = memory ? 5 : length.value;
   if (note) {
     assert.equal(note.rows.at(-1).to, total, `${cue.id}: direction rows end at the cut length`);
     lines.push(`【情緒節奏】${note.mood}`);
     lines.push('【分鏡】', ...note.rows.map(row => `${fmt(row.from)}–${fmt(row.to)} 秒｜${row.picture}`));
   } else if (beats.length) {
-    lines.push('【分鏡】', ...timeline(beats, total));
+    lines.push('【分鏡】', ...beats.map((beat, i) => `${fmt(at[i])}–${fmt(at[i + 1])} 秒｜${beat.text}`));
   } else {
     lines.push('【分鏡】本段主要是介面、燈號或狀態變化，建議直接以圖層差分製作，不需要 AI 生成影片；細節見上方劇本描述。');
   }
-  const camera = moving
-    ? '第一人稱主觀鏡頭。視點只照分鏡緩慢移動，不晃動、不旋轉，地平線保持水平；最後在分鏡寫的位置停穩。'
-    : CAMERA[cue.type];
+  const focus = focusOf(cue, device);
+  const camera = moving ? MOVING_CAMERA(focus) : CAMERA[cue.type](focus);
   lines.push(`【鏡頭】${note ? note.camera : camera}`);
   if (framing.length && !memory) lines.push(`【構圖限制】${framing.join('')}`);
   if (memory) {
@@ -448,20 +556,25 @@ function prompt(cue, previous, pictures, note) {
     const palette = device ? PALETTE.device
       : cue.type === '第一人稱過場' ? (note ? '' : '照首格與分鏡：深黑為主，只有分鏡點名的光源發亮，低飽和。')
       : /^R1-/.test(cue.code) ? PALETTE.lobby : PALETTE.now;
-    lines.push(`【光線色調】${note ? note.light : ''}${palette}`);
+    lines.push(`【光線色調】${note ? note.light : ''}${palette}${note ? '' : lightOf(beats)}`);
   }
   lines.push(`【影片風格】${device ? STYLE_DEVICE : STYLE}`);
-  const texts = [...new Set(beats.join('').match(/「[^」]+」/g) || [])];
+  const texts = [...new Set(beats.map(beat => beat.text).join('').match(/「[^」]+」/g) || [])];
   // Sound notes keep what is heard; remarks on what the player can work out stay in the script.
-  const audio = [...cue.sound.map(line => sentences(line).filter(s => !s.includes('玩家')).join('')).filter(Boolean), ...captions];
+  const script = cue.sound.map(line => sentences(line).filter(s => !s.includes('玩家')).join('')).filter(Boolean);
+  // Without a note, what the description says is heard is timed to its beat; the script's own sound
+  // lines run under the whole segment and are placed in the edit.
+  const heard = note ? [] : [
+    ...beats.flatMap((beat, i) => beat.sound.length ? [`・${fmt(at[i])}–${fmt(at[i + 1])} 秒：${beat.sound.map(s => s.text).join('')}`] : []),
+    ...[...shot.loose.map(s => s.text), ...script].map(line => `・整段：${line}`),
+  ];
   // A direction note times every sound and composited text to the beat it lands on.
   // A cell that names its own moment (「2.3 秒：…」) keeps it; otherwise the cue spans its row.
   const timed = note ? note.rows.filter(row => row.sound).map(row => /^\d+(?:\.\d+)? 秒：/.test(row.sound) ? `・${row.sound}` : `・${fmt(row.from)}–${fmt(row.to)} 秒：${row.sound}`) : [];
-  if (audio.length || texts.length || timed.length) {
+  if (texts.length || (note ? script.length || shot.captions || timed.length : heard.length)) {
     lines.push('【後製（不進 AI 生成）】');
     if (texts.length) lines.push(`畫面文字：${texts.join('、')}`);
-    if (note) lines.push('聲音與後製對點：', ...timed);
-    else for (const line of audio) lines.push(line);
+    if (note || heard.length) lines.push('聲音與後製對點：', ...(note ? timed : heard));
   }
   const negative = [...NEGATIVE];
   if (!device) negative.splice(3, 0, '第三人稱或看見主角全身', cue.type === '第一人稱過場' || camera.includes('視點只照') ? '鏡頭晃動或突然換景' : '鏡頭晃動、推移或換景');
@@ -648,9 +761,9 @@ const noteLink = cue => `[${cue.id} ${cue.note.name}](${fileName(VIDEO_DIRECTION
 const assetLink = asset => asset.link ? `[${asset.name}](${fileName(VIDEO_ASSETS)}#${asset.link})` : asset.name;
 cues.forEach((cue, i) => {
   const previous = cues[i - 1]?.act === cue.act ? cues[i - 1] : null;
+  cue.assets = assets(cue, registry);
   cue.prompt = prompt(cue, previous, pictures, notes.get(cue.id));
   cue.note = notes.get(cue.id);
-  cue.assets = assets(cue, registry);
 });
 for (const entry of registry) assert(cues.some(c => applies(entry, c)), `${VIDEO_ASSETS}: ${entry.name} is used by no segment`);
 cues.forEach((cue, i) => { [cue.level, cue.reason] = importance(cue, cues[i + 1]); });
