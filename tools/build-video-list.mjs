@@ -457,7 +457,7 @@ function prompt(cue, previous, pictures, note) {
   if (!device) negative.splice(3, 0, '第三人稱或看見主角全身', cue.type === '第一人稱過場' || camera.includes('視點只照') ? '鏡頭晃動或突然換景' : '鏡頭晃動、推移或換景');
   if (memory) negative.push('冷青色調或訊號雜訊', '對方的臉、名牌或可讀的名字');
   lines.push(`【不要出現】${negative.join('；')}。`);
-  return { text: lines.join('\n'), length, empty: !beats.length };
+  return { text: lines.join('\n'), length, empty: !beats.length && !note };
 }
 
 // ---------- importance ----------
