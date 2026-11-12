@@ -405,7 +405,7 @@ function prompt(cue, previous, pictures, note) {
   }
   if (note?.end) {
     const end = pictures.get(note.end);
-    const start = continued ? `用上一段 ${previous.id} 的最後一格` : frame ? `直接用 ${frame} 的寫實定稿圖` : '依分鏡第一格另做一張寫實實拍的畫面';
+    const start = continued ? `用上一段 ${previous.id} 的最後一格` : frame ? `直接用 ${frame} 的寫實定稿圖` : `直接用 ${cue.code} 本場次主圖的寫實定稿圖`;
     lines[lines.length - 1] = `【生成方式】首尾格生影片：首格${start}；尾格停在 ${note.end}（${end.use}）的視點與構圖。中間照分鏡過渡，光線與物件位置以尾格定稿為準。`;
   }
   const cut = memory ? '約 5 秒（可在 3–6 秒間）' : `約 ${fmt(length.value)} 秒${length.stated ? '（劇本指定）' : ''}`;

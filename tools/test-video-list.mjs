@@ -135,8 +135,9 @@ test('direction notes replace the rule-built storyboard of their segment and are
   for (const segment of segments) {
     if (!notes.some(n => n.id === segment.id)) assert(!segment.prompt.includes('【情緒節奏】'), `${segment.id}: only directed segments carry a mood line`);
   }
-  const prologueHigh = segments.filter(s => s.rel === VIDEO_ACT_LISTS[0] && s.level === '高');
-  assert(prologueHigh.every(s => notes.some(n => n.id === s.id)), 'every high prologue segment has a note');
+  for (const segment of segments.filter(s => s.level === '高')) {
+    assert(notes.some(n => n.id === segment.id), `${segment.id}: every high segment is directed before it is generated`);
+  }
   const total = overview.match(/^\| \*\*上部合計\*\* \| \d+ \| \d+ \| \d+ \| \*\*\d+\*\* \| \*\*(\d+)\*\* \|$/m);
   assert.equal(Number(total[1]), notes.length, 'the overview counts the notes');
   VIDEO_ACT_LISTS.forEach((rel, i) => {
