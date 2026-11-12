@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 import { ROOT } from './sync-canonical.mjs';
-import { ACTS, VIDEO_LIST, VIDEO_ACT_LISTS, VIDEO_DIRECTION } from './screenplay-files.mjs';
+import { ACTS, VIDEO_LIST, VIDEO_ACT_LISTS, VIDEO_DIRECTION, VIDEO_ASSETS } from './screenplay-files.mjs';
 
 const docs = rel => readFileSync(path.join(ROOT, 'docs', rel), 'utf8').replaceAll('\r\n', '\n');
 const overview = docs(VIDEO_LIST);
@@ -144,4 +144,60 @@ test('direction notes replace the rule-built storyboard of their segment and are
     const count = notes.filter(n => segments.find(s => s.id === n.id).rel === rel).length;
     assert.match(lists[i].text, new RegExp(`^導演註記：已寫 ${count} 段`, 'm'), rel);
   });
+});
+
+test('every segment lists its people, scene and props, each as a reference-image prompt', () => {
+  const registry = docs(VIDEO_ASSETS);
+  const file = VIDEO_ASSETS.split('/').at(-1);
+  const anchors = new Set([...registry.matchAll(/<a id="(va-[a-z0-9-]+)"><\/a>/g)].map(m => m[1]));
+  const banned = ['身份', '高亮', '像素', '幀', '接口', '隊列', '緩存', '默認', '全屏', '黑屏', '保存進度', '選填', '聲優', '玩家'];
+  const ORDER = ['【素材】', '【內容】', '【構圖】', '【風格】', '【不要出現】'];
+  const used = new Map();
+  let count = 0;
+  for (const { text } of lists) {
+    for (const part of text.split(/\n(?=<a id="v-)/).slice(1)) {
+      const id = part.match(/^### (\S+)　/m)[1];
+      const type = part.match(/^- \*\*類型：\*\*<span class="video-[a-z]+">([^<]+)<\/span>/m)[1];
+      const summary = part.match(/^\*\*素材提示詞\*\*　人物：(.+)｜場景：(.+)｜物品：(.+)$/m);
+      assert(summary, `${id}: asset summary line`);
+      assert(part.indexOf('**素材提示詞**') > part.indexOf('```prompt\n'), `${id}: assets follow the storyboard prompt`);
+      const names = cell => cell === '無' ? [] : cell.split('、').map(name => {
+        const link = name.match(/^\[([^\]]+)\]\(([^)#]+)#(va-[a-z0-9-]+)\)$/);
+        if (link) { assert.equal(link[2], file, `${id}: ${name}`); assert(anchors.has(link[3]), `${id}: ${link[3]} exists`); return link[1]; }
+        return name;
+      });
+      const listed = [...names(summary[1]).map(n => ['人物', n]), ['場景', names(summary[2])[0]], ...names(summary[3]).map(n => ['物品', n])];
+      const blocks = [...part.matchAll(/^```asset\n([\s\S]*?)\n```$/gm)].map(m => m[1]);
+      assert.deepEqual(blocks.map(b => b.match(/^【素材】(人物|場景|物品)｜(.+)｜(\S+)$/m).slice(1, 3)), listed, `${id}: one block per listed asset, in order`);
+      for (const block of blocks) {
+        count++;
+        assert(block.startsWith('【素材】') && block.split('\n')[0].endsWith(`｜${id}`), `${id}: block names its segment`);
+        let at = -1;
+        for (const section of ORDER) { const next = block.indexOf(section); assert(next > at, `${id}: ${section} out of order`); at = next; }
+        for (const word of banned) assert(!block.includes(word), `${id}: ${word}`);
+        assert(block.includes('清楚可辨識的人臉五官') && block.includes('【風格】寫實、極致逼真的真人實景攝影質感'), `${id}: realism and unreadable faces`);
+        assert(!/[A-Z]\d+b?-[VCD]\d{2}[^（]*（[^）]*）：\s*\n/.test(block), `${id}: no empty scene layer`);
+        if (block.startsWith('【素材】場景')) assert(block.includes('任何人物、手、人影或異變者') && block.includes('【光線色調】'), `${id}: scene plates are empty and lit`);
+        const name = block.match(/^【素材】\S+?｜(.+)｜/)[1];
+        used.set(name, (used.get(name) || 0) + 1);
+      }
+      const people = names(summary[1]);
+      if (type === '主觀記憶動畫') {
+        assert(people.includes('她・記憶裡') && people.includes('小花・記憶裡（米色袖口）'), `${id}: memories show her and the beige sleeve`);
+        assert(summary[2].includes(`](${file}#`), `${id}: memory scenes are hand-written`);
+        assert(!blocks.join('').includes('白襯衫的袖口有'), `${id}: memories predate the escape shirt`);
+      } else {
+        assert(!people.some(n => n.includes('記憶裡')), `${id}: memory people stay in memories`);
+      }
+      if (type === '設備內影片') assert(summary[2].includes(`](${file}#`), `${id}: device videos have a hand-written screen scene`);
+    }
+  }
+  assert.equal(count, [...used.values()].reduce((a, b) => a + b, 0));
+  const table = registry.slice(registry.indexOf('<!-- video-assets:begin -->'), registry.indexOf('<!-- video-assets:end -->'));
+  const rows = [...table.matchAll(/^\| \[([^\]]+)\]\(#(va-[a-z0-9-]+)\) \| (人物|場景|物品) \| (\d+) \| .+ \|$/gm)];
+  assert.equal(rows.length, anchors.size, 'every registered asset has a usage row');
+  for (const [, name, anchor, , n] of rows) {
+    assert(anchors.has(anchor), anchor);
+    assert.equal(used.get(name) || 0, Number(n), `${name}: usage count matches the act lists`);
+  }
 });

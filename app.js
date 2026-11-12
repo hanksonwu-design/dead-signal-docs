@@ -230,11 +230,11 @@ function renderMarkdown(raw, lineOffset = 0) {
   const flushParagraph = () => { if (paragraph.length) { out.push(`<p data-source-line="${lineOffset + paragraphLine}">${withCueTags(paragraph, inlineMarkdown)}</p>`); paragraph = []; } };
   const closeList = () => { if (listType) { out.push(`</${listType}>`); listType = null; } };
   const closeTable = () => { if (table) { out.push(`</tbody></table></div>`); table = null; } };
-  // A ```prompt fence is an AI storyboard prompt: it wraps and gets a copy button (wired in openReader).
+  // A ```prompt fence (AI storyboard) or ```asset fence (AI reference image) wraps and gets a copy button (wired in openReader).
   const closeCode = () => {
     if (code === null) return;
     const block = `<pre><code>${esc(code.join("\n"))}</code></pre>`;
-    out.push(codeLang === "prompt" ? `<div class="prompt-block"><button type="button" class="prompt-copy">複製提示詞</button>${block}</div>` : block);
+    out.push(codeLang === "prompt" || codeLang === "asset" ? `<div class="prompt-block"><button type="button" class="prompt-copy">複製提示詞</button>${block}</div>` : block);
     code = null;
   };
 

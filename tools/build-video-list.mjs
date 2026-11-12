@@ -1,11 +1,12 @@
 // Builds the upper-part video production lists from every （動畫演出／…） cue in the act scripts.
 // 10-16 keeps its hand-written introduction and gets a generated overview; each upper act gets a
-// fully generated list (10-17 to 10-21) whose segments carry a Chinese storyboard prompt for AI video tools.
+// fully generated list (10-17 to 10-21) whose segments carry a Chinese storyboard prompt for AI video tools
+// and asset prompts (people, scene, props) for the reference images those tools take.
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ACTS, APPENDIX, VIDEO_LIST, VIDEO_ACT_LISTS, VIDEO_DIRECTION } from './screenplay-files.mjs';
+import { ACTS, APPENDIX, VIDEO_LIST, VIDEO_ACT_LISTS, VIDEO_DIRECTION, VIDEO_ASSETS } from './screenplay-files.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'docs');
@@ -66,6 +67,8 @@ function soundAfter(lines, i) {
   return found;
 }
 
+// Room and sub-scene names by code (「R1」→ 入口大廳, 「T-R2-R3-01」→ 後廚服務巷), for asset headings.
+const TITLES = new Map();
 function collect(act) {
   const lines = read(act.path).split('\n');
   const cues = [];
@@ -81,6 +84,7 @@ function collect(act) {
     if ((m = line.match(/^<!-- import:([^:]+):end -->$/))) { block = null; continue; }
     const heading = parseHeading(line);
     if (heading) {
+      if (heading.code && !TITLES.has(heading.code)) TITLES.set(heading.code, heading.title);
       while (stack.length && stack.at(-1).level >= heading.level) stack.pop();
       stack.push({ ...heading, line: i, anchors: pending });
       pending = [];
@@ -107,7 +111,7 @@ function collect(act) {
     }
     cues.push({
       act, type, description, images, block, sound: soundAfter(lines, i),
-      code: coded.code, title: coded.title, sub, anchor,
+      code: coded.code, title: coded.title, sub, anchor, room: stack.find(h => h.level === 3 && h.code)?.code,
       anchors: new Set([block, ...stack.flatMap(h => h.anchors), ...floating].filter(Boolean)),
     });
   }
@@ -222,7 +226,14 @@ const DELIVERY = {
   設備內影片: '成片合成進設備螢幕遮罩；近看保留設備邊框，字幕與畫面文字後製加上。',
   設備即時影像: '成片合成進設備螢幕遮罩；近看保留設備邊框。',
 };
-const PROTAGONIST_HAND = /(?:她|自己|主角)(?:的)?(?:雙手|右手|左手|手|指|拇指|指甲|指尖|指節|掌)|前景的(?:右|左)?手|撐地的手|手從視野下緣|她彎身|她用指/;
+const PALETTE = {
+  device: '舊螢幕畫質：略低解析、輕微掃描線與色偏，亮度只在螢幕範圍內。',
+  lobby: 'R1 大廳：廉價、均勻的暖白日光燈，乾淨得不自然；不加恐怖暗角，也不偏冷青。',
+  now: '現在的暖黑：低飽和、潮濕、廢棄，深黑陰影佔大半，只有設備燈、消防燈或漏光照亮局部；光向與首格一致。',
+  memory: '記憶色調：柔和低對比的暖褐微光，帶輕微顆粒與四周微暈；不用凝固層的單色冷青，也不加訊號雜訊。',
+  dark: '深黑為主，只有畫面裡點名的光源發亮，低飽和。',
+};
+const PROTAGONIST_HAND =/(?:她|自己|主角)(?:的)?(?:雙手|右手|左手|手|指|拇指|指甲|指尖|指節|掌)|前景的(?:右|左)?手|撐地的手|手從視野下緣|她彎身|她用指/;
 const FIGURE = /輪廓|殘留|人影|縫紉者|老周|阿尋|噤聲者|鏡像者|接待員|成年人|那人|三人|影邊|衣領|肩線|倒影/;
 // Every clip is shot-on-camera realism: no game CG look and no stiff motion.
 const STYLE = '寫實、極致逼真的真人實景拍攝質感：真實攝影機與自然光學，輕微景深、自然底片顆粒與真實曝光；皮膚、布料、金屬、水漬與灰塵都有真實細節。動作自然流暢，有重量與慣性，符合真實人體動作。不是遊戲 CG、不是 3D 算圖、不是插畫。';
@@ -434,10 +445,9 @@ function prompt(cue, previous, pictures, note) {
     if (!device && PROTAGONIST_HAND.test(cue.description)) hands.push('她的手只露出手與白襯衫袖口，手背乾裂、有擦傷，從畫面下緣入鏡；五指比例正確。');
     if (FIGURE.test(cue.description)) hands.push(device ? '片中人物的臉要被裁切、壓縮或模糊，只看得清嘴形、肩膀與手；不做清晰肖像。' : '人物與異變者照首格的造型與位置，臉不給清楚五官（無臉、背光或被遮住），動作緩慢但連貫自然。');
     if (hands.length) lines.push(`【人物】${hands.join('')}`);
-    const palette = device ? '舊螢幕畫質：略低解析、輕微掃描線與色偏，亮度只在螢幕範圍內。'
+    const palette = device ? PALETTE.device
       : cue.type === '第一人稱過場' ? (note ? '' : '照首格與分鏡：深黑為主，只有分鏡點名的光源發亮，低飽和。')
-      : /^R1-/.test(cue.code) ? 'R1 大廳：廉價、均勻的暖白日光燈，乾淨得不自然；不加恐怖暗角，也不偏冷青。'
-      : '現在的暖黑：低飽和、潮濕、廢棄，深黑陰影佔大半，只有設備燈、消防燈或漏光照亮局部；光向與首格一致。';
+      : /^R1-/.test(cue.code) ? PALETTE.lobby : PALETTE.now;
     lines.push(`【光線色調】${note ? note.light : ''}${palette}`);
   }
   lines.push(`【影片風格】${device ? STYLE_DEVICE : STYLE}`);
@@ -486,6 +496,144 @@ function importance(cue, next) {
   return cue.prompt.length.value >= 3 ? ['中', '較長的動作回饋'] : ['低', '短動作回饋'];
 }
 
+// ---------- asset prompts ----------
+
+// 10-23 registers people, hand-written scenes and props; each entry names the segments it appears in
+// (場次, 類型, 認法 words of the script description). Scenes of ordinary segments are built from the
+// picture rows and the scripts' static-shot lines instead.
+const ASSET_KINDS = { 人物與生物: '人物', 場景: '場景', 物品: '物品' };
+const ASSET_FRAME = {
+  人物: '人物參考圖：中性灰背景、柔和均勻光；正面、側面、背面三視角，外加衣物與手部細節特寫；臉一律背光、失焦或出框。',
+  物品: '物品參考圖：單一物件置中，中性深灰背景、柔和側光；正面、背面與局部特寫三個角度，比例照實物。',
+};
+const STILL = '寫實、極致逼真的真人實景攝影質感：真實相機與自然光學，輕微景深與自然底片顆粒；皮膚、布料、金屬、水漬與灰塵都有真實細節。不是遊戲 CG、不是 3D 算圖、不是插畫。';
+const ASSET_NEGATIVE = [
+  '清楚可辨識的人臉五官', '任何可讀的文字、號碼、標誌、國旗或國名（字留白或模糊，後製再合成）', '血腥特寫、裸露',
+  '遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質',
+];
+const ASSET_EXTRA = { 人物: '名牌或品牌標誌；手指數量或手部結構錯誤', 場景: '任何人物、手、人影或異變者', 物品: '人物與手' };
+const inScope = (cue, scope) => scope === '全部' || cue.id === scope || cue.code === scope || cue.code.startsWith(`${scope}-`);
+const seen = cue => cue.description.replaceAll('**', '');
+
+function assetRegistry(cues) {
+  const entries = [];
+  for (const part of read(VIDEO_ASSETS).split(/\n(?=## )/)) {
+    const kind = ASSET_KINDS[part.match(/^## (.+)$/m)?.[1]];
+    if (!kind) continue;
+    for (const [, anchor, name, body] of part.matchAll(/<a id="(va-[a-z0-9-]+)"><\/a>\n\n### (.+)\n\n([\s\S]*?)(?=\n<a id="|$)/g)) {
+      const field = label => body.match(new RegExp(`^- \\*\\*${label}：\\*\\*(.+)$`, 'm'))?.[1].trim();
+      const list = (label, sep) => (field(label) || '').split(sep).map(s => s.trim()).filter(Boolean);
+      const entry = {
+        kind, anchor, name, scope: list('場次', '、'), types: list('類型', '、'), words: list('認法', '｜'), skip: list('排除', '、'),
+        frame: field('構圖'), text: field('素材提示詞'), avoid: field('不要出現'),
+      };
+      assert(entry.scope.length && entry.text, `${VIDEO_ASSETS}: ${name} needs 場次 and 素材提示詞`);
+      assert(!/[、｜]/.test(name), `${VIDEO_ASSETS}: ${name}: names are listed with 、 and ｜, so they cannot contain them`);
+      assert(kind !== '場景' || entry.frame, `${VIDEO_ASSETS}: scene ${name} needs 構圖`);
+      for (const type of entry.types) assert(TYPES.includes(type), `${name}: unknown type ${type}`);
+      for (const scope of [...entry.scope, ...entry.skip]) assert(cues.some(c => inScope(c, scope)), `${name}: 場次 ${scope} matches no segment`);
+      entries.push(entry);
+    }
+  }
+  return entries;
+}
+const applies = (entry, cue) => entry.scope.some(s => inScope(cue, s)) && !entry.skip.some(s => inScope(cue, s))
+  && (!entry.types.length || entry.types.includes(cue.type)) && (!entry.words.length || entry.words.some(w => seen(cue).includes(w)));
+
+// The first static-shot line that links a picture describes it; indented 前景／中景／背景 lines continue it.
+function staticShots() {
+  const shots = new Map();
+  for (const act of UPPER) {
+    const lines = read(act.path).split('\n');
+    lines.forEach((line, i) => {
+      const m = line.match(/^（靜態畫面／[^）]+）\s*(.*)$/);
+      if (!m) return;
+      let text = m[1];
+      for (let j = i + 1; j < lines.length && lines[j].startsWith('　'); j++) text += lines[j].trim();
+      for (const id of new Set(line.match(IMAGE) || [])) if (!shots.has(id)) shots.set(id, plain(text));
+    });
+  }
+  return shots;
+}
+// An empty plate keeps only the place: clauses about people, hands, traces of figures, sound, camera,
+// routes and production or player rules are dropped; codes go, the things they label stay.
+const PERSON = /(?<![扶把拉握提徒助選對])手(?![冊機套寫電推柄勢])|掌心|指尖|主觀視野|殘影|輪廓|人影|鞋影|身影|她|主角|屈膝|牛仔褲|噤聲者|怨靈|異變|鞋底/;
+const ENV_RULE = new RegExp([
+  '玩家', '任何(?:輸入|操作)', '判定', '條件', '狀態', '驗證', '可查看', '近看', '可辨', '差分', '另交', '另層', '座標', '辨認', '依據',
+  '只能', '才可', '尚未', '只管', '雙重', '保存', '減少動態', '字幕', '第一人稱', '提前', '→', '跨門', '不再次', '注意力', '安排',
+  '對位', '同框', '示意', '避開', '開始', '接景', '核對', '抹除', '視線', '視角', '這一眼', '由遠及近', '爬', '推開', '聲(?!軌|源)', '筆記(?:不|只|更新|寫入|補|中)',
+  '熱點', '不變成', '不新增', '共用資產', '才露出', '穿越',
+].join('|'));
+const CODE = /\b[A-Z]{1,3}\d?(?:-[A-Z]?\d+)+\b\s*/g;
+function scenery(text, kept = '') {
+  const out = [];
+  const cleaned = tidy(text || '').replace(CODE, '').replace(/\s+[、–～\s]*(?=[。，；]|$)/g, '').replace(/、(?=及|與|和)/g, '');
+  for (const raw of sentences(cleaned)) {
+    const clauses = raw.replace(/[。；！？]$/, '').split('，')
+      .filter(c => c.trim().length > 1 && !ENV_RULE.test(c) && !PERSON.test(c));
+    const sentence = `${clauses.join('，').replace(/^[：、\s]+/, '')}。`;
+    if (sentence.length > 2 && !(kept + out.join('')).includes(sentence)) out.push(sentence);
+  }
+  return out.join('');
+}
+// A transition scene is its own place; any other picture belongs to the main picture of its room.
+function placeOf(cue) {
+  const image = cue.images[0];
+  const scene = image?.match(/^T-[A-Z]\d+b?-[A-Z]\d+b?-\d{2}/)?.[0];
+  if (scene) return { code: scene, base: pictures.has(scene) ? scene : image, focus: image };
+  const room = image ? image.match(/^([PRU]\d+b?)-/)[1] : cue.room;
+  return room && { code: room, base: `${room}-V01`, focus: image || `${room}-V01` };
+}
+function assetPalette(cue) {
+  if (cue.type === '主觀記憶動畫') return PALETTE.memory;
+  if (cue.type.startsWith('設備')) return PALETTE.device;
+  if (cue.type === '第一人稱過場') return PALETTE.dark;
+  return /^R1-/.test(cue.code) ? PALETTE.lobby : PALETTE.now;
+}
+function assetBlock(kind, name, cue, lines) {
+  return [`【素材】${kind}｜${name}｜${cue.id}`, ...lines].join('\n');
+}
+function negative(kind, avoid) {
+  return `【不要出現】${[...(avoid ? avoid.split('；') : []), ASSET_EXTRA[kind], ...ASSET_NEGATIVE].join('；')}。`;
+}
+function sceneAsset(cue, entry) {
+  if (entry) {
+    return { name: entry.name, link: entry.anchor, text: assetBlock('場景', entry.name, cue, [
+      `【內容】${entry.text}`, `【構圖】${entry.frame}`, `【光線色調】${assetPalette(cue)}`, `【風格】${STILL}`, negative('場景', entry.avoid),
+    ]) };
+  }
+  const place = placeOf(cue);
+  assert(place && pictures.has(place.base), `${cue.id}: no picture to build its scene from; add a scene to ${VIDEO_ASSETS}`);
+  const layer = id => {
+    const row = pictures.get(id);
+    const draw = scenery(row.draw);
+    const text = draw + scenery(statics.get(id), draw);
+    return text ? `${id}（${row.use}）：${text}` : `${id}（${row.use}），構圖照本段首格。`;
+  };
+  const close = place.focus !== place.base;
+  const name = `${place.code} ${TITLES.get(place.code) || pictures.get(place.base).use}`;
+  const content = [`【內容】寫實實景的空景，不含任何人物與手。`, `空間：${layer(place.base)}`];
+  if (close) content.push(`本段畫面：${layer(place.focus)}`);
+  const frame = close
+    ? '空景參考兩張：一張照「空間」的全景，第一人稱站立視線高度、約 28mm 人眼視角、平視、地平線水平；一張照「本段畫面」的近看構圖，與本段首格一致。都不含人物、手與人影。'
+    : '空景參考：第一人稱站立視線高度、約 28mm 人眼視角、平視、地平線水平；構圖與本段首格一致，不含人物、手與人影。';
+  return { name, text: assetBlock('場景', name, cue, [...content, `【構圖】${frame}`, `【光線色調】${assetPalette(cue)}`, `【風格】${STILL}`, negative('場景')]) };
+}
+function assets(cue, registry) {
+  const matched = registry.filter(entry => applies(entry, cue));
+  const scenes = matched.filter(e => e.kind === '場景');
+  assert(scenes.length <= 1, `${cue.id}: more than one scene in ${VIDEO_ASSETS}: ${scenes.map(e => e.name).join('、')}`);
+  if (cue.type === '主觀記憶動畫' || cue.type.startsWith('設備')) assert(scenes.length, `${cue.id}: memories and device videos need a scene in ${VIDEO_ASSETS}`);
+  const item = entry => ({ name: entry.name, link: entry.anchor, text: assetBlock(entry.kind, entry.name, cue, [
+    `【內容】${entry.text}`, `【構圖】${entry.frame || ASSET_FRAME[entry.kind]}`, `【風格】${STILL}`, negative(entry.kind, entry.avoid),
+  ]) });
+  return {
+    people: matched.filter(e => e.kind === '人物').map(item),
+    scene: sceneAsset(cue, scenes[0]),
+    props: matched.filter(e => e.kind === '物品').map(item),
+  };
+}
+
 // ---------- output ----------
 
 const cues = UPPER.flatMap(collect);
@@ -494,12 +642,17 @@ const pictures = pictureRows();
 for (const cue of cues) for (const id of cue.images) assert(pictures.has(id), `${cue.id}: picture ${id} has no row in the act spec`);
 const usedTypes = TYPES.filter(t => cues.some(c => c.type === t));
 const notes = directionNotes(cues, pictures);
+const statics = staticShots();
+const registry = assetRegistry(cues);
 const noteLink = cue => `[${cue.id} ${cue.note.name}](${fileName(VIDEO_DIRECTION)}#${cue.note.anchor})`;
+const assetLink = asset => asset.link ? `[${asset.name}](${fileName(VIDEO_ASSETS)}#${asset.link})` : asset.name;
 cues.forEach((cue, i) => {
   const previous = cues[i - 1]?.act === cue.act ? cues[i - 1] : null;
   cue.prompt = prompt(cue, previous, pictures, notes.get(cue.id));
   cue.note = notes.get(cue.id);
+  cue.assets = assets(cue, registry);
 });
+for (const entry of registry) assert(cues.some(c => applies(entry, c)), `${VIDEO_ASSETS}: ${entry.name} is used by no segment`);
 cues.forEach((cue, i) => { [cue.level, cue.reason] = importance(cue, cues[i + 1]); });
 const overview = read(VIDEO_LIST);
 const updated = overview.match(/^更新: (\d{4}-\d{2}-\d{2})$/m)[1];
@@ -510,9 +663,9 @@ function actList(act) {
   const index = UPPER.indexOf(act);
   const out = [];
   out.push('---', `文件: 製作規格｜影片製作列表・${act.name}`, `狀態: ${status}`, `更新: ${updated}`,
-    `摘要: ${act.name}〈${act.subtitle}〉${own.length} 段動畫演出的製作列表；每段附劇本描述、首格圖號與 AI 生成影片用的中文分鏡提示詞。`, '---', '');
+    `摘要: ${act.name}〈${act.subtitle}〉${own.length} 段動畫演出的製作列表；每段附劇本描述、首格圖號、AI 生成影片用的中文分鏡提示詞，以及人物、場景與物品的素材提示詞。`, '---', '');
   out.push(`<a id="video-act-${act.act}"></a>`, '', `# 影片製作列表・${act.name} · ${act.subtitle}（${own.length} 段）`, '');
-  out.push(`> 本頁由 \`node tools/build-video-list.mjs\` 依[${act.name}劇本](../${act.path})與[${act.name}製作規格](${fileName(act.specPath)})產生，請勿手改；要改動畫，請改劇本或同幕圖像表，要改鏡頭、光與聲音設計，請改[影片導演註記](${fileName(VIDEO_DIRECTION)})，再重新執行。提示詞的用法、共用影片風格與禁止事項見[總表的提示詞說明](${fileName(VIDEO_LIST)}#video-prompt-guide)。`, '');
+  out.push(`> 本頁由 \`node tools/build-video-list.mjs\` 依[${act.name}劇本](../${act.path})與[${act.name}製作規格](${fileName(act.specPath)})產生，請勿手改；要改動畫，請改劇本或同幕圖像表，要改鏡頭、光與聲音設計，請改[影片導演註記](${fileName(VIDEO_DIRECTION)})，要改人物、場景與物品素材，請改[影片素材設定](${fileName(VIDEO_ASSETS)})，再重新執行。提示詞的用法、共用影片風格與禁止事項見[總表的提示詞說明](${fileName(VIDEO_LIST)}#video-prompt-guide)。`, '');
   const nav = [`[影片製作總表](${fileName(VIDEO_LIST)}#video-catalog)`];
   if (index > 0) nav.push(`[上一幕：${UPPER[index - 1].name}](${fileName(listFile(UPPER[index - 1]))})`);
   if (index < UPPER.length - 1) nav.push(`[下一幕：${UPPER[index + 1].name}](${fileName(listFile(UPPER[index + 1]))})`);
@@ -551,6 +704,10 @@ function actList(act) {
     if (cue.note) out.push(`- **導演註記：**${noteLink(cue)}`);
     out.push('', `**劇本描述**　${cue.description}`, '');
     out.push('```prompt', built.text, '```', '');
+    const { people, scene: place, props } = cue.assets;
+    const names = list => list.length ? list.map(assetLink).join('、') : '無';
+    out.push(`**素材提示詞**　人物：${names(people)}｜場景：${assetLink(place)}｜物品：${names(props)}`, '');
+    for (const asset of [...people, place, ...props]) out.push('```asset', asset.text, '```', '');
   }
   return out.join('\n').trim() + '\n';
 }
@@ -588,6 +745,23 @@ const from = overview.indexOf(BEGIN) + BEGIN.length;
 const to = overview.indexOf(END);
 outputs.set(VIDEO_LIST, overview.slice(0, from) + '\n\n' + region.join('\n').trim() + '\n\n' + overview.slice(to));
 
+// 10-23 is hand-written except its usage table, which lists the segments that share each asset.
+const ASSET_BEGIN = '<!-- video-assets:begin -->';
+const ASSET_END = '<!-- video-assets:end -->';
+const assetPage = read(VIDEO_ASSETS);
+assert.equal(assetPage.split(ASSET_BEGIN).length, 2, 'video-assets begin marker');
+assert.equal(assetPage.split(ASSET_END).length, 2, 'video-assets end marker');
+const segmentLink = cue => `[${cue.id}](${fileName(listFile(cue.act))}#${anchorOf(cue.id)})`;
+const autoScenes = cues.filter(c => !c.assets.scene.link);
+const usage = [
+  table(['素材', '類別', '段數', '段落'], registry.map(entry => {
+    const used = cues.filter(c => applies(entry, c));
+    return [`[${entry.name}](#${entry.anchor})`, entry.kind, used.length, used.map(segmentLink).join('、')];
+  })), '',
+  `其餘 ${autoScenes.length} 段的場景由圖像表與劇本靜態畫面自動整理，共 ${new Set(autoScenes.map(c => c.assets.scene.name)).size} 處空間；同一空間做一張全景空景即可共用，近看另依各段「本段畫面」補做。`,
+];
+outputs.set(VIDEO_ASSETS, assetPage.slice(0, assetPage.indexOf(ASSET_BEGIN) + ASSET_BEGIN.length) + '\n\n' + usage.join('\n') + '\n\n' + assetPage.slice(assetPage.indexOf(ASSET_END)));
+
 const stale = [];
 for (const [rel, text] of outputs) {
   const file = path.join(DOCS, rel);
@@ -601,4 +775,5 @@ for (const [rel, text] of outputs) {
 if (CHECK) assert.deepEqual(stale, [], 'Video lists are stale; run node tools/build-video-list.mjs');
 const empty = cues.filter(c => c.prompt.empty).length;
 const levels = LEVELS.map(level => `${level} ${cues.filter(c => c.level === level).length}`).join('／');
-console.log(`Video lists ${stale.length && !CHECK ? 'updated' : 'verified'}: ${cues.length} animation cues in ${UPPER.length} act lists (${levels}), ${bridges.length} key bridges, ${empty} layer-only prompts, ${notes.size} direction notes`);
+const assetCount = cues.reduce((n, c) => n + c.assets.people.length + c.assets.props.length + 1, 0);
+console.log(`Video lists ${stale.length && !CHECK ? 'updated' : 'verified'}: ${cues.length} animation cues in ${UPPER.length} act lists (${levels}), ${bridges.length} key bridges, ${empty} layer-only prompts, ${notes.size} direction notes, ${registry.length} registered assets, ${assetCount} asset prompts`);

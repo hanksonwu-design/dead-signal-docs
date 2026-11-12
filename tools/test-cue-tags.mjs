@@ -71,10 +71,11 @@ test('video-list animation types each render in their own reader color', () => {
   assert(typeCells.every(cell => /^<span class="video-[a-z]+">[^<]+<\/span>$/.test(cell)), 'every type cell is colored');
 });
 
-test('storyboard prompt fences wrap and carry a copy button; other code blocks stay plain', () => {
-  const html = render('```prompt\n【影片】A·1\n【分鏡】<b>\n```\n\n```\nplain\n```');
+test('storyboard and asset prompt fences wrap and carry a copy button; other code blocks stay plain', () => {
+  const html = render('```prompt\n【影片】A·1\n【分鏡】<b>\n```\n\n```asset\n【素材】人物｜她\n```\n\n```\nplain\n```');
   assert.match(html, /^<div class="prompt-block"><button type="button" class="prompt-copy">複製提示詞<\/button><pre><code>【影片】A·1\n【分鏡】&lt;b&gt;<\/code><\/pre><\/div>/);
-  assert((html.match(/class="prompt-block"/g) || []).length === 1, 'plain fences get no copy button');
+  assert(html.includes('<div class="prompt-block"><button type="button" class="prompt-copy">複製提示詞</button><pre><code>【素材】人物｜她</code></pre></div>'), 'asset fences get the same copy button');
+  assert((html.match(/class="prompt-block"/g) || []).length === 2, 'plain fences get no copy button');
   assert(app.includes('querySelectorAll(".prompt-copy")') && app.includes('navigator.clipboard.writeText'), 'copy buttons are wired');
   assert.match(css, /\.reader-content \.prompt-block pre code \{ white-space: pre-wrap;/);
 });
