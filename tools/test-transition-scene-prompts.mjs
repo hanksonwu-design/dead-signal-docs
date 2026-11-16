@@ -63,3 +63,39 @@ test('signs left from before the compound keep the 40/10/50 script mix, and each
   assert.ok(Math.abs(share('簡體中文') - 0.4) <= 0.05, 'about 40% simplified Chinese');
   assert.ok(Math.abs(share('繁體中文') - 0.1) <= 0.05, 'about 10% traditional Chinese');
 });
+
+// Each room's own colour and material, from its 空間第一印象 in the production specs.
+const ROOM_LOOK = {
+  R2: /醬褐|麵店/, R3: /暗靛/, R4: /濕綠/, R5: /赭紅/, R6: /藍灰/, R7: /泛黃/, R8: /冷青/, R9: /褪紫/, R10: /粉白/,
+  R12: /銅綠/, R13: /米黃/, R14: /暗鐵紅/, R17: /飾板/, R18: /吸音板/, R22: /裸露的鋼梯/, R27: /展示/, R28: /貿易/, R30: /黑鋼/,
+};
+const plates = () => [...prompts.matchAll(/```asset\n【素材】場景｜[^｜]+｜(\S+)\n([\s\S]*?)\n```/g)].map(m => [m[1], m[2].split('\n').slice(0, 3).join('\n')]);
+
+test('route-end plates carry the colour and material of the rooms they leave and reach', () => {
+  const all = plates();
+  const routes = new Map();
+  for (const [id, text] of all) {
+    const t = id.match(/^T-([A-Z]\d+)b?-([A-Z]\d+)b?-(\d{2})$/);
+    if (t) { const key = `${t[1]}-${t[2]}`; if (!routes.has(key)) routes.set(key, []); routes.get(key).push([id, text]); continue; }
+    const room = id.replace(/b?-V\d+$/, '');
+    if (ROOM_LOOK[room]) assert.match(text, ROOM_LOOK[room], `${id} shows ${room}`);
+  }
+  for (const [key, list] of routes) {
+    const [from, to] = key.split('-');
+    if (ROOM_LOOK[from]) assert.match(list[0][1], ROOM_LOOK[from], `${list[0][0]} shows ${from}`);
+    if (ROOM_LOOK[to]) assert.match(list.at(-1)[1], ROOM_LOOK[to], `${list.at(-1)[0]} shows ${to}`);
+  }
+});
+
+test('plates on the 8F–14F, 21F–27F and 33F–40F bands show the quake damage, and no other plate does', () => {
+  const band = f => (f >= 8 && f <= 14) || (f >= 21 && f <= 27) || (f >= 33 && f <= 40);
+  let quaked = 0;
+  for (const [id, text] of plates()) {
+    const content = text.split('\n')[0];
+    const floors = [...content.replace(/這一段樓後來在震損中受創.*$/, '').matchAll(/(\d+)F/g)].map(m => +m[1]);
+    const marked = content.includes('震損中受創');
+    if (floors.length && band(floors[0])) assert.ok(marked, `${id} sits on a quake band`);
+    if (marked) { quaked++; assert.ok(floors.some(band), `${id} marks quake damage off the bands`); }
+  }
+  assert.ok(quaked >= 20, 'quake bands are covered');
+});
