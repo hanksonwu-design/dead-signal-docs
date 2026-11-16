@@ -34,8 +34,10 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
     // Plain documentary photos in the light that is really there: no staged mood or cinematic grade.
     assert.ok(lines[3].startsWith('【光線色調】現場自然光，照實拍：'), id);
     assert.doesNotMatch(lines[3], /暖黑|深黑陰影|勾邊|勾出|光束|戲劇|電影/, id);
-    // Lamps are only ever partly on, and every plate says what the shadows still show.
-    assert.match(lines[3], /不亮|只亮|只剩|燈座|熄|隔一/, `${id}: lamps partly on`);
+    // Where skylight comes in the lamps stay off, or only one or two are on when it is dim;
+    // windowless plates keep their lamps only partly on. Every plate says what the shadows still show.
+    if (lines[3].includes('這裡沒有任何透光的縫')) assert.match(lines[3], /不亮|只亮|只剩|燈座|熄|隔一/, `${id}: lamps partly on`);
+    else assert.match(lines[3], /燈[^，；。]{0,4}沒開|只開了|沒有燈/, `${id}: skylit plates keep the lamps off or light one or two`);
     assert.match(lines[3], /仍(看得出|看得清|分得出)/, `${id}: shadow detail`);
     assert.doesNotMatch(lines.slice(1, 4).join(''), /深黑|死黑|漆黑|偏暗|均勻的暖白/, id);
     // Overcast skylight only: no sun, no cloud gaps, no sunlit patches, and no 日光 that reads as sunlight.
@@ -65,6 +67,8 @@ test('daylight changes from route to route, and the windowless plates use only t
   assert.equal(new Set(lights).size, 72, 'every plate has its own light');
   for (const kind of ['陰天', '細雨', '雨剛停', '雨停', '浪板', '帆布', '白磁磚井壁', '高窗']) assert.ok(lights.some(l => l.includes(kind)), kind);
   assert.equal(lights.filter(l => l.includes('這裡沒有任何透光的縫')).length, 31);
+  assert.ok(lights.filter(l => l.includes('有天光')).length >= 15, 'plates with enough skylight keep the lamps off');
+  assert.ok(lights.filter(l => l.includes('天光灰暗')).length >= 10, 'dim plates light only one or two lamps');
   assert.ok(prompts.includes('<a id="tsp-light"></a>'), '10-15 keeps a 光線的分配 section');
 });
 
