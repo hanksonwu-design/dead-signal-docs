@@ -6,8 +6,8 @@ const doc = readFileSync(new URL('../docs/10_製作規格/10-15_製作規格_連
 const start = doc.indexOf('<a id="transition-scene-prompts"></a>');
 const tables = doc.slice(0, start);
 const prompts = doc.slice(start, doc.indexOf('## 製作交接欄位'));
-const STYLE = '【風格】寫實、極致逼真的真人實景攝影質感：普通相機在現場自然光下拍的紀錄片照片，不打燈、不做電影感調色，白平衡照實；曝光以亮處不過曝為準，燈泡、燈管與透光的縫保留細節，暗面不壓成死黑，看得出牆面、地面與管線的層次；真實相機與自然光學，景深自然，暗處帶一點相機雜訊；皮膚、布料、金屬、水漬與灰塵都有真實細節；招牌、標籤與紙上的字照【內容】引號裡的原文正常顯示，筆畫正確，只帶實際的褪色、髒污與磨損；畫面裡若有盆栽或植物，一律已經枯死乾黃。不是電影劇照、不是遊戲 CG、不是 3D 算圖、不是插畫。';
-const AVOID = '【不要出現】任何人物、手、人影或異變者；清楚可辨識的人臉五官；提示詞沒寫到的文字與號碼、真實的店名與品牌標誌、國旗或國名；模糊、馬賽克或打碼的字；還活著的綠色盆栽與植物；血腥特寫、裸露；遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質；電影感的戲劇打光、光束、霧氣效果、刻意調色與暗角；太陽、陽光直射與陽光照出的光斑；過曝死白的亮處、壓成死黑的暗面、所有燈都亮著的室內。';
+const STYLE = '【風格】寫實、極致逼真的真人實景攝影質感：普通相機在現場自然光下拍的紀錄片照片，不打燈、不做電影感調色，白平衡照實；整體氣氛陰冷、壓迫、令人不安，像人都突然不見了的樓裡留下的現場照片；現場光不夠，照實拍，曝光以亮處不過曝為準、整體壓低，大半個畫面落在陰影裡，光只照到局部；燈泡、燈管與透光的縫保留細節，光源照實帶著各自的顏色，老舊日光燈偏青綠、蒙灰的燈泡昏黃、陰雨天光發灰；暗處由近到遠慢慢沉下去，近處的牆面、地面與管線仍看得出層次，只有最深的門洞、梯井或走道盡頭暗到看不出裡面；真實相機與自然光學，景深自然，暗處帶明顯的相機雜訊；皮膚、布料、金屬、水漬、霉斑與灰塵都有真實細節；招牌、標籤與紙上的字照【內容】引號裡的原文正常顯示，筆畫正確，只帶實際的褪色、髒污與磨損；畫面裡若有盆栽或植物，一律已經枯死乾黃。不是電影劇照、不是遊戲 CG、不是 3D 算圖、不是插畫。';
+const AVOID = '【不要出現】任何人物、手、人影或異變者；清楚可辨識的人臉五官；提示詞沒寫到的文字與號碼、真實的店名與品牌標誌、國旗或國名；模糊、馬賽克或打碼的字；還活著的綠色盆栽與植物；血腥特寫、裸露；遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質；電影感的戲劇打光、光束、霧氣效果、刻意調色與暗角；太陽、陽光直射與陽光照出的光斑；過曝死白的亮處、整片壓成死黑的暗面、所有燈都亮著的室內；明亮乾淨、溫暖舒適的氣氛；血跡、鬼影或刻意擺放的恐怖道具。';
 const TRAD_ONLY = /[樓號區門開關電線請進廠貨運單後間費維時熱錶輪價診務經許轉輕庫錢檢應說讓點類辦釋臨禱貿業實體媽願飯湯標別著處閉載產棟換補報廢鑰籃閥負側]/;
 const SIMP_ONLY = /[楼号区门开关电线请进厂货运单后间费维时热轮价诊务经许转轻库钱检应说让点类办释临祷贸业实体妈愿饭汤标别着处闭载产栋换补报废钥篮阀负侧]/;
 
@@ -50,6 +50,7 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
     assert.doesNotMatch(lines.slice(1, 4).join(''), /玩家|聲|人影|——/, id);
     // Prompts name no real place, and every sign or paper shows which script it carries instead of a blank.
     assert.doesNotMatch(lines.slice(1, 4).join(''), /九龍|城寨|字留白|模糊不可讀|字跡模糊/, id);
+    assert.doesNotMatch(lines.slice(1, 4).join(''), /(?<![A-Za-z0-9-])[RUP]\d+(?!\d)/, `${id}: room codes get drawn as signs`);
     // Signs show their real words: simplified quotes carry no traditional-only characters and the reverse,
     // and a clause that names Burmese quotes some Burmese script.
     for (const clause of lines[1].split(/[。；]/).filter(c => c.includes('「'))) {
@@ -79,6 +80,9 @@ test('daylight changes from route to route, and the windowless plates use only t
   assert.ok(lights.filter(l => l.includes('有天光')).length >= 15, 'plates with enough skylight keep the lamps off');
   assert.ok(lights.filter(l => l.includes('天光灰暗')).length >= 10, 'dim plates light only one or two lamps');
   assert.ok(prompts.includes('<a id="tsp-light"></a>'), '10-15 keeps a 光線的分配 section');
+  // Horror comes from the light that is there: every plate ends on one place too dark to see into.
+  assert.ok(prompts.includes('- **恐怖感：**'), '光線的分配 explains the horror look');
+  for (const l of lights) assert.match(l.split('；').at(-1), /看不出|看不到底/, `one place too dark to see into: ${l.slice(0, 30)}`);
 });
 
 test('signs left from before the compound keep the 40/10/50 script mix, and each plate shows its assigned script', () => {
