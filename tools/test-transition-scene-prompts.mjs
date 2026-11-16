@@ -28,6 +28,8 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
     assert.ok(prompts.includes(`<a id="tsp-${id.toLowerCase()}"></a>\n\n#### ${id} ${name}\n\n\`\`\`asset\n`), `${id} has its own anchor and heading`);
     assert.deepEqual(lines.map(l => l.slice(0, l.indexOf('】') + 1)), ['【素材】', '【內容】', '【構圖】', '【光線色調】', '【風格】', '【不要出現】'], id);
     assert.ok(lines[1].startsWith('【內容】寫實實景的空景：'), id);
+    // Each plate closes on its floor band's walled-city ground: wrapped old homes, patchwork eras, life left in place.
+    assert.match(lines[1], /層層加建/, id);
     assert.match(lines[2], /^【構圖】16:9 橫幅，第一人稱站立視線高度、約 28mm 人眼視角，/, id);
     assert.equal(lines[4], STYLE, id);
     assert.equal(lines[5], AVOID, id);
