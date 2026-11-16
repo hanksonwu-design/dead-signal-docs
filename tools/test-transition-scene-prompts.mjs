@@ -136,3 +136,30 @@ test('plates on the 8F–14F, 21F–27F and 33F–40F bands show the quake damag
   }
   assert.ok(quaked >= 20, 'quake bands are covered');
 });
+
+// Route pieces, close-up objects and sign text the act specs and scripts ask each plate to show (checked against the v2 images).
+const MUST_SHOW = {
+  'T-R2-R3-01': ['「收碗留後門」'],
+  'T-R3-R5-01': ['半截鋼梯'],
+  'T-R5-R6-01': ['濾籃', '溢流刻線', '旁通管的閥柄'],
+  'T-R6-R7-02': ['只剩第一階', '空衣架', '固定鐵梯往上'],
+  'T-R7-R8-01': ['「A栋 15F」', '「B栋 15F」'],
+  'T-R11-R12-01': ['完整的鐵踏板'],
+  'T-R11-R12-02': ['塔腳', '短梯'],
+  'T-R12-R14-01': ['防塵片', '爬架'],
+  'T-R13-R14-03': ['「A栋 26F」', '「B栋 26F」'],
+  'T-R13-R15-03': ['「A栋 26F」', '「B栋 26F」'],
+  'T-R15-R16-02': ['三站示意', '「29F」「30F」「31F」', '平層刻線'],
+  'T-R12-R15-03': ['「A栋 26F」', '「B栋 26F」', '「低负荷通道」'],
+  'T-R17-R18-01': ['側梯踏板', '壓斷'],
+  'T-R17-R18-02': ['「皂盒／毛巾」', '「修理料」'],
+  'T-R29-U4-02': ['「48F」', '平層刻線'],
+  'T-U3-R28-01': ['「41F」', '停車凹位', '止擋'],
+  'R16-V02': ['往上的鋼構坡道'],
+};
+
+test('plates show the route pieces, close-up objects and sign text their specs ask for', () => {
+  const content = new Map([...prompts.matchAll(/```asset\n【素材】場景｜[^｜]+｜(\S+)\n(【內容】[^\n]*)/g)].map(m => [m[1], m[2]]));
+  for (const [id, items] of Object.entries(MUST_SHOW)) for (const item of items) assert.ok(content.get(id)?.includes(item), `${id} shows ${item}`);
+  assert.doesNotMatch(content.get('T-R29-U4-02'), /「47F」/, 'the sign up the shaft is the floor above');
+});
