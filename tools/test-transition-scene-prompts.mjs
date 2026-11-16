@@ -6,8 +6,8 @@ const doc = readFileSync(new URL('../docs/10_製作規格/10-15_製作規格_連
 const start = doc.indexOf('<a id="transition-scene-prompts"></a>');
 const tables = doc.slice(0, start);
 const prompts = doc.slice(start, doc.indexOf('## 製作交接欄位'));
-const STYLE = '【風格】寫實、極致逼真的真人實景攝影質感：真實相機與自然光學，輕微景深與自然底片顆粒；皮膚、布料、金屬、水漬與灰塵都有真實細節。不是遊戲 CG、不是 3D 算圖、不是插畫。';
-const AVOID = '【不要出現】任何人物、手、人影或異變者；清楚可辨識的人臉五官；任何可讀的文字、號碼、標誌、國旗或國名（字留白或模糊，後製再合成）；血腥特寫、裸露；遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質。';
+const STYLE = '【風格】寫實、極致逼真的真人實景攝影質感：普通相機在現場自然光下拍的紀錄片照片，不打燈、不做電影感調色，曝光與白平衡照實；真實相機與自然光學，景深自然，暗處帶一點相機雜訊；皮膚、布料、金屬、水漬與灰塵都有真實細節。不是電影劇照、不是遊戲 CG、不是 3D 算圖、不是插畫。';
+const AVOID = '【不要出現】任何人物、手、人影或異變者；清楚可辨識的人臉五官；任何可讀的文字、號碼、標誌、國旗或國名（字留白或模糊，後製再合成）；血腥特寫、裸露；遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質；電影感的戲劇打光、光束、霧氣效果、刻意調色與暗角。';
 
 test('every static transition image in 10-15 has one scene prompt in the fixed six-part format', () => {
   assert.ok(start > 0, '10-15 keeps a 場景 AI 生成提示詞 section');
@@ -31,6 +31,9 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
     // Each plate closes on its floor band's walled-city ground: wrapped old homes, patchwork eras, life left in place.
     assert.match(lines[1], /層層加建/, id);
     assert.match(lines[2], /^【構圖】16:9 橫幅，第一人稱站立視線高度、約 28mm 人眼視角，/, id);
+    // Plain documentary photos in the light that is really there: no staged mood or cinematic grade.
+    assert.ok(lines[3].startsWith('【光線色調】現場自然光，照實拍：'), id);
+    assert.doesNotMatch(lines[3], /暖黑|深黑陰影|勾邊|勾出|光束|戲劇|電影/, id);
     assert.equal(lines[4], STYLE, id);
     assert.equal(lines[5], AVOID, id);
     // A still plate shows no sound, no people and no player-facing wording.
@@ -42,10 +45,12 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
   assert.deepEqual([...seen].sort(), [...ids].sort());
 });
 
-test('red mist and white silk stay in the three transition plates whose specs call for them', () => {
+test('base plates leave the red mist and white silk to their separate masks', () => {
   const misty = [...prompts.matchAll(/```asset\n【素材】場景｜[^｜]+｜(\S+)\n([\s\S]*?)\n```/g)]
     .filter(m => /紅霧|白絲|蠶絲/.test(m[2].split('\n').slice(0, 3).join(''))).map(m => m[1]);
-  assert.deepEqual(misty, ['T-R7-R8-02', 'T-R11-R12-07', 'T-R12-R14-03']);
+  assert.deepEqual(misty, []);
+  const intro = prompts.slice(0, prompts.indexOf('### A.'));
+  for (const id of ['T-R7-R8-02', 'T-R11-R12-07', 'T-R12-R14-03']) assert.ok(intro.includes(id), `intro names ${id} as a mask plate`);
 });
 
 test('signs left from before the compound keep the 40/10/50 script mix, and each plate shows its assigned script', () => {
