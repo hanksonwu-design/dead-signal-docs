@@ -6,8 +6,10 @@ const doc = readFileSync(new URL('../docs/10_製作規格/10-15_製作規格_連
 const start = doc.indexOf('<a id="transition-scene-prompts"></a>');
 const tables = doc.slice(0, start);
 const prompts = doc.slice(start, doc.indexOf('## 製作交接欄位'));
-const STYLE = '【風格】寫實、極致逼真的真人實景攝影質感：普通相機在現場自然光下拍的紀錄片照片，不打燈、不做電影感調色，白平衡照實；曝光以亮處不過曝為準，燈泡、燈管與透光的縫保留細節，暗面不壓成死黑，看得出牆面、地面與管線的層次；真實相機與自然光學，景深自然，暗處帶一點相機雜訊；皮膚、布料、金屬、水漬與灰塵都有真實細節。不是電影劇照、不是遊戲 CG、不是 3D 算圖、不是插畫。';
-const AVOID = '【不要出現】任何人物、手、人影或異變者；清楚可辨識的人臉五官；任何可讀的文字、號碼、標誌、國旗或國名（字留白或模糊，後製再合成）；血腥特寫、裸露；遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質；電影感的戲劇打光、光束、霧氣效果、刻意調色與暗角；太陽、陽光直射與陽光照出的光斑；過曝死白的亮處、壓成死黑的暗面、所有燈都亮著的室內。';
+const STYLE = '【風格】寫實、極致逼真的真人實景攝影質感：普通相機在現場自然光下拍的紀錄片照片，不打燈、不做電影感調色，白平衡照實；曝光以亮處不過曝為準，燈泡、燈管與透光的縫保留細節，暗面不壓成死黑，看得出牆面、地面與管線的層次；真實相機與自然光學，景深自然，暗處帶一點相機雜訊；皮膚、布料、金屬、水漬與灰塵都有真實細節；招牌、標籤與紙上的字照【內容】引號裡的原文正常顯示，筆畫正確，只帶實際的褪色、髒污與磨損；畫面裡若有盆栽或植物，一律已經枯死乾黃。不是電影劇照、不是遊戲 CG、不是 3D 算圖、不是插畫。';
+const AVOID = '【不要出現】任何人物、手、人影或異變者；清楚可辨識的人臉五官；提示詞沒寫到的文字與號碼、真實的店名與品牌標誌、國旗或國名；模糊、馬賽克或打碼的字；還活著的綠色盆栽與植物；血腥特寫、裸露；遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質；電影感的戲劇打光、光束、霧氣效果、刻意調色與暗角；太陽、陽光直射與陽光照出的光斑；過曝死白的亮處、壓成死黑的暗面、所有燈都亮著的室內。';
+const TRAD_ONLY = /[樓號區門開關電線請進廠貨運單後間費維時熱錶輪價診務經許轉輕庫錢檢應說讓點類辦釋臨禱貿業實體媽願飯湯標別著處閉載產棟換補報廢鑰籃閥負側]/;
+const SIMP_ONLY = /[楼号区门开关电线请进厂货运单后间费维时热轮价诊务经许转轻库钱检应说让点类办释临祷贸业实体妈愿饭汤标别着处闭载产栋换补报废钥篮阀负侧]/;
 
 test('every static transition image in 10-15 has one scene prompt in the fixed six-part format', () => {
   assert.ok(start > 0, '10-15 keeps a 場景 AI 生成提示詞 section');
@@ -47,8 +49,15 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
     // A still plate shows no sound, no people and no player-facing wording.
     assert.doesNotMatch(lines.slice(1, 4).join(''), /玩家|聲|人影|——/, id);
     // Prompts name no real place, and every sign or paper shows which script it carries instead of a blank.
-    assert.doesNotMatch(lines.slice(1, 4).join(''), /九龍|城寨|字留白/, id);
-    for (const clause of lines[1].split(/[。；]/).filter(c => /模糊不可讀|字跡模糊/.test(c))) assert.match(clause, /簡體|繁體|緬甸文|英文|中文/, `${id}: ${clause}`);
+    assert.doesNotMatch(lines.slice(1, 4).join(''), /九龍|城寨|字留白|模糊不可讀|字跡模糊/, id);
+    // Signs show their real words: simplified quotes carry no traditional-only characters and the reverse,
+    // and a clause that names Burmese quotes some Burmese script.
+    for (const clause of lines[1].split(/[。；]/).filter(c => c.includes('「'))) {
+      const quotes = [...clause.matchAll(/「([^」]+)」/g)].map(m => m[1]);
+      if (clause.includes('簡體') && !clause.includes('繁體')) for (const q of quotes) assert.doesNotMatch(q, TRAD_ONLY, `${id}: ${q}`);
+      if (clause.includes('繁體') && !clause.includes('簡體')) for (const q of quotes) assert.doesNotMatch(q, SIMP_ONLY, `${id}: ${q}`);
+      if (clause.includes('緬甸文')) assert.ok(quotes.some(q => /[\u1000-\u109F]/.test(q)), `${id}: Burmese text in ${clause}`);
+    }
   }
   assert.deepEqual([...seen].sort(), [...ids].sort());
 });
