@@ -105,7 +105,17 @@ test('key bridges link to the prompt section of their segment', () => {
     assert(segment.rel.endsWith(file), `${id} lives in ${file}`);
     assert(segment.facts.includes('**重點 ★ '), `${id} shows its key bridge`);
   }
-  assert(segments.filter(s => s.prompt.includes('建議直接以圖層差分製作')).length <= 6, 'only a few layer-only segments');
+  assert(segments.filter(s => s.prompt.includes('建議直接以圖層差分製作')).length <= 10, 'only layer-only segments skip video generation');
+  // Post cues stay free of raw screenplay tags or mechanical leaks, and non-UI segments start on real plates.
+  for (const { id, prompt } of segments) {
+    assert(!/〔環境|（配音演出）|\*\*|移動窗|沿原事件|安全窗時/.test(prompt), `${id}: no raw screenplay tags or rule leaks`);
+  }
+  assert.doesNotMatch(segments.find(s => s.id === 'R11-02a·1').prompt, /首格直接用 R11-D02/);
+  assert.doesNotMatch(segments.find(s => s.id === 'R11-02a·2').prompt, /工作鎖|R11-D02/);
+  assert.doesNotMatch(segments.find(s => s.id === 'R11-02a·3').prompt, /R11-D02/);
+  assert.doesNotMatch(segments.find(s => s.id === 'ACT2-01·1').prompt, /首格直接用 R11-D06/);
+  assert.doesNotMatch(segments.find(s => s.id === 'R20-02·1').prompt, /首格直接用 R20-D01/);
+  assert.doesNotMatch(segments.find(s => s.id === 'R20-04·1').prompt, /首格直接用 R20-D02/);
   // A key bridge with any visible action keeps its prompt even when rules dominate its description.
   assert.match(segments.find(s => s.id === 'R12-02·1').prompt, /^0–1\.5 秒｜主角的手先輸入前三碼/m);
 });

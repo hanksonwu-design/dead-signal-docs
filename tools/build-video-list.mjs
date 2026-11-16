@@ -56,13 +56,21 @@ function parseHeading(line) {
 
 // Sound and subtitle lines that follow a cue belong to it until the next picture, player or operation line.
 const SOUND = /^(?:〔(?:環境|字幕|人聲)[^〕]*〕|（配音演出）|[\p{Script=Han}A-Za-z0-9·]{1,12}（[^）]+）「|主角「)/u;
+const cleanSound = line => plain(line)
+  .replace(/^〔字幕〕\s*/, '字幕：')
+  .replace(/^〔(?:環境|人聲)[^〕]*〕\s*/, '')
+  .replace(/^（配音演出）\s*/, '')
+  .replaceAll('**', '')
+  .replace(/，與布簾回落共同標出後續移動窗/g, '，與布簾一起停靜')
+  .replace(/「〔([^〕]+)〕」/g, '「［$1］」')
+  .trim();
 function soundAfter(lines, i) {
   const found = [];
   for (let j = i + 1; j < lines.length && found.length < 4; j++) {
     const line = lines[j].trim();
     if (!line || /^<a id=/.test(line)) continue;
     if (!SOUND.test(line)) break;
-    found.push(plain(line));
+    found.push(cleanSound(line));
   }
   return found;
 }
@@ -197,7 +205,7 @@ const VISIBLE = [
 const MECHANICS = new RegExp([
   '玩家', '任何(?:輸入|操作)', '一有輸入', '鎖輸入', '提交', '點選', '點回', '交還', '判定', '補救窗', '低動態', '讀檔', '略過', '不算', '回訪',
   '熱點', '條件', '筆記(?:不|只|更新|寫入|補)', '示範', '驗證', '憑證', '路由', '供電', '狀態', '不能', '可重試', '生效', '取消', '覆寫',
-  '已讀', '索引', '證據', '不改', '仍需', '仍待', '可近看', '可查看', '等待', '標出', '方向字幕', '可見標記', '保持可用', '不只靠',
+  '已讀', '索引', '證據', '不改', '仍需', '仍待', '可近看', '可查看', '等待', '標出', '方向字幕', '可見標記', '保持可用', '不只靠', '工作鎖',
   '必要', '倒數', '抹除', '未處理', '演出', '本來就', '可橫穿', '不超過', '總長', '^(?:最長|前後|共)?約?\\s*\\d+(?:\\.\\d+)?\\s*秒$',
   '近看', '收起', '打開完整', '首次進', '至少\\s*\\d', '同一段\\s*\\d', '這\\s*\\d+(?:\\.\\d+)?\\s*秒', '^到\\s*\\d', '開始計', '共同顯示',
   '^那只是', '指定觀察', '^確認\\S{0,2}後$', '^記下', '退格', '^退出後$', '不要求', '保持連續',
@@ -261,8 +269,33 @@ const PALETTE = {
   memory: '記憶色調：柔和低對比的暖褐微光，帶輕微顆粒與四周微暈；不用凝固層的單色冷青，也不加訊號雜訊。',
   dark: '深黑為主，只有畫面裡點名的光源發亮，低飽和。',
 };
-const PROTAGONIST_HAND =/(?:她|自己|主角)(?:的)?(?:雙手|右手|左手|手|指|拇指|指甲|指尖|指節|掌)|前景的(?:右|左)?手|撐地的手|手從視野下緣|她彎身|她用指/;
+const PROTAGONIST_HAND =/(?:她|自己|主角)(?:的)?(?:雙手|右手|左手|手|指|拇指|指甲|指尖|指節|掌)|前景的(?:右|左)?手|撐地的手|手從視野下緣|手壓下|手指離開|手停在柵門|手仍扶著|鬆開的手|剛離開按鍵的手|指尖壓上去|她彎身|她用指/;
 const FIGURE = /輪廓|殘留|人影|縫紉者|老周|阿尋|噤聲者|鏡像者|接待員|成年人|那人|三人|影邊|衣領|肩線|倒影/;
+// Segments that represent a pure switch/idle state diff rather than filmable video motion.
+const LAYER_ONLY = new Set(['P0-03a·2', 'R10-03·1', 'R11-04·1', 'R17-03·1', 'R20-07·1']);
+// Override first-frame selection where cue collection would otherwise pick a flat UI screen over physical action.
+const FIRST_FRAME_OVERRIDE = new Map([
+  ['R11-02a·1', 'R11-V01'],
+  ['R11-02a·2', 'R11-V01'],
+  ['R11-02a·3', 'R11-V01'],
+  ['ACT2-01·1', null],
+  ['R20-02·1', 'R20-V01'],
+  ['R20-04·1', 'R20-V01'],
+]);
+const SOUND_FIXES = [
+  [/^每一聲落下。$/, '遠處重聲每落下一拍，對準反光標轉暗那一拍。'],
+  [/^電流聲一回來。$/, '日光燈電流聲重新接上。'],
+  [/^嗶到哪一格。$/, '讀頭短「嗶」聲沿門框一格一格響過。'],
+  [/^下一聲嗡起來。$/, '低頻嗡聲再次響起。'],
+  [/^聽不出底下還有沒有別的聲音，也沒有別的聲音。$/, '除了水泵與滴水聲，底下沒有別的聲音。'],
+  [/^輕快聲音底下只剩分配與禁令。$/, '輕快的背景宣傳音持續，緊接接待員錄音進場。'],
+  [/^鍵才悶悶地一聲落到底/, '按鍵悶悶地一聲落到底'],
+];
+function normalizeBeatSound(text) {
+  let out = text.replace(/「〔([^〕]+)〕」/g, '「［$1］」');
+  for (const [pattern, replacement] of SOUND_FIXES) out = out.replace(pattern, replacement);
+  return out;
+}
 // Every clip is shot-on-camera realism: no game CG look and no stiff motion.
 const STYLE = '寫實、極致逼真的真人實景拍攝質感：真實攝影機與自然光學，輕微景深、自然底片顆粒與真實曝光；皮膚、布料、金屬、水漬與灰塵都有真實細節。動作自然流暢，有重量與慣性，符合真實人體動作。不是遊戲 CG、不是 3D 算圖、不是插畫。';
 const STYLE_DEVICE = '寫實、極致逼真的真人實拍錄影畫面，再疊上舊螢幕的質感；人物動作自然、不僵硬。不是遊戲 CG、不是 3D 算圖、不是動畫。';
@@ -347,7 +380,8 @@ function shots(cue) {
     if (!framed || (framed.length < 6 && ruled.length)) continue;
     let text = tidy(kept.join('，'));
     const alone = heard.length && ORPHAN(text);
-    const sound = heard.length ? tidy((alone ? order : heard).join('，')).replace(/^[卻也]/, '') + end : '';
+    const rawSound = heard.length ? tidy((alone ? order : heard).join('，')).replace(/^[卻也]/, '') + end : '';
+    const sound = rawSound ? normalizeBeatSound(rawSound) : '';
     if (alone) text = '';
     visual += text.length + sound.length;
     if (!text) { if (sound) hear(last(), sound, last().text.length, framed.length >= 12 ? 1 : 0); continue; }
@@ -366,8 +400,8 @@ function shots(cue) {
     beats.splice(best, 2, join(beats[best], beats[best + 1]));
   }
   const loose = carry.text ? [] : carry.sound;
-  // Mostly rules and state: better made as layer differences than generated as video.
-  if (visual < total * 0.3 && !cue.key) loose.push(...beats.splice(0).flatMap(beat => beat.sound));
+  // Mostly rules and state, or pure light-off/pose-return switches: better made as layer differences than video.
+  if ((visual < total * 0.3 && !cue.key) || LAYER_ONLY.has(cue.id)) loose.push(...beats.splice(0).flatMap(beat => beat.sound));
   return { beats, framing, loose, captions, slots: Math.min(5, beats.length + holds) };
 }
 
@@ -470,16 +504,31 @@ function directionNotes(cues, pictures) {
   return notes;
 }
 
+const FOCUS_TARGET = [
+  [/按鍵|鍵帽/, '按鍵'],
+  [/門框|門扣|連桿|插銷|扣件|鎖舌|柵門/, '門框與扣件'],
+  [/水紋|積水|水滴|油膜/, '水面細紋'],
+  [/布簾|擴音器|振膜/, '布簾與擴音器'],
+  [/衣領|汗漬|肩線/, '空衣領與肩線'],
+  [/耳機|控制台/, '耳機與控制台'],
+  [/螢幕|電視/, '螢幕畫面'],
+  [/玻璃/, '玻璃表面'],
+  [/紙條|照片|申請|處置單|清單|筆記/, '紙頁'],
+  [/椅|床單|地板|踏面/, '椅面與地面'],
+];
+const frameImage = cue => (FIRST_FRAME_OVERRIDE.has(cue.id) ? FIRST_FRAME_OVERRIDE.get(cue.id) : cue.images[0]);
+
 // Where the default camera holds focus: her hand and what it touches, a figure, or the part that changes.
 // A registered prop is named only when the script names it too.
 function focusOf(cue, device) {
   const prop = cue.assets?.props.map(p => p.name.replace(/（[^）]*）$/, '')).find(name => cue.description.includes(name));
-  if (device) return FIGURE.test(cue.description) || /嘴|肩膀|手/.test(cue.description) ? '焦點在片中人物的嘴、肩膀與手' : '焦點在分鏡點名的物件與畫面變化';
-  const hand = PROTAGONIST_HAND.test(cue.description) && `焦點先在她的手，手碰到的${prop || '物件'}跟著收清`;
+  const named = prop || FOCUS_TARGET.find(([pattern]) => pattern.test(cue.description))?.[1];
+  if (device) return FIGURE.test(cue.description) || /嘴|肩膀|手/.test(cue.description) ? '焦點在片中人物的嘴、肩膀與手' : `焦點在${named || '分鏡點名的物件與畫面變化'}`;
+  const hand = PROTAGONIST_HAND.test(cue.description) && `焦點先在她的手，手碰到的${named || '物件'}跟著收清`;
   const figure = FIGURE.test(cue.description) && '焦點在分鏡點名的人物、倒影或異變者，前景與背景略微失焦';
   // In her own action the hand leads; elsewhere what moves against her does.
   if (hand || figure) return cue.type === '第一人稱動作回饋' ? hand || figure : figure || hand;
-  return prop ? `焦點落在${prop}與分鏡點名會變化的局部` : '焦點落在分鏡點名會變化的局部';
+  return named ? `焦點落在${named}` : '焦點落在分鏡點名會變化的局部';
 }
 // The light of a rule-built segment: which of the first frame's sources change, if any.
 function lightOf(beats) {
@@ -503,18 +552,21 @@ function prompt(cue, previous, pictures, note) {
   const total = memory ? 5 : length.value;
   const beats = fit(spread(shot.beats, total), total);
   const at = marks(beats, total);
-  const image = cue.images[0];
+  const image = frameImage(cue);
   const picture = image && pictures.get(image);
   const draw = picture && picture.draw.split(/[。；]/)[0].trim();
   const frame = picture ? `${image}（${picture.use}：${draw.length > 60 ? draw.slice(0, 60).replace(/[，、；\s]*$/, '') + '…' : draw}）` : '';
   const moving = !device && !memory && cue.type !== '第一人稱過場' && MOVING.test(cue.description);
-  const continued = previous && previous.code === cue.code && previous.images[0] === image && !memory && previous.type !== '主觀記憶動畫';
+  const prevImage = previous && frameImage(previous);
+  const continued = previous && previous.code === cue.code && prevImage === image && !memory && previous.type !== '主觀記憶動畫';
   const lines = [];
   lines.push(`【影片】${cue.id}｜${cue.type}｜${cue.act.name} ${cue.code} ${cue.title}`);
   if (memory) {
     lines.push(`【生成方式】先依分鏡第一格生成一張寫實實拍的記憶首格${image ? `（併入 ${image} 素材項的記憶分層）` : ''}，再用圖生影片。`);
   } else if (device) {
     lines.push(`【生成方式】圖生影片：首格是${image ? ` ${image} ` : '設備'}螢幕裡播放的畫面，做成真人實拍的錄影畫面，不含設備外框。`);
+  } else if (FIRST_FRAME_OVERRIDE.has(cue.id) && image === null) {
+    lines.push('【生成方式】圖生影片：首格依「她的舊布面筆記本」與封底「那張照片」資產定稿合成寫實近看（背景為 R11 座位弱光虛化，不出現調查板介面），構圖、光線與物件造型保持不變，只加入下列動作。');
   } else if (moving) {
     lines.push(`【生成方式】首尾格生影片：終點停在 ${frame || `${cue.code} 本場次主圖`} 的視點與構圖；起點依分鏡第一格另做一張寫實實拍的首格。構圖、光源與物件位置照定稿。`);
   } else if (continued) {
@@ -549,14 +601,31 @@ function prompt(cue, previous, pictures, note) {
     lines.push(`【人物】她的手與前臂可入鏡，衣袖素色、無圖案。另一個人只以米色、過長、蓋到指節的袖口辨認；構圖只到${crop}，看不見任何人的臉。`);
     lines.push(`【光線色調】${note ? note.light : ''}記憶色調：柔和低對比的暖褐微光，帶輕微顆粒與四周微暈，像隔著一層舊塑膠片看；不用凝固層的單色冷青，也不加訊號雜訊。光源只用分鏡裡原有的。`);
   } else {
+    const peopleNames = cue.assets?.people.map(p => p.name) || [];
+    const hasVideoAction = Boolean(beats.length || note);
+    const hasHand = hasVideoAction && !device && (peopleNames.includes('她・現在（第一人稱的手）') || PROTAGONIST_HAND.test(cue.description));
+    const hasLegs = hasVideoAction && !device && !hasHand && peopleNames.includes('她・現在（低頭看見的腿與鞋）');
+    const hasReflect = hasVideoAction && !device && peopleNames.includes('她・反光裡（含鏡像者）');
+    const hasFigure = hasVideoAction && (FIGURE.test(cue.description)
+      || peopleNames.some(n => !['她・現在（第一人稱的手）', '她・現在（低頭看見的腿與鞋）', '她・反光裡（含鏡像者）', '灰蛾'].includes(n)));
     const hands = [];
-    if (!device && PROTAGONIST_HAND.test(cue.description)) hands.push('她的手只露出手與白襯衫袖口，手背乾裂、有擦傷，從畫面下緣入鏡；五指比例正確。');
-    if (FIGURE.test(cue.description)) hands.push(device ? '片中人物的臉要被裁切、壓縮或模糊，只看得清嘴形、肩膀與手；不做清晰肖像。' : '人物與異變者照首格的造型與位置，臉不給清楚五官（無臉、背光或被遮住），動作緩慢但連貫自然。');
+    if (hasHand) hands.push('她的手只露出手與白襯衫袖口，手背乾裂、有擦傷，從畫面下緣入鏡；五指比例正確。');
+    if (hasLegs) hands.push('只從第一人稱低頭視線拍到破牛仔褲膝部（左膝纏著舊布）、小腿與髒白休閒鞋，不出現上半身或臉。');
+    if (hasFigure) hands.push(device ? '片中人物的臉要被裁切、壓縮或模糊，只看得清嘴形、肩膀與手；不做清晰肖像。' : '人物與異變者照首格的造型與位置，臉不給清楚五官（無臉、背光或被遮住），動作緩慢但連貫自然。');
+    else if (hasReflect) hands.push('反光中的人影照首格的造型與位置，亮度壓低、臉被反光吃掉，不給清楚五官。');
     if (hands.length) lines.push(`【人物】${hands.join('')}`);
-    const palette = device ? PALETTE.device
-      : cue.type === '第一人稱過場' ? (note ? '' : '照首格與分鏡：深黑為主，只有分鏡點名的光源發亮，低飽和。')
-      : /^R1-/.test(cue.code) ? PALETTE.lobby : PALETTE.now;
-    lines.push(`【光線色調】${note ? note.light : ''}${palette}${note ? '' : lightOf(beats)}`);
+    if (note) {
+      const tone = device ? (note.light.includes('舊螢幕') ? '' : PALETTE.device)
+        : cue.type === '第一人稱過場' ? ''
+        : /^R1-/.test(cue.code) ? (note.light.includes('恐怖暗角') ? '' : '整體維持大廳廉價暖白日光燈色調，不加恐怖暗角、不偏冷青。')
+        : (note.light.includes('暖黑') ? '' : '整體色調沿用低飽和潮濕暖黑。');
+      lines.push(`【光線色調】${note.light}${tone}`);
+    } else {
+      const palette = device ? PALETTE.device
+        : cue.type === '第一人稱過場' ? '照首格與分鏡：深黑為主，只有分鏡點名的光源發亮，低飽和。'
+        : /^R1-/.test(cue.code) ? PALETTE.lobby : PALETTE.now;
+      lines.push(`【光線色調】${palette}${lightOf(beats)}`);
+    }
   }
   lines.push(`【影片風格】${device ? STYLE_DEVICE : STYLE}`);
   const texts = [...new Set(beats.map(beat => beat.text).join('').match(/「[^」]+」/g) || [])];
@@ -570,11 +639,14 @@ function prompt(cue, previous, pictures, note) {
   ];
   // A direction note times every sound and composited text to the beat it lands on.
   // A cell that names its own moment (「2.3 秒：…」) keeps it; otherwise the cue spans its row.
-  const timed = note ? note.rows.filter(row => row.sound).map(row => /^\d+(?:\.\d+)? 秒：/.test(row.sound) ? `・${row.sound}` : `・${fmt(row.from)}–${fmt(row.to)} 秒：${row.sound}`) : [];
-  if (texts.length || (note ? script.length || shot.captions || timed.length : heard.length)) {
+  const timed = note ? note.rows.filter(row => row.sound).map(row => {
+    const soundText = row.sound.replace(/「〔([^〕]+)〕」/g, '「［$1］」');
+    return /^\d+(?:\.\d+)? 秒：/.test(soundText) ? `・${soundText}` : `・${fmt(row.from)}–${fmt(row.to)} 秒：${soundText}`;
+  }) : [];
+  if (texts.length || (note ? timed.length : heard.length)) {
     lines.push('【後製（不進 AI 生成）】');
     if (texts.length) lines.push(`畫面文字：${texts.join('、')}`);
-    if (note || heard.length) lines.push('聲音與後製對點：', ...(note ? timed : heard));
+    if (note ? timed.length : heard.length) lines.push('聲音與後製對點：', ...(note ? timed : heard));
   }
   const negative = [...NEGATIVE];
   if (!device) negative.splice(3, 0, '第三人稱或看見主角全身', cue.type === '第一人稱過場' || camera.includes('視點只照') ? '鏡頭晃動或突然換景' : '鏡頭晃動、推移或換景');
@@ -691,11 +763,12 @@ function scenery(text, kept = '') {
 }
 // A transition scene is its own place; any other picture belongs to the main picture of its room.
 function placeOf(cue) {
-  const image = cue.images[0];
+  const overridden = frameImage(cue);
+  const image = overridden || cue.images[0];
   const scene = image?.match(/^T-[A-Z]\d+b?-[A-Z]\d+b?-\d{2}/)?.[0];
   if (scene) return { code: scene, base: pictures.has(scene) ? scene : image, focus: image };
   const room = image ? image.match(/^([PRU]\d+b?)-/)[1] : cue.room;
-  return room && { code: room, base: `${room}-V01`, focus: image || `${room}-V01` };
+  return room && { code: room, base: `${room}-V01`, focus: FIRST_FRAME_OVERRIDE.has(cue.id) && !overridden ? `${room}-V01` : (image || `${room}-V01`) };
 }
 function assetPalette(cue) {
   if (cue.type === '主觀記憶動畫') return PALETTE.memory;
@@ -807,7 +880,10 @@ function actList(act) {
     out.push(`<a id="${anchorOf(cue.id)}"></a>`, '', `### ${cue.id}　${shortType(cue.type)}（${cue.level}）`, '');
     out.push(`- **重要級別：**${levelTag(cue.level)}　${cue.reason}`);
     const facts = [`**類型：**${typeTag(cue.type)}`];
-    facts.push(`**畫面：**${cue.images.length ? cue.images.map(id => `\`${id}\``).join('、') : '本場次主圖'}`);
+    const displayFrame = FIRST_FRAME_OVERRIDE.has(cue.id)
+      ? (FIRST_FRAME_OVERRIDE.get(cue.id) ? `\`${FIRST_FRAME_OVERRIDE.get(cue.id)}\`` : '舊布面筆記本／那張照片（資產合成近看）')
+      : (cue.images.length ? cue.images.map(id => `\`${id}\``).join('、') : '本場次主圖');
+    facts.push(`**畫面：**${displayFrame}`);
     facts.push(`**剪用：**${cue.type === '主觀記憶動畫' ? '約 3–6 秒' : `約 ${fmt(built.length.value)} 秒`}`);
     out.push(`- ${facts.join('　')}`);
     out.push(`- **劇本：**[${cue.code} ${cue.title}](../${act.path}#${cue.anchor})${cue.sub ? `｜${cue.sub}` : ''}`);
