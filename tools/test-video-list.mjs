@@ -64,7 +64,9 @@ test('prompts describe what is seen, not player rules, and keep the faceless art
     assert(prompt.includes('遊戲 CG 感') && prompt.includes('動作僵硬'), `${id}: no game CG look or stiff motion`);
     if (type === '主觀記憶動畫') {
       assert(prompt.includes('不用凝固層的單色冷青'), `${id}: memory palette differs from the frozen layer`);
-      assert(prompt.includes('米色、過長') && prompt.includes('看不見任何人的臉'), `${id}: the other person is only a sleeve`);
+      assert(prompt.includes('看不見任何人的臉'), `${id}: faces stay out of memory shots`);
+      if (id === 'R1-01·3') assert(!prompt.includes('米色'), `${id}: arrival van leaves the other hand without a beige cuff`);
+      else assert(prompt.includes('米色、過長'), `${id}: the other person is only a sleeve`);
       assert(!prompt.includes('白襯衫'), `${id}: memories predate the escape shirt`);
     }
     if (type === '設備內影片') assert(prompt.includes('不含設備外框'), `${id}: device video is screen content`);
@@ -210,17 +212,28 @@ test('every segment lists its people, scene and props, each as a reference-image
         for (const word of banned) assert(!block.includes(word), `${id}: ${word}`);
         assert(block.includes('清楚可辨識的人臉五官') && block.includes('【風格】寫實、極致逼真的真人實景攝影質感'), `${id}: realism and unreadable faces`);
         assert(!/[A-Z]\d+b?-[VCD]\d{2}[^（]*（[^）]*）：\s*\n/.test(block), `${id}: no empty scene layer`);
-        if (block.startsWith('【素材】場景')) assert(block.includes('任何人物、手、人影或異變者') && block.includes('【光線色調】'), `${id}: scene plates are empty and lit`);
+        if (block.startsWith('【素材】場景')) {
+          assert(block.includes('任何人物、手、人影或異變者') && block.includes('【光線色調】'), `${id}: scene plates are empty and lit`);
+          const content = block.slice(block.indexOf('【內容】'), block.indexOf('【構圖】'));
+          assert(!/坐在桌後的人|每個人都穿著衣服|告示可讀|「[^」]+」/.test(content), `${id}: empty scene avoids figures or quoted text`);
+          assert(!/(?:[AB]\s*棟(?:\s*\d+F)?|\d+F|F\d+)\s*(?:門牌|字牌|棟別牌|樓層牌|停靠牌|標記|刻痕)/.test(content), `${id}: signage codes stay blanked`);
+        }
         const name = block.match(/^【素材】\S+?｜(.+)｜/)[1];
         used.set(name, (used.get(name) || 0) + 1);
       }
       const people = names(summary[1]);
       if (type === '主觀記憶動畫') {
-        assert(people.includes('她・記憶裡') && people.includes('小花・記憶裡（米色袖口）'), `${id}: memories show her and the beige sleeve`);
+        const expectedHer = id === 'R1-01·3' ? '她・記憶裡（入園前）'
+          : id === 'P1-01·2' ? '她・記憶裡（上鋪包紮）'
+          : id === 'R13-03·4' ? '她・記憶裡（主管期）'
+          : '她・記憶裡（園區前期）';
+        const expectedOther = id === 'R1-01·3' ? '車上鄰座的手（R1 記憶）' : '小花・記憶裡（米色袖口）';
+        assert.deepEqual(people, [expectedHer, expectedOther], `${id}: memory people match timeline and visibility`);
         assert(summary[2].includes(`](${file}#`), `${id}: memory scenes are hand-written`);
         assert(!blocks.join('').includes('白襯衫的袖口有'), `${id}: memories predate the escape shirt`);
+        if (id !== 'P1-01·2') assert(!blocks[0].includes('還沒結痂'), `${id}: P1 wrist wound stays in P1`);
       } else {
-        assert(!people.some(n => n.includes('記憶裡')), `${id}: memory people stay in memories`);
+        assert(!people.some(n => n.includes('記憶')), `${id}: memory people stay in memories`);
       }
       if (type === '設備內影片') assert(summary[2].includes(`](${file}#`), `${id}: device videos have a hand-written screen scene`);
     }

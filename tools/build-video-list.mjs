@@ -598,7 +598,15 @@ function prompt(cue, previous, pictures, note) {
   if (framing.length && !memory) lines.push(`【構圖限制】${framing.join('')}`);
   if (memory) {
     const crop = cue.description.match(/畫面只到([^，。；]+)/)?.[1] || '肩膀以下';
-    lines.push(`【人物】她的手與前臂可入鏡，衣袖素色、無圖案。另一個人只以米色、過長、蓋到指節的袖口辨認；構圖只到${crop}，看不見任何人的臉。`);
+    const herMemory = cue.id === 'R1-01·3'
+      ? '她的手與前臂可入鏡，穿墨綠短外套、袖口素色無圖案，腕上戴著窄面黑色數位錶'
+      : cue.id === 'R13-03·4'
+        ? '她的手與前臂可入鏡，穿合身的深低飽和素色長袖，腕上戴著窄面黑色數位錶'
+        : '她的手與前臂可入鏡，衣袖素色、無圖案';
+    const otherMemory = cue.id === 'R1-01·3'
+      ? '另一個人只看得出壓在表上的手與不明顯的暗色袖邊，不帶可辨識特徵'
+      : '另一個人只以米色、過長、蓋到指節的袖口辨認';
+    lines.push(`【人物】${herMemory}。${otherMemory}；構圖只到${crop}，看不見任何人的臉。`);
     lines.push(`【光線色調】${note ? note.light : ''}記憶色調：柔和低對比的暖褐微光，帶輕微顆粒與四周微暈，像隔著一層舊塑膠片看；不用凝固層的單色冷青，也不加訊號雜訊。光源只用分鏡裡原有的。`);
   } else {
     const peopleNames = cue.assets?.people.map(p => p.name) || [];
@@ -750,9 +758,21 @@ const ENV_RULE = new RegExp([
   '熱點', '不變成', '不新增', '共用資產', '才露出', '穿越',
 ].join('|'));
 const CODE = /\b[A-Z]{1,3}\d?(?:-[A-Z]?\d+)+\b\s*/g;
+// Empty-plate scene descriptions drop literal quoted text and plaque codes so AI image tools leave signage blank for compositing.
+function blankSignage(text) {
+  return text
+    .replace(/可讀\s*：\s*「[^」]+」/g, '（字留白）')
+    .replace(/：\s*「[^」]+」/g, '（字留白）')
+    .replace(/「[^」]+」\s*(燈箱|舊牌|舊字)/g, '$1（字留白）')
+    .replace(/「[^」]+」\s*鐵盒/g, '鐵盒（標籤字留白）')
+    .replace(/(寫著|留著|牆上)\s*「[^」]+」(舊字)?/g, (_, verb, noun) => (verb === '牆上' ? '牆上標語' : `${verb}${noun || '指示字'}`) + '（字留白）')
+    .replace(/「[^」]+」/g, '（字留白）')
+    .replace(/(?:(?<=[\u4e00-\u9fff])\s+)?(?:[AB]\s*棟\s*\d+F|\d+F|[AB]\s*棟|F\d+)\s*(門牌|字牌|棟別牌|樓層牌|停靠牌|標記|刻痕)/g, '$1（字碼留白）')
+    .replace(/標著\s*\d+F\s*必停/g, '設有停靠標示（字碼留白）');
+}
 function scenery(text, kept = '') {
   const out = [];
-  const cleaned = tidy(text || '').replace(CODE, '').replace(/\s+[、–～\s]*(?=[。，；]|$)/g, '').replace(/、(?=及|與|和)/g, '');
+  const cleaned = blankSignage(tidy(text || '').replace(CODE, '').replace(/\s+[、–～\s]*(?=[。，；]|$)/g, '').replace(/、(?=及|與|和)/g, ''));
   for (const raw of sentences(cleaned)) {
     const clauses = raw.replace(/[。；！？]$/, '').split('，')
       .filter(c => c.trim().length > 1 && !ENV_RULE.test(c) && !PERSON.test(c));
@@ -798,7 +818,7 @@ function sceneAsset(cue, entry) {
   };
   const close = place.focus !== place.base;
   const name = `${place.code} ${TITLES.get(place.code) || pictures.get(place.base).use}`;
-  const content = [`【內容】寫實實景的空景，不含任何人物與手。`, `空間：${layer(place.base)}`];
+  const content = ['【內容】寫實實景的空景，不含任何人物與手；畫面中所有牌面、告示、標籤與紙件上的文字、數字一律留白或模糊。', `空間：${layer(place.base)}`];
   if (close) content.push(`本段畫面：${layer(place.focus)}`);
   const frame = close
     ? '空景參考兩張：一張照「空間」的全景，第一人稱站立視線高度、約 28mm 人眼視角、平視、地平線水平；一張照「本段畫面」的近看構圖，與本段首格一致。都不含人物、手與人影。'
