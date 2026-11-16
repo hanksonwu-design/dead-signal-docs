@@ -174,7 +174,7 @@ test('all three former floor skips now have one playable node on every intermedi
   assert(route('R3','R5').back && route('R6','R7').back);
   assert(!route('R5','R6').back && !route('R11','R12').back && !route('R17','R18').back);
   const access = id => flow.nodes.find(n=>n.id===id).access.map(a=>a.location+a.state).join('\n');
-  assert.match(access('R3'), /3F 晒衣排水台/);
+  assert.match(access('R3'), /3F 曬衣排水台/);
   assert.match(access('R11'), /16F–22F 每層探路/);
   assert.match(access('R17'), /31F.*30F.*29F.*28F.*(?:探路|下行)/);
   for(const id of ['R3','R11'])assert(!/可直接進 R5|三段服務梯/.test(access(id)));

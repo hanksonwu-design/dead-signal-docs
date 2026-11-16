@@ -7,7 +7,7 @@ const start = doc.indexOf('<a id="transition-scene-prompts"></a>');
 const tables = doc.slice(0, start);
 const prompts = doc.slice(start, doc.indexOf('## 製作交接欄位'));
 const STYLE = '【風格】寫實、極致逼真的真人實景攝影質感：普通相機在現場自然光下拍的紀錄片照片，不打燈、不做電影感調色，白平衡照實；曝光以亮處不過曝為準，燈泡、燈管與透光的縫保留細節，暗面不壓成死黑，看得出牆面、地面與管線的層次；真實相機與自然光學，景深自然，暗處帶一點相機雜訊；皮膚、布料、金屬、水漬與灰塵都有真實細節。不是電影劇照、不是遊戲 CG、不是 3D 算圖、不是插畫。';
-const AVOID = '【不要出現】任何人物、手、人影或異變者；清楚可辨識的人臉五官；任何可讀的文字、號碼、標誌、國旗或國名（字留白或模糊，後製再合成）；血腥特寫、裸露；遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質；電影感的戲劇打光、光束、霧氣效果、刻意調色與暗角；過曝死白的亮處、壓成死黑的暗面、所有燈都亮著的室內。';
+const AVOID = '【不要出現】任何人物、手、人影或異變者；清楚可辨識的人臉五官；任何可讀的文字、號碼、標誌、國旗或國名（字留白或模糊，後製再合成）；血腥特寫、裸露；遊戲 CG 感、3D 算圖感、插畫、動漫或卡通畫風、塑膠般光滑的皮膚與材質；電影感的戲劇打光、光束、霧氣效果、刻意調色與暗角；太陽、陽光直射與陽光照出的光斑；過曝死白的亮處、壓成死黑的暗面、所有燈都亮著的室內。';
 
 test('every static transition image in 10-15 has one scene prompt in the fixed six-part format', () => {
   assert.ok(start > 0, '10-15 keeps a 場景 AI 生成提示詞 section');
@@ -38,6 +38,8 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
     assert.match(lines[3], /不亮|只亮|只剩|燈座|熄|隔一/, `${id}: lamps partly on`);
     assert.match(lines[3], /仍(看得出|看得清|分得出)/, `${id}: shadow detail`);
     assert.doesNotMatch(lines.slice(1, 4).join(''), /深黑|死黑|漆黑|偏暗|均勻的暖白/, id);
+    // Overcast skylight only: no sun, no cloud gaps, no sunlit patches, and no 日光 that reads as sunlight.
+    assert.doesNotMatch(lines.slice(0, 4).join(''), /陽光|太陽|晴|雲|直射|日光(?!燈)|晒/, id);
     assert.equal(lines[4], STYLE, id);
     assert.equal(lines[5], AVOID, id);
     // A still plate shows no sound, no people and no player-facing wording.
@@ -61,8 +63,8 @@ test('daylight changes from route to route, and the windowless plates use only t
   const lights = [...prompts.matchAll(/^【光線色調】(.*)$/gm)].map(m => m[1]);
   assert.equal(lights.length, 72);
   assert.equal(new Set(lights).size, 72, 'every plate has its own light');
-  for (const kind of ['陰天', '細雨', '雨剛停', '陽光', '浪板', '帆布', '高窗']) assert.ok(lights.some(l => l.includes(kind)), kind);
-  assert.equal(lights.filter(l => l.includes('這裡照不到日光')).length, 31);
+  for (const kind of ['陰天', '細雨', '雨剛停', '雨停', '浪板', '帆布', '白磁磚井壁', '高窗']) assert.ok(lights.some(l => l.includes(kind)), kind);
+  assert.equal(lights.filter(l => l.includes('這裡沒有任何透光的縫')).length, 31);
   assert.ok(prompts.includes('<a id="tsp-light"></a>'), '10-15 keeps a 光線的分配 section');
 });
 
