@@ -155,7 +155,8 @@ test('every static screenplay cue names its shot size without changing protected
   // Act 2 adds the close-up of the pencil line on the photo's back.
   // Act 4 splits the upper ending into the notebook's escape page, then the photo.
   // The R3 paper-flower and R13 medicine-bag memories become subjective memory animations (acts 1 and 3).
-  const counts = [23, 63, 92, 102, 50, 33, 19, 27, 10, 20];
+  // Finale ending D adds one cold P1 maintenance-camera still beside the merged warm cocoon frame.
+  const counts = [23, 63, 92, 102, 50, 33, 19, 27, 10, 21];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -220,8 +221,9 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // and the two knocks behind the R18 entry door.
   // Subjective memory animations add the P1 knot tap and memory sound, the R1 intake-form truck sound,
   // the R2 tracing and R4 muffled-laugh sounds, and the R12 parts-box screw sound.
+  // Finale R32-09 adds one localized wing-strain pause cue before Xiao Hua's written-request follow-up.
   const counts = [[24, 25, 9], [79, 38, 20], [114, 49, 10], [151, 31, 9],
-    [63, 24, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 12, 3]];
+    [63, 24, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 13, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
