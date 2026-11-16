@@ -35,6 +35,9 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
     assert.equal(lines[5], AVOID, id);
     // A still plate shows no sound, no people and no player-facing wording.
     assert.doesNotMatch(lines.slice(1, 4).join(''), /玩家|聲|人影|——/, id);
+    // Prompts name no real place, and every sign or paper shows which script it carries instead of a blank.
+    assert.doesNotMatch(lines.slice(1, 4).join(''), /九龍|城寨|字留白/, id);
+    for (const clause of lines[1].split(/[。；]/).filter(c => /模糊不可讀|字跡模糊/.test(c))) assert.match(clause, /簡體|繁體|緬甸文|英文|中文/, `${id}: ${clause}`);
   }
   assert.deepEqual([...seen].sort(), [...ids].sort());
 });
@@ -43,4 +46,20 @@ test('red mist and white silk stay in the three transition plates whose specs ca
   const misty = [...prompts.matchAll(/```asset\n【素材】場景｜[^｜]+｜(\S+)\n([\s\S]*?)\n```/g)]
     .filter(m => /紅霧|白絲|蠶絲/.test(m[2].split('\n').slice(0, 3).join(''))).map(m => m[1]);
   assert.deepEqual(misty, ['T-R7-R8-02', 'T-R11-R12-07', 'T-R12-R14-03']);
+});
+
+test('signs left from before the compound keep the 40/10/50 script mix, and each plate shows its assigned script', () => {
+  const at = prompts.indexOf('<a id="tsp-scripts"></a>');
+  assert.ok(at > 0, '10-15 keeps a 招牌與文件的文字 section');
+  const section = prompts.slice(at, prompts.indexOf('### A.', at));
+  const rows = [...section.matchAll(/^\| \[`(\S+)`\]\(#tsp-[^)]+\) \| ([^|]+) \| ([^|]+) \|$/gm)].map(m => [m[1], m[2].trim(), m[3].trim()]);
+  assert.ok(rows.length >= 20, 'enough signs to hold a ratio');
+  const content = new Map([...prompts.matchAll(/```asset\n【素材】場景｜[^｜]+｜(\S+)\n(【內容】[^\n]*)/g)].map(m => [m[1], m[2]]));
+  for (const [id, what, script] of rows) {
+    assert.ok(['簡體中文', '繁體中文', '緬甸文', '英文', '緬甸文與英文並列'].includes(script), `${id} ${what}: ${script}`);
+    assert.ok(content.get(id)?.includes(script), `${id} ${what} shows ${script}`);
+  }
+  const share = s => rows.filter(r => r[2] === s).length / rows.length;
+  assert.ok(Math.abs(share('簡體中文') - 0.4) <= 0.05, 'about 40% simplified Chinese');
+  assert.ok(Math.abs(share('繁體中文') - 0.1) <= 0.05, 'about 10% traditional Chinese');
 });
