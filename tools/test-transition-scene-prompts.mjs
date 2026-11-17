@@ -139,27 +139,59 @@ test('plates on the 8F–14F, 21F–27F and 33F–40F bands show the quake damag
 
 // Route pieces, close-up objects and sign text the act specs and scripts ask each plate to show (checked against the v2 images).
 const MUST_SHOW = {
-  'T-R2-R3-01': ['「收碗留後門」'],
-  'T-R3-R5-01': ['半截鋼梯'],
+  'T-R2-R3-01': ['「收碗留後門」', '排水溝'],
+  'T-R3-R5-01': ['半截鋼梯', '鬆脫'],
+  'T-R3-R5-02': ['讀頭', '插銷', '滑槽'],
+  'T-R3-R5-03': ['讀頭', '斷頭平台'],
+  'T-R3-R5-04': ['讀頭', '鐵窗格前', '半扇高的小門'],
+  'T-R3-R5-05': ['夾扣', '原掛鉤', '「8F」'],
   'T-R5-R6-01': ['濾籃', '溢流刻線', '旁通管的閥柄'],
-  'T-R6-R7-02': ['只剩第一階', '空衣架', '固定鐵梯往上'],
+  'T-R5-R6-02': ['梯段門', '門縫底下', '短鐵鏈'],
+  'T-R6-R7-01': ['門閂', '漏水'],
+  'T-R6-R7-02': ['只剩第一階', '空衣架', '固定鐵梯往上', '刷卡小盒', '舊床單'],
+  'T-R6-R7-03': ['刷卡小盒'],
   'T-R7-R8-01': ['「A栋 15F」', '「B栋 15F」'],
-  'T-R11-R12-01': ['完整的鐵踏板'],
-  'T-R11-R12-02': ['塔腳', '短梯'],
+  'T-R11-R12-01': ['完整的鐵踏板', '鈴式電話盒', '地漏', '水膜'],
+  'T-R11-R12-02': ['塔腳', '短梯', '水位刻線', '木片'],
+  'T-R11-R12-06': ['空著的鉤座', '22F 梯口'],
   'T-R12-R14-01': ['防塵片', '爬架'],
+  'T-R12-R14-02': ['牽引纜'],
+  'T-R12-R14-03': ['刻線區', '集水溝', '止滑條'],
   'T-R13-R14-03': ['「A栋 26F」', '「B栋 26F」'],
-  'T-R13-R15-03': ['「A栋 26F」', '「B栋 26F」'],
-  'T-R15-R16-02': ['三站示意', '「29F」「30F」「31F」', '平層刻線'],
-  'T-R12-R15-03': ['「A栋 26F」', '「B栋 26F」', '「低负荷通道」'],
-  'T-R17-R18-01': ['側梯踏板', '壓斷'],
-  'T-R17-R18-02': ['「皂盒／毛巾」', '「修理料」'],
-  'T-R29-U4-02': ['「48F」', '平層刻線'],
+  'T-R13-R15-01': ['回路', '小指示燈', '薄薄的水'],
+  'T-R13-R15-02': ['回路', '小指示燈', '薄薄的水'],
+  'T-R13-R15-03': ['「A栋 26F」', '「B栋 26F」', '小指示燈', '薄薄的水'],
+  'T-R15-R16-02': ['三站示意', '「29F」「30F」「31F」', '平層刻線', '滑軌槽裡積著一層薄薄的水'],
+  'T-R15-R16-03': ['平層刻線'],
+  'T-R15-R16-05': ['停靠刻線'],
+  'T-R15-R16-06': ['「B栋 31F」', '平層刻線'],
+  'T-R12-R15-01': ['回路', '小指示燈', '薄薄的水'],
+  'T-R12-R15-02': ['回路', '小指示燈', '薄薄的水'],
+  'T-R12-R15-03': ['「A栋 26F」', '「B栋 26F」', '「低负荷通道」', '小指示燈', '薄薄的水'],
+  'T-R17-R14-01': ['扣住', '舊物流標籤'],
+  'T-R17-R18-01': ['側梯踏板', '壓斷', '扣住'],
+  'T-R17-R18-02': ['「皂盒／毛巾」', '「修理料」', '原掛鉤'],
+  'T-R17-R18-03': ['薄薄的水', '鎖銷', '短梯梯口'],
+  'T-R17-R18-04': ['止擋', '維修步道'],
+  'T-R20-R21-01': ['「轮值用」'],
+  'T-R24-R25-01': ['收碗槽原本的支承槽', '瀝水板'],
+  'T-R29-U4-02': ['「48F」', '平層刻線', '到站燈'],
   'T-U3-R28-01': ['「41F」', '停車凹位', '止擋'],
+  'T-U5-U6-01': ['「48F」'],
+  'P2-V02': ['SELF-CLOSING', '反光標', '積著一小灘水'],
+  'R14-V02': ['貨梯合上的'],
   'R16-V02': ['往上的鋼構坡道'],
+  'R19-V02': ['水痕', '實心的鐵擋板'],
+  'U3-V02': ['門閂'],
 };
 
 test('plates show the route pieces, close-up objects and sign text their specs ask for', () => {
   const content = new Map([...prompts.matchAll(/```asset\n【素材】場景｜[^｜]+｜(\S+)\n(【內容】[^\n]*)/g)].map(m => [m[1], m[2]]));
   for (const [id, items] of Object.entries(MUST_SHOW)) for (const item of items) assert.ok(content.get(id)?.includes(item), `${id} shows ${item}`);
   assert.doesNotMatch(content.get('T-R29-U4-02'), /「47F」/, 'the sign up the shaft is the floor above');
+  // Script facts the plates once got wrong.
+  assert.doesNotMatch(content.get('R14-V02'), /鐵網門/, 'R14-V02 looks back at the closed cargo-lift door');
+  assert.doesNotMatch(content.get('T-R5-R6-02'), /玻璃/, 'the 11F stair door is closed and shows only a line of light');
+  assert.doesNotMatch(content.get('T-R24-R25-01'), /瀝水板蓋在導槽/, 'the drainboard sits in the 31F dish trough, not on the 32F cart guide');
+  assert.doesNotMatch(content.get('T-R3-R5-04'), /鐵窗格後疊/, 'the signs stand on this side of the grille, where she can crouch behind them');
 });
