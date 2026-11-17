@@ -15,7 +15,8 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
   assert.ok(start > 0, '10-15 keeps a 場景 AI 生成提示詞 section');
   const ids = [...new Set([...tables.matchAll(/`((?:T-[A-Z]\d+b?-[A-Z]\d+b?-\d{2})|(?:[PRU]\d+b?-V\d{2}))`/g)].map(m => m[1]))];
   assert.equal(ids.length, 72);
-  const blocks = [...prompts.matchAll(/```asset\n([\s\S]*?)\n```/g)].map(m => m[1].split('\n'));
+  // Extra compositions the specs ask to deliver under an existing image number are not plates of their own.
+  const blocks = [...prompts.matchAll(/```asset\n([\s\S]*?)\n```/g)].map(m => m[1].split('\n')).filter(l => !l[0].startsWith('【素材】另交構圖｜'));
   assert.equal(blocks.length, 72);
   // Scene names come from each row's 主圖序列 cell (the first mention of the id).
   const named = new Map();
@@ -63,6 +64,28 @@ test('every static transition image in 10-15 has one scene prompt in the fixed s
   assert.deepEqual([...seen].sort(), [...ids].sort());
 });
 
+test('the act-one ending composition is delivered under T-R5-R6-02, not as a new image number', () => {
+  const extras = [...prompts.matchAll(/```asset\n(【素材】另交構圖｜[\s\S]*?)\n```/g)].map(m => m[1].split('\n'));
+  assert.deepEqual(extras.map(l => l[0]), ['【素材】另交構圖｜維修梯頂 11F 梯段門｜T-R5-R6-02']);
+  const [lines] = extras;
+  assert.ok(prompts.includes('<a id="tsp-t-r5-r6-02-end"></a>'), 'the extra composition has its own anchor');
+  assert.ok(prompts.indexOf('<a id="tsp-t-r5-r6-02-end"></a>') > prompts.indexOf('<a id="tsp-t-r5-r6-02"></a>'), 'it sits under T-R5-R6-02');
+  assert.deepEqual(lines.map(l => l.slice(0, l.indexOf('】') + 1)), ['【素材】', '【內容】', '【構圖】', '【光線色調】', '【風格】', '【不要出現】']);
+  assert.ok(lines[1].startsWith('【內容】寫實實景的空景：'));
+  assert.match(lines[1], /梯段門/);
+  assert.match(lines[1], /門縫/);
+  assert.match(lines[2], /^【構圖】16:9 橫幅，第一人稱站立視線高度、約 28mm 人眼視角，/);
+  assert.ok(lines[3].startsWith('【光線色調】現場自然光，照實拍：'));
+  assert.match(lines[3], /仍(看得出|看得清|分得出)/);
+  assert.match(lines[3].split('；').at(-1), /看不出|看不到底/);
+  // The stair top is open steel by a shaft: no glass doors or windows here.
+  assert.doesNotMatch(lines.slice(1, 4).join(''), /玻璃/);
+  assert.doesNotMatch(lines.slice(1, 4).join(''), /玩家|聲|人影|——|陽光|太陽|晴|雲|直射|日光(?!燈)|紅霧|白絲/);
+  assert.doesNotMatch(lines.slice(1, 4).join(''), /(?<![A-Za-z0-9-])[RUP]\d+(?!\d)/);
+  assert.equal(lines[4], STYLE);
+  assert.equal(lines[5], AVOID);
+});
+
 test('base plates leave the red mist and white silk to their separate masks', () => {
   const misty = [...prompts.matchAll(/```asset\n【素材】場景｜[^｜]+｜(\S+)\n([\s\S]*?)\n```/g)]
     .filter(m => /紅霧|白絲|蠶絲/.test(m[2].split('\n').slice(0, 3).join(''))).map(m => m[1]);
@@ -72,7 +95,7 @@ test('base plates leave the red mist and white silk to their separate masks', ()
 });
 
 test('daylight changes from route to route, and the windowless plates use only the lamps there', () => {
-  const lights = [...prompts.matchAll(/^【光線色調】(.*)$/gm)].map(m => m[1]);
+  const lights = [...prompts.matchAll(/```asset\n【素材】場景｜[\s\S]*?\n【光線色調】(.*)\n/g)].map(m => m[1]);
   assert.equal(lights.length, 72);
   assert.equal(new Set(lights).size, 72, 'every plate has its own light');
   for (const kind of ['陰天', '細雨', '雨剛停', '雨停', '浪板', '帆布', '白磁磚井壁', '高窗']) assert.ok(lights.some(l => l.includes(kind)), kind);
