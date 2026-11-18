@@ -278,7 +278,14 @@ const FIRST_FRAME_OVERRIDE = new Map([
   ['R11-02a·1', 'R11-V01'],
   ['R11-02a·2', 'R11-V01'],
   ['R11-02a·3', 'R11-V01'],
-  ['ACT2-01·1', null],
+  ['ACT2-01·1', {
+    display: '舊布面筆記本／那張照片（資產合成近看）',
+    method: '【生成方式】圖生影片：首格依「她的舊布面筆記本」與封底「那張照片」資產定稿合成寫實近看（背景為 R11 座位弱光虛化，不出現調查板介面），構圖、光線與物件造型保持不變，只加入下列動作。',
+  }],
+  ['ACT4-POST·1', {
+    display: '31F 檔案側翼長廊（上部片尾預覽空景）',
+    method: '【生成方式】圖生影片：首格依「檔案側翼長廊（上部片尾）」場景空景參考圖生成寫實定稿首格（只展現成排檔案架、鋼斜撐與走廊進深，不提前呈現查證桌與可讀文件細節），構圖、光線與物件位置保持不變，只加入下列動作。',
+  }],
   ['R20-02·1', 'R20-V01'],
   ['R20-04·1', 'R20-V01'],
 ]);
@@ -516,7 +523,11 @@ const FOCUS_TARGET = [
   [/紙條|照片|申請|處置單|清單|筆記/, '紙頁'],
   [/椅|床單|地板|踏面/, '椅面與地面'],
 ];
-const frameImage = cue => (FIRST_FRAME_OVERRIDE.has(cue.id) ? FIRST_FRAME_OVERRIDE.get(cue.id) : cue.images[0]);
+const frameImage = cue => {
+  if (!FIRST_FRAME_OVERRIDE.has(cue.id)) return cue.images[0];
+  const override = FIRST_FRAME_OVERRIDE.get(cue.id);
+  return typeof override === 'string' ? override : null;
+};
 
 // Where the default camera holds focus: her hand and what it touches, a figure, or the part that changes.
 // A registered prop is named only when the script names it too.
@@ -566,7 +577,7 @@ function prompt(cue, previous, pictures, note) {
   } else if (device) {
     lines.push(`【生成方式】圖生影片：首格是${image ? ` ${image} ` : '設備'}螢幕裡播放的畫面，做成真人實拍的錄影畫面，不含設備外框。`);
   } else if (FIRST_FRAME_OVERRIDE.has(cue.id) && image === null) {
-    lines.push('【生成方式】圖生影片：首格依「她的舊布面筆記本」與封底「那張照片」資產定稿合成寫實近看（背景為 R11 座位弱光虛化，不出現調查板介面），構圖、光線與物件造型保持不變，只加入下列動作。');
+    lines.push(FIRST_FRAME_OVERRIDE.get(cue.id).method);
   } else if (moving) {
     lines.push(`【生成方式】首尾格生影片：終點停在 ${frame || `${cue.code} 本場次主圖`} 的視點與構圖；起點依分鏡第一格另做一張寫實實拍的首格。構圖、光源與物件位置照定稿。`);
   } else if (continued) {
@@ -614,13 +625,15 @@ function prompt(cue, previous, pictures, note) {
     const hasHand = hasVideoAction && !device && (peopleNames.includes('她・現在（第一人稱的手）') || PROTAGONIST_HAND.test(cue.description));
     const hasLegs = hasVideoAction && !device && !hasHand && peopleNames.includes('她・現在（低頭看見的腿與鞋）');
     const hasReflect = hasVideoAction && !device && peopleNames.includes('她・反光裡（含鏡像者）');
+    const hasCuff = hasVideoAction && !device && peopleNames.includes('遠架暗處的米色袖緣（上部片尾）');
     const hasFigure = hasVideoAction && (FIGURE.test(cue.description)
-      || peopleNames.some(n => !['她・現在（第一人稱的手）', '她・現在（低頭看見的腿與鞋）', '她・反光裡（含鏡像者）', '灰蛾'].includes(n)));
+      || peopleNames.some(n => !['她・現在（第一人稱的手）', '她・現在（低頭看見的腿與鞋）', '她・反光裡（含鏡像者）', '灰蛾', '遠架暗處的米色袖緣（上部片尾）'].includes(n)));
     const hands = [];
     if (hasHand) hands.push('她的手只露出手與白襯衫袖口，手背乾裂、有擦傷，從畫面下緣入鏡；五指比例正確。');
     if (hasLegs) hands.push('只從第一人稱低頭視線拍到破牛仔褲膝部（左膝纏著舊布）、小腿與髒白休閒鞋，不出現上半身或臉。');
     if (hasFigure) hands.push(device ? '片中人物的臉要被裁切、壓縮或模糊，只看得清嘴形、肩膀與手；不做清晰肖像。' : '人物與異變者照首格的造型與位置，臉不給清楚五官（無臉、背光或被遮住），動作緩慢但連貫自然。');
     else if (hasReflect) hands.push('反光中的人影照首格的造型與位置，亮度壓低、臉被反光吃掉，不給清楚五官。');
+    if (hasCuff) hands.push('長廊最深處架角只短暫閃過一角寬大的米色袖緣隨即隱沒，不出現正臉、肩線、站立完整人形或任何異變者。');
     if (hands.length) lines.push(`【人物】${hands.join('')}`);
     if (note) {
       const tone = device ? (note.light.includes('舊螢幕') ? '' : PALETTE.device)
@@ -900,8 +913,9 @@ function actList(act) {
     out.push(`<a id="${anchorOf(cue.id)}"></a>`, '', `### ${cue.id}　${shortType(cue.type)}（${cue.level}）`, '');
     out.push(`- **重要級別：**${levelTag(cue.level)}　${cue.reason}`);
     const facts = [`**類型：**${typeTag(cue.type)}`];
-    const displayFrame = FIRST_FRAME_OVERRIDE.has(cue.id)
-      ? (FIRST_FRAME_OVERRIDE.get(cue.id) ? `\`${FIRST_FRAME_OVERRIDE.get(cue.id)}\`` : '舊布面筆記本／那張照片（資產合成近看）')
+    const override = FIRST_FRAME_OVERRIDE.get(cue.id);
+    const displayFrame = override
+      ? (typeof override === 'string' ? `\`${override}\`` : override.display)
       : (cue.images.length ? cue.images.map(id => `\`${id}\``).join('、') : '本場次主圖');
     facts.push(`**畫面：**${displayFrame}`);
     facts.push(`**剪用：**${cue.type === '主觀記憶動畫' ? '約 3–6 秒' : `約 ${fmt(built.length.value)} 秒`}`);
