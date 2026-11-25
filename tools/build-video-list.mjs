@@ -625,15 +625,15 @@ function prompt(cue, previous, pictures, note) {
     const hasHand = hasVideoAction && !device && (peopleNames.includes('她・現在（第一人稱的手）') || PROTAGONIST_HAND.test(cue.description));
     const hasLegs = hasVideoAction && !device && !hasHand && peopleNames.includes('她・現在（低頭看見的腿與鞋）');
     const hasReflect = hasVideoAction && !device && peopleNames.includes('她・反光裡（含鏡像者）');
-    const hasCuff = hasVideoAction && !device && peopleNames.includes('遠架暗處的米色袖緣（上部片尾）');
+    const hasCuff = hasVideoAction && !device && peopleNames.includes('遠架暗處的粉紅棕格紋袖緣（上部片尾）');
     const hasFigure = hasVideoAction && (FIGURE.test(cue.description)
-      || peopleNames.some(n => !['她・現在（第一人稱的手）', '她・現在（低頭看見的腿與鞋）', '她・反光裡（含鏡像者）', '灰蛾', '遠架暗處的米色袖緣（上部片尾）'].includes(n)));
+      || peopleNames.some(n => !['她・現在（第一人稱的手）', '她・現在（低頭看見的腿與鞋）', '她・反光裡（含鏡像者）', '灰蛾', '遠架暗處的粉紅棕格紋袖緣（上部片尾）'].includes(n)));
     const hands = [];
     if (hasHand) hands.push('她的手只露出手與白襯衫袖口，手背乾裂、有擦傷，從畫面下緣入鏡；五指比例正確。');
     if (hasLegs) hands.push('只從第一人稱低頭視線拍到破牛仔褲膝部（左膝纏著舊布）、小腿與髒白休閒鞋，不出現上半身或臉。');
     if (hasFigure) hands.push(device ? '片中人物的臉要被裁切、壓縮或模糊，只看得清嘴形、肩膀與手；不做清晰肖像。' : '人物與異變者照首格的造型與位置，臉不給清楚五官（無臉、背光或被遮住），動作緩慢但連貫自然。');
     else if (hasReflect) hands.push('反光中的人影照首格的造型與位置，亮度壓低、臉被反光吃掉，不給清楚五官。');
-    if (hasCuff) hands.push('長廊最深處架角只短暫閃過一角寬大的米色袖緣隨即隱沒，不出現正臉、肩線、站立完整人形或任何異變者。');
+    if (hasCuff) hands.push('長廊最深處架角只短暫閃過一角反摺了兩次的寬大粉紅棕格紋袖緣隨即隱沒，不出現正臉、肩線、站立完整人形或任何異變者。');
     if (hands.length) lines.push(`【人物】${hands.join('')}`);
     if (note) {
       const tone = device ? (note.light.includes('舊螢幕') ? '' : PALETTE.device)
