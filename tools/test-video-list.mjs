@@ -65,8 +65,8 @@ test('prompts describe what is seen, not player rules, and keep the faceless art
     if (type === '主觀記憶動畫') {
       assert(prompt.includes('不用凝固層的單色冷青'), `${id}: memory palette differs from the frozen layer`);
       assert(prompt.includes('看不見任何人的臉'), `${id}: faces stay out of memory shots`);
-      if (id === 'R1-01·3') assert(!prompt.includes('米色'), `${id}: arrival van leaves the other hand without a beige cuff`);
-      else assert(prompt.includes('米色、過長'), `${id}: the other person is only a sleeve`);
+      if (id === 'R1-01·3') assert(!prompt.includes('粉紅棕格紋') && !prompt.includes('米色'), `${id}: arrival van leaves the other hand without a signature cuff`);
+      else assert(prompt.includes('粉紅棕格紋、過長') && !prompt.includes('米色'), `${id}: the other person is identified by the oversized pink-brown plaid cuff, not old plain beige`);
       assert(!prompt.includes('白襯衫'), `${id}: memories predate the escape shirt`);
     }
     if (type === '設備內影片') assert(prompt.includes('不含設備外框'), `${id}: device video is screen content`);
@@ -227,7 +227,7 @@ test('every segment lists its people, scene and props, each as a reference-image
           : id === 'P1-01·2' ? '她・記憶裡（上鋪包紮）'
           : id === 'R13-03·4' ? '她・記憶裡（主管期）'
           : '她・記憶裡（園區前期）';
-        const expectedOther = id === 'R1-01·3' ? '車上鄰座的手（R1 記憶）' : '小花・記憶裡（米色袖口）';
+        const expectedOther = id === 'R1-01·3' ? '車上鄰座的手（R1 記憶）' : '小花・記憶裡（粉紅棕格紋袖口）';
         assert.deepEqual(people, [expectedHer, expectedOther], `${id}: memory people match timeline and visibility`);
         assert(summary[2].includes(`](${file}#`), `${id}: memory scenes are hand-written`);
         assert(!blocks.join('').includes('白襯衫的袖口有'), `${id}: memories predate the escape shirt`);

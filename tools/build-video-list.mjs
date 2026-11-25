@@ -616,7 +616,7 @@ function prompt(cue, previous, pictures, note) {
         : '她的手與前臂可入鏡，衣袖素色、無圖案';
     const otherMemory = cue.id === 'R1-01·3'
       ? '另一個人只看得出壓在表上的手與不明顯的暗色袖邊，不帶可辨識特徵'
-      : '另一個人只以米色、過長、蓋到指節的袖口辨認';
+      : '另一個人只以粉紅棕格紋、過長、蓋到指節的袖口辨認';
     lines.push(`【人物】${herMemory}。${otherMemory}；構圖只到${crop}，看不見任何人的臉。`);
     lines.push(`【光線色調】${note ? note.light : ''}記憶色調：柔和低對比的暖褐微光，帶輕微顆粒與四周微暈，像隔著一層舊塑膠片看；不用凝固層的單色冷青，也不加訊號雜訊。光源只用分鏡裡原有的。`);
   } else {
