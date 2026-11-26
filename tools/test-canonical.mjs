@@ -226,7 +226,8 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Finale R32-09 adds one localized wing-strain pause cue before Xiao Hua's written-request follow-up.
   // P0 upper emotional-spine pass adds three environment cues: R2-02 self-voice breath drop (act 1),
   // R22-00 silent waiting platform and R22-04 rusted A/B release sound (act 4).
-  const counts = [[24, 25, 9], [79, 39, 20], [114, 49, 10], [151, 31, 9],
+  // Act 2 R11 splits Ahsun's status into a fixed nickname line and the R6-only revoked-account line.
+  const counts = [[24, 25, 9], [79, 39, 20], [114, 49, 11], [151, 31, 9],
     [63, 26, 12], [62, 15, 13], [33, 4, 2], [61, 8, 5], [32, 3, 4], [28, 13, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
