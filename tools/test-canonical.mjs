@@ -157,7 +157,8 @@ test('every static screenplay cue names its shot size without changing protected
   // The R3 paper-flower and R13 medicine-bag memories become subjective memory animations (acts 1 and 3).
   // Finale ending D adds one cold P1 maintenance-camera still beside the merged warm cocoon frame.
   // Act 2 R7-00 adds one corridor sightline mid-shot past the K-114 booth and Lao Zhou's partition.
-  const counts = [23, 63, 93, 102, 50, 33, 19, 27, 10, 21];
+  // Act 2 R6 adds the wide shot and close-up of the white cloth knot on the headset cable.
+  const counts = [23, 63, 95, 102, 50, 33, 19, 27, 10, 21];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
