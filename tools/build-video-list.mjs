@@ -3,7 +3,7 @@
 // fully generated list (10-17 to 10-21) whose segments carry a Chinese storyboard prompt for AI video tools
 // and asset prompts (people, scene, props) for the reference images those tools take.
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ACTS, APPENDIX, VIDEO_LIST, VIDEO_ACT_LISTS, VIDEO_DIRECTION, VIDEO_ASSETS } from './screenplay-files.mjs';
@@ -38,6 +38,15 @@ const plain = text => text
   .trim();
 const fileName = rel => rel.split('/').at(-1);
 const listFile = act => VIDEO_ACT_LISTS[UPPER.indexOf(act)];
+// Finished storyboard sheets live beside the other visual references as 分鏡_<segment id>_<name>_v<n>.png;
+// a segment shows its latest sheet between the script description and the prompts.
+const BOARD_DIR = 'assets/07_視聽與介面/assets';
+const BOARDS = readdirSync(path.join(ROOT, BOARD_DIR)).filter(name => /^分鏡_.+_v\d+\.png$/.test(name));
+const boardOf = id => {
+  const prefix = `分鏡_${id.replace('·', '-')}_`;
+  const version = name => Number(name.match(/_v(\d+)\.png$/)[1]);
+  return BOARDS.filter(name => name.startsWith(prefix)).sort((a, b) => version(b) - version(a))[0];
+};
 const anchorOf = id => `v-${id.toLowerCase().replace('·', '-')}`;
 
 function parseHeading(line) {
@@ -972,6 +981,8 @@ function actList(act) {
     if (cue.note) out.push(`- **導演註記：**${noteLink(cue)}`);
     out.push('', `**劇本描述**　${cue.description}`, '');
     out.push(`**對白／配音**　${cue.dialogues.length ? cue.dialogues.join(' ／ ') : '無對白（純畫面／環境音）'}`, '');
+    const board = boardOf(cue.id);
+    if (board) out.push(`**分鏡板**　${board.replace(/^分鏡_[^_]+_|_v\d+\.png$/g, '')}`, '', `![${cue.id} 分鏡板](../../${BOARD_DIR}/${board})`, '');
     out.push('```prompt', built.text, '```', '');
     const { people, scene: place, props } = cue.assets;
     const names = list => list.length ? list.map(assetLink).join('、') : '無';
