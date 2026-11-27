@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import path from 'node:path';
+import { OPERATION_DIAGRAMS } from './operation-diagrams.mjs';
 import { ROOT, MASTER, parseMaster, buildSync, deriveGraph, canonicalFile } from './sync-canonical.mjs';
 import { ACTS, FINALE, APPENDIX, CANONICAL_FILES, READING_FILES, SPLIT_MARKER, SPEC_SPLIT_MARKER, legacyFinalHeading, ILLUSTRATION_CATALOG, VIDEO_ACT_LISTS, VIDEO_DIRECTION, VIDEO_ASSETS } from './screenplay-files.mjs';
 import { buildDocuments } from './build-docs.mjs';
@@ -727,7 +728,9 @@ test('all Markdown document and image links resolve; master anchors are unique',
   assert.equal(explicit.length, new Set(explicit).size);
   const imageRefs = [...master.text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)];
   const boards = imageRefs.filter(m => path.posix.basename(m[1]).startsWith('分鏡_'));
-  assert.equal(imageRefs.length - boards.length, 110);
+  const diagrams = imageRefs.filter(m => path.posix.basename(m[1]).startsWith('示意圖_'));
+  assert.equal(imageRefs.length - boards.length - diagrams.length, 110);
+  assert.equal(diagrams.length, OPERATION_DIAGRAMS.length, 'each operation diagram appears once in the scripts');
   assert.equal(boards.length, 163, 'one storyboard sheet after each upper-part animation paragraph');
   const files = readdirSync(path.join(ROOT, 'docs'), {recursive:true}).filter(f => f.endsWith('.md'));
   const errors = [];

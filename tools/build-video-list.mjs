@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ACTS, APPENDIX, VIDEO_LIST, VIDEO_ACT_LISTS, VIDEO_DIRECTION, VIDEO_ASSETS } from './screenplay-files.mjs';
+import { OPERATION_DIAGRAMS } from './operation-diagrams.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'docs');
@@ -51,7 +52,10 @@ const anchorOf = id => `v-${id.toLowerCase().replace('·', '-')}`;
 // The act scripts show the same sheet right after each animation paragraph (the cue line and the sound and
 // subtitle lines that follow it); those image lines are generated here and ignored when the scripts are read.
 const BOARD_LINE = /^!\[\S+ 分鏡板\]\([^)]*\)$/;
-const scriptLines = rel => read(rel).split('\n').filter(line => !BOARD_LINE.test(line));
+// Operation diagrams (tools/operation-diagrams.mjs) are generated into the scripts the same way, after their operation line.
+const DIAGRAM_LINE = /^!\[\S+ 操作示意：[^\]]*\]\([^)]*\)$/;
+const GENERATED_LINE = line => BOARD_LINE.test(line) || DIAGRAM_LINE.test(line);
+const scriptLines = rel => read(rel).split('\n').filter(line => !GENERATED_LINE(line));
 
 function parseHeading(line) {
   const m = line.match(/^(#{2,6}) (.+)$/);
@@ -998,15 +1002,38 @@ function actList(act) {
 
 const outputs = new Map(UPPER.map(act => [listFile(act), actList(act)]));
 
-// Each act script gets its cues' storyboard sheets, in cue order, after the paragraph they illustrate.
+// Each act script gets its cues' storyboard sheets, in cue order, after the paragraph they illustrate,
+// and its operation diagrams after the operation line (and the sound lines right after it) they explain.
+for (const d of OPERATION_DIAGRAMS) {
+  assert(existsSync(path.join(ROOT, BOARD_DIR, d.file)), `missing operation diagram ${d.file}`);
+  assert(/^\S+ 操作示意：[^\]]+$/.test(d.caption), `operation diagram caption ${d.caption}`);
+}
 function scriptWithBoards(act) {
   const own = cues.filter(c => c.act === act);
+  const diagrams = OPERATION_DIAGRAMS.filter(d => d.act === act.name);
+  const placed = new Map(diagrams.map(d => [d, 0]));
   const source = read(act.path).split('\n');
-  const lines = source.filter((line, i) => !BOARD_LINE.test(line) && !(line === '' && BOARD_LINE.test(source[i + 1] || '')));
+  const lines = source.filter((line, i) => !GENERATED_LINE(line) && !(line === '' && GENERATED_LINE(source[i + 1] || '')));
   const out = [];
   let n = 0;
   for (let i = 0; i < lines.length; i++) {
     out.push(lines[i]);
+    const here = diagrams.filter(d => lines[i].startsWith(d.after));
+    if (here.length) {
+      let end = i;
+      for (let j = i + 1; j < lines.length; j++) {
+        if (!lines[j].trim()) continue;
+        if (!/^〔(?:環境|字幕)/.test(lines[j].trim())) break;
+        end = j;
+      }
+      for (let j = i + 1; j <= end; j++) out.push(lines[j]);
+      i = end;
+      for (const d of here) {
+        placed.set(d, placed.get(d) + 1);
+        out.push('', `![${d.caption}](../../${BOARD_DIR}/${d.file})`);
+      }
+      continue;
+    }
     if (!/^（動畫演出／[^）]+）/.test(lines[i])) continue;
     const cue = own[n++];
     let end = i;
@@ -1021,6 +1048,7 @@ function scriptWithBoards(act) {
     if (board) out.push('', `![${cue.id} 分鏡板](../../${BOARD_DIR}/${board})`);
   }
   assert.equal(n, own.length, `${act.name}: storyboard cues out of step`);
+  for (const [d, count] of placed) assert.equal(count, 1, `${act.name}: operation diagram ${d.file} must follow exactly one line`);
   return out.join('\n');
 }
 for (const act of UPPER) outputs.set(act.path, scriptWithBoards(act));

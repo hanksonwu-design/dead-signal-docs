@@ -25,7 +25,7 @@ const catalogAsset = href => path.posix.normalize(path.posix.join('docs', path.p
 test('catalog covers every canonical illustration once, including supplements and access layouts', () => {
   const embedded = [...documents].flatMap(([file, text]) => [...text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)]
     .map(m => path.posix.normalize(path.posix.join('docs', path.posix.dirname(file), m[1])))
-    .filter(asset => !path.posix.basename(asset).startsWith('分鏡_')));
+    .filter(asset => !/^(?:分鏡|示意圖)_/.test(path.posix.basename(asset))));
   assert.equal(records.length, 110);
   assert(catalog.includes(`更新: ${manifest.updated}`));
   assert.equal(records.filter(r => r.layout).length, 13);
