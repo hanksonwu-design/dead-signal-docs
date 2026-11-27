@@ -82,8 +82,9 @@ test('rule-built storyboards hold each beat a second, keep sound and absence out
     if (type !== '設備內影片') assert(/^【光線色調】.*(?:整段光源與明暗都不變|照分鏡的時間點亮暗|明暗變化只發生在點名的局部)/m.test(prompt), `${id}: light says what changes`);
     for (const [, from, to, text] of prompt.matchAll(/^(\d+(?:\.\d+)?)–(\d+(?:\.\d+)?) 秒｜(.+)$/gm)) {
       assert(Number(to) - Number(from) >= 1, `${id}: ${from}–${to} holds at least a second`);
-      assert(!/聲音|聲響|雜音/.test(text), `${id}: ${text} — what is heard goes to 後製`);
-      assert(!/不是|不再|沒有/.test(text.replace(/(?:剩|是|成)沒有/g, '')), `${id}: ${text} — an absence is not filmed`);
+      const visual = text.split('　對白：')[0];
+      assert(!/聲音|聲響|雜音/.test(visual), `${id}: ${visual} — what is heard goes to 後製`);
+      assert(!/不是|不再|沒有/.test(visual.replace(/(?:剩|是|成)沒有/g, '')), `${id}: ${visual} — an absence is not filmed`);
     }
     if (!prompt.includes('【後製')) continue;
     const post = prompt.slice(prompt.indexOf('【後製'), prompt.indexOf('【不要出現】')).trim().split('\n').slice(1);
@@ -165,7 +166,7 @@ test('direction notes replace the rule-built storyboard of their segment and are
     const mood = segment.prompt.indexOf('【情緒節奏】');
     assert(mood > segment.prompt.indexOf('【長度】') && mood < segment.prompt.indexOf('【分鏡】'), `${id}: mood sits between length and storyboard`);
     const beats = [...segment.prompt.matchAll(/^(\d+(?:\.\d+)?)–(\d+(?:\.\d+)?) 秒｜(.+)$/gm)];
-    assert.deepEqual(beats.map(b => b[3]), rows.map(r => r[3]), `${id}: storyboard is the note's picture column`);
+    assert.deepEqual(beats.map(b => b[3].split('　對白：')[0]), rows.map(r => r[3]), `${id}: storyboard is the note's picture column`);
     if (rows.some(r => r[4] !== '—')) assert(segment.prompt.includes('聲音與後製對點：\n・'), `${id}: sound cues are timed`);
   }
   for (const segment of segments) {
@@ -249,15 +250,24 @@ test('every segment lists its people, scene and props, each as a reference-image
   }
 });
 
-test('every segment declares a dialogue/VO line outside the AI prompt and the overview indexes every voiced segment', () => {
+test('every segment declares a dialogue/VO line, inlines spoken lines inside 【分鏡】, and the overview indexes every voiced segment', () => {
   const banned = ['身份', '高亮', '像素', '幀', '接口', '隊列', '緩存', '默認', '全屏', '黑屏', '保存進度', '選填', '聲優', '玩家'];
   const voiced = [];
   for (const s of segments) {
     const line = s.facts.match(/^\*\*對白／配音\*\*　(.+)$/m)?.[1];
     assert(line, `${s.id}: missing **對白／配音** line`);
     for (const word of banned) assert(!line.includes(word), `${s.id}: ${word}`);
-    if (line !== '無對白（純畫面／環境音）') voiced.push({ id: s.id, anchor: s.anchor, rel: s.rel, line });
+    if (line !== '無對白（純畫面／環境音）') {
+      voiced.push({ id: s.id, anchor: s.anchor, rel: s.rel, line });
+      const sb = s.prompt.slice(s.prompt.indexOf('【分鏡】'), s.prompt.indexOf('【鏡頭】'));
+      for (const q of line.match(/「[^」]+」/g) || []) {
+        assert(sb.includes(q), `${s.id}: inline storyboard missing dialogue quote ${q}`);
+      }
+    }
   }
+  const r12002 = segments.find(s => s.id === 'R12-00·2').prompt;
+  assert.match(r12002, /^2–3\.2 秒｜.+　對白：小花聲線（主觀記憶回聲）「停電反而安心，燈亮著像在盯人。」$/m);
+  assert.match(r12002, /^3\.2–5 秒｜.+　對白：主角聲線（主觀記憶回聲）「趁還沒來電，把少的那顆找出來。」$/m);
   const section = overview.slice(overview.indexOf('<a id="video-dialogues"></a>'));
   const tableRows = [...section.matchAll(/^\| \[([^\]]+)\]\((10-\d\d_[^)#]+)#(v-[a-z0-9-]+)\) \| [^|]+ \| <span[^>]+>[^<]+<\/span> \| (.+) \|$/gm)];
   assert.equal(tableRows.length, voiced.length, 'voiced count matches overview table');

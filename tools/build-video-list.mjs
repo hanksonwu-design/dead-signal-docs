@@ -630,14 +630,22 @@ function prompt(cue, previous, pictures, note) {
   }
   const cut = memory ? '約 5 秒（可在 3–6 秒間）' : `約 ${fmt(length.value)} 秒${length.stated ? '（劇本指定）' : ''}`;
   lines.push(`【長度】剪用${cut}；${length.value > 10 ? '分兩段各生成 5–10 秒，接剪後裁切' : `生成 ${length.value > 5 ? 10 : 5} 秒後裁切`}。`);
+  const voiced = cue.dialogues || [];
   if (note) {
     assert.equal(note.rows.at(-1).to, total, `${cue.id}: direction rows end at the cut length`);
+    const byRow = note.rows.map(() => []);
+    for (const d of voiced) {
+      const qs = quotes(d);
+      const idx = note.rows.findIndex(r => qs.some(q => r.sound.includes(q)));
+      byRow[idx >= 0 ? idx : note.rows.length - 1].push(d);
+    }
     lines.push(`【情緒節奏】${note.mood}`);
-    lines.push('【分鏡】', ...note.rows.map(row => `${fmt(row.from)}–${fmt(row.to)} 秒｜${row.picture}`));
+    lines.push('【分鏡】', ...note.rows.map((row, i) => `${fmt(row.from)}–${fmt(row.to)} 秒｜${row.picture}${byRow[i].length ? `　對白：${byRow[i].join(' ／ ')}` : ''}`));
   } else if (beats.length) {
-    lines.push('【分鏡】', ...beats.map((beat, i) => `${fmt(at[i])}–${fmt(at[i + 1])} 秒｜${beat.text}`));
+    lines.push('【分鏡】', ...beats.map((beat, i) => `${fmt(at[i])}–${fmt(at[i + 1])} 秒｜${beat.text}${i === beats.length - 1 && voiced.length ? `　對白：${voiced.join(' ／ ')}` : ''}`));
   } else {
     lines.push('【分鏡】本段主要是介面、燈號或狀態變化，建議直接以圖層差分製作，不需要 AI 生成影片；細節見上方劇本描述。');
+    if (voiced.length) lines.push(`對白：${voiced.join(' ／ ')}`);
   }
   const focus = focusOf(cue, device);
   const camera = moving ? MOVING_CAMERA(focus) : CAMERA[cue.type](focus);
@@ -903,10 +911,10 @@ const noteLink = cue => `[${cue.id} ${cue.note.name}](${fileName(VIDEO_DIRECTION
 const assetLink = asset => asset.link ? `[${asset.name}](${fileName(VIDEO_ASSETS)}#${asset.link})` : asset.name;
 cues.forEach((cue, i) => {
   const previous = cues[i - 1]?.act === cue.act ? cues[i - 1] : null;
-  cue.assets = assets(cue, registry);
-  cue.prompt = prompt(cue, previous, pictures, notes.get(cue.id));
   cue.note = notes.get(cue.id);
   cue.dialogues = dialoguesOf(cue);
+  cue.assets = assets(cue, registry);
+  cue.prompt = prompt(cue, previous, pictures, cue.note);
 });
 for (const entry of registry) assert(cues.some(c => applies(entry, c)), `${VIDEO_ASSETS}: ${entry.name} is used by no segment`);
 cues.forEach((cue, i) => { [cue.level, cue.reason] = importance(cue, cues[i + 1]); });
