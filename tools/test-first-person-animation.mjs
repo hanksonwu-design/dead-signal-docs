@@ -228,12 +228,19 @@ test('subjective memory animations move only her own memories, faceless and skip
   for (const id of ['s-0903-14', 's-0904-3', 's-0904-15', 's-0904-18', 's-0904-29', 's-0906-3', 's-0906-14', 's-0907-30']) {
     ordered(block(id), '（動畫演出／第一人稱動作回饋）', '（動畫演出／主觀記憶動畫）', '看不見');
   }
-  // The R12 box keeps its line for R21: screws only, no subtitle or voice.
+  // All upper-part spoken/subtitled subjective memory animations carry voiced memory echoes (R4 keeps muffled laughter only).
+  ordered(block('s-0903-14'), '小花聲線（主觀記憶回聲）「這樣洗澡不會鬆。」');
+  ordered(block('s-0904-3'), '前座看守聲線（主觀記憶回聲）「不准講話。進去以後，舊名字用不到。」');
+  ordered(block('s-0904-15'), '主角聲線（主觀記憶回聲）「筆畫別斷掉。」', '小花聲線（主觀記憶回聲）「……斷了，家就找不回來了。」');
+  ordered(block('s-0904-18'), '小花聲線（主觀記憶回聲）「真的花太快壞了。」', '小花聲線（主觀記憶回聲）「……紙摺的，壓扁了還能再打開。」');
+  // The R12 box pairs voiced low-whisper memory echoes with R21's repair-desk closing echoes.
   const box = block('s-0906-3');
   const memory = box.slice(box.indexOf('（動畫演出／主觀記憶動畫）'), box.indexOf('鐵盒仍打不開'));
-  assert(!memory.includes('〔字幕〕') && !memory.includes('聲線'));
+  ordered(memory, '小花聲線（主觀記憶回聲）「只有停電的時候，燈才不看我們。」', '主角聲線（主觀記憶回聲）「……趁還沒來電，把少的找回來。」');
+  ordered(block('s-0906-14'), '主角聲線（主觀記憶回聲）「這兩個字是『飯後』。」', '小花聲線（主觀記憶回聲）「……那還沒吃飯，這袋就先不拆嗎？」');
   // R21 closes the R12 memory: the missing screw fills the empty slot before the existing echo voices.
-  ordered(block('s-0907-30'), '（動畫演出／主觀記憶動畫）', '推進那一格', '小花聲線（主觀記憶回聲）', '主角聲線（主觀記憶回聲）');
+  ordered(block('s-0907-30'), '（動畫演出／主觀記憶動畫）', '推進那一格', '小花聲線（主觀記憶回聲）「出去以後，找個能放修理桌的地方——開著燈也沒關係的那種。」', '主角聲線（主觀記憶回聲）「好，我陪妳找。」');
+  for (const act of ACTS.slice(0, 5)) assert(!story(act.act).includes('〔字幕〕（主觀記憶，無聲）'), act.name);
   // The upper part has no frozen memory stills left; lower-part memories may stay still.
   for (const act of ACTS.slice(0, 5)) assert(!/（靜態畫面[^）]*）主觀記憶停在/.test(story(act.act)), act.name);
 });
