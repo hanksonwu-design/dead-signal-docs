@@ -180,8 +180,8 @@ test('every work order cites an existing canonical source', () => {
 });
 
 test('all original H and B hotspots bind images, including non-table and retired definitions', () => {
-  assert.equal(hotspots.length, 226);
-  assert.equal(new Set(hotspots.map(h => h.id)).size, 226);
+  assert.equal(hotspots.length, 230);
+  assert.equal(new Set(hotspots.map(h => h.id)).size, 230);
   const images = id => hotspots.find(h => h.id === id)?.images;
   assert.deepEqual(images('R07_H10'), ['R7-C03']);
   assert.deepEqual(images('R08_H07'), ['R8-C02']);
