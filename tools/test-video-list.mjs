@@ -98,7 +98,8 @@ test('rule-built storyboards hold each beat a second, keep sound and absence out
 
 test('key bridges link to the prompt section of their segment', () => {
   const start = overview.indexOf('## 重點橋段（★）');
-  const links = [...overview.slice(start).matchAll(/\[([^\]]+)\]\((10-\d\d_[^)#]+)#(v-[a-z0-9-]+)\)/g)];
+  const end = overview.indexOf('<a id="video-dialogues"></a>');
+  const links = [...overview.slice(start, end).matchAll(/\[([^\]]+)\]\((10-\d\d_[^)#]+)#(v-[a-z0-9-]+)\)/g)];
   assert(links.length >= 20);
   for (const [, id, file, anchor] of links) {
     const segment = segments.find(s => s.anchor === anchor);
@@ -245,5 +246,29 @@ test('every segment lists its people, scene and props, each as a reference-image
   for (const [, name, anchor, , n] of rows) {
     assert(anchors.has(anchor), anchor);
     assert.equal(used.get(name) || 0, Number(n), `${name}: usage count matches the act lists`);
+  }
+});
+
+test('every segment declares a dialogue/VO line outside the AI prompt and the overview indexes every voiced segment', () => {
+  const banned = ['身份', '高亮', '像素', '幀', '接口', '隊列', '緩存', '默認', '全屏', '黑屏', '保存進度', '選填', '聲優', '玩家'];
+  const voiced = [];
+  for (const s of segments) {
+    const line = s.facts.match(/^\*\*對白／配音\*\*　(.+)$/m)?.[1];
+    assert(line, `${s.id}: missing **對白／配音** line`);
+    for (const word of banned) assert(!line.includes(word), `${s.id}: ${word}`);
+    if (line !== '無對白（純畫面／環境音）') voiced.push({ id: s.id, anchor: s.anchor, rel: s.rel, line });
+  }
+  const section = overview.slice(overview.indexOf('<a id="video-dialogues"></a>'));
+  const tableRows = [...section.matchAll(/^\| \[([^\]]+)\]\((10-\d\d_[^)#]+)#(v-[a-z0-9-]+)\) \| [^|]+ \| <span[^>]+>[^<]+<\/span> \| (.+) \|$/gm)];
+  assert.equal(tableRows.length, voiced.length, 'voiced count matches overview table');
+  voiced.forEach((v, i) => {
+    const [, id, file, anchor, line] = tableRows[i];
+    assert.equal(id, v.id);
+    assert.equal(anchor, v.anchor);
+    assert(v.rel.endsWith(file), id);
+    assert.equal(line, v.line, id);
+  });
+  for (const id of ['P0-03a·2', 'P1-01·2', 'P2-04·1', 'R1-01·3', 'R1-02·6', 'R18-02·1', 'R20-07·1', 'ACT4-02·1']) {
+    assert(voiced.some(v => v.id === id), `${id}: expected voiced segment`);
   }
 });

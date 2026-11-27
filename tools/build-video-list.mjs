@@ -74,6 +74,42 @@ function soundAfter(lines, i) {
   }
   return found;
 }
+const DIALOGUE_LINE = /^(?:〔人聲〕|[\p{Script=Han}A-Za-z0-9·]{1,12}（[^）]+）「|主角「)/u;
+const NOTE_VOICE = /(?:[\p{Script=Han}A-Za-z0-9·]{1,12}聲線|(?:主角|小花|阿尋|老周|康|接待員|匿名人聲|錄影中的人|畫外管理者|前座看守聲線|人聲|聲音)(?:（[^）]+）)?|(?:近耳[^「]*的)?人聲|OS)[^「。\n]*「[^［「」]+」/gu;
+const cleanDialogue = text => plain(text)
+  .replaceAll('**', '')
+  .replace(/^〔人聲〕/, '人聲')
+  .replaceAll('玩家字幕匿名', '字幕匿名')
+  .replaceAll('玩家', '')
+  .trim();
+function dialoguesAfter(lines, i) {
+  const found = [];
+  for (let j = i + 1; j < lines.length && j <= i + 14; j++) {
+    const line = lines[j].trim();
+    if (!line || /^<a id=/.test(line)) continue;
+    if (/^(?:#|---|<!--|（動畫演出／|〔操作／|〔條件|〔前置|〔安全反應|主角的短句)/.test(line)) break;
+    if (DIALOGUE_LINE.test(line)) found.push(cleanDialogue(line));
+  }
+  return found;
+}
+function dialoguesOf(cue) {
+  const out = [...cue.scriptDialogues];
+  const seenQuotes = new Set(out.flatMap(d => [...d.matchAll(/「([^」]+)」/g)].map(m => m[1])));
+  if (cue.note) {
+    for (const row of cue.note.rows) {
+      const cleanedRow = row.sound.replace(/畫面文字：「[^」]+」/g, '').replace(/字幕「［[^］]+］」/g, '');
+      for (const m of cleanedRow.matchAll(NOTE_VOICE)) {
+        const entry = cleanDialogue(m[0].replace(/^進(?:只有氣聲的\s*)?/, '').replace(/^換成/, '').replace(/^念出——/, ''));
+        const qs = [...entry.matchAll(/「([^」]+)」/g)].map(x => x[1]);
+        if (qs.length && qs.some(q => !seenQuotes.has(q))) {
+          qs.forEach(q => seenQuotes.add(q));
+          out.push(entry);
+        }
+      }
+    }
+  }
+  return out;
+}
 
 // Room and sub-scene names by code (「R1」→ 入口大廳, 「T-R2-R3-01」→ 後廚服務巷), for asset headings.
 const TITLES = new Map();
@@ -118,7 +154,7 @@ function collect(act) {
       for (let j = i + 1; j < lines.length && !images.length && !parseHeading(lines[j]); j++) images = [...new Set(lines[j].match(IMAGE) || [])];
     }
     cues.push({
-      act, type, description, images, block, sound: soundAfter(lines, i),
+      act, type, description, images, block, sound: soundAfter(lines, i), scriptDialogues: dialoguesAfter(lines, i),
       code: coded.code, title: coded.title, sub, anchor, room: stack.find(h => h.level === 3 && h.code)?.code,
       anchors: new Set([block, ...stack.flatMap(h => h.anchors), ...floating].filter(Boolean)),
     });
@@ -870,6 +906,7 @@ cues.forEach((cue, i) => {
   cue.assets = assets(cue, registry);
   cue.prompt = prompt(cue, previous, pictures, notes.get(cue.id));
   cue.note = notes.get(cue.id);
+  cue.dialogues = dialoguesOf(cue);
 });
 for (const entry of registry) assert(cues.some(c => applies(entry, c)), `${VIDEO_ASSETS}: ${entry.name} is used by no segment`);
 cues.forEach((cue, i) => { [cue.level, cue.reason] = importance(cue, cues[i + 1]); });
@@ -926,6 +963,7 @@ function actList(act) {
     if (cue.key) out.push(`- **重點 ★ ${cue.key.name}：**${cue.key.control}`);
     if (cue.note) out.push(`- **導演註記：**${noteLink(cue)}`);
     out.push('', `**劇本描述**　${cue.description}`, '');
+    out.push(`**對白／配音**　${cue.dialogues.length ? cue.dialogues.join(' ／ ') : '無對白（純畫面／環境音）'}`, '');
     out.push('```prompt', built.text, '```', '');
     const { people, scene: place, props } = cue.assets;
     const names = list => list.length ? list.map(assetLink).join('、') : '無';
@@ -959,6 +997,12 @@ region.push(`下列橋段另有控制交接規格，取自[第一人稱動畫製
 region.push(table(['橋段', '方式／既有素材', '控制交接與時序', '對應列表'], bridges.map(b => [
   `[${b.name}](../${b.act.path}#${b.anchor})`, b.method, b.control,
   b.matched.map(c => `[${c.id}](${fileName(listFile(c.act))}#${anchorOf(c.id)})`).join('、'),
+])), '');
+const voiced = cues.filter(c => c.dialogues.length);
+region.push('<a id="video-dialogues"></a>', '', `## 有對白／配音段落速查（${voiced.length} 段）`, '');
+region.push('下列上部影片段落均附帶台詞、OS 或人聲回聲（其餘段落皆為無對白之純畫面／環境音）；點選段落編號可跳至對應分鏡、對白與後製對點。', '');
+region.push(table(['段落', '幕別', '類型', '對白／配音'], voiced.map(c => [
+  `[${c.id}](${fileName(listFile(c.act))}#${anchorOf(c.id)})`, c.act.name, typeTag(c.type), c.dialogues.join(' ／ '),
 ])), '');
 const original = readFileSync(path.join(DOCS, VIDEO_LIST), 'utf8');
 const nl = original.includes('\r\n') ? '\r\n' : '\n';
