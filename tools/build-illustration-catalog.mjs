@@ -28,6 +28,8 @@ export function collectIllustrations(documents, graph, flow, manifest) {
   for (const [source, content] of documents) {
     const text = stripIllustrationNotes(content);
     for (const m of text.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g)) {
+      // Storyboard sheets after animation paragraphs belong to the video lists, not the illustration catalog.
+      if (path.posix.basename(m[2]).startsWith('分鏡_')) continue;
       const asset = path.posix.normalize(path.posix.join('docs', path.posix.dirname(source), m[2]));
       const heading = [...text.slice(0, m.index).matchAll(/<a id="([^"]+)"><\/a>/g)].at(-1)?.[1];
       assert(heading, `Missing figure anchor: ${asset}`);

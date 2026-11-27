@@ -48,6 +48,10 @@ const boardOf = id => {
   return BOARDS.filter(name => name.startsWith(prefix)).sort((a, b) => version(b) - version(a))[0];
 };
 const anchorOf = id => `v-${id.toLowerCase().replace('·', '-')}`;
+// The act scripts show the same sheet right after each animation paragraph (the cue line and the sound and
+// subtitle lines that follow it); those image lines are generated here and ignored when the scripts are read.
+const BOARD_LINE = /^!\[\S+ 分鏡板\]\([^)]*\)$/;
+const scriptLines = rel => read(rel).split('\n').filter(line => !BOARD_LINE.test(line));
 
 function parseHeading(line) {
   const m = line.match(/^(#{2,6}) (.+)$/);
@@ -123,7 +127,7 @@ function dialoguesOf(cue) {
 // Room and sub-scene names by code (「R1」→ 入口大廳, 「T-R2-R3-01」→ 後廚服務巷), for asset headings.
 const TITLES = new Map();
 function collect(act) {
-  const lines = read(act.path).split('\n');
+  const lines = scriptLines(act.path);
   const cues = [];
   const stack = [];
   let pending = [];
@@ -803,7 +807,7 @@ const applies = (entry, cue) => entry.scope.some(s => inScope(cue, s)) && !entry
 function staticShots() {
   const shots = new Map();
   for (const act of UPPER) {
-    const lines = read(act.path).split('\n');
+    const lines = scriptLines(act.path);
     lines.forEach((line, i) => {
       const m = line.match(/^（靜態畫面／[^）]+）\s*(.*)$/);
       if (!m) return;
@@ -993,6 +997,33 @@ function actList(act) {
 }
 
 const outputs = new Map(UPPER.map(act => [listFile(act), actList(act)]));
+
+// Each act script gets its cues' storyboard sheets, in cue order, after the paragraph they illustrate.
+function scriptWithBoards(act) {
+  const own = cues.filter(c => c.act === act);
+  const source = read(act.path).split('\n');
+  const lines = source.filter((line, i) => !BOARD_LINE.test(line) && !(line === '' && BOARD_LINE.test(source[i + 1] || '')));
+  const out = [];
+  let n = 0;
+  for (let i = 0; i < lines.length; i++) {
+    out.push(lines[i]);
+    if (!/^（動畫演出／[^）]+）/.test(lines[i])) continue;
+    const cue = own[n++];
+    let end = i;
+    for (let j = i + 1; j < lines.length; j++) {
+      if (!lines[j].trim()) continue;
+      if (!SOUND.test(lines[j].trim())) break;
+      end = j;
+    }
+    for (let j = i + 1; j <= end; j++) out.push(lines[j]);
+    i = end;
+    const board = boardOf(cue.id);
+    if (board) out.push('', `![${cue.id} 分鏡板](../../${BOARD_DIR}/${board})`);
+  }
+  assert.equal(n, own.length, `${act.name}: storyboard cues out of step`);
+  return out.join('\n');
+}
+for (const act of UPPER) outputs.set(act.path, scriptWithBoards(act));
 
 const region = [];
 region.push('## 統計', '');

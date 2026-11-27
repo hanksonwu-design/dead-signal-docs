@@ -726,7 +726,9 @@ test('all Markdown document and image links resolve; master anchors are unique',
   const explicit = [...master.text.matchAll(/<a id="([^"]+)"><\/a>/g)].map(m => m[1]);
   assert.equal(explicit.length, new Set(explicit).size);
   const imageRefs = [...master.text.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)];
-  assert.equal(imageRefs.length, 110);
+  const boards = imageRefs.filter(m => path.posix.basename(m[1]).startsWith('分鏡_'));
+  assert.equal(imageRefs.length - boards.length, 110);
+  assert.equal(boards.length, 163, 'one storyboard sheet after each upper-part animation paragraph');
   const files = readdirSync(path.join(ROOT, 'docs'), {recursive:true}).filter(f => f.endsWith('.md'));
   const errors = [];
   for (const relative of files) {
