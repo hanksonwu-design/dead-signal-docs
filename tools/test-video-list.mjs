@@ -288,26 +288,27 @@ test('F0.5 flash apparitions register all eight wraith groups and bind to their 
   assert(appendix.includes('| **F0.5 瞬閃殘影** |'));
   const registry = docs(VIDEO_ASSETS);
   const wraithMap = [
-    ['va-faller', '墜落者（R3 瞬閃殘影）', 'R3-01·1'],
-    ['va-lockdown', '封鎖後者（R4b 瞬閃殘影）', 'R4b-03·1'],
-    ['va-seamstress', '縫紉者（R5）', 'R5-01·1'],
-    ['va-informant', '通報者（R10 瞬閃殘影）', 'R10-02·1'],
-    ['va-medicine', '斷藥者（R13）', 'R13-00·1'],
-    ['va-cocoon', '貨梯裡的人（R14）', 'R14-03·1'],
-    ['va-power-echo', '電房殘響（R15 瞬閃殘影）', 'R15-04·1'],
-    ['va-silent', '噤聲者（校正區巡行）', 'R18-02·1'],
-    ['va-silent', '噤聲者（校正區巡行）', 'R22-04·1'],
+    ['va-faller', '墜落者（R3 瞬閃殘影）', 'R3-01·1', '墜落者'],
+    ['va-lockdown', '封鎖後者（R4b 瞬閃殘影）', 'R4b-03·1', '封鎖後者'],
+    ['va-seamstress', '縫紉者（R5）', 'R5-01·1', '縫紉者'],
+    ['va-informant', '通報者（R10 瞬閃殘影）', 'R10-02·1', '通報者'],
+    ['va-medicine', '斷藥者（R13）', 'R13-00·1', '斷藥者'],
+    ['va-cocoon', '貨梯裡的人（R14）', 'R14-03·1', '貨梯者'],
+    ['va-power-echo', '電房殘響（R15 瞬閃殘影）', 'R15-04·1', '電房殘響'],
+    ['va-silent', '噤聲者（校正區巡行）', 'R18-02·1', '噤聲者'],
+    ['va-silent', '噤聲者（校正區巡行）', 'R22-04·1', '噤聲者五人群像'],
   ];
-  for (const [anchor, name, segId] of wraithMap) {
+  for (const [anchor, name, segId, label] of wraithMap) {
     assert(registry.includes(`<a id="${anchor}"></a>`), `${anchor}: registered in 10-23`);
     const seg = segments.find(s => s.id === segId);
     assert(seg, `${segId}: segment exists`);
     const sb = seg.prompt.slice(seg.prompt.indexOf('【分鏡】'), seg.prompt.indexOf('【鏡頭】'));
-    assert(/0\.2|0\.25/.test(sb), `${segId}: storyboard includes 0.2–0.25s flash`);
+    assert(/0\.2|0\.25/.test(sb) && sb.includes(label) && sb.includes('F0.5 瞬閃殘影'), `${segId}: storyboard names ${label} & F0.5`);
     const actText = lists.find(l => l.rel === seg.rel).text;
     const blockStart = actText.indexOf(`<a id="${seg.anchor}"></a>`);
     const nextStart = actText.indexOf('\n<a id="v-', blockStart + 1);
     const segSection = nextStart >= 0 ? actText.slice(blockStart, nextStart) : actText.slice(blockStart);
+    assert(segSection.includes(`${label}（F0.5 瞬閃殘影`), `${segId}: script description names ${label}`);
     assert(segSection.includes(`[${name}](10-23_製作規格_影片素材設定.md#${anchor})`), `${segId}: references ${name}`);
     assert(segSection.includes(`【素材】人物｜${name}｜${segId}`), `${segId}: emits asset block for ${name}`);
   }
