@@ -230,16 +230,16 @@ test('subjective memory animations move only her own memories, faceless and skip
   }
   // All upper-part spoken/subtitled subjective memory animations carry voiced memory echoes (R4 keeps muffled laughter only).
   ordered(block('s-0903-14'), '小花聲線（主觀記憶回聲）「這樣洗澡不會鬆。」');
-  ordered(block('s-0904-3'), '前座看守聲線（主觀記憶回聲）「不准講話。進去以後，舊名字用不到。」');
-  ordered(block('s-0904-15'), '主角聲線（主觀記憶回聲）「筆畫別斷掉。」', '小花聲線（主觀記憶回聲）「……斷了，家就找不回來了。」');
-  ordered(block('s-0904-18'), '小花聲線（主觀記憶回聲）「真的花太快壞了。」', '小花聲線（主觀記憶回聲）「……紙摺的，壓扁了還能再打開。」');
+  ordered(block('s-0904-3'), '前座看守聲線（主觀記憶回聲）「別出聲。進去都叫號碼，沒人在叫名字的。」');
+  ordered(block('s-0904-15'), '主角聲線（主觀記憶回聲）「這行糊掉了……」', '小花聲線（主觀記憶回聲）「先照著描。等紙乾了，字就沒了。」');
+  ordered(block('s-0904-18'), '小花聲線（主觀記憶回聲）「真的花太快壞了。」', '小花聲線（主觀記憶回聲）「這個壓扁了沒關係，掰一掰又好了。」');
   // The R12 box pairs voiced low-whisper memory echoes with R21's repair-desk closing echoes.
   const box = block('s-0906-3');
   const memory = box.slice(box.indexOf('（動畫演出／主觀記憶動畫）'), box.indexOf('鐵盒仍打不開'));
-  ordered(memory, '小花聲線（主觀記憶回聲）「只有停電的時候，燈才不看我們。」', '主角聲線（主觀記憶回聲）「……趁還沒來電，把少的找回來。」');
-  ordered(block('s-0906-14'), '主角聲線（主觀記憶回聲）「這兩個字是『飯後』。」', '小花聲線（主觀記憶回聲）「……那還沒吃飯，這袋就先不拆嗎？」');
+  ordered(memory, '小花聲線（主觀記憶回聲）「停電反而安心，燈亮著像在盯人。」', '主角聲線（主觀記憶回聲）「趁還沒來電，把少的那顆找出來。」');
+  ordered(block('s-0906-14'), '主角聲線（主觀記憶回聲）「這兩個字念『飯後』。」', '小花聲線（主觀記憶回聲）「那還沒吃飯，這袋就先不拆喔？」');
   // R21 closes the R12 memory: the missing screw fills the empty slot before the existing echo voices.
-  ordered(block('s-0907-30'), '（動畫演出／主觀記憶動畫）', '推進那一格', '小花聲線（主觀記憶回聲）「出去以後，找個能放修理桌的地方——開著燈也沒關係的那種。」', '主角聲線（主觀記憶回聲）「好，我陪妳找。」');
+  ordered(block('s-0907-30'), '（動畫演出／主觀記憶動畫）', '推進那一格', '小花聲線（主觀記憶回聲）「出去以後，找個不用關燈的地方，放一張修理桌。」', '主角聲線（主觀記憶回聲）「好，我陪妳找。」');
   for (const act of ACTS.slice(0, 5)) assert(!story(act.act).includes('〔字幕〕（主觀記憶，無聲）'), act.name);
   // The upper part has no frozen memory stills left; lower-part memories may stay still.
   for (const act of ACTS.slice(0, 5)) assert(!/（靜態畫面[^）]*）主觀記憶停在/.test(story(act.act)), act.name);
