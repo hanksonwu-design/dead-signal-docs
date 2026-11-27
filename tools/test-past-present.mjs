@@ -69,7 +69,7 @@ test('R19 comparison follows input recovery and gives the summary equal spatial 
   const summary = memory.slice(memory.indexOf('##### 同段文字摘要'));
   has(summary, '椅腳螺栓、排水孔及玻璃下緣', '束帶固定在同一組扣環上');
   has(block(scripts[4], 's-0907-16'), '只讀摘要者回查同段文字', '沿現時可見的側門');
-  has(specs[4], '對照入口僅在 R19-07 恢復操作後開放', '八秒 → OS → 四秒',
+  has(specs[4], '對照入口僅在 R19-07 恢復操作後開放', '四秒 → OS → 兩秒',
     '未看此非必要內容者仍可沿現場 F2／F3 完成原主線',
     '不由今昔翻頁觸發或重播', '不增加等待時間或離房條件');
 });
