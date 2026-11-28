@@ -242,9 +242,10 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Act 8 adds the scraping under the U6b grating that follows the shaft telegraph.
   // Acts 6 and 7 add optional handling: lifting the U1 door plate, flicking the U2 clothespins, pushing the U4 mail slot, opening the U4b lunch box.
   // The finale lets the player point at the signature (R33-A), mark the verified devices (R33-C) and knock twice (R33-E).
+  // R31-03 adds the hand-pushed cold archive tray before the remount button (act 8).
   // The second life-trace pass adds four optional handling cues in act 6 and three each in acts 7 and 8.
   const counts = [[24, 25, 9], [79, 39, 20], [114, 49, 11], [151, 31, 9],
-    [63, 26, 12], [63, 15, 13], [41, 4, 2], [66, 10, 5], [43, 4, 4], [31, 13, 3]];
+    [63, 26, 12], [63, 15, 13], [41, 4, 2], [66, 10, 5], [44, 4, 4], [31, 13, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);

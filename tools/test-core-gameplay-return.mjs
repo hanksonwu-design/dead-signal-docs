@@ -32,7 +32,7 @@ test('U4 compares original landmarks only after the single return and never requ
 });
 
 test('R31 equipment inspection preserves both investigation orders and explicit remount', () => {
-  includes(story(8), ['已接好的來源、未完成的列與原頁位置都留著', '供電端與本地接合口', '完成原三項核對後，由玩家再按']);
+  includes(story(8), ['已接好的來源、未完成的列與原頁位置都留著', '供電端與本地接合口', '完成原三項核對後，才可動手接回備份', '推到卡榫咬住為止', '推妥後再按「接回備份資料」']);
   includes(spec(8), ['不增加強制離桌步驟', '只關閉近看不會取得 E5-08', '先做五列或先掛載皆可', '不插入鎖定後的五秒靜默或十二秒解凍']);
 });
 
