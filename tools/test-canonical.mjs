@@ -232,10 +232,11 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // R22-00 silent waiting platform and R22-04 rusted A/B release sound (act 4).
   // Act 2 R11 splits Ahsun's status into a fixed nickname line and the R6-only revoked-account line.
   // Act 5 adds playback of the optional R26 call-log intercom clip.
+  // Act 7 adds the corridor knocks reaching the 47-01 door.
   // Act 8 adds the view-mode choice for the optional AX-17 recording in R31.
   // Act 6 adds the optional M1 lower-landing panel: loosening its screws and the crawlspace light switch.
   const counts = [[24, 25, 9], [79, 39, 20], [114, 49, 11], [151, 31, 9],
-    [63, 26, 12], [63, 15, 13], [35, 4, 2], [61, 8, 5], [33, 3, 4], [28, 13, 3]];
+    [63, 26, 12], [63, 15, 13], [35, 4, 2], [61, 9, 5], [33, 3, 4], [28, 13, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
