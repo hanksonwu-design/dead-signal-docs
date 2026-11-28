@@ -161,7 +161,8 @@ test('every static screenplay cue names its shot size without changing protected
   // Act 2 R6 adds the wide shot and close-up of the white cloth knot on the headset cable.
   // Act 5 adds close-ups of the three notebook lines (R24) and the struck third line (act-5 outro).
   // Act 6 adds the near shot into the crawlspace behind the M1 lower-landing panel.
-  const counts = [23, 63, 95, 102, 50, 35, 20, 27, 10, 21];
+  // Act 8 adds the last frame of the optional AX-17 work-machine recording in R31.
+  const counts = [23, 63, 95, 102, 50, 35, 20, 27, 11, 21];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -231,9 +232,10 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // R22-00 silent waiting platform and R22-04 rusted A/B release sound (act 4).
   // Act 2 R11 splits Ahsun's status into a fixed nickname line and the R6-only revoked-account line.
   // Act 5 adds playback of the optional R26 call-log intercom clip.
+  // Act 8 adds the view-mode choice for the optional AX-17 recording in R31.
   // Act 6 adds the optional M1 lower-landing panel: loosening its screws and the crawlspace light switch.
   const counts = [[24, 25, 9], [79, 39, 20], [114, 49, 11], [151, 31, 9],
-    [63, 26, 12], [63, 15, 13], [35, 4, 2], [61, 8, 5], [32, 3, 4], [28, 13, 3]];
+    [63, 26, 12], [63, 15, 13], [35, 4, 2], [61, 8, 5], [33, 3, 4], [28, 13, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
