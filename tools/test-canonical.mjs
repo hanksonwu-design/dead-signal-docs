@@ -163,7 +163,8 @@ test('every static screenplay cue names its shot size without changing protected
   // Act 6 adds the near shot into the crawlspace behind the M1 lower-landing panel.
   // Act 8 adds the last frame of the optional AX-17 work-machine recording in R31.
   // The U3 needle-and-lamp and R29 moving-box memories become subjective memory animations (acts 6 and 7).
-  const counts = [23, 63, 95, 102, 50, 35, 19, 26, 11, 21];
+  // Acts 6 and 7 add optional life traces: the U1 door frame, U2 clothespins, U2b recess tally (act 6), the U4 calendar and U4b lunch box (act 7).
+  const counts = [23, 63, 95, 102, 50, 35, 22, 28, 11, 21];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -237,9 +238,10 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Act 8 adds the view-mode choice for the optional AX-17 recording in R31.
   // Act 6 adds the optional M1 lower-landing panel: loosening its screws and the crawlspace light switch.
   // Act 8 adds the scraping under the U6b grating that follows the shaft telegraph.
+  // Acts 6 and 7 add optional handling: lifting the U1 door plate, flicking the U2 clothespins, pushing the U4 mail slot, opening the U4b lunch box.
   // The finale lets the player point at the signature (R33-A), mark the verified devices (R33-C) and knock twice (R33-E).
   const counts = [[24, 25, 9], [79, 39, 20], [114, 49, 11], [151, 31, 9],
-    [63, 26, 12], [63, 15, 13], [35, 4, 2], [61, 10, 5], [33, 4, 4], [31, 13, 3]];
+    [63, 26, 12], [63, 15, 13], [37, 4, 2], [63, 10, 5], [33, 4, 4], [31, 13, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
