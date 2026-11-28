@@ -4,7 +4,7 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { MASTER, APPENDIX, ACTS, FINALE, CANONICAL_FILES, SPLIT_MARKER, ILLUSTRATION_CATALOG } from './screenplay-files.mjs';
+import { MASTER, APPENDIX, ACTS, FINALE, CANONICAL_FILES, SPLIT_MARKER, ILLUSTRATION_CATALOG, VIDEO_ACT_LISTS } from './screenplay-files.mjs';
 
 export const ROOT = fileURLToPath(new URL("..", import.meta.url));
 export const DOCS_DIR = join(ROOT, "docs");
@@ -123,7 +123,9 @@ export function buildDocuments() {
       const rank = doc => order.includes(doc.path) ? order.indexOf(doc.path) : order.length;
       return rank(a) - rank(b);
     }
-    return a.path < b.path ? -1 : a.path > b.path ? 1 : 0;
+    // The lower acts' video lists (10-27 onward) follow the upper ones (10-17 to 10-21) in act order.
+    const key = doc => VIDEO_ACT_LISTS.indexOf(doc.path) >= 5 ? `${VIDEO_ACT_LISTS[4]}￿${VIDEO_ACT_LISTS.indexOf(doc.path)}` : doc.path;
+    return key(a) < key(b) ? -1 : key(a) > key(b) ? 1 : 0;
   });
 }
 

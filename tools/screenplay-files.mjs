@@ -27,7 +27,8 @@ export const ACTS = [
 export const FINALE = ACTS.at(-1);
 // The upper-part video overview keeps its path; each upper act has its own list with storyboard prompts.
 export const VIDEO_LIST = '10_製作規格/10-16_製作規格_影片製作列表.md';
-export const VIDEO_ACT_LISTS = ACTS.slice(0, 5).map((act, i) => `10_製作規格/10-${17 + i}_製作規格_影片製作列表_${act.name}.md`);
+// Upper acts keep 10-17 to 10-21; the lower acts (第五幕 to 終幕) follow the static-prompt pages as 10-27 to 10-31.
+export const VIDEO_ACT_LISTS = ACTS.map((act, i) => `10_製作規格/10-${i < 5 ? 17 + i : 22 + i}_製作規格_影片製作列表_${act.name}.md`);
 // Hand-written direction notes (shots, light, sound cues) that the video lists merge into their prompts.
 export const VIDEO_DIRECTION = '10_製作規格/10-22_製作規格_影片導演註記.md';
 // Hand-written character, scene and prop registry that gives every video segment its asset prompts.

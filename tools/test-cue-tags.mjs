@@ -54,7 +54,8 @@ test('video-list animation types each render in their own reader color', () => {
     state: { selected: null, documents: [] }, imageAssetUrl: () => null, documentDisplayTitle: value => value,
   });
   const builder = readFileSync(path.join(ROOT, 'tools/build-video-list.mjs'), 'utf8');
-  const classes = [...builder.matchAll(/: '(video-[a-z]+)'/g)].map(match => match[1]);
+  // The lower part's history-thaw and epilogue-observer shots reuse the cutscene color.
+  const classes = [...new Set([...builder.matchAll(/: '(video-[a-z]+)'/g)].map(match => match[1]))];
   assert.equal(classes.length, 7);
   const colors = classes.map(name => css.match(new RegExp(`\.reader-content \.${name} \{ --video: (#[0-9a-f]{6}); \}`))?.[1]);
   assert(colors.every(Boolean), 'every animation type has a color');
@@ -64,7 +65,7 @@ test('video-list animation types each render in their own reader color', () => {
   }
   assert(!inlineMarkdown('<span class="video-other">互動</span>').includes('<span'), 'unknown classes stay escaped');
   const docs = rel => readFileSync(path.join(ROOT, 'docs', rel), 'utf8').replaceAll('\r\n', '\n');
-  const total = docs(VIDEO_LIST).match(/^\| \*\*上部合計\*\* \|.*\| \*\*(\d+)\*\* \|$/m);
+  const total = docs(VIDEO_LIST).match(/^\| \*\*全劇合計\*\* \|.*\| \*\*(\d+)\*\* \|$/m);
   const typeCells = VIDEO_ACT_LISTS.flatMap(rel => docs(rel).split('\n').filter(line => line.startsWith('- **類型：**'))
     .map(line => line.slice('- **類型：**'.length).split('　')[0]));
   assert.equal(typeCells.length, Number(total[1]));

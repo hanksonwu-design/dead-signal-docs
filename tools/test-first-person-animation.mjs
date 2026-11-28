@@ -278,7 +278,9 @@ test('history thaw and observer epilogue labels cannot spread to present-day sce
   assert.equal([...block('s-0910-42').matchAll(/（動畫演出／片尾旁觀過場）/g)].length, 3);
   has(row(8, 'R31-F01'), '歷史解凍過場', '八張低動態定格');
   has(row(9, 'POST-V03'), '片尾旁觀過場', '不改成康眼中視角或主角回憶');
-  for (const image of ['R33-V03', 'R33-V04', 'R33-V05', 'R33-V07']) has(row(9, image), '第一人稱過場');
+  has(row(9, 'R33-V04'), '第一人稱過場');
+  // The pointing hand, the device marks and the two knocks are driven by the player.
+  for (const image of ['R33-V03', 'R33-V05', 'R33-V07']) has(row(9, image), '第一人稱互動');
 });
 
 test('newly classified threat and feedback cues preserve player input and static reflections', () => {

@@ -13,10 +13,10 @@ const segments = lists.flatMap(({ rel, text }) => [...text.matchAll(/<a id="(v-[
 const LEVEL_CLASSES = { 高: 'importance-high', 中: 'importance-mid', 低: 'importance-low' };
 const SECTIONS = ['【影片】', '【生成方式】', '【長度】', '【分鏡】', '【鏡頭】', '【影片風格】', '【不要出現】'];
 
-test('the overview counts every segment that the five act lists carry', () => {
+test('the overview counts every segment that the ten act lists carry', () => {
   const typeTable = overview.slice(overview.indexOf('## 統計'), overview.indexOf('## 重要級別統計'));
   const rows = typeTable.match(/^\| \[[^\]]+\]\(10-\d\d_[^)]+\) \|.*$/gm);
-  assert.equal(rows.length, 5);
+  assert.equal(rows.length, VIDEO_ACT_LISTS.length);
   rows.forEach((row, i) => {
     assert(row.includes(`](${VIDEO_ACT_LISTS[i].split('/').at(-1)})`), row);
     const count = Number(row.split(' | ').at(-1).replace(' |', ''));
@@ -24,7 +24,7 @@ test('the overview counts every segment that the five act lists carry', () => {
     assert.equal((lists[i].text.match(/^```prompt$/gm) || []).length, count, 'one prompt per segment');
     assert(lists[i].text.startsWith(`---\n文件: 製作規格｜影片製作列表・${ACTS[i].name}\n`), 'title names the act');
   });
-  assert.equal(segments.length, Number(overview.match(/\| \*\*(\d+)\*\* \|$/m)[1]));
+  assert.equal(segments.length, Number(overview.match(/^\| \*\*全劇合計\*\* \|.*\| \*\*(\d+)\*\* \|$/m)[1]));
   assert(!/^\| `/m.test(overview), 'per-segment rows live in the act lists, not the overview');
 });
 
@@ -79,7 +79,7 @@ test('rule-built storyboards hold each beat a second, keep sound and absence out
   for (const { id, type, prompt } of ruled) {
     const camera = prompt.match(/^【鏡頭】(.+)$/m)[1];
     assert(/約 (?:28|35)mm/.test(camera) && camera.includes('焦點'), `${id}: default camera names a focal length and a focus`);
-    if (type !== '設備內影片') assert(/^【光線色調】.*(?:整段光源與明暗都不變|照分鏡的時間點亮暗|明暗變化只發生在點名的局部)/m.test(prompt), `${id}: light says what changes`);
+    if (!type.startsWith('設備')) assert(/^【光線色調】.*(?:整段光源與明暗都不變|照分鏡的時間點亮暗|明暗變化只發生在點名的局部)/m.test(prompt), `${id}: light says what changes`);
     for (const [, from, to, text] of prompt.matchAll(/^(\d+(?:\.\d+)?)–(\d+(?:\.\d+)?) 秒｜(.+)$/gm)) {
       assert(Number(to) - Number(from) >= 1, `${id}: ${from}–${to} holds at least a second`);
       const visual = text.split('　對白：')[0];
@@ -109,7 +109,8 @@ test('key bridges link to the prompt section of their segment', () => {
     assert(segment.rel.endsWith(file), `${id} lives in ${file}`);
     assert(segment.facts.includes('**重點 ★ '), `${id} shows its key bridge`);
   }
-  assert(segments.filter(s => s.prompt.includes('建議直接以圖層差分製作')).length <= 10, 'only layer-only segments skip video generation');
+  // The lower part adds two status-panel diffs.
+  assert(segments.filter(s => s.prompt.includes('建議直接以圖層差分製作')).length <= 12, 'only layer-only segments skip video generation');
   // Post cues stay free of raw screenplay tags or mechanical leaks, and non-UI segments start on real plates.
   for (const { id, prompt } of segments) {
     assert(!/〔環境|（配音演出）|\*\*|移動窗|沿原事件|安全窗時/.test(prompt), `${id}: no raw screenplay tags or rule leaks`);
@@ -136,9 +137,9 @@ test('every segment carries an importance level, and the counts add up in every 
   }
   for (const level of ['高', '中', '低']) assert(segments.some(s => s.level === level), `some segments are ${level}`);
   const start = overview.indexOf('## 重要級別統計');
-  const rows = overview.slice(start, overview.indexOf('## 重點橋段（★）')).match(/^\| (?:\[|\*\*上部合計).*$/gm);
-  assert.equal(rows.length, 6);
-  rows.slice(0, 5).forEach((row, i) => {
+  const rows = overview.slice(start, overview.indexOf('## 重點橋段（★）')).match(/^\| (?:\[|\*\*全劇合計).*$/gm);
+  assert.equal(rows.length, VIDEO_ACT_LISTS.length + 1);
+  rows.slice(0, VIDEO_ACT_LISTS.length).forEach((row, i) => {
     const cells = row.split(' | ').slice(1).map(cell => Number(cell.replace(/[ |*]/g, '')));
     const own = segments.filter(s => s.rel === VIDEO_ACT_LISTS[i]);
     assert.deepEqual(cells.slice(0, 4), [...['高', '中', '低'].map(level => own.filter(s => s.level === level).length), own.length], VIDEO_ACT_LISTS[i]);
@@ -148,7 +149,7 @@ test('every segment carries an importance level, and the counts add up in every 
     assert(high, `${VIDEO_ACT_LISTS[i]}: high list`);
     assert.deepEqual([...high[1].matchAll(/`([^`]+)`/g)].map(m => m[1]), own.filter(s => s.level === '高').map(s => s.id));
   });
-  const total = rows[5].split(' | ').slice(1).map(cell => Number(cell.replace(/[ |*]/g, '')));
+  const total = rows[VIDEO_ACT_LISTS.length].split(' | ').slice(1).map(cell => Number(cell.replace(/[ |*]/g, '')));
   assert.deepEqual(total.slice(0, 4), [...['高', '中', '低'].map(level => segments.filter(s => s.level === level).length), segments.length]);
   assert(overview.includes('<a id="video-importance"></a>\n\n## 重要級別怎麼分'), 'the importance guide anchor exists');
 });
@@ -172,10 +173,12 @@ test('direction notes replace the rule-built storyboard of their segment and are
   for (const segment of segments) {
     if (!notes.some(n => n.id === segment.id)) assert(!segment.prompt.includes('【情緒節奏】'), `${segment.id}: only directed segments carry a mood line`);
   }
-  for (const segment of segments.filter(s => s.level === '高')) {
+  // Lower-part lists (10-27 onward) are new; their high segments still wait for direction notes.
+  const upper = VIDEO_ACT_LISTS.slice(0, 5);
+  for (const segment of segments.filter(s => s.level === '高' && upper.includes(s.rel))) {
     assert(notes.some(n => n.id === segment.id), `${segment.id}: every high segment is directed before it is generated`);
   }
-  const total = overview.match(/^\| \*\*上部合計\*\* \| \d+ \| \d+ \| \d+ \| \*\*\d+\*\* \| \*\*(\d+)\*\* \|$/m);
+  const total = overview.match(/^\| \*\*全劇合計\*\* \| \d+ \| \d+ \| \d+ \| \*\*\d+\*\* \| \*\*(\d+)\*\* \|$/m);
   assert.equal(Number(total[1]), notes.length, 'the overview counts the notes');
   VIDEO_ACT_LISTS.forEach((rel, i) => {
     const count = notes.filter(n => segments.find(s => s.id === n.id).rel === rel).length;
@@ -227,7 +230,7 @@ test('every segment lists its people, scene and props, each as a reference-image
       if (type === '主觀記憶動畫') {
         const expectedHer = id === 'R1-01·3' ? '她・記憶裡（入園前）'
           : id === 'P1-01·2' ? '她・記憶裡（上鋪包紮）'
-          : id === 'R13-03·4' ? '她・記憶裡（主管期）'
+          : id === 'R13-03·4' || id === 'R29-V03·2' ? '她・記憶裡（主管期）'
           : '她・記憶裡（園區前期）';
         const expectedOther = id === 'R1-01·3' ? '車上鄰座的手（R1 記憶）' : '小花・記憶裡（粉紅棕格紋袖口）';
         assert.deepEqual(people, [expectedHer, expectedOther], `${id}: memory people match timeline and visibility`);

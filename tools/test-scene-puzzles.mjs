@@ -246,7 +246,7 @@ test('U3 present-day memory closeup supports both lamp states without changing b
   }
   has(rows[1]['針線包與近看照明'], '移除檢修燈光束', '原招牌漏光');
   has(spec(6), '重新開燈是自選操作，不是回憶前置', '不因切燈重播',
-    'M 類靜格裡的暖燈屬過去回想，不受現時開關控制');
+    '記憶裡的暖燈屬過去回想，不受現時開關控制');
   has(story(6), '若已關燈，原招牌漏光', '可直接近看包內窄布');
   assert(!story(6).includes('落橋完成，沒有威脅。檢修燈照到舊針線包'));
   const art = spec(6).split('\n').find(row => row.startsWith('| U3-C05 |'));

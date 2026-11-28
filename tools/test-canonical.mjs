@@ -162,7 +162,8 @@ test('every static screenplay cue names its shot size without changing protected
   // Act 5 adds close-ups of the three notebook lines (R24) and the struck third line (act-5 outro).
   // Act 6 adds the near shot into the crawlspace behind the M1 lower-landing panel.
   // Act 8 adds the last frame of the optional AX-17 work-machine recording in R31.
-  const counts = [23, 63, 95, 102, 50, 35, 20, 27, 11, 21];
+  // The U3 needle-and-lamp and R29 moving-box memories become subjective memory animations (acts 6 and 7).
+  const counts = [23, 63, 95, 102, 50, 35, 19, 26, 11, 21];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     const cues = [...story.matchAll(/（靜態畫面[^）]*）/g)].map(m => m[0]);
@@ -235,8 +236,10 @@ test('operation, environment and system cues distinguish inputs, sources and aut
   // Act 7 adds the corridor knocks reaching the 47-01 door and the distant drag after the U4 return.
   // Act 8 adds the view-mode choice for the optional AX-17 recording in R31.
   // Act 6 adds the optional M1 lower-landing panel: loosening its screws and the crawlspace light switch.
+  // Act 8 adds the scraping under the U6b grating that follows the shaft telegraph.
+  // The finale lets the player point at the signature (R33-A), mark the verified devices (R33-C) and knock twice (R33-E).
   const counts = [[24, 25, 9], [79, 39, 20], [114, 49, 11], [151, 31, 9],
-    [63, 26, 12], [63, 15, 13], [35, 4, 2], [61, 10, 5], [33, 3, 4], [28, 13, 3]];
+    [63, 26, 12], [63, 15, 13], [35, 4, 2], [61, 10, 5], [33, 4, 4], [31, 13, 3]];
   for (const act of ACTS) {
     const story = master.documents.get(act.path);
     assert(!/〔(?:操作|環境|系統)〕/.test(story), act.name);
@@ -276,7 +279,7 @@ test('operation, environment and system cues distinguish inputs, sources and aut
     ['s-0908-31', '介面呈現', '進房時，時序軌'],
     ['s-0909-22', '動畫演出／第一人稱互動', '主角在安全桌邊伸手'],
     ['s-0909-44', '動畫演出／場景局部動畫', '粉塵往一側落'],
-    ['s-0910-34', '動畫演出／第一人稱過場', '既有分支演出中，她伸出手指向原簽名'],
+    ['s-0910-34', '動畫演出／第一人稱互動', '她的手隨玩家的輸入一點一點伸過去'],
   ]) assert(block(id).includes(`（${cue}）${text}`), `${id}: automatic presentation`);
   for (const text of ['不是新增的玩家介面文字', '不把替代路徑變成兩步必做', '不另外插入一次確認',
     '預覽不外送，回執不明不重發', '不單憑分類認定說話者', '規則註記不直接顯示']) {

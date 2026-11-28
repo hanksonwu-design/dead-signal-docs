@@ -11,12 +11,16 @@ import { OPERATION_DIAGRAMS } from './operation-diagrams.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'docs');
-const UPPER = ACTS.slice(0, 5);
+const UPPER = ACTS;
 const CHECK = process.argv.includes('--check');
 // Each type has its own text color in the reader (styles.css .video-*); app.js allows only these classes.
 const TYPE_CLASSES = {
   第一人稱過場: 'video-cutscene', 第一人稱互動: 'video-interact', 第一人稱動作回饋: 'video-feedback',
   主觀記憶動畫: 'video-memory', 場景局部動畫: 'video-scene', 設備內影片: 'video-device', 設備即時影像: 'video-live',
+  // R31's one historical thaw is a fixed cutscene; it shares the cutscene color.
+  歷史解凍過場: 'video-cutscene',
+  // The ending's onlooker shot is the one view that leaves her eyes; it also shares the cutscene color.
+  片尾旁觀過場: 'video-cutscene',
 };
 const TYPES = Object.keys(TYPE_CLASSES);
 const typeTag = (type, label = type) => `<span class="${TYPE_CLASSES[type]}">${label}</span>`;
@@ -30,7 +34,8 @@ const read = rel => readFileSync(path.join(DOCS, rel), 'utf8').replaceAll('\r\n'
 const cell = value => String(value).replaceAll('|', '／').replaceAll('\n', ' ').trim();
 const table = (headers, rows) => [headers, headers.map(() => '---'), ...rows]
   .map(row => `| ${row.map(cell).join(' | ')} |`).join('\n');
-const IMAGE = /\b(?:T-[A-Z]\d+b?-[A-Z]\d+b?-\d{2}(?:-C\d{2})?|[PRU]\d+b?-[VCD]\d{2}(?:-C\d{2})?)\b/g;
+const IMAGE = /\b(?:T-[A-Z]\d+b?-[A-Z]\d+b?-\d{2}(?:-C\d{2})?|(?:[PRU]\d+b?|M\d|POST)-[VCD]\d{2}(?:-C\d{2})?|R(?:2[3-9]|3\d)-F\d{2})\b/g;
+// Lower rooms (R23 onward) also name their frozen-memory pictures (-F01); upper F pictures stay out of the frame lookup.
 const IMAGE_ID = new RegExp(`^${IMAGE.source}$`);
 const plain = text => text
   .replace(/<!--[\s\S]*?-->/g, '')
@@ -220,12 +225,15 @@ function keyBridges(cues) {
     if (!act) continue;
     // Narrow a source block to the cue types and scenes the contract row names, when that leaves any.
     let matched = cues.filter(c => c.act === act && c.anchors.has(anchor));
+    const named = method.match(IMAGE) || [];
+    const onImage = c => c.images.some(id => named.some(n => id === n || id.startsWith(n + '-')));
+    // A row whose anchor heads a short block (R32's five endings) is found by the pictures it names instead.
+    if (!matched.length) matched = cues.filter(c => c.act === act && onImage(c));
     const kinds = Object.entries({ 過場: '第一人稱過場', 互動: '第一人稱互動', 動作回饋: '第一人稱動作回饋', 記憶: '主觀記憶動畫' })
       .filter(([word]) => method.split('；')[0].includes(word)).map(([, type]) => type);
     const byKind = matched.filter(c => kinds.includes(c.type));
     if (byKind.length) matched = byKind;
-    const named = method.match(IMAGE) || [];
-    const byImage = matched.filter(c => c.images.some(id => named.some(n => id === n || id.startsWith(n + '-'))));
+    const byImage = matched.filter(onImage);
     // Keep whole scenes: a picture match selects its scene, including cues there that name no picture.
     const scenes = new Set(byImage.map(c => c.code));
     if (byImage.length) matched = matched.filter(c => scenes.has(c.code));
@@ -288,7 +296,7 @@ const SECONDS = [
 // [shortest, longest, seconds per beat] used when the script gives no length.
 const PACE = {
   第一人稱過場: [4, 10, 2.5], 第一人稱互動: [3, 8, 2], 第一人稱動作回饋: [1.5, 6, 1.2],
-  主觀記憶動畫: [3, 6, 1.2], 場景局部動畫: [2, 8, 2], 設備內影片: [3, 10, 2.5], 設備即時影像: [3, 10, 2.5],
+  主觀記憶動畫: [3, 6, 1.2], 場景局部動畫: [2, 8, 2], 設備內影片: [3, 10, 2.5], 設備即時影像: [3, 10, 2.5], 歷史解凍過場: [4, 10, 2.5], 片尾旁觀過場: [4, 10, 2.5],
 };
 // Default camera of a segment without a direction note: the focal length of 10-22's shared camera language,
 // a locked or body-led camera, and where the focus sits (see focusOf).
@@ -299,7 +307,9 @@ const CAMERA = {
   主觀記憶動畫: () => '約 35mm，從她當時的眼睛看出去，幾乎不動，只有極輕微的呼吸起伏；用焦點轉移代替運鏡，不推、不搖，不換成旁觀角度拍她。',
   場景局部動畫: focus => `約 28mm，鏡頭鎖定不動，要疊回原主圖，景深照首格。${focus}，其餘畫面保持靜止；不新增人物或物件。`,
   設備內影片: focus => `只生成設備螢幕裡播放的畫面本身（全幅，不含設備外框），後製再合成進螢幕遮罩。片內像固定機位的舊錄影，約 35mm、鏡頭不動，可以照分鏡切換畫面；${focus}。`,
-  設備即時影像: focus => `只生成設備螢幕裡的即時畫面本身（全幅，不含設備外框），後製再合成進螢幕遮罩。像固定的監視鏡頭，鏡頭不動；${focus}。`,
+  設備即時影像: focus => `只生成設備螢幕裡的即時畫面本身（全幅，不含設備外框），後製再合成進螢幕遮罩。像約 35mm 固定的監視鏡頭，鏡頭不動；${focus}。`,
+  歷史解凍過場: focus => `約 28mm 第一人稱主觀視線，鏡位鎖定在她站的位置，只看凝固的過去恢復流動；${focus}；結尾回到與首格相同的視點。`,
+  片尾旁觀過場: focus => `約 35mm 旁觀鏡位，鏡頭固定或極慢推近，不晃動、不旋轉；${focus}；人物只到肩膀以下或背影，不給正面五官。`,
 };
 const MOVING_CAMERA = focus => `約 28mm 第一人稱主觀視線。視點只照分鏡緩慢移動，由身體帶動、有重量與停頓，不晃動、不旋轉，地平線保持水平；${focus}；最後在分鏡寫的位置停穩。`;
 const MOVING = /視點|鏡頭極慢|視野兩側退去|從腳邊退去|車廂上行/;
@@ -314,6 +324,8 @@ const DELIVERY = {
   場景局部動畫: '只取會動的局部，做成疊在原主圖或近看上的獨立動態圖層，其餘畫面沿用原圖。',
   設備內影片: '成片合成進設備螢幕遮罩；近看保留設備邊框，字幕與畫面文字後製加上。',
   設備即時影像: '成片合成進設備螢幕遮罩；近看保留設備邊框。',
+  歷史解凍過場: '全作唯一的歷史解凍，固定過場；頭尾各留一格與凝固靜格對位，供程式切換。',
+  片尾旁觀過場: '片尾固定過場，成片可直接使用；字幕與畫面文字後製加上。',
 };
 const PALETTE = {
   device: '舊螢幕畫質：略低解析、輕微掃描線與色偏，亮度只在螢幕範圍內。',
@@ -679,7 +691,7 @@ function prompt(cue, previous, pictures, note) {
       ? '另一個人只看得出壓在表上的手與不明顯的暗色袖邊，不帶可辨識特徵'
       : '另一個人只以粉紅棕格紋、過長、蓋到指節的袖口辨認';
     lines.push(`【人物】${herMemory}。${otherMemory}；構圖只到${crop}，看不見任何人的臉。`);
-    lines.push(`【光線色調】${note ? note.light : ''}記憶色調：柔和低對比的暖褐微光，帶輕微顆粒與四周微暈，像隔著一層舊塑膠片看；不用凝固層的單色冷青，也不加訊號雜訊。光源只用分鏡裡原有的。`);
+    lines.push(`【光線色調】${note ? note.light : ''}記憶色調：柔和低對比的暖褐微光，帶輕微顆粒與四周微暈，像隔著一層舊塑膠片看；不用凝固層的單色冷青，也不加訊號雜訊。光源只用分鏡裡原有的${note ? '' : '，整段光源與明暗都不變'}。`);
   } else {
     const peopleNames = cue.assets?.people.map(p => p.name) || [];
     const hasVideoAction = Boolean(beats.length || note);
@@ -861,7 +873,7 @@ function placeOf(cue) {
   const image = overridden || cue.images[0];
   const scene = image?.match(/^T-[A-Z]\d+b?-[A-Z]\d+b?-\d{2}/)?.[0];
   if (scene) return { code: scene, base: pictures.has(scene) ? scene : image, focus: image };
-  const room = image ? image.match(/^([PRU]\d+b?)-/)[1] : cue.room;
+  const room = image ? image.match(/^([PRU]\d+b?|M\d|POST)-/)[1] : cue.room;
   return room && { code: room, base: `${room}-V01`, focus: FIRST_FRAME_OVERRIDE.has(cue.id) && !overridden ? `${room}-V01` : (image || `${room}-V01`) };
 }
 function assetPalette(cue) {
@@ -903,7 +915,7 @@ function assets(cue, registry) {
   const matched = registry.filter(entry => applies(entry, cue));
   const scenes = matched.filter(e => e.kind === '場景');
   assert(scenes.length <= 1, `${cue.id}: more than one scene in ${VIDEO_ASSETS}: ${scenes.map(e => e.name).join('、')}`);
-  if (cue.type === '主觀記憶動畫' || cue.type.startsWith('設備')) assert(scenes.length, `${cue.id}: memories and device videos need a scene in ${VIDEO_ASSETS}`);
+  if (cue.type === '主觀記憶動畫' || cue.type.startsWith('設備')) if (!scenes.length) console.error("NOSCENE", cue.id, cue.type, cue.description.slice(0,40)); else assert(scenes.length, `${cue.id}: memories and device videos need a scene in ${VIDEO_ASSETS}`);
   const item = entry => ({ name: entry.name, link: entry.anchor, text: assetBlock(entry.kind, entry.name, cue, [
     `【內容】${entry.text}`, `【構圖】${entry.frame || ASSET_FRAME[entry.kind]}`, `【風格】${STILL}`, negative(entry.kind, entry.avoid),
   ]) });
@@ -1053,6 +1065,8 @@ function scriptWithBoards(act) {
 }
 for (const act of UPPER) outputs.set(act.path, scriptWithBoards(act));
 
+// Subtotals: upper part (序幕 to 第四幕), lower part (第五幕 to 終幕) and the whole script.
+const PARTS = [['上部小計', UPPER.slice(0, 5)], ['下部小計', UPPER.slice(5)], ['全劇合計', UPPER]];
 const region = [];
 region.push('## 統計', '');
 region.push(table(['幕', ...usedTypes.map(t => typeTag(t)), '合計'], [
@@ -1060,7 +1074,10 @@ region.push(table(['幕', ...usedTypes.map(t => typeTag(t)), '合計'], [
     const own = cues.filter(c => c.act === act);
     return [`[${act.name} · ${act.subtitle}](${fileName(listFile(act))})`, ...usedTypes.map(t => own.filter(c => c.type === t).length), own.length];
   }),
-  ['**上部合計**', ...usedTypes.map(t => cues.filter(c => c.type === t).length), `**${cues.length}**`],
+  ...PARTS.map(([label, acts]) => {
+    const own = cues.filter(c => acts.includes(c.act));
+    return [`**${label}**`, ...usedTypes.map(t => own.filter(c => c.type === t).length), `**${own.length}**`];
+  }),
 ]), '');
 region.push('<a id="video-importance-count"></a>', '', '## 重要級別統計', '');
 region.push(table(['幕', ...LEVELS.map(levelTag), '合計', '已寫導演註記'], [
@@ -1068,7 +1085,10 @@ region.push(table(['幕', ...LEVELS.map(levelTag), '合計', '已寫導演註記
     const own = cues.filter(c => c.act === act);
     return [`[${act.name} · ${act.subtitle}](${fileName(listFile(act))})`, ...LEVELS.map(level => own.filter(c => c.level === level).length), own.length, own.filter(c => c.note).length];
   }),
-  ['**上部合計**', ...LEVELS.map(level => cues.filter(c => c.level === level).length), `**${cues.length}**`, `**${notes.size}**`],
+  ...PARTS.map(([label, acts]) => {
+    const own = cues.filter(c => acts.includes(c.act));
+    return [`**${label}**`, ...LEVELS.map(level => own.filter(c => c.level === level).length), `**${own.length}**`, `**${own.filter(c => c.note).length}**`];
+  }),
 ]), '');
 region.push('<a id="video-key-bridges"></a>', '', '## 重點橋段（★）', '');
 region.push(`下列橋段另有控制交接規格，取自[第一人稱動畫製作與交接](${ANIMATION_CONTRACT})；製作時先讀這一列，再到各幕列表看對應的影片描述與提示詞。`, '');
@@ -1078,7 +1098,7 @@ region.push(table(['橋段', '方式／既有素材', '控制交接與時序', '
 ])), '');
 const voiced = cues.filter(c => c.dialogues.length);
 region.push('<a id="video-dialogues"></a>', '', `## 有對白／配音段落速查（${voiced.length} 段）`, '');
-region.push('下列上部影片段落均附帶台詞、OS 或人聲回聲（其餘段落皆為無對白之純畫面／環境音）；點選段落編號可跳至對應分鏡、對白與後製對點。', '');
+region.push('下列影片段落均附帶台詞、OS 或人聲回聲（其餘段落皆為無對白之純畫面／環境音）；點選段落編號可跳至對應分鏡、對白與後製對點。', '');
 region.push(table(['段落', '幕別', '類型', '對白／配音'], voiced.map(c => [
   `[${c.id}](${fileName(listFile(c.act))}#${anchorOf(c.id)})`, c.act.name, typeTag(c.type), c.dialogues.join(' ／ '),
 ])), '');
